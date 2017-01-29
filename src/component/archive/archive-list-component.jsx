@@ -32,7 +32,7 @@ class ArchiveList extends Component {
                         </DataTable>
                     </div> :
                     <div className={commonStyles.emptyState}>
-                            <Icon name="report" style={{ color: '#aaa', fontSize: '40px' }}/><br />
+                            <Icon name="archive" className="mdl-color-text--grey-300" style={{ fontSize: '56px' }}/><br />
                             No archived feature toggles, go see <Link to="/features">active toggles here</Link>
                     </div>
                 }
