@@ -27,6 +27,17 @@
     margin: 0;
 }
 
+.listLink {
+    color: #212121;
+    text-decoration: none;
+    font-weight: normal;
+    display: block;
+}
+
+.listLink:hover {
+    color: #000;
+}
+
 @media (max-width: 920px) {
     .hideLt920 {
         display: none;
@@ -72,4 +83,9 @@
     flex-direction: column;
     justify-content: center;
     min-height: 200px;
+}
+
+.dropDownButton {
+    text-transform: none;
+    font-weight: normal;
 }
