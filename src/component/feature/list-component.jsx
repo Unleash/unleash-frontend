@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import Feature from './feature-list-item-component';
 import { Link } from 'react-router';
-import { Icon, FABButton, Textfield, Menu, MenuItem, Card, CardActions, Button, List } from 'react-mdl';
+import { Icon, FABButton, Textfield, Menu, MenuItem, Card, CardActions, List } from 'react-mdl';
 
-import { MenuItemWithIcon, styles as commonStyles } from '../common';
+import { MenuItemWithIcon, DropdownButton, styles as commonStyles } from '../common';
 import styles from './feature.scss';
 
 export default class FeatureListComponent extends React.PureComponent {
@@ -66,24 +66,17 @@ export default class FeatureListComponent extends React.PureComponent {
                     </FABButton>
                 </Link>
             </div>
-
             <Card shadow={0} className={commonStyles.fullwidth}>
                 <CardActions>
-                    <Button id="metric" className={commonStyles.dropDownButton}>
-                        Last {settings.showLastHour ? 'hour' : 'minute' }
-                        <Icon name="arrow_drop_down" className="mdl-color-text--grey-600"/>
-                    </Button>
+                    <DropdownButton id="metric" label={`Last ${settings.showLastHour ? 'hour' : 'minute'}`}/>
                     <Menu target="metric" onClick={() => this.toggleMetrics()}
                         style={{ width: '168px' }}>
-                        <MenuItemWithIcon icon="hourglass_empty" disabled={!settings.showLastHour} data-target="minute">
-                            Last minute</MenuItemWithIcon>
-                        <MenuItemWithIcon icon="hourglass_full" disabled={settings.showLastHour} data-target="hour">
-                            Last hour</MenuItemWithIcon>
+                        <MenuItemWithIcon icon="hourglass_empty" disabled={!settings.showLastHour} data-target="minute"
+                            label="Last minute"/>
+                        <MenuItemWithIcon icon="hourglass_full" disabled={settings.showLastHour} data-target="hour"
+                            label="Last hour"/>
                     </Menu>
-                    <Button id="sorting" className={commonStyles.dropDownButton}>
-                        By {settings.sort}
-                        <Icon name="arrow_drop_down" className="mdl-color-text--grey-600"/>
-                    </Button>
+                    <DropdownButton id="sorting" label={`By ${settings.sort}`}/>
                     <Menu target="sorting" onClick={(e) => this.setSort(e.target.getAttribute('data-target'))}
                         style={{ width: '168px' }}>
                         <MenuItem disabled={!settings.sort || settings.sort === 'name'} data-target="name">Name</MenuItem>

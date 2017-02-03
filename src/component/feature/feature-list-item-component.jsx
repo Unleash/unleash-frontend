@@ -27,9 +27,9 @@ const Feature = ({
     const remainingStrategies = strategies.length - strategiesToShow;
 
     const strategyChips = strategies && strategies.slice(0, strategiesToShow).map((s, i) =>
-            <Chip className={styles.listItemStrategy} key={i}>{s.name}</Chip>);
+            <Chip className={styles.strategyChip} key={i}>{s.name}</Chip>);
     const summaryChip = remainingStrategies > 0 &&
-            <Chip className={styles.listItemStrategy}>+{remainingStrategies}</Chip>;
+            <Chip className={styles.strategyChip}>+{remainingStrategies}</Chip>;
 
     return (
         <ListItem twoLine>
@@ -46,16 +46,16 @@ const Feature = ({
                     }
                 </div>
             </span>
-            <span className={styles.listItemToggle} style={{ flexShrink: 0 }}>
+            <span className={styles.listItemToggle}>
                 <Switch title={`Toggle ${name}`} key="left-actions" onChange={() => toggleFeature(name)} checked={enabled} />
             </span>
-            <span className="mdl-list__item-primary-content" style={{ minWidth: 0 }}>
+            <span className={['mdl-list__item-primary-content', styles.listItemLink].join(' ')}>
                 <Link to={`/features/view/${name}`} className={[commonStyles.listLink, commonStyles.truncate].join(' ')}>
                     {name}
                     <span className={['mdl-list__item-sub-title', commonStyles.truncate].join(' ')}>{description}</span>
                 </Link>
             </span>
-            <span className={commonStyles.hideLt920} style={{ flexShrink: 0 }}>
+            <span className={[styles.listItemStrategies, commonStyles.hideLt920].join(' ')}>
                 {strategyChips}
                 {summaryChip}
             </span>

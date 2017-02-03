@@ -112,10 +112,17 @@ export const ExternalIconLink = ({ url, children }) => (
     </IconLink>
 );
 
-export const MenuItemWithIcon = ({ icon, disabled, children, ...menuItemProps }) => (
+export const DropdownButton = ({ label, id }) => (
+    <Button id={id} className={styles.dropdownButton}>
+        {label}
+        <Icon name="arrow_drop_down" className="mdl-color-text--grey-600"/>
+    </Button>
+);
+
+export const MenuItemWithIcon = ({ icon, label, disabled, ...menuItemProps }) => (
     <MenuItem disabled={disabled} style={{ display: 'flex', alignItems: 'center' }} {...menuItemProps}>
         <Icon name={icon} style={{ paddingRight: '16px' }}/>
-        {children}
+        {label}
     </MenuItem>
 );
 
