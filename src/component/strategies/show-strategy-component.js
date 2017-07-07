@@ -7,38 +7,38 @@ class ShowStrategyComponent extends PureComponent {
         toggles: PropTypes.array,
         applications: PropTypes.array,
         strategy: PropTypes.object.isRequired,
-    }
+    };
 
-    renderParameters (params) {
+    renderParameters(params) {
         if (params) {
-            return params.map(({ name, type, description, required }, i) => (
-                <ListItem twoLine key={`${name}-${i}`} title={required ? 'Required' : ''}>
-                    <ListItemContent avatar={required ? 'add' : ' '} subtitle={description}>
+            return params.map(({ name, type, description, required }, i) =>
+                <ListItem
+                    twoLine
+                    key={`${name}-${i}`}
+                    title={required ? 'Required' : ''}
+                >
+                    <ListItemContent
+                        avatar={required ? 'add' : ' '}
+                        subtitle={description}
+                    >
                         {name} <small>({type})</small>
                     </ListItemContent>
                 </ListItem>
-            ));
+            );
         } else {
             return <ListItem>(no params)</ListItem>;
         }
     }
 
-    render () {
-        const {
-            strategy,
-            applications,
-            toggles,
-        } = this.props;
+    render() {
+        const { strategy, applications, toggles } = this.props;
 
-        const {
-            parameters = [],
-        } = strategy;
+        const { parameters = [] } = strategy;
 
         return (
             <div>
-
                 <Grid>
-                    <Cell col={12} >
+                    <Cell col={12}>
                         <h6>Parameters</h6>
                         <hr />
                         <List>
@@ -62,6 +62,5 @@ class ShowStrategyComponent extends PureComponent {
         );
     }
 }
-
 
 export default ShowStrategyComponent;

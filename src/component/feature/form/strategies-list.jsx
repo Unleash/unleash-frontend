@@ -3,7 +3,8 @@ import ConfigureStrategy from './strategy-configure';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-@DragDropContext(HTML5Backend) // eslint-disable-line new-cap
+// eslint-disable-next-line new-cap
+@DragDropContext(HTML5Backend)
 class StrategiesList extends React.Component {
     static propTypes = {
         strategies: PropTypes.array.isRequired,
@@ -11,9 +12,9 @@ class StrategiesList extends React.Component {
         updateStrategy: PropTypes.func.isRequired,
         removeStrategy: PropTypes.func.isRequired,
         moveStrategy: PropTypes.func.isRequired,
-    }
+    };
 
-    render () {
+    render() {
         const {
             strategies,
             configuredStrategies,
@@ -26,7 +27,7 @@ class StrategiesList extends React.Component {
             return <i style={{ color: 'red' }}>No strategies added</i>;
         }
 
-        const blocks = configuredStrategies.map((strategy, i) => (
+        const blocks = configuredStrategies.map((strategy, i) =>
             <ConfigureStrategy
                 index={i}
                 key={strategy.id}
@@ -34,8 +35,11 @@ class StrategiesList extends React.Component {
                 moveStrategy={moveStrategy}
                 removeStrategy={removeStrategy.bind(null, i)}
                 updateStrategy={updateStrategy.bind(null, i)}
-                strategyDefinition={strategies.find(s => s.name === strategy.name)} />
-        ));
+                strategyDefinition={strategies.find(
+                    s => s.name === strategy.name
+                )}
+            />
+        );
         return (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {blocks}

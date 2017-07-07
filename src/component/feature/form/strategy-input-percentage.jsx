@@ -8,9 +8,17 @@ const labelStyle = {
     fontSize: '12px',
 };
 
-export default ({ name, value, onChange }) => (
+export default ({ name, value, onChange }) =>
     <div style={{ marginBottom: '20px' }}>
-        <div style={labelStyle}>{name}: {value}%</div>
-        <Slider min={0} max={100} defaultValue={value} value={value} onChange={onChange} label={name} />
-    </div>
-);
+        <div style={labelStyle}>
+            {name}: {value}%
+        </div>
+        <Slider
+            min={0}
+            max={100}
+            defaultValue={value}
+            value={value}
+            onChange={onChange}
+            label={name}
+        />
+    </div>;
