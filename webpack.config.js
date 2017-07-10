@@ -13,6 +13,7 @@ const plugins = [
             NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
         },
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
 if (process.env.NODE_ENV === 'development') {
