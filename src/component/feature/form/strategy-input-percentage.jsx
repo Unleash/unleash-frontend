@@ -1,5 +1,6 @@
 import React from 'react';
 import { Slider } from 'react-mdl';
+import styles from './strategy.scss';
 
 const labelStyle = {
     margin: '20px 0',
@@ -11,6 +12,6 @@ const labelStyle = {
 export default ({ name, value, onChange }) => (
     <div style={{ marginBottom: '20px' }}>
         <div style={labelStyle}>{name}: {value}%</div>
-        <Slider min={0} max={100} defaultValue={value} value={value} onChange={onChange} label={name} />
+        <Slider min={0} max={100} defaultValue={value} value={value} onChange={onChange} label={name} className={styles.sliderThumb}/>
     </div>
 );

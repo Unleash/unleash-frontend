@@ -56,3 +56,8 @@
     display: inline-block;
     vertical-align: bottom;
 }
+
+.sliderThumb::-webkit-slider-thumb {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
