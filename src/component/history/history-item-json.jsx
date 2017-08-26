@@ -18,9 +18,7 @@ class HistoryItem extends PureComponent {
         return (
             <div className={style['history-item']}>
                 <div>
-                    <code className="JSON smalltext man">
-                        {prettyPrinted}
-                    </code>
+                    <code className="JSON smalltext man">{prettyPrinted}</code>
                 </div>
             </div>
         );

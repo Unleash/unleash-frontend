@@ -55,10 +55,8 @@ export default class InputList extends Component {
         const { name, list } = this.props;
         return (
             <div>
-                <p>
-                    {name}
-                </p>
-                {list.map((entryValue, index) =>
+                <p>{name}</p>
+                {list.map((entryValue, index) => (
                     <Chip
                         key={index + entryValue}
                         style={{ marginRight: '3px' }}
@@ -66,7 +64,7 @@ export default class InputList extends Component {
                     >
                         {entryValue}
                     </Chip>
-                )}
+                ))}
 
                 <div style={{ display: 'flex' }}>
                     <Textfield

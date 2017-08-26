@@ -67,11 +67,7 @@ function buildDiff(diff, idx) {
         );
     }
 
-    return (
-        <div key={idx}>
-            {change}
-        </div>
-    );
+    return <div key={idx}>{change}</div>;
 }
 
 class HistoryItem extends PureComponent {

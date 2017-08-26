@@ -73,189 +73,183 @@ class ClientApplications extends PureComponent {
         } = application;
 
         const content =
-            this.state.activeTab === 0
-                ? <Grid style={{ margin: 0 }}>
-                      <Cell col={6} tablet={4} phone={12}>
-                          <h6> Toggles</h6>
-                          <hr />
-                          <List>
-                              {seenToggles.map(
-                                  (
-                                      { name, description, enabled, notFound },
-                                      i
-                                  ) =>
-                                      notFound
-                                          ? <ListItem twoLine key={i}>
-                                                <ListItemContent
-                                                    icon={'report'}
-                                                    subtitle={
-                                                        'Missing, want to create?'
-                                                    }
-                                                >
-                                                    <Link
-                                                        to={`/features/create?name=${name}`}
-                                                    >
-                                                        {name}
-                                                    </Link>
-                                                </ListItemContent>
-                                            </ListItem>
-                                          : <ListItem twoLine key={i}>
-                                                <ListItemContent
-                                                    icon={
-                                                        <span>
-                                                            <Switch
-                                                                disabled
-                                                                checked={
-                                                                    !!enabled
-                                                                }
-                                                            />
-                                                        </span>
-                                                    }
-                                                    subtitle={shorten(
-                                                        description,
-                                                        60
-                                                    )}
-                                                >
-                                                    <Link
-                                                        to={`/features/view/${name}`}
-                                                    >
-                                                        {shorten(name, 50)}
-                                                    </Link>
-                                                </ListItemContent>
-                                            </ListItem>
-                              )}
-                          </List>
-                      </Cell>
-                      <Cell col={6} tablet={4} phone={12}>
-                          <h6>Implemented strategies</h6>
-                          <hr />
-                          <List>
-                              {strategies.map(
-                                  ({ name, description, notFound }, i) =>
-                                      notFound
-                                          ? <ListItem
-                                                twoLine
-                                                key={`${name}-${i}`}
+            this.state.activeTab === 0 ? (
+                <Grid style={{ margin: 0 }}>
+                    <Cell col={6} tablet={4} phone={12}>
+                        <h6> Toggles</h6>
+                        <hr />
+                        <List>
+                            {seenToggles.map(
+                                ({ name, description, enabled, notFound }, i) =>
+                                    notFound ? (
+                                        <ListItem twoLine key={i}>
+                                            <ListItemContent
+                                                icon={'report'}
+                                                subtitle={
+                                                    'Missing, want to create?'
+                                                }
                                             >
-                                                <ListItemContent
-                                                    icon={'report'}
-                                                    subtitle={
-                                                        'Missing, want to create?'
-                                                    }
+                                                <Link
+                                                    to={`/features/create?name=${name}`}
                                                 >
-                                                    <Link
-                                                        to={`/strategies/create?name=${name}`}
-                                                    >
-                                                        {name}
-                                                    </Link>
-                                                </ListItemContent>
-                                            </ListItem>
-                                          : <ListItem
-                                                twoLine
-                                                key={`${name}-${i}`}
+                                                    {name}
+                                                </Link>
+                                            </ListItemContent>
+                                        </ListItem>
+                                    ) : (
+                                        <ListItem twoLine key={i}>
+                                            <ListItemContent
+                                                icon={
+                                                    <span>
+                                                        <Switch
+                                                            disabled
+                                                            checked={!!enabled}
+                                                        />
+                                                    </span>
+                                                }
+                                                subtitle={shorten(
+                                                    description,
+                                                    60
+                                                )}
                                             >
-                                                <ListItemContent
-                                                    icon={'extension'}
-                                                    subtitle={shorten(
-                                                        description,
-                                                        60
-                                                    )}
+                                                <Link
+                                                    to={`/features/view/${name}`}
                                                 >
-                                                    <Link
-                                                        to={`/strategies/view/${name}`}
-                                                    >
-                                                        {shorten(name, 50)}
-                                                    </Link>
-                                                </ListItemContent>
-                                            </ListItem>
-                              )}
-                          </List>
-                      </Cell>
-                      <Cell col={12} tablet={12}>
-                          <h6>
-                              {instances.length} Instances registered
-                          </h6>
-                          <hr />
-                          <List>
-                              {instances.map(
-                                  (
-                                      {
-                                          instanceId,
-                                          clientIp,
-                                          lastSeen,
-                                          sdkVersion,
-                                      },
-                                      i
-                                  ) =>
-                                      <ListItem key={i} twoLine>
-                                          <ListItemContent
-                                              icon="timeline"
-                                              subtitle={
-                                                  <span>
-                                                      {clientIp} last seen at{' '}
-                                                      <small>{formatFullDateTime(lastSeen)}</small>
-                                                  </span>
-                                              }
-                                          >
-                                              {instanceId}{' '}
-                                              {sdkVersion ? `(${sdkVersion})` : ''}
-                                          </ListItemContent>
-                                      </ListItem>
-                              )}
-                          </List>
-                      </Cell>
-                  </Grid>
-                : <Grid>
-                      <Cell col={12}>
-                          <h5>Edit app meta data</h5>
-                      </Cell>
-                      <Cell col={6} tablet={12}>
-                          <StatefulTextfield
-                              value={url}
-                              label="URL"
-                              onBlur={e =>
-                                  storeApplicationMetaData(
-                                      appName,
-                                      'url',
-                                      e.target.value
-                                  )}
-                          />
-                          <br />
-                          <StatefulTextfield
-                              value={description}
-                              label="Description"
-                              rows={5}
-                              onBlur={e =>
-                                  storeApplicationMetaData(
-                                      appName,
-                                      'description',
-                                      e.target.value
-                                  )}
-                          />
-                      </Cell>
-                      <Cell col={6} tablet={12}>
-                          <StatefulTextfield
-                              value={icon}
-                              label="Select icon"
-                              onBlur={e =>
-                                  storeApplicationMetaData(
-                                      appName,
-                                      'icon',
-                                      e.target.value
-                                  )}
-                          />
-                          <StatefulTextfield
-                              value={color}
-                              label="Select color"
-                              onBlur={e =>
-                                  storeApplicationMetaData(
-                                      appName,
-                                      'color',
-                                      e.target.value
-                                  )}
-                          />
-                      </Cell>
-                  </Grid>;
+                                                    {shorten(name, 50)}
+                                                </Link>
+                                            </ListItemContent>
+                                        </ListItem>
+                                    )
+                            )}
+                        </List>
+                    </Cell>
+                    <Cell col={6} tablet={4} phone={12}>
+                        <h6>Implemented strategies</h6>
+                        <hr />
+                        <List>
+                            {strategies.map(
+                                ({ name, description, notFound }, i) =>
+                                    notFound ? (
+                                        <ListItem twoLine key={`${name}-${i}`}>
+                                            <ListItemContent
+                                                icon={'report'}
+                                                subtitle={
+                                                    'Missing, want to create?'
+                                                }
+                                            >
+                                                <Link
+                                                    to={`/strategies/create?name=${name}`}
+                                                >
+                                                    {name}
+                                                </Link>
+                                            </ListItemContent>
+                                        </ListItem>
+                                    ) : (
+                                        <ListItem twoLine key={`${name}-${i}`}>
+                                            <ListItemContent
+                                                icon={'extension'}
+                                                subtitle={shorten(
+                                                    description,
+                                                    60
+                                                )}
+                                            >
+                                                <Link
+                                                    to={`/strategies/view/${name}`}
+                                                >
+                                                    {shorten(name, 50)}
+                                                </Link>
+                                            </ListItemContent>
+                                        </ListItem>
+                                    )
+                            )}
+                        </List>
+                    </Cell>
+                    <Cell col={12} tablet={12}>
+                        <h6>{instances.length} Instances registered</h6>
+                        <hr />
+                        <List>
+                            {instances.map(
+                                (
+                                    {
+                                        instanceId,
+                                        clientIp,
+                                        lastSeen,
+                                        sdkVersion,
+                                    },
+                                    i
+                                ) => (
+                                    <ListItem key={i} twoLine>
+                                        <ListItemContent
+                                            icon="timeline"
+                                            subtitle={
+                                                <span>
+                                                    {clientIp} last seen at{' '}
+                                                    <small>{formatFullDateTime(lastSeen)}</small>
+                                                </span>
+                                            }
+                                        >
+                                            {instanceId}{' '}
+                                            {sdkVersion ? `(${sdkVersion})` : ''}
+                                        </ListItemContent>
+                                    </ListItem>
+                                )
+                            )}
+                        </List>
+                    </Cell>
+                </Grid>
+            ) : (
+                <Grid>
+                    <Cell col={12}>
+                        <h5>Edit app meta data</h5>
+                    </Cell>
+                    <Cell col={6} tablet={12}>
+                        <StatefulTextfield
+                            value={url}
+                            label="URL"
+                            onBlur={e =>
+                                storeApplicationMetaData(
+                                    appName,
+                                    'url',
+                                    e.target.value
+                                )}
+                        />
+                        <br />
+                        <StatefulTextfield
+                            value={description}
+                            label="Description"
+                            rows={5}
+                            onBlur={e =>
+                                storeApplicationMetaData(
+                                    appName,
+                                    'description',
+                                    e.target.value
+                                )}
+                        />
+                    </Cell>
+                    <Cell col={6} tablet={12}>
+                        <StatefulTextfield
+                            value={icon}
+                            label="Select icon"
+                            onBlur={e =>
+                                storeApplicationMetaData(
+                                    appName,
+                                    'icon',
+                                    e.target.value
+                                )}
+                        />
+                        <StatefulTextfield
+                            value={color}
+                            label="Select color"
+                            onBlur={e =>
+                                storeApplicationMetaData(
+                                    appName,
+                                    'color',
+                                    e.target.value
+                                )}
+                        />
+                    </Cell>
+                </Grid>
+            );
 
         return (
             <Card shadow={0} className={commonStyles.fullwidth}>
@@ -268,14 +262,12 @@ class ClientApplications extends PureComponent {
                 >
                     <Icon name={icon} /> {appName}
                 </CardTitle>
-                {description &&
-                    <CardText>
-                        {description}
-                    </CardText>}
-                {url &&
+                {description && <CardText>{description}</CardText>}
+                {url && (
                     <CardMenu>
                         <IconLink url={url} icon="link" />
-                    </CardMenu>}
+                    </CardMenu>
+                )}
                 <hr />
                 <Tabs
                     activeTab={this.state.activeTab}

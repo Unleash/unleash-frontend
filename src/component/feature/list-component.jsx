@@ -21,7 +21,6 @@ import styles from './feature.scss';
 
 export default class FeatureListComponent extends React.PureComponent {
     static propTypes = {
-        toggleFeature: PropTypes.func.isRequired,
         features: PropTypes.array.isRequired,
         featureMetrics: PropTypes.object.isRequired,
         fetchFeatureToggles: PropTypes.func.isRequired,
@@ -166,7 +165,7 @@ export default class FeatureListComponent extends React.PureComponent {
                     </CardActions>
                     <hr />
                     <List>
-                        {features.map((feature, i) =>
+                        {features.map((feature, i) => (
                             <Feature
                                 key={i}
                                 settings={settings}
@@ -179,7 +178,7 @@ export default class FeatureListComponent extends React.PureComponent {
                                 feature={feature}
                                 toggleFeature={toggleFeature}
                             />
-                        )}
+                        ))}
                     </List>
                 </Card>
             </div>

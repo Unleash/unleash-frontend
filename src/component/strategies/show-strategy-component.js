@@ -11,7 +11,7 @@ class ShowStrategyComponent extends PureComponent {
 
     renderParameters(params) {
         if (params) {
-            return params.map(({ name, type, description, required }, i) =>
+            return params.map(({ name, type, description, required }, i) => (
                 <ListItem
                     twoLine
                     key={`${name}-${i}`}
@@ -24,7 +24,7 @@ class ShowStrategyComponent extends PureComponent {
                         {name} <small>({type})</small>
                     </ListItemContent>
                 </ListItem>
-            );
+            ));
         } else {
             return <ListItem>(no params)</ListItem>;
         }
@@ -41,9 +41,7 @@ class ShowStrategyComponent extends PureComponent {
                     <Cell col={12}>
                         <h6>Parameters</h6>
                         <hr />
-                        <List>
-                            {this.renderParameters(parameters)}
-                        </List>
+                        <List>{this.renderParameters(parameters)}</List>
                     </Cell>
 
                     <Cell col={6} tablet={12}>

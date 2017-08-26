@@ -60,7 +60,7 @@ class AddStrategy extends React.Component {
                     style={menuStyle}
                 >
                     <MenuItem disabled>Add Strategy:</MenuItem>
-                    {this.props.strategies.map(s =>
+                    {this.props.strategies.map(s => (
                         <MenuItem
                             key={s.name}
                             title={s.description}
@@ -68,7 +68,7 @@ class AddStrategy extends React.Component {
                         >
                             {s.name}
                         </MenuItem>
-                    )}
+                    ))}
                 </Menu>
             </div>
         );

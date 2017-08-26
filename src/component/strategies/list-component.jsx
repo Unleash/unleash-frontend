@@ -41,31 +41,33 @@ class StrategiesListComponent extends Component {
                         }
                     />
                     <List>
-                        {strategies.length > 0
-                            ? strategies.map((strategy, i) =>
-                                  <ListItem key={i} twoLine>
-                                      <ListItemContent
-                                          icon="extension"
-                                          subtitle={strategy.description}
-                                      >
-                                          <Link
-                                              to={`/strategies/view/${strategy.name}`}
-                                          >
-                                              <strong>
-                                                  {strategy.name}
-                                              </strong>
-                                          </Link>
-                                      </ListItemContent>
-                                      {strategy.editable === false
-                                          ? ''
-                                          : <IconButton
-                                                name="delete"
-                                                onClick={() =>
-                                                    removeStrategy(strategy)}
-                                            />}
-                                  </ListItem>
-                              )
-                            : <ListItem>No entries</ListItem>}
+                        {strategies.length > 0 ? (
+                            strategies.map((strategy, i) => (
+                                <ListItem key={i} twoLine>
+                                    <ListItemContent
+                                        icon="extension"
+                                        subtitle={strategy.description}
+                                    >
+                                        <Link
+                                            to={`/strategies/view/${strategy.name}`}
+                                        >
+                                            <strong>{strategy.name}</strong>
+                                        </Link>
+                                    </ListItemContent>
+                                    {strategy.editable === false ? (
+                                        ''
+                                    ) : (
+                                        <IconButton
+                                            name="delete"
+                                            onClick={() =>
+                                                removeStrategy(strategy)}
+                                        />
+                                    )}
+                                </ListItem>
+                            ))
+                        ) : (
+                            <ListItem>No entries</ListItem>
+                        )}
                     </List>
                 </Cell>
             </Grid>

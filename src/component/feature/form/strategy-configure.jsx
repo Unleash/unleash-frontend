@@ -106,10 +106,9 @@ class StrategyConfigure extends React.Component {
                                 )}
                                 value={1 * value}
                             />
-                            {description &&
-                                <p className={styles.helpText}>
-                                    {description}
-                                </p>}
+                            {description && (
+                                <p className={styles.helpText}>{description}</p>
+                            )}
                         </div>
                     );
                 } else if (type === 'list') {
@@ -124,10 +123,9 @@ class StrategyConfigure extends React.Component {
                                 list={list}
                                 setConfig={this.setConfig}
                             />
-                            {description &&
-                                <p className={styles.helpText}>
-                                    {description}
-                                </p>}
+                            {description && (
+                                <p className={styles.helpText}>{description}</p>
+                            )}
                         </div>
                     );
                 } else if (type === 'number') {
@@ -147,10 +145,9 @@ class StrategyConfigure extends React.Component {
                                 )}
                                 value={value}
                             />
-                            {description &&
-                                <p className={styles.helpText}>
-                                    {description}
-                                </p>}
+                            {description && (
+                                <p className={styles.helpText}>{description}</p>
+                            )}
                         </div>
                     );
                 } else {
@@ -169,10 +166,9 @@ class StrategyConfigure extends React.Component {
                                 )}
                                 value={value}
                             />
-                            {description &&
-                                <p className={styles.helpText}>
-                                    {description}
-                                </p>}
+                            {description && (
+                                <p className={styles.helpText}>{description}</p>
+                            )}
                         </div>
                     );
                 }
@@ -207,10 +203,11 @@ class StrategyConfigure extends React.Component {
                     <CardText>
                         {this.props.strategyDefinition.description}
                     </CardText>
-                    {inputFields &&
+                    {inputFields && (
                         <CardActions border style={{ padding: '20px' }}>
                             {inputFields}
-                        </CardActions>}
+                        </CardActions>
+                    )}
 
                     <CardMenu className="mdl-color-text--white">
                         <Link
@@ -237,9 +234,7 @@ class StrategyConfigure extends React.Component {
             const { name } = this.props.strategy;
             item = (
                 <Card shadow={0} className={styles.card}>
-                    <CardTitle>
-                        "{name}" deleted?
-                    </CardTitle>
+                    <CardTitle>"{name}" deleted?</CardTitle>
                     <CardText>
                         The strategy "{name}" does not exist on this server.
                         <Link to={`/strategies/create?name=${name}`}>
@@ -261,11 +256,7 @@ class StrategyConfigure extends React.Component {
         }
 
         return connectDropTarget(
-            connectDragPreview(
-                <div className={styles.item}>
-                    {item}
-                </div>
-            )
+            connectDragPreview(<div className={styles.item}>{item}</div>)
         );
     }
 }

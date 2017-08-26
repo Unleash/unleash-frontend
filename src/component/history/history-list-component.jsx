@@ -23,7 +23,7 @@ class HistoryList extends Component {
             return null;
         }
 
-        const truncateTableCell = v =>
+        const truncateTableCell = v => (
             <span
                 className={commonStyles.truncate}
                 style={{
@@ -33,14 +33,15 @@ class HistoryList extends Component {
                 }}
             >
                 {v}
-            </span>;
+            </span>
+        );
 
         let entries;
 
         if (showData) {
-            entries = history.map(entry =>
+            entries = history.map(entry => (
                 <HistoryItemJson key={`log${entry.id}`} entry={entry} />
-            );
+            ));
         } else {
             entries = (
                 <Table
@@ -100,9 +101,7 @@ class HistoryList extends Component {
                         </SwitchWithLabel>
                     }
                 />
-                <div className={commonStyles.horisontalScroll}>
-                    {entries}
-                </div>
+                <div className={commonStyles.horisontalScroll}>{entries}</div>
             </div>
         );
     }

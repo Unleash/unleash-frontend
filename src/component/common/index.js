@@ -17,10 +17,10 @@ export { styles };
 export const shorten = (str, len = 50) =>
     str && str.length > len ? `${str.substring(0, len)}...` : str;
 
-export const AppsLinkList = ({ apps }) =>
+export const AppsLinkList = ({ apps }) => (
     <List>
         {apps.length > 0 &&
-            apps.map(({ appName, description = '-', icon = 'apps' }) =>
+            apps.map(({ appName, description = '-', icon = 'apps' }) => (
                 <ListItem twoLine key={appName}>
                     <span
                         className="mdl-list__item-primary-content"
@@ -45,10 +45,11 @@ export const AppsLinkList = ({ apps }) =>
                         </Link>
                     </span>
                 </ListItem>
-            )}
-    </List>;
+            ))}
+    </List>
+);
 
-export const HeaderTitle = ({ title, actions, subtitle }) =>
+export const HeaderTitle = ({ title, actions, subtitle }) => (
     <div
         style={{
             display: 'flex',
@@ -58,35 +59,26 @@ export const HeaderTitle = ({ title, actions, subtitle }) =>
         }}
     >
         <div style={{ flex: '2' }}>
-            <h6 style={{ margin: 0 }}>
-                {title}
-            </h6>
-            {subtitle &&
-                <small>
-                    {subtitle}
-                </small>}
+            <h6 style={{ margin: 0 }}>{title}</h6>
+            {subtitle && <small>{subtitle}</small>}
         </div>
 
-        {actions &&
-            <div style={{ flex: '1', textAlign: 'right' }}>
-                {actions}
-            </div>}
-    </div>;
+        {actions && (
+            <div style={{ flex: '1', textAlign: 'right' }}>{actions}</div>
+        )}
+    </div>
+);
 
-export const DataTableHeader = ({ title, actions }) =>
+export const DataTableHeader = ({ title, actions }) => (
     <div className={styles.dataTableHeader}>
         <div className={styles.title}>
-            <h2 className={styles.titleText}>
-                {title}
-            </h2>
+            <h2 className={styles.titleText}>{title}</h2>
         </div>
-        {actions &&
-            <div className={styles.actions}>
-                {actions}
-            </div>}
-    </div>;
+        {actions && <div className={styles.actions}>{actions}</div>}
+    </div>
+);
 
-export const FormButtons = ({ submitText = 'Create', onCancel }) =>
+export const FormButtons = ({ submitText = 'Create', onCancel }) => (
     <div>
         <Button type="submit" ripple raised primary icon="add">
             <Icon name="add" />&nbsp;&nbsp;&nbsp;
@@ -102,27 +94,27 @@ export const FormButtons = ({ submitText = 'Create', onCancel }) =>
         >
             <Icon name="cancel" />&nbsp;&nbsp;&nbsp; Cancel
         </Button>
-    </div>;
+    </div>
+);
 
 export const SwitchWithLabel = ({
     onChange,
     checked,
     children,
     ...switchProps
-}) =>
+}) => (
     <span className={styles.switchWithLabel}>
-        <span className={styles.label}>
-            {children}
-        </span>
+        <span className={styles.label}>{children}</span>
         <span className={styles.switch}>
             <Switch checked={checked} onChange={onChange} {...switchProps} />
         </span>
-    </span>;
+    </span>
+);
 
-export const TogglesLinkList = ({ toggles }) =>
+export const TogglesLinkList = ({ toggles }) => (
     <List style={{ textAlign: 'left' }} className={styles.truncate}>
         {toggles.length > 0 &&
-            toggles.map(({ name, description = '-', icon = 'toggle' }) =>
+            toggles.map(({ name, description = '-', icon = 'toggle' }) => (
                 <ListItem twoLine key={name}>
                     <ListItemContent avatar={icon} subtitle={description}>
                         <Link key={name} to={`/features/view/${name}`}>
@@ -130,8 +122,9 @@ export const TogglesLinkList = ({ toggles }) =>
                         </Link>
                     </ListItemContent>
                 </ListItem>
-            )}
-    </List>;
+            ))}
+    </List>
+);
 
 export function getIcon(type) {
     switch (type) {
@@ -148,7 +141,7 @@ export function getIcon(type) {
     }
 }
 
-export const IconLink = ({ url, icon }) =>
+export const IconLink = ({ url, icon }) => (
     <a
         href={url}
         target="_blank"
@@ -156,15 +149,22 @@ export const IconLink = ({ url, icon }) =>
         className="mdl-color-text--grey-600"
     >
         <Icon name={icon} />
-    </a>;
+    </a>
+);
 
-export const DropdownButton = ({ label, id }) =>
+export const DropdownButton = ({ label, id }) => (
     <Button id={id} className={styles.dropdownButton}>
         {label}
         <Icon name="arrow_drop_down" className="mdl-color-text--grey-600" />
-    </Button>;
+    </Button>
+);
 
-export const MenuItemWithIcon = ({ icon, label, disabled, ...menuItemProps }) =>
+export const MenuItemWithIcon = ({
+    icon,
+    label,
+    disabled,
+    ...menuItemProps
+}) => (
     <MenuItem
         disabled={disabled}
         style={{ display: 'flex', alignItems: 'center' }}
@@ -172,7 +172,8 @@ export const MenuItemWithIcon = ({ icon, label, disabled, ...menuItemProps }) =>
     >
         <Icon name={icon} style={{ paddingRight: '16px' }} />
         {label}
-    </MenuItem>;
+    </MenuItem>
+);
 
 const badNumbers = [NaN, Infinity, -Infinity];
 export function calc(value, total, decimal) {

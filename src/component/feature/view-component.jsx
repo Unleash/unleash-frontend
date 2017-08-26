@@ -115,9 +115,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 >
                     {featureToggle.name}
                 </CardTitle>
-                <CardText>
-                    {featureToggle.description}
-                </CardText>
+                <CardText>{featureToggle.description}</CardText>
                 <CardActions
                     border
                     style={{

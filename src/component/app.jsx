@@ -87,7 +87,7 @@ export default class App extends Component {
         const result = this.getSections();
         return (
             <span>
-                {result.map((entry, index) =>
+                {result.map((entry, index) => (
                     <span
                         key={entry.link + index}
                         className={
@@ -105,7 +105,7 @@ export default class App extends Component {
                             {entry.name}
                         </Link>
                     </span>
-                )}
+                ))}
             </span>
         );
     }
@@ -143,14 +143,15 @@ export default class App extends Component {
                         [styles.navigationLink, linkColor].join(' ')
                     }
                 >
-                    {icon &&
+                    {icon && (
                         <Icon
                             name={icon}
                             className={
                                 isDrawerNavigation &&
                                 [styles.navigationIcon, iconColor].join(' ')
                             }
-                        />}
+                        />
+                    )}
                     {caption}
                 </Link>
             );

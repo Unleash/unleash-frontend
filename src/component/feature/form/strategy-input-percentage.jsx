@@ -8,7 +8,7 @@ const labelStyle = {
     fontSize: '12px',
 };
 
-export default ({ name, value, onChange }) =>
+export default ({ name, value, onChange }) => (
     <div style={{ marginBottom: '20px' }}>
         <div style={labelStyle}>
             {name}: {value}%
@@ -21,4 +21,5 @@ export default ({ name, value, onChange }) =>
             onChange={onChange}
             label={name}
         />
-    </div>;
+    </div>
+);

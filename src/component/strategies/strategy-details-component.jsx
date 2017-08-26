@@ -70,21 +70,19 @@ export default class StrategyDetails extends Component {
                         title={strategy.name}
                         subtitle={strategy.description}
                     />
-                    {strategy.editable === false
-                        ? ''
-                        : <Tabs activeTab={activeTabId} ripple>
-                              <Tab onClick={() => this.goToTab('view')}>
-                                  Details
-                              </Tab>
-                              <Tab onClick={() => this.goToTab('edit')}>
-                                  Edit
-                              </Tab>
-                          </Tabs>}
+                    {strategy.editable === false ? (
+                        ''
+                    ) : (
+                        <Tabs activeTab={activeTabId} ripple>
+                            <Tab onClick={() => this.goToTab('view')}>
+                                Details
+                            </Tab>
+                            <Tab onClick={() => this.goToTab('edit')}>Edit</Tab>
+                        </Tabs>
+                    )}
 
                     <section>
-                        <div className="content">
-                            {tabContent}
-                        </div>
+                        <div className="content">{tabContent}</div>
                     </section>
                 </Cell>
             </Grid>

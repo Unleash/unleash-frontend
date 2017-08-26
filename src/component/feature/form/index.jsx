@@ -67,7 +67,7 @@ class AddFeatureToggleComponent extends Component {
                         onChange={v => setValue('description', v.target.value)}
                     />
 
-                    {!editmode &&
+                    {!editmode && (
                         <div>
                             <br />
                             <Switch
@@ -79,7 +79,8 @@ class AddFeatureToggleComponent extends Component {
                                 Enabled
                             </Switch>
                             <hr />
-                        </div>}
+                        </div>
+                    )}
 
                     <StrategiesSection
                         configuredStrategies={configuredStrategies}

@@ -4,13 +4,12 @@ import { Card, CardTitle } from 'react-mdl';
 import FormComponent from './form';
 import { styles as commonStyles } from '../common';
 
-const FormAddComponent = ({ title, ...formProps }) =>
+const FormAddComponent = ({ title, ...formProps }) => (
     <Card className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-        <CardTitle style={{ paddingTop: '24px' }}>
-            {title}
-        </CardTitle>
+        <CardTitle style={{ paddingTop: '24px' }}>{title}</CardTitle>
         <FormComponent {...formProps} />
-    </Card>;
+    </Card>
+);
 
 FormAddComponent.propTypes = {
     title: PropTypes.string,

@@ -23,7 +23,7 @@ function gerArrayWithEntries(num) {
     return Array.from(Array(num));
 }
 
-const Parameter = ({ set, input = {}, index }) =>
+const Parameter = ({ set, input = {}, index }) => (
     <div
         style={{
             background: '#f1f1f1',
@@ -87,33 +87,37 @@ const Parameter = ({ set, input = {}, index }) =>
             ripple
             defaultChecked
         />
-    </div>;
+    </div>
+);
 
-const EditHeader = () =>
+const EditHeader = () => (
     <div>
         <h4 style={{ marginTop: '16px' }}>Edit strategy</h4>
         <p style={{ background: '#ffb7b7', padding: '16px 20px' }}>
             Be carefull! Changing a strategy definition might also require
             changes to the implementation in the clients.
         </p>
-    </div>;
+    </div>
+);
 
-const CreateHeader = () =>
+const CreateHeader = () => (
     <div>
         <h4 style={{ marginTop: '16px' }}>Create a new Strategy definition</h4>
-    </div>;
+    </div>
+);
 
-const Parameters = ({ input = [], count = 0, updateInList }) =>
+const Parameters = ({ input = [], count = 0, updateInList }) => (
     <div>
-        {gerArrayWithEntries(count).map((v, i) =>
+        {gerArrayWithEntries(count).map((v, i) => (
             <Parameter
                 key={i}
                 set={v => updateInList('parameters', i, v, true)}
                 index={i}
                 input={input[i]}
             />
-        )}
-    </div>;
+        ))}
+    </div>
+);
 
 class AddStrategy extends Component {
     static propTypes = {

@@ -39,16 +39,14 @@ const Feature = ({
 
     const strategyChips =
         strategies &&
-        strategies.slice(0, strategiesToShow).map((s, i) =>
+        strategies.slice(0, strategiesToShow).map((s, i) => (
             <Chip className={styles.strategyChip} key={i}>
                 {s.name}
             </Chip>
-        );
-    const summaryChip =
-        remainingStrategies > 0 &&
-        <Chip className={styles.strategyChip}>
-            +{remainingStrategies}
-        </Chip>;
+        ));
+    const summaryChip = remainingStrategies > 0 && (
+        <Chip className={styles.strategyChip}>+{remainingStrategies}</Chip>
+    );
 
     return (
         <ListItem twoLine>
