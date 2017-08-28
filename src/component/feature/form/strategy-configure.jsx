@@ -114,7 +114,10 @@ class StrategyConfigure extends React.Component {
                 } else if (type === 'list') {
                     let list = [];
                     if (typeof value === 'string') {
-                        list = value.trim().split(',').filter(Boolean);
+                        list = value
+                            .trim()
+                            .split(',')
+                            .filter(Boolean);
                     }
                     return (
                         <div key={name}>
