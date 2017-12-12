@@ -145,8 +145,8 @@ export default class App extends Component {
                     </Header>
                     <Drawer className="mdl-color--white">
                         <span className={[styles.drawerTitle, 'mdl-layout-title'].join(' ')}>
-                            <img src="public/logo.png" width="32" height="32" className={styles.drawerTitleLogo} />
-                            <span className={styles.drawerTitleText}>Unleash</span>
+                            <img src="public/ulti-icon.webp" width="32" height="32" className={styles.drawerTitleLogo} />
+                            <span className={styles.drawerTitleText}>UltiPro Toggles</span>
                         </span>
                         <hr />
                         <Navigation className={styles.navigation}>
