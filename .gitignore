@@ -40,3 +40,6 @@ typings/
 
 # Built (HACK)
 # dist
+.DS_STORE
+
+
