@@ -95,12 +95,12 @@ class AddFeatureToggleComponent extends Component {
                     <div>
                         <br />
                         <Switch
-                            checked={devOnly}
+                            checked={!devOnly}
                             onChange={() => {
                                 setValue('devOnly', !devOnly);
                             }}
                         >
-                            Dev Only
+                            Client Facing
                         </Switch>
                         <hr />
                     </div>
