@@ -52,6 +52,11 @@ ReactDOM.render(
 
                 <Route pageTitle="User Toggles" path="/user-features/:userId" component={UserFeatures} />
 
+                {/*<Route pageTitle="User Toggles" link="/user-toggles">*/}
+                    {/*<Route pageTitle="User Toggles" path="/features/:userId" component={UserToggle}/>*/}
+                    {/*<Route pageTitle="New User Toggle" path="/features/create" component={CreateUserToggle}/>*/}
+                {/*</Route>*/}
+
                 <Route pageTitle="Strategies" link="/strategies">
                     <Route pageTitle="Strategies" path="/strategies" component={Strategies} />
                     <Route pageTitle="New" path="/strategies/create" component={CreateStrategies} />
