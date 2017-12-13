@@ -145,12 +145,13 @@ export default class App extends Component {
                     </Header>
                     <Drawer className="mdl-color--white">
                         <span className={[styles.drawerTitle, 'mdl-layout-title'].join(' ')}>
-                            <img src="public/logo.png" width="32" height="32" className={styles.drawerTitleLogo} />
-                            <span className={styles.drawerTitleText}>Unleash</span>
+                            <img src="public/fav-icon.webp" width="32" height="32" className={styles.drawerTitleLogo} />
+                            <span className={styles.drawerTitleText}>UltiPro Toggles</span>
                         </span>
                         <hr />
                         <Navigation className={styles.navigation}>
                             {createListItem('/features', 'Feature Toggles', 'list', true)}
+                            {createListItem('/user-features', 'User Features', 'list', true)}
                             {createListItem('/strategies', 'Strategies', 'extension', true)}
                             {createListItem('/history', 'Event History', 'history', true)}
                             {createListItem('/archive', 'Archived Toggles', 'archive', true)}

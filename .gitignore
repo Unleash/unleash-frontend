@@ -1,3 +1,5 @@
+/.idea
+
 # Logs
 logs
 *.log
@@ -38,5 +40,8 @@ jspm_packages
 
 typings/
 
-# Built
-dist
+# Built (HACK)
+# dist
+.DS_STORE
+
+

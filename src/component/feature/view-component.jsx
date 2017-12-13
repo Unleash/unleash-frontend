@@ -7,6 +7,7 @@ import HistoryComponent from '../history/history-list-toggle-container';
 import MetricComponent from './metric-container';
 import EditFeatureToggle from './form-edit-container.jsx';
 import { styles as commonStyles } from '../common';
+import { requestUpdateFeatureToggle, editFeatureToggle } from '../../store/feature-actions';
 
 const TABS = {
     view: 0,
@@ -26,7 +27,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         toggleFeature: PropTypes.func.isRequired,
         removeFeatureToggle: PropTypes.func.isRequired,
         fetchFeatureToggles: PropTypes.array.isRequired,
-        featureToggle: PropTypes.object.isRequired,
+        featureToggle : PropTypes.object.isRequired,
     };
 
     componentWillMount() {
@@ -79,7 +80,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 </span>
             );
         }
-
+        console.log(featureToggle);
         const activeTabId = TABS[this.props.activeTab] ? TABS[this.props.activeTab] : TABS.view;
         const tabContent = this.getTabContent(activeTab);
 
@@ -94,6 +95,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         };
 
         return (
+            
             <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
                 <CardTitle style={{ paddingTop: '24px', wordBreak: 'break-all' }}>{featureToggle.name}</CardTitle>
                 <CardText>{featureToggle.description}</CardText>
@@ -114,6 +116,11 @@ export default class ViewFeatureToggleComponent extends React.Component {
                             {featureToggle.enabled ? 'Enabled' : 'Disabled'}
                         </Switch>
                     </span>
+
+                    <span style={{ paddingRight: '24px' }}>
+                        {featureToggle.devOnly ? 'Developer Only' : 'Client Facing'}
+                    </span>
+
                     <Button onClick={removeToggle} style={{ flexShrink: 0 }}>
                         Archive
                     </Button>

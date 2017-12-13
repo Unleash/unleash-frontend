@@ -40,6 +40,7 @@ class AddFeatureToggleComponent extends Component {
             nameError,
             description,
             enabled,
+            devOnly,
         } = input;
         const configuredStrategies = input.strategies || [];
 
@@ -90,7 +91,20 @@ class AddFeatureToggleComponent extends Component {
                         moveStrategy={moveStrategy}
                         removeStrategy={removeStrategy}
                     />
-
+                    
+                    <div>
+                        <br />
+                        <Switch
+                            checked={!devOnly}
+                            onChange={() => {
+                                setValue('devOnly', !devOnly);
+                            }}
+                        >
+                            Client Facing
+                        </Switch>
+                        <hr />
+                    </div>
+                    
                     <br />
                     <FormButtons submitText={editmode ? 'Update' : 'Create'} onCancel={onCancel} />
                 </section>
