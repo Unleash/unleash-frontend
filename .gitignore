@@ -38,5 +38,5 @@ jspm_packages
 
 typings/
 
-# Built
-dist
+# Built (HACK)
+# dist
