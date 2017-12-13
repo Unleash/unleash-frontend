@@ -151,6 +151,7 @@ export default class App extends Component {
                         <hr />
                         <Navigation className={styles.navigation}>
                             {createListItem('/features', 'Feature Toggles', 'list', true)}
+                            {createListItem('/user-features', 'User Features', 'list', true)}
                             {createListItem('/strategies', 'Strategies', 'extension', true)}
                             {createListItem('/history', 'Event History', 'history', true)}
                             {createListItem('/archive', 'Archived Toggles', 'archive', true)}

@@ -25,6 +25,7 @@ import HistoryTogglePage from './page/history/toggle';
 import Archive from './page/archive';
 import Applications from './page/applications';
 import ApplicationView from './page/applications/view';
+import CreateUserToggle from './page/user-toggle/create';
 
 let composeEnhancers;
 
@@ -50,12 +51,11 @@ ReactDOM.render(
                     <Route pageTitle=":name" path="/features/:activeTab/:name" component={ViewFeatureToggle} />
                 </Route>
 
+                <Route pageTitle="User Features" link="/user-features">
+                    <Route pageTitle="New User Toggle" path="/user-features" component={CreateUserToggle} />
+                    <Route pageTitle="New User Toggle" path="/user-features/:hau" component={Strategies} />
+                </Route>
                 <Route pageTitle="User Toggles" path="/user-features/:userId" component={UserFeatures} />
-
-                {/*<Route pageTitle="User Toggles" link="/user-toggles">*/}
-                    {/*<Route pageTitle="User Toggles" path="/features/:userId" component={UserToggle}/>*/}
-                    {/*<Route pageTitle="New User Toggle" path="/features/create" component={CreateUserToggle}/>*/}
-                {/*</Route>*/}
 
                 <Route pageTitle="Strategies" link="/strategies">
                     <Route pageTitle="Strategies" path="/strategies" component={Strategies} />
