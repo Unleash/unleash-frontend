@@ -1,0 +1,35 @@
+.toolbar {
+    position: relative;
+    padding: 0 104px 16px 24px;
+}
+
+.toolbarButton {
+    position: absolute;
+    top: 56px;
+    right: 24px;
+    z-index: 2;
+}
+
+.listItemMetric {
+    width: 40px;
+    flex-shrink: 0;
+    margin-right: 16px;
+}
+
+.listItemToggle {
+    width: 36px;
+    flex-shrink: 0;
+    margin-right: 16px;
+}
+
+.listItemLink {
+    min-width: 0;
+}
+
+.listItemStrategies {
+    flex-shrink: 0;
+}
+
+.strategyChip {
+    margin-left: 8px !important;
+}

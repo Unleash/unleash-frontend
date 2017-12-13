@@ -14,6 +14,7 @@ import store from './store';
 import App from './component/app';
 
 import Features from './page/features';
+import UserFeatures from './page/user-features';
 import CreateFeatureToggle from './page/features/create';
 import ViewFeatureToggle from './page/features/show';
 import Strategies from './page/strategies';
@@ -48,6 +49,8 @@ ReactDOM.render(
                     <Route pageTitle="New" path="/features/create" component={CreateFeatureToggle} />
                     <Route pageTitle=":name" path="/features/:activeTab/:name" component={ViewFeatureToggle} />
                 </Route>
+
+                <Route pageTitle="User Toggles" path="/user-features/:userId" component={UserFeatures} />
 
                 <Route pageTitle="Strategies" link="/strategies">
                     <Route pageTitle="Strategies" path="/strategies" component={Strategies} />
