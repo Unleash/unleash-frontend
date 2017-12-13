@@ -80,7 +80,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 </span>
             );
         }
-        console.log(featureToggle.devOnly);
+        console.log(featureToggle);
         const activeTabId = TABS[this.props.activeTab] ? TABS[this.props.activeTab] : TABS.view;
         const tabContent = this.getTabContent(activeTab);
 
@@ -118,13 +118,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
                     </span>
 
                     <span style={{ paddingRight: '24px' }}>
-                        <Switch
-                            ripple
-                            checked={featureToggle.devOnly}
-                            onChange={() => editFeatureToggle(featureToggle) }
-                        >
-                            {featureToggle.devOnly ? 'Developer Only' : 'Client Facing'}
-                        </Switch>
+                        {featureToggle.devOnly ? 'Developer Only' : 'Client Facing'}
                     </span>
 
                     <Button onClick={removeToggle} style={{ flexShrink: 0 }}>

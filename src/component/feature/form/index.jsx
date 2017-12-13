@@ -91,20 +91,20 @@ class AddFeatureToggleComponent extends Component {
                         moveStrategy={moveStrategy}
                         removeStrategy={removeStrategy}
                     />
-                    {!editmode && (
-                        <div>
-                            <br />
-                            <Switch
-                                checked={devOnly}
-                                onChange={() => {
-                                    setValue('devOnly', !devOnly);
-                                }}
-                            >
-                                Dev Only
-                            </Switch>
-                            <hr />
-                        </div>
-                    )}
+                    
+                    <div>
+                        <br />
+                        <Switch
+                            checked={devOnly}
+                            onChange={() => {
+                                setValue('devOnly', !devOnly);
+                            }}
+                        >
+                            Dev Only
+                        </Switch>
+                        <hr />
+                    </div>
+                    
                     <br />
                     <FormButtons submitText={editmode ? 'Update' : 'Create'} onCancel={onCancel} />
                 </section>
