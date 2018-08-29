@@ -2,8 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressBar } from 'react-mdl';
 import StrategiesList from './strategies-list';
+import ConfigureStrategy from './strategy-configure';
 import AddStrategy from './strategies-add';
 import { HeaderTitle } from '../../common';
+
+const GROUP_STRATEGY = '__internal-strategy-group';
+
+const ListStrategies = ({ strategies }) => (
+    <table>
+        <tbody>
+            {strategies.map((strategy, i) => (
+                <tr key={i}>
+                    <td><SingleStrategy strategy={strategy} /></td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+);
+
+const StrategyGroup = ({ strategy }) => (
+    <div style={{ backgroundColor: '#EFEFEF' }}>
+        Group: <strong>{strategy.displayName || strategy.name}</strong>
+        <br />
+        Operator: <strong>{strategy.operator}</strong>
+        <br />
+        Strategies:
+        <ListStrategies strategies={strategy.group} />
+    </div>
+);
+
+const SingleStrategy = ({ strategy }) => (
+    <div>
+        <strong>{strategy.name}</strong>
+    </div>
+);
+
+const Strategy = ({ strategy }) =>
+    strategy.name === GROUP_STRATEGY ? <StrategyGroup strategy={strategy} /> : <SingleStrategy strategy={strategy} />;
 
 class StrategiesSectionComponent extends React.Component {
     static propTypes = {
@@ -30,7 +65,9 @@ class StrategiesSectionComponent extends React.Component {
                 ) : (
                     <span />
                 )}
-                <StrategiesList {...this.props} />
+                {this.props.configuredStrategies.map((strategy, i) => <Strategy key={i} strategy={strategy} />)}
+
+                <a href="¤">+ create strategy group</a>
             </div>
         );
     }
