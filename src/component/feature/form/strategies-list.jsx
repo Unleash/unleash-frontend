@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConfigureStrategy from './strategy-configure';
+import StrategyGroup from './strategy-group';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -25,17 +26,30 @@ class StrategiesList extends React.Component {
             );
         }
 
-        const blocks = configuredStrategies.map((strategy, i) => (
-            <ConfigureStrategy
-                index={i}
-                key={`${strategy.id}-${i}`}
-                strategy={strategy}
-                moveStrategy={moveStrategy}
-                removeStrategy={removeStrategy ? removeStrategy.bind(null, i) : null}
-                updateStrategy={updateStrategy ? updateStrategy.bind(null, i) : null}
-                strategyDefinition={strategies.find(s => s.name === strategy.name)}
-            />
-        ));
+        const blocks = configuredStrategies.map(
+            (strategy, i) =>
+                strategy.name === '__internal-strategy-group' ? (
+                    <StrategyGroup
+                        index={i}
+                        key={`${strategy.id}-${i}`}
+                        strategy={strategy}
+                        moveStrategy={moveStrategy}
+                        removeStrategy={removeStrategy ? removeStrategy.bind(null, i) : null}
+                        updateStrategy={updateStrategy ? updateStrategy.bind(null, i) : null}
+                        strategies={strategies}
+                    />
+                ) : (
+                    <ConfigureStrategy
+                        index={i}
+                        key={`${strategy.id}-${i}`}
+                        strategy={strategy}
+                        moveStrategy={moveStrategy}
+                        removeStrategy={removeStrategy ? removeStrategy.bind(null, i) : null}
+                        updateStrategy={updateStrategy ? updateStrategy.bind(null, i) : null}
+                        strategyDefinition={strategies.find(s => s.name === strategy.name)}
+                    />
+                )
+        );
         return <div style={{ display: 'flex', flexWrap: 'wrap' }}>{blocks}</div>;
     }
 }

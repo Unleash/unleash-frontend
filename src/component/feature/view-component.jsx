@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import HistoryComponent from '../history/history-list-toggle-container';
 import MetricComponent from './metric-container';
 import EditFeatureToggle from './form/form-update-feature-container';
+import UpdateStrategies from './update/update-strategies-container';
 import ViewFeatureToggle from './form/form-view-feature-container';
 import { styles as commonStyles } from '../common';
 
@@ -54,7 +55,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         } else if (TABS[activeTab] === TABS.strategies) {
             if (this.isFeatureView) {
                 return (
-                    <EditFeatureToggle featureToggle={featureToggle} features={features} history={this.props.history} />
+                    <UpdateStrategies featureToggle={featureToggle} features={features} history={this.props.history} />
                 );
             }
             return <ViewFeatureToggle featureToggle={featureToggle} />;
