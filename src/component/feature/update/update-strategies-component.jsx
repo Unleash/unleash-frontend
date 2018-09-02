@@ -6,18 +6,18 @@ import { Button, Icon } from 'react-mdl';
 class UpdateStrategyComponent extends React.Component {
     static propTypes = {
         featureToggleEdit: PropTypes.object,
+        shouldCallInit: PropTypes.bool.isRequired,
         onCancel: PropTypes.func.isRequired,
     };
 
     componentDidMount() {
-        if (!this.props.featureToggleEdit) {
-            this.props.initEditStore();
+        if (!this.props.shouldCallInit) {
+            this.props.init();
         }
     }
 
     render() {
         const { featureToggleEdit } = this.props;
-        console.log(featureToggleEdit);
 
         if (!featureToggleEdit) {
             return <div />;
@@ -32,6 +32,10 @@ class UpdateStrategyComponent extends React.Component {
                     </div>
                 ))}
                 <br />
+                <a href="add" onClick={this.props.addGroup}>
+                    + Add strategy group
+                </a>
+                <br />
                 <Link to="/features" onClick={this.props.onCancel}>
                     Cancel Edit
                 </Link>
@@ -39,7 +43,7 @@ class UpdateStrategyComponent extends React.Component {
                     <Icon name="update" />&nbsp;&nbsp;&nbsp; touch
                 </Button>
                 <Button type="submit" ripple raised primary disabled={!featureToggleEdit.dirty} icon="add">
-                    <Icon name="add" />&nbsp;&nbsp;&nbsp; Update toggle
+                    <Icon name="save" />&nbsp;&nbsp;&nbsp; save
                 </Button>
             </div>
         );
