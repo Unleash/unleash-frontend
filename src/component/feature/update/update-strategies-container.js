@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             evt.preventDefault();
             actions.addGroup(toggleName);
         },
-        removeGroup: (index) => actions.removeGroup(name, index),
+        removeGroup: index => actions.removeGroup(name, index),
     };
 };
 

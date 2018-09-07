@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import HistoryComponent from '../history/history-list-toggle-container';
 import MetricComponent from './metric-container';
-import EditFeatureToggle from './form/form-update-feature-container';
+// import EditFeatureToggle from './form/form-update-feature-container';
 import UpdateStrategies from './update/update-strategies-container';
 import ViewFeatureToggle from './form/form-view-feature-container';
 import { styles as commonStyles } from '../common';

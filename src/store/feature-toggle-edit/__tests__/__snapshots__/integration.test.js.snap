@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should add group to toggle 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+    Object {
+      "group": Array [],
+      "name": "__internal-strategy-group",
+    },
+  ],
+}
+`;
+
+exports[`should add multiple strategies to group 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+    Object {
+      "group": Array [
+        Object {
+          "name": "default",
+        },
+        Object {
+          "name": "custom",
+        },
+        Object {
+          "name": "foo",
+        },
+      ],
+      "name": "__internal-strategy-group",
+    },
+  ],
+}
+`;
+
+exports[`should add strategy to group 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+    Object {
+      "group": Array [
+        Object {
+          "name": "default",
+        },
+      ],
+      "name": "__internal-strategy-group",
+    },
+  ],
+}
+`;
+
+exports[`should initialize toggle 1`] = `
+Object {
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+  ],
+}
+`;
+
+exports[`should remove second strategy 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "first",
+    },
+    Object {
+      "name": "third",
+    },
+  ],
+}
+`;
+
+exports[`should remove strategy with given index 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+  ],
+}
+`;
