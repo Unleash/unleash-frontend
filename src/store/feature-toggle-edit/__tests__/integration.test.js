@@ -1,6 +1,15 @@
 import { AssertionError } from 'assert';
 import reducer from '../index';
-import { init, clearEdit, addGroup, removeStrategy, addStrategyToGroup } from '../actions';
+import {
+    init,
+    clearEdit,
+    addGroup,
+    removeStrategy,
+    addStrategyToGroup,
+    removeStrategyfromGroup,
+    addStrategy,
+    moveStrategy,
+} from '../actions';
 
 const name = 'test';
 
@@ -88,6 +97,45 @@ test('should add multiple strategies to group', () => {
     expect(jsToggle.strategies[1].group.length).toBe(3);
     expect(jsToggle.dirty).toBeTruthy();
     expect(jsToggle).toMatchSnapshot();
+});
+
+test('should remove strategy from group', () => {
+    const s0 = reducer(initalizedState, addGroup(name));
+    const s1 = reducer(s0, addStrategyToGroup(name, 1, { name: 'default' }));
+    const s2 = reducer(s1, addStrategyToGroup(name, 1, { name: 'custom' }));
+    const s3 = reducer(s2, addStrategyToGroup(name, 1, { name: 'foo' }));
+    const s4 = reducer(s3, removeStrategyfromGroup(name, 1, 1));
+
+    const jsToggle = s4.get(name).toJS();
+    expect(jsToggle.strategies.length).toBe(2);
+    expect(jsToggle.strategies[1].group.length).toBe(2);
+    expect(jsToggle.dirty).toBeTruthy();
+    expect(jsToggle).toMatchSnapshot();
+});
+
+test('should add strategies', () => {
+    const s0 = reducer(initalizedState, addStrategy(name, { name: 'default' }));
+    const s1 = reducer(s0, addStrategy(name, { name: 'custom' }));
+    const s2 = reducer(s1, addStrategy(name, { name: 'foo' }));
+
+    const jsToggle = s2.get(name).toJS();
+    expect(jsToggle.strategies.length).toBe(4);
+    expect(jsToggle.strategies[2].name).toBe('custom');
+    expect(jsToggle.dirty).toBeTruthy();
+    expect(jsToggle).toMatchSnapshot();
+});
+
+test('should move strategy', () => {
+    const s0 = reducer(initalizedState, addStrategy(name, { name: 'default-2' }));
+    const s1 = reducer(s0, addStrategy(name, { name: 'custom' }));
+    const s2 = reducer(s1, addStrategy(name, { name: 'foo' }));
+    const s3 = reducer(s2, moveStrategy(name, { index: 3 }, { index: 1 } ));
+
+    const jsToggle = s3.get(name).toJS();
+    expect(jsToggle.strategies.length).toBe(4);
+    expect(jsToggle.strategies[1].name).toBe('foo');
+    expect(jsToggle.dirty).toBeTruthy();
+    // expect(jsToggle).toMatchSnapshot();
 });
 
 test('should not be able to add strategy to no group', () => {

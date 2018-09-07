@@ -6,7 +6,7 @@ class AddStrategy extends React.Component {
     static propTypes = {
         strategies: PropTypes.array.isRequired,
         addStrategy: PropTypes.func,
-        fetchStrategies: PropTypes.func.isRequired,
+        uniqueId: PropTypes.string,
     };
 
     addStrategy(strategyName) {
@@ -38,13 +38,19 @@ class AddStrategy extends React.Component {
             <div style={{ position: 'relative', width: '25px', height: '25px', display: 'inline-block' }}>
                 <IconButton
                     name="add"
-                    id="strategies-add"
+                    id={`strategies-add-${this.props.uniqueId}`}
                     raised
                     accent
                     title="Add Strategy"
                     onClick={this.stopPropagation}
                 />
-                <Menu target="strategies-add" valign="bottom" align="right" ripple style={menuStyle}>
+                <Menu
+                    target={`strategies-add-${this.props.uniqueId}`}
+                    valign="bottom"
+                    align="right"
+                    ripple
+                    style={menuStyle}
+                >
                     <MenuItem disabled>Add Strategy:</MenuItem>
                     {this.props.strategies.map(s => (
                         <MenuItem key={s.name} title={s.description} onClick={() => this.addStrategy(s.name)}>

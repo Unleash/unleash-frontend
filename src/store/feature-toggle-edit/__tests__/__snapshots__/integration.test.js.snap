@@ -42,6 +42,27 @@ Object {
 }
 `;
 
+exports[`should add strategies 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+    Object {
+      "name": "default",
+    },
+    Object {
+      "name": "custom",
+    },
+    Object {
+      "name": "foo",
+    },
+  ],
+}
+`;
+
 exports[`should add strategy to group 1`] = `
 Object {
   "dirty": true,
@@ -83,6 +104,29 @@ Object {
     },
     Object {
       "name": "third",
+    },
+  ],
+}
+`;
+
+exports[`should remove strategy from group 1`] = `
+Object {
+  "dirty": true,
+  "name": "test",
+  "strategies": Array [
+    Object {
+      "name": "default",
+    },
+    Object {
+      "group": Array [
+        Object {
+          "name": "default",
+        },
+        Object {
+          "name": "foo",
+        },
+      ],
+      "name": "__internal-strategy-group",
     },
   ],
 }
