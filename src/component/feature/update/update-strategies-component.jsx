@@ -1,15 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Icon } from 'react-mdl';
-import AddStrategy from '../form/strategies-add';
+import { Button, Card, CardActions, CardMenu, CardText, CardTitle, Icon, IconButton } from 'react-mdl';
+import AddStrategy from './strategies-add';
+import styles from '../form/strategy.scss';
+import StrategyList from './strategy-list-component';
 
-const StrategyGroup = ({ strategy, groupId, strategies, addStrategyToGroup }) => (
-    <div style={{ border: '1px solid', margin: '4px', padding: '5px' }}>
-        {strategy.group.map((item, i) => <Strategy key={`${groupId}-${i}`} strategy={item} />)}
-        <AddStrategy strategies={strategies} addStrategy={addStrategyToGroup.bind(null, groupId)} uniqueId={groupId} />
-    </div>
+const StrategyGroup = ({ strategy, groupId, strategies, addStrategyToGroup, removeStrategy, removeGroup }) => (
+    <Card shadow={0} className={styles.card}>
+        <CardTitle className={styles.cardTitle}>Strategy Group</CardTitle>
+        <CardText>
+            <StrategyList
+                strategyDefinitions={strategies}
+                strategies={strategy.group}
+                removeStrategy={removeStrategy}
+            />
+        </CardText>
+        <CardActions>
+            <AddStrategy
+                strategies={strategies}
+                addStrategy={addStrategyToGroup.bind(null, groupId)}
+                uniqueId={`${groupId}`}
+            />
+        </CardActions>
+        <CardMenu className="mdl-color-text--white">
+            <select name="operator" title="Group Operator">
+                <option value="operator">AND</option>
+                <option value="operator">OR</option>
+            </select>
+            <IconButton title="Remove group" name="delete" onClick={removeGroup} />
+            <span className={styles.reorderIcon}>
+                <Icon name="reorder" />
+            </span>
+        </CardMenu>
+    </Card>
 );
+
 const Strategy = ({ strategy, removeStrategy }) => (
     <div>
         <strong>{strategy.name}</strong>
@@ -25,6 +51,9 @@ class UpdateStrategyComponent extends React.Component {
         shouldCallInit: PropTypes.bool.isRequired,
         onCancel: PropTypes.func.isRequired,
         addStrategy: PropTypes.func.isRequired,
+        removeStrategy: PropTypes.func.isRequired,
+        removeStrategyFromGroup: PropTypes.func.isRequired,
+        removeGroup: PropTypes.func.isRequired,
     };
 
     componentWillMount() {
@@ -36,6 +65,8 @@ class UpdateStrategyComponent extends React.Component {
 
     render() {
         const { featureToggleEdit } = this.props;
+        const groupedStrategies = featureToggleEdit.strategies.filter(s => s.name === '__internal-strategy-group');
+        const unGroupedStrategies = featureToggleEdit.strategies.filter(s => s.name !== '__internal-strategy-group');
 
         if (!featureToggleEdit) {
             return <div />;
@@ -43,17 +74,25 @@ class UpdateStrategyComponent extends React.Component {
 
         return (
             <div>
-                {featureToggleEdit.strategies.map((s, i) => {
-                    if (s.name === '__internal-strategy-group') {
-                        return <StrategyGroup key={i} strategy={s} groupId={i} strategies={this.props.strategies} addStrategyToGroup={this.props.addStrategyToGroup} />;
-                    } else {
-                        return <div key={i}>{s.name}</div>;
-                    }
-                })}
+                {groupedStrategies.map((s, i) => (
+                    <StrategyGroup
+                        key={i}
+                        strategy={s}
+                        groupId={i}
+                        strategies={this.props.strategies}
+                        addStrategyToGroup={this.props.addStrategyToGroup}
+                        removeGroup={this.props.removeGroup.bind(this, i)}
+                        removeStrategy={this.props.removeStrategyFromGroup.bind(this, i)}
+                    />
+                ))}
+                {unGroupedStrategies.map((s, i) => (
+                    <Strategy key={i} strategy={s} removeStrategy={this.props.removeStrategy.bind(null, i)} />
+                ))}
                 <br />
                 <a href="add" onClick={this.props.addGroup}>
                     + Add strategy group
-                </a>
+                </a>{' '}
+                <br />
                 <AddStrategy strategies={this.props.strategies} addStrategy={this.props.addStrategy} uniqueId="outer" />
                 <br />
                 <Link to="/features" onClick={this.props.onCancel}>

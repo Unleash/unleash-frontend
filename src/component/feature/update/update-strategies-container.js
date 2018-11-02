@@ -27,8 +27,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             evt.preventDefault();
             actions.addGroup(toggleName);
         },
-        removeGroup: index => actions.removeGroup(toggleName, index),
+        removeGroup: index => actions.removeStrategy(toggleName, index),
         addStrategy: strategy => actions.addStrategy(toggleName, strategy),
+        removeStrategy: index => actions.removeStrategy(toggleName, index),
+        removeStrategyFromGroup: (groupId, index) => actions.removeStrategyfromGroup(toggleName, groupId, index),
         addStrategyToGroup: (groupIndex, strategy) => actions.addStrategyToGroup(toggleName, groupIndex, strategy),
         fetchStrategies: bindActionCreators(fetchStrategies, dispatch),
     };
