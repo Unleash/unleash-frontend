@@ -13,11 +13,13 @@ const prepare = (methods, dispatch) => {
         // clean
         const parameters = (input.parameters || [])
             .filter(name => !!name)
-            .map(({ name, type = 'string', description = '', required = false }) => ({
+            .map(({ name, type = 'string', description = '', required = false, minLabel, maxLabel }) => ({
                 name,
                 type,
                 description,
                 required,
+                minLabel,
+                maxLabel,
             }));
 
         createStrategy({

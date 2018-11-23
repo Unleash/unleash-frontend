@@ -19,7 +19,7 @@ function gerArrayWithEntries(num) {
 const Parameter = ({ set, input = {}, index }) => (
     <div style={{ background: '#f1f1f1', padding: '16px 20px', marginBottom: '20px' }}>
         <Textfield
-            style={{ width: '50%' }}
+            style={{ width: '30%' }}
             floatingLabel
             label={`Parameter name ${index + 1}`}
             onChange={({ target }) => set({ name: target.value }, true)}
@@ -48,6 +48,24 @@ const Parameter = ({ set, input = {}, index }) => (
                 <MenuItem onClick={() => set({ type: 'list' })}>list</MenuItem>
                 <MenuItem onClick={() => set({ type: 'number' })}>number</MenuItem>
             </Menu>
+            {input.type === 'percentage' ? (
+                <span>
+                    <Textfield
+                        style={{ marginLeft: '5px', width: '20%' }}
+                        floatingLabel
+                        label="min label"
+                        onChange={({ target }) => set({ minLabel: target.value }, true)}
+                        value={input.minLabel}
+                    />
+                    <Textfield
+                        style={{ marginLeft: '5px', width: '20%' }}
+                        floatingLabel
+                        label="max label"
+                        onChange={({ target }) => set({ maxLabel: target.value }, true)}
+                        value={input.maxLabel}
+                    />
+                </span>
+            ) : null}
         </div>
         <Textfield
             floatingLabel
@@ -62,7 +80,6 @@ const Parameter = ({ set, input = {}, index }) => (
             checked={!!input.required}
             onChange={() => set({ required: !input.required })}
             ripple
-            defaultChecked
         />
     </div>
 );
