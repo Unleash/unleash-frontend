@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import HistoryComponent from '../history/history-list-toggle-container';
 import MetricComponent from './metric-container';
 import EditFeatureToggle from './form/form-update-feature-container';
+import EditVariants from './variant/update-variant-container';
 import ViewFeatureToggle from './form/form-view-feature-container';
 import { styles as commonStyles } from '../common';
 import { CREATE_FEATURE, DELETE_FEATURE, UPDATE_FEATURE } from '../../permissions';
@@ -13,7 +14,8 @@ import { CREATE_FEATURE, DELETE_FEATURE, UPDATE_FEATURE } from '../../permission
 const TABS = {
     strategies: 0,
     view: 1,
-    history: 2,
+    variants: 2,
+    history: 3,
 };
 
 export default class ViewFeatureToggleComponent extends React.Component {
@@ -60,6 +62,8 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 );
             }
             return <ViewFeatureToggle featureToggle={featureToggle} />;
+        } else if (TABS[activeTab] === TABS.variants) {
+            return <EditVariants featureToggle={featureToggle} features={features} />;
         } else {
             return <MetricComponent featureToggle={featureToggle} />;
         }
@@ -82,6 +86,9 @@ export default class ViewFeatureToggleComponent extends React.Component {
             removeFeatureToggle,
             hasPermission,
         } = this.props;
+
+        // TODO: Find better solution for this
+        const showVariants = features.find(t => t.name === 'unleash.beta.variants');
 
         if (!featureToggle) {
             if (features.length === 0) {
@@ -217,6 +224,11 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 >
                     <Tab onClick={() => this.goToTab('strategies', featureToggleName)}>Strategies</Tab>
                     <Tab onClick={() => this.goToTab('view', featureToggleName)}>Metrics</Tab>
+                    {showVariants ? (
+                        <Tab onClick={() => this.goToTab('variants', featureToggleName)}>Variants</Tab>
+                    ) : (
+                        []
+                    )}
                     <Tab onClick={() => this.goToTab('history', featureToggleName)}>History</Tab>
                 </Tabs>
                 {tabContent}
