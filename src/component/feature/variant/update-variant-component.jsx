@@ -14,7 +14,8 @@ class UpdateVariantComponent extends Component {
     }
 
     updateWeight = newWeight => {
-        this.props.input.variants.forEach((v, i) => {
+        const variants = this.props.input.variants || [];
+        variants.forEach((v, i) => {
             v.weight = newWeight;
             this.props.updateVariant(i, v);
         });
@@ -30,7 +31,6 @@ class UpdateVariantComponent extends Component {
         };
 
         this.updateWeight(percentage);
-
         this.props.addVariant(variant);
     };
 
