@@ -29,6 +29,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         activeTab: PropTypes.string.isRequired,
         featureToggleName: PropTypes.string.isRequired,
         features: PropTypes.array.isRequired,
+        betaFlags: PropTypes.array.isRequired,
         toggleFeature: PropTypes.func,
         removeFeatureToggle: PropTypes.func,
         revive: PropTypes.func,
@@ -78,6 +79,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         const {
             featureToggle,
             features,
+            betaFlags,
             activeTab,
             revive,
             // setValue,
@@ -88,7 +90,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         } = this.props;
 
         // TODO: Find better solution for this
-        const showVariants = features.find(t => t.name === 'unleash.beta.variants');
+        const showVariants = betaFlags.includes('unleash.beta.variants');
 
         if (!featureToggle) {
             if (features.length === 0) {
