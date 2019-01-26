@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, IconButton } from 'react-mdl';
+import { IconButton } from 'react-mdl';
 import { FormButtons } from '../../common';
 import VariantItemComponent from './variant-item-component';
 
