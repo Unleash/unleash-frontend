@@ -79,7 +79,7 @@ class UpdateVariantComponent extends Component {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>{variants.map(this.renderVariant)}</tbody>
+                        {variants.map(this.renderVariant)}
                     </table>
                     <br />
                     <FormButtons submitText={'Update'} onCancel={onCancel} />

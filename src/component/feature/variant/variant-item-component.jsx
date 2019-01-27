@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { IconButton } from 'react-mdl';
+import { IconButton, Textfield } from 'react-mdl';
 
 class VariantItemComponent extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class VariantItemComponent extends Component {
     toggleEditMode = e => {
         e.preventDefault();
         this.setState({
-            editmode: true,
+            editmode: !this.state.editmode,
         });
     };
 
@@ -21,9 +21,6 @@ class VariantItemComponent extends Component {
         const variant = this.props.variant;
         variant.name = e.target.value;
         this.props.update(variant);
-        this.setState({
-            editmode: false,
-        });
     };
 
     renderName(name) {
@@ -40,18 +37,40 @@ class VariantItemComponent extends Component {
         const style = {
             width: '174px',
             textAlign: 'left',
+            borderBottom: 0,
         };
 
         return (
-            <tr>
-                <td style={style} onClick={this.toggleEditMode}>
-                    {this.renderName(variant.name)}
-                </td>
-                <td>{variant.weight}</td>
-                <td>
-                    <IconButton name="delete" onClick={remove} />
-                </td>
-            </tr>
+            <tbody>
+                {this.state.editmode ? (
+                    <tr>
+                        <td colSpan="3" style={{ borderTop: 0 }}>
+                            <section>
+                                <Textfield
+                                    floatingLabel
+                                    rows={1}
+                                    label="Name"
+                                    required
+                                    value={variant.name}
+                                    onChange={this.updateToggleName}
+                                    onBlur={this.updateToggleName}
+                                />
+                                <Textfield floatingLabel rows={2} label="Payload" value="" expandable />
+                            </section>
+                            <IconButton name="save" onClick={this.toggleEditMode} />
+                        </td>
+                    </tr>
+                ) : (
+                    <tr>
+                        <td style={style}>{variant.name}</td>
+                        <td>{variant.weight}</td>
+                        <td>
+                            <IconButton name="edit" onClick={this.toggleEditMode} />
+                            <IconButton name="delete" onClick={remove} />
+                        </td>
+                    </tr>
+                )}
+            </tbody>
         );
     }
 }
