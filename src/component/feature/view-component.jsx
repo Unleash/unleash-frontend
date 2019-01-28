@@ -1,6 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, ProgressBar, Button, Card, CardText, CardTitle, CardActions, Textfield, Switch } from 'react-mdl';
+import {
+    Tabs,
+    Tab,
+    ProgressBar,
+    Button,
+    Card,
+    CardText,
+    CardTitle,
+    CardActions,
+    Textfield,
+    Switch,
+    Badge,
+} from 'react-mdl';
 import { Link } from 'react-router-dom';
 
 import HistoryComponent from '../history/history-list-toggle-container';
@@ -64,7 +76,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
             }
             return <ViewFeatureToggle featureToggle={featureToggle} />;
         } else if (TABS[activeTab] === TABS.variants) {
-            return <EditVariants featureToggle={featureToggle} features={features} />;
+            return <EditVariants featureToggle={featureToggle} features={features} history={this.props.history} />;
         } else {
             return <MetricComponent featureToggle={featureToggle} />;
         }
@@ -227,7 +239,11 @@ export default class ViewFeatureToggleComponent extends React.Component {
                     <Tab onClick={() => this.goToTab('strategies', featureToggleName)}>Strategies</Tab>
                     <Tab onClick={() => this.goToTab('view', featureToggleName)}>Metrics</Tab>
                     {showVariants ? (
-                        <Tab onClick={() => this.goToTab('variants', featureToggleName)}>Variants</Tab>
+                        <Tab onClick={() => this.goToTab('variants', featureToggleName)}>
+                            <Badge text="beta" noBackground>
+                                Variants
+                            </Badge>
+                        </Tab>
                     ) : (
                         []
                     )}

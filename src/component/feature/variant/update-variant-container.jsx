@@ -28,7 +28,12 @@ const prepare = (methods, dispatch, ownProps) => {
         // Kind of a hack
         featureToggle.strategies.forEach(s => (s.id = undefined));
 
-        requestUpdateFeatureToggleVariants(featureToggle, input.variants)(dispatch);
+        const variants = input.variants.map(v => {
+            delete v.edit;
+            return v;
+        });
+
+        requestUpdateFeatureToggleVariants(featureToggle, variants)(dispatch);
     };
 
     methods.onCancel = evt => {

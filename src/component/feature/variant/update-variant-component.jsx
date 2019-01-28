@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 import { IconButton } from 'react-mdl';
 import { FormButtons } from '../../common';
-import VariantItemComponent from './variant-item-component';
+import VariantViewComponent from './variant-view-component';
+import VariantEditComponent from './variant-edit-component';
 
 class UpdateVariantComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     componentWillMount() {
         // TODO unwind this stuff
         if (this.props.initCallRequired === true) {
@@ -26,8 +31,9 @@ class UpdateVariantComponent extends Component {
         const size = variants.length + 1;
         const percentage = parseInt(1 / size * 100);
         const variant = {
-            name: `variant${size}`,
+            name: '',
             weight: percentage,
+            edit: true,
         };
 
         this.updateWeight(percentage);
@@ -43,14 +49,39 @@ class UpdateVariantComponent extends Component {
         this.props.removeVariant(index);
     };
 
-    renderVariant = (variant, index) => (
-        <VariantItemComponent
-            key={index}
-            variant={variant}
-            update={this.props.updateVariant.bind(null, index)}
-            remove={e => this.removeVariant(e, index)}
-        />
-    );
+    editVariant = (e, index, v) => {
+        e.preventDefault();
+        v.edit = true;
+        this.props.updateVariant(index, v);
+    };
+
+    closeVariant = (e, index, v) => {
+        e.preventDefault();
+        v.edit = false;
+        this.props.updateVariant(index, v);
+    };
+
+    updateVariant = (index, newVariant) => {
+        this.props.updateVariant(index, newVariant);
+    };
+
+    renderVariant = (variant, index) =>
+        variant.edit ? (
+            <VariantEditComponent
+                key={index}
+                variant={variant}
+                removeVariant={e => this.removeVariant(e, index, variant)}
+                closeVariant={e => this.closeVariant(e, index, variant)}
+                updateVariant={this.updateVariant.bind(this, index)}
+            />
+        ) : (
+            <VariantViewComponent
+                key={index}
+                variant={variant}
+                editVariant={e => this.editVariant(e, index, variant)}
+                removeVariant={e => this.removeVariant(e, index)}
+            />
+        );
 
     render() {
         const { onSubmit, onCancel, input, features } = this.props;
@@ -60,15 +91,20 @@ class UpdateVariantComponent extends Component {
             <form onSubmit={onSubmit(input, features)}>
                 <section style={{ padding: '16px' }}>
                     <p>
-                        Variants is a new Beta feature. In order to use variants you must use a Client SDK which Client
-                        Client SDK which supports variants.
+                        Variants is a new <i>beta feature</i> and the implementation is subject to change at any time
+                        until it is made in to a permanent feature. In order to use variants you will have use a Client
+                        SDK which supports variants.
                     </p>
-                    <table className="mdl-data-table mdl-shadow--2dp">
+                    <p>
+                        If you want to give feedback on this feature, experiences issues or have questions please feel
+                        free to open an issue request on <a href="https://github.com/Unleash/unleash/">GitHub</a>.
+                    </p>
+                    <table className="mdl-data-table mdl-shadow--2dp" style={{ width: '100%' }}>
                         <thead>
                             <tr>
-                                <th style={{ textAlign: 'left' }}>Name</th>
-                                <th style={{ textAlign: 'left' }}>Percentage</th>
-                                <th style={{ textAlign: 'center' }}>
+                                <th style={{ textAlign: 'left', width: '100%' }}>Name</th>
+                                <th style={{ textAlign: 'left', width: '100px' }}>Percentage</th>
+                                <th style={{ textAlign: 'right', width: '100px' }}>
                                     <IconButton
                                         raised
                                         accent
@@ -79,10 +115,10 @@ class UpdateVariantComponent extends Component {
                                 </th>
                             </tr>
                         </thead>
-                        {variants.map(this.renderVariant)}
+                        <tbody>{variants.map(this.renderVariant)}</tbody>
                     </table>
                     <br />
-                    <FormButtons submitText={'Update'} onCancel={onCancel} />
+                    <FormButtons submitText={'Save'} onCancel={onCancel} />
                 </section>
             </form>
         );
