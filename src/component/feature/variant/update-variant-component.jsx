@@ -5,6 +5,7 @@ import { IconButton } from 'react-mdl';
 import { FormButtons } from '../../common';
 import VariantViewComponent from './variant-view-component';
 import VariantEditComponent from './variant-edit-component';
+import styles from './variant.scss';
 
 class UpdateVariantComponent extends Component {
     constructor(props) {
@@ -70,7 +71,7 @@ class UpdateVariantComponent extends Component {
             <VariantEditComponent
                 key={index}
                 variant={variant}
-                removeVariant={e => this.removeVariant(e, index, variant)}
+                removeVariant={e => this.removeVariant(e, index)}
                 closeVariant={e => this.closeVariant(e, index, variant)}
                 updateVariant={this.updateVariant.bind(this, index)}
             />
@@ -86,7 +87,6 @@ class UpdateVariantComponent extends Component {
     render() {
         const { onSubmit, onCancel, input, features } = this.props;
         const variants = input.variants || [];
-
         return (
             <form onSubmit={onSubmit(input, features)}>
                 <section style={{ padding: '16px' }}>
@@ -99,12 +99,12 @@ class UpdateVariantComponent extends Component {
                         If you want to give feedback on this feature, experiences issues or have questions please feel
                         free to open an issue request on <a href="https://github.com/Unleash/unleash/">GitHub</a>.
                     </p>
-                    <table className="mdl-data-table mdl-shadow--2dp" style={{ width: '100%' }}>
+                    <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
                         <thead>
                             <tr>
-                                <th style={{ textAlign: 'left', width: '100%' }}>Name</th>
-                                <th style={{ textAlign: 'left', width: '100px' }}>Percentage</th>
-                                <th style={{ textAlign: 'right', width: '100px' }}>
+                                <th>Name</th>
+                                <th>Weight</th>
+                                <th className={styles.actions}>
                                     <IconButton
                                         raised
                                         accent

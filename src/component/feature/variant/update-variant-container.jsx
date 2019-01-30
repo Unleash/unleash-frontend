@@ -34,12 +34,12 @@ const prepare = (methods, dispatch, ownProps) => {
         });
 
         requestUpdateFeatureToggleVariants(featureToggle, variants)(dispatch);
+        variants.forEach((v, i) => methods.updateInList('variants', i, v));
     };
 
     methods.onCancel = evt => {
         evt.preventDefault();
-        methods.clear();
-        ownProps.history.push(`/features`);
+        ownProps.history.push(`/features/view/${ownProps.featureToggle.name}`);
     };
 
     methods.addVariant = v => {
