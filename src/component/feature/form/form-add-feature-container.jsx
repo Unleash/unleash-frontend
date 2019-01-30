@@ -24,14 +24,9 @@ const prepare = (methods, dispatch, ownProps) => {
 
         input.createdAt = new Date();
 
-        if (Array.isArray(input.strategies)) {
-            input.strategies.forEach(s => {
-                delete s.id;
-            });
-        } else {
+        if (!Array.isArray(input.strategies)) {
             input.strategies = [defaultStrategy];
         }
-
         createFeatureToggles(input)(dispatch)
             .then(() => methods.clear())
             .then(() => ownProps.history.push(`/features/strategies/${input.name}`));
@@ -44,7 +39,6 @@ const prepare = (methods, dispatch, ownProps) => {
     };
 
     methods.addStrategy = v => {
-        v.id = Math.round(Math.random() * 10000000);
         methods.pushToList('strategies', v);
     };
 

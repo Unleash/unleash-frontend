@@ -28,7 +28,7 @@ class StrategiesList extends React.Component {
         const blocks = configuredStrategies.map((strategy, i) => (
             <ConfigureStrategy
                 index={i}
-                key={`${strategy.id}-${i}`}
+                key={`${strategy.name}-${i}`}
                 strategy={strategy}
                 moveStrategy={moveStrategy}
                 removeStrategy={removeStrategy ? removeStrategy.bind(null, i) : null}

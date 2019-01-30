@@ -10,12 +10,7 @@ function getId(props) {
 // best is to emulate the "input-storage"?
 const mapStateToProps = createMapper({
     id: getId,
-    getDefault: (state, ownProps) => {
-        ownProps.featureToggle.strategies.forEach((strategy, index) => {
-            strategy.id = Math.round(Math.random() * 1000000 * (1 + index));
-        });
-        return ownProps.featureToggle;
-    },
+    getDefault: (state, ownProps) => ownProps.featureToggle,
     prepare: props => {
         props.editmode = true;
         return props;

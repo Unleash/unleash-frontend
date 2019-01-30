@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tabs, Tab, ProgressBar, Button, Card, CardText, CardTitle, CardActions, Textfield, Switch } from 'react-mdl';
 import { Link } from 'react-router-dom';
 
+import ExportToggleComponent from './toggle-export';
 import HistoryComponent from '../history/history-list-toggle-container';
 import MetricComponent from './metric-container';
 import EditFeatureToggle from './form/form-update-feature-container';
@@ -106,6 +107,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
             );
         }
 
+
         const activeTabId = TABS[this.props.activeTab] ? TABS[this.props.activeTab] : TABS.strategies;
         const tabContent = this.getTabContent(activeTab);
 
@@ -139,7 +141,10 @@ export default class ViewFeatureToggleComponent extends React.Component {
 
         return (
             <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <CardTitle style={{ paddingTop: '24px', wordBreak: 'break-all' }}>{featureToggle.name}</CardTitle>
+                <CardTitle style={{ paddingTop: '24px', wordBreak: 'break-all' }}>
+                    {featureToggle.name}
+                    <ExportToggleComponent featureToggle={featureToggle} />
+                </CardTitle>
                 <CardText>
                     {this.isFeatureView && hasPermission(UPDATE_FEATURE) ? (
                         <Textfield
