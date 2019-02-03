@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { IconButton } from 'react-mdl';
 import { FormButtons } from '../../common';
 import VariantViewComponent from './variant-view-component';
 import VariantEditComponent from './variant-edit-component';
 import styles from './variant.scss';
+import { UPDATE_FEATURE } from '../../../permissions';
 
 class UpdateVariantComponent extends Component {
     constructor(props) {
@@ -19,13 +19,21 @@ class UpdateVariantComponent extends Component {
         }
     }
 
-    updateWeight = newWeight => {
+    updateWeight(newWeight, newSize) {
         const variants = this.props.input.variants || [];
         variants.forEach((v, i) => {
             v.weight = newWeight;
             this.props.updateVariant(i, v);
         });
-    };
+
+        // Make sure the sum of weigths is 100.
+        const sum = newWeight * newSize;
+        if (sum !== 100) {
+            const first = variants[0];
+            first.weight = 100 - sum + first.weight;
+            this.props.updateVariant(0, first);
+        }
+    }
 
     addVariant = (e, variants) => {
         e.preventDefault();
@@ -37,7 +45,7 @@ class UpdateVariantComponent extends Component {
             edit: true,
         };
 
-        this.updateWeight(percentage);
+        this.updateWeight(percentage, size);
         this.props.addVariant(variant);
     };
 
@@ -46,14 +54,16 @@ class UpdateVariantComponent extends Component {
         const variants = this.props.input.variants;
         const size = variants.length - 1;
         const percentage = parseInt(1 / size * 100);
-        this.updateWeight(percentage);
+        this.updateWeight(percentage, size);
         this.props.removeVariant(index);
     };
 
     editVariant = (e, index, v) => {
         e.preventDefault();
-        v.edit = true;
-        this.props.updateVariant(index, v);
+        if (this.props.hasPermission(UPDATE_FEATURE)) {
+            v.edit = true;
+            this.props.updateVariant(index, v);
+        }
     };
 
     closeVariant = (e, index, v) => {
@@ -81,6 +91,7 @@ class UpdateVariantComponent extends Component {
                 variant={variant}
                 editVariant={e => this.editVariant(e, index, variant)}
                 removeVariant={e => this.removeVariant(e, index)}
+                hasPermission={this.props.hasPermission}
             />
         );
 
@@ -88,39 +99,50 @@ class UpdateVariantComponent extends Component {
         const { onSubmit, onCancel, input, features } = this.props;
         const variants = input.variants || [];
         return (
-            <form onSubmit={onSubmit(input, features)}>
-                <section style={{ padding: '16px' }}>
+            <section style={{ padding: '16px' }}>
+                <p>
+                    Variants is a new <i>beta feature</i> and the implementation is subject to change at any time until
+                    it is made in to a permanent feature. In order to use variants you will have use a Client SDK which
+                    supports variants.
+                </p>
+                <p>
+                    The sum of variants weights needs to be a constant number to guarantee consistent hashing in the
+                    client implementations, this is why we will sometime allocate a few more percentages to the first
+                    variant if the sum is not exactly 100. In a final version of this feature it should be possible to
+                    the user to manually set the percentages for each variant.
+                </p>
+                <p>
+                    If you want to give feedback on this feature, experiences issues or have questions please feel free
+                    to open an issue request on <a href="https://github.com/Unleash/unleash/">GitHub</a>.
+                </p>
+
+                {this.props.hasPermission(UPDATE_FEATURE) ? (
                     <p>
-                        Variants is a new <i>beta feature</i> and the implementation is subject to change at any time
-                        until it is made in to a permanent feature. In order to use variants you will have use a Client
-                        SDK which supports variants.
+                        <a href="#add-variant" title="Add variant" onClick={e => this.addVariant(e, variants)}>
+                            Add variant
+                        </a>
                     </p>
-                    <p>
-                        If you want to give feedback on this feature, experiences issues or have questions please feel
-                        free to open an issue request on <a href="https://github.com/Unleash/unleash/">GitHub</a>.
-                    </p>
-                    <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Weight</th>
-                                <th className={styles.actions}>
-                                    <IconButton
-                                        raised
-                                        accent
-                                        name="add"
-                                        onClick={e => this.addVariant(e, variants)}
-                                        title="Add variant"
-                                    />
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>{variants.map(this.renderVariant)}</tbody>
-                    </table>
-                    <br />
-                    <FormButtons submitText={'Save'} onCancel={onCancel} />
-                </section>
-            </form>
+                ) : null}
+
+                {variants.length > 0 ? (
+                    <form onSubmit={onSubmit(input, features)}>
+                        <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Weight</th>
+                                    <th className={styles.actions} />
+                                </tr>
+                            </thead>
+                            <tbody>{variants.map(this.renderVariant)}</tbody>
+                        </table>
+                        <br />
+                        {this.props.hasPermission(UPDATE_FEATURE) ? (
+                            <FormButtons submitText={'Save'} onCancel={onCancel} />
+                        ) : null}
+                    </form>
+                ) : null}
+            </section>
         );
     }
 }
@@ -136,6 +158,7 @@ UpdateVariantComponent.propTypes = {
     onCancel: PropTypes.func.isRequired,
     initCallRequired: PropTypes.bool,
     init: PropTypes.func,
+    hasPermission: PropTypes.func.isRequired,
 };
 
 export default UpdateVariantComponent;

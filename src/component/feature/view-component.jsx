@@ -76,7 +76,14 @@ export default class ViewFeatureToggleComponent extends React.Component {
             }
             return <ViewFeatureToggle featureToggle={featureToggle} />;
         } else if (TABS[activeTab] === TABS.variants) {
-            return <EditVariants featureToggle={featureToggle} features={features} history={this.props.history} />;
+            return (
+                <EditVariants
+                    featureToggle={featureToggle}
+                    features={features}
+                    history={this.props.history}
+                    hasPermission={this.props.hasPermission}
+                />
+            );
         } else {
             return <MetricComponent featureToggle={featureToggle} />;
         }
