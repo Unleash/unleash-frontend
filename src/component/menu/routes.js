@@ -8,6 +8,7 @@ import HistoryPage from '../../page/history';
 import HistoryTogglePage from '../../page/history/toggle';
 import ShowArchive from '../../page/archive/show';
 import Archive from '../../page/archive';
+import Admin from '../../page/admin';
 import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
 import LogoutFeatures from '../../page/user/logout';
@@ -39,6 +40,8 @@ export const routes = [
     // Applications
     { path: '/applications/:name', title: ':name', parent: '/applications', component: ApplicationView },
     { path: '/applications', title: 'Applications', icon: 'apps', component: Applications },
+
+    { path: '/admin', title: 'Admin', icon: 'settings', component: Admin, hide: true },
 
     { path: '/logout', title: 'Sign out', icon: 'exit_to_app', component: LogoutFeatures },
 ];

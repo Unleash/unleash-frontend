@@ -13,7 +13,7 @@ export const DrawerMenu = () => (
         </span>
         <hr />
         <Navigation className={styles.navigation}>
-            {routes.map(item => (
+            {routes.filter(item => !item.hide).map(item => (
                 <NavLink
                     key={item.path}
                     to={item.path}
