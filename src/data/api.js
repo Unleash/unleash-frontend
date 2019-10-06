@@ -1,13 +1,13 @@
-import { throwIfNotSuccess, headers } from './helper';
+import { throwIfNotSuccess, headers } from "./helper";
 
-const URI = 'api';
+const URI = "api";
 
 function fetchAll() {
-    return fetch(URI, { headers, credentials: 'include' })
+    return fetch(URI, { headers, credentials: "include" })
         .then(throwIfNotSuccess)
         .then(response => response.json());
 }
 
 export default {
-    fetchAll,
+    fetchAll
 };
