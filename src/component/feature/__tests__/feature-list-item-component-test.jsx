@@ -34,6 +34,42 @@ test('renders correctly with one feature', () => {
                 feature={feature}
                 toggleFeature={jest.fn()}
                 hasPermission={permission => permission === UPDATE_FEATURE}
+                hideFeatureToggle={false}
+            />
+        </MemoryRouter>
+    );
+
+    expect(tree).toMatchSnapshot();
+});
+
+test("doesn't render a toggle when hideFeatureToggle is true", () => {
+    const feature = {
+        name: 'Another',
+        description: "another's description",
+        enabled: false,
+        strategies: [
+            {
+                name: 'gradualRolloutRandom',
+                parameters: {
+                    percentage: 50,
+                },
+            },
+        ],
+        createdAt: '2018-02-04T20:27:52.127Z',
+    };
+    const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
+    const settings = { sort: 'name' };
+    const tree = renderer.create(
+        <MemoryRouter>
+            <Feature
+                key={0}
+                settings={settings}
+                metricsLastHour={featureMetrics.lastHour[feature.name]}
+                metricsLastMinute={featureMetrics.lastMinute[feature.name]}
+                feature={feature}
+                toggleFeature={jest.fn()}
+                hasPermission={permission => permission === UPDATE_FEATURE}
+                hideFeatureToggle
             />
         </MemoryRouter>
     );
@@ -68,6 +104,7 @@ test('renders correctly with one feature without permission', () => {
                 feature={feature}
                 toggleFeature={jest.fn()}
                 hasPermission={() => false}
+                hideFeatureToggle={false}
             />
         </MemoryRouter>
     );

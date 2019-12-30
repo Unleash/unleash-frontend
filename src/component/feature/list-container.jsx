@@ -69,6 +69,7 @@ export const mapStateToPropsConfigurable = isFeature => state => {
         featureMetrics,
         settings,
         hasPermission: hasPermission.bind(null, state.user.get('profile')),
+        hideFeatureToggle: state.uiConfig.get('hideFeatureToggle'),
     };
 };
 const mapStateToProps = mapStateToPropsConfigurable(true);

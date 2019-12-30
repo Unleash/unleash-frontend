@@ -19,6 +19,7 @@ export default class FeatureListComponent extends React.Component {
         settings: PropTypes.object,
         history: PropTypes.object.isRequired,
         hasPermission: PropTypes.func.isRequired,
+        hideFeatureToggle: PropTypes.bool.isRequired,
     };
 
     componentDidMount() {
@@ -42,7 +43,16 @@ export default class FeatureListComponent extends React.Component {
     }
 
     render() {
-        const { features, toggleFeature, featureMetrics, settings, revive, hasPermission } = this.props;
+        const {
+            features,
+            toggleFeature,
+            featureMetrics,
+            settings,
+            revive,
+            hasPermission,
+            hideFeatureToggle,
+        } = this.props;
+
         features.forEach(e => {
             e.reviveName = e.name;
         });
@@ -121,6 +131,7 @@ export default class FeatureListComponent extends React.Component {
                                     toggleFeature={toggleFeature}
                                     revive={revive}
                                     hasPermission={hasPermission}
+                                    hideFeatureToggle={hideFeatureToggle}
                                 />
                             ))
                         ) : (

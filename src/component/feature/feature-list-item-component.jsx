@@ -16,6 +16,7 @@ const Feature = ({
     metricsLastMinute = { yes: 0, no: 0, isFallback: true },
     revive,
     hasPermission,
+    hideFeatureToggle = false,
 }) => {
     const { name, description, enabled, strategies } = feature;
     const { showLastHour = false } = settings;
@@ -42,19 +43,23 @@ const Feature = ({
             <span className={styles.listItemMetric}>
                 <Progress strokeWidth={15} percentage={percent} isFallback={isStale} />
             </span>
-            <span className={styles.listItemToggle}>
-                {hasPermission(UPDATE_FEATURE) ? (
-                    <Switch
-                        disabled={toggleFeature === undefined}
-                        title={`Toggle ${name}`}
-                        key="left-actions"
-                        onChange={() => toggleFeature(!enabled, name)}
-                        checked={enabled}
-                    />
-                ) : (
-                    <Switch disabled title={`Toggle ${name}`} key="left-actions" checked={enabled} />
-                )}
-            </span>
+            {hideFeatureToggle ? (
+                <span data-test="hidden-toggle" />
+            ) : (
+                <span className={styles.listItemToggle}>
+                    {hasPermission(UPDATE_FEATURE) ? (
+                        <Switch
+                            disabled={toggleFeature === undefined}
+                            title={`Toggle ${name}`}
+                            key="left-actions"
+                            onChange={() => toggleFeature(!enabled, name)}
+                            checked={enabled}
+                        />
+                    ) : (
+                        <Switch disabled title={`Toggle ${name}`} key="left-actions" checked={enabled} />
+                    )}
+                </span>
+            )}
             <span className={['mdl-list__item-primary-content', styles.listItemLink].join(' ')}>
                 <Link to={featureUrl} className={[commonStyles.listLink, commonStyles.truncate].join(' ')}>
                     {name}
@@ -84,6 +89,7 @@ Feature.propTypes = {
     metricsLastMinute: PropTypes.object,
     revive: PropTypes.func,
     hasPermission: PropTypes.func.isRequired,
+    hideFeatureToggle: PropTypes.bool,
 };
 
 export default Feature;
