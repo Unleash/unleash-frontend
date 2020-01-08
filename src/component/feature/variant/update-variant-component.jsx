@@ -124,24 +124,22 @@ class UpdateVariantComponent extends Component {
                     </p>
                 ) : null}
 
-                {variants.length > 0 ? (
-                    <form onSubmit={onSubmit(input, features)}>
-                        <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Weight</th>
-                                    <th className={styles.actions} />
-                                </tr>
-                            </thead>
-                            <tbody>{variants.map(this.renderVariant)}</tbody>
-                        </table>
-                        <br />
-                        {this.props.hasPermission(UPDATE_FEATURE) ? (
-                            <FormButtons submitText={'Save'} onCancel={onCancel} />
-                        ) : null}
-                    </form>
-                ) : null}
+                <form onSubmit={onSubmit(input, features)}>
+                    <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Weight</th>
+                                <th className={styles.actions} />
+                            </tr>
+                        </thead>
+                        <tbody>{variants.map(this.renderVariant)}</tbody>
+                    </table>
+                    <br />
+                    {this.props.hasPermission(UPDATE_FEATURE) ? (
+                        <FormButtons submitText={'Save'} onCancel={onCancel} />
+                    ) : null}
+                </form>
             </section>
         );
     }
