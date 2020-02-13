@@ -12,3 +12,22 @@ export const formatFullDateTimeWithLocale = (v, locale, tz) => {
     }
     return new Date(v).toLocaleString(locale, dateTimeOptions);
 };
+
+export const trim = value => {
+    if (value && value.trim) {
+        return value.trim();
+    } else {
+        return value;
+    }
+};
+
+export function updateWeight(variants, totalWeight) {
+
+    const size = variants.length;
+    const percentage = parseInt((1 / size) * totalWeight);
+
+    variants.forEach((v, i) => {
+        v.weight = percentage
+    });
+    return variants;
+}
