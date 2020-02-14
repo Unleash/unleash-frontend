@@ -1,3 +1,9 @@
 .listItemWeight {
     flex-shrink: 0;
 }
+
+.item {
+    .mdl-list__item-avatar, .mdl-list__item-avatar.material-icons {
+        background-color: green;
+    }
+}

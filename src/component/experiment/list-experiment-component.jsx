@@ -5,6 +5,32 @@ import { Link } from 'react-router-dom';
 import { List, ListItem, ListItemAction, ListItemContent, Icon, IconButton, Card } from 'react-mdl';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_FEATURE } from '../../permissions';
+import styles from './styles.scss';
+
+
+function ExperimentItem({item, removeItem}) {
+    return (
+        <ListItem twoLine className={styles.item}>
+            <ListItemContent subtitle={item.description} avatar="emoji_objects" style={{color: 'green'}}>
+                <Link to={`/experiments/${item.name}`}>
+                    <strong>{item.name}</strong>
+                </Link>
+            </ListItemContent>
+            <ListItemAction>
+                <a
+                    href="#delete"
+                    title="Remove experiment"
+                    onClick={evt => {
+                        evt.preventDefault();
+                        removeItem(item);
+                    }}
+                >
+                    <Icon name="delete" />
+                </a>
+            </ListItemAction>
+        </ListItem>
+    );
+}
 
 class CreateExperimentComponent extends Component {
     static propTypes = {
@@ -45,25 +71,7 @@ class CreateExperimentComponent extends Component {
                     }
                 />
                 <List>
-                    {experiments.length > 0 ? (
-                        experiments.map((exp, i) => (
-                            <ListItem key={i} twoLine>
-                                <ListItemContent subtitle={exp.desription}>
-                                    <Link to={`/context/view/${exp.name}`}>
-                                        <strong>{exp.name}</strong>
-                                    </Link>
-                                </ListItemContent>
-                                <ListItemAction>
-                                    <a
-                                        href="#delete"
-                                        title="Remove contextField"
-                                        onClick={this.removeContextField.bind(this, exp)}
-                                    >
-                                        <Icon name="delete" />
-                                    </a>
-                                </ListItemAction>
-                            </ListItem>
-                        ))
+                    {experiments.length > 0 ? (experiments.map((exp, i) => <ExperimentItem key={i} item={exp} removeItem={this.removeItem}  />)
                     ) : (
                         <ListItem>Opps, no experiments defined</ListItem>
                     )}

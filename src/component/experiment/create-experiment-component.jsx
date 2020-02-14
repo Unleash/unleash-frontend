@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon, Textfield, List, ListItem, ListItemContent, ListItemAction, Card, CardTitle, CardText, CardActions, Dialog, DialogActions, DialogContent, DialogTitle } from 'react-mdl';
 
-import { SubSection } from './parts';
+import { SubSection, StepsBar } from './parts';
 
 import { FormButtons } from '../common';
 import { trim, updateWeight } from '../common/util';
@@ -11,6 +11,11 @@ import StrategyInputPercentage from '../feature/form/strategy-input-percentage';
 
 import { styles as commonStyles } from '../common';
 import styles from './styles.scss';
+
+const payload = {
+    type: 'exp',
+    value: JSON.stringify({status: 'inital'})
+};
 
 class CreateExperimentComponent extends Component {
     static propTypes = {
@@ -21,7 +26,7 @@ class CreateExperimentComponent extends Component {
     constructor() {
         super();
         this.state = {
-            experiment: { name: '', description: '', variants: [{ name: 'control', weight: 1000}], rollout: 100 },
+            experiment: { name: '', description: '', variants: [{ name: 'control', weight: 1000, payload}], rollout: 100 },
             errors: {},
             dirty: false,
             showAddVariant: false,
@@ -61,7 +66,7 @@ class CreateExperimentComponent extends Component {
             errors.newVariant = 'The variant must have a name';
             this.setState({errors});
         } else {
-            const variants = experiment.variants.concat({name: newVariant});
+            const variants = experiment.variants.concat({name: newVariant, payload});
             experiment.variants = updateWeight(variants, 1000);
             this.setState({
                 experiment,
@@ -122,106 +127,106 @@ class CreateExperimentComponent extends Component {
         const { experiment, errors } = this.state;
 
         return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <CardTitle style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
-                    Create a new experiment
-                </CardTitle>
-                <CardText>
-                    An experiment is a Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultricies laoreet
-                    condimentum. Mauris mollis tortor sed interdum fermentum. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Mauris rutrum dui ut felis finibus porta. Vivamus sem mauris, consectetur quis
-                    neque eu, pretium auctor diam. Quisque diam lorem, lacinia ac rhoncus a, lacinia vel mauris. Ut eu
-                    velit porta, consequat dui et, aliquet velit. Pellentesque non purus quis erat vehicula mollis.
-                    Aenean condimentum nibh a ligula ullamcorper ultrices. Nam ultrices, neque at ultricies scelerisque,
-                    justo odio luctus nisl, eget commodo diam purus at tortor. Aliquam mi nisl, ultrices id blandit et,
-                    condimentum ut quam.
-                </CardText>
-                <form onSubmit={this.onSubmit}>
-                    <section style={{ padding: '16px' }}>
-                        <Textfield
-                            floatingLabel
-                            label="Experiment id"
-                            name="name"
-                            ref="name"
-                            value={experiment.name}
-                            error={errors.name}
-                            onBlur={v => this.validateName(v.target.value)}
-                            onChange={v => this.setValue('name', trim(v.target.value))}
-                        />
-                        <Textfield
-                            floatingLabel
-                            style={{ width: '100%' }}
-                            rows={1}
-                            label="Description"
-                            name="description"
-                            error={errors.description}
-                            value={experiment.description}
-                            onChange={v => this.setValue('description', v.target.value)}
-                        />
-                        <SubSection title="Variants">
-                            <p style={{ color: 'rgba(0,0,0,.54)' }}>
-                                What do you want to test?
-                            </p>
-                            <List>
-                                {experiment.variants.map((v, i) => (
-                                        <ListItem key={i}>
-                                            <ListItemContent>
-                                                {v.name}
-                                            </ListItemContent>
-                                            <span className={styles.listItemWeight}>
-                                                {v.weight/10.0}%
-                                            </span>
-                                            <ListItemAction>
-                                                <a
-                                                    href="#delete"
-                                                    title="Remove variant"
-                                                    onClick={this.removeVariant.bind(this, v.name)}
-                                                >
-                                                    <Icon name="delete" />
-                                                </a>
-                                            </ListItemAction>
-                                        </ListItem>
-                                    ))
-                                }
-                            </List>
-                            <Button onClick={this.showAddVariant} icon="add"><Icon name="add"></Icon> Add variant</Button>
-                                <Dialog open={this.state.showAddVariant}>
-                                    <DialogContent>
-                                        <Textfield
-                                            floatingLabel
-                                            style={{ width: '100%' }}
-                                            label="Variant name"
-                                            error={errors.newVariant}
-                                            name="newVariant"
-                                            value= {this.state.newVariant}
-                                            onChange={e => this.setState({newVariant: trim(e.target.value)})}
-                                        />
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button type='button' raised primary icon="add" onClick={this.addVariant}>Add variant</Button>
-                                        <Button type='button' onClick={this.hideAddVariant}>Close</Button>
-                                    </DialogActions>
-                                </Dialog>
-                        </SubSection>
-
-                        <SubSection title="Traffic allocation">
-                            <p style={{ color: 'rgba(0,0,0,.54)' }}>
-                                How much traffic do you want to reserve for your experiment?
-                            </p>
-                            <StrategyInputPercentage
-                                name="percentage"
-                                value={1 * experiment.rollout}
-                                minLabel="off"
-                                maxLabel="on"
-                                onChange={v => this.setValue('rollout', v.target.value)}
+            <div>
+                <StepsBar />
+                <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+                    <CardTitle style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
+                        Define a new experiment
+                    </CardTitle>
+                    <CardText>
+                        The first step is to define your experiment. You need to give it a unique experiment id and define the variants you want to use in your A/B/n Experiment. 
+                    </CardText>
+                    <form onSubmit={this.onSubmit}>
+                        <section style={{ padding: '16px' }}>
+                            <Textfield
+                                floatingLabel
+                                label="Experiment id"
+                                name="name"
+                                ref="name"
+                                value={experiment.name}
+                                error={errors.name}
+                                onBlur={v => this.validateName(v.target.value)}
+                                onChange={v => this.setValue('name', trim(v.target.value))}
                             />
-                        </SubSection>
-                    </section>
-                    <CardActions>
-                        <FormButtons submitText={'Create'} onCancel={this.onCancel} />
-                    </CardActions>
-                </form>
-            </Card>
+                            <Textfield
+                                floatingLabel
+                                style={{ width: '100%' }}
+                                rows={1}
+                                label="Description"
+                                name="description"
+                                error={errors.description}
+                                value={experiment.description}
+                                onChange={v => this.setValue('description', v.target.value)}
+                            />
+                            <SubSection title="Variants">
+                                <p style={{ color: 'rgba(0,0,0,.54)' }}>
+                                    What do you want to test?
+                                </p>
+                                <List>
+                                    {experiment.variants.map((v, i) => (
+                                            <ListItem key={i}>
+                                                <ListItemContent>
+                                                    {v.name}
+                                                </ListItemContent>
+                                                <span className={styles.listItemWeight}>
+                                                    {v.weight/10.0}%
+                                                </span>
+                                                <ListItemAction>
+                                                    <a
+                                                        href="#delete"
+                                                        title="Remove variant"
+                                                        onClick={this.removeVariant.bind(this, v.name)}
+                                                    >
+                                                        <Icon name="delete" />
+                                                    </a>
+                                                </ListItemAction>
+                                            </ListItem>
+                                        ))
+                                    }
+                                </List>
+                                <Button onClick={this.showAddVariant} icon="add"><Icon name="add"></Icon> Add variant</Button>
+                            </SubSection>
+
+                            <SubSection title="Traffic allocation">
+                                <p style={{ color: 'rgba(0,0,0,.54)' }}>
+                                    How much traffic do you want to reserve for your experiment?
+                                </p>
+                                <div>
+                                    <StrategyInputPercentage
+                                        name="percentage"
+                                        value={1 * experiment.rollout}
+                                        minLabel="off"
+                                        maxLabel="on"
+                                        onChange={v => this.setValue('rollout', v.target.value)}
+                                    />
+                                </div>
+                            </SubSection>
+                        </section>
+                        <CardActions>
+                            <FormButtons submitText={'Create'} onCancel={this.onCancel} />
+                        </CardActions>
+                    </form>
+                    <Dialog open={this.state.showAddVariant}>
+                        <form onSubmit={this.addVariant}>
+                            <DialogContent>
+                                <Textfield
+                                    floatingLabel
+                                    style={{ width: '100%' }}
+                                    label="Variant name"
+                                    error={errors.newVariant}
+                                    name="newVariant"
+                                    value= {this.state.newVariant}
+                                    onChange={e => this.setState({newVariant: trim(e.target.value)})}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button type='button' raised primary icon="add" onClick={this.addVariant}>Add variant</Button>
+                                <Button type='button' onClick={this.hideAddVariant}>Close</Button>
+                            </DialogActions>
+                        </form>
+                    </Dialog>
+                </Card>
+            </div>
         );
     }
 }

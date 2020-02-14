@@ -14,6 +14,7 @@ import ApplicationView from '../../page/applications/view';
 import LogoutFeatures from '../../page/user/logout';
 import ExperimentList from '../../page/experiment';
 import ExperimentCreate from '../../page/experiment/create';
+import ExperimentShow from '../../page/experiment/show';
 
 export const routes = [
     // Features
@@ -48,6 +49,7 @@ export const routes = [
 
     //
     { path: '/experiments/create', parent: '/experiments', title: 'Create', component: ExperimentCreate },
+    { path: '/experiments/:experimentName', parent: '/experiments', title: ':experimentName', component: ExperimentShow },
     { path: '/experiments', title: 'Experiments', icon: 'emoji_flags', component: ExperimentList },
 ];
 
