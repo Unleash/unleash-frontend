@@ -42,11 +42,11 @@ export default class App extends PureComponent {
                                 <ErrorContainer />
                             </Cell>
                         </Grid>
-                        <Footer size="mega">
-                            <FooterMenu />
-                            <ShowApiDetailsContainer />
-                        </Footer>
                     </Content>
+                    <Footer size="mega">
+                        <FooterMenu />
+                        <ShowApiDetailsContainer />
+                    </Footer>
                 </Layout>
             </div>
         );
