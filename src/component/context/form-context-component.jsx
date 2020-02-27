@@ -17,8 +17,8 @@ class AddContextComponent extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if(!state.contextField.name && props.contextField.name) {
-            return {contextField: props.contextField}
+        if (!state.contextField.name && props.contextField.name) {
+            return { contextField: props.contextField };
         }
     }
 
@@ -60,19 +60,18 @@ class AddContextComponent extends Component {
         evt.preventDefault();
         const { contextField, currentLegalValue, errors } = this.state;
 
-        if(contextField.legalValues.indexOf(currentLegalValue) !== -1) {
+        if (contextField.legalValues.indexOf(currentLegalValue) !== -1) {
             errors.currentLegalValue = 'Duplicate legal value';
-            this.setState({errors});
+            this.setState({ errors });
             return;
         }
-
 
         const legalValues = contextField.legalValues.concat(trim(currentLegalValue));
         contextField.legalValues = legalValues;
         this.setState({
             contextField,
             currentLegalValue: '',
-            errors: {}
+            errors: {},
         });
     };
 

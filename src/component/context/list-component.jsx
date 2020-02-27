@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemAction, ListItemContent, Icon, IconButton, Card } from 'react-mdl';
+import { List, ListItem, ListItemAction, ListItemContent, IconButton, Card } from 'react-mdl';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../permissions';
 
@@ -57,8 +57,11 @@ class ContextFieldListComponent extends Component {
                                 </ListItemContent>
                                 <ListItemAction>
                                     {hasPermission(DELETE_CONTEXT_FIELD) ? (
-                                            
-                                        <IconButton name="delete" title="Remove contextField" onClick={this.removeContextField.bind(this, field)} />
+                                        <IconButton
+                                            name="delete"
+                                            title="Remove contextField"
+                                            onClick={this.removeContextField.bind(this, field)}
+                                        />
                                     ) : (
                                         ''
                                     )}

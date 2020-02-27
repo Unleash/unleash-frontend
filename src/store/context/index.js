@@ -15,9 +15,10 @@ const strategies = (state = getInitState(), action) => {
             return state.remove(state.indexOf(action.context));
         case ADD_CONTEXT_FIELD:
             return state.push(action.context);
-        case UPDATE_CONTEXT_FIELD:
-            const index = state.findIndex(item => item.name === action.context.name)
+        case UPDATE_CONTEXT_FIELD: {
+            const index = state.findIndex(item => item.name === action.context.name);
             return state.set(index, action.context);
+        }
         default:
             return state;
     }
