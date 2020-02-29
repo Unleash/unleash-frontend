@@ -3589,13 +3589,14 @@ fbjs@^0.8.1:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-mock@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-8.0.0.tgz#b0f5c9d639f9f01d1e312597f60ad34a9866aa71"
-  integrity sha512-ll7ld9acY6GJehNmX5dHbbmCPeKIqifx6dd/B1bhFGKSkC+2tgOFJdzxIfHWhxBt6i957KEqXlvUZDCQncEqYQ==
+fetch-mock@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-9.0.0.tgz#0174913da7a9411fc820529868c188aad49a3f3a"
+  integrity sha512-Nr7vPs0CdkhHiet0E9upniEAcHCb9liTNFtXtsphi3xKmkdllVIBDqcPwvIzS+wqjJMePs6BMNolLdQd0/+qAg==
   dependencies:
     babel-runtime "^6.26.0"
     core-js "^3.0.0"
+    debug "^4.1.1"
     glob-to-regexp "^0.4.0"
     lodash.isequal "^4.5.0"
     path-to-regexp "^2.2.1"
