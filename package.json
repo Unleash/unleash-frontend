@@ -52,7 +52,7 @@
     "babel-jest": "^25.3.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^2.1.1",
+    "css-loader": "^3.5.3",
     "debounce": "^1.2.0",
     "debug": "^4.1.1",
     "enzyme": "^3.9.0",
