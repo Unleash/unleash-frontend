@@ -40,7 +40,7 @@
   "main": "./index.js",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "^7.9.0",
