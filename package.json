@@ -45,7 +45,7 @@
     "@babel/plugin-proposal-decorators": "^7.10.1",
     "@babel/plugin-transform-modules-commonjs": "^7.10.1",
     "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.9.4",
     "array-move": "^2.2.1",
     "babel-eslint": "^10.1.0",
