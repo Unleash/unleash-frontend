@@ -1,6 +1,8 @@
 // docs: http://webpack.github.io/docs/configuration.html
 'use strict';
 
+require('dotenv').config(); // for this config file
+const DotEnv = require('dotenv-webpack'); // to share env to whole application
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,16 +12,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const entry = ['whatwg-fetch', './src/index'];
+
 const plugins = [
+    new DotEnv(),
     new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: 'bundle.css',
-    }),
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-        },
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new CleanWebpackPlugin(),

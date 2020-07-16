@@ -49,9 +49,6 @@ export default class ShowUserComponent extends React.Component {
         const imageLocale = foundLocale ? `public/${foundLocale.image}.png` : `public/unknown-locale.png`;
         return (
             <div className={styles.showUserSettings}>
-                <div className={styles.showLocale} id="select-locale" style={{ cursor: 'pointer' }}>
-                    <img src={imageLocale} title={`Current locale is ${locale}`} alt={locale} />
-                </div>
                 <Menu target="select-locale" valign="bottom" align="right" ripple>
                     {this.possibleLocales.map(i => (
                         <MenuItem key={i.value} style={{ textAlign: 'center' }} onClick={() => this.setLocale(i)}>
@@ -61,10 +58,6 @@ export default class ShowUserComponent extends React.Component {
                         </MenuItem>
                     ))}
                 </Menu>
-                &nbsp;
-                <div className={styles.showUser}>
-                    <img src={imageUrl} title={email} alt={email} />
-                </div>
             </div>
         );
     }

@@ -5,9 +5,12 @@ import Modal from 'react-modal';
 import AuthenticationSimpleComponent from './authentication-simple-component';
 import AuthenticationCustomComponent from './authentication-custom-component';
 import AuthenticationPasswordComponent from './authentication-password-component';
+import AuthenticationUploanComponent from './authentication-uploan-component';
+import { iframeEventBinder } from '../../data/helper'
 
 const SIMPLE_TYPE = 'unsecure';
 const PASSWORD_TYPE = 'password';
+const UPLOAN_TYPE = 'uploan';
 
 const customStyles = {
     overlay: {
@@ -37,14 +40,26 @@ class AuthComponent extends React.Component {
         user: PropTypes.object.isRequired,
         unsecureLogin: PropTypes.func.isRequired,
         passwordLogin: PropTypes.func.isRequired,
+        uploanLogin: PropTypes.func.isRequired,
         fetchFeatureToggles: PropTypes.func.isRequired,
         fetchUIConfig: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
     };
 
+    // this makes it possible for stellar service to
+    // push token to unleash front-end.
+    componentDidMount() {
+        iframeEventBinder(window, 'message', (e) => {
+            if (typeof e.data === 'string' && e.data) {
+                sessionStorage.setItem('oauth', e.data)
+            }
+        })
+    };
+
     render() {
         const authDetails = this.props.user.authDetails;
         if (!authDetails) return null;
+
 
         let content;
         if (authDetails.type === PASSWORD_TYPE) {
@@ -63,6 +78,16 @@ class AuthComponent extends React.Component {
                     unsecureLogin={this.props.unsecureLogin}
                     authDetails={authDetails}
                     fetchFeatureToggles={this.props.fetchFeatureToggles}
+                    history={this.props.history}
+                />
+            );
+        } else if (authDetails.type === UPLOAN_TYPE) {
+            content = (
+                <AuthenticationUploanComponent
+                    uploanLogin={this.props.uploanLogin}
+                    authDetails={authDetails}
+                    fetchFeatureToggles={this.props.fetchFeatureToggles}
+                    fetchUIConfig={this.props.fetchUIConfig}
                     history={this.props.history}
                 />
             );

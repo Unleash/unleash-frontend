@@ -14,6 +14,8 @@ import store from './store';
 import MetricsPoller from './metrics-poller';
 import App from './component/app';
 import ScrollToTop from './component/scroll-to-top';
+import fetchIntercept from 'fetch-intercept';
+import { retrieveTokenBearer } from './data/helper'
 
 let composeEnhancers;
 
@@ -25,6 +27,29 @@ if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_C
 
 const unleashStore = createStore(store, composeEnhancers(applyMiddleware(thunkMiddleware)));
 const metricsPoller = new MetricsPoller(unleashStore);
+
+// fetch interceptor
+const unregister = fetchIntercept.register({
+    request: async function (url, config) {
+        if (url === process.env.UPLOAN_AUTH_URL) {
+            return [url, config];
+        }
+
+        let token = await retrieveTokenBearer()
+        if (typeof config.headers === 'undefined') {
+            config.headers = {}
+        }
+        config.headers["Authorization"] = `Bearer ${token}`
+        config.headers["Accept"] = 'application/json'
+        config.headers["Content-Type"] = 'application/json';
+
+        return [url, config];
+    },
+
+    requestError: err => Promise.reject(err),
+    response: res => res,
+    responseError: err => Promise.reject(err)
+});
 metricsPoller.start();
 
 ReactDOM.render(

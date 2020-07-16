@@ -1,3 +1,6 @@
+import { refreshUploanOAuthToken } from '../store/user/actions'
+import jwtDecode from 'jwt-decode'
+
 const defaultErrorMessage = 'Unexptected exception when talking to unleash-api';
 
 function extractJoiMsg(body) {
@@ -57,6 +60,47 @@ export function throwIfNotSuccess(response) {
         }
     }
     return Promise.resolve(response);
+}
+
+export const uploanUserToUnleashUser = (uploanUser) => {
+    return {
+        email: uploanUser.user_name,
+        permission: uploanUser.permissions,
+        type: uploanUser.type,
+        roles: uploanUser.roles
+    }
+}
+
+// this helper method connects Stellar Service and Unleash Front-end
+export const iframeEventBinder = (element, eventName, eventHandler) => {
+    if (element.addEventListener) {
+        element.addEventListener(eventName, eventHandler, false)
+    } else if (element.attachEvent) {
+        element.attachEvent('on' + eventName, eventHandler)
+    }
+}
+
+export const retrieveOAuthDetails = () => {
+    return sessionStorage.getItem('oauth') ? JSON.parse(sessionStorage.getItem('oauth')) : {};
+}
+
+export const retrieveTokenBearer = async () => {
+    const oauthDetails = retrieveOAuthDetails()
+    if (Object.keys(oauthDetails).length === 0) {
+        return '';
+    }
+
+    const decodedAccessToken = jwtDecode(oauthDetails.access_token)
+    const accessTokenExpDate = new Date(decodedAccessToken.exp * 1000)
+    const currentDate = new Date()
+    if (currentDate > accessTokenExpDate) {
+        const refreshTokenParams = { refresh_token: oauthDetails.refresh_token }
+        await refreshUploanOAuthToken(process.env.UPLOAN_AUTH_URL, refreshTokenParams)
+
+        const refreshedOAuthDetails = retrieveOAuthDetails()
+        return refreshedOAuthDetails.access_token;
+    }
+    return oauthDetails.access_token;
 }
 
 export const headers = {
