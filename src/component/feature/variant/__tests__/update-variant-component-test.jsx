@@ -72,6 +72,7 @@ test('renders correctly with with variants', () => {
             {
                 name: 'orange',
                 weight: 33,
+                weightType: 'fix',
                 payload: {
                     type: 'string',
                     value: '{"color": "blue", "animated": false}',
