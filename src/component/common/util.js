@@ -22,11 +22,32 @@ export const trim = value => {
 };
 
 export function updateWeight(variants, totalWeight) {
-    const size = variants.length;
-    const percentage = parseInt((1 / size) * totalWeight);
+    const { remainingPercentage, variableVariants } = variants.reduce(
+        ({ remainingPercentage, variableVariants }, v) => {
+            if (v.weightType === 'fix') {
+                remainingPercentage = Number(remainingPercentage) - Number(v.weight);
+            } else {
+                variableVariants += 1;
+            }
+            return { remainingPercentage, variableVariants };
+        },
+        { remainingPercentage: totalWeight, variableVariants: 0 }
+    );
 
-    variants.forEach(v => {
-        v.weight = percentage;
+    if (remainingPercentage < 0) {
+        throw new Error('The traffic distribution total must equal 100%');
+    }
+
+    if (!variableVariants) {
+        throw new Error('There must be atleast one variable variant');
+    }
+
+    const percentage = parseInt((1 / variableVariants) * remainingPercentage);
+
+    return variants.map(variant => {
+        if (variant.weightType !== 'fix') {
+            variant.weight = percentage;
+        }
+        return variant;
     });
-    return variants;
 }

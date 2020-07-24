@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { Button, Textfield, DialogActions, Grid, Cell, Icon } from 'react-mdl';
+import { Button, Textfield, DialogActions, Grid, Cell, Icon, Switch } from 'react-mdl';
 import MySelect from '../../common/select';
 import { trim } from '../form/util';
+import { weightTypes } from './enums';
 import OverrideConfig from './override-config';
 
 Modal.setAppElement('#app');
@@ -46,7 +47,11 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
 
     const clear = () => {
         if (editVariant) {
-            setData({ name: editVariant.name });
+            setData({
+                name: editVariant.name,
+                weight: editVariant.weight / 10,
+                weightType: editVariant.weightType || weightTypes.VARIABLE,
+            });
             if (editVariant.payload) {
                 setPayload(editVariant.payload);
             }
@@ -67,11 +72,21 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
         clear();
     }, [editVariant]);
 
-    const setName = e => {
-        e.preventDefault();
+    const setVariantValue = e => {
+        const { name, value } = e.target;
         setData({
             ...data,
-            [e.target.name]: trim(e.target.value),
+            [name]: trim(value),
+        });
+    };
+
+    const setVariantWeightType = e => {
+        const { checked, name } = e.target;
+
+        const weightType = checked ? weightTypes.FIX : weightTypes.VARIABLE;
+        setData({
+            ...data,
+            [name]: weightType,
         });
     };
 
@@ -88,6 +103,8 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
         try {
             const variant = {
                 name: data.name,
+                weight: data.weight * 10,
+                weightType: data.weightType,
                 payload: payload.value ? payload : undefined,
                 overrides: overrides
                     .map(o => ({
@@ -100,7 +117,7 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
             clear();
             closeDialog();
         } catch (error) {
-            const msg = error.error || 'Could not add variant';
+            const msg = error.message || 'Could not add variant';
             setError({ general: msg });
         }
     };
@@ -152,6 +169,8 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
         setOverrides([...overrides, ...[{ contextName: 'userId', values: [] }]]);
     };
 
+    const isFixWeight = data.weightType === weightTypes.FIX;
+
     return (
         <Modal isOpen={showDialog} contentLabel="Example Modal" style={customStyles} onRequestClose={onCancel}>
             <h3>{title}</h3>
@@ -167,10 +186,33 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
                     value={data.name}
                     error={error.name}
                     type="name"
-                    onChange={setName}
+                    onChange={setVariantValue}
                 />
                 <br />
                 <br />
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Textfield
+                        floatingLabel
+                        label="Weight"
+                        name="weight"
+                        placeholder=""
+                        value={data.weight}
+                        error={error.weight}
+                        type="number"
+                        disabled={data.weightType !== 'fix'}
+                        onChange={setVariantValue}
+                    />
+                    <div>
+                        <Switch name="weightType" checked={isFixWeight} onChange={setVariantWeightType}>
+                            Fix
+                        </Switch>
+                    </div>
+                </div>
                 <p style={{ marginBottom: '0' }}>
                     <strong>Payload </strong>
                     <Icon name="info" title="Passed to the variant object. Can be anything (json, value, csv)" />
