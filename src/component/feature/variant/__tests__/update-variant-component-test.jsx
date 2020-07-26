@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import UpdateVariant from './../update-variant-component';
 import renderer from 'react-test-renderer';
 import { UPDATE_FEATURE } from '../../../../permissions';
+import { weightTypes } from '../enums';
 
 jest.mock('react-mdl');
 
@@ -72,7 +73,7 @@ test('renders correctly with with variants', () => {
             {
                 name: 'orange',
                 weight: 33,
-                weightType: 'fix',
+                weightType: weightTypes.FIX,
                 payload: {
                     type: 'string',
                     value: '{"color": "blue", "animated": false}',

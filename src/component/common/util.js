@@ -50,7 +50,7 @@ export function updateWeight(variants, totalWeight) {
     const percentage = parseInt((1 / variableVariants) * remainingPercentage);
 
     return variants.map(variant => {
-        if (variant.weightType !== 'fix') {
+        if (variant.weightType !== weightTypes.FIX) {
             variant.weight = percentage;
         }
         return variant;
