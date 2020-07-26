@@ -1,3 +1,5 @@
+import { weightTypes } from '../feature/variant/enums';
+
 const dateTimeOptions = {
     day: '2-digit',
     month: '2-digit',
@@ -23,13 +25,16 @@ export const trim = value => {
 
 export function updateWeight(variants, totalWeight) {
     const { remainingPercentage, variableVariants } = variants.reduce(
-        ({ remainingPercentage, variableVariants }, v) => {
-            if (v.weightType === 'fix') {
-                remainingPercentage = Number(remainingPercentage) - Number(v.weight);
+        ({ remain, varVariants }, variant) => {
+            if (variant.weightType === weightTypes.FIX) {
+                remain = Number(remain) - Number(variant.weight);
             } else {
-                variableVariants += 1;
+                varVariants += 1;
             }
-            return { remainingPercentage, variableVariants };
+            return {
+                remainingPercentage: remain,
+                variableVariants: varVariants,
+            };
         },
         { remainingPercentage: totalWeight, variableVariants: 0 }
     );
