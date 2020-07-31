@@ -62,12 +62,21 @@ td.actions {
     }
 }
 
+.inputWeight {
+    text-align: right;
+}
+
 .flexCenter {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.marginL15 {
-    margin-left: 15px;
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.marginL10 {
+    margin-left: 10px;
 }

@@ -83,7 +83,6 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
 
     const setVariantWeightType = e => {
         const { checked, name } = e.target;
-
         const weightType = checked ? weightTypes.FIX : weightTypes.VARIABLE;
         setData({
             ...data,
@@ -190,29 +189,30 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
                     onChange={setVariantValue}
                 />
                 <br />
-                <br />
-                <div className={styles.flexCenter}>
-                    <Cell col={2} className={styles.flexCenter}>
+                <Grid noSpacing className={styles.flex}>
+                    <Cell col={3} className={styles.flex}>
                         <Textfield
                             id="weight"
                             floatingLabel
                             label="Weight"
                             name="weight"
                             placeholder=""
+                            style={{ width: '40px', marginRight: '5px' }}
+                            inputClassName={styles.inputWeight}
                             value={data.weight}
                             error={error.weight}
                             type="number"
                             disabled={!isFixWeight}
                             onChange={setVariantValue}
                         />
-                        %
+                        <span>%</span>
                     </Cell>
-                    <Cell col={10} className={styles.marginL15}>
+                    <Cell col={9} className={[styles.flexCenter, styles.marginL10]}>
                         <Switch name="weightType" checked={isFixWeight} onChange={setVariantWeightType}>
                             Custom percentage
                         </Switch>
                     </Cell>
-                </div>
+                </Grid>
                 <p style={{ marginBottom: '0' }}>
                     <strong>Payload </strong>
                     <Icon name="info" title="Passed to the variant object. Can be anything (json, value, csv)" />
