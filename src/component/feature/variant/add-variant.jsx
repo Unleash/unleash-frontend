@@ -240,13 +240,11 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
                         />
                     </Cell>
                 </Grid>
-                {overrides.length > 0 ? (
+                {overrides.length > 0 && (
                     <p style={{ marginBottom: '0' }}>
                         <strong>Overrides </strong>
                         <Icon name="info" title="Here you can specify which users that should get this variant." />
                     </p>
-                ) : (
-                    undefined
                 )}
 
                 <OverrideConfig

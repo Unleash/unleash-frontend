@@ -24,30 +24,32 @@ export const trim = value => {
 };
 
 export function updateWeight(variants, totalWeight) {
-    const { remainingPercentage, variableVariants } = variants.reduce(
-        ({ remainingPercentage, variableVariants }, variant) => {
+    const variantMetadata = variants.reduce(
+        ({ remainingPercentage, variableVariantCount }, variant) => {
             if (variant.weight && variant.weightType === weightTypes.FIX) {
-                remainingPercentage = Number(remainingPercentage) - Number(variant.weight);
+                remainingPercentage -= Number(variant.weight);
             } else {
-                variableVariants += 1;
+                variableVariantCount += 1;
             }
             return {
                 remainingPercentage,
-                variableVariants,
+                variableVariantCount,
             };
         },
-        { remainingPercentage: totalWeight, variableVariants: 0 }
+        { remainingPercentage: totalWeight, variableVariantCount: 0 }
     );
+
+    const { remainingPercentage, variableVariantCount } = variantMetadata;
 
     if (remainingPercentage < 0) {
         throw new Error('The traffic distribution total must equal 100%');
     }
 
-    if (!variableVariants) {
+    if (!variableVariantCount) {
         throw new Error('There must be atleast one variable variant');
     }
 
-    const percentage = parseInt((1 / variableVariants) * remainingPercentage);
+    const percentage = parseInt(remainingPercentage / variableVariantCount);
 
     return variants.map(variant => {
         if (variant.weightType !== weightTypes.FIX) {
