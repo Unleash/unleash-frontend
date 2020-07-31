@@ -25,15 +25,15 @@ export const trim = value => {
 
 export function updateWeight(variants, totalWeight) {
     const { remainingPercentage, variableVariants } = variants.reduce(
-        ({ remain, varVariants }, variant) => {
-            if (variant.weightType === weightTypes.FIX) {
-                remain = Number(remain) - Number(variant.weight);
+        ({ remainingPercentage, variableVariants }, variant) => {
+            if (variant.weight && variant.weightType === weightTypes.FIX) {
+                remainingPercentage = Number(remainingPercentage) - Number(variant.weight);
             } else {
-                varVariants += 1;
+                variableVariants += 1;
             }
             return {
-                remainingPercentage: remain,
-                variableVariants: varVariants,
+                remainingPercentage,
+                variableVariants,
             };
         },
         { remainingPercentage: totalWeight, variableVariants: 0 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { Button, Textfield, DialogActions, Grid, Cell, Icon, Switch } from 'react-mdl';
+import styles from './variant.scss';
 import MySelect from '../../common/select';
 import { trim } from '../form/util';
 import { weightTypes } from './enums';
@@ -190,28 +191,27 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
                 />
                 <br />
                 <br />
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Textfield
-                        floatingLabel
-                        label="Weight"
-                        name="weight"
-                        placeholder=""
-                        value={data.weight}
-                        error={error.weight}
-                        type="number"
-                        disabled={data.weightType !== 'fix'}
-                        onChange={setVariantValue}
-                    />
-                    <div>
+                <div className={styles.flexCenter}>
+                    <Cell col={2} className={styles.flexCenter}>
+                        <Textfield
+                            id="weight"
+                            floatingLabel
+                            label="Weight"
+                            name="weight"
+                            placeholder=""
+                            value={data.weight}
+                            error={error.weight}
+                            type="number"
+                            disabled={!isFixWeight}
+                            onChange={setVariantValue}
+                        />
+                        %
+                    </Cell>
+                    <Cell col={10} className={styles.marginL15}>
                         <Switch name="weightType" checked={isFixWeight} onChange={setVariantWeightType}>
-                            Fix
+                            Custom percentage
                         </Switch>
-                    </div>
+                    </Cell>
                 </div>
                 <p style={{ marginBottom: '0' }}>
                     <strong>Payload </strong>
