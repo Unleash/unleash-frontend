@@ -40,6 +40,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         revive: PropTypes.func,
         fetchArchive: PropTypes.func,
         fetchFeatureToggles: PropTypes.func,
+        fetchFeatureToggle: PropTypes.func,
         editFeatureToggle: PropTypes.func,
         featureToggle: PropTypes.object,
         history: PropTypes.object.isRequired,
@@ -85,6 +86,10 @@ export default class ViewFeatureToggleComponent extends React.Component {
 
     goToTab(tabName, featureToggleName) {
         let view = this.props.fetchFeatureToggles ? 'features' : 'archive';
+        if (view === 'features' && tabName === 'strategies') {
+            const { featureToggleName, fetchFeatureToggle } = this.props;
+            fetchFeatureToggle(featureToggleName);
+        }
         this.props.history.push(`/${view}/${tabName}/${featureToggleName}`);
     }
 

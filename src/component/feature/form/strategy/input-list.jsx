@@ -10,56 +10,44 @@ export default class InputList extends Component {
         disabled: PropTypes.bool,
     };
 
-    onBlur(e) {
+    onBlur = e => {
         this.setValue(e);
-        window.removeEventListener('keydown', this.onKeyHandler, false);
-    }
+    };
 
-    onFocus(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.addEventListener('keydown', this.onKeyHandler, false);
-    }
-
-    onKeyHandler = e => {
+    onKeyDown = e => {
         if (e.key === 'Enter') {
-            this.setValue();
+            this.setValue(e);
             e.preventDefault();
             e.stopPropagation();
         }
     };
 
-    setValue = e => {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
+    setValue = evt => {
+        evt.preventDefault();
+        const value = evt.target.value;
 
         const { name, list, setConfig } = this.props;
-        if (this.textInput && this.textInput.inputRef && this.textInput.inputRef.value) {
-            const newValues = this.textInput.inputRef.value.split(/,\s*/);
-            const newList = list.concat(newValues).filter(a => a);
+        if (value) {
+            const newValues = value.split(/,\s*/).filter(a => !list.includes(a));
+            if (newValues.length > 0) {
+                const newList = list.concat(newValues).filter(a => a);
+                setConfig(name, newList.join(','), true);
+            }
             this.textInput.inputRef.value = '';
-            setConfig(name, newList.join(','));
         }
     };
 
     onClose(index) {
         const { name, list, setConfig } = this.props;
         list[index] = null;
-        setConfig(name, list.length === 1 ? '' : list.filter(Boolean).join(','));
+        setConfig(name, list.length === 1 ? '' : list.filter(Boolean).join(','), true);
     }
 
     render() {
         const { name, list, disabled } = this.props;
         return (
             <div>
-                <p>
-                    <i>
-                        Please specify the list of <code>{name}</code>:
-                    </i>
-                </p>
-
+                <strong>List of {name}:</strong>
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {list.map((entryValue, index) => (
                         <Chip
@@ -71,18 +59,18 @@ export default class InputList extends Component {
                         </Chip>
                     ))}
                 </div>
-
                 {disabled ? (
                     ''
                 ) : (
                     <div style={{ display: 'flex' }}>
                         <Textfield
-                            name={`${name}_input`}
+                            name={`input_field`}
                             style={{ width: '100%', flex: 1 }}
                             floatingLabel
-                            label="Enter value (val1, val2)"
-                            onFocus={this.onFocus.bind(this)}
-                            onBlur={this.onBlur.bind(this)}
+                            label="Add items:"
+                            placeholder="value1, value2"
+                            onBlur={this.onBlur}
+                            onKeyDown={this.onKeyDown}
                             ref={input => {
                                 this.textInput = input;
                             }}

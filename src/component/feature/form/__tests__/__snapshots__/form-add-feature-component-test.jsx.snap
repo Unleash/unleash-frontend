@@ -96,15 +96,6 @@ exports[`render the create feature page 1`] = `
         }
         value="Description"
       />
-      <StrategiesSection
-        addStrategy={[MockFunction]}
-        configuredStrategies={Array []}
-        featureToggleName="feature"
-        moveStrategy={[MockFunction]}
-        removeStrategy={[MockFunction]}
-        updateStrategy={[MockFunction]}
-      />
-      <br />
     </section>
     <react-mdl-CardActions>
       <FormButtons

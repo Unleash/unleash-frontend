@@ -22,7 +22,12 @@ let eventMock = {
     },
 };
 const buildComponent = (addStrategy, fetchStrategies, strategies) => (
-    <AddStrategy addStrategy={addStrategy} fetchStrategies={fetchStrategies} strategies={strategies} />
+    <AddStrategy
+        addStrategy={addStrategy}
+        fetchStrategies={fetchStrategies}
+        strategies={strategies}
+        featureToggleName="nameOfToggle"
+    />
 );
 
 it('renders add strategy form with a list of available strategies', () => {

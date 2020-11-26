@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Textfield, Switch, Card, CardTitle, CardActions, Grid, Cell } from 'react-mdl';
-import StrategiesSection from './strategies-section-container';
 import FeatureTypeSelect from './feature-type-select-container';
 import ProjectSelect from './project-select-container';
 
@@ -20,20 +19,7 @@ class AddFeatureComponent extends Component {
     }
 
     render() {
-        const {
-            input,
-            errors,
-            setValue,
-            validateName,
-            addStrategy,
-            removeStrategy,
-            updateStrategy,
-            moveStrategy,
-            onSubmit,
-            onCancel,
-        } = this.props;
-
-        const configuredStrategies = input.strategies || [];
+        const { input, errors, setValue, validateName, onSubmit, onCancel } = this.props;
 
         return (
             <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
@@ -81,19 +67,6 @@ class AddFeatureComponent extends Component {
                             value={input.description}
                             onChange={v => setValue('description', v.target.value)}
                         />
-
-                        {input.name ? (
-                            <StrategiesSection
-                                configuredStrategies={configuredStrategies}
-                                featureToggleName={input.name}
-                                addStrategy={addStrategy}
-                                updateStrategy={updateStrategy}
-                                moveStrategy={moveStrategy}
-                                removeStrategy={removeStrategy}
-                            />
-                        ) : null}
-
-                        <br />
                     </section>
                     <CardActions>
                         <FormButtons submitText={'Create'} onCancel={onCancel} />
@@ -108,10 +81,6 @@ AddFeatureComponent.propTypes = {
     input: PropTypes.object,
     errors: PropTypes.object,
     setValue: PropTypes.func.isRequired,
-    addStrategy: PropTypes.func.isRequired,
-    removeStrategy: PropTypes.func.isRequired,
-    moveStrategy: PropTypes.func.isRequired,
-    updateStrategy: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     validateName: PropTypes.func.isRequired,

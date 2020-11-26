@@ -2,19 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem, IconButton } from 'react-mdl';
 
+function resolveDefaultParamVale(name, featureToggleName) {
+    switch (name) {
+        case 'percentage':
+        case 'rollout':
+            return '100';
+        case 'stickiness':
+            return 'default';
+        case 'groupId':
+            return featureToggleName;
+        default:
+            return '';
+    }
+}
+
 class AddStrategy extends React.Component {
     static propTypes = {
         strategies: PropTypes.array.isRequired,
         addStrategy: PropTypes.func,
-        fetchStrategies: PropTypes.func.isRequired,
+        featureToggleName: PropTypes.string.isRequired,
     };
 
     addStrategy(strategyName) {
+        const featureToggleName = this.props.featureToggleName;
         const selectedStrategy = this.props.strategies.find(s => s.name === strategyName);
         const parameters = {};
 
         selectedStrategy.parameters.forEach(({ name }) => {
-            parameters[name] = '';
+            parameters[name] = resolveDefaultParamVale(name, featureToggleName);
         });
 
         this.props.addStrategy({

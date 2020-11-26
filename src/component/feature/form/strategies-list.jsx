@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ConfigureStrategy from './strategy-configure';
+import ConfigureStrategy from './strategy/strategy-configure';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 

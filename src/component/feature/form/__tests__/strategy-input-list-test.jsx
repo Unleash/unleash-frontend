@@ -1,5 +1,5 @@
 import React from 'react';
-import InputList from './../strategy-input-list';
+import InputList from './../strategy/input-list';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
@@ -37,34 +37,6 @@ it('go inside onFocus', () => {
         key: 'e',
     };
     wrapper.find('react-mdl-Textfield').simulate('focus', focusMock);
-});
-
-// https://github.com/airbnb/enzyme/issues/944
-it('spy onFocus', () => {
-    let list = ['item1'];
-    const name = 'featureName';
-    const onFocus = jest.spyOn(InputList.prototype, 'onFocus');
-    let focusMock = {
-        preventDefault: () => {},
-        stopPropagation: () => {},
-        key: 'e',
-    };
-    const wrapper = shallow(<InputList list={list} name={name} setConfig={jest.fn()} />);
-    wrapper.find('react-mdl-Textfield').simulate('focus', focusMock);
-    expect(onFocus).toHaveBeenCalled();
-});
-
-it('spy onBlur', () => {
-    let list = ['item1'];
-    const name = 'featureName';
-    const onFocus = jest.spyOn(InputList.prototype, 'onBlur');
-    let focusMock = {
-        preventDefault: () => {},
-        stopPropagation: () => {},
-    };
-    const wrapper = shallow(<InputList list={list} name={name} setConfig={jest.fn()} />);
-    wrapper.find('react-mdl-Textfield').simulate('blur', focusMock);
-    expect(onFocus).toHaveBeenCalled();
 });
 
 it('spy onClose', () => {

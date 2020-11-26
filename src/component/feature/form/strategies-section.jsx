@@ -12,13 +12,7 @@ class StrategiesSectionComponent extends React.Component {
         addStrategy: PropTypes.func,
         removeStrategy: PropTypes.func,
         updateStrategy: PropTypes.func,
-        fetchStrategies: PropTypes.func,
     };
-
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillMount() {
-        this.props.fetchStrategies();
-    }
 
     render() {
         if (!this.props.strategies || this.props.strategies.length === 0) {

@@ -13,7 +13,7 @@
     background-color: #f2f9fc;
 }
 
-.item:first-child {
+.item:nth-child(odd) {
     margin-left: 0;
 }
 
@@ -42,7 +42,7 @@
 .cardTitle {
     color: #fff;
     height: 65px;
-    background-color: #607d8b !important;
+    background-color: rgba(96, 125, 139, .85) !important;
 }
 
 .helpText {

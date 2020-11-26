@@ -2,15 +2,11 @@
 
 exports[`renders correctly when disabled 1`] = `
 <div>
-  <p>
-    <i>
-      Please specify the list of 
-      <code>
-        featureName
-      </code>
-      :
-    </i>
-  </p>
+  <strong>
+    List of 
+    featureName
+    :
+  </strong>
   <div
     style={
       Object {
@@ -44,15 +40,11 @@ exports[`renders correctly when disabled 1`] = `
 
 exports[`renders strategy with empty list as param 1`] = `
 <div>
-  <p>
-    <i>
-      Please specify the list of 
-      <code>
-        featureName
-      </code>
-      :
-    </i>
-  </p>
+  <strong>
+    List of 
+    featureName
+    :
+  </strong>
   <div
     style={
       Object {
@@ -70,10 +62,11 @@ exports[`renders strategy with empty list as param 1`] = `
   >
     <react-mdl-Textfield
       floatingLabel={true}
-      label="Enter value (val1, val2)"
-      name="featureName_input"
+      label="Add items:"
+      name="input_field"
       onBlur={[Function]}
-      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="value1, value2"
       style={
         Object {
           "flex": 1,
@@ -99,15 +92,11 @@ exports[`renders strategy with empty list as param 1`] = `
 
 exports[`renders strategy with list as param 1`] = `
 <div>
-  <p>
-    <i>
-      Please specify the list of 
-      <code>
-        featureName
-      </code>
-      :
-    </i>
-  </p>
+  <strong>
+    List of 
+    featureName
+    :
+  </strong>
   <div
     style={
       Object {
@@ -146,10 +135,11 @@ exports[`renders strategy with list as param 1`] = `
   >
     <react-mdl-Textfield
       floatingLabel={true}
-      label="Enter value (val1, val2)"
-      name="featureName_input"
+      label="Add items:"
+      name="input_field"
       onBlur={[Function]}
-      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="value1, value2"
       style={
         Object {
           "flex": 1,

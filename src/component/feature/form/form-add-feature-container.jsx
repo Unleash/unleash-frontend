@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import arrayMove from 'array-move';
 import { createFeatureToggles, validateName } from './../../../store/feature-actions';
 import AddFeatureComponent from './form-add-feature-component';
 import { loadNameFromHash } from './util';
 
-const defaultStrategy = { name: 'default' };
+const defaultStrategy = {
+    name: 'flexibleRollout',
+    parameters: {
+        rollout: '100',
+        stickiness: 'default',
+        groupId: 'a-new.toggle',
+    },
+};
 
 function resolveCurrentProjectId(settings) {
     if (!settings.currentProjectId) {
@@ -20,7 +26,7 @@ function resolveCurrentProjectId(settings) {
 
 class WrapperComponent extends Component {
     constructor(props) {
-        super(props);
+        super();
         const name = loadNameFromHash();
         this.state = {
             featureToggle: {
@@ -28,6 +34,7 @@ class WrapperComponent extends Component {
                 description: '',
                 type: 'release',
                 strategies: [],
+                variants: [],
                 enabled: true,
                 project: props.currentProjectId,
             },
@@ -54,49 +61,11 @@ class WrapperComponent extends Component {
         this.setState({ errors });
     };
 
-    addStrategy = strat => {
-        strat.id = Math.round(Math.random() * 10000000);
-        const { featureToggle } = this.state;
-        const strategies = featureToggle.strategies.concat(strat);
-        featureToggle.strategies = strategies;
-        this.setState({ featureToggle, dirty: true });
-    };
-
-    moveStrategy = (index, toIndex) => {
-        const { featureToggle } = this.state;
-        const strategies = arrayMove(featureToggle.strategies, index, toIndex);
-        featureToggle.strategies = strategies;
-        this.setState({ featureToggle, dirty: true });
-    };
-
-    removeStrategy = index => {
-        const { featureToggle } = this.state;
-        const strategies = featureToggle.strategies.filter((_, i) => i !== index);
-        featureToggle.strategies = strategies;
-        this.setState({ featureToggle, dirty: true });
-    };
-
-    updateStrategy = (index, strat) => {
-        const { featureToggle } = this.state;
-        const strategies = featureToggle.strategies.concat();
-        strategies[index] = strat;
-        featureToggle.strategies = strategies;
-        this.setState({ featureToggle, dirty: true });
-    };
-
     onSubmit = evt => {
         evt.preventDefault();
         const { createFeatureToggles, history } = this.props;
         const { featureToggle } = this.state;
-        featureToggle.createdAt = new Date();
-
-        if (Array.isArray(featureToggle.strategies) && featureToggle.strategies.length > 0) {
-            featureToggle.strategies.forEach(s => {
-                delete s.id;
-            });
-        } else {
-            featureToggle.strategies = [defaultStrategy];
-        }
+        featureToggle.strategies = [defaultStrategy];
 
         createFeatureToggles(featureToggle).then(() => history.push(`/features/strategies/${featureToggle.name}`));
     };
@@ -111,10 +80,6 @@ class WrapperComponent extends Component {
             <AddFeatureComponent
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
-                addStrategy={this.addStrategy}
-                updateStrategy={this.updateStrategy}
-                removeStrategy={this.removeStrategy}
-                moveStrategy={this.moveStrategy}
                 validateName={this.validateName}
                 setValue={this.setValue}
                 input={this.state.featureToggle}

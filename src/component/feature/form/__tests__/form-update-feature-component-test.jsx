@@ -14,7 +14,7 @@ it('render the create feature page', () => {
     };
     const tree = shallow(
         <UpdateFeatureComponent
-            input={input}
+            featureToggle={input}
             onSubmit={jest.fn()}
             setValue={jest.fn()}
             addStrategy={jest.fn()}
