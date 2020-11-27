@@ -22,7 +22,7 @@ export default class FlexibleRolloutStrategy extends Component {
     };
 
     render() {
-        const { editable, parameters } = this.props;
+        const { editable, parameters, index } = this.props;
 
         const rollout = parameters.rollout;
         const stickiness = parameters.stickiness;
@@ -33,12 +33,13 @@ export default class FlexibleRolloutStrategy extends Component {
                 <br />
                 <strong>Rollout</strong>
                 <StrategyInputPercentage
-                    name=""
+                    name="Percentage"
                     value={1 * rollout}
                     minLabel="off"
                     maxLabel="on"
                     disabled={!editable}
                     onChange={evt => this.onConfiguUpdate('rollout', evt)}
+                    id={`${index}-groupId`}
                 />
                 <div>
                     <Select
@@ -56,6 +57,7 @@ export default class FlexibleRolloutStrategy extends Component {
                         value={groupId}
                         disabled={!editable}
                         onChange={evt => this.onConfiguUpdate('groupId', evt)}
+                        id={`${index}-groupId`}
                     />{' '}
                 </div>
             </div>

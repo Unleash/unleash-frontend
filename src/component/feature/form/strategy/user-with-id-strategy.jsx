@@ -15,7 +15,7 @@ export default function UserWithIdStrategy({ editable, parameters, updateParamet
 
     return (
         <div>
-            <InputList name="userIds" list={list} disabled={!editable} setConfig={updateParameter} />
+            <InputList name="users" list={list} disabled={!editable} setConfig={updateParameter} />
         </div>
     );
 }

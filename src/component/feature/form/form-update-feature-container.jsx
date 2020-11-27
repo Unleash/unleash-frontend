@@ -23,9 +23,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     moveStrategy: (index, toIndex) => {
         // methods.moveItem('strategies', index, toIndex);
         console.log(`move strategy from ${index} to ${toIndex}`);
+        console.log(ownProps.featureToggle);
         const featureToggle = ownProps.featureToggle;
         const strategies = arrayMove(featureToggle.strategies, index, toIndex);
-        requestUpdateFeatureToggleStrategies(featureToggle, strategies)(dispatch);
+        return requestUpdateFeatureToggleStrategies(featureToggle, strategies)(dispatch);
     },
 
     updateStrategy: (index, s) => {

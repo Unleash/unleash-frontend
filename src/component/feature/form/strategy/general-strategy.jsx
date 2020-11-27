@@ -87,6 +87,7 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                         <Textfield
                             floatingLabel
                             rows={1}
+                            placeholder=""
                             style={{ width: '100%' }}
                             required={required}
                             name={name}

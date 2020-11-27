@@ -11,6 +11,16 @@
     width: 100%;
     display: block;
     background-color: #f2f9fc;
+    overflow: 'visible';
+}
+
+.isDragging {
+    opacity: 0.4;
+    border: 2px dotted black;
+}
+
+.isDroptarget {
+    border: 2px solid rgba(96, 125, 139, 1) !important;
 }
 
 .item:nth-child(odd) {

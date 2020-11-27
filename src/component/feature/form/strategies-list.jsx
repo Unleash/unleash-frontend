@@ -12,18 +12,39 @@ class StrategiesList extends React.Component {
         updateStrategy: PropTypes.func,
         removeStrategy: PropTypes.func,
         moveStrategy: PropTypes.func,
+        editable: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        editable: true,
+    };
+
+    constructor(props) {
+        super();
+        // temporal hack, until strategies get UIDs
+        const keys = Array.from({ length: props.strategies.length }, () => Math.random());
+        this.state = { keys };
+    }
+
+    moveStrategy = async (index, toIndex) => {
+        await this.props.moveStrategy(index, toIndex);
+        const { keys } = this.state;
+        keys[index] = Math.random();
+        keys[toIndex] = Math.random();
+        this.setState({ keys });
     };
 
     render() {
         const {
             strategies,
             configuredStrategies,
-            moveStrategy,
             removeStrategy,
             updateStrategy,
             featureToggleName,
+            editable,
         } = this.props;
 
+        const { keys } = this.state;
         if (!configuredStrategies || configuredStrategies.length === 0) {
             return (
                 <p style={{ padding: '0 16px' }}>
@@ -35,13 +56,14 @@ class StrategiesList extends React.Component {
         const blocks = configuredStrategies.map((strategy, i) => (
             <ConfigureStrategy
                 index={i}
-                key={`${strategy.id}-${i}`}
+                key={`${keys[i]}}`}
                 featureToggleName={featureToggleName}
                 strategy={strategy}
-                moveStrategy={moveStrategy}
+                moveStrategy={this.moveStrategy}
                 removeStrategy={removeStrategy ? removeStrategy.bind(null, i) : null}
                 updateStrategy={updateStrategy ? updateStrategy.bind(null, i) : null}
                 strategyDefinition={strategies.find(s => s.name === strategy.name)}
+                editable={editable}
             />
         ));
         return (

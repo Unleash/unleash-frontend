@@ -15,14 +15,17 @@ export default class StrategyConfigureComponent extends React.Component {
     /* eslint-enable */
     static propTypes = {
         strategy: PropTypes.object.isRequired,
+        index: PropTypes.number.isRequired,
         strategyDefinition: PropTypes.object,
         updateStrategy: PropTypes.func,
         removeStrategy: PropTypes.func,
         moveStrategy: PropTypes.func,
         isDragging: PropTypes.bool.isRequired,
+        hovered: PropTypes.bool,
         connectDragPreview: PropTypes.func.isRequired,
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
+        editable: PropTypes.bool,
     };
 
     constructor(props) {
@@ -31,6 +34,7 @@ export default class StrategyConfigureComponent extends React.Component {
             parameters: { ...props.strategy.parameters },
             edit: false,
             dirty: false,
+            index: props.index,
         };
     }
 
@@ -85,11 +89,14 @@ export default class StrategyConfigureComponent extends React.Component {
         const { dirty, parameters } = this.state;
         const {
             isDragging,
+            hovered,
+            editable,
             connectDragSource,
             connectDragPreview,
             connectDropTarget,
             strategyDefinition,
             strategy,
+            index,
         } = this.props;
 
         const { name } = strategy;
@@ -101,18 +108,17 @@ export default class StrategyConfigureComponent extends React.Component {
         if (dirty) {
             cardClasses.push('mdl-color--pink-50');
         }
+        if (isDragging) {
+            cardClasses.push(styles.isDragging);
+        }
+        if (hovered) {
+            cardClasses.push(styles.isDroptarget);
+        }
 
         return connectDragPreview(
             connectDropTarget(
                 <div className={styles.item}>
-                    <Card
-                        shadow={0}
-                        className={cardClasses.join(' ')}
-                        style={{
-                            opacity: isDragging ? '0.1' : '1',
-                            overflow: 'visible',
-                        }}
-                    >
+                    <Card shadow={0} className={cardClasses.join(' ')}>
                         <CardTitle className={styles.cardTitle} title={description}>
                             <Icon name="extension" />
                             &nbsp;
@@ -125,7 +131,8 @@ export default class StrategyConfigureComponent extends React.Component {
                                 strategy={strategy}
                                 strategyDefinition={strategyDefinition}
                                 updateParameter={this.updateParameter}
-                                editable
+                                index={index}
+                                editable={editable}
                             />
                             <Button
                                 onClick={this.onSave}
@@ -147,20 +154,19 @@ export default class StrategyConfigureComponent extends React.Component {
                             >
                                 <Icon name="info" />
                             </Link>
-                            {this.props.removeStrategy ? (
+                            {editable && (
                                 <IconButton
                                     title="Remove strategy from toggle"
                                     name="delete"
                                     onClick={this.handleRemove}
                                 />
-                            ) : (
-                                <span />
                             )}
-                            {connectDragSource(
-                                <span className={styles.reorderIcon}>
-                                    <Icon name="reorder" />
-                                </span>
-                            )}
+                            {editable &&
+                                connectDragSource(
+                                    <span className={styles.reorderIcon}>
+                                        <Icon name="reorder" />
+                                    </span>
+                                )}
                         </CardMenu>
                     </Card>
                 </div>

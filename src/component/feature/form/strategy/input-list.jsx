@@ -47,13 +47,15 @@ export default class InputList extends Component {
         const { name, list, disabled } = this.props;
         return (
             <div>
-                <strong>List of {name}:</strong>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <strong>List of {name}</strong>
+                <div style={{ display: 'flex', flexWrap: 'wrap', margin: '10px 0' }}>
                     {list.map((entryValue, index) => (
                         <Chip
                             key={index + entryValue}
-                            style={{ marginRight: '3px' }}
+                            className="mdl-color--blue-grey-100"
+                            style={{ marginRight: '3px', border: '1px solid' }}
                             onClose={disabled ? undefined : () => this.onClose(index)}
+                            title="Remove value"
                         >
                             {entryValue}
                         </Chip>
@@ -65,10 +67,10 @@ export default class InputList extends Component {
                     <div style={{ display: 'flex' }}>
                         <Textfield
                             name={`input_field`}
-                            style={{ width: '100%', flex: 1 }}
+                            style={{ width: '100%', maxWidth: '200px', flex: 1 }}
                             floatingLabel
                             label="Add items:"
-                            placeholder="value1, value2"
+                            placeholder=""
                             onBlur={this.onBlur}
                             onKeyDown={this.onKeyDown}
                             ref={input => {

@@ -17,22 +17,24 @@ const infoLabelStyle = {
 const InputPercentage = ({ name, minLabel, maxLabel, value, onChange, disabled = false }) => (
     <div style={{ margin: '20px 0' }}>
         <table style={{ width: '100%' }} colSpan="0" cellSpacing="0" cellPadding="0">
-            <tr>
-                <td style={{ textAlign: 'left', paddingLeft: '20px', width: '20px' }}>
-                    <span style={infoLabelStyle}>{minLabel}</span>
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                    {name} <strong style={labelStyle}>{value}%</strong>
-                </td>
-                <td style={{ textAlign: 'right', paddingRight: '20px', width: '20px' }}>
-                    <span style={infoLabelStyle}>{maxLabel}</span>&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td colSpan="3">
-                    <Slider min={0} max={100} value={value} onChange={onChange} label={name} disabled={disabled} />
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td style={{ textAlign: 'left', paddingLeft: '20px', width: '20px' }}>
+                        <span style={infoLabelStyle}>{minLabel}</span>
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                        <strong title={name} style={labelStyle}>{value}%</strong>
+                    </td>
+                    <td style={{ textAlign: 'right', paddingRight: '20px', width: '20px' }}>
+                        <span style={infoLabelStyle}>{maxLabel}</span>&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan="3">
+                        <Slider min={0} max={100} value={value} onChange={onChange} label={name} disabled={disabled} />
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 );
