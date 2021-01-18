@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
-import features from './feature-store';
+import features from './feature-toggle';
 import featureTypes from './feature-type';
-import featureMetrics from './feature-metrics-store';
+import featureMetrics from './feature-metrics';
+import featureTags from './feature-tags';
+import tagTypes from './tag-type';
+import tags from './tag';
 import strategies from './strategy';
-import input from './input-store';
-import history from './history-store'; // eslint-disable-line
-import archive from './archive-store';
-import error from './error-store';
-import clientInstances from './client-instance-store';
+import history from './history'; // eslint-disable-line
+import archive from './archive';
+import error from './error';
 import settings from './settings';
 import user from './user';
 import applications from './application';
@@ -20,11 +21,12 @@ const unleashStore = combineReducers({
     featureTypes,
     featureMetrics,
     strategies,
-    input,
+    tagTypes,
+    tags,
+    featureTags,
     history,
     archive,
     error,
-    clientInstances,
     settings,
     user,
     applications,
