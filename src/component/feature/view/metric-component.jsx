@@ -109,7 +109,7 @@ export default class MetricComponent extends React.Component {
                                 <div>
                                     <small>
                                         <strong>Not used in an app in the last hour. </strong>
-                                        This might be due to your client implementation is not reporting usage.
+                                        This might be due to your client implementation not reporting usage.
                                     </small>
                                 </div>
                             </div>
