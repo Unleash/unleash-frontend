@@ -143,7 +143,7 @@ export default class StrategyConfigureComponent extends React.Component {
                             </Link>
                             {editable && (
                                 <IconButton
-                                    title="Remove this acivation strategy"
+                                    title="Remove this activation strategy"
                                     name="delete"
                                     onClick={removeStrategy}
                                 />
