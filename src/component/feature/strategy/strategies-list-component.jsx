@@ -13,8 +13,6 @@ import { HeaderTitle } from '../../common';
 import { updateIndexInArray } from '../../common/util';
 import styles from './strategy.module.scss';
 
-const randomKeys = length => Array.from({ length }, () => Math.random());
-
 const cleanStrategy = strategy => ({
     name: strategy.name,
     parameters: cloneDeep(strategy.parameters),
@@ -22,15 +20,10 @@ const cleanStrategy = strategy => ({
 });
 
 const StrategiesList = props => {
-    const [keys, updateKeys] = useState(randomKeys(props.configuredStrategies.length));
     const [editableStrategies, updateEditableStrategies] = useState(cloneDeep(props.configuredStrategies));
     const dirty = editableStrategies.some(p => p.dirty);
 
     useEffect(() => {
-        if (keys.length < props.configuredStrategies.length) {
-            // eslint-disable-next-line react/no-did-update-set-state
-            updateKeys(randomKeys(props.configuredStrategies.length));
-        }
         if (!dirty) {
             updateEditableStrategies(cloneDeep(props.configuredStrategies));
         }
@@ -63,7 +56,6 @@ const StrategiesList = props => {
     const addStrategy = strategy => {
         const strategies = [...editableStrategies];
         strategies.push({ ...strategy, dirty: true, new: true });
-        updateKeys([...keys, Math.random()]);
         updateEditableStrategies(strategies);
     };
 
@@ -71,7 +63,6 @@ const StrategiesList = props => {
         if (!dirty) {
             // console.log(`move strategy from ${index} to ${toIndex}`);
             const strategies = arrayMove(editableStrategies, index, toIndex);
-            updateKeys(randomKeys(strategies.length));
             await props.saveStrategies(strategies);
             updateEditableStrategies(strategies);
         }
@@ -119,7 +110,7 @@ const StrategiesList = props => {
     const blocks = editableStrategies.map((strategy, i) => (
         <ConfigureStrategy
             index={i}
-            key={i} // TODO: Do we beed random keys anymore?
+            key={i}
             featureToggleName={featureToggleName}
             strategy={strategy}
             moveStrategy={moveStrategy}
