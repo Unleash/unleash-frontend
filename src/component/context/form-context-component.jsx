@@ -157,7 +157,7 @@ class AddContextComponent extends Component {
                             <p style={{ color: 'rgba(0,0,0,.54)' }}>
                                 By enabling stickiness on this context field you can use it together with the
                                 flexible-rollout strategy. This will guarantee a consistent behavior for specific values
-                                of this context field. PS! Not all client SDK's support this feature yet!
+                                of this context field. PS! Not all client SDK's support this feature yet!{' '}
                                 <a
                                     href="https://unleash.github.io/docs/activation_strategy#flexiblerollout"
                                     target="_blank"
