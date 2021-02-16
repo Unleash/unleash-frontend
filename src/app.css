@@ -1,0 +1,11 @@
+:root {
+    --h1-size: 1.25rem;
+    --card-padding: 2rem;
+}
+
+h1,
+h2 {
+    padding: 0;
+    margin: 0;
+    line-height: 24px;
+}

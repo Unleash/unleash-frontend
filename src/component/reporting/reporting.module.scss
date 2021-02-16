@@ -1,0 +1,31 @@
+.header {
+    font-size: var(--h1-size);
+    font-weight: 500;
+    margin: 0;
+}
+
+.card {
+    width: 100%;
+    padding: var(--card-padding);
+}
+
+.projectSelector {
+    margin-bottom: 1rem;
+}
+
+/** REPORT CARD **/
+.reportCardContainer {
+    display: flex;
+}
+
+.reportCardList,
+.reportCardHealth,
+.reportCardAction {
+    width: 33.3%;
+}
+
+.reportCardList .header,
+.reportCardHealth .header,
+.reportCardAction .header {
+    text-align: center;
+}
