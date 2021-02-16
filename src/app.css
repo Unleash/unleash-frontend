@@ -1,6 +1,14 @@
 :root {
+    /* FONT SIZE */
     --h1-size: 1.25rem;
+    --p-size: 1.05rem;
+
+    /* PADDING */
     --card-padding: 2rem;
+
+    /* COLORS*/
+    --success: #3bd86e;
+    --danger: #d95e5e;
 }
 
 h1,

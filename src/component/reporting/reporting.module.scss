@@ -1,7 +1,7 @@
 .header {
     font-size: var(--h1-size);
     font-weight: 500;
-    margin: 0;
+    margin: 0 0 0.5rem 0;
 }
 
 .card {
@@ -16,16 +16,56 @@
 /** REPORT CARD **/
 .reportCardContainer {
     display: flex;
+    justify-content: space-between;
 }
 
-.reportCardList,
-.reportCardHealth,
-.reportCardAction {
-    width: 33.3%;
+.reportCardHealthInnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
 }
 
-.reportCardList .header,
-.reportCardHealth .header,
-.reportCardAction .header {
-    text-align: center;
+.reportCardHealthRating {
+    color: #d67c3d;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.reportCardList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.reportCardList li {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.reportCardList li p {
+    margin: 0;
+    padding: 0;
+    margin-left: 0.5rem;
+    font-size: var(--p-size);
+}
+
+.check {
+    color: var(--success);
+}
+
+.danger {
+    color: var(--danger);
+}
+
+.reportCardActionContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.reportCardActionText {
+    max-width: 300px;
+    font-size: var(--p-size);
 }
