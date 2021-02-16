@@ -103,7 +103,8 @@ class UpdateVariantComponent extends Component {
                 <MySelect label="Stickiness" options={options} value={value} onChange={onChange} />
                 &nbsp;&nbsp;
                 <small>
-                    By overriding the stickiness you may control how users are distributed across variants.{' '}
+                    By overriding the stickiness you can control which parameter you want to be used in order to ensure
+                    consistent traffic allocation across variants.{' '}
                     <a href="https://unleash.github.io/docs/toggle_variants" target="_blank">
                         Read more
                     </a>
