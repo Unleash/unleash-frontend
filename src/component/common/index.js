@@ -185,3 +185,15 @@ export function calc(value, total, decimal) {
 export function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
+
+export const selectStyles = {
+    control: provided => ({
+        ...provided,
+        border: '1px solid #607d8b',
+        boxShadow: '0',
+        ':hover': {
+            borderColor: '#607d8b',
+            boxShadow: '0 0 0 1px #607d8b',
+        },
+    }),
+};

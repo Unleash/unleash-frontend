@@ -34,6 +34,19 @@ Array [
   },
   Object {
     "component": [Function],
+    "icon": "album",
+    "path": "/context",
+    "title": "Context Fields",
+  },
+  Object {
+    "component": [Function],
+    "hidden": false,
+    "icon": "folder_open",
+    "path": "/projects",
+    "title": "Projects",
+  },
+  Object {
+    "component": [Function],
     "icon": "label",
     "path": "/tag-types",
     "title": "Tag types",
@@ -148,8 +161,7 @@ Array [
   },
   Object {
     "component": [Function],
-    "hidden": true,
-    "icon": "apps",
+    "icon": "album",
     "path": "/context",
     "title": "Context Fields",
   },
@@ -167,10 +179,35 @@ Array [
   },
   Object {
     "component": [Function],
-    "hidden": true,
+    "hidden": false,
     "icon": "folder_open",
     "path": "/projects",
     "title": "Projects",
+  },
+  Object {
+    "component": [Function],
+    "parent": "/admin",
+    "path": "/admin/api",
+    "title": "API access",
+  },
+  Object {
+    "component": [Function],
+    "parent": "/admin",
+    "path": "/admin/users",
+    "title": "Users",
+  },
+  Object {
+    "component": [Function],
+    "parent": "/admin",
+    "path": "/admin/auth",
+    "title": "Authentication",
+  },
+  Object {
+    "component": [Function],
+    "hidden": true,
+    "icon": "album",
+    "path": "/admin",
+    "title": "Admin",
   },
   Object {
     "component": [Function],

@@ -1,5 +1,5 @@
 {
-  "name": "unleash-frontend",
+  "name": "@ivarconr/unleash-enterprise-frontend",
   "description": "unleash your features",
   "version": "3.13.0",
   "keywords": [
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:Unleash/unleash-frontend.git"
+    "url": "git@github.com:ivarconr/unleash-enterprise-frontend.git"
   },
   "bugs": {
     "url": "https://github.com/Unleash/unleash-frontend"
@@ -116,5 +116,8 @@
     "testPathIgnorePatterns": [
       "/src/store/addons/__tests__/data.js"
     ]
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
