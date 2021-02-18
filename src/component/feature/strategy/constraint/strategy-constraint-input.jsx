@@ -9,6 +9,7 @@ export default class StrategyConstraintInput extends Component {
         updateConstraints: PropTypes.func.isRequired,
         contextNames: PropTypes.array.isRequired,
         contextFields: PropTypes.array.isRequired,
+        enabled: PropTypes.bool.isRequired,
     };
 
     constructor() {
@@ -49,7 +50,11 @@ export default class StrategyConstraintInput extends Component {
     };
 
     render() {
-        const { constraints, contextFields } = this.props;
+        const { constraints, contextFields, enabled } = this.props;
+
+        if (!enabled) {
+            return null;
+        }
 
         return (
             <div>

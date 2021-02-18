@@ -5,12 +5,12 @@ import { fetchProjects } from './project/actions';
 import { fetchStrategies } from './strategy/actions';
 import { fetchTagTypes } from './tag-type/actions';
 
-export function loadInitalData() {
+export function loadInitialData(flags = {}) {
     return dispatch => {
         fetchUIConfig()(dispatch);
-        fetchContext()(dispatch);
+        if (flags.C) fetchContext()(dispatch);
         fetchFeatureTypes()(dispatch);
-        fetchProjects()(dispatch);
+        if (flags.P) fetchProjects()(dispatch);
         fetchStrategies()(dispatch);
         fetchTagTypes()(dispatch);
     };
