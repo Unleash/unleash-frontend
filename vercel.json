@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/api", "destination": "https://unleash.herokuapp.com/api" },
+    { "source": "/logout", "destination": "https://unleash.herokuapp.com/logout" },
+    { "source": "/auth", "destination": "https://unleash.herokuapp.com/auth" },
+  ]
+}

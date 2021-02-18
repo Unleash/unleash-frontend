@@ -1,5 +1,5 @@
-import React from "react";
-import ReportingContainer from "../../component/reporting/reporting-container";
+import React from 'react';
+import ReportingContainer from '../../component/reporting/reporting-container';
 
 const render = () => <ReportingContainer />;
 

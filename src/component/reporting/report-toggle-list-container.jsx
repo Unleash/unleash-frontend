@@ -1,19 +1,16 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import ReportToggleList from "./report-toggle-list";
+import ReportToggleList from './report-toggle-list';
 
 const mapStateToProps = (state, ownProps) => {
     const features = state.features.toJS();
 
     return {
         features,
-        selectedProject: ownProps.selectedProject
+        selectedProject: ownProps.selectedProject,
     };
 };
 
-const ReportToggleListContainer = connect(
-    mapStateToProps,
-    null
-)(ReportToggleList);
+const ReportToggleListContainer = connect(mapStateToProps, null)(ReportToggleList);
 
 export default ReportToggleListContainer;

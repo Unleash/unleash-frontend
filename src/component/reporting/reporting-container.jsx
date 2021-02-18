@@ -1,21 +1,16 @@
-import { connect } from "react-redux";
-import { fetchFeatureToggles } from "../../store/feature-toggle/actions";
+import { connect } from 'react-redux';
+import { fetchFeatureToggles } from '../../store/feature-toggle/actions';
 
-import Reporting from "./reporting";
+import Reporting from './reporting';
 
-const mapStateToProps = state => {
-    return {
-        projects: state.projects.toJS()
-    };
-};
+const mapStateToProps = state => ({
+    projects: state.projects.toJS(),
+});
 
 const mapDispatchToProps = {
-    fetchFeatureToggles
+    fetchFeatureToggles,
 };
 
-const ReportingContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Reporting);
+const ReportingContainer = connect(mapStateToProps, mapDispatchToProps)(Reporting);
 
 export default ReportingContainer;

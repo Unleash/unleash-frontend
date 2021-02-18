@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "react-mdl";
+import React, { useState, useEffect } from 'react';
+import { Card } from 'react-mdl';
 
-import ReportToggleListItem from "./report-toggle-list-item";
-import ReportToggleListHeader from "./report-toggle-list-header";
+import ReportToggleListItem from './report-toggle-list-item';
+import ReportToggleListHeader from './report-toggle-list-header';
 
-import { getObjectProperties } from "./utils";
+import { getObjectProperties } from './utils';
 
-import styles from "./reporting.module.scss";
+import styles from './reporting.module.scss';
 
 const ReportToggleList = ({ features, selectedProject }) => {
     const [toggleRowData, setToggleRowData] = useState([]);
@@ -15,19 +15,11 @@ const ReportToggleList = ({ features, selectedProject }) => {
     console.log(selectedProject);
 
     useEffect(() => {
-        const formattedFeatures = features.filter(sameProject).map(feature => {
-            return {
-                ...getObjectProperties(
-                    feature,
-                    "name",
-                    "lastSeenAt",
-                    "createdAt",
-                    "stale"
-                ),
-                checked: getCheckedState(feature.name),
-                setToggleRowData
-            };
-        });
+        const formattedFeatures = features.filter(sameProject).map(feature => ({
+            ...getObjectProperties(feature, 'name', 'lastSeenAt', 'createdAt', 'stale'),
+            checked: getCheckedState(feature.name),
+            setToggleRowData,
+        }));
 
         setToggleRowData(formattedFeatures);
     }, [features, selectedProject]);
@@ -41,32 +33,21 @@ const ReportToggleList = ({ features, selectedProject }) => {
         return false;
     };
 
-    const renderListRows = () => {
-        return toggleRowData.map(feature => {
-            return <ReportToggleListItem key={feature.name} {...feature} />;
-        });
-    };
+    const renderListRows = () => toggleRowData.map(feature => <ReportToggleListItem key={feature.name} {...feature} />);
 
-    const sameProject = feature => {
-        return feature.project === selectedProject;
-    };
+    const sameProject = feature => feature.project === selectedProject;
 
     const handleCheckAll = () => {
         if (!checkAll) {
             setCheckAll(true);
-            return setToggleRowData(prev => {
-                return applyCheckedToFeatures(prev, true);
-            });
+            return setToggleRowData(prev => applyCheckedToFeatures(prev, true));
         }
         setCheckAll(false);
-        return setToggleRowData(prev => {
-            return applyCheckedToFeatures(prev, false);
-        });
+        return setToggleRowData(prev => applyCheckedToFeatures(prev, false));
     };
 
-    const applyCheckedToFeatures = (features, checkedState) => {
-        return features.map(feature => ({ ...feature, checked: checkedState }));
-    };
+    const applyCheckedToFeatures = (features, checkedState) =>
+        features.map(feature => ({ ...feature, checked: checkedState }));
 
     return (
         <Card className={styles.reportToggleList}>
@@ -75,10 +56,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
             </div>
             <div className={styles.reportToggleListInnerContainer}>
                 <table className={styles.reportingToggleTable}>
-                    <ReportToggleListHeader
-                        handleCheckAll={handleCheckAll}
-                        checkAll={checkAll}
-                    />
+                    <ReportToggleListHeader handleCheckAll={handleCheckAll} checkAll={checkAll} />
 
                     <tbody>{renderListRows()}</tbody>
                 </table>
