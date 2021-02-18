@@ -2,11 +2,12 @@ import { connect } from "react-redux";
 
 import ReportToggleList from "./report-toggle-list";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     const features = state.features.toJS();
 
     return {
-        features
+        features,
+        selectedProject: ownProps.selectedProject
     };
 };
 

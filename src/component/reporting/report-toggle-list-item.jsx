@@ -13,12 +13,16 @@ const ReportToggleListItem = ({
         setToggleRowData(prevState => {
             const newState = [...prevState];
             return newState.map(feature => {
-                if (feature.name === name) {
+                if (nameMatches(feature)) {
                     return { ...feature, checked: !feature.checked };
                 }
                 return feature;
             });
         });
+    };
+
+    const nameMatches = feature => {
+        return feature.name === name;
     };
 
     console.log(checked);

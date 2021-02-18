@@ -8,7 +8,7 @@ import styles from "./reporting.module.scss";
 
 const Reporting = ({ fetchFeatureToggles, projects }) => {
     const [projectOptions, setProjectOptions] = useState([
-        { key: "default", name: "default" }
+        { key: "default", label: "Default" }
     ]);
     const [selectedProject, setSelectedProject] = useState("default");
 
@@ -27,8 +27,14 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
         });
     };
 
-    const onChange = () => {
-        console.log("Changing");
+    const onChange = e => {
+        const { value } = e.target;
+
+        const selectedProject = projectOptions.find(
+            option => option.key === value
+        );
+
+        setSelectedProject(selectedProject.key);
     };
 
     return (
@@ -39,7 +45,7 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
                     name="project"
                     label="project"
                     options={projectOptions}
-                    value={projectOptions[0].key}
+                    value={setSelectedProject.label}
                     onChange={onChange}
                 />
             </div>

@@ -12,8 +12,9 @@ const ReportToggleList = ({ features, selectedProject }) => {
     const [toggleRowData, setToggleRowData] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
 
+    console.log(selectedProject);
+
     useEffect(() => {
-        console.log("UPDATING");
         const formattedFeatures = features.filter(sameProject).map(feature => {
             return {
                 ...getObjectProperties(
