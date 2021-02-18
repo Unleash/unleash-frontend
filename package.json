@@ -37,7 +37,8 @@
     "test:ci": "npm run lint && npm run build && npm run test",
     "prepublish": "npm run build"
   },
-  "main": "./index.js",  
+  "main": "./index.js",
+  "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
