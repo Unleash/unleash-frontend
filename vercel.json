@@ -1,7 +1,7 @@
 {
-  "routes": [
-    { "src": "/api/*", "dest": "https://unleash.herokuapp.com/api" },
-    { "src": "/logout", "dest": "https://unleash.herokuapp.com/logout" },
-    { "src": "/auth", "dest": "https://unleash.herokuapp.com/auth" }
+  "rewrites": [
+    { "source": "/api/*", "destination": "https://unleash.herokuapp.com/api" },
+    { "source": "/logout", "destination": "https://unleash.herokuapp.com/logout" },
+    { "source": "/auth", "destination": "https://unleash.herokuapp.com/auth" }
   ]
 }
