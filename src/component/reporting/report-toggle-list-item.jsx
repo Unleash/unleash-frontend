@@ -1,11 +1,36 @@
 import React from "react";
 import { Checkbox } from "react-mdl";
 
-const ReportToggleListItem = ({ name, stale, lastSeenAt, createdAt }) => {
+const ReportToggleListItem = ({
+    name,
+    stale,
+    lastSeenAt,
+    createdAt,
+    checked,
+    setToggleRowData
+}) => {
+    const handleChange = () => {
+        setToggleRowData(prevState => {
+            const newState = [...prevState];
+            return newState.map(feature => {
+                if (feature.name === name) {
+                    return { ...feature, checked: !feature.checked };
+                }
+                return feature;
+            });
+        });
+    };
+
+    console.log(checked);
+
     return (
         <tr>
             <td>
-                <Checkbox />
+                <Checkbox
+                    checked={checked}
+                    value={checked}
+                    onChange={handleChange}
+                />
             </td>
             <td>{name}</td>
             <td>50 days</td>
@@ -17,4 +42,4 @@ const ReportToggleListItem = ({ name, stale, lastSeenAt, createdAt }) => {
     );
 };
 
-export default ReportToggleListItem;
+export default React.memo(ReportToggleListItem);
