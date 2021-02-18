@@ -6,6 +6,10 @@
     /* PADDING */
     --card-padding: 2rem;
 
+    /* MARGIN */
+    --card-margin-y: 1rem;
+    --card-margin-x: 1rem;
+
     /* COLORS*/
     --success: #3bd86e;
     --danger: #d95e5e;

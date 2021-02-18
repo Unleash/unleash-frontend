@@ -7,13 +7,15 @@
 .card {
     width: 100%;
     padding: var(--card-padding);
+    margin: var(--card-margin-y) 0;
 }
 
 .projectSelector {
     margin-bottom: 1rem;
 }
 
-/** REPORT CARD **/
+/** ReportCard **/
+
 .reportCardContainer {
     display: flex;
     justify-content: space-between;
@@ -23,6 +25,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    align-items: center;
     height: 80%;
 }
 
@@ -68,4 +71,41 @@
 .reportCardActionText {
     max-width: 300px;
     font-size: var(--p-size);
+}
+
+.reportCardBtn {
+    background-color: #f2f2f2;
+}
+
+/** ReportToggleList **/
+.reportToggleList {
+    width: 100%;
+    margin: var(--card-margin-y) 0;
+}
+
+.reportToggleListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 1rem 1.5rem;
+}
+
+.reportToggleListInnerContainer {
+    padding: var(--card-padding);
+}
+
+.reportToggleListHeading {
+    font-size: var(--h1-size);
+    margin: 0;
+    font-weight: 500;
+}
+
+.reportingToggleTable {
+    width: 100%;
+    border-spacing: 0 0.8rem;
+}
+
+.reportingToggleTable th {
+    text-align: left;
 }
