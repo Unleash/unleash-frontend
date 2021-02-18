@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from 'react-mdl';
+import React, { useState, useEffect } from "react";
+import { Card } from "react-mdl";
 
-import ReportToggleListItem from './report-toggle-list-item';
-import ReportToggleListHeader from './report-toggle-list-header';
+import ReportToggleListItem from "./report-toggle-list-item";
+import ReportToggleListHeader from "./report-toggle-list-header";
 
-import { getObjectProperties } from './utils';
+import { getObjectProperties } from "./utils";
 
-import styles from './reporting.module.scss';
+import styles from "./reporting.module.scss";
 
 const ReportToggleList = ({ features, selectedProject }) => {
     const [toggleRowData, setToggleRowData] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
 
-    console.log(selectedProject);
-
     useEffect(() => {
+        // TODO: Handle sorting preservation on updated props
         const formattedFeatures = features.filter(sameProject).map(feature => ({
-            ...getObjectProperties(feature, 'name', 'lastSeenAt', 'createdAt', 'stale'),
+            ...getObjectProperties(
+                feature,
+                "name",
+                "lastSeenAt",
+                "createdAt",
+                "stale"
+            ),
             checked: getCheckedState(feature.name),
-            setToggleRowData,
+            setToggleRowData
         }));
 
         setToggleRowData(formattedFeatures);
@@ -33,7 +38,10 @@ const ReportToggleList = ({ features, selectedProject }) => {
         return false;
     };
 
-    const renderListRows = () => toggleRowData.map(feature => <ReportToggleListItem key={feature.name} {...feature} />);
+    const renderListRows = () =>
+        toggleRowData.map(feature => (
+            <ReportToggleListItem key={feature.name} {...feature} />
+        ));
 
     const sameProject = feature => feature.project === selectedProject;
 
@@ -56,7 +64,11 @@ const ReportToggleList = ({ features, selectedProject }) => {
             </div>
             <div className={styles.reportToggleListInnerContainer}>
                 <table className={styles.reportingToggleTable}>
-                    <ReportToggleListHeader handleCheckAll={handleCheckAll} checkAll={checkAll} />
+                    <ReportToggleListHeader
+                        handleCheckAll={handleCheckAll}
+                        checkAll={checkAll}
+                        setToggleRowData={setToggleRowData}
+                    />
 
                     <tbody>{renderListRows()}</tbody>
                 </table>
