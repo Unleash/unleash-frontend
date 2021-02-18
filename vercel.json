@@ -1,6 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/*", "destination": "https://unleash.herokuapp.com/api" },
+    { "source": "/api/admin/user", "destination": "https://unleash.herokuapp.com/api/admin/user" },
+    { "source": "/api/admin/uiconfig", "destination": "https://unleash.herokuapp.com/api/admin/uiconfig" },
+    { "source": "/api/admin/context", "destination": "https://unleash.herokuapp.com/api/admin/context" },
     { "source": "/logout", "destination": "https://unleash.herokuapp.com/logout" },
     { "source": "/auth", "destination": "https://unleash.herokuapp.com/auth" }
   ]
