@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import Select from "../common/select";
-import ReportCard from "./reportCard";
+import ReportCard from "./report-card";
+import ReportToggleListContainer from "./report-toggle-list-container";
 
 import styles from "./reporting.module.scss";
 
-const Reporting = () => {
-    const projectOptions = [{ key: "default", label: "default" }];
+const Reporting = ({ fetchFeatureToggles, projects }) => {
+    const [projectOptions, setProjectOptions] = useState([
+        { key: "default", name: "default" }
+    ]);
+    const [selectedProject, setSelectedProject] = useState("default");
+
+    useEffect(() => {
+        fetchFeatureToggles();
+        setSelectedProject(projects[0].id);
+    }, []);
+
+    useEffect(() => {
+        setProjectOptions(formatProjectOptions(projects));
+    }, [projects]);
+
+    const formatProjectOptions = projects => {
+        return projects.map(project => {
+            return { key: project.id, label: project.name };
+        });
+    };
 
     const onChange = () => {
         console.log("Changing");
@@ -24,6 +44,7 @@ const Reporting = () => {
                 />
             </div>
             <ReportCard />
+            <ReportToggleListContainer selectedProject={selectedProject} />
         </React.Fragment>
     );
 };

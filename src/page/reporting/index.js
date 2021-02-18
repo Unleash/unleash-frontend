@@ -1,6 +1,6 @@
 import React from "react";
-import Reporting from "../../component/reporting/reporting";
+import ReportingContainer from "../../component/reporting/reporting-container";
 
-const render = () => <Reporting />;
+const render = () => <ReportingContainer />;
 
 export default render;
