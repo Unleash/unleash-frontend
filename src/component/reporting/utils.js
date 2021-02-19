@@ -10,15 +10,24 @@ export const getObjectProperties = (target, ...keys) => {
     return newObject;
 };
 
-export const sortProjectsByName = projects => {
+export const sortProjectsByNameAscending = projects => {
     const sorted = [...projects];
     sorted.sort((a, b) => {
-        return a.name.toLowerCase()[0] - b.name.toLowerCase()[0];
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
     });
+    return sorted;
+};
 
-    console.log(sorted, projects);
+export const sortProjectsByNameDescending = projects => {
+    const sorted = sortProjectsByNameAscending([...projects]).reverse();
 
-    return sorted.reverse();
+    return sorted;
 };
 
 export const sortProjectsByLastSeen = projects => {};

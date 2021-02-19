@@ -1,35 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox } from "react-mdl";
 
-import { sortProjectsByLastSeen, sortProjectsByName } from "./utils";
+import { NAME, LAST_SEEN } from "./constants";
 
-const NAME = "name";
-const LAST_SEEN = "lastSeen";
-const CREATED = "created";
-const EXPIRED = "expired";
-const STATUS = "status";
-const REPORT = "report";
+import {
+    sortProjectsByLastSeen,
+    sortProjectsByNameAscending,
+    sortProjectsByNameDescending
+} from "./utils";
 
 const ReportToggleListHeader = ({
     handleCheckAll,
     checkAll,
+    setSortKey,
+    sort,
     setToggleRowData
 }) => {
-    const handleSort = type => {
-        switch (type) {
-            case NAME:
-                setToggleRowData(prev => {
-                    console.log("FIRING");
-                    return sortProjectsByName(prev);
-                });
-                break;
-            case LAST_SEEN:
-                setToggleRowData(prev => {
-                    return sortProjectsByLastSeen(prev);
-                });
+    const ASCENDING = "ascending";
+    const DESCENDING = "descending";
+    const [sortNameState, setSortNameState] = useState(ASCENDING);
 
-                break;
+    const handleSort = type => {
+        setSortKey(type);
+        setToggleRowData(prev => {
+            const sorted = sort(prev);
+            console.log("SORTED", sorted[0].name);
+            return sorted;
+        });
+    };
+
+    const handleSortName = projects => {
+        if (sortNameState === ASCENDING) {
+            setSortNameState(DESCENDING);
+            return sortProjectsByNameDescending(projects);
         }
+        setSortNameState(ASCENDING);
+        return sortProjectsByNameAscending(projects);
     };
 
     return (

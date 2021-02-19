@@ -7,13 +7,16 @@ import ReportToggleListHeader from "./report-toggle-list-header";
 import { getObjectProperties } from "./utils";
 
 import styles from "./reporting.module.scss";
+import useSort from "./useSort";
+
+const PRESERVE = true;
 
 const ReportToggleList = ({ features, selectedProject }) => {
     const [toggleRowData, setToggleRowData] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
+    const [sort, setSortKey] = useSort();
 
     useEffect(() => {
-        // TODO: Handle sorting preservation on updated props
         const formattedFeatures = features.filter(sameProject).map(feature => ({
             ...getObjectProperties(
                 feature,
@@ -26,8 +29,9 @@ const ReportToggleList = ({ features, selectedProject }) => {
             setToggleRowData
         }));
 
-        setToggleRowData(formattedFeatures);
-    }, [features, selectedProject]);
+        const sortedFeatures = sort(formattedFeatures, PRESERVE);
+        setToggleRowData(sortedFeatures);
+    }, []);
 
     const getCheckedState = name => {
         const feature = toggleRowData.find(feature => feature.name === name);
@@ -68,6 +72,8 @@ const ReportToggleList = ({ features, selectedProject }) => {
                         handleCheckAll={handleCheckAll}
                         checkAll={checkAll}
                         setToggleRowData={setToggleRowData}
+                        setSortKey={setSortKey}
+                        sort={sort}
                     />
 
                     <tbody>{renderListRows()}</tbody>
