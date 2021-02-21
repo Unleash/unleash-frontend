@@ -34,13 +34,14 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "C",
     "icon": "album",
     "path": "/context",
     "title": "Context Fields",
   },
   Object {
     "component": [Function],
-    "hidden": false,
+    "flag": "P",
     "icon": "folder_open",
     "path": "/projects",
     "title": "Projects",
@@ -161,6 +162,7 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "C",
     "icon": "album",
     "path": "/context",
     "title": "Context Fields",
@@ -179,7 +181,7 @@ Array [
   },
   Object {
     "component": [Function],
-    "hidden": false,
+    "flag": "P",
     "icon": "folder_open",
     "path": "/projects",
     "title": "Projects",
