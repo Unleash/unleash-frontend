@@ -23,7 +23,8 @@ const ReportToggleList = ({ features, selectedProject }) => {
                 "name",
                 "lastSeenAt",
                 "createdAt",
-                "stale"
+                "stale",
+                "type"
             ),
             checked: getCheckedState(feature.name),
             setFeatures

@@ -35,3 +35,8 @@ export const sortProjectsByLastSeen = projects => {};
 export const sortProjectsByCreatedAt = projects => {};
 
 export const sortProjectsByReport = projects => {};
+
+export const pluralize = (items, word) => {
+    if (items === 1) return `${items} ${word}`;
+    return `${items} ${word}s`;
+};
