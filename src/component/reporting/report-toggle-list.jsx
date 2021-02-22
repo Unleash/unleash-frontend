@@ -6,15 +6,15 @@ import ReportToggleListHeader from "./report-toggle-list-header";
 
 import { getObjectProperties } from "./utils";
 
-import styles from "./reporting.module.scss";
 import useSort from "./useSort";
 
-const PRESERVE = true;
+import styles from "./reporting.module.scss";
 
 const ReportToggleList = ({ features, selectedProject }) => {
-    const [toggleRowData, setToggleRowData] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
-    const [sort, setSortKey] = useSort();
+
+    const [localFeatures, setFeatures] = useState(features);
+    const [sort, setSortData] = useSort();
 
     useEffect(() => {
         const formattedFeatures = features.filter(sameProject).map(feature => ({
@@ -26,15 +26,14 @@ const ReportToggleList = ({ features, selectedProject }) => {
                 "stale"
             ),
             checked: getCheckedState(feature.name),
-            setToggleRowData
+            setFeatures
         }));
 
-        const sortedFeatures = sort(formattedFeatures, PRESERVE);
-        setToggleRowData(sortedFeatures);
-    }, []);
+        setFeatures(formattedFeatures);
+    }, [features, selectedProject]);
 
     const getCheckedState = name => {
-        const feature = toggleRowData.find(feature => feature.name === name);
+        const feature = localFeatures.find(feature => feature.name === name);
 
         if (feature) {
             return feature.checked ? feature.checked : false;
@@ -43,7 +42,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
     };
 
     const renderListRows = () =>
-        toggleRowData.map(feature => (
+        sort(localFeatures).map(feature => (
             <ReportToggleListItem key={feature.name} {...feature} />
         ));
 
@@ -52,10 +51,10 @@ const ReportToggleList = ({ features, selectedProject }) => {
     const handleCheckAll = () => {
         if (!checkAll) {
             setCheckAll(true);
-            return setToggleRowData(prev => applyCheckedToFeatures(prev, true));
+            return setFeatures(prev => applyCheckedToFeatures(prev, true));
         }
         setCheckAll(false);
-        return setToggleRowData(prev => applyCheckedToFeatures(prev, false));
+        return setFeatures(prev => applyCheckedToFeatures(prev, false));
     };
 
     const applyCheckedToFeatures = (features, checkedState) =>
@@ -71,9 +70,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
                     <ReportToggleListHeader
                         handleCheckAll={handleCheckAll}
                         checkAll={checkAll}
-                        setToggleRowData={setToggleRowData}
-                        setSortKey={setSortKey}
-                        sort={sort}
+                        setSortData={setSortData}
                     />
 
                     <tbody>{renderListRows()}</tbody>

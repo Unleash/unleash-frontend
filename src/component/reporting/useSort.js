@@ -1,22 +1,21 @@
 import { useState } from "react";
-
-import { LAST_SEEN, NAME } from "./constants";
 import {
     sortProjectsByNameAscending,
     sortProjectsByNameDescending
 } from "./utils";
 
-const ASCENDING = "ascending";
-const DESCENDING = "descending";
+import { LAST_SEEN, NAME } from "./constants";
 
 const useSort = () => {
-    const [sortKey, setSortKey] = useState(NAME);
-    const [sortNameState, setSortNameState] = useState(DESCENDING);
+    const [sortData, setSortData] = useState({
+        sortKey: NAME,
+        ascending: true
+    });
 
-    const sort = (features, preserve = false) => {
-        switch (sortKey) {
+    const sort = features => {
+        switch (sortData.sortKey) {
             case NAME:
-                return handleSortName(features, preserve);
+                return handleSortName(features, sortData);
             case LAST_SEEN:
                 return sortProjectsByLastSeen(features);
             default:
@@ -24,22 +23,17 @@ const useSort = () => {
         }
     };
 
-    const handleSortName = (projects, preserve) => {
-        if (sortNameState === ASCENDING) {
-            if (!preserve) {
-                setSortNameState(DESCENDING);
-            }
-
-            return sortProjectsByNameDescending(projects);
+    const handleSortName = features => {
+        if (sortData.ascending) {
+            return sortProjectsByNameAscending(features);
         }
 
-        if (!preserve) {
-            setSortNameState(ASCENDING);
-        }
-        return sortProjectsByNameAscending(projects);
+        return sortProjectsByNameDescending(features);
     };
 
-    return [sort, setSortKey];
+    const handleSortLastSeen = features => {};
+
+    return [sort, setSortData];
 };
 
 export default useSort;

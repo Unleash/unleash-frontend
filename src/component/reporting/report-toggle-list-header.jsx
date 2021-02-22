@@ -3,39 +3,12 @@ import { Checkbox } from "react-mdl";
 
 import { NAME, LAST_SEEN } from "./constants";
 
-import {
-    sortProjectsByLastSeen,
-    sortProjectsByNameAscending,
-    sortProjectsByNameDescending
-} from "./utils";
-
-const ReportToggleListHeader = ({
-    handleCheckAll,
-    checkAll,
-    setSortKey,
-    sort,
-    setToggleRowData
-}) => {
-    const ASCENDING = "ascending";
-    const DESCENDING = "descending";
-    const [sortNameState, setSortNameState] = useState(ASCENDING);
-
+const ReportToggleListHeader = ({ handleCheckAll, checkAll, setSortData }) => {
     const handleSort = type => {
-        setSortKey(type);
-        setToggleRowData(prev => {
-            const sorted = sort(prev);
-            console.log("SORTED", sorted[0].name);
-            return sorted;
-        });
-    };
-
-    const handleSortName = projects => {
-        if (sortNameState === ASCENDING) {
-            setSortNameState(DESCENDING);
-            return sortProjectsByNameDescending(projects);
-        }
-        setSortNameState(ASCENDING);
-        return sortProjectsByNameAscending(projects);
+        setSortData(prev => ({
+            sortKey: type,
+            ascending: !prev.ascending
+        }));
     };
 
     return (

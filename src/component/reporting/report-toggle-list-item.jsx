@@ -7,10 +7,10 @@ const ReportToggleListItem = ({
     lastSeenAt,
     createdAt,
     checked,
-    setToggleRowData
+    setFeatures
 }) => {
     const handleChange = () => {
-        setToggleRowData(prevState => {
+        setFeatures(prevState => {
             const newState = [...prevState];
             return newState.map(feature => {
                 if (nameMatches(feature)) {
