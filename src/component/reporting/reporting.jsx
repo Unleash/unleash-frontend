@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import Select from '../common/select';
-import ReportCard from './report-card';
-import ReportToggleListContainer from './report-toggle-list-container';
+import Select from "../common/select";
+import ReportCard from "./report-card";
+import ReportToggleListContainer from "./report-toggle-list-container";
 
-import styles from './reporting.module.scss';
+import styles from "./reporting.module.scss";
 
 const Reporting = ({ fetchFeatureToggles, projects }) => {
-    const [projectOptions, setProjectOptions] = useState([{ key: 'default', label: 'Default' }]);
-    const [selectedProject, setSelectedProject] = useState('default');
+    const [projectOptions, setProjectOptions] = useState([
+        { key: "default", label: "Default" }
+    ]);
+    const [selectedProject, setSelectedProject] = useState("default");
 
     useEffect(() => {
         fetchFeatureToggles();
@@ -19,12 +21,18 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
         setProjectOptions(formatProjectOptions(projects));
     }, [projects]);
 
-    const formatProjectOptions = projects => projects.map(project => ({ key: project.id, label: project.name }));
+    const formatProjectOptions = projects => {
+        return projects.map(project => {
+            return { key: project.id, label: project.name };
+        });
+    };
 
     const onChange = e => {
         const { value } = e.target;
 
-        const selectedProject = projectOptions.find(option => option.key === value);
+        const selectedProject = projectOptions.find(
+            option => option.key === value
+        );
 
         setSelectedProject(selectedProject.key);
     };

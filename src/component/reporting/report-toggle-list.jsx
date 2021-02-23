@@ -10,6 +10,8 @@ import useSort from "./useSort";
 
 import styles from "./reporting.module.scss";
 
+//import features from "./testFeatures";
+
 const ReportToggleList = ({ features, selectedProject }) => {
     const [checkAll, setCheckAll] = useState(false);
 

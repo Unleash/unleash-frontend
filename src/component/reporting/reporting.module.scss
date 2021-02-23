@@ -83,6 +83,10 @@
     margin: var(--card-margin-y) 0;
 }
 
+.sortIcon {
+    margin-left: 8px;
+}
+
 .reportToggleListHeader {
     display: flex;
     justify-content: space-between;
@@ -108,4 +112,26 @@
 
 .reportingToggleTable th {
     text-align: left;
+}
+
+.expired {
+    color: var(--danger);
+}
+
+.active {
+    color: var(--success);
+}
+
+.stale {
+    color: var(--danger);
+}
+
+.reportStatus {
+    display: flex;
+    align-items: center;
+}
+
+.reportIcon {
+    font-size: 1.5rem;
+    margin-right: 5px;
 }

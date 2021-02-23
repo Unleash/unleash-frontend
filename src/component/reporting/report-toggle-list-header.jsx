@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Checkbox } from "react-mdl";
+import UnfoldMoreOutlinedIcon from "@material-ui/icons/UnfoldMoreOutlined";
 
-import { NAME, LAST_SEEN } from "./constants";
+import { NAME, LAST_SEEN, CREATED, EXPIRED, STATUS, REPORT } from "./constants";
+
+import styles from "./reporting.module.scss";
 
 const ReportToggleListHeader = ({ handleCheckAll, checkAll, setSortData }) => {
     const handleSort = type => {
@@ -21,14 +24,55 @@ const ReportToggleListHeader = ({ handleCheckAll, checkAll, setSortData }) => {
                         checked={checkAll}
                     />
                 </th>
-                <th style={{ width: "150px" }}>
-                    Name <button onClick={() => handleSort(NAME)}>Sort</button>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    style={{ width: "150px" }}
+                    onClick={() => handleSort(NAME)}
+                >
+                    Name
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
                 </th>
-                <th>Last seen</th>
-                <th>Created</th>
-                <th>Expired</th>
-                <th>Status</th>
-                <th>Report</th>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSort(LAST_SEEN)}
+                >
+                    Last seen
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
+                </th>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSort(CREATED)}
+                >
+                    Created
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
+                </th>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSort(EXPIRED)}
+                >
+                    Expired
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
+                </th>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSort(STATUS)}
+                >
+                    Status
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
+                </th>
+                <th
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleSort(REPORT)}
+                >
+                    Report
+                    <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
+                </th>
             </tr>
         </thead>
     );

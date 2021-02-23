@@ -1,10 +1,18 @@
 import { useState } from "react";
 import {
-    sortProjectsByNameAscending,
-    sortProjectsByNameDescending
+    sortFeaturesByNameAscending,
+    sortFeaturesByNameDescending,
+    sortFeaturesByLastSeenAscending,
+    sortFeaturesByLastSeenDescending,
+    sortFeaturesByCreatedAtAscending,
+    sortFeaturesByCreatedAtDescending,
+    sortFeaturesByExpiredAtAscending,
+    sortFeaturesByExpiredAtDescending,
+    sortFeaturesByStatusAscending,
+    sortFeaturesByStatusDescending
 } from "./utils";
 
-import { LAST_SEEN, NAME } from "./constants";
+import { LAST_SEEN, NAME, CREATED, EXPIRED, STATUS, REPORT } from "./constants";
 
 const useSort = () => {
     const [sortData, setSortData] = useState({
@@ -15,9 +23,16 @@ const useSort = () => {
     const sort = features => {
         switch (sortData.sortKey) {
             case NAME:
-                return handleSortName(features, sortData);
+                return handleSortName(features);
             case LAST_SEEN:
-                return sortProjectsByLastSeen(features);
+                return handleSortLastSeen(features);
+            case CREATED:
+                return handleCreated(features);
+            case EXPIRED:
+            case REPORT:
+                return handleExpired(features);
+            case STATUS:
+                return handleStatus(features);
             default:
                 return features;
         }
@@ -25,13 +40,39 @@ const useSort = () => {
 
     const handleSortName = features => {
         if (sortData.ascending) {
-            return sortProjectsByNameAscending(features);
+            return sortFeaturesByNameAscending(features);
         }
 
-        return sortProjectsByNameDescending(features);
+        return sortFeaturesByNameDescending(features);
     };
 
-    const handleSortLastSeen = features => {};
+    const handleSortLastSeen = features => {
+        if (sortData.ascending) {
+            return sortFeaturesByLastSeenAscending(features);
+        }
+        return sortFeaturesByLastSeenDescending(features);
+    };
+
+    const handleCreated = features => {
+        if (sortData.ascending) {
+            return sortFeaturesByCreatedAtAscending(features);
+        }
+        return sortFeaturesByCreatedAtDescending(features);
+    };
+
+    const handleExpired = features => {
+        if (sortData.ascending) {
+            return sortFeaturesByExpiredAtAscending(features);
+        }
+        return sortFeaturesByExpiredAtDescending(features);
+    };
+
+    const handleStatus = features => {
+        if (sortData.ascending) {
+            return sortFeaturesByStatusAscending(features);
+        }
+        return sortFeaturesByStatusDescending(features);
+    };
 
     return [sort, setSortData];
 };

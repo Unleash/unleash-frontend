@@ -1,10 +1,20 @@
 import React from "react";
+import classnames from "classnames";
+
 import { Checkbox } from "react-mdl";
+import CheckIcon from "@material-ui/icons/Check";
+import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
-import { pluralize } from "./utils";
+import {
+    pluralize,
+    getDates,
+    expired,
+    toggleExpiryByTypeMap,
+    getDiffInDays
+} from "./utils";
+import { KILLSWITCH, PERMISSION } from "./constants";
 
-import { format } from "date-fns";
-import differenceInDays from "date-fns/differenceInDays";
+import styles from "./reporting.module.scss";
 
 const ReportToggleListItem = ({
     name,
@@ -15,20 +25,6 @@ const ReportToggleListItem = ({
     checked,
     setFeatures
 }) => {
-    const EXPERIMENT = "experiment";
-    const RELEASE = "release";
-    const OPERATIONAL = "operational";
-    const KILLSWITCH = "kill-switch";
-
-    const FOURTYDAYS = 20;
-    const SEVENDAYS = 7;
-
-    const toggleExpiryByType = {
-        [EXPERIMENT]: FOURTYDAYS,
-        [RELEASE]: FOURTYDAYS,
-        [OPERATIONAL]: SEVENDAYS
-    };
-
     const handleChange = () => {
         setFeatures(prevState => {
             const newState = [...prevState];
@@ -44,55 +40,83 @@ const ReportToggleListItem = ({
 
     const nameMatches = feature => feature.name === name;
 
-    const formatDates = (date, now) => {
-        const diff = Math.abs(differenceInDays(date, now));
-
-        return pluralize(diff, "day");
-    };
-
     const formatCreatedAt = () => {
-        const date = new Date(createdAt);
-        const now = new Date();
+        const [date, now] = getDates(createdAt);
 
-        return `${formatDates(date, now)} ago`;
+        const diff = getDiffInDays(date, now);
+        if (diff === 0) return "1 day";
+
+        const formatted = pluralize(diff, "day");
+
+        return `${formatted} ago`;
     };
 
     const formatExpiredAt = () => {
-        if (type === KILLSWITCH || type === OPERATIONAL) {
+        if (type === KILLSWITCH || type === PERMISSION) {
             return "N/A";
         }
 
-        const date = new Date(createdAt);
-        const now = new Date();
+        const [date, now] = getDates(createdAt);
+        const diff = getDiffInDays(date, now);
 
-        const diff = Math.abs(differenceInDays(date, now));
+        if (expired(diff, type)) {
+            const result = diff - toggleExpiryByTypeMap[type];
+            if (result === 0) return "1 day";
 
-        if (expired(diff)) {
-            const result = diff - toggleExpiryByType[type];
-            console.log(pluralize(result, "day"));
             return pluralize(result, "day");
         }
-        return "";
-    };
-
-    const expired = diff => {
-        if (diff >= toggleExpiryByType[type]) return true;
-        return false;
     };
 
     const formatLastSeenAt = () => {
-        const date = new Date(lastSeenAt);
-        const now = new Date();
+        if (!lastSeenAt) return "Never";
 
-        const diff = Math.abs(differenceInDays(date, now));
+        const [date, now] = getDates(lastSeenAt);
+        const diff = getDiffInDays(date, now);
+        if (diff === 0) return "1 day";
+
         if (diff) {
             return pluralize(diff, "day");
         }
 
-        return "Never";
+        return "1 day";
     };
 
-    console.log(type);
+    const formatReportStatus = () => {
+        if (type === KILLSWITCH || type === PERMISSION) {
+            return renderStatus(
+                <CheckIcon className={styles.reportIcon} />,
+                "Active"
+            );
+        }
+
+        const [date, now] = getDates(createdAt);
+        const diff = getDiffInDays(date, now);
+
+        if (expired(diff, type)) {
+            return renderStatus(
+                <ReportProblemOutlinedIcon className={styles.reportIcon} />,
+                "Potentially stale"
+            );
+        }
+
+        return renderStatus(
+            <CheckIcon className={styles.reportIcon} />,
+            "Active"
+        );
+    };
+
+    const renderStatus = (icon, text) => {
+        return (
+            <span className={styles.reportStatus}>
+                {icon}
+                {text}
+            </span>
+        );
+    };
+
+    const statusClasses = classnames(styles.active, {
+        [styles.stale]: stale
+    });
 
     return (
         <tr>
@@ -106,9 +130,9 @@ const ReportToggleListItem = ({
             <td>{name}</td>
             <td>{formatLastSeenAt()}</td>
             <td>{formatCreatedAt()}</td>
-            <td>{formatExpiredAt()}</td>
-            <td>{stale ? "Stale" : "Active"}</td>
-            <td>Potentially stale</td>
+            <td className={styles.expired}>{formatExpiredAt()}</td>
+            <td className={statusClasses}>{stale ? "Stale" : "Active"}</td>
+            <td>{formatReportStatus()}</td>
         </tr>
     );
 };
