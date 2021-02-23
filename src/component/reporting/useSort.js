@@ -27,12 +27,12 @@ const useSort = () => {
             case LAST_SEEN:
                 return handleSortLastSeen(features);
             case CREATED:
-                return handleCreated(features);
+                return handleSortCreatedAt(features);
             case EXPIRED:
             case REPORT:
-                return handleExpired(features);
+                return handleSortExpiredAt(features);
             case STATUS:
-                return handleStatus(features);
+                return handleSortStatus(features);
             default:
                 return features;
         }
@@ -53,21 +53,21 @@ const useSort = () => {
         return sortFeaturesByLastSeenDescending(features);
     };
 
-    const handleCreated = features => {
+    const handleSortCreatedAt = features => {
         if (sortData.ascending) {
             return sortFeaturesByCreatedAtAscending(features);
         }
         return sortFeaturesByCreatedAtDescending(features);
     };
 
-    const handleExpired = features => {
+    const handleSortExpiredAt = features => {
         if (sortData.ascending) {
             return sortFeaturesByExpiredAtAscending(features);
         }
         return sortFeaturesByExpiredAtDescending(features);
     };
 
-    const handleStatus = features => {
+    const handleSortStatus = features => {
         if (sortData.ascending) {
             return sortFeaturesByStatusAscending(features);
         }
