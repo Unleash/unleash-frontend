@@ -95,7 +95,7 @@ const ReportCard = ({ features }) => {
         <Card className={styles.card}>
             <div className={styles.reportCardContainer}>
                 <div className={styles.reportCardListContainer}>
-                    <h2 className={styles.header + " loader"}>Toggle report</h2>
+                    <h2 className={styles.header}>Toggle report</h2>
                     <ul className={styles.reportCardList}>
                         <li>
                             <ConditionallyRender
