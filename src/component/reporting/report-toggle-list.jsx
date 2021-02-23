@@ -4,7 +4,7 @@ import { Card } from "react-mdl";
 import ReportToggleListItem from "./report-toggle-list-item";
 import ReportToggleListHeader from "./report-toggle-list-header";
 
-import { getObjectProperties } from "./utils";
+import { getObjectProperties, filterByProject } from "./utils";
 
 import useSort from "./useSort";
 
@@ -19,7 +19,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
     const [sort, setSortData] = useSort();
 
     useEffect(() => {
-        const formattedFeatures = features.filter(sameProject).map(feature => ({
+        const formattedFeatures = features.map(feature => ({
             ...getObjectProperties(
                 feature,
                 "name",
@@ -49,7 +49,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
             <ReportToggleListItem key={feature.name} {...feature} />
         ));
 
-    const sameProject = feature => feature.project === selectedProject;
+    const sameProject = filterByProject(selectedProject);
 
     const handleCheckAll = () => {
         if (!checkAll) {

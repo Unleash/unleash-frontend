@@ -106,8 +106,8 @@ export const sortFeaturesByExpiredAtDescending = features => {
 export const sortFeaturesByStatusAscending = features => {
     const sorted = [...features];
     sorted.sort((a, b) => {
-        if (a.active) return 1;
-        if (b.active) return -1;
+        if (a.stale) return 1;
+        if (b.stale) return -1;
         return 0;
     });
     return sorted;
@@ -136,4 +136,15 @@ export const expired = (diff, type) => {
 
 export const getDiffInDays = (date, now) => {
     return Math.abs(differenceInDays(date, now));
+};
+
+export const filterByProject = selectedProject => {
+    return feature => feature.project === selectedProject;
+};
+
+export const isFeatureExpired = feature => {
+    const [date, now] = getDates(feature.createdAt);
+    const diff = getDiffInDays(date, now);
+
+    return expired(diff, feature.type);
 };

@@ -14,5 +14,5 @@ export const KILLSWITCH = "kill-switch";
 export const PERMISSION = "permission";
 
 /* DAYS */
-export const FOURTYDAYS = 20; // TODO - REVERT THIS
+export const FOURTYDAYS = 40;
 export const SEVENDAYS = 7;

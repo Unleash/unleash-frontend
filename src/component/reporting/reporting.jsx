@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Select from "../common/select";
-import ReportCard from "./report-card";
+import ReportCardContainer from "./report-card-container";
 import ReportToggleListContainer from "./report-toggle-list-container";
 
 import styles from "./reporting.module.scss";
@@ -49,7 +49,7 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
                     onChange={onChange}
                 />
             </div>
-            <ReportCard />
+            <ReportCardContainer selectedProject={selectedProject} />
             <ReportToggleListContainer selectedProject={selectedProject} />
         </React.Fragment>
     );
