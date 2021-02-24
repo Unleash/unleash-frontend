@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-mdl";
+import classnames from "classnames";
+import { Card, Menu, MenuItem } from "react-mdl";
 
 import ReportToggleListItem from "./report-toggle-list-item";
 import ReportToggleListHeader from "./report-toggle-list-header";
+import ConditionallyRender from "../common/conditionally-render";
 
-import { getObjectProperties, filterByProject } from "./utils";
+import { getObjectProperties } from "./utils";
 
 import useSort from "./useSort";
 
 import styles from "./reporting.module.scss";
+import { DropdownButton } from "../common";
 
-//import features from "./testFeatures";
+/* FLAG TO TOGGLE UNFINISHED BULK ACTIONS FEATURE */
+const BULK_ACTIONS_ON = false;
 
 const ReportToggleList = ({ features, selectedProject }) => {
     const [checkAll, setCheckAll] = useState(false);
-
-    const [localFeatures, setFeatures] = useState(features);
+    const [localFeatures, setFeatures] = useState([]);
     const [sort, setSortData] = useSort();
 
     useEffect(() => {
@@ -44,13 +47,6 @@ const ReportToggleList = ({ features, selectedProject }) => {
         return false;
     };
 
-    const renderListRows = () =>
-        sort(localFeatures).map(feature => (
-            <ReportToggleListItem key={feature.name} {...feature} />
-        ));
-
-    const sameProject = filterByProject(selectedProject);
-
     const handleCheckAll = () => {
         if (!checkAll) {
             setCheckAll(true);
@@ -63,10 +59,44 @@ const ReportToggleList = ({ features, selectedProject }) => {
     const applyCheckedToFeatures = (features, checkedState) =>
         features.map(feature => ({ ...feature, checked: checkedState }));
 
+    const renderListRows = () => {
+        return sort(localFeatures).map(feature => (
+            <ReportToggleListItem
+                key={feature.name}
+                {...feature}
+                bulkActionsOn={BULK_ACTIONS_ON}
+            />
+        ));
+    };
+
+    const renderBulkActionsMenu = () => {
+        return (
+            <span>
+                <DropdownButton
+                    className={classnames("mdl-button", styles.bulkAction)}
+                    id="bulk_actions"
+                    label="Bulk actions"
+                />
+                <Menu
+                    target="bulk_actions"
+                    onClick={() => console.log("Hi")}
+                    style={{ width: "168px" }}
+                >
+                    <MenuItem>Mark toggles as stale</MenuItem>
+                    <MenuItem>Delete toggles</MenuItem>
+                </Menu>
+            </span>
+        );
+    };
+
     return (
         <Card className={styles.reportToggleList}>
             <div className={styles.reportToggleListHeader}>
                 <h3 className={styles.reportToggleListHeading}>Overview</h3>
+                <ConditionallyRender
+                    condition={BULK_ACTIONS_ON}
+                    show={renderBulkActionsMenu}
+                />
             </div>
             <div className={styles.reportToggleListInnerContainer}>
                 <table className={styles.reportingToggleTable}>
@@ -74,6 +104,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
                         handleCheckAll={handleCheckAll}
                         checkAll={checkAll}
                         setSortData={setSortData}
+                        bulkActionsOn={BULK_ACTIONS_ON}
                     />
 
                     <tbody>{renderListRows()}</tbody>

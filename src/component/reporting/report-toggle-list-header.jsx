@@ -2,11 +2,18 @@ import React from "react";
 import { Checkbox } from "react-mdl";
 import UnfoldMoreOutlinedIcon from "@material-ui/icons/UnfoldMoreOutlined";
 
+import ConditionallyRender from "../common/conditionally-render";
+
 import { NAME, LAST_SEEN, CREATED, EXPIRED, STATUS, REPORT } from "./constants";
 
 import styles from "./reporting.module.scss";
 
-const ReportToggleListHeader = ({ handleCheckAll, checkAll, setSortData }) => {
+const ReportToggleListHeader = ({
+    handleCheckAll,
+    checkAll,
+    setSortData,
+    bulkActionsOn
+}) => {
     const handleSort = type => {
         setSortData(prev => ({
             sortKey: type,
@@ -17,13 +24,19 @@ const ReportToggleListHeader = ({ handleCheckAll, checkAll, setSortData }) => {
     return (
         <thead>
             <tr>
-                <th>
-                    <Checkbox
-                        onChange={handleCheckAll}
-                        value={checkAll}
-                        checked={checkAll}
-                    />
-                </th>
+                <ConditionallyRender
+                    condition={bulkActionsOn}
+                    show={
+                        <th>
+                            <Checkbox
+                                onChange={handleCheckAll}
+                                value={checkAll}
+                                checked={checkAll}
+                            />
+                        </th>
+                    }
+                />
+
                 <th
                     role="button"
                     tabIndex={0}

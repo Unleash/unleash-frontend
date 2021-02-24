@@ -43,7 +43,7 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
                 <h1 className={styles.header}>Project</h1>
                 <Select
                     name="project"
-                    label="project"
+                    className={styles.select}
                     options={projectOptions}
                     value={setSelectedProject.label}
                     onChange={onChange}

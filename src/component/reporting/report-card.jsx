@@ -135,9 +135,6 @@ const ReportCard = ({ features }) => {
                             Review your feature toggles and delete unused
                             toggles.
                         </p>
-                        <Button className={styles.reportCardBtn}>
-                            Overview
-                        </Button>
                     </div>
                 </div>
             </div>

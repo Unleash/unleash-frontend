@@ -4,6 +4,7 @@ import classnames from "classnames";
 import { Checkbox } from "react-mdl";
 import CheckIcon from "@material-ui/icons/Check";
 import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
+import ConditionallyRender from "../common/conditionally-render";
 
 import {
     pluralize,
@@ -23,6 +24,7 @@ const ReportToggleListItem = ({
     createdAt,
     type,
     checked,
+    bulkActionsOn,
     setFeatures
 }) => {
     const handleChange = () => {
@@ -120,13 +122,18 @@ const ReportToggleListItem = ({
 
     return (
         <tr>
-            <td>
-                <Checkbox
-                    checked={checked}
-                    value={checked}
-                    onChange={handleChange}
-                />
-            </td>
+            <ConditionallyRender
+                condition={bulkActionsOn}
+                show={
+                    <td>
+                        <Checkbox
+                            checked={checked}
+                            value={checked}
+                            onChange={handleChange}
+                        />
+                    </td>
+                }
+            />
             <td>{name}</td>
             <td>{formatLastSeenAt()}</td>
             <td>{formatCreatedAt()}</td>
