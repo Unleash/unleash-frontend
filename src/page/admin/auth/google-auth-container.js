@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import GooleAuth from './google-auth';
+import GoogleAuth from './google-auth';
 import { getGoogleConfig, updateGoogleConfig } from './../../../store/e-admin-auth/actions';
 import { hasPermission } from '../../../permissions';
 
