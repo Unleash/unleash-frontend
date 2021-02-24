@@ -32,6 +32,7 @@ function ProjectComponent({ projects, currentProjectId, updateCurrentProject }) 
         <React.Fragment>
             <DropdownButton
                 className="mdl-color--amber-50"
+                style={{ textTransform: 'none', fontWeight: 'normal' }}
                 id="project"
                 label={`${curentProject.name}`}
                 title="Select project"
