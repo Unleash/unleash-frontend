@@ -18,10 +18,7 @@
     background-color: #fff;
     border: none;
     padding: 0.5rem 1rem;
-}
-
-.select .is-focused {
-    animation: none;
+    position: static;
 }
 
 .select select {
