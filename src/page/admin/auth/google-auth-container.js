@@ -8,6 +8,6 @@ const mapStateToProps = state => ({
     hasPermission: permission => hasPermission(state.user.get('profile'), permission),
 });
 
-const Container = connect(mapStateToProps, { getGoogleConfig, updateGoogleConfig })(GooleAuth);
+const Container = connect(mapStateToProps, { getGoogleConfig, updateGoogleConfig })(GoogleAuth);
 
 export default Container;
