@@ -30,6 +30,7 @@ import Admin from '../../page/admin';
 import AdminApi from '../../page/admin/api';
 import AdminUsers from '../../page/admin/users';
 import AdminAuth from '../../page/admin/auth';
+import { P, C } from '../common/flags';
 
 export const routes = [
     // Features
@@ -63,12 +64,12 @@ export const routes = [
     // Context
     { path: '/context/create', parent: '/context', title: 'Create', component: CreateContextField },
     { path: '/context/edit/:name', parent: '/context', title: ':name', component: EditContextField },
-    { path: '/context', title: 'Context Fields', icon: 'album', component: ContextFields, flag: 'C' },
+    { path: '/context', title: 'Context Fields', icon: 'album', component: ContextFields, flag: C },
 
     // Project
     { path: '/projects/create', parent: '/projects', title: 'Create', component: CreateProject },
     { path: '/projects/edit/:id', parent: '/projects', title: ':id', component: EditProject },
-    { path: '/projects', title: 'Projects', icon: 'folder_open', component: ListProjects, flag: 'P' },
+    { path: '/projects', title: 'Projects', icon: 'folder_open', component: ListProjects, flag: P },
 
     // Admin
     { path: '/admin/api', parent: '/admin', title: 'API access', component: AdminApi },

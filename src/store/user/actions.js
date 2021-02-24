@@ -28,12 +28,12 @@ export function fetchUser() {
     };
 }
 
-export function unsecureLogin(path, user) {
+export function insecureLogin(path, user) {
     return dispatch => {
         dispatch({ type: START_FETCH_USER });
 
         return api
-            .unsecureLogin(path, user)
+            .insecureLogin(path, user)
             .then(json => dispatch(updateUser(json)))
             .catch(handleError);
     };
