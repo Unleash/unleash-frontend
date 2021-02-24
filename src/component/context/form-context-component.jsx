@@ -25,7 +25,7 @@ class AddContextComponent extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (state.contextField.inital && !props.contextField.inital) {
+        if (state.contextField.initial && !props.contextField.initial) {
             return { contextField: props.contextField };
         } else {
             return null;
