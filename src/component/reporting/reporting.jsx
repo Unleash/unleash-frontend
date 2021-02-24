@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Select from "../common/select";
-import ReportCardContainer from "./report-card-container";
-import ReportToggleListContainer from "./report-toggle-list-container";
+import PropTypes from 'prop-types';
 
-import styles from "./reporting.module.scss";
+import Select from '../common/select';
+import ReportCardContainer from './report-card-container';
+import ReportToggleListContainer from './report-toggle-list-container';
+
+import { formatProjectOptions } from './utils';
+
+import styles from './reporting.module.scss';
 
 const Reporting = ({ fetchFeatureToggles, projects }) => {
-    const [projectOptions, setProjectOptions] = useState([
-        { key: "default", label: "Default" }
-    ]);
-    const [selectedProject, setSelectedProject] = useState("default");
+    const [projectOptions, setProjectOptions] = useState([{ key: 'default', label: 'Default' }]);
+    const [selectedProject, setSelectedProject] = useState('default');
 
     useEffect(() => {
         fetchFeatureToggles();
@@ -21,18 +23,10 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
         setProjectOptions(formatProjectOptions(projects));
     }, [projects]);
 
-    const formatProjectOptions = projects => {
-        return projects.map(project => {
-            return { key: project.id, label: project.name };
-        });
-    };
-
     const onChange = e => {
         const { value } = e.target;
 
-        const selectedProject = projectOptions.find(
-            option => option.key === value
-        );
+        const selectedProject = projectOptions.find(option => option.key === value);
 
         setSelectedProject(selectedProject.key);
     };
@@ -53,6 +47,12 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
             <ReportToggleListContainer selectedProject={selectedProject} />
         </React.Fragment>
     );
+};
+
+Reporting.propTypes = {
+    fetchFeatureToggles: PropTypes.func.isRequired,
+    projects: PropTypes.array.isRequired,
+    features: PropTypes.array,
 };
 
 export default Reporting;

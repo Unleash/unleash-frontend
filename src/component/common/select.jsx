@@ -1,23 +1,13 @@
-import React from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
+import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
-const Select = ({
-    name,
-    value,
-    label,
-    options,
-    style,
-    onChange,
-    disabled = false,
-    filled,
-    className
-}) => {
-    const wrapper = Object.assign({ width: "auto" }, style);
+const Select = ({ name, value, label, options, style, onChange, disabled = false, filled, className }) => {
+    const wrapper = Object.assign({ width: 'auto' }, style);
     return (
         <div
             className={classnames(
-                "mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded",
+                'mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded',
                 className
             )}
             style={wrapper}
@@ -29,8 +19,8 @@ const Select = ({
                 onChange={onChange}
                 value={value}
                 style={{
-                    width: "auto",
-                    background: filled ? "#f5f5f5" : "none"
+                    width: 'auto',
+                    background: filled ? '#f5f5f5' : 'none',
                 }}
             >
                 {options.map(o => (
@@ -39,10 +29,7 @@ const Select = ({
                     </option>
                 ))}
             </select>
-            <label
-                className="mdl-textfield__label"
-                htmlFor="textfield-contextName"
-            >
+            <label className="mdl-textfield__label" htmlFor="textfield-contextName">
                 {label}
             </label>
         </div>
@@ -57,7 +44,7 @@ Select.propTypes = {
     style: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
-    filled: PropTypes.bool
+    filled: PropTypes.bool,
 };
 
 export default Select;

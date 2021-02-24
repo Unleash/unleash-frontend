@@ -1,7 +1,7 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import ReportCard from "./report-card";
-import { filterByProject } from "./utils";
+import ReportCard from './report-card';
+import { filterByProject } from './utils';
 
 const mapStateToProps = (state, ownProps) => {
     const features = state.features.toJS();
@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     const featuresByProject = features.filter(sameProject);
 
     return {
-        features: featuresByProject
+        features: featuresByProject,
     };
 };
 

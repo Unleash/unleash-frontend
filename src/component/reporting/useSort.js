@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
     sortFeaturesByNameAscending,
     sortFeaturesByNameDescending,
@@ -9,34 +9,16 @@ import {
     sortFeaturesByExpiredAtAscending,
     sortFeaturesByExpiredAtDescending,
     sortFeaturesByStatusAscending,
-    sortFeaturesByStatusDescending
-} from "./utils";
+    sortFeaturesByStatusDescending,
+} from './utils';
 
-import { LAST_SEEN, NAME, CREATED, EXPIRED, STATUS, REPORT } from "./constants";
+import { LAST_SEEN, NAME, CREATED, EXPIRED, STATUS, REPORT } from './constants';
 
 const useSort = () => {
     const [sortData, setSortData] = useState({
         sortKey: NAME,
-        ascending: true
+        ascending: true,
     });
-
-    const sort = features => {
-        switch (sortData.sortKey) {
-            case NAME:
-                return handleSortName(features);
-            case LAST_SEEN:
-                return handleSortLastSeen(features);
-            case CREATED:
-                return handleSortCreatedAt(features);
-            case EXPIRED:
-            case REPORT:
-                return handleSortExpiredAt(features);
-            case STATUS:
-                return handleSortStatus(features);
-            default:
-                return features;
-        }
-    };
 
     const handleSortName = features => {
         if (sortData.ascending) {
@@ -72,6 +54,24 @@ const useSort = () => {
             return sortFeaturesByStatusAscending(features);
         }
         return sortFeaturesByStatusDescending(features);
+    };
+
+    const sort = features => {
+        switch (sortData.sortKey) {
+            case NAME:
+                return handleSortName(features);
+            case LAST_SEEN:
+                return handleSortLastSeen(features);
+            case CREATED:
+                return handleSortCreatedAt(features);
+            case EXPIRED:
+            case REPORT:
+                return handleSortExpiredAt(features);
+            case STATUS:
+                return handleSortStatus(features);
+            default:
+                return features;
+        }
     };
 
     return [sort, setSortData];

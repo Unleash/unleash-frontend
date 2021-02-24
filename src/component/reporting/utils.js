@@ -1,18 +1,33 @@
-import parseISO from "date-fns/parseISO";
-import differenceInDays from "date-fns/differenceInDays";
+import parseISO from 'date-fns/parseISO';
+import differenceInDays from 'date-fns/differenceInDays';
 
-import {
-    EXPERIMENT,
-    OPERATIONAL,
-    RELEASE,
-    FOURTYDAYS,
-    SEVENDAYS
-} from "./constants";
+import { EXPERIMENT, OPERATIONAL, RELEASE, FOURTYDAYS, SEVENDAYS } from './constants';
 
 export const toggleExpiryByTypeMap = {
     [EXPERIMENT]: FOURTYDAYS,
     [RELEASE]: FOURTYDAYS,
-    [OPERATIONAL]: SEVENDAYS
+    [OPERATIONAL]: SEVENDAYS,
+};
+
+export const applyCheckedToFeatures = (features, checkedState) =>
+    features.map(feature => ({ ...feature, checked: checkedState }));
+
+export const getCheckedState = (name, features) => {
+    const feature = features.find(feature => feature.name === name);
+
+    if (feature) {
+        return feature.checked ? feature.checked : false;
+    }
+    return false;
+};
+
+export const getDiffInDays = (date, now) => Math.abs(differenceInDays(date, now));
+
+export const formatProjectOptions = projects => projects.map(project => ({ key: project.id, label: project.name }));
+
+export const expired = (diff, type) => {
+    if (diff >= toggleExpiryByTypeMap[type]) return true;
+    return false;
 };
 
 export const getObjectProperties = (target, ...keys) => {
@@ -41,9 +56,7 @@ export const sortFeaturesByNameAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByNameDescending = features => {
-    return sortFeaturesByNameAscending([...features]).reverse();
-};
+export const sortFeaturesByNameDescending = features => sortFeaturesByNameAscending([...features]).reverse();
 
 export const sortFeaturesByLastSeenAscending = features => {
     const sorted = [...features];
@@ -51,32 +64,28 @@ export const sortFeaturesByLastSeenAscending = features => {
         if (!a.lastSeenAt) return -1;
         if (!b.lastSeenAt) return 1;
 
-        const dateA = new parseISO(a.lastSeenAt);
-        const dateB = new parseISO(b.lastSeenAt);
+        const dateA = parseISO(a.lastSeenAt);
+        const dateB = parseISO(b.lastSeenAt);
 
         return dateA.getTime() - dateB.getTime();
     });
     return sorted;
 };
 
-export const sortFeaturesByLastSeenDescending = features => {
-    return sortFeaturesByLastSeenAscending([...features]).reverse();
-};
+export const sortFeaturesByLastSeenDescending = features => sortFeaturesByLastSeenAscending([...features]).reverse();
 
 export const sortFeaturesByCreatedAtAscending = features => {
     const sorted = [...features];
     sorted.sort((a, b) => {
-        const dateA = new parseISO(a.createdAt);
-        const dateB = new parseISO(b.createdAt);
+        const dateA = parseISO(a.createdAt);
+        const dateB = parseISO(b.createdAt);
 
         return dateA.getTime() - dateB.getTime();
     });
     return sorted;
 };
 
-export const sortFeaturesByCreatedAtDescending = features => {
-    return sortFeaturesByCreatedAtAscending([...features]).reverse();
-};
+export const sortFeaturesByCreatedAtDescending = features => sortFeaturesByCreatedAtAscending([...features]).reverse();
 
 export const sortFeaturesByExpiredAtAscending = features => {
     const sorted = [...features];
@@ -99,9 +108,7 @@ export const sortFeaturesByExpiredAtAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByExpiredAtDescending = features => {
-    return sortFeaturesByExpiredAtAscending([...features]).reverse();
-};
+export const sortFeaturesByExpiredAtDescending = features => sortFeaturesByExpiredAtAscending([...features]).reverse();
 
 export const sortFeaturesByStatusAscending = features => {
     const sorted = [...features];
@@ -113,9 +120,7 @@ export const sortFeaturesByStatusAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByStatusDescending = features => {
-    return sortFeaturesByStatusAscending([...features]).reverse();
-};
+export const sortFeaturesByStatusDescending = features => sortFeaturesByStatusAscending([...features]).reverse();
 
 export const pluralize = (items, word) => {
     if (items === 1) return `${items} ${word}`;
@@ -123,24 +128,13 @@ export const pluralize = (items, word) => {
 };
 
 export const getDates = dateString => {
-    const date = new parseISO(dateString);
+    const date = parseISO(dateString);
     const now = new Date();
 
     return [date, now];
 };
 
-export const expired = (diff, type) => {
-    if (diff >= toggleExpiryByTypeMap[type]) return true;
-    return false;
-};
-
-export const getDiffInDays = (date, now) => {
-    return Math.abs(differenceInDays(date, now));
-};
-
-export const filterByProject = selectedProject => {
-    return feature => feature.project === selectedProject;
-};
+export const filterByProject = selectedProject => feature => feature.project === selectedProject;
 
 export const isFeatureExpired = feature => {
     const [date, now] = getDates(feature.createdAt);
