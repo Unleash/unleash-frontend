@@ -5,7 +5,7 @@ import MySelect from '../common/select';
 class ProjectSelectComponent extends Component {
     componentDidMount() {
         const { fetchProjects, projects, enabled } = this.props;
-        if (projects[0].inital && enabled) {
+        if (projects[0].initial && enabled) {
             fetchProjects();
         }
     }
