@@ -6,6 +6,8 @@ import Select from '../common/select';
 import ReportCardContainer from './report-card-container';
 import ReportToggleListContainer from './report-toggle-list-container';
 
+import ConditionallyRender from '../common/conditionally-render';
+
 import { formatProjectOptions } from './utils';
 
 import styles from './reporting.module.scss';
@@ -31,18 +33,24 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
         setSelectedProject(selectedProject.key);
     };
 
+    const renderSelect = () => (
+        <div className={styles.projectSelector}>
+            <h1 className={styles.header}>Project</h1>
+            <Select
+                name="project"
+                className={styles.select}
+                options={projectOptions}
+                value={setSelectedProject.label}
+                onChange={onChange}
+            />
+        </div>
+    );
+    const multipleProjects = projects.length > 1;
+
     return (
         <React.Fragment>
-            <div className={styles.projectSelector}>
-                <h1 className={styles.header}>Project</h1>
-                <Select
-                    name="project"
-                    className={styles.select}
-                    options={projectOptions}
-                    value={setSelectedProject.label}
-                    onChange={onChange}
-                />
-            </div>
+            <ConditionallyRender condition={multipleProjects} show={renderSelect} />
+
             <ReportCardContainer selectedProject={selectedProject} />
             <ReportToggleListContainer selectedProject={selectedProject} />
         </React.Fragment>
