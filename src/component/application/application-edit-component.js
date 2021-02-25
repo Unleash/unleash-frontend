@@ -2,12 +2,50 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Card, CardActions, CardTitle, CardText, CardMenu, Icon, ProgressBar, Tabs, Tab } from 'react-mdl';
-import { IconLink, styles as commonStyles } from '../common';
+import {
+    Paper,
+    Avatar,
+    Card,
+    CardHeader,
+    CardContent,
+    CardActions,
+    Icon,
+    IconButton,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogActions,
+    LinearProgress,
+    Tabs,
+    Tab,
+} from '@material-ui/core';
+import ConditionallyRender from '../common/conditionally-render';
+import { styles as commonStyles } from '../common';
 import { formatFullDateTimeWithLocale, formatDateWithLocale } from '../common/util';
 import { UPDATE_APPLICATION } from '../../permissions';
 import ApplicationView from './application-view';
 import ApplicationUpdate from './application-update';
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`wrapped-tabpanel-${index}`}
+            aria-labelledby={`wrapped-tab-${index}`}
+            {...other}
+        >
+            {value === index && children}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    value: PropTypes.number,
+    index: PropTypes.number,
+};
 
 class ClientApplications extends PureComponent {
     static propTypes = {
@@ -23,7 +61,7 @@ class ClientApplications extends PureComponent {
 
     constructor(props) {
         super();
-        this.state = { activeTab: 0, loading: !props.application };
+        this.state = { activeTab: 0, loading: !props.application, prompt: false };
     }
 
     componentDidMount() {
@@ -34,9 +72,11 @@ class ClientApplications extends PureComponent {
 
     deleteApplication = async evt => {
         evt.preventDefault();
+        // if (window.confirm('Are you sure you want to remove this application?')) {
         const { deleteApplication, appName } = this.props;
         await deleteApplication(appName);
         this.props.history.push('/applications');
+        // }
     };
 
     render() {
@@ -44,7 +84,7 @@ class ClientApplications extends PureComponent {
             return (
                 <div>
                     <p>Loading...</p>
-                    <ProgressBar indeterminate />
+                    <LinearProgress />
                 </div>
             );
         } else if (!this.props.application) {
@@ -53,68 +93,104 @@ class ClientApplications extends PureComponent {
         const { application, storeApplicationMetaData, hasPermission } = this.props;
         const { appName, instances, strategies, seenToggles, url, description, icon = 'apps', createdAt } = application;
 
-        const content =
-            this.state.activeTab === 0 ? (
-                <ApplicationView
-                    strategies={strategies}
-                    instances={instances}
-                    seenToggles={seenToggles}
-                    hasPermission={hasPermission}
-                    formatFullDateTime={this.formatFullDateTime}
-                />
-            ) : (
-                <ApplicationUpdate application={application} storeApplicationMetaData={storeApplicationMetaData} />
-            );
+        const toggleModal = () => {
+            this.setState(prev => ({ ...prev, prompt: !prev.prompt }));
+        };
+
+        const renderModal = () => (
+            <Dialog
+                open={this.state.prompt}
+                onClose={this.toggleModal}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <DialogTitle>Are you sure you want to delete this application?</DialogTitle>
+                <DialogActions>
+                    <Button color="primary" onClick={this.deleteApplication} autoFocus>
+                        Yes, I'm sure
+                    </Button>
+                    <Button onClick={toggleModal}>No, take me back.</Button>
+                </DialogActions>
+            </Dialog>
+        );
+
+        const a11yProps = index => ({
+            id: `tab-${index}`,
+            'aria-controls': `tabpanel-${index}`,
+        });
 
         return (
-            <Card shadow={0} className={commonStyles.fullwidth}>
-                <CardTitle style={{ paddingTop: '24px', paddingRight: '64px', wordBreak: 'break-all' }}>
-                    <Icon name={icon || 'apps'} />
-                    &nbsp;{appName}
-                </CardTitle>
-                <CardText style={{ paddingTop: '0' }}>
+            <Card className={commonStyles.fullwidth}>
+                <CardHeader
+                    avatar={
+                        <Avatar>
+                            <Icon>{icon || 'apps'}</Icon>
+                        </Avatar>
+                    }
+                    title={appName}
+                    action={
+                        url && (
+                            <IconButton href={url}>
+                                <Icon>link</Icon>
+                            </IconButton>
+                        )
+                    }
+                />
+                <CardContent style={{ paddingTop: '0' }}>
                     <p>{description || ''}</p>
                     <p>
                         Created: <strong>{this.formatDate(createdAt)}</strong>
                     </p>
-                </CardText>
-                {url && (
-                    <CardMenu>
-                        <IconLink url={url} icon="link" />
-                    </CardMenu>
-                )}
-                {hasPermission(UPDATE_APPLICATION) ? (
+                </CardContent>
+                {hasPermission(UPDATE_APPLICATION) && (
                     <div>
                         <CardActions
-                            border
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
+                                borderTop: '1px solid #efefef',
                             }}
                         >
                             <span />
-                            <Button accent title="Delete application" onClick={this.deleteApplication}>
+                            <Button color="secondary" title="Delete application" onClick={toggleModal}>
                                 Delete
                             </Button>
+
+                            <ConditionallyRender condition={this.state.prompt} show={renderModal} />
                         </CardActions>
                         <hr />
-                        <Tabs
-                            activeTab={this.state.activeTab}
-                            onChange={tabId => this.setState({ activeTab: tabId })}
-                            ripple
-                            tabBarProps={{ style: { width: '100%' } }}
-                            className="mdl-color--grey-100"
-                        >
-                            <Tab>Details</Tab>
-                            <Tab>Edit</Tab>
-                        </Tabs>
-                    </div>
-                ) : (
-                    ''
-                )}
+                        <Paper style={{ background: '#efefef' }}>
+                            <Tabs
+                                value={this.state.activeTab}
+                                onChange={(_, tabId) => this.setState({ activeTab: tabId })}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                centered
+                            >
+                                <Tab label="Application Overview" {...a11yProps(0)} />
+                                <Tab label="Edit application" {...a11yProps(1)} />
+                            </Tabs>
+                        </Paper>
 
-                {content}
+                        <TabPanel value={this.state.activeTab} index={0}>
+                            <ApplicationView
+                                strategies={strategies}
+                                instances={instances}
+                                seenToggles={seenToggles}
+                                hasPermission={hasPermission}
+                                formatFullDateTime={this.formatFullDateTime}
+                            />
+                        </TabPanel>
+
+                        <TabPanel value={this.state.activeTab} index={1}>
+                            <ApplicationUpdate
+                                application={application}
+                                storeApplicationMetaData={storeApplicationMetaData}
+                            />
+                        </TabPanel>
+                    </div>
+                )}
             </Card>
         );
     }

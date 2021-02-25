@@ -28,7 +28,7 @@ function ApplicationUpdate({ application, storeApplicationMetaData }) {
 
                 <br />
                 <StatefulTextfield
-                    value={description}
+                    value={description || ''}
                     label="Description"
                     rows={2}
                     onBlur={e => storeApplicationMetaData(appName, 'description', e.target.value)}
