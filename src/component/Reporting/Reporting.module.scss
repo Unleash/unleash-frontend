@@ -1,0 +1,31 @@
+.header {
+    font-size: var(--h1-size);
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+}
+
+.card {
+    width: 100%;
+    padding: var(--card-padding);
+    margin: var(--card-margin-y) 0;
+}
+
+.projectSelector {
+    margin-bottom: 1rem;
+}
+
+.select {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    position: static;
+}
+
+.select select {
+    border: none;
+    min-width: 120px;
+}
+
+.select select:active {
+    border: none;
+}
