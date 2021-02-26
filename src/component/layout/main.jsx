@@ -18,7 +18,7 @@ export default class App extends PureComponent {
         return (
             <Layout fixedHeader>
                 <Header location={this.props.location} />
-                <Content className={classnames("mdl-color--grey-50", styles.contentWrapper)}>
+                <Content className={classnames('mdl-color--grey-50', styles.contentWrapper)}>
                     <Grid noSpacing className={styles.content}>
                         <Cell col={12}>
                             {this.props.children}
