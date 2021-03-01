@@ -63,7 +63,7 @@ export const DrawerMenu = ({
     title = "Unleash",
     flags = {},
     open = false,
-    toggleDrawer = { toggleDrawer }
+    toggleDrawer
 }) => (
     <Drawer
         className={styles.drawer}
@@ -87,6 +87,7 @@ export const DrawerMenu = ({
             <List className={styles.drawerList}>
                 {routes.filter(filterByFlags(flags)).map(item => (
                     <NavLink
+                        onClick={() => toggleDrawer()}
                         key={item.path}
                         to={item.path}
                         className={classnames(styles.navigationLink)}
