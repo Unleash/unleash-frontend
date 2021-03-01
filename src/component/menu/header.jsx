@@ -18,6 +18,19 @@ class HeaderComponent extends PureComponent {
         location: PropTypes.object.isRequired
     };
 
+    constructor() {
+        super();
+        this.state = {
+            openDrawer: false
+        };
+    }
+
+    toggleDrawer = () => {
+        this.setState(prev => ({
+            openDrawer: !prev.openDrawer
+        }));
+    };
+
     componentDidMount() {
         const { init, uiConfig } = this.props;
         init(uiConfig.flags);
@@ -38,17 +51,9 @@ class HeaderComponent extends PureComponent {
         }
     }
 
-    handleClick() {
-        const drawer = document.querySelector(".mdl-layout__drawer");
-
-        if (drawer.classList.contains("is-visible")) {
-            return drawer.classList.remove("is-visible");
-        }
-        drawer.classList.add("is-visible");
-    }
-
     render() {
         const { headerBackground, links, name, flags } = this.props.uiConfig;
+        const { openDrawer } = this.state;
         const style = headerBackground ? { background: headerBackground } : {};
         return (
             <React.Fragment>
@@ -58,7 +63,7 @@ class HeaderComponent extends PureComponent {
                     >
                         <IconButton
                             style={{ color: "#fff" }}
-                            onClick={this.handleClick}
+                            onClick={this.toggleDrawer}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -69,7 +74,13 @@ class HeaderComponent extends PureComponent {
                         <div style={{ marginLeft: "auto" }}>
                             <ShowUserContainer />
                         </div>
-                        <DrawerMenu links={links} title={name} flags={flags} />
+                        <DrawerMenu
+                            links={links}
+                            title={name}
+                            flags={flags}
+                            open={openDrawer}
+                            toggleDrawer={this.toggleDrawer}
+                        />
                     </Container>
                 </AppBar>
             </React.Fragment>

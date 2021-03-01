@@ -19,11 +19,11 @@ function getIcon(name) {
     if (name === "c_github") {
         return (
             <i
-                className={[
+                className={classnames(
                     "material-icons",
                     styles.navigationIcon,
                     styles.iconGitHub
-                ].join(" ")}
+                )}
             />
         );
     } else {
@@ -58,8 +58,19 @@ function renderLink(link) {
     }
 }
 
-export const DrawerMenu = ({ links = [], title = "Unleash", flags = {} }) => (
-    <Drawer className={styles.drawer} open={true} anchor={"left"}>
+export const DrawerMenu = ({
+    links = [],
+    title = "Unleash",
+    flags = {},
+    open = false,
+    toggleDrawer = { toggleDrawer }
+}) => (
+    <Drawer
+        className={styles.drawer}
+        open={open}
+        anchor={"left"}
+        onClose={() => toggleDrawer()}
+    >
         <div className={styles.drawerContainer}>
             <div className={styles.drawerTitleContainer}>
                 <span className={[styles.drawerTitle].join(" ")}>
@@ -84,7 +95,6 @@ export const DrawerMenu = ({ links = [], title = "Unleash", flags = {} }) => (
                         )}
                     >
                         {getIcon(item.icon)}
-
                         {item.title}
                     </NavLink>
                 ))}
