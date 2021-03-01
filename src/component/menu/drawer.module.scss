@@ -1,89 +1,42 @@
-.container {
-    ul {
-        margin: 0;
-    }
-    hr {
-        margin: 0;
-        height: auto;
-        border-color: rgba(0, 0, 0, 0.12);
-    }
-}
-
-.contentWrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.content {
-    width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    flex: 1 0 0%;
-}
-
-@media (max-width: 1260px) {
-    .content {
-        width: 1024px;
-    }
-}
-@media (max-width: 1024px) {
-    .content {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-@media (max-width: 600px) {
-    .content {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-        min-width: 100%;
-    }
-}
-
-.headerTitleLink {
-    text-decoration: none;
+.drawer {
+    box-shadow: none;
+    border: 0;
 }
 
 .drawerTitle {
-    line-height: 1 !important;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 24px !important;
+    font-size: var(--h1-size);
 }
 
-@media screen and (max-width: 1024px) {
-    .drawerTitle {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        padding-left: 16px !important;
-    }
+.drawerContainer {
+    width: var(--drawer-width);
 }
+
+.drawerTitleContainer {
+    padding: var(--drawer-padding);
+}
+
 .drawerTitleLogo {
     padding-right: 16px;
 }
-.drawerTitleText {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 0.8em;
-}
 
-.navigation {
-    padding: 8px 5px 8px 0 !important;
+.drawerList {
+    display: flex;
+    flex-direction: column;
+    align-items: centre;
 }
 
 .navigationLink {
-    padding: 12px 20px !important;
-    border-radius: 0 50px 50px 0;
     text-decoration: none;
+    color: var(--drawer-link-inactive);
+    padding: var(--drawer-padding);
+    display: flex;
+    align-items: centre;
 }
-@media screen and (max-width: 1024px) {
-    .navigationLink {
-        padding: 12px 16px !important;
-    }
+
+.navigationLinkActive {
+    background-color: var(--drawer-link-active-bg);
+    color: var(--drawer-link-active);
+    width: 100%;
 }
 
 .navigationIcon {

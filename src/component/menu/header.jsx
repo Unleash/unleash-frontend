@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Header, Navigation } from "react-mdl";
-import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
+
+import { AppBar, Container, Typography, IconButton } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+
 import { Route } from "react-router-dom";
 import { DrawerMenu } from "./drawer";
 import Breadcrum from "./breadcrumb";
@@ -36,29 +38,38 @@ class HeaderComponent extends PureComponent {
         }
     }
 
+    handleClick() {
+        const drawer = document.querySelector(".mdl-layout__drawer");
+
+        if (drawer.classList.contains("is-visible")) {
+            return drawer.classList.remove("is-visible");
+        }
+        drawer.classList.add("is-visible");
+    }
+
     render() {
         const { headerBackground, links, name, flags } = this.props.uiConfig;
         const style = headerBackground ? { background: headerBackground } : {};
         return (
             <React.Fragment>
-                <AppBar seamed style={{ padding: "1rem" }} position="static">
+                <AppBar style={{ padding: "1rem" }} position="static">
                     <Container
                         style={{ display: "flex", alignItems: "center" }}
                     >
+                        <IconButton
+                            style={{ color: "#fff" }}
+                            onClick={this.handleClick}
+                        >
+                            <MenuIcon />
+                        </IconButton>
                         <Typography variant="h1" style={{ fontSize: "1.5rem" }}>
                             <Route path="/:path" component={Breadcrum} />
                         </Typography>
 
                         <div style={{ marginLeft: "auto" }}>
-                            <Navigation>
-                                <ShowUserContainer />
-                            </Navigation>
-                            <DrawerMenu
-                                links={links}
-                                title={name}
-                                flags={flags}
-                            />
+                            <ShowUserContainer />
                         </div>
+                        <DrawerMenu links={links} title={name} flags={flags} />
                     </Container>
                 </AppBar>
             </React.Fragment>

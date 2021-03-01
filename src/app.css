@@ -1,7 +1,10 @@
-
-
-html { height: 100%; overflow:auto; }
-body { height: 100%; }
+html {
+    height: 100%;
+    overflow: auto;
+}
+body {
+    height: 100%;
+}
 
 :root {
     /* FONT SIZE */
@@ -12,6 +15,7 @@ body { height: 100%; }
     --card-padding: 2rem;
     --card-padding-x: 2rem;
     --card-padding-y: 2rem;
+    --drawer-padding: 1rem 1.5rem;
 
     /* MARGIN */
     --card-margin-y: 1rem;
@@ -21,6 +25,16 @@ body { height: 100%; }
     --success: #3bd86e;
     --danger: #d95e5e;
     --warning: #d67c3d;
+    --drawer-link-active: #000;
+    --drawer-link-active-bg: #f1f1f1;
+    --drawer-link-inactive: #424242;
+
+    /* WIDTHS */
+    --drawer-width: 250px;
+}
+
+body {
+    font-size: 16px;
 }
 
 h1,
@@ -28,4 +42,10 @@ h2 {
     padding: 0;
     margin: 0;
     line-height: 24px;
+}
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --drawer-padding: 0.75rem 1.25rem;
+    }
 }

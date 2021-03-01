@@ -1,10 +1,12 @@
-import React from 'react';
-import { Drawer, Icon, Navigation } from 'react-mdl';
-import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import styles from '../styles.module.scss';
+import React from "react";
+import { Divider, Drawer, List, Icon } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
+import classnames from "classnames";
+import PropTypes from "prop-types";
 
-import { baseRoutes as routes } from './routes';
+import styles from "./drawer.module.scss";
+
+import { baseRoutes as routes } from "./routes";
 
 const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
@@ -14,10 +16,18 @@ const filterByFlags = flags => r => {
 };
 
 function getIcon(name) {
-    if (name === 'c_github') {
-        return <i className={['material-icons', styles.navigationIcon, styles.iconGitHub].join(' ')} />;
+    if (name === "c_github") {
+        return (
+            <i
+                className={[
+                    "material-icons",
+                    styles.navigationIcon,
+                    styles.iconGitHub
+                ].join(" ")}
+            />
+        );
     } else {
-        return <Icon name={name} className={styles.navigationIcon} />;
+        return <Icon className={styles.navigationIcon}>{name}</Icon>;
     }
 }
 
@@ -27,8 +37,8 @@ function renderLink(link) {
             <NavLink
                 key={link.path}
                 to={link.path}
-                className={[styles.navigationLink, 'mdl-color-text--grey-900'].join(' ')}
-                activeClassName={[styles.navigationLink, 'mdl-color-text--black', 'mdl-color--blue-grey-100'].join(' ')}
+                className={classnames(styles.navigationLink)}
+                activeClassName={classnames(styles.navigationLinkActive)}
             >
                 {getIcon(link.icon)} {link.value}
             </NavLink>
@@ -39,7 +49,7 @@ function renderLink(link) {
                 href={link.href}
                 key={link.href}
                 target="_blank"
-                className={[styles.navigationLink, 'mdl-color-text--grey-900'].join(' ')}
+                className={[styles.navigationLink].join(" ")}
                 title={link.title}
             >
                 {getIcon(link.icon)} {link.value}
@@ -48,34 +58,45 @@ function renderLink(link) {
     }
 }
 
-export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {} }) => (
-    <Drawer style={{ boxShadow: 'none', border: 0 }}>
-        <span className={[styles.drawerTitle, 'mdl-layout-title'].join(' ')}>
-            <img src="public/logo.png" width="32" height="32" className={styles.drawerTitleLogo} />
-            <span className={styles.drawerTitleText}>{title}</span>
-        </span>
-        <hr />
-        <Navigation className={styles.navigation}>
-            {routes.filter(filterByFlags(flags)).map(item => (
-                <NavLink
-                    key={item.path}
-                    to={item.path}
-                    className={[styles.navigationLink, 'mdl-color-text--grey-900'].join(' ')}
-                    activeClassName={[styles.navigationLink, 'mdl-color-text--black', 'mdl-color--blue-grey-50'].join(
-                        ' '
-                    )}
-                >
-                    <Icon name={item.icon} className={styles.navigationIcon} /> {item.title}
-                </NavLink>
-            ))}
-        </Navigation>
-        <hr />
-        <Navigation className={styles.navigation}>{links.map(renderLink)}</Navigation>
+export const DrawerMenu = ({ links = [], title = "Unleash", flags = {} }) => (
+    <Drawer className={styles.drawer} open={true} anchor={"left"}>
+        <div className={styles.drawerContainer}>
+            <div className={styles.drawerTitleContainer}>
+                <span className={[styles.drawerTitle].join(" ")}>
+                    <img
+                        src="public/logo.png"
+                        width="32"
+                        height="32"
+                        className={styles.drawerTitleLogo}
+                    />
+                    <span className={styles.drawerTitleText}>{title}</span>
+                </span>
+            </div>
+            <Divider />
+            <List className={styles.drawerList}>
+                {routes.filter(filterByFlags(flags)).map(item => (
+                    <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className={classnames(styles.navigationLink)}
+                        activeClassName={classnames(
+                            styles.navigationLinkActive
+                        )}
+                    >
+                        {getIcon(item.icon)}
+
+                        {item.title}
+                    </NavLink>
+                ))}
+            </List>
+            <Divider />
+            <List className={styles.navigation}>{links.map(renderLink)}</List>
+        </div>
     </Drawer>
 );
 
 DrawerMenu.propTypes = {
     links: PropTypes.array,
     title: PropTypes.string,
-    flags: PropTypes.object,
+    flags: PropTypes.object
 };
