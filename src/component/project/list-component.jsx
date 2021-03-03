@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { List, ListItem, ListItemAction, ListItemContent, IconButton, Card } from 'react-mdl';
 import { HeaderTitle, styles as commonStyles } from '../common';
-import { CREATE_PROJECT, DELETE_PROJECT } from '../../permissions';
+import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from '../../permissions';
 
 class ProjectListComponent extends Component {
     static propTypes = {
@@ -56,6 +56,13 @@ class ProjectListComponent extends Component {
                                     </Link>
                                 </ListItemContent>
                                 <ListItemAction>
+                                    {hasPermission(UPDATE_PROJECT) ? (
+                                        <Link to={`/projects/${project.id}/access`} style={{ color: 'black' }}>
+                                            <IconButton name="supervised_user_circle" title="Manage access" />
+                                        </Link>
+                                    ) : (
+                                        ''
+                                    )}
                                     {hasPermission(DELETE_PROJECT) ? (
                                         <IconButton
                                             name="delete"
