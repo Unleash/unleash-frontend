@@ -23,6 +23,10 @@
     flex: 1 0 0%;
 }
 
+.contentContainer {
+    padding: var(--page-padding);
+}
+
 @media (max-width: 1260px) {
     .content {
         width: 1024px;

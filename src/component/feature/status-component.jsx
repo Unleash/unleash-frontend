@@ -1,23 +1,26 @@
-import React, { memo } from 'react';
-import { Chip } from 'react-mdl';
-import PropTypes from 'prop-types';
+import React, { memo } from "react";
+import classnames from "classnames";
+import { Chip } from "@material-ui/core";
+import PropTypes from "prop-types";
 
+import styles from "./status.module.scss";
 function StatusComponent({ stale, style, showActive = true }) {
     if (!stale && !showActive) {
         return null;
     }
 
-    const className = stale
-        ? 'mdl-color--red mdl-color-text--white mdl-shadow--2dp'
-        : 'mdl-color--light-green-500 mdl-color-text--white mdl-shadow--2dp';
+    const className = classnames({
+        [styles.stale]: stale,
+        [!styles.stale]: "mdl-color--light-green-500 mdl-color-text--white mdl-shadow--2dp"
+    });
 
-    const title = stale ? 'Feature toggle is deprecated.' : 'Feature toggle is active.';
-    const value = stale ? 'Stale' : 'Active';
+    const title = stale
+        ? "Feature toggle is deprecated."
+        : "Feature toggle is active.";
+    const value = stale ? "Stale" : "Active";
 
     return (
-        <Chip style={style} title={title} className={className}>
-            {value}
-        </Chip>
+        <Chip style={style} title={title} className={className} label={value} />
     );
 }
 
@@ -26,5 +29,5 @@ export default memo(StatusComponent);
 StatusComponent.propTypes = {
     stale: PropTypes.bool.isRequired,
     style: PropTypes.object,
-    showActive: PropTypes.bool,
+    showActive: PropTypes.bool
 };

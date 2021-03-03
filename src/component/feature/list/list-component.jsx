@@ -4,7 +4,7 @@ import { debounce } from "debounce";
 import classnames from "classnames";
 
 import { Link } from "react-router-dom";
-import { Button, Paper, List, Divider } from "@material-ui/core";
+import { Button, Paper, List } from "@material-ui/core";
 import Feature from "./list-item-component";
 import SearchField from "../../common/search-field";
 import ListComponentHeader from "./list-component-header";
@@ -81,7 +81,7 @@ export default class FeatureListComponent extends React.Component {
 
         return features.map((feature, i) => (
             <Feature
-                key={i}
+                key={feature.name}
                 settings={settings}
                 metricsLastHour={featureMetrics.lastHour[feature.name]}
                 metricsLastMinute={featureMetrics.lastMinute[feature.name]}
@@ -114,7 +114,7 @@ export default class FeatureListComponent extends React.Component {
                             <Button
                                 to="/features/create"
                                 size="large"
-                                color="primary"
+                                color="secondary"
                                 variant="contained"
                                 component={Link}
                             >
@@ -124,13 +124,7 @@ export default class FeatureListComponent extends React.Component {
                     />
                 </div>
 
-                <Paper
-                    shadow={0}
-                    className={classnames(
-                        commonStyles.fullwidth,
-                        styles.listContainer
-                    )}
-                >
+                <Paper shadow={0}>
                     <div>
                         <ListComponentHeader
                             settings={this.props.settings}
@@ -146,13 +140,7 @@ export default class FeatureListComponent extends React.Component {
                             condition={features.length > 0}
                             show={this.renderFeatures}
                             elseShow={
-                                <p
-                                    style={{
-                                        textAlign: "center",
-                                        marginTop: "50px",
-                                        color: "gray"
-                                    }}
-                                >
+                                <p className={styles.listParagraph}>
                                     Empty list of feature toggles
                                 </p>
                             }

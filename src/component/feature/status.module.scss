@@ -1,0 +1,16 @@
+.stale {
+    background-color: var(--danger);
+    color: #fff;
+    font-size: var(--p-size);
+}
+
+.active {
+    background-color: var(--success);
+    color: #000;
+    font-size: var(--p-size);
+}
+
+.stale,
+.active {
+    box-shadow: var(--chip-shadow);
+}

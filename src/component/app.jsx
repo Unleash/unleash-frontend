@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { StylesProvider } from "@material-ui/core/styles";
 
 import Features from "../page/features";
 import AuthenticationContainer from "./user/authentication-container";
@@ -25,31 +26,34 @@ class App extends PureComponent {
             return <AuthenticationContainer history={this.props.history} />;
         }
         return (
-            <ThemeProvider theme={mainTheme}>
-                <div className={styles.container}>
-                    <MainLayout {...this.props}>
-                        <Switch>
-                            <Route
-                                exact
-                                path="/"
-                                render={() => (
-                                    <Redirect
-                                        to="/features"
-                                        component={Features}
-                                    />
-                                )}
-                            />
-                            {routes.map(route => (
+            <StylesProvider injectFirst>
+                <CssBaseline />
+                <ThemeProvider theme={mainTheme}>
+                    <div className={styles.container}>
+                        <MainLayout {...this.props}>
+                            <Switch>
                                 <Route
-                                    key={route.path}
-                                    path={route.path}
-                                    component={route.component}
+                                    exact
+                                    path="/"
+                                    render={() => (
+                                        <Redirect
+                                            to="/features"
+                                            component={Features}
+                                        />
+                                    )}
                                 />
-                            ))}
-                        </Switch>
-                    </MainLayout>
-                </div>
-            </ThemeProvider>
+                                {routes.map(route => (
+                                    <Route
+                                        key={route.path}
+                                        path={route.path}
+                                        component={route.component}
+                                    />
+                                ))}
+                            </Switch>
+                        </MainLayout>
+                    </div>
+                </ThemeProvider>
+            </StylesProvider>
         );
     }
 }
