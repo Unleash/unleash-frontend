@@ -1,14 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { debounce } from 'debounce';
-import { Link } from 'react-router-dom';
-import { Icon, FABButton, Menu, MenuItem, Card, CardActions, List } from 'react-mdl';
-import Feature from './list-item-component';
-import { MenuItemWithIcon, DropdownButton, styles as commonStyles } from '../../common';
-import SearchField from '../../common/search-field';
-import { CREATE_FEATURE } from '../../../permissions';
-import ProjectMenu from './project-container';
+import React from "react";
+import PropTypes from "prop-types";
+import { debounce } from "debounce";
+import classnames from "classnames";
 
+import { Link } from "react-router-dom";
+import { CardActions, List } from "react-mdl";
+
+import { Button, Paper, Menu, MenuItem } from "@material-ui/core";
+import Feature from "./list-item-component";
+import SearchField from "../../common/search-field";
+import ProjectMenu from "./project-container";
+import ListComponentHeader from "./list-component-header";
+import ConditionallyRender from "../../common/conditionally-render";
+
+import { CREATE_FEATURE } from "../../../permissions";
+
+import {
+    MenuItemWithIcon,
+    DropdownButton,
+    styles as commonStyles
+} from "../../common";
+
+import styles from "./list.module.scss";
 export default class FeatureListComponent extends React.Component {
     static propTypes = {
         features: PropTypes.array.isRequired,
@@ -20,14 +33,17 @@ export default class FeatureListComponent extends React.Component {
         toggleFeature: PropTypes.func,
         settings: PropTypes.object,
         history: PropTypes.object.isRequired,
-        hasPermission: PropTypes.func.isRequired,
+        hasPermission: PropTypes.func.isRequired
     };
 
     constructor(props) {
         super();
         this.state = {
             filter: props.settings.filter,
-            updateFilter: debounce(props.updateSetting.bind(this, 'filter'), 150),
+            updateFilter: debounce(
+                props.updateSetting.bind(this, "filter"),
+                150
+            )
         };
     }
 
@@ -39,96 +55,78 @@ export default class FeatureListComponent extends React.Component {
         }
     }
 
-    toggleMetrics() {
-        this.props.updateSetting('showLastHour', !this.props.settings.showLastHour);
-    }
+    toggleMetrics = () => {
+        this.props.updateSetting(
+            "showLastHour",
+            !this.props.settings.showLastHour
+        );
+    };
 
     setFilter = v => {
-        const value = typeof v === 'string' ? v : '';
+        const value = typeof v === "string" ? v : "";
         this.setState({ filter: value });
         this.state.updateFilter(value);
     };
 
-    setSort(v) {
-        this.props.updateSetting('sort', typeof v === 'string' ? v.trim() : '');
-    }
+    setSort = v => {
+        this.props.updateSetting("sort", typeof v === "string" ? v.trim() : "");
+    };
 
     render() {
-        const { features, toggleFeature, featureMetrics, settings, revive, hasPermission } = this.props;
+        const {
+            features,
+            toggleFeature,
+            featureMetrics,
+            settings,
+            revive,
+            hasPermission
+        } = this.props;
         features.forEach(e => {
             e.reviveName = e.name;
         });
         return (
-            <div>
-                <div className={commonStyles.toolbar}>
+            <div className={styles.featureContainer}>
+                <div className={styles.searchBarContainer}>
                     <SearchField
                         value={this.props.settings.filter}
-                        updateValue={this.props.updateSetting.bind(this, 'filter')}
+                        updateValue={this.props.updateSetting.bind(
+                            this,
+                            "filter"
+                        )}
+                        className={styles.searchBar}
                     />
-                    {hasPermission(CREATE_FEATURE) ? (
-                        <Link to="/features/create" className={commonStyles.toolbarButton}>
-                            <FABButton accent title="Create feature toggle">
-                                <Icon name="add" />
-                            </FABButton>
-                        </Link>
-                    ) : (
-                        ''
-                    )}
+                    <ConditionallyRender
+                        condition={hasPermission(CREATE_FEATURE)}
+                        show={
+                            <Button
+                                to="/features/create"
+                                size="large"
+                                color="primary"
+                                variant="contained"
+                                component={Link}
+                            >
+                                Add new feature
+                            </Button>
+                        }
+                    />
                 </div>
-                <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                    <CardActions>
-                        <DropdownButton
-                            id="metric"
-                            label={`Last ${settings.showLastHour ? 'hour' : 'minute'}`}
-                            title="Metric interval"
+
+                <Paper
+                    shadow={0}
+                    className={classnames(
+                        commonStyles.fullwidth,
+                        styles.listContainer
+                    )}
+                >
+                    <div>
+                        <ListComponentHeader
+                            settings={this.props.settings}
+                            toggleMetrics={this.toggleMetrics}
+                            setSort={this.setSort}
+                            updateSetting={this.props.updateSetting}
                         />
-                        <Menu target="metric" onClick={() => this.toggleMetrics()} style={{ width: '168px' }}>
-                            <MenuItemWithIcon
-                                icon="hourglass_empty"
-                                disabled={!settings.showLastHour}
-                                data-target="minute"
-                                label="Last minute"
-                            />
-                            <MenuItemWithIcon
-                                icon="hourglass_full"
-                                disabled={settings.showLastHour}
-                                data-target="hour"
-                                label="Last hour"
-                            />
-                        </Menu>
-                        <DropdownButton id="sorting" label={`By ${settings.sort}`} title="Sort by" />
-                        <Menu
-                            target="sorting"
-                            onClick={e => this.setSort(e.target.getAttribute('data-target'))}
-                            style={{ width: '168px' }}
-                        >
-                            <MenuItem disabled={settings.sort === 'name'} data-target="name">
-                                Name
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'type'} data-target="type">
-                                Type
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'enabled'} data-target="enabled">
-                                Enabled
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'stale'} data-target="stale">
-                                Stale
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'created'} data-target="created">
-                                Created
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'Last seen'} data-target="Last seen">
-                                Last seen
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'strategies'} data-target="strategies">
-                                Strategies
-                            </MenuItem>
-                            <MenuItem disabled={settings.sort === 'metrics'} data-target="metrics">
-                                Metrics
-                            </MenuItem>
-                        </Menu>
-                        <ProjectMenu settings={this.props.settings} updateSetting={this.props.updateSetting} />
-                    </CardActions>
+                    </div>
+
                     <hr />
                     <List>
                         {features.length > 0 ? (
@@ -136,8 +134,12 @@ export default class FeatureListComponent extends React.Component {
                                 <Feature
                                     key={i}
                                     settings={settings}
-                                    metricsLastHour={featureMetrics.lastHour[feature.name]}
-                                    metricsLastMinute={featureMetrics.lastMinute[feature.name]}
+                                    metricsLastHour={
+                                        featureMetrics.lastHour[feature.name]
+                                    }
+                                    metricsLastMinute={
+                                        featureMetrics.lastMinute[feature.name]
+                                    }
                                     feature={feature}
                                     toggleFeature={toggleFeature}
                                     revive={revive}
@@ -146,12 +148,18 @@ export default class FeatureListComponent extends React.Component {
                                 />
                             ))
                         ) : (
-                            <p style={{ textAlign: 'center', marginTop: '50px', color: 'gray' }}>
+                            <p
+                                style={{
+                                    textAlign: "center",
+                                    marginTop: "50px",
+                                    color: "gray"
+                                }}
+                            >
                                 Empty list of feature toggles
                             </p>
                         )}
                     </List>
-                </Card>
+                </Paper>
             </div>
         );
     }

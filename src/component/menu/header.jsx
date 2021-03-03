@@ -57,7 +57,10 @@ class HeaderComponent extends PureComponent {
         const style = headerBackground ? { background: headerBackground } : {};
         return (
             <React.Fragment>
-                <AppBar style={{ padding: "1rem" }} position="static">
+                <AppBar
+                    style={{ padding: "1rem", boxShadow: "none" }}
+                    position="static"
+                >
                     <Container
                         style={{ display: "flex", alignItems: "center" }}
                     >

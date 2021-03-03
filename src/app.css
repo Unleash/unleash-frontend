@@ -16,6 +16,8 @@ body {
     --card-padding-x: 2rem;
     --card-padding-y: 2rem;
     --drawer-padding: 1rem 1.5rem;
+    --page-padding: 2rem 0;
+    --list-header-padding: 1rem;
 
     /* MARGIN */
     --card-margin-y: 1rem;
@@ -31,6 +33,7 @@ body {
 
     /* WIDTHS */
     --drawer-width: 250px;
+    --dropdownMenuWidth: 200px;
 }
 
 body {

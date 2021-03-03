@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 
 import Features from "../page/features";
 import AuthenticationContainer from "./user/authentication-container";

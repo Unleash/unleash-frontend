@@ -1,3 +1,7 @@
+.dropdownMenu {
+    width: var(--dropdownMenuWidth);
+}
+
 .truncate {
     white-space: nowrap;
     overflow: hidden;
@@ -51,7 +55,7 @@
     .titleText {
         margin: 0;
         font-size: 20px;
-        line-height: 24px
+        line-height: 24px;
     }
 
     .actions {
@@ -62,7 +66,7 @@
 
 .switchWithLabel {
     display: flex;
-    
+
     .label {
         padding-right: 16px;
         line-height: 24px;
@@ -84,6 +88,7 @@
 .dropdownButton {
     text-transform: none;
     font-weight: normal;
+    min-width: 150px;
 }
 
 .toggleName {

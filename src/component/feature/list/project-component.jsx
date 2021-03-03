@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { Menu, MenuItem } from 'react-mdl';
+import React from 'react';
+import { MenuItem } from '@material-ui/core';
 import { DropdownButton } from '../../common';
 import PropTypes from 'prop-types';
+import DropdownMenu from '../../common/dropdown-menu';
 
 const ALL_PROJECTS = { id: '*', name: '> All projects' };
 
@@ -13,7 +14,7 @@ function projectItem(selectedId, item) {
     );
 }
 
-function ProjectComponent({ projects, currentProjectId, updateCurrentProject, enabled, fetchProjects }) {
+function ProjectComponent({ projects, currentProjectId, updateCurrentProject }) {
     function setProject(v) {
         const id = typeof v === 'string' ? v.trim() : '';
         updateCurrentProject(id);
@@ -34,25 +35,31 @@ function ProjectComponent({ projects, currentProjectId, updateCurrentProject, en
     if (!currentProject) {
         currentProject = ALL_PROJECTS;
     }
+
+    const handleChangeProject = e => {
+        const target = e.target.getAttribute('data-target');
+        setProject(target);
+    };
+
+    const renderProjectOptions = () => {
+        const start = [
+            <MenuItem disabled={curentProject === ALL_PROJECTS} data-target={ALL_PROJECTS.id}>
+                {ALL_PROJECTS.name}
+            </MenuItem>,
+        ];
+
+        return [...start, ...projects.map(p => projectItem(currentProjectId, p))];
+    };
+
     return (
         <React.Fragment>
-            <DropdownButton
-                className="mdl-color--amber-50"
-                style={{ textTransform: 'none', fontWeight: 'normal' }}
-                id="project"
-                label={`${currentProject.name}`}
+            <DropdownMenu
+                id={'project'}
                 title="Select project"
+                label={`${curentProject.name}`}
+                callback={handleChangeProject}
+                renderOptions={renderProjectOptions}
             />
-            <Menu
-                target="project"
-                onClick={e => setProject(e.target.getAttribute('data-target'))}
-                style={{ width: '168px' }}
-            >
-                <MenuItem disabled={currentProject === ALL_PROJECTS} data-target={ALL_PROJECTS.id}>
-                    {ALL_PROJECTS.name}
-                </MenuItem>
-                {projects.map(p => projectItem(currentProjectId, p))}
-            </Menu>
         </React.Fragment>
     );
 }
@@ -62,7 +69,6 @@ ProjectComponent.propTypes = {
     fetchProjects: PropTypes.func.isRequired,
     currentProjectId: PropTypes.string.isRequired,
     updateCurrentProject: PropTypes.func.isRequired,
-    enabled: PropTypes.bool,
 };
 
 export default ProjectComponent;
