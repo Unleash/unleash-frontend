@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Component from './edit-access-component';
+import Component from './access-component';
 
 const mapStateToProps = (state, props) => {
     const projectBase = { id: '', name: '', description: '' };
@@ -13,6 +13,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = () => ({});
 
-const EditAccessContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
+const AccessContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
-export default EditAccessContainer;
+export default AccessContainer;

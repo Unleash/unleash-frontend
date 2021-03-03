@@ -25,7 +25,7 @@ import AddUserComponent from './access-add-user';
 
 import projectApi from '../../store/project/api';
 
-function EditAccessComponent({ projectId, project }) {
+function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState();
@@ -84,7 +84,7 @@ function EditAccessComponent({ projectId, project }) {
     };
 
     return (
-        <Card>
+        <Card style={{ minHeight: '400px' }}>
             <CardHeader title={`Managed Access for project "${project.name}"`} />
             <AddUserComponent roles={roles} addUserToRole={addUser} />
             <Dialog
@@ -146,9 +146,9 @@ function EditAccessComponent({ projectId, project }) {
     );
 }
 
-EditAccessComponent.propTypes = {
+AccessComponent.propTypes = {
     projectId: PropTypes.string.isRequired,
     project: PropTypes.object,
 };
 
-export default EditAccessComponent;
+export default AccessComponent;
