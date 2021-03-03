@@ -11,7 +11,7 @@ function StatusComponent({ stale, style, showActive = true }) {
 
     const className = classnames({
         [styles.stale]: stale,
-        [!styles.stale]: "mdl-color--light-green-500 mdl-color-text--white mdl-shadow--2dp"
+        [styles.active]: !stale
     });
 
     const title = stale
