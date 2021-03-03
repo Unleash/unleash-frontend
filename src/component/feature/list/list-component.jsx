@@ -4,22 +4,15 @@ import { debounce } from "debounce";
 import classnames from "classnames";
 
 import { Link } from "react-router-dom";
-import { CardActions, List } from "react-mdl";
-
-import { Button, Paper, Menu, MenuItem } from "@material-ui/core";
+import { Button, Paper, List, Divider } from "@material-ui/core";
 import Feature from "./list-item-component";
 import SearchField from "../../common/search-field";
-import ProjectMenu from "./project-container";
 import ListComponentHeader from "./list-component-header";
 import ConditionallyRender from "../../common/conditionally-render";
 
 import { CREATE_FEATURE } from "../../../permissions";
 
-import {
-    MenuItemWithIcon,
-    DropdownButton,
-    styles as commonStyles
-} from "../../common";
+import { styles as commonStyles } from "../../common";
 
 import styles from "./list.module.scss";
 export default class FeatureListComponent extends React.Component {
@@ -72,7 +65,7 @@ export default class FeatureListComponent extends React.Component {
         this.props.updateSetting("sort", typeof v === "string" ? v.trim() : "");
     };
 
-    render() {
+    renderFeatures = () => {
         const {
             features,
             toggleFeature,
@@ -81,9 +74,29 @@ export default class FeatureListComponent extends React.Component {
             revive,
             hasPermission
         } = this.props;
+
         features.forEach(e => {
             e.reviveName = e.name;
         });
+
+        return features.map((feature, i) => (
+            <Feature
+                key={i}
+                settings={settings}
+                metricsLastHour={featureMetrics.lastHour[feature.name]}
+                metricsLastMinute={featureMetrics.lastMinute[feature.name]}
+                feature={feature}
+                toggleFeature={toggleFeature}
+                revive={revive}
+                hasPermission={hasPermission}
+                setFilter={this.setFilter}
+            />
+        ));
+    };
+
+    render() {
+        const { features, hasPermission } = this.props;
+
         return (
             <div className={styles.featureContainer}>
                 <div className={styles.searchBarContainer}>
@@ -129,35 +142,21 @@ export default class FeatureListComponent extends React.Component {
 
                     <hr />
                     <List>
-                        {features.length > 0 ? (
-                            features.map((feature, i) => (
-                                <Feature
-                                    key={i}
-                                    settings={settings}
-                                    metricsLastHour={
-                                        featureMetrics.lastHour[feature.name]
-                                    }
-                                    metricsLastMinute={
-                                        featureMetrics.lastMinute[feature.name]
-                                    }
-                                    feature={feature}
-                                    toggleFeature={toggleFeature}
-                                    revive={revive}
-                                    hasPermission={hasPermission}
-                                    setFilter={this.setFilter}
-                                />
-                            ))
-                        ) : (
-                            <p
-                                style={{
-                                    textAlign: "center",
-                                    marginTop: "50px",
-                                    color: "gray"
-                                }}
-                            >
-                                Empty list of feature toggles
-                            </p>
-                        )}
+                        <ConditionallyRender
+                            condition={features.length > 0}
+                            show={this.renderFeatures}
+                            elseShow={
+                                <p
+                                    style={{
+                                        textAlign: "center",
+                                        marginTop: "50px",
+                                        color: "gray"
+                                    }}
+                                >
+                                    Empty list of feature toggles
+                                </p>
+                            }
+                        />
                     </List>
                 </Paper>
             </div>
