@@ -1,0 +1,26 @@
+.header {
+    font-size: var(--h1-size);
+    padding: var(--list-header-padding) var(--card-padding-x);
+}
+
+.container {
+    padding: var(--card-padding);
+}
+
+.nameInput {
+    margin-right: 1.5rem;
+}
+
+.formContainer {
+    margin-bottom: 1.5rem;
+    max-width: 350px;
+}
+
+.toggleContainer {
+    display: flex;
+    align-items: center;
+}
+
+.strategiesContainer {
+    margin: 2rem 0;
+}

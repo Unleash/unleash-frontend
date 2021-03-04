@@ -1,16 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import {
-    List,
-    ListItem,
-    ListItemContent,
-    Button,
-    Icon,
-    Switch
-} from "react-mdl";
+import { List, ListItem, ListItemContent, Icon, Switch } from "react-mdl";
 
-import { MenuItem } from "@material-ui/core";
+import { MenuItem, Button } from "@material-ui/core";
 import styles from "./common.module.scss";
 
 export { styles };
@@ -96,7 +89,13 @@ DataTableHeader.propTypes = {
 
 export const FormButtons = ({ submitText = "Create", onCancel }) => (
     <div>
-        <Button type="submit" ripple raised primary icon="add">
+        <Button
+            type="submit"
+            raised
+            color="primary"
+            variant="contained"
+            icon="add"
+        >
             <Icon name="add" />
             &nbsp;&nbsp;&nbsp;
             {submitText}
