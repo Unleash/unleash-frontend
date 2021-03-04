@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { CardActions, Switch, TextField, Paper, Grid } from "@material-ui/core";
+import { CardActions, Switch, TextField, Paper } from "@material-ui/core";
 import FeatureTypeSelect from "../feature-type-select-container";
 import ProjectSelect from "../project-select-container";
 import StrategiesList from "../strategy/strategies-list-add-container";
@@ -13,8 +13,8 @@ import styles from "./add-feature-component.module.scss";
 class AddFeatureComponent extends Component {
     // static displayName = `AddFeatureComponent-${getDisplayName(Component)}`;
     componentDidMount() {
-        // window.onbeforeunload = () =>
-        //     "Data will be lost if you leave the page, are you sure?";
+        window.onbeforeunload = () =>
+            "Data will be lost if you leave the page, are you sure?";
     }
 
     componentWillUnmount() {

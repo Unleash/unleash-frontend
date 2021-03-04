@@ -15,6 +15,7 @@ body {
     --card-padding: 2rem;
     --card-padding-x: 2rem;
     --card-padding-y: 2rem;
+    --card-header-padding: 1rem 2rem;
     --drawer-padding: 1rem 1.5rem;
     --page-padding: 2rem 0;
     --list-header-padding: 1rem;

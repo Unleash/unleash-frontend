@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    padding: var(--card-header-padding);
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.heading {
+    font-size: var(--h1-size);
+}
+
+.featureInfoContainer {
+    padding: var(--card-header-padding);
+}
+
+.selectContainer {
+    margin-top: 1rem;
+}

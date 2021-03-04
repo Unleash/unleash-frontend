@@ -1,29 +1,47 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Tabs, Tab, ProgressBar, Button, Card, CardTitle, CardActions, Switch, CardText } from 'react-mdl';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import {
+    Tabs,
+    Tab,
+    ProgressBar,
+    Button,
+    Card,
+    CardTitle,
+    CardActions,
+    Switch,
+    CardText
+} from "react-mdl";
+import { Link } from "react-router-dom";
+import { Paper, Typography } from "@material-ui/core";
 
-import HistoryComponent from '../../history/history-list-toggle-container';
-import MetricComponent from './metric-container';
-import UpdateStrategies from './update-strategies-container';
-import EditVariants from '../variant/update-variant-container';
-import FeatureTypeSelect from '../feature-type-select-container';
-import ProjectSelect from '../project-select-container';
-import UpdateDescriptionComponent from './update-description-component';
-import { styles as commonStyles } from '../../common';
-import { CREATE_FEATURE, DELETE_FEATURE, UPDATE_FEATURE } from '../../../permissions';
-import StatusComponent from '../status-component';
-import FeatureTagComponent from '../feature-tag-component';
-import StatusUpdateComponent from './status-update-component';
-import AddTagDialog from '../add-tag-dialog-container';
+import HistoryComponent from "../../history/history-list-toggle-container";
+import MetricComponent from "./metric-container";
+import UpdateStrategies from "./update-strategies-container";
+import EditVariants from "../variant/update-variant-container";
+import FeatureTypeSelect from "../feature-type-select-container";
+import ProjectSelect from "../project-select-container";
+import UpdateDescriptionComponent from "./update-description-component";
+import { styles as commonStyles } from "../../common";
+import {
+    CREATE_FEATURE,
+    DELETE_FEATURE,
+    UPDATE_FEATURE
+} from "../../../permissions";
+import StatusComponent from "../status-component";
+import FeatureTagComponent from "../feature-tag-component";
+import StatusUpdateComponent from "./status-update-component";
+import AddTagDialog from "../add-tag-dialog-container";
+import ConditionallyRender from "../../common/conditionally-render";
 
-import { scrollToTop } from '../../common/util';
+import { scrollToTop } from "../../common/util";
+
+import styles from "./view-component.module.scss";
 
 const TABS = {
     strategies: 0,
     view: 1,
     variants: 2,
-    history: 3,
+    history: 3
 };
 
 export default class ViewFeatureToggleComponent extends React.Component {
@@ -55,7 +73,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
         fetchTags: PropTypes.func,
         untagFeature: PropTypes.func,
         featureTags: PropTypes.array,
-        tagTypes: PropTypes.array,
+        tagTypes: PropTypes.array
     };
 
     // eslint-disable-next-line camelcase
@@ -71,14 +89,23 @@ export default class ViewFeatureToggleComponent extends React.Component {
     }
 
     getTabContent(activeTab) {
-        const { features, featureToggle, featureToggleName, hasPermission } = this.props;
+        const {
+            features,
+            featureToggle,
+            featureToggleName,
+            hasPermission
+        } = this.props;
 
         if (TABS[activeTab] === TABS.history) {
             return <HistoryComponent toggleName={featureToggleName} />;
         } else if (TABS[activeTab] === TABS.strategies) {
             if (this.isFeatureView && hasPermission(UPDATE_FEATURE)) {
                 return (
-                    <UpdateStrategies featureToggle={featureToggle} features={features} history={this.props.history} />
+                    <UpdateStrategies
+                        featureToggle={featureToggle}
+                        features={features}
+                        history={this.props.history}
+                    />
                 );
             }
             return (
@@ -104,8 +131,8 @@ export default class ViewFeatureToggleComponent extends React.Component {
     }
 
     goToTab(tabName, featureToggleName) {
-        let view = this.props.fetchFeatureToggles ? 'features' : 'archive';
-        if (view === 'features' && tabName === 'strategies') {
+        let view = this.props.fetchFeatureToggles ? "features" : "archive";
+        if (view === "features" && tabName === "strategies") {
             const { featureToggleName, fetchFeatureToggle } = this.props;
             fetchFeatureToggle(featureToggleName);
         }
@@ -124,7 +151,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
             hasPermission,
             featureTags,
             tagTypes,
-            untagFeature,
+            untagFeature
         } = this.props;
 
         if (!featureToggle) {
@@ -133,38 +160,42 @@ export default class ViewFeatureToggleComponent extends React.Component {
             }
             return (
                 <span>
-                    Could not find the toggle{' '}
-                    {hasPermission(CREATE_FEATURE) ? (
-                        <Link
-                            to={{
-                                pathname: '/features/create',
-                                query: { name: featureToggleName },
-                            }}
-                        >
-                            {featureToggleName}
-                        </Link>
-                    ) : (
-                        featureToggleName
-                    )}
+                    Could not find the toggle{" "}
+                    <ConditionallyRender
+                        condition={hasPermission(CREATE_FEATURE)}
+                        show={
+                            <Link
+                                to={{
+                                    pathname: "/features/create",
+                                    query: { name: featureToggleName }
+                                }}
+                            >
+                                {featureToggleName}
+                            </Link>
+                        }
+                        elseShow={<span>featureToggleName</span>}
+                    />
                 </span>
             );
         }
 
-        const activeTabId = TABS[this.props.activeTab] ? TABS[this.props.activeTab] : TABS.strategies;
+        const activeTabId = TABS[this.props.activeTab]
+            ? TABS[this.props.activeTab]
+            : TABS.strategies;
         const tabContent = this.getTabContent(activeTab);
 
         const removeToggle = () => {
             if (
                 // eslint-disable-next-line no-alert
-                window.confirm('Are you sure you want to remove this toggle?')
+                window.confirm("Are you sure you want to remove this toggle?")
             ) {
                 removeFeatureToggle(featureToggle.name);
-                this.props.history.push('/features');
+                this.props.history.push("/features");
             }
         };
         const reviveToggle = () => {
             revive(featureToggle.name);
-            this.props.history.push('/features');
+            this.props.history.push("/features");
         };
         const updateDescription = description => {
             let feature = { ...featureToggle, description };
@@ -207,67 +238,95 @@ export default class ViewFeatureToggleComponent extends React.Component {
         };
 
         return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <StatusComponent
-                    stale={featureToggle.stale}
-                    style={{
-                        position: 'absolute',
-                        right: '4px',
-                        top: '4px',
-                    }}
-                />
-                <CardTitle style={{ wordBreak: 'break-all', paddingBottom: 0 }}>{featureToggle.name} </CardTitle>
-                <CardText>
-                    <UpdateDescriptionComponent
-                        isFeatureView={this.isFeatureView}
-                        description={featureToggle.description}
-                        update={updateDescription}
-                        hasPermission={hasPermission}
-                    />
-                </CardText>
-                <CardText style={{ paddingTop: 0 }}>
-                    <FeatureTypeSelect value={featureToggle.type} onChange={updateType} filled />
-                    &nbsp;
-                    <ProjectSelect value={featureToggle.project} onChange={updateProject} filled />
-                    <FeatureTagComponent
-                        featureToggleName={featureToggle.name}
-                        tags={featureTags}
-                        tagTypes={tagTypes}
-                        untagFeature={untagFeature}
-                    />
-                </CardText>
+            <Paper
+                shadow={0}
+                className={commonStyles.fullwidth}
+                style={{ overflow: "visible" }}
+            >
+                <div>
+                    <div className={styles.header}>
+                        <Typography variant="h1" className={styles.heading}>
+                            {featureToggle.name}
+                        </Typography>
+                        <StatusComponent stale={featureToggle.stale} />
+                    </div>
+                    <div className={styles.featureInfoContainer}>
+                        <UpdateDescriptionComponent
+                            isFeatureView={this.isFeatureView}
+                            description={featureToggle.description}
+                            update={updateDescription}
+                            hasPermission={hasPermission}
+                        />
+                        <div className={styles.selectContainer}>
+                            <FeatureTypeSelect
+                                value={featureToggle.type}
+                                onChange={updateType}
+                                label="Feature type"
+                            />
+                            &nbsp;
+                            <ProjectSelect
+                                value={featureToggle.project}
+                                onChange={updateProject}
+                                label="Project"
+                                filled
+                            />
+                        </div>
+                        <FeatureTagComponent
+                            featureToggleName={featureToggle.name}
+                            tags={featureTags}
+                            tagTypes={tagTypes}
+                            untagFeature={untagFeature}
+                        />
+                    </div>
+                </div>
 
                 <CardActions
                     border
                     style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between"
                     }}
                 >
-                    <span style={{ paddingRight: '24px' }}>
+                    <span style={{ paddingRight: "24px" }}>
                         {hasPermission(UPDATE_FEATURE) ? (
                             <Switch
                                 disabled={!this.isFeatureView}
                                 ripple
                                 checked={featureToggle.enabled}
-                                onChange={() => toggleFeature(!featureToggle.enabled, featureToggle.name)}
+                                onChange={() =>
+                                    toggleFeature(
+                                        !featureToggle.enabled,
+                                        featureToggle.name
+                                    )
+                                }
                             >
                                 <span className="mdl-cell--hide-phone">
-                                    {featureToggle.enabled ? 'Enabled' : 'Disabled'}
+                                    {featureToggle.enabled
+                                        ? "Enabled"
+                                        : "Disabled"}
                                 </span>
                             </Switch>
                         ) : (
-                            <Switch disabled ripple checked={featureToggle.enabled}>
-                                {featureToggle.enabled ? 'Enabled' : 'Disabled'}
+                            <Switch
+                                disabled
+                                ripple
+                                checked={featureToggle.enabled}
+                            >
+                                {featureToggle.enabled ? "Enabled" : "Disabled"}
                             </Switch>
                         )}
                     </span>
 
                     {this.isFeatureView ? (
                         <div>
-                            <AddTagDialog featureToggleName={featureToggle.name} />
-                            <StatusUpdateComponent stale={featureToggle.stale} updateStale={updateStale} />
+                            <AddTagDialog
+                                featureToggleName={featureToggle.name}
+                            />
+                            <StatusUpdateComponent
+                                stale={featureToggle.stale}
+                                updateStale={updateStale}
+                            />
                             <Link
                                 to={`/features/copy/${featureToggle.name}`}
                                 title="Create new feature toggle by cloning configuration"
@@ -298,20 +357,38 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 <Tabs
                     activeTab={activeTabId}
                     ripple
-                    tabBarProps={{ style: { width: '100%' } }}
+                    tabBarProps={{ style: { width: "100%" } }}
                     className="mdl-color--grey-100"
                 >
-                    <Tab onClick={() => this.goToTab('strategies', featureToggleName)}>Activation</Tab>
-                    <Tab onClick={() => this.goToTab('view', featureToggleName)}>Metrics</Tab>
-                    <Tab onClick={() => this.goToTab('variants', featureToggleName)}>
+                    <Tab
+                        onClick={() =>
+                            this.goToTab("strategies", featureToggleName)
+                        }
+                    >
+                        Activation
+                    </Tab>
+                    <Tab
+                        onClick={() => this.goToTab("view", featureToggleName)}
+                    >
+                        Metrics
+                    </Tab>
+                    <Tab
+                        onClick={() =>
+                            this.goToTab("variants", featureToggleName)
+                        }
+                    >
                         V<span className="mdl-cell--hide-phone">ariants</span>
                     </Tab>
-                    <Tab onClick={() => this.goToTab('history', featureToggleName)}>
+                    <Tab
+                        onClick={() =>
+                            this.goToTab("history", featureToggleName)
+                        }
+                    >
                         L<span className="mdl-cell--hide-phone">og</span>
                     </Tab>
                 </Tabs>
                 {tabContent}
-            </Card>
+            </Paper>
         );
     }
 }
