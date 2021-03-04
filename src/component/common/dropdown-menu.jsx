@@ -5,7 +5,14 @@ import { DropdownButton } from ".";
 
 import styles from "./common.module.scss";
 
-const DropdownMenu = ({ renderOptions, id, title, callback, label }) => {
+const DropdownMenu = ({
+    renderOptions,
+    id,
+    title,
+    callback,
+    label,
+    ...rest
+}) => {
     const [anchor, setAnchor] = React.useState(null);
 
     const handleOpen = e => setAnchor(e.currentTarget);
@@ -27,6 +34,7 @@ const DropdownMenu = ({ renderOptions, id, title, callback, label }) => {
                 onClick={handleOpen}
                 aria-controls={id}
                 aria-haspopup="true"
+                {...rest}
             />
             <Menu
                 id={id}

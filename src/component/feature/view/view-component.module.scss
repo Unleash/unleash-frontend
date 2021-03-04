@@ -3,7 +3,7 @@
     padding: var(--card-header-padding);
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: var(--default-border);
 }
 
 .heading {
@@ -16,4 +16,17 @@
 
 .selectContainer {
     margin-top: 1rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--card-header-padding);
+    border-bottom: var(--default-border);
+    border-top: var(--default-border);
+}
+
+.tabContentContainer {
+    padding: var(--card-padding);
 }

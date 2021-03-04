@@ -36,21 +36,6 @@ class HeaderComponent extends PureComponent {
         init(uiConfig.flags);
     }
 
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (this.props.location.pathname !== nextProps.location.pathname) {
-            clearTimeout(this.timer);
-            this.timer = setTimeout(() => {
-                const layout = document.querySelector(".mdl-js-layout");
-                const drawer = document.querySelector(".mdl-layout__drawer");
-                // hack, might get a built in alternative later
-                if (drawer.classList.contains("is-visible")) {
-                    layout.MaterialLayout.toggleDrawer();
-                }
-            }, 10);
-        }
-    }
-
     render() {
         const { headerBackground, links, name, flags } = this.props.uiConfig;
         const { openDrawer } = this.state;

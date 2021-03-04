@@ -1,18 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-    Tabs,
-    Tab,
-    ProgressBar,
-    Button,
-    Card,
-    CardTitle,
-    CardActions,
-    Switch,
-    CardText
-} from "react-mdl";
 import { Link } from "react-router-dom";
-import { Paper, Typography } from "@material-ui/core";
+import {
+    Paper,
+    Typography,
+    Button,
+    Switch,
+    Tab,
+    Tabs,
+    LinearProgress
+} from "@material-ui/core";
 
 import HistoryComponent from "../../history/history-list-toggle-container";
 import MetricComponent from "./metric-container";
@@ -156,7 +153,7 @@ export default class ViewFeatureToggleComponent extends React.Component {
 
         if (!featureToggle) {
             if (features.length === 0) {
-                return <ProgressBar indeterminate />;
+                return <LinearProgress />;
             }
             return (
                 <span>
@@ -237,6 +234,12 @@ export default class ViewFeatureToggleComponent extends React.Component {
             this.props.setStale(stale, featureToggleName);
         };
 
+        /**REFACTOR THIS */
+        const a11yProps = index => ({
+            id: `tab-${index}`,
+            "aria-controls": `tabpanel-${index}`
+        });
+
         return (
             <Paper
                 shadow={0}
@@ -280,114 +283,126 @@ export default class ViewFeatureToggleComponent extends React.Component {
                     </div>
                 </div>
 
-                <CardActions
-                    border
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between"
-                    }}
-                >
+                <div className={styles.actions}>
                     <span style={{ paddingRight: "24px" }}>
-                        {hasPermission(UPDATE_FEATURE) ? (
-                            <Switch
-                                disabled={!this.isFeatureView}
-                                ripple
-                                checked={featureToggle.enabled}
-                                onChange={() =>
-                                    toggleFeature(
-                                        !featureToggle.enabled,
-                                        featureToggle.name
-                                    )
-                                }
-                            >
-                                <span className="mdl-cell--hide-phone">
-                                    {featureToggle.enabled
-                                        ? "Enabled"
-                                        : "Disabled"}
-                                </span>
-                            </Switch>
-                        ) : (
-                            <Switch
-                                disabled
-                                ripple
-                                checked={featureToggle.enabled}
-                            >
-                                {featureToggle.enabled ? "Enabled" : "Disabled"}
-                            </Switch>
-                        )}
+                        <ConditionallyRender
+                            condition={hasPermission(UPDATE_FEATURE)}
+                            show={
+                                <>
+                                    <Switch
+                                        disabled={!this.isFeatureView}
+                                        checked={featureToggle.enabled}
+                                        onChange={() =>
+                                            toggleFeature(
+                                                !featureToggle.enabled,
+                                                featureToggle.name
+                                            )
+                                        }
+                                    />
+                                    <span>
+                                        {featureToggle.enabled
+                                            ? "Enabled"
+                                            : "Disabled"}
+                                    </span>
+                                </>
+                            }
+                            elseShow={
+                                <>
+                                    <Switch
+                                        disabled
+                                        checked={featureToggle.enabled}
+                                    />
+                                    <span>
+                                        {featureToggle.enabled
+                                            ? "Enabled"
+                                            : "Disabled"}
+                                    </span>
+                                </>
+                            }
+                        />
                     </span>
 
-                    {this.isFeatureView ? (
-                        <div>
-                            <AddTagDialog
-                                featureToggleName={featureToggle.name}
-                            />
-                            <StatusUpdateComponent
-                                stale={featureToggle.stale}
-                                updateStale={updateStale}
-                            />
-                            <Link
-                                to={`/features/copy/${featureToggle.name}`}
-                                title="Create new feature toggle by cloning configuration"
-                            >
-                                <Button style={{ flexShrink: 0 }}>Clone</Button>
-                            </Link>
+                    <ConditionallyRender
+                        condition={this.isFeatureView}
+                        show={
+                            <div>
+                                <AddTagDialog
+                                    featureToggleName={featureToggle.name}
+                                />
+                                <StatusUpdateComponent
+                                    stale={featureToggle.stale}
+                                    updateStale={updateStale}
+                                />
+                                <Button
+                                    title="Create new feature toggle by cloning configuration"
+                                    component={Link}
+                                    to={`/features/copy/${featureToggle.name}`}
+                                >
+                                    Clone
+                                </Button>
+
+                                <Button
+                                    disabled={!hasPermission(DELETE_FEATURE)}
+                                    onClick={removeToggle}
+                                    title="Archive feature toggle"
+                                    style={{ flexShrink: 0 }}
+                                >
+                                    Archive
+                                </Button>
+                            </div>
+                        }
+                        elseShow={
                             <Button
-                                disabled={!hasPermission(DELETE_FEATURE)}
-                                onClick={removeToggle}
-                                title="Archive feature toggle"
-                                accent
+                                disabled={!hasPermission(UPDATE_FEATURE)}
+                                onClick={reviveToggle}
                                 style={{ flexShrink: 0 }}
                             >
-                                Archive
+                                Revive
                             </Button>
-                        </div>
-                    ) : (
-                        <Button
-                            disabled={!hasPermission(UPDATE_FEATURE)}
-                            onClick={reviveToggle}
-                            style={{ flexShrink: 0 }}
-                        >
-                            Revive
-                        </Button>
-                    )}
-                </CardActions>
+                        }
+                    />
+                </div>
+
                 <hr />
-                <Tabs
-                    activeTab={activeTabId}
-                    ripple
-                    tabBarProps={{ style: { width: "100%" } }}
-                    className="mdl-color--grey-100"
-                >
-                    <Tab
-                        onClick={() =>
-                            this.goToTab("strategies", featureToggleName)
-                        }
+                <Paper style={{ background: "#efefef" }}>
+                    <Tabs
+                        value={this.props.activeTab}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
                     >
-                        Activation
-                    </Tab>
-                    <Tab
-                        onClick={() => this.goToTab("view", featureToggleName)}
-                    >
-                        Metrics
-                    </Tab>
-                    <Tab
-                        onClick={() =>
-                            this.goToTab("variants", featureToggleName)
-                        }
-                    >
-                        V<span className="mdl-cell--hide-phone">ariants</span>
-                    </Tab>
-                    <Tab
-                        onClick={() =>
-                            this.goToTab("history", featureToggleName)
-                        }
-                    >
-                        L<span className="mdl-cell--hide-phone">og</span>
-                    </Tab>
-                </Tabs>
-                {tabContent}
+                        <Tab
+                            onClick={() =>
+                                this.goToTab("strategies", featureToggleName)
+                            }
+                            label="Activation"
+                            {...a11yProps(0)}
+                        />
+                        <Tab
+                            onClick={() =>
+                                this.goToTab("view", featureToggleName)
+                            }
+                            label="Metrics"
+                            {...a11yProps(1)}
+                        />
+                        <Tab
+                            onClick={() =>
+                                this.goToTab("variants", featureToggleName)
+                            }
+                            label="Variants"
+                            {...a11yProps(2)}
+                        />
+                        <Tab
+                            onClick={() =>
+                                this.goToTab("history", featureToggleName)
+                            }
+                            label="Log"
+                            {...a11yProps(3)}
+                        />
+                    </Tabs>
+                </Paper>
+
+                <div className={styles.tabContentContainer}>{tabContent}</div>
             </Paper>
         );
     }
