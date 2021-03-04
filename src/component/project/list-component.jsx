@@ -13,6 +13,7 @@ class ProjectListComponent extends Component {
         removeProject: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
         hasPermission: PropTypes.func.isRequired,
+        rbacEnabled: PropTypes.bool.isRequired,
     };
 
     componentDidMount() {
@@ -25,7 +26,7 @@ class ProjectListComponent extends Component {
     };
 
     render() {
-        const { projects, hasPermission } = this.props;
+        const { projects, hasPermission, rbacEnabled } = this.props;
 
         return (
             <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
@@ -56,7 +57,7 @@ class ProjectListComponent extends Component {
                                     </Link>
                                 </ListItemContent>
                                 <ListItemAction>
-                                    {hasPermission(UPDATE_PROJECT) ? (
+                                    {hasPermission(UPDATE_PROJECT) && rbacEnabled ? (
                                         <Link to={`/projects/${project.id}/access`} style={{ color: 'black' }}>
                                             <IconButton name="supervised_user_circle" title="Manage access" />
                                         </Link>
