@@ -127,6 +127,18 @@ export default class ViewFeatureToggleComponent extends React.Component {
         }
     }
 
+    getTabs = () => {
+        if (this.isFeatureView && hasPermission(UPDATE_FEATURE)) {
+            return (
+                <UpdateStrategies
+                    featureToggle={featureToggle}
+                    features={features}
+                    history={this.props.history}
+                />
+            );
+        }
+    };
+
     goToTab(tabName, featureToggleName) {
         let view = this.props.fetchFeatureToggles ? "features" : "archive";
         if (view === "features" && tabName === "strategies") {
