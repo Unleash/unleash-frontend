@@ -94,8 +94,11 @@ export function createFeatureToggles(featureToggle) {
         return api
             .create(featureToggle)
             .then(res => res.json())
-            .then(featureToggle => {
-                dispatch({ type: ADD_FEATURE_TOGGLE, featureToggle });
+            .then(createdFeature => {
+                dispatch({
+                    type: ADD_FEATURE_TOGGLE,
+                    featureToggle: createdFeature,
+                });
             })
             .catch(dispatchAndThrow(dispatch, ERROR_CREATING_FEATURE_TOGGLE));
     };
