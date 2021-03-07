@@ -29,17 +29,11 @@ import FeatureTagComponent from "../feature-tag-component";
 import StatusUpdateComponent from "./status-update-component";
 import AddTagDialog from "../add-tag-dialog-container";
 import ConditionallyRender from "../../common/conditionally-render";
+import TabNav from "../../common/tabNav";
 
 import { scrollToTop } from "../../common/util";
 
 import styles from "./view-component.module.scss";
-
-const TABS = {
-    strategies: 0,
-    view: 1,
-    variants: 2,
-    history: 3
-};
 
 export default class ViewFeatureToggleComponent extends React.Component {
     isFeatureView;
@@ -85,68 +79,69 @@ export default class ViewFeatureToggleComponent extends React.Component {
         this.props.fetchTags(this.props.featureToggleName);
     }
 
-    getTabContent(activeTab) {
+    getTabComponent = key => {
         const {
-            features,
             featureToggle,
+            features,
             featureToggleName,
             hasPermission
         } = this.props;
 
-        if (TABS[activeTab] === TABS.history) {
-            return <HistoryComponent toggleName={featureToggleName} />;
-        } else if (TABS[activeTab] === TABS.strategies) {
-            if (this.isFeatureView && hasPermission(UPDATE_FEATURE)) {
+        switch (key) {
+            case "activation":
+                if (this.isFeatureView && hasPermission(UPDATE_FEATURE)) {
+                    return (
+                        <UpdateStrategies
+                            featureToggle={featureToggle}
+                            features={features}
+                            history={this.props.history}
+                        />
+                    );
+                }
                 return (
                     <UpdateStrategies
                         featureToggle={featureToggle}
                         features={features}
                         history={this.props.history}
+                        editable={false}
                     />
                 );
-            }
-            return (
-                <UpdateStrategies
-                    featureToggle={featureToggle}
-                    features={features}
-                    history={this.props.history}
-                    editable={false}
-                />
-            );
-        } else if (TABS[activeTab] === TABS.variants) {
-            return (
-                <EditVariants
-                    featureToggle={featureToggle}
-                    features={features}
-                    history={this.props.history}
-                    hasPermission={this.props.hasPermission}
-                />
-            );
-        } else {
-            return <MetricComponent featureToggle={featureToggle} />;
-        }
-    }
-
-    getTabs = () => {
-        if (this.isFeatureView && hasPermission(UPDATE_FEATURE)) {
-            return (
-                <UpdateStrategies
-                    featureToggle={featureToggle}
-                    features={features}
-                    history={this.props.history}
-                />
-            );
+            case "metrics":
+                return <MetricComponent featureToggle={featureToggle} />;
+            case "variants":
+                return (
+                    <EditVariants
+                        featureToggle={featureToggle}
+                        features={features}
+                        history={this.props.history}
+                        hasPermission={this.props.hasPermission}
+                    />
+                );
+            case "log":
+                return <HistoryComponent toggleName={featureToggleName} />;
         }
     };
 
-    goToTab(tabName, featureToggleName) {
-        let view = this.props.fetchFeatureToggles ? "features" : "archive";
-        if (view === "features" && tabName === "strategies") {
-            const { featureToggleName, fetchFeatureToggle } = this.props;
-            fetchFeatureToggle(featureToggleName);
-        }
-        this.props.history.push(`/${view}/${tabName}/${featureToggleName}`);
-    }
+    getTabData = () => {
+        return [
+            {
+                label: "Activation",
+                component: this.getTabComponent("activation")
+            },
+            {
+                label: "Metrics",
+                component: this.getTabComponent("metrics")
+            },
+            {
+                label: "Variants",
+                component: this.getTabComponent("variants")
+            },
+            {
+                label: "Log",
+                component: this.getTabComponent("log")
+            }
+        ];
+    };
 
     render() {
         const {
@@ -187,11 +182,6 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 </span>
             );
         }
-
-        const activeTabId = TABS[this.props.activeTab]
-            ? TABS[this.props.activeTab]
-            : TABS.strategies;
-        const tabContent = this.getTabContent(activeTab);
 
         const removeToggle = () => {
             if (
@@ -246,15 +236,8 @@ export default class ViewFeatureToggleComponent extends React.Component {
             this.props.setStale(stale, featureToggleName);
         };
 
-        /**REFACTOR THIS */
-        const a11yProps = index => ({
-            id: `tab-${index}`,
-            "aria-controls": `tabpanel-${index}`
-        });
-
         return (
             <Paper
-                shadow={0}
                 className={commonStyles.fullwidth}
                 style={{ overflow: "visible" }}
             >
@@ -376,45 +359,10 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 </div>
 
                 <hr />
-                <Paper style={{ background: "#efefef" }}>
-                    <Tabs
-                        value={this.props.activeTab}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                    >
-                        <Tab
-                            onClick={() =>
-                                this.goToTab("strategies", featureToggleName)
-                            }
-                            label="Activation"
-                            {...a11yProps(0)}
-                        />
-                        <Tab
-                            onClick={() =>
-                                this.goToTab("view", featureToggleName)
-                            }
-                            label="Metrics"
-                            {...a11yProps(1)}
-                        />
-                        <Tab
-                            onClick={() =>
-                                this.goToTab("variants", featureToggleName)
-                            }
-                            label="Variants"
-                            {...a11yProps(2)}
-                        />
-                        <Tab
-                            onClick={() =>
-                                this.goToTab("history", featureToggleName)
-                            }
-                            label="Log"
-                            {...a11yProps(3)}
-                        />
-                    </Tabs>
-                </Paper>
-
-                <div className={styles.tabContentContainer}>{tabContent}</div>
+                {/* 
+                        TODO FIX TAB CONTENT PADDING */}
+                <div className={styles.tabContentContainer}></div>
+                <TabNav tabData={this.getTabData()} />
             </Paper>
         );
     }
