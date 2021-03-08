@@ -6,8 +6,6 @@ import {
     Typography,
     Button,
     Switch,
-    Tab,
-    Tabs,
     LinearProgress
 } from "@material-ui/core";
 
@@ -147,7 +145,6 @@ export default class ViewFeatureToggleComponent extends React.Component {
         const {
             featureToggle,
             features,
-            activeTab,
             revive,
             featureToggleName,
             toggleFeature,
@@ -361,8 +358,10 @@ export default class ViewFeatureToggleComponent extends React.Component {
                 <hr />
                 {/* 
                         TODO FIX TAB CONTENT PADDING */}
-                <div className={styles.tabContentContainer}></div>
-                <TabNav tabData={this.getTabData()} />
+                <TabNav
+                    tabData={this.getTabData()}
+                    className={styles.tabContentContainer}
+                />
             </Paper>
         );
     }

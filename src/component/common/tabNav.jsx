@@ -28,7 +28,7 @@ TabPanel.propTypes = {
     index: PropTypes.number
 };
 
-const TabNav = ({ tabData }) => {
+const TabNav = ({ tabData, className }) => {
     const [activeTab, setActiveTab] = useState(0);
 
     const renderTabs = () => {
@@ -62,7 +62,7 @@ const TabNav = ({ tabData }) => {
                     {renderTabs()}
                 </Tabs>
             </Paper>
-            {renderTabPanels()}
+            <div className={className}>{renderTabPanels()}</div>
         </>
     );
 };

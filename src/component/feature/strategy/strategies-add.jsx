@@ -1,18 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Menu, MenuItem, IconButton } from 'react-mdl';
+import React from "react";
+import PropTypes from "prop-types";
+import { MenuItem } from "@material-ui/core";
+import DropdownMenu from "../../common/dropdown-menu";
+
+import styles from "./strategy.module.scss";
 
 function resolveDefaultParamVale(name, featureToggleName) {
     switch (name) {
-        case 'percentage':
-        case 'rollout':
-            return '100';
-        case 'stickiness':
-            return 'default';
-        case 'groupId':
+        case "percentage":
+        case "rollout":
+            return "100";
+        case "stickiness":
+            return "default";
+        case "groupId":
             return featureToggleName;
         default:
-            return '';
+            return "";
     }
 }
 
@@ -21,12 +24,14 @@ class AddStrategy extends React.Component {
         strategies: PropTypes.array.isRequired,
         addStrategy: PropTypes.func,
         featureToggleName: PropTypes.string.isRequired,
-        disabled: PropTypes.bool,
+        disabled: PropTypes.bool
     };
 
     addStrategy(strategyName) {
         const featureToggleName = this.props.featureToggleName;
-        const selectedStrategy = this.props.strategies.find(s => s.name === strategyName);
+        const selectedStrategy = this.props.strategies.find(
+            s => s.name === strategyName
+        );
         const parameters = {};
 
         selectedStrategy.parameters.forEach(({ name }) => {
@@ -35,7 +40,7 @@ class AddStrategy extends React.Component {
 
         this.props.addStrategy({
             name: selectedStrategy.name,
-            parameters,
+            parameters
         });
     }
 
@@ -45,33 +50,31 @@ class AddStrategy extends React.Component {
     }
 
     render() {
-        const menuStyle = {
-            maxHeight: '400px',
-            overflowY: 'auto',
-            backgroundColor: 'rgb(247, 248, 255)',
+        const addStrategiesOptions = () => {
+            return this.props.strategies
+                .filter(s => !s.deprecated)
+                .map(s => (
+                    <MenuItem
+                        key={s.name}
+                        title={s.description}
+                        onClick={() => this.addStrategy(s.name)}
+                    >
+                        {s.name}
+                    </MenuItem>
+                ));
         };
-        const { disabled = false } = this.props;
+
         return (
-            <div style={{ position: 'relative', width: '25px', height: '25px', display: 'inline-block' }}>
-                <IconButton
-                    name="add"
+            <div>
+                <DropdownMenu
                     id="strategies-add"
-                    raised
-                    accent
-                    disabled={disabled}
-                    title="Add Strategy"
-                    onClick={this.stopPropagation}
+                    renderOptions={addStrategiesOptions}
+                    label="Add strategy"
+                    icon="add"
+                    className={styles.addStrategyButton}
+                    color="primary"
+                    variant="contained"
                 />
-                <Menu target="strategies-add" valign="bottom" align="right" ripple style={menuStyle}>
-                    <MenuItem disabled>Add Strategy:</MenuItem>
-                    {this.props.strategies
-                        .filter(s => !s.deprecated)
-                        .map(s => (
-                            <MenuItem key={s.name} title={s.description} onClick={() => this.addStrategy(s.name)}>
-                                {s.name}
-                            </MenuItem>
-                        ))}
-                </Menu>
             </div>
         );
     }

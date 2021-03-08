@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { List, ListItem, ListItemContent, Icon, Switch } from "react-mdl";
+import { List, ListItem, ListItemContent, Switch } from "react-mdl";
 
-import { MenuItem, Button } from "@material-ui/core";
+import { MenuItem, Button, Icon } from "@material-ui/core";
 import styles from "./common.module.scss";
 
 export { styles };
@@ -55,11 +55,12 @@ export const HeaderTitle = ({ title, actions, subtitle }) => (
             display: "flex",
             borderBottom: "1px solid #f9f9f9",
             marginBottom: "10px",
-            padding: "16px"
+            padding: "16px",
+            alignItems: "center"
         }}
     >
         <div style={{ flex: "2" }}>
-            <h6 style={{ margin: 0 }}>{title}</h6>
+            <h6 className={styles.headerTitle}>{title}</h6>
             {subtitle && <small>{subtitle}</small>}
         </div>
 
@@ -182,12 +183,13 @@ export const DropdownButton = ({
     id,
     className = styles.dropdownButton,
     title,
+    icon,
     style,
     ...rest
 }) => (
     <Button id={id} className={className} title={title} style={style} {...rest}>
         {label}
-        <Icon name="arrow_drop_down" className="mdl-color-text--grey-600" />
+        <Icon>{icon}</Icon>
     </Button>
 );
 DropdownButton.propTypes = {

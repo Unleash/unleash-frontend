@@ -5,13 +5,13 @@
     margin: 5px 0 5px 5px;
     position: relative;
     z-index: 1;
-};
+}
 
 .card {
     width: 100%;
     display: block;
     background-color: #f2f9fc;
-    overflow: 'visible';
+    overflow: "visible";
 }
 
 .cardText {
@@ -64,15 +64,14 @@
 .cardTitle {
     color: #fff;
     height: 65px;
-    background-color: rgba(96, 125, 139, .85) !important;
+    background-color: rgba(96, 125, 139, 0.85) !important;
 }
 
 .helpText {
-    color: rgba(0,0,0, 0.54);
+    color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
     line-height: 14px;
-};
-
+}
 
 .editLink {
     color: #fff;
@@ -102,9 +101,15 @@
     background-color: #f9f9f9;
 }
 
+/* 
+    ADD STRATEGY
+*/
+.addStrategyButton {
+    font-size: 0.935rem;
+}
+
 @media (max-width: 500px) {
     .strategyList {
         padding: 0;
     }
 }
-
