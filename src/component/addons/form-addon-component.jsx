@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Textfield, Card, CardTitle, CardText, CardActions, Switch, Grid, Cell } from 'react-mdl';
+import { TextField, Paper, FormControlLabel, Switch } from '@material-ui/core';
 
 import { FormButtons, styles as commonStyles } from '../common';
 import { trim } from '../common/util';
 import AddonParameters from './form-addon-parameters';
 import AddonEvents from './form-addon-events';
 import { cloneDeep } from 'lodash';
+
+import styles from './form-addon-component.module.scss';
 
 const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }) => {
     const [config, setConfig] = useState(addon);
@@ -98,49 +100,49 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
     const { name, description, documentationUrl = 'https://unleash.github.io/docs/addons' } = provider ? provider : {};
 
     return (
-        <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-            <CardTitle style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
-                Configure {name}
-            </CardTitle>
-            <CardText>
+        <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+            <h1 className={styles.header}>
+                Configure <strong>{name}</strong> addon
+            </h1>
+            <section className={styles.formSection}>
                 {description}&nbsp;
                 <a href={documentationUrl} target="_blank">
                     Read more
                 </a>
                 <p className={commonStyles.error}>{errors.general}</p>
-            </CardText>
+            </section>
             <form onSubmit={onSubmit}>
-                <section style={{ padding: '16px' }}>
-                    <Grid noSpacing>
-                        <Cell col={4}>
-                            <Textfield
-                                floatingLabel
-                                label="Provider"
-                                name="provider"
-                                value={config.provider}
-                                disabled
-                            />
-                        </Cell>
-                        <Cell col={4} style={{ paddingTop: '14px' }}>
-                            <Switch checked={config.enabled} onChange={onEnabled}>
-                                {config.enabled ? 'Enabled' : 'Disabled'}
-                            </Switch>
-                        </Cell>
-                    </Grid>
-
-                    <Textfield
-                        floatingLabel
+                <section className={styles.formSection}>
+                    <TextField
+                        size="small"
+                        label="Provider"
+                        name="provider"
+                        value={config.provider}
+                        disabled
+                        variant="outlined"
+                        className={styles.nameInput}
+                    />
+                    <FormControlLabel
+                        control={<Switch checked={config.enabled} onChange={onEnabled} />}
+                        label={config.enabled ? 'Enabled' : 'Disabled'}
+                    />
+                </section>
+                <section className={styles.formSection}>
+                    <TextField
+                        size="small"
                         style={{ width: '80%' }}
-                        rows={1}
+                        rows={4}
+                        multiline
                         label="Description"
                         name="description"
                         placeholder=""
                         value={config.description}
                         error={errors.description}
                         onChange={setFieldValue('description')}
+                        variant="outlined"
                     />
                 </section>
-                <section style={{ padding: '16px' }}>
+                <section className={styles.formSection}>
                     <AddonEvents
                         provider={provider}
                         checkedEvents={config.events}
@@ -148,7 +150,7 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
                         error={errors.events}
                     />
                 </section>
-                <section style={{ padding: '16px' }}>
+                <section className={styles.formSection}>
                     <AddonParameters
                         provider={provider}
                         config={config}
@@ -157,11 +159,11 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
                         setParameterValue={setParameterValue}
                     />
                 </section>
-                <CardActions>
+                <section className={styles.formSection}>
                     <FormButtons submitText={submitText} onCancel={cancel} />
-                </CardActions>
+                </section>
             </form>
-        </Card>
+        </Paper>
     );
 };
 

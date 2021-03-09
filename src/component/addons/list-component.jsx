@@ -2,9 +2,21 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemAction, IconButton, Card, Button } from 'react-mdl';
+import {
+    Avatar,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemAvatar,
+    ListItemSecondaryAction,
+    Paper,
+    Button,
+    Icon,
+    IconButton,
+} from '@material-ui/core';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_ADDON, DELETE_ADDON, UPDATE_ADDON } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
 const style = { width: '40px', height: '40px', marginRight: '16px', float: 'left' };
 
@@ -17,7 +29,11 @@ const getIcon = name => {
         case 'webhook':
             return <img style={style} src="public/webhooks.svg" />;
         default:
-            return <i className="material-icons mdl-list__item-avatar">device_hub</i>;
+            return (
+                <Avatar>
+                    <Icon>device_hub</Icon>
+                </Avatar>
+            );
     }
 };
 
@@ -33,74 +49,87 @@ const AddonListComponent = ({ addons, providers, fetchAddons, removeAddon, toggl
     return (
         <div>
             {addons.length > 0 ? (
-                <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+                <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
                     <HeaderTitle title="Configured addons" />
                     <List>
                         {addons.map(addon => (
-                            <ListItem key={addon.id} threeLine>
-                                <span className={['mdl-list__item-primary-content'].join(' ')}>
-                                    {getIcon(addon.provider)}
-                                    <span>
-                                        {hasPermission(UPDATE_ADDON) ? (
-                                            <Link to={`/addons/edit/${addon.id}`}>
-                                                <strong>{addon.provider}</strong>
-                                            </Link>
-                                        ) : (
-                                            <strong>{addon.provider}</strong>
-                                        )}
-                                        {addon.enabled ? null : <small> (Disabled)</small>}
-                                    </span>
-                                    <span className="mdl-list__item-text-body">{addon.description}</span>
-                                </span>
-                                <ListItemAction>
-                                    {hasPermission(UPDATE_ADDON) ? (
-                                        <IconButton
-                                            name={addon.enabled ? 'visibility' : 'visibility_off'}
-                                            title={addon.enabled ? 'Disable addon' : 'Enable addon'}
-                                            onClick={() => toggleAddon(addon)}
-                                        />
-                                    ) : null}
-                                    {hasPermission(DELETE_ADDON) ? (
-                                        <IconButton name="delete" title="Remove addon" onClick={onRemoveAddon(addon)} />
-                                    ) : null}
-                                </ListItemAction>
+                            <ListItem key={addon.id}>
+                                <ListItemAvatar>{getIcon(addon.provider)}</ListItemAvatar>
+                                <ListItemText
+                                    primary={
+                                        <span>
+                                            <ConditionallyRender
+                                                condition={hasPermission(UPDATE_ADDON)}
+                                                show={
+                                                    <Link to={`/addons/edit/${addon.id}`}>
+                                                        <strong>{addon.provider}</strong>
+                                                    </Link>
+                                                }
+                                                elseShow={<strong>{addon.provider}</strong>}
+                                            />
+                                            {addon.enabled ? null : <small> (Disabled)</small>}
+                                        </span>
+                                    }
+                                    secondary={addon.description}
+                                />
+                                <ListItemSecondaryAction>
+                                    <ConditionallyRender
+                                        condition={hasPermission(UPDATE_ADDON)}
+                                        show={
+                                            <IconButton
+                                                size="small"
+                                                title={addon.enabled ? 'Disable addon' : 'Enable addon'}
+                                                onClick={() => toggleAddon(addon)}
+                                            >
+                                                <Icon>{addon.enabled ? 'visibility' : 'visibility_off'}</Icon>
+                                            </IconButton>
+                                        }
+                                    />
+                                    <ConditionallyRender
+                                        condition={hasPermission(DELETE_ADDON)}
+                                        show={
+                                            <IconButton
+                                                size="small"
+                                                title="Remove addon"
+                                                onClick={onRemoveAddon(addon)}
+                                            >
+                                                <Icon>delete</Icon>
+                                            </IconButton>
+                                        }
+                                    />
+                                </ListItemSecondaryAction>
                             </ListItem>
                         ))}
                     </List>
-                </Card>
+                </Paper>
             ) : null}
             <br />
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
                 <HeaderTitle title="Available addons" />
                 <List>
                     {providers.map((provider, i) => (
-                        <ListItem key={i} threeLine>
-                            <span className={['mdl-list__item-primary-content'].join(' ')}>
-                                {getIcon(provider.name)}
-                                <span>
-                                    <strong>{provider.displayName}</strong>&nbsp;
-                                </span>
-                                <span className="mdl-list__item-text-body">{provider.description}</span>
-                            </span>
-                            <ListItemAction>
-                                {hasPermission(CREATE_ADDON) ? (
-                                    <Button
-                                        raised
-                                        colored
-                                        name="device_hub"
-                                        onClick={() => history.push(`/addons/create/${provider.name}`)}
-                                        title="Configure"
-                                    >
-                                        Configure
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                            </ListItemAction>
+                        <ListItem key={i}>
+                            <ListItemAvatar>{getIcon(provider.name)}</ListItemAvatar>
+                            <ListItemText primary={provider.displayName} secondary={provider.description} />
+                            <ListItemSecondaryAction>
+                                <ConditionallyRender
+                                    condition={hasPermission(CREATE_ADDON)}
+                                    show={
+                                        <Button
+                                            variant="contained"
+                                            name="device_hub"
+                                            onClick={() => history.push(`/addons/create/${provider.name}`)}
+                                            title="Configure"
+                                        >
+                                            Configure
+                                        </Button>
+                                    }
+                                />
+                            </ListItemSecondaryAction>
                         </ListItem>
                     ))}
                 </List>
-            </Card>
+            </Paper>
         </div>
     );
 };

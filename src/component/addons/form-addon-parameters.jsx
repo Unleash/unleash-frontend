@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Textfield } from 'react-mdl';
+import { TextField } from '@material-ui/core';
 
 const MASKED_VALUE = '*****';
 
@@ -22,19 +22,24 @@ const AddonParameter = ({ definition, config, errors, setParameterValue }) => {
 
     return (
         <div style={{ width: '80%', marginTop: '25px' }}>
-            <Textfield
-                floatingLabel
+            <TextField
+                size="small"
                 style={{ width: '100%' }}
                 rows={definition.type === 'textfield' ? 9 : 0}
+                multiline={definition.type === 'textfield'}
                 type={type}
                 label={definition.displayName}
                 name={definition.name}
                 placeholder={definition.placeholder || ''}
+                InputLabelProps={{
+                    shrink: true,
+                }}
                 value={value}
                 error={error}
                 onChange={setParameterValue(definition.name)}
+                variant="outlined"
+                helperText={definition.description}
             />
-            <div style={descStyle}>{definition.description}</div>
         </div>
     );
 };
@@ -76,7 +81,7 @@ AddonParameters.propTypes = {
     config: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     setParameterValue: PropTypes.func.isRequired,
-    editMode: PropTypes.bool.optional,
+    editMode: PropTypes.bool,
 };
 
 export default AddonParameters;
