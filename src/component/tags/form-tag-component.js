@@ -70,7 +70,6 @@ class AddTagComponent extends Component {
                             onChange={v => this.setValue('type', v.target.value)}
                         />
                         <TextField
-                            floatingLabel
                             label="Value"
                             name="value"
                             placeholder="Your tag"
