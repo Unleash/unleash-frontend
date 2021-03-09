@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { MenuItem } from '@material-ui/core';
-import DropdownMenu from '../../common/dropdown-menu';
+import React from "react";
+import PropTypes from "prop-types";
+import { MenuItem } from "@material-ui/core";
+import DropdownMenu from "../../common/dropdown-menu";
 
-import styles from './strategy.module.scss';
+import styles from "./strategy.module.scss";
 
 function resolveDefaultParamVale(name, featureToggleName) {
     switch (name) {
-        case 'percentage':
-        case 'rollout':
-            return '100';
-        case 'stickiness':
-            return 'default';
-        case 'groupId':
+        case "percentage":
+        case "rollout":
+            return "100";
+        case "stickiness":
+            return "default";
+        case "groupId":
             return featureToggleName;
         default:
-            return '';
+            return "";
     }
 }
 
@@ -24,12 +24,14 @@ class AddStrategy extends React.Component {
         strategies: PropTypes.array.isRequired,
         addStrategy: PropTypes.func,
         featureToggleName: PropTypes.string.isRequired,
-        disabled: PropTypes.bool,
+        disabled: PropTypes.bool
     };
 
     addStrategy(strategyName) {
         const featureToggleName = this.props.featureToggleName;
-        const selectedStrategy = this.props.strategies.find(s => s.name === strategyName);
+        const selectedStrategy = this.props.strategies.find(
+            s => s.name === strategyName
+        );
         const parameters = {};
 
         selectedStrategy.parameters.forEach(({ name }) => {
@@ -38,7 +40,7 @@ class AddStrategy extends React.Component {
 
         this.props.addStrategy({
             name: selectedStrategy.name,
-            parameters,
+            parameters
         });
     }
 
@@ -52,7 +54,11 @@ class AddStrategy extends React.Component {
             this.props.strategies
                 .filter(s => !s.deprecated)
                 .map(s => (
-                    <MenuItem key={s.name} title={s.description} onClick={() => this.addStrategy(s.name)}>
+                    <MenuItem
+                        key={s.name}
+                        title={s.description}
+                        onClick={() => this.addStrategy(s.name)}
+                    >
                         {s.name}
                     </MenuItem>
                 ));
@@ -65,7 +71,7 @@ class AddStrategy extends React.Component {
                     label="Add strategy"
                     icon="add"
                     className={styles.addStrategyButton}
-                    color="primary"
+                    color="secondary"
                     variant="contained"
                 />
             </div>

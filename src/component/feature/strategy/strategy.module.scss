@@ -61,10 +61,13 @@
 }
 */
 
+.actionButton {
+    color: #fff;
+}
+
 .cardTitle {
     color: #fff;
-    height: 65px;
-    background-color: rgba(96, 125, 139, 0.85) !important;
+    background-color: var(--primary);
 }
 
 .helpText {
