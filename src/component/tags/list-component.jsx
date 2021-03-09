@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem, ListItemContent, Card, IconButton } from 'react-mdl';
-import { HeaderTitle, styles as commonStyles } from '../common';
+import { List, ListItem, ListItemText, Card, CardHeader, IconButton, ListItemIcon, Icon } from '@material-ui/core';
+import { styles as commonStyles } from '../common';
 import { CREATE_TAG, DELETE_TAG } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
 class TagsListComponent extends Component {
     static propTypes = {
@@ -25,43 +26,44 @@ class TagsListComponent extends Component {
 
     render() {
         const { tags, hasPermission } = this.props;
+        let deleteButton = (tagType, tagValue) => (
+            <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
+                <Icon>delete</Icon>
+            </IconButton>
+        );
+        let addButton = (
+            <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
+                <Icon>add</Icon>
+                Add new tag
+            </IconButton>
+        );
         return (
             <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <HeaderTitle
+                <CardHeader
                     title="Tags"
-                    actions={
-                        hasPermission(CREATE_TAG) ? (
-                            <IconButton
-                                raised
-                                name="add"
-                                onClick={() => this.props.history.push('/tags/create')}
-                                title="Add new tag"
-                            />
-                        ) : (
-                            ''
-                        )
-                    }
+                    action={<ConditionallyRender condition={hasPermission(CREATE_TAG)} show={addButton} />}
                 />
                 <List>
-                    {tags.length > 0 ? (
-                        tags.map((tag, i) => (
-                            <ListItem key={i} twoLine>
-                                <ListItemContent icon="label" subtitle={tag.type}>
-                                    <strong>{tag.value}</strong>
-                                </ListItemContent>
-                                {hasPermission(DELETE_TAG) ? (
-                                    <IconButton
-                                        name="delete"
-                                        onClick={this.removeTag.bind(this, { type: tag.type, value: tag.value })}
-                                    />
-                                ) : (
-                                    ''
-                                )}
+                    <ConditionallyRender
+                        condition={tags.length > 0}
+                        show={tags.map((tag, i) => (
+                            <ListItem key={i}>
+                                <ListItemIcon>
+                                    <Icon>label</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary={tag.value} secondary={tag.type} />
+                                <ConditionallyRender
+                                    condition={hasPermission(DELETE_TAG)}
+                                    show={deleteButton(tag.type, tag.value)}
+                                />
                             </ListItem>
-                        ))
-                    ) : (
-                        <ListItem>No entries</ListItem>
-                    )}
+                        ))}
+                        elseShow={
+                            <ListItem>
+                                <ListItemText primary="No tags available" />
+                            </ListItem>
+                        }
+                    />
                 </List>
             </Card>
         );

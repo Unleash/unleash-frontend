@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Switch } from 'react-mdl';
-import { List, MenuItem, Icon, ListItem, ListItemText, ListItemAvatar, Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { List, MenuItem, Icon, ListItem, ListItemText, ListItemAvatar, Button, Avatar } from '@material-ui/core';
 import styles from './common.module.scss';
+import ConditionallyRender from './conditionally-render';
 
 export { styles };
 
@@ -12,20 +11,33 @@ export const shorten = (str, len = 50) => (str && str.length > len ? `${str.subs
 
 export const AppsLinkList = ({ apps }) => (
     <List>
-        {apps.length > 0 &&
-            apps.map(({ appName, description, icon }) => (
+        <ConditionallyRender
+            condition={apps.length > 0}
+            show={apps.map(({ appName, description, icon }) => (
                 <ListItem key={appName}>
-                    <span className="mdl-list__item-primary-content" style={{ minWidth: 0 }}>
-                        <Icon name={icon || 'apps'} className="mdl-list__item-avatar" />
-                        <Link to={`/applications/${appName}`} className={[styles.listLink, styles.truncate].join(' ')}>
-                            {appName}
-                            <span className={['mdl-list__item-sub-title', styles.truncate].join(' ')}>
-                                {description || 'No description'}
-                            </span>
-                        </Link>
-                    </span>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <ConditionallyRender
+                                condition={icon}
+                                show={<Icon>{icon}</Icon>}
+                                elseShow={<Icon>apps</Icon>}
+                            />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={
+                            <Link
+                                to={`/applications/${appName}`}
+                                className={[styles.listLink, styles.truncate].join(' ')}
+                            >
+                                {appName}
+                            </Link>
+                        }
+                        secondary={description || 'No description'}
+                    />
                 </ListItem>
             ))}
+        />
     </List>
 );
 AppsLinkList.propTypes = {
@@ -71,7 +83,7 @@ DataTableHeader.propTypes = {
 
 export const FormButtons = ({ submitText = 'Create', onCancel }) => (
     <div>
-        <Button type="submit" color="primary" variant="contained" startIcon={<AddIcon />}>
+        <Button type="submit" color="primary" variant="contained" startIcon={<Icon>add</Icon>}>
             {submitText}
         </Button>
         &nbsp;
@@ -85,30 +97,20 @@ FormButtons.propTypes = {
     onCancel: PropTypes.func.isRequired,
 };
 
-export const SwitchWithLabel = ({ onChange, checked, children, ...switchProps }) => (
-    <span className={styles.switchWithLabel}>
-        <span className={styles.label}>{children}</span>
-        <span className={styles.switch}>
-            <Switch checked={checked} onChange={onChange} {...switchProps} />
-        </span>
-    </span>
-);
-SwitchWithLabel.propTypes = {
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
-};
-
 export const TogglesLinkList = ({ toggles }) => (
     <List style={{ textAlign: 'left' }} className={styles.truncate}>
         {toggles.length > 0 &&
             toggles.map(({ name, description = '-', icon = 'toggle' }) => (
                 <ListItem key={name}>
                     <ListItemAvatar>{icon}</ListItemAvatar>
-                    <ListItemText secondary={description}>
-                        <Link key={name} to={`/features/view/${name}`}>
-                            {name}
-                        </Link>
-                    </ListItemText>
+                    <ListItemText
+                        primary={
+                            <Link key={name} to={`/features/view/${name}`}>
+                                {name}
+                            </Link>
+                        }
+                        secondary={description}
+                    />
                 </ListItem>
             ))}
     </List>

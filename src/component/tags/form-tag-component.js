@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Textfield, Card, CardTitle, CardActions } from 'react-mdl';
+import { TextField, Card, CardHeader, CardActions } from '@material-ui/core';
 import { FormButtons, styles as commonStyles } from '../common';
 import TagTypeSelect from '../feature/tag-type-select-container';
 import { trim } from '../common/util';
@@ -57,9 +57,10 @@ class AddTagComponent extends Component {
         const submitText = 'Create';
         return (
             <Card shadow={0} className={commonStyles.fullWidth} style={{ overflow: 'visible' }}>
-                <CardTitle style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
-                    {submitText} Tag
-                </CardTitle>
+                <CardHeader
+                    title={`${submitText} Tag`}
+                    style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}
+                />
                 <form onSubmit={this.onSubmit}>
                     <section style={{ padding: '16px' }}>
                         <p style={{ color: 'red' }}>{errors.general}</p>
@@ -68,13 +69,14 @@ class AddTagComponent extends Component {
                             value={tag.type}
                             onChange={v => this.setValue('type', v.target.value)}
                         />
-                        <Textfield
+                        <TextField
                             floatingLabel
                             label="Value"
                             name="value"
                             placeholder="Your tag"
                             value={tag.value}
                             error={errors.value}
+                            helperText={errors.value}
                             onChange={v => this.setValue('value', trim(v.target.value))}
                         />
                     </section>
