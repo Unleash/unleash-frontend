@@ -1,6 +1,6 @@
 /* eslint react/no-multi-comp:off */
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import {
     Paper,
@@ -17,18 +17,15 @@ import {
     DialogActions,
     LinearProgress,
     Tabs,
-    Tab
-} from "@material-ui/core";
-import ConditionallyRender from "../common/conditionally-render";
-import { styles as commonStyles } from "../common";
-import {
-    formatFullDateTimeWithLocale,
-    formatDateWithLocale
-} from "../common/util";
-import { UPDATE_APPLICATION } from "../../permissions";
-import ApplicationView from "./application-view";
-import ApplicationUpdate from "./application-update";
-import TabNav from "../common/tabNav";
+    Tab,
+} from '@material-ui/core';
+import ConditionallyRender from '../common/conditionally-render';
+import { styles as commonStyles } from '../common';
+import { formatFullDateTimeWithLocale, formatDateWithLocale } from '../common/util';
+import { UPDATE_APPLICATION } from '../../permissions';
+import ApplicationView from './application-view';
+import ApplicationUpdate from './application-update';
+import TabNav from '../common/tabNav';
 
 class ClientApplications extends PureComponent {
     static propTypes = {
@@ -39,7 +36,7 @@ class ClientApplications extends PureComponent {
         storeApplicationMetaData: PropTypes.func.isRequired,
         deleteApplication: PropTypes.func.isRequired,
         hasPermission: PropTypes.func.isRequired,
-        history: PropTypes.object.isRequired
+        history: PropTypes.object.isRequired,
     };
 
     constructor(props) {
@@ -47,17 +44,14 @@ class ClientApplications extends PureComponent {
         this.state = {
             activeTab: 0,
             loading: !props.application,
-            prompt: false
+            prompt: false,
         };
     }
 
     componentDidMount() {
-        this.props
-            .fetchApplication(this.props.appName)
-            .finally(() => this.setState({ loading: false }));
+        this.props.fetchApplication(this.props.appName).finally(() => this.setState({ loading: false }));
     }
-    formatFullDateTime = v =>
-        formatFullDateTimeWithLocale(v, this.props.location.locale);
+    formatFullDateTime = v => formatFullDateTimeWithLocale(v, this.props.location.locale);
     formatDate = v => formatDateWithLocale(v, this.props.location.locale);
 
     deleteApplication = async evt => {
@@ -65,7 +59,7 @@ class ClientApplications extends PureComponent {
         // if (window.confirm('Are you sure you want to remove this application?')) {
         const { deleteApplication, appName } = this.props;
         await deleteApplication(appName);
-        this.props.history.push("/applications");
+        this.props.history.push('/applications');
         // }
     };
 
@@ -80,21 +74,8 @@ class ClientApplications extends PureComponent {
         } else if (!this.props.application) {
             return <p>Application ({this.props.appName}) not found</p>;
         }
-        const {
-            application,
-            storeApplicationMetaData,
-            hasPermission
-        } = this.props;
-        const {
-            appName,
-            instances,
-            strategies,
-            seenToggles,
-            url,
-            description,
-            icon = "apps",
-            createdAt
-        } = application;
+        const { application, storeApplicationMetaData, hasPermission } = this.props;
+        const { appName, instances, strategies, seenToggles, url, description, icon = 'apps', createdAt } = application;
 
         const toggleModal = () => {
             this.setState(prev => ({ ...prev, prompt: !prev.prompt }));
@@ -107,15 +88,9 @@ class ClientApplications extends PureComponent {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
-                <DialogTitle>
-                    Are you sure you want to delete this application?
-                </DialogTitle>
+                <DialogTitle>Are you sure you want to delete this application?</DialogTitle>
                 <DialogActions>
-                    <Button
-                        color="primary"
-                        onClick={this.deleteApplication}
-                        autoFocus
-                    >
+                    <Button color="primary" onClick={this.deleteApplication} autoFocus>
                         Yes, I'm sure
                     </Button>
                     <Button onClick={toggleModal}>No, take me back.</Button>
@@ -125,7 +100,7 @@ class ClientApplications extends PureComponent {
 
         const tabData = [
             {
-                label: "Application overview",
+                label: 'Application overview',
                 component: (
                     <ApplicationView
                         strategies={strategies}
@@ -134,17 +109,14 @@ class ClientApplications extends PureComponent {
                         hasPermission={hasPermission}
                         formatFullDateTime={this.formatFullDateTime}
                     />
-                )
+                ),
             },
             {
-                label: "Edit application",
+                label: 'Edit application',
                 component: (
-                    <ApplicationUpdate
-                        application={application}
-                        storeApplicationMetaData={storeApplicationMetaData}
-                    />
-                )
-            }
+                    <ApplicationUpdate application={application} storeApplicationMetaData={storeApplicationMetaData} />
+                ),
+            },
         ];
 
         return (
@@ -152,7 +124,7 @@ class ClientApplications extends PureComponent {
                 <CardHeader
                     avatar={
                         <Avatar>
-                            <Icon>{icon || "apps"}</Icon>
+                            <Icon>{icon || 'apps'}</Icon>
                         </Avatar>
                     }
                     title={appName}
@@ -164,8 +136,8 @@ class ClientApplications extends PureComponent {
                         )
                     }
                 />
-                <CardContent style={{ paddingTop: "0" }}>
-                    <p>{description || ""}</p>
+                <CardContent style={{ paddingTop: '0' }}>
+                    <p>{description || ''}</p>
                     <p>
                         Created: <strong>{this.formatDate(createdAt)}</strong>
                     </p>
@@ -174,25 +146,18 @@ class ClientApplications extends PureComponent {
                     <div>
                         <CardActions
                             style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                borderTop: "1px solid #efefef"
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                borderTop: '1px solid #efefef',
                             }}
                         >
                             <span />
-                            <Button
-                                color="secondary"
-                                title="Delete application"
-                                onClick={toggleModal}
-                            >
+                            <Button color="secondary" title="Delete application" onClick={toggleModal}>
                                 Delete
                             </Button>
 
-                            <ConditionallyRender
-                                condition={this.state.prompt}
-                                show={renderModal}
-                            />
+                            <ConditionallyRender condition={this.state.prompt} show={renderModal} />
                         </CardActions>
                         <hr />
                         <TabNav tabData={tabData} />

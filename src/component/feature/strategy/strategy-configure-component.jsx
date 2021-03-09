@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, CardTitle, CardText, CardMenu, IconButton, Icon } from 'react-mdl';
+import { Button, Card, Icon, IconButton, CardHeader, CardContent, CardActions } from "@material-ui/core"
 import { Link } from 'react-router-dom';
 
 import FlexibleRolloutStrategy from './flexible-rollout-strategy-container';
@@ -107,14 +107,13 @@ export default class StrategyConfigureComponent extends React.Component {
             connectDropTarget(
                 <div className={styles.item}>
                     <Card shadow={0} className={cardClasses.join(' ')}>
-                        <CardTitle className={styles.cardTitle} title={description}>
-                            <Icon name="extension" />
-                            &nbsp;
-                            {name}
-                            {dirty ? <small>&nbsp;(Unsaved)</small> : ''}
-                        </CardTitle>
+                        <CardHeader className={styles.cardTitle} title={name} subheader={description} avatar={<Icon>extension</Icon>} action={dirty ? <small>&nbsp;(Unsaved)</small> : ''} />
+                            
+                     
+                         
+                    
 
-                        <CardText style={{ width: 'unset' }}>
+                        <CardContent style={{ width: 'unset' }}>
                             <StrategyConstraints
                                 updateConstraints={this.updateConstraints}
                                 constraints={strategy.constraints || []}
@@ -136,9 +135,9 @@ export default class StrategyConfigureComponent extends React.Component {
                             >
                                 Save changes
                             </Button>
-                        </CardText>
-
-                        <CardMenu className="mdl-color-text--white">
+                        </CardContent>
+                        
+                        <CardActions>
                             <Link
                                 title="View strategy"
                                 to={`/strategies/view/${name}`}
@@ -166,7 +165,7 @@ export default class StrategyConfigureComponent extends React.Component {
                                     <Icon name="reorder" title="You can not reorder while editing." />
                                 </span>
                             )}
-                        </CardMenu>
+                        </CardActions>
                     </Card>
                 </div>
             )

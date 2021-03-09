@@ -1,33 +1,33 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { AppBar, Container, Typography, IconButton } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { AppBar, Container, Typography, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
-import { Route } from "react-router-dom";
-import { DrawerMenu } from "./drawer";
-import Breadcrum from "./breadcrumb";
-import ShowUserContainer from "../user/show-user-container";
-import { loadInitialData } from "./../../store/loader";
+import { Route } from 'react-router-dom';
+import { DrawerMenu } from './drawer';
+import Breadcrum from './breadcrumb';
+import ShowUserContainer from '../user/show-user-container';
+import { loadInitialData } from './../../store/loader';
 
 class HeaderComponent extends PureComponent {
     static propTypes = {
         uiConfig: PropTypes.object.isRequired,
         init: PropTypes.func.isRequired,
-        location: PropTypes.object.isRequired
+        location: PropTypes.object.isRequired,
     };
 
     constructor() {
         super();
         this.state = {
-            openDrawer: false
+            openDrawer: false,
         };
     }
 
     toggleDrawer = () => {
         this.setState(prev => ({
-            openDrawer: !prev.openDrawer
+            openDrawer: !prev.openDrawer,
         }));
     };
 
@@ -42,24 +42,16 @@ class HeaderComponent extends PureComponent {
         const style = headerBackground ? { background: headerBackground } : {};
         return (
             <React.Fragment>
-                <AppBar
-                    style={{ padding: "1rem", boxShadow: "none" }}
-                    position="static"
-                >
-                    <Container
-                        style={{ display: "flex", alignItems: "center" }}
-                    >
-                        <IconButton
-                            style={{ color: "#fff" }}
-                            onClick={this.toggleDrawer}
-                        >
+                <AppBar style={{ padding: '1rem', boxShadow: 'none' }} position="static">
+                    <Container style={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton style={{ color: '#fff' }} onClick={this.toggleDrawer}>
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h1" style={{ fontSize: "1.5rem" }}>
+                        <Typography variant="h1" style={{ fontSize: '1.5rem' }}>
                             <Route path="/:path" component={Breadcrum} />
                         </Typography>
 
-                        <div style={{ marginLeft: "auto" }}>
+                        <div style={{ marginLeft: 'auto' }}>
                             <ShowUserContainer />
                         </div>
                         <DrawerMenu
@@ -77,5 +69,5 @@ class HeaderComponent extends PureComponent {
 }
 
 export default connect(state => ({ uiConfig: state.uiConfig.toJS() }), {
-    init: loadInitialData
+    init: loadInitialData,
 })(HeaderComponent);

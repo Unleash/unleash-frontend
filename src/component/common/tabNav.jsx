@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Tabs, Tab, Paper } from "@material-ui/core";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Tabs, Tab, Paper } from '@material-ui/core';
 
 const a11yProps = index => ({
     id: `tab-${index}`,
-    "aria-controls": `tabpanel-${index}`
+    'aria-controls': `tabpanel-${index}`,
 });
 
 const TabPanel = props => {
@@ -25,31 +25,24 @@ const TabPanel = props => {
 
 TabPanel.propTypes = {
     value: PropTypes.number,
-    index: PropTypes.number
+    index: PropTypes.number,
 };
 
 const TabNav = ({ tabData, className }) => {
     const [activeTab, setActiveTab] = useState(0);
 
-    const renderTabs = () => {
-        return tabData.map((tab, index) => {
-            return <Tab label={tab.label} {...a11yProps(index)} />;
-        });
-    };
+    const renderTabs = () => tabData.map((tab, index) => <Tab label={tab.label} {...a11yProps(index)} />);
 
-    const renderTabPanels = () => {
-        return tabData.map((tab, index) => {
-            return (
-                <TabPanel value={activeTab} index={index}>
-                    {tab.component}
-                </TabPanel>
-            );
-        });
-    };
+    const renderTabPanels = () =>
+        tabData.map((tab, index) => (
+            <TabPanel value={activeTab} index={index}>
+                {tab.component}
+            </TabPanel>
+        ));
 
     return (
         <>
-            <Paper style={{ background: "#efefef" }}>
+            <Paper style={{ background: '#efefef' }}>
                 <Tabs
                     value={activeTab}
                     onChange={(_, tabId) => {

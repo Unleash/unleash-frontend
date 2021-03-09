@@ -1,33 +1,16 @@
-import React from "react";
-import { Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Select, FormControl, MenuItem, InputLabel } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-import styles from "./common.module.scss";
+import styles from './common.module.scss';
 
-const SelectMenu = ({
-    name,
-    value,
-    label,
-    options,
-    onChange,
-    id,
-    disabled = false,
-    className,
-    ...rest
-}) => {
-    const renderSelectItems = () => {
-        return options.map(option => {
-            return (
-                <MenuItem
-                    key={option.key}
-                    value={option.key}
-                    title={option.title}
-                >
-                    {option.label}
-                </MenuItem>
-            );
-        });
-    };
+const SelectMenu = ({ name, value, label, options, onChange, id, disabled = false, className, ...rest }) => {
+    const renderSelectItems = () =>
+        options.map(option => (
+            <MenuItem key={option.key} value={option.key} title={option.title}>
+                {option.label}
+            </MenuItem>
+        ));
 
     return (
         <FormControl variant="outlined" size="small">
@@ -57,7 +40,7 @@ Select.propTypes = {
     options: PropTypes.array,
     style: PropTypes.object,
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
 };
 
 export default SelectMenu;

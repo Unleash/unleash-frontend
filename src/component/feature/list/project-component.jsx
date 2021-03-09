@@ -1,6 +1,5 @@
 import React from 'react';
 import { MenuItem } from '@material-ui/core';
-import { DropdownButton } from '../../common';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../../common/dropdown-menu';
 

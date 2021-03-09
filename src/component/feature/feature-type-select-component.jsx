@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import MySelect from "../common/select";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import MySelect from '../common/select';
 
 class FeatureTypeSelectComponent extends Component {
     componentDidMount() {
@@ -16,7 +16,7 @@ class FeatureTypeSelectComponent extends Component {
         const options = types.map(t => ({
             key: t.id,
             label: t.name,
-            title: t.description
+            title: t.description,
         }));
 
         if (!options.find(o => o.key === value)) {
@@ -24,14 +24,7 @@ class FeatureTypeSelectComponent extends Component {
         }
 
         return (
-            <MySelect
-                label="Toggle type"
-                options={options}
-                value={value}
-                onChange={onChange}
-                label={label}
-                id={id}
-            />
+            <MySelect label="Toggle type" options={options} value={value} onChange={onChange} label={label} id={id} />
         );
     }
 }
@@ -41,7 +34,7 @@ FeatureTypeSelectComponent.propTypes = {
     filled: PropTypes.bool,
     types: PropTypes.array.isRequired,
     fetchFeatureTypes: PropTypes.func,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
 };
 
 export default FeatureTypeSelectComponent;

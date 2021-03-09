@@ -1,43 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { List, ListItem, ListItemContent, Switch } from "react-mdl";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { List, ListItem, ListItemContent, Switch } from 'react-mdl';
 
-import { MenuItem, Button, Icon } from "@material-ui/core";
-import styles from "./common.module.scss";
+import { MenuItem, Button, Icon } from '@material-ui/core';
+import styles from './common.module.scss';
 
 export { styles };
 
-export const shorten = (str, len = 50) =>
-    str && str.length > len ? `${str.substring(0, len)}...` : str;
+export const shorten = (str, len = 50) => (str && str.length > len ? `${str.substring(0, len)}...` : str);
 
 export const AppsLinkList = ({ apps }) => (
     <List>
         {apps.length > 0 &&
             apps.map(({ appName, description, icon }) => (
                 <ListItem twoLine key={appName}>
-                    <span
-                        className="mdl-list__item-primary-content"
-                        style={{ minWidth: 0 }}
-                    >
-                        <Icon
-                            name={icon || "apps"}
-                            className="mdl-list__item-avatar"
-                        />
-                        <Link
-                            to={`/applications/${appName}`}
-                            className={[styles.listLink, styles.truncate].join(
-                                " "
-                            )}
-                        >
+                    <span className="mdl-list__item-primary-content" style={{ minWidth: 0 }}>
+                        <Icon name={icon || 'apps'} className="mdl-list__item-avatar" />
+                        <Link to={`/applications/${appName}`} className={[styles.listLink, styles.truncate].join(' ')}>
                             {appName}
-                            <span
-                                className={[
-                                    "mdl-list__item-sub-title",
-                                    styles.truncate
-                                ].join(" ")}
-                            >
-                                {description || "No description"}
+                            <span className={['mdl-list__item-sub-title', styles.truncate].join(' ')}>
+                                {description || 'No description'}
                             </span>
                         </Link>
                     </span>
@@ -46,33 +29,31 @@ export const AppsLinkList = ({ apps }) => (
     </List>
 );
 AppsLinkList.propTypes = {
-    apps: PropTypes.array.isRequired
+    apps: PropTypes.array.isRequired,
 };
 
 export const HeaderTitle = ({ title, actions, subtitle }) => (
     <div
         style={{
-            display: "flex",
-            borderBottom: "1px solid #f9f9f9",
-            marginBottom: "10px",
-            padding: "16px",
-            alignItems: "center"
+            display: 'flex',
+            borderBottom: '1px solid #f9f9f9',
+            marginBottom: '10px',
+            padding: '16px',
+            alignItems: 'center',
         }}
     >
-        <div style={{ flex: "2" }}>
+        <div style={{ flex: '2' }}>
             <h6 className={styles.headerTitle}>{title}</h6>
             {subtitle && <small>{subtitle}</small>}
         </div>
 
-        {actions && (
-            <div style={{ flex: "1", textAlign: "right" }}>{actions}</div>
-        )}
+        {actions && <div style={{ flex: '1', textAlign: 'right' }}>{actions}</div>}
     </div>
 );
 HeaderTitle.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    actions: PropTypes.any
+    actions: PropTypes.any,
 };
 
 export const DataTableHeader = ({ title, actions }) => (
@@ -85,18 +66,12 @@ export const DataTableHeader = ({ title, actions }) => (
 );
 DataTableHeader.propTypes = {
     title: PropTypes.string,
-    actions: PropTypes.any
+    actions: PropTypes.any,
 };
 
-export const FormButtons = ({ submitText = "Create", onCancel }) => (
+export const FormButtons = ({ submitText = 'Create', onCancel }) => (
     <div>
-        <Button
-            type="submit"
-            raised
-            color="primary"
-            variant="contained"
-            icon="add"
-        >
+        <Button type="submit" raised color="primary" variant="contained" icon="add">
             <Icon name="add" />
             &nbsp;&nbsp;&nbsp;
             {submitText}
@@ -109,15 +84,10 @@ export const FormButtons = ({ submitText = "Create", onCancel }) => (
 );
 FormButtons.propTypes = {
     submitText: PropTypes.string,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
 };
 
-export const SwitchWithLabel = ({
-    onChange,
-    checked,
-    children,
-    ...switchProps
-}) => (
+export const SwitchWithLabel = ({ onChange, checked, children, ...switchProps }) => (
     <span className={styles.switchWithLabel}>
         <span className={styles.label}>{children}</span>
         <span className={styles.switch}>
@@ -127,13 +97,13 @@ export const SwitchWithLabel = ({
 );
 SwitchWithLabel.propTypes = {
     checked: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
 };
 
 export const TogglesLinkList = ({ toggles }) => (
-    <List style={{ textAlign: "left" }} className={styles.truncate}>
+    <List style={{ textAlign: 'left' }} className={styles.truncate}>
         {toggles.length > 0 &&
-            toggles.map(({ name, description = "-", icon = "toggle" }) => (
+            toggles.map(({ name, description = '-', icon = 'toggle' }) => (
                 <ListItem twoLine key={name}>
                     <ListItemContent avatar={icon} subtitle={description}>
                         <Link key={name} to={`/features/view/${name}`}>
@@ -145,48 +115,35 @@ export const TogglesLinkList = ({ toggles }) => (
     </List>
 );
 TogglesLinkList.propTypes = {
-    toggles: PropTypes.array
+    toggles: PropTypes.array,
 };
 
 export function getIcon(type) {
     switch (type) {
-        case "feature-updated":
-            return "autorenew";
-        case "feature-created":
-            return "add";
-        case "feature-deleted":
-            return "remove";
-        case "feature-archived":
-            return "archived";
+        case 'feature-updated':
+            return 'autorenew';
+        case 'feature-created':
+            return 'add';
+        case 'feature-deleted':
+            return 'remove';
+        case 'feature-archived':
+            return 'archived';
         default:
-            return "star";
+            return 'star';
     }
 }
 
 export const IconLink = ({ url, icon }) => (
-    <a
-        href={url}
-        target="_blank"
-        rel="noopener"
-        className="mdl-color-text--grey-600"
-    >
+    <a href={url} target="_blank" rel="noopener" className="mdl-color-text--grey-600">
         <Icon name={icon} />
     </a>
 );
 IconLink.propTypes = {
     url: PropTypes.string,
-    icon: PropTypes.string
+    icon: PropTypes.string,
 };
 
-export const DropdownButton = ({
-    label,
-    id,
-    className = styles.dropdownButton,
-    title,
-    icon,
-    style,
-    ...rest
-}) => (
+export const DropdownButton = ({ label, id, className = styles.dropdownButton, title, icon, style, ...rest }) => (
     <Button id={id} className={className} title={title} style={style} {...rest}>
         {label}
         <Icon>{icon}</Icon>
@@ -196,37 +153,24 @@ DropdownButton.propTypes = {
     label: PropTypes.string,
     style: PropTypes.object,
     id: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
 };
 
-export const MenuItemWithIcon = ({
-    icon,
-    label,
-    disabled,
-    ...menuItemProps
-}) => (
-    <MenuItem
-        disabled={disabled}
-        style={{ display: "flex", alignItems: "center" }}
-        {...menuItemProps}
-    >
-        <Icon name={icon} style={{ paddingRight: "16px" }} />
+export const MenuItemWithIcon = ({ icon, label, disabled, ...menuItemProps }) => (
+    <MenuItem disabled={disabled} style={{ display: 'flex', alignItems: 'center' }} {...menuItemProps}>
+        <Icon name={icon} style={{ paddingRight: '16px' }} />
         {label}
     </MenuItem>
 );
 MenuItemWithIcon.propTypes = {
     icon: PropTypes.string,
     label: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
 };
 
 const badNumbers = [NaN, Infinity, -Infinity];
 export function calc(value, total, decimal) {
-    if (
-        typeof value !== "number" ||
-        typeof total !== "number" ||
-        typeof decimal !== "number"
-    ) {
+    if (typeof value !== 'number' || typeof total !== 'number' || typeof decimal !== 'number') {
         return null;
     }
 
@@ -243,17 +187,17 @@ export function calc(value, total, decimal) {
     return ((value / total) * 100).toFixed(decimal);
 }
 export function getDisplayName(WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || "Component";
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
 export const selectStyles = {
     control: provided => ({
         ...provided,
-        border: "1px solid #607d8b",
-        boxShadow: "0",
-        ":hover": {
-            borderColor: "#607d8b",
-            boxShadow: "0 0 0 1px #607d8b"
-        }
-    })
+        border: '1px solid #607d8b',
+        boxShadow: '0',
+        ':hover': {
+            borderColor: '#607d8b',
+            boxShadow: '0 0 0 1px #607d8b',
+        },
+    }),
 };
