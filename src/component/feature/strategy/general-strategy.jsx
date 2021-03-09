@@ -1,16 +1,22 @@
 import React from 'react';
-import { Textfield, Icon } from 'react-mdl';
-import { Switch, FormControlLabel, Tooltip } from '@material-ui/core';
+import { Switch, FormControlLabel, Tooltip, TextField } from '@material-ui/core';
 import strategyInputProps from './strategy-input-props';
 import StrategyInputPercentage from './input-percentage';
 import StrategyInputList from './input-list';
 import styles from './strategy.module.scss';
 
 export default function GeneralStrategyInput({ parameters, strategyDefinition, updateParameter, editable }) {
-    const onChange = (field, evt, newValue) => {
+    const onChangeTextField = (field, evt) => {
+        const { value } = evt.currentTarget;
+ 
         evt.preventDefault();
-        updateParameter(field, newValue);
+        updateParameter(field, value);
     };
+
+    const onChangePercentage = (field, evt, newValue) => {
+        evt.preventDefault(); 
+        updateParameter(field, newValue);
+    }
 
     const handleSwitchChange = (key, currentValue) => {
         const value = currentValue === 'true' ? 'false' : 'true';
@@ -20,6 +26,7 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
     if (strategyDefinition.parameters && strategyDefinition.parameters.length > 0) {
         return strategyDefinition.parameters.map(({ name, type, description, required }) => {
             let value = parameters[name];
+
             if (type === 'percentage') {
                 if (value == null || (typeof value === 'string' && value === '')) {
                     value = 0;
@@ -29,7 +36,7 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                         <br />
                         <StrategyInputPercentage
                             name={name}
-                            onChange={onChange.bind(this, name)}
+                            onChange={onChangePercentage.bind(this, name)}
                             value={1 * value}
                             minLabel="off"
                             maxLabel="on"
@@ -52,17 +59,21 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                     </div>
                 );
             } else if (type === 'number') {
+                const regex = new RegExp('^\\d+$');
+                const error = value.length > 0 ? !regex.test(value) : false;
+  
                 return (
-                    <div key={name}>
-                        <Textfield
-                            pattern="-?[0-9]*(\.[0-9]+)?"
-                            error={`${name} is not a number!`}
-                            floatingLabel
+                    <div key={name} className={styles.generalSection}>
+                        <TextField
+                            error={error}
+                            helperText={error && `${name} is not a number!`}
+                            variant="outlined"
+                            size="small"
                             required={required}
                             style={{ width: '100%' }}
                             name={name}
                             label={name}
-                            onChange={onChange.bind(this, name)}
+                            onChange={onChangeTextField.bind(this, name)}
                             value={value}
                         />
                         {description && <p className={styles.helpText}>{description}</p>}
@@ -78,16 +89,17 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                 );
             } else {
                 return (
-                    <div key={name}>
-                        <Textfield
-                            floatingLabel
+                    <div key={name} className={styles.generalSection}>
+                        <TextField
                             rows={1}
                             placeholder=""
+                            variant="outlined"
+                            size="small"
                             style={{ width: '100%' }}
                             required={required}
                             name={name}
                             label={name}
-                            onChange={onChange.bind(this, name)}
+                            onChange={onChangeTextField.bind(this, name)}
                             value={value}
                         />
                         {description && <p className={styles.helpText}>{description}</p>}

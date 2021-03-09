@@ -199,9 +199,6 @@ export default class StrategyConfigureComponent extends React.Component {
                             />
                             <Button
                                 onClick={saveStrategy}
-                                accent
-                                raised
-                                ripple
                                 style={{
                                     visibility: dirty ? "visible" : "hidden"
                                 }}
