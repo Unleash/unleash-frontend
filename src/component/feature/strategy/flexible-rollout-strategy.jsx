@@ -16,9 +16,10 @@ const builtInStickinessOptions = [
 export default class FlexibleRolloutStrategy extends Component {
     static propTypes = { ...strategyInputProps, context: PropTypes.array };
 
-    onUpdate = (field, evt) => {
-        evt.preventDefault();
-        const value = evt.target.value;
+    onUpdate = (field, newValue) => {
+        console.log(field, newValue);
+        console.log(newValue.currentTarget.value);
+        const value = newValue.currentTarget.value;
         this.props.updateParameter(field, value);
     };
 
