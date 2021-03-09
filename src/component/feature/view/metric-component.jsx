@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Cell, Icon, Chip, ChipContact } from 'react-mdl';
+import { Grid, Cell } from 'react-mdl';
+import { Icon, Chip } from "@material-ui/core";
+import LinkIcon from '@material-ui/icons/Link';
 import Progress from '../progress-component';
 import { Link } from 'react-router-dom';
 import { AppsLinkList, calc } from '../../common';
@@ -9,14 +11,7 @@ import styles from './metric.module.scss';
 import ConditionallyRender from '../../common/conditionally-render';
 
 const StrategyChipItem = ({ strategy }) => (
-    <Chip className={styles.chip}>
-        <ChipContact className="mdl-color--blue-grey mdl-color-text--white">
-            <Icon style={{ marginTop: '3px' }} name="link" />
-        </ChipContact>
-        <Link to={`/strategies/view/${strategy.name}`} className="mdl-color-text--blue-grey">
-            {strategy.name}
-        </Link>
-    </Chip>
+    <Chip clickable className={styles.chip} label={strategy.name} component={Link} to={`/strategies/view/${strategy.name}`} icon={ <LinkIcon />} />
 );
 StrategyChipItem.propTypes = {
     strategy: PropTypes.object.isRequired,
