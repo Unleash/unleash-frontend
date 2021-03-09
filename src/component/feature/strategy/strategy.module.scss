@@ -1,10 +1,11 @@
 .item {
     flex: 1;
     min-width: 400px;
-    max-width: 537px;
+    max-width: 450px;
     margin: 5px 0 5px 5px;
     position: relative;
     z-index: 1;
+    margin-bottom: 2rem;
 }
 
 .card {
@@ -90,7 +91,8 @@
 
     &.disabled {
         cursor: default;
-        color: silver;
+        background-color: #f1f1f1;
+        color: #f1f1f1;
     }
 }
 
@@ -98,6 +100,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
+    justify-content: space-between;
 }
 
 .strategyListAdd {
