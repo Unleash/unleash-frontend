@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { List, ListItem, ListItemContent, Switch } from 'react-mdl';
-
-import { MenuItem, Button, Icon } from '@material-ui/core';
+import { Switch } from 'react-mdl';
+import { List, MenuItem, Icon, ListItem, ListItemText, ListItemAvatar, Button } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import styles from './common.module.scss';
 
 export { styles };
@@ -14,7 +14,7 @@ export const AppsLinkList = ({ apps }) => (
     <List>
         {apps.length > 0 &&
             apps.map(({ appName, description, icon }) => (
-                <ListItem twoLine key={appName}>
+                <ListItem key={appName}>
                     <span className="mdl-list__item-primary-content" style={{ minWidth: 0 }}>
                         <Icon name={icon || 'apps'} className="mdl-list__item-avatar" />
                         <Link to={`/applications/${appName}`} className={[styles.listLink, styles.truncate].join(' ')}>
@@ -71,9 +71,7 @@ DataTableHeader.propTypes = {
 
 export const FormButtons = ({ submitText = 'Create', onCancel }) => (
     <div>
-        <Button type="submit" raised color="primary" variant="contained" icon="add">
-            <Icon name="add" />
-            &nbsp;&nbsp;&nbsp;
+        <Button type="submit" color="primary" variant="contained" startIcon={<AddIcon />}>
             {submitText}
         </Button>
         &nbsp;
@@ -104,12 +102,13 @@ export const TogglesLinkList = ({ toggles }) => (
     <List style={{ textAlign: 'left' }} className={styles.truncate}>
         {toggles.length > 0 &&
             toggles.map(({ name, description = '-', icon = 'toggle' }) => (
-                <ListItem twoLine key={name}>
-                    <ListItemContent avatar={icon} subtitle={description}>
+                <ListItem key={name}>
+                    <ListItemAvatar>{icon}</ListItemAvatar>
+                    <ListItemText secondary={description}>
                         <Link key={name} to={`/features/view/${name}`}>
                             {name}
                         </Link>
-                    </ListItemContent>
+                    </ListItemText>
                 </ListItem>
             ))}
     </List>
@@ -144,7 +143,7 @@ IconLink.propTypes = {
 };
 
 export const DropdownButton = ({ label, id, className = styles.dropdownButton, title, icon, style, ...rest }) => (
-    <Button id={id} className={className} title={title} style={style} {...rest} endIcon={<Icon>{icon}</Icon>}> 
+    <Button id={id} className={className} title={title} style={style} {...rest} endIcon={<Icon>{icon}</Icon>}>
         {label}
     </Button>
 );

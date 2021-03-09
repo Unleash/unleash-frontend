@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Textfield, Card, CardTitle, CardText, CardActions } from 'react-mdl';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import { FormButtons, styles as commonStyles } from '../common';
-import { trim } from '../common/util';
 class AddTagTypeComponent extends Component {
     constructor(props) {
         super(props);
@@ -36,9 +39,9 @@ class AddTagTypeComponent extends Component {
         this.setState({ errors });
     };
 
-    setValue = (field, value) => {
+    setValue = (field, value, trim = true) => {
         const { tagType } = this.state;
-        tagType[field] = trim(value);
+        tagType[field] = trim ? value.trim() : value;
         this.setState({ tagType, dirty: true });
     };
 
@@ -69,40 +72,42 @@ class AddTagTypeComponent extends Component {
         const submitText = editMode ? 'Update' : 'Create';
         return (
             <Card shadow={0} className={commonStyles.fullWidth} style={{ overflow: 'visible' }}>
-                <CardTitle style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
+                <CardHeader style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}>
                     {submitText} Tag type
-                </CardTitle>
-                <CardText>Tag types allows you to group tags together in the management UI</CardText>
-                <form onSubmit={this.onSubmit}>
-                    <section style={{ padding: '16px' }}>
-                        <p style={{ color: 'red' }}>{errors.general}</p>
-                        <Textfield
-                            floatingLabel
-                            label="Name"
-                            name="name"
-                            placeholder="url-friendly-unique-name"
-                            value={tagType.name}
-                            error={errors.name}
-                            disabled={editMode}
-                            onBlur={this.onValidateName}
-                            onChange={v => this.setValue('name', v.target.value)}
-                        />
-                        <Textfield
-                            floatingLabel
-                            style={{ width: '100%' }}
-                            label="Description"
-                            name="description"
-                            placeholder="Some short helpful descriptive text"
-                            rows={1}
-                            error={errors.description}
-                            value={tagType.description}
-                            onChange={v => this.setValue('description', v.target.value)}
-                        />
-                    </section>
-                    <CardActions>
-                        <FormButtons submitText={submitText} onCancel={this.onCancel} />
-                    </CardActions>
-                </form>
+                </CardHeader>
+                <CardContent>
+                    Tag types allows you to group tags together in the management UI
+                    <form onSubmit={this.onSubmit}>
+                        <section style={{ padding: '16px' }}>
+                            <p style={{ color: 'red' }}>{errors.general}</p>
+                            <TextField
+                                label="Name"
+                                name="name"
+                                placeholder="url-friendly-unique-name"
+                                value={tagType.name}
+                                error={errors.name}
+                                helperText={errors.name}
+                                disabled={editMode}
+                                onBlur={this.onValidateName}
+                                onChange={v => this.setValue('name', v.target.value)}
+                            />
+                            <TextField
+                                style={{ width: '100%' }}
+                                label="Description"
+                                name="description"
+                                placeholder="Some short explanation of the tag type"
+                                rows={1}
+                                error={errors.description}
+                                helperText={errors.description}
+                                value={tagType.description}
+                                onChange={v => this.setValue('description', v.target.value, false)}
+                            />
+                        </section>
+                        <CardActions>
+                            <FormButtons submitText={submitText} onCancel={this.onCancel} />
+                        </CardActions>
+                    </form>
+                </CardContent>
             </Card>
         );
     }

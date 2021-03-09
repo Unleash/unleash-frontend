@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemContent, Card, IconButton } from 'react-mdl';
+import { List, ListItem, ListItemIcon, ListItemText, Paper, IconButton } from '@material-ui/core';
+import LabelIcon from '@material-ui/icons/Label';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
 class TagTypesListComponent extends Component {
     static propTypes = {
@@ -27,43 +31,53 @@ class TagTypesListComponent extends Component {
     render() {
         const { tagTypes, hasPermission } = this.props;
         return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
                 <HeaderTitle
                     title="Tag Types"
                     actions={
                         hasPermission(CREATE_TAG_TYPE) ? (
                             <IconButton
-                                raised
-                                name="add"
+                                aria-label="add tag type"
                                 onClick={() => this.props.history.push('/tag-types/create')}
-                                title="Add new tag type"
-                            />
+                            >
+                                <AddIcon />
+                            </IconButton>
                         ) : (
                             ''
                         )
                     }
                 />
                 <List>
-                    {tagTypes.length > 0 ? (
-                        tagTypes.map((tagType, i) => (
-                            <ListItem key={i} twoLine>
-                                <ListItemContent icon="label" subtitle={tagType.description}>
-                                    <Link to={`/tag-types/edit/${tagType.name}`}>
-                                        <strong>{tagType.name}</strong>
-                                    </Link>
-                                </ListItemContent>
-                                {hasPermission(DELETE_TAG_TYPE) ? (
-                                    <IconButton name="delete" onClick={this.removeTagType.bind(this, tagType.name)} />
-                                ) : (
-                                    ''
-                                )}
-                            </ListItem>
-                        ))
-                    ) : (
-                        <ListItem>No entries</ListItem>
-                    )}
+                    <ConditionallyRender
+                        condition={tagTypes.length > 0}
+                        show={tagTypes.map((tagType, i) => {
+                            let link = (
+                                <Link to={`/tag-types/edit/${tagType.name}`}>
+                                    <strong>{tagType.name}</strong>
+                                </Link>
+                            );
+                            let deleteButton = (
+                                <IconButton onClick={this.removeTagType.bind(this, tagType.name)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            );
+                            return (
+                                <ListItem key={i}>
+                                    <ListItemIcon>
+                                        <LabelIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={link} secondary={tagType.description} />
+                                    <ConditionallyRender
+                                        condition={hasPermission(DELETE_TAG_TYPE)}
+                                        show={deleteButton}
+                                    />
+                                </ListItem>
+                            );
+                        })}
+                        elseShow={<ListItem>No entries</ListItem>}
+                    />
                 </List>
-            </Card>
+            </Paper>
         );
     }
 }
