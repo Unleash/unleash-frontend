@@ -16,11 +16,9 @@ const builtInStickinessOptions = [
 export default class FlexibleRolloutStrategy extends Component {
     static propTypes = { ...strategyInputProps, context: PropTypes.array };
 
-    onUpdate = (field, newValue) => {
-        console.log(field, newValue);
-        console.log(newValue.currentTarget.value);
-        const value = newValue.currentTarget.value;
-        this.props.updateParameter(field, value);
+    onUpdate = (evt, newValue) => {
+        const field = evt.target.name;
+        this.props.updateParameter("rollout", newValue);
     };
 
     resolveStickiness = () => {
@@ -53,7 +51,7 @@ export default class FlexibleRolloutStrategy extends Component {
                     minLabel="off"
                     maxLabel="on"
                     disabled={!editable}
-                    onChange={evt => this.onUpdate("rollout", evt)}
+                    onChange={this.onUpdate}
                     id={`${index}-groupId`}
                 />
                 <div>

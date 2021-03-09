@@ -24,7 +24,6 @@ export default class InputList extends Component {
     onKeyDown = e => {
         if (e.key === "Enter") {
             this.setValue(e);
-            this.textInput.inputRef.value = "";
             e.preventDefault();
             e.stopPropagation();
         }
@@ -98,9 +97,6 @@ export default class InputList extends Component {
                             onBlur={this.onBlur}
                             onChange={this.onChange}
                             onKeyDown={this.onKeyDown}
-                            ref={input => {
-                                this.textInput = input;
-                            }}
                         />
                         <IconButton raised onClick={this.setValue}>
                             <Icon>add</Icon>
