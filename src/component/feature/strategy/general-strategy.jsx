@@ -1,15 +1,15 @@
 import React from 'react';
-import { Textfield, Icon, Switch, Tooltip } from 'react-mdl';
+import { Textfield, Icon } from 'react-mdl';
+import { Switch, FormControlLabel, Tooltip } from '@material-ui/core';
 import strategyInputProps from './strategy-input-props';
 import StrategyInputPercentage from './input-percentage';
 import StrategyInputList from './input-list';
 import styles from './strategy.module.scss';
 
 export default function GeneralStrategyInput({ parameters, strategyDefinition, updateParameter, editable }) {
-    const onChange = (field, evt) => {
+    const onChange = (field, evt, newValue) => {
         evt.preventDefault();
-        const value = evt.target.value;
-        updateParameter(field, value);
+        updateParameter(field, newValue);
     };
 
     const handleSwitchChange = (key, currentValue) => {
@@ -71,14 +71,9 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
             } else if (type === 'boolean') {
                 return (
                     <div key={name} style={{ padding: '20px 0' }}>
-                        <Switch onChange={handleSwitchChange.bind(this, name, value)} checked={value === 'true'}>
-                            {name}{' '}
-                            {description && (
-                                <Tooltip label={description}>
-                                    <Icon name="info" style={{ color: 'rgba(0, 0, 0, 0.7)', fontSize: '1em' }} />
-                                </Tooltip>
-                            )}
-                        </Switch>
+                        <Tooltip title={description} placement="right-end">
+                            <FormControlLabel label={name} control={<Switch name={name} onChange={handleSwitchChange.bind(this, name, value)} checked={value === 'true'} />} />
+                        </Tooltip>
                     </div>
                 );
             } else {

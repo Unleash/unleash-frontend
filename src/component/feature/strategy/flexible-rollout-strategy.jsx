@@ -17,7 +17,6 @@ export default class FlexibleRolloutStrategy extends Component {
     static propTypes = { ...strategyInputProps, context: PropTypes.array };
 
     onUpdate = (evt, newValue) => {
-        const field = evt.target.name;
         this.props.updateParameter("rollout", newValue);
     };
 
@@ -51,7 +50,7 @@ export default class FlexibleRolloutStrategy extends Component {
                     minLabel="off"
                     maxLabel="on"
                     disabled={!editable}
-                    onChange={this.onUpdate}
+                    onChange={this.onUpdate.bind(this, 'Percentage')}
                     id={`${index}-groupId`}
                 />
                 <div>

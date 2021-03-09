@@ -39,6 +39,7 @@ class AddFeatureComponent extends Component {
                                 name="name"
                                 value={input.name}
                                 error={errors.name}
+                                helperText={errors.name}
                                 onBlur={v => validateName(v.target.value)}
                                 onChange={v => setValue('name', trim(v.target.value))}
                             />
