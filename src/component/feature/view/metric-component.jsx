@@ -1,33 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Cell } from 'react-mdl';
-import { Icon, Chip } from "@material-ui/core";
-import LinkIcon from '@material-ui/icons/Link';
-import Progress from '../progress-component';
-import { Link } from 'react-router-dom';
-import { AppsLinkList, calc } from '../../common';
-import { formatFullDateTimeWithLocale } from '../../common/util';
-import styles from './metric.module.scss';
-import ConditionallyRender from '../../common/conditionally-render';
+import React from "react";
+import PropTypes from "prop-types";
+import { Icon, Chip, Grid } from "@material-ui/core";
+import LinkIcon from "@material-ui/icons/Link";
+
+import { Link } from "react-router-dom";
+import { AppsLinkList, calc } from "../../common";
+import { formatFullDateTimeWithLocale } from "../../common/util";
+import Progress from "../progress-component";
+import ConditionallyRender from "../../common/conditionally-render";
+
+import styles from "./metric.module.scss";
 
 const StrategyChipItem = ({ strategy }) => (
-    <Chip clickable className={styles.chip} label={strategy.name} component={Link} to={`/strategies/view/${strategy.name}`} icon={ <LinkIcon />} />
+    <Chip
+        clickable
+        className={styles.chip}
+        label={strategy.name}
+        component={Link}
+        to={`/strategies/view/${strategy.name}`}
+        icon={<LinkIcon />}
+    />
 );
 StrategyChipItem.propTypes = {
-    strategy: PropTypes.object.isRequired,
+    strategy: PropTypes.object.isRequired
 };
 
 // TODO what about "missing" strategies here?
 const StrategiesList = ({ strategies }) => (
-    <div style={{ verticalAlign: 'middle', paddingTop: '14px' }}>
-        With {strategies.length > 1 ? 'strategies' : 'strategy'}{' '}
+    <div style={{ verticalAlign: "middle", paddingTop: "14px" }}>
+        With {strategies.length > 1 ? "strategies" : "strategy"}{" "}
         {strategies.map((strategy, i) => (
             <StrategyChipItem key={i} strategy={strategy} />
         ))}
     </div>
 );
 StrategiesList.propTypes = {
-    strategies: PropTypes.array.isRequired,
+    strategies: PropTypes.array.isRequired
 };
 
 export default class MetricComponent extends React.Component {
@@ -36,7 +44,7 @@ export default class MetricComponent extends React.Component {
         featureToggle: PropTypes.object.isRequired,
         fetchSeenApps: PropTypes.func.isRequired,
         fetchFeatureMetrics: PropTypes.func.isRequired,
-        location: PropTypes.object,
+        location: PropTypes.object
     };
 
     // eslint-disable-next-line camelcase
@@ -47,69 +55,103 @@ export default class MetricComponent extends React.Component {
     formatFullDateTime(v) {
         return formatFullDateTimeWithLocale(v, this.props.location.locale);
     }
-    renderLastSeen = lastSeenAt => (lastSeenAt ? this.formatFullDateTime(lastSeenAt) : 'Never reported');
+    renderLastSeen = lastSeenAt =>
+        lastSeenAt ? this.formatFullDateTime(lastSeenAt) : "Never reported";
 
     render() {
         const { metrics = {}, featureToggle } = this.props;
         const {
             lastHour = { yes: 0, no: 0, isFallback: true },
             lastMinute = { yes: 0, no: 0, isFallback: true },
-            seenApps = [],
+            seenApps = []
         } = metrics;
 
-        const lastHourPercent = 1 * calc(lastHour.yes, lastHour.yes + lastHour.no, 0);
-        const lastMinutePercent = 1 * calc(lastMinute.yes, lastMinute.yes + lastMinute.no, 0);
+        const lastHourPercent =
+            1 * calc(lastHour.yes, lastHour.yes + lastHour.no, 0);
+        const lastMinutePercent =
+            1 * calc(lastMinute.yes, lastMinute.yes + lastMinute.no, 0);
 
         return (
-            <div style={{ padding: '16px' }}>
-                <Grid style={{ textAlign: 'center' }}>
-                    <Cell col={4} tablet={4} phone={12}>
+            <div style={{ padding: "16px", flexGrow: 1 }}>
+                <Grid
+                    container
+                    spacing={2}
+                    justify="center"
+                    className={styles.grid}
+                >
+                    <Grid item xs={12} sm={4}>
                         <Progress
                             percentage={lastMinutePercent}
                             isFallback={lastMinute.isFallback}
                             colorClassName="mdl-color-text--accent"
                             animatePercentageText
                         />
-                        {lastMinute.isFallback ? (
-                            <p className="mdl-color-text--grey-500">No metrics available</p>
-                        ) : (
-                            <p>
-                                <strong>Last minute</strong>
-                                <br /> Yes {lastMinute.yes}, No: {lastMinute.no}
-                            </p>
-                        )}
-                    </Cell>
-                    <Cell col={4} tablet={4} phone={12}>
-                        <Progress percentage={lastHourPercent} isFallback={lastHour.isFallback} />
-                        {lastHour.isFallback ? (
-                            <p className="mdl-color-text--grey-500">No metrics available</p>
-                        ) : (
-                            <p>
-                                <strong>Last hour</strong>
-                                <br /> Yes {lastHour.yes}, No: {lastHour.no}
-                            </p>
-                        )}
-                    </Cell>
-                    <Cell col={4} tablet={12}>
-                        {seenApps.length > 0 ? (
-                            <div>
-                                <strong>Seen in applications:</strong>
-                            </div>
-                        ) : (
-                            <div>
-                                <Icon
-                                    className={styles.problemIcon}
-                                    name="report problem"
-                                    title="Not used in an app in the last hour"
-                                />
+                        <ConditionallyRender
+                            condition={lastMinute.isFallback}
+                            show={
+                                <p className="mdl-color-text--grey-500">
+                                    No metrics available
+                                </p>
+                            }
+                            elseShow={
+                                <p>
+                                    <strong>Last minute</strong>
+                                    <br /> Yes {lastMinute.yes}, No:{" "}
+                                    {lastMinute.no}
+                                </p>
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Progress
+                            percentage={lastHourPercent}
+                            isFallback={lastHour.isFallback}
+                        />
+                        <ConditionallyRender
+                            condition={lastHour.isFallback}
+                            show={
+                                <p className="mdl-color-text--grey-500">
+                                    No metrics available
+                                </p>
+                            }
+                            elseShow={
+                                <p>
+                                    <strong>Last hour</strong>
+                                    <br /> Yes {lastHour.yes}, No: {lastHour.no}
+                                </p>
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <ConditionallyRender
+                            condition={seenApps.length}
+                            show={
                                 <div>
-                                    <small>
-                                        <strong>Not used in an app in the last hour. </strong>
-                                        This might be due to your client implementation not reporting usage.
-                                    </small>
+                                    <strong>Seen in applications:</strong>
                                 </div>
-                            </div>
-                        )}
+                            }
+                            elseShow={
+                                <div>
+                                    <Icon
+                                        className={styles.problemIcon}
+                                        title="Not used in an app in the last hour"
+                                    >
+                                        report problem
+                                    </Icon>
+                                    <div>
+                                        <small>
+                                            <strong>
+                                                Not used in an app in the last
+                                                hour.{" "}
+                                            </strong>
+                                            This might be due to your client
+                                            implementation not reporting usage.
+                                        </small>
+                                    </div>
+                                </div>
+                            }
+                        />
+
                         <AppsLinkList apps={seenApps} />
                         <div>
                             <ConditionallyRender
@@ -117,16 +159,22 @@ export default class MetricComponent extends React.Component {
                                 show={
                                     <>
                                         <strong>Created: </strong>
-                                        <span>{this.formatFullDateTime(featureToggle.createdAt)}</span>
+                                        <span>
+                                            {this.formatFullDateTime(
+                                                featureToggle.createdAt
+                                            )}
+                                        </span>
                                     </>
                                 }
                             />
 
                             <br />
                             <strong>Last seen: </strong>
-                            <span>{this.renderLastSeen(featureToggle.lastSeenAt)}</span>
+                            <span>
+                                {this.renderLastSeen(featureToggle.lastSeenAt)}
+                            </span>
                         </div>
-                    </Cell>
+                    </Grid>
                 </Grid>
                 <hr />
                 <StrategiesList strategies={featureToggle.strategies} />
