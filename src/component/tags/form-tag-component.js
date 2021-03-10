@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Card, CardHeader, CardActions } from '@material-ui/core';
+import { TextField, Paper } from '@material-ui/core';
+import styles from './Tag.module.scss';
 import { FormButtons, styles as commonStyles } from '../common';
 import TagTypeSelect from '../feature/tag-type-select-container';
-import { trim } from '../common/util';
 class AddTagComponent extends Component {
     constructor(props) {
         super(props);
@@ -56,34 +56,37 @@ class AddTagComponent extends Component {
         const { tag, errors } = this.state;
         const submitText = 'Create';
         return (
-            <Card shadow={0} className={commonStyles.fullWidth} style={{ overflow: 'visible' }}>
-                <CardHeader
-                    title={`${submitText} Tag`}
-                    style={{ paddingTop: '24px', paddingBottom: '0', wordBreak: 'break-all' }}
-                />
-                <form onSubmit={this.onSubmit}>
-                    <section style={{ padding: '16px' }}>
+            <Paper shadow={0} className={commonStyles.fullwidth}>
+                <div className={styles.header}>
+                    <h1>{`${submitText} Tag`}</h1>
+                </div>
+                <section className={styles.container}>
+                    <form onSubmit={this.onSubmit}>
                         <p style={{ color: 'red' }}>{errors.general}</p>
                         <TagTypeSelect
                             name="type"
                             value={tag.type}
                             onChange={v => this.setValue('type', v.target.value)}
+                            className={styles.select}
                         />
                         <TextField
                             label="Value"
                             name="value"
                             placeholder="Your tag"
+                            size="small"
+                            variant="outlined"
                             value={tag.value}
                             error={errors.value}
                             helperText={errors.value}
-                            onChange={v => this.setValue('value', trim(v.target.value))}
+                            onChange={v => this.setValue('value', v.target.value)}
+                            className={styles.textfield}
                         />
-                    </section>
-                    <CardActions>
-                        <FormButtons submitText={submitText} onCancel={this.onCancel} />
-                    </CardActions>
-                </form>
-            </Card>
+                        <div className={styles.formbuttons}>
+                            <FormButtons submitText={submitText} onCancel={this.onCancel} />
+                        </div>
+                    </form>
+                </section>
+            </Paper>
         );
     }
 }

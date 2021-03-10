@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem, ListItemText, Card, CardHeader, IconButton, ListItemIcon, Icon } from '@material-ui/core';
+import { List, ListItem, ListItemText, Paper, IconButton, ListItemIcon, Icon } from '@material-ui/core';
 import { styles as commonStyles } from '../common';
+import styles from './Tag.module.scss';
 import { CREATE_TAG, DELETE_TAG } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
 
@@ -24,40 +25,55 @@ class TagsListComponent extends Component {
         this.props.removeTag(tag);
     };
 
-    render() {
+    renderListItems = () => {
         const { tags, hasPermission } = this.props;
-        let deleteButton = (tagType, tagValue) => (
-            <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
-                <Icon>delete</Icon>
-            </IconButton>
-        );
-        let addButton = (
-            <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
-                <Icon>add</Icon>
-                Add new tag
-            </IconButton>
-        );
-        return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <CardHeader
-                    title="Tags"
-                    action={<ConditionallyRender condition={hasPermission(CREATE_TAG)} show={addButton} />}
+        return tags.map((tag, i) => (
+            <ListItem key={i}>
+                <ListItemIcon>
+                    <Icon>label</Icon>
+                </ListItemIcon>
+                <ListItemText primary={tag.value} secondary={tag.type} />
+                <ConditionallyRender
+                    condition={hasPermission(DELETE_TAG)}
+                    show={this.deleteButton(tag.type, tag.value)}
                 />
+            </ListItem>
+        ));
+    };
+
+    deleteButton = (tagType, tagValue) => (
+        <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
+            <Icon>delete</Icon>
+        </IconButton>
+    );
+
+    addButton = () => {
+        const { hasPermission } = this.props;
+        return (
+            <ConditionallyRender
+                condition={hasPermission(CREATE_TAG)}
+                show={
+                    <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
+                        <Icon>add</Icon>
+                        Add new tag
+                    </IconButton>
+                }
+            />
+        );
+    };
+
+    render() {
+        const { tags } = this.props;
+        return (
+            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+                <div className={styles.header}>
+                    <h1>Tags</h1>
+                    <div>{this.addButton()}</div>
+                </div>
                 <List>
                     <ConditionallyRender
                         condition={tags.length > 0}
-                        show={tags.map((tag, i) => (
-                            <ListItem key={i}>
-                                <ListItemIcon>
-                                    <Icon>label</Icon>
-                                </ListItemIcon>
-                                <ListItemText primary={tag.value} secondary={tag.type} />
-                                <ConditionallyRender
-                                    condition={hasPermission(DELETE_TAG)}
-                                    show={deleteButton(tag.type, tag.value)}
-                                />
-                            </ListItem>
-                        ))}
+                        show={this.renderListItems(tags)}
                         elseShow={
                             <ListItem>
                                 <ListItemText primary="No tags available" />
@@ -65,7 +81,7 @@ class TagsListComponent extends Component {
                         }
                     />
                 </List>
-            </Card>
+            </Paper>
         );
     }
 }

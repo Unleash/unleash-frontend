@@ -2,8 +2,6 @@ import React from 'react';
 import { Select, FormControl, MenuItem, InputLabel } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-import styles from './common.module.scss';
-
 const SelectMenu = ({ name, value, label, options, onChange, id, disabled = false, className, ...rest }) => {
     const renderSelectItems = () =>
         options.map(option => (
@@ -16,7 +14,6 @@ const SelectMenu = ({ name, value, label, options, onChange, id, disabled = fals
         <FormControl variant="outlined" size="small">
             <InputLabel id={id}>{label}</InputLabel>
             <Select
-                className={styles.root}
                 name={name}
                 disabled={disabled}
                 onChange={onChange}
