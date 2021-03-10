@@ -38,9 +38,6 @@
     "prepublish": "npm run build"
   },
   "main": "./index.js",
-  "dependencies": {
-    "@material-ui/styles": "^4.11.3"
-  },
   "devDependencies": {
     "@material-ui/lab": "4.0.0-alpha.57",
     "@babel/core": "^7.9.0",
@@ -52,6 +49,7 @@
     "@babel/preset-react": "^7.9.4",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.3",
     "array-move": "^2.2.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.3.0",
