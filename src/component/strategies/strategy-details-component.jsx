@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, ProgressBar, Grid } from '@material-ui/core';
+import { Tabs, Tab, Grid, Paper } from '@material-ui/core';
 import ShowStrategy from './show-strategy-component';
 import EditStrategy from './form-container';
 import { HeaderTitle } from '../common';
 import { UPDATE_STRATEGY } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
+import { Edit } from '@material-ui/icons';
+import TabNav from '../common/tabNav';
 
 const TABS = {
     view: 0,
@@ -38,51 +40,53 @@ export default class StrategyDetails extends Component {
         }
     }
 
-    getTabContent(activeTabId) {
-        if (activeTabId === TABS.edit) {
-            return <EditStrategy strategy={this.props.strategy} history={this.props.history} editMode />;
-        } else {
-            return (
-                <ShowStrategy
-                    strategy={this.props.strategy}
-                    toggles={this.props.toggles}
-                    applications={this.props.applications}
-                />
-            );
-        }
-    }
-
-    goToTab(tabName) {
-        this.props.history.push(`/strategies/${tabName}/${this.props.strategyName}`);
-    }
-
     render() {
-        const activeTabId = TABS[this.props.activeTab] ? TABS[this.props.activeTab] : TABS.strategies;
         const strategy = this.props.strategy;
-        if (!strategy) {
-            return <ProgressBar indeterminate />;
-        }
-
-        const tabContent = this.getTabContent(activeTabId);
-
-        return (
-            <Grid container>
-                <Grid item xs={12} sm={12}>
-                    <HeaderTitle title={strategy.name} subtitle={strategy.description} />
-                    <ConditionallyRender
-                        condition={strategy.editable && this.props.hasPermission(UPDATE_STRATEGY)}
-                        show={
-                            <Tabs activeTab={activeTabId} ripple>
-                                <Tab onClick={() => this.goToTab('view')}>Details</Tab>
-                                <Tab onClick={() => this.goToTab('edit')}>Edit</Tab>
-                            </Tabs>
-                        }
+        const tabData = [
+            {
+                label: 'Details',
+                component: (
+                    <ShowStrategy
+                        strategy={this.props.strategy}
+                        toggles={this.props.toggles}
+                        applications={this.props.applications}
                     />
-                    <section>
-                        <div className="content">{tabContent}</div>
-                    </section>
+                ),
+            },
+            {
+                label: 'Edit',
+                component: <EditStrategy strategy={this.props.strategy} history={this.props.history} editMode />,
+            },
+        ];
+        return (
+            <Paper>
+                <Grid container>
+                    <Grid item xs={12} sm={12}>
+                        <HeaderTitle title={strategy.name} subtitle={strategy.description} />
+                        <ConditionallyRender
+                            condition={strategy.editable && this.props.hasPermission(UPDATE_STRATEGY)}
+                            show={
+                                <div>
+                                    <TabNav tabData={tabData} />
+                                </div>
+                            }
+                            elseShow={
+                                <section>
+                                    <div className="content">
+                                        {
+                                            <ShowStrategy
+                                                strategy={this.props.strategy}
+                                                toggles={this.props.toggles}
+                                                applications={this.props.applications}
+                                            />
+                                        }
+                                    </div>
+                                </section>
+                            }
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Paper>
         );
     }
 }
