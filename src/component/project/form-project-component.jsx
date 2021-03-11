@@ -68,38 +68,38 @@ class AddContextComponent extends Component {
                 </div>
                 <section className={styles.container}>
                     <div className={styles.supporting}>
-                        Projects allows you to group feature toggles together in the managemnt UI.
+                        Projects allows you to group feature toggles together in the management UI.
                     </div>
                     <form onSubmit={this.onSubmit}>
-                        <section style={{ padding: '16px' }}>
+                        <section className={styles.formContainer}>
                             <TextField
-                                floatingLabel
                                 label="Project Id"
                                 name="id"
                                 placeholder="A-unique-key"
                                 value={project.id}
-                                error={errors.id}
+                                error={!!errors.id}
+                                helperText={errors.id}
                                 disabled={editMode}
                                 onBlur={v => this.validateId(v.target.value)}
                                 onChange={v => this.setValue('id', trim(v.target.value))}
                             />
                             <br />
                             <TextField
-                                floatingLabel
                                 label="Name"
                                 name="name"
                                 placeholder="Project name"
                                 value={project.name}
-                                error={errors.name}
+                                error={!!errors.name}
+                                helperText={errors.name}
                                 onChange={v => this.setValue('name', v.target.value)}
                             />
                             <TextField
-                                floatingLabel
-                                style={{ width: '100%' }}
+                                className={commonStyles.fullwidth}
                                 placeholder="A short description"
-                                rows={1}
+                                rowsMax={1}
                                 label="Description"
-                                error={errors.description}
+                                error={!!errors.description}
+                                helperText={errors.description}
                                 value={project.description}
                                 onChange={v => this.setValue('description', v.target.value)}
                             />
