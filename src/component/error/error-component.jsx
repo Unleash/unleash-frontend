@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Snackbar, Icon } from '@material-ui/core';
+import { Snackbar, Icon, IconButton } from '@material-ui/core';
 
 const ErrorComponent = ({ errors, ...props }) => {
     const showError = errors.length > 0;
@@ -9,9 +9,14 @@ const ErrorComponent = ({ errors, ...props }) => {
     const muteError = () => props.muteError(error);
     return (
         <Snackbar
-            action="Dismiss"
+            action={
+                <React.Fragment>
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={muteError}>
+                        <Icon>close</Icon>
+                    </IconButton>
+                </React.Fragment>
+            }
             open={showError}
-            onActionClick={muteError}
             onTimeout={muteError}
             autoHideDuration={10000}
             message={
