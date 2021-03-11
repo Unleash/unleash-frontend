@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemIcon, ListItemText, Paper, IconButton } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Paper, IconButton, Tooltip } from '@material-ui/core';
 import LabelIcon from '@material-ui/icons/Label';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -36,12 +36,14 @@ class TagTypesListComponent extends Component {
                     title="Tag Types"
                     actions={
                         hasPermission(CREATE_TAG_TYPE) ? (
-                            <IconButton
-                                aria-label="add tag type"
-                                onClick={() => this.props.history.push('/tag-types/create')}
-                            >
-                                <AddIcon />
-                            </IconButton>
+                            <Tooltip title="Add tag type">
+                                <IconButton
+                                    aria-label="add tag type"
+                                    onClick={() => this.props.history.push('/tag-types/create')}
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            </Tooltip>
                         ) : (
                             ''
                         )

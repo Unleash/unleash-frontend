@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemAction, ListItemContent, IconButton, Card } from 'react-mdl';
+import { List, ListItem, ListItemIcon, ListItemText, IconButton, Icon, Paper, Tooltip } from '@material-ui/core';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
 class ContextFieldListComponent extends Component {
     static propTypes = {
@@ -24,55 +25,65 @@ class ContextFieldListComponent extends Component {
         this.props.removeContextField(contextField);
     };
 
-    render() {
-        const { contextFields, hasPermission } = this.props;
-
+    headerButton = () => {
+        const { hasPermission } = this.props;
         return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <HeaderTitle
-                    title="Context Fields"
-                    actions={
-                        hasPermission(CREATE_CONTEXT_FIELD) ? (
-                            <IconButton
-                                raised
-                                colored
-                                accent
-                                name="add"
-                                onClick={() => this.props.history.push('/context/create')}
-                                title="Add new context field"
-                            />
-                        ) : (
-                            ''
-                        )
+            <ConditionallyRender
+                condition={hasPermission(CREATE_CONTEXT_FIELD)}
+                show={
+                    <Tooltip title="Add context type">
+                        <IconButton onClick={() => this.props.history.push('/context/create')}>
+                            <Icon>add</Icon>
+                        </IconButton>
+                    </Tooltip>
+                }
+            />
+        );
+    };
+
+    contextList = () => {
+        const { contextFields, hasPermission } = this.props;
+        return contextFields.map((field, i) => (
+            <ListItem key={i}>
+                <ListItemIcon>
+                    <Icon>album</Icon>
+                </ListItemIcon>
+                <ListItemText
+                    primary={
+                        <Link to={`/context/edit/${field.name}`}>
+                            <strong>{field.name}</strong>
+                        </Link>
+                    }
+                    secondary={field.description}
+                />
+                <ConditionallyRender
+                    condition={hasPermission(DELETE_CONTEXT_FIELD)}
+                    show={
+                        <Tooltip title="Delete context field">
+                            <IconButton aria-label="delete" onClick={this.removeContextField.bind(this, field)}>
+                                <Icon>delete</Icon>
+                            </IconButton>
+                        </Tooltip>
                     }
                 />
+            </ListItem>
+        ));
+    };
+
+    render() {
+        const { contextFields } = this.props;
+
+        return (
+            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+                <HeaderTitle title="Context Fields" actions={this.headerButton()} />
                 <List>
-                    {contextFields.length > 0 ? (
-                        contextFields.map((field, i) => (
-                            <ListItem key={i} twoLine>
-                                <ListItemContent icon="album" subtitle={field.description}>
-                                    <Link to={`/context/edit/${field.name}`}>
-                                        <strong>{field.name}</strong>
-                                    </Link>
-                                </ListItemContent>
-                                <ListItemAction>
-                                    {hasPermission(DELETE_CONTEXT_FIELD) ? (
-                                        <IconButton
-                                            name="delete"
-                                            title="Remove contextField"
-                                            onClick={this.removeContextField.bind(this, field)}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                </ListItemAction>
-                            </ListItem>
-                        ))
-                    ) : (
-                        <ListItem>No context fields defined</ListItem>
-                    )}
+                    <ConditionallyRender
+                        condition={contextFields.length > 0}
+                        show={this.contextList()}
+                        elseShow={<ListItem>No context fields defined</ListItem>}
+                    />
                 </List>
-            </Card>
+            </Paper>
         );
     }
 }

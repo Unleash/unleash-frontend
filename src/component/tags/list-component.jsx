@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem, ListItemText, Paper, IconButton, ListItemIcon, Icon } from '@material-ui/core';
+import { List, ListItem, ListItemText, Paper, IconButton, ListItemIcon, Tooltip, Icon } from '@material-ui/core';
 import { styles as commonStyles } from '../common';
 import styles from './Tag.module.scss';
 import { CREATE_TAG, DELETE_TAG } from '../../permissions';
@@ -42,9 +42,11 @@ class TagsListComponent extends Component {
     };
 
     deleteButton = (tagType, tagValue) => (
-        <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
-            <Icon>delete</Icon>
-        </IconButton>
+        <Tooltip title="Delete tag">
+            <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
+                <Icon>delete</Icon>
+            </IconButton>
+        </Tooltip>
     );
 
     addButton = () => {
@@ -53,10 +55,11 @@ class TagsListComponent extends Component {
             <ConditionallyRender
                 condition={hasPermission(CREATE_TAG)}
                 show={
-                    <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
-                        <Icon>add</Icon>
-                        Add new tag
-                    </IconButton>
+                    <Tooltip title="Add new tag">
+                        <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
+                            <Icon>add</Icon>
+                        </IconButton>
+                    </Tooltip>
                 }
             />
         );
