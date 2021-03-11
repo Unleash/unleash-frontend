@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, ProgressBar, Grid, Cell } from 'react-mdl';
+import { Tabs, Tab, ProgressBar, Grid } from '@material-ui/core';
 import ShowStrategy from './show-strategy-component';
 import EditStrategy from './form-container';
 import { HeaderTitle } from '../common';
 import { UPDATE_STRATEGY } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
 const TABS = {
     view: 0,
@@ -65,22 +66,22 @@ export default class StrategyDetails extends Component {
         const tabContent = this.getTabContent(activeTabId);
 
         return (
-            <Grid className="mdl-color--white">
-                <Cell col={12}>
+            <Grid container>
+                <Grid item xs={12} sm={12}>
                     <HeaderTitle title={strategy.name} subtitle={strategy.description} />
-                    {strategy.editable === false || !this.props.hasPermission(UPDATE_STRATEGY) ? (
-                        ''
-                    ) : (
-                        <Tabs activeTab={activeTabId} ripple>
-                            <Tab onClick={() => this.goToTab('view')}>Details</Tab>
-                            <Tab onClick={() => this.goToTab('edit')}>Edit</Tab>
-                        </Tabs>
-                    )}
-
+                    <ConditionallyRender
+                        condition={strategy.editable && this.props.hasPermission(UPDATE_STRATEGY)}
+                        show={
+                            <Tabs activeTab={activeTabId} ripple>
+                                <Tab onClick={() => this.goToTab('view')}>Details</Tab>
+                                <Tab onClick={() => this.goToTab('edit')}>Edit</Tab>
+                            </Tabs>
+                        }
+                    />
                     <section>
                         <div className="content">{tabContent}</div>
                     </section>
-                </Cell>
+                </Grid>
             </Grid>
         );
     }

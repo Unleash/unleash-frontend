@@ -100,9 +100,11 @@ FormButtons.propTypes = {
 export const TogglesLinkList = ({ toggles }) => (
     <List style={{ textAlign: 'left' }} className={styles.truncate}>
         {toggles.length > 0 &&
-            toggles.map(({ name, description = '-', icon = 'toggle' }) => (
+            toggles.map(({ name, description = '-', icon = 'toggle_on' }) => (
                 <ListItem key={name}>
-                    <ListItemAvatar>{icon}</ListItemAvatar>
+                    <ListItemAvatar>
+                        <Icon>{icon}</Icon>
+                    </ListItemAvatar>
                     <ListItemText
                         primary={
                             <Link key={name} to={`/features/view/${name}`}>

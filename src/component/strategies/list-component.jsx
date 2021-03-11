@@ -61,11 +61,27 @@ class StrategiesListComponent extends Component {
     deprecateButton = strategy => {
         const { deprecateStrategy } = this.props;
         return (
-            <Tooltip title="Deprecate activation strategy">
-                <IconButton disabled={strategy.name === 'default'} onClick={() => deprecateStrategy(strategy)}>
-                    <Icon>visibility_off</Icon>
-                </IconButton>
-            </Tooltip>
+            <ConditionallyRender
+                condition={strategy.name === 'default'}
+                show={
+                    <Tooltip title="You cannot deprecate the default strategy">
+                        <div>
+                            <IconButton disabled>
+                                <Icon>visibility_off</Icon>
+                            </IconButton>
+                        </div>
+                    </Tooltip>
+                }
+                elseShow={
+                    <Tooltip title="Deprecate activation strategy">
+                        <div>
+                            <IconButton onClick={() => deprecateStrategy(strategy)}>
+                                <Icon>visibility_off</Icon>
+                            </IconButton>
+                        </div>
+                    </Tooltip>
+                }
+            />
         );
     };
 
@@ -83,9 +99,11 @@ class StrategiesListComponent extends Component {
                 }
                 elseShow={
                     <Tooltip title="You cannot delete a built-in strategy">
-                        <IconButton disabled>
-                            <Icon>delete</Icon>
-                        </IconButton>
+                        <div>
+                            <IconButton disabled>
+                                <Icon>delete</Icon>
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
