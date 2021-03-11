@@ -1,33 +1,57 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { IconButton, Chip } from 'react-mdl';
-import styles from './variant.module.scss';
-import { UPDATE_FEATURE } from '../../../permissions';
-import { weightTypes } from './enums';
+import React from "react";
+import PropTypes from "prop-types";
+import { IconButton, Chip, Icon } from "@material-ui/core";
+import { UPDATE_FEATURE } from "../../../permissions";
+import { weightTypes } from "./enums";
 
-function VariantViewComponent({ variant, editVariant, removeVariant, hasPermission }) {
+import ConditionallyRender from "../../common/conditionally-render";
+
+import styles from "./variant.module.scss";
+function VariantViewComponent({
+    variant,
+    editVariant,
+    removeVariant,
+    hasPermission
+}) {
     const { FIX } = weightTypes;
     return (
         <tr>
             <td onClick={editVariant}>{variant.name}</td>
-            <td className={styles.labels}>
-                {variant.payload ? <Chip>Payload</Chip> : undefined}{' '}
-                {variant.overrides && variant.overrides.length > 0 ? (
-                    <Chip style={{ backgroundColor: 'rgba(173, 216, 230, 0.2)' }}>Overrides</Chip>
-                ) : (
-                    undefined
-                )}
+            <td>
+                <ConditionallyRender
+                    condition={variant.payload}
+                    show={<Chip label="Payload" />}
+                />
+                <ConditionallyRender
+                    condition={
+                        variant.overrides && variant.overrides.length > 0
+                    }
+                    show={
+                        <Chip
+                            style={{
+                                backgroundColor: "rgba(173, 216, 230, 0.2)"
+                            }}
+                            label="Overrides"
+                        />
+                    }
+                />
             </td>
             <td>{variant.weight / 10.0} %</td>
-            <td>{variant.weightType === FIX ? 'Fix' : 'Variable'}</td>
-            {hasPermission(UPDATE_FEATURE) ? (
-                <td className={styles.actions}>
-                    <IconButton name="edit" onClick={editVariant} />
-                    <IconButton name="delete" onClick={removeVariant} />
-                </td>
-            ) : (
-                <td className={styles.actions} />
-            )}
+            <td>{variant.weightType === FIX ? "Fix" : "Variable"}</td>
+            <ConditionallyRender
+                condition={hasPermission(UPDATE_FEATURE)}
+                show={
+                    <td className={styles.actions}>
+                        <IconButton onClick={editVariant}>
+                            <Icon>edit</Icon>
+                        </IconButton>
+                        <IconButton onClick={removeVariant}>
+                            <Icon>delete</Icon>
+                        </IconButton>
+                    </td>
+                }
+                elseShow={<td className={styles.actions} />}
+            />
         </tr>
     );
 }
@@ -36,7 +60,7 @@ VariantViewComponent.propTypes = {
     variant: PropTypes.object,
     removeVariant: PropTypes.func,
     editVariant: PropTypes.func,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default VariantViewComponent;
