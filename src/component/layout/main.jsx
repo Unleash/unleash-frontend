@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { makeStyles } from "@material-ui/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 
 import styles from "../styles.module.scss";
 import ErrorContainer from "../error/error-container";
@@ -13,9 +13,10 @@ import { FooterMenu } from "../menu/footer";
 const useStyles = makeStyles(theme => ({
     footer: {
         background: theme.palette.neutral.main,
-        padding: "2rem",
+        padding: "2rem 4rem",
         color: "#fff",
-        height: "450px"
+        height: "450px",
+        width: "100%"
     },
     container: {
         height: "100%",
@@ -38,9 +39,11 @@ const Layout = ({ children, location }) => {
                         <ErrorContainer />
                     </Grid>
                 </div>
-                <div className={muiStyles.footer} style={{ width: "100%" }}>
-                    <FooterMenu />
-                    <ShowApiDetailsContainer />
+                <div className={muiStyles.footer}>
+                    <Container>
+                        <FooterMenu />
+                        <ShowApiDetailsContainer />
+                    </Container>
                 </div>
             </Grid>
         </>
