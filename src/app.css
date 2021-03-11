@@ -10,6 +10,7 @@ body {
     /* FONT SIZE */
     --h1-size: 1.25rem;
     --p-size: 1.1rem;
+    --caption-size: 0.9rem;
 
     /* PADDING */
     --card-padding: 2rem;

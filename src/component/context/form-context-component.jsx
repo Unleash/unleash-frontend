@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Chip, TextField, Paper, Switch } from '@material-ui/core';
+import { Button, Chip, TextField, Paper, Switch, Icon } from '@material-ui/core';
 import styles from './Context.module.scss';
 import { FormButtons, styles as commonStyles } from '../common';
 import { trim } from '../common/util';
@@ -99,8 +99,7 @@ class AddContextComponent extends Component {
     renderLegalValue = (value, index) => (
         <Chip
             key={`${value}:${index}`}
-            className="mdl-color--blue-grey-100"
-            style={{ marginRight: '4px' }}
+            className={styles.chip}
             onDelete={() => this.removeLegalValue(index)}
             label={value}
         />
@@ -116,20 +115,23 @@ class AddContextComponent extends Component {
                 <div className={styles.header}>
                     <h1>Create context field</h1>
                 </div>
-                <div className={styles.supporting}>
-                    Context fields are a basic building block used in Unleash to control roll-out. They can be used
-                    together with strategy constraints as part of the activation strategy evaluation.
-                </div>
                 <section className={styles.container}>
+                    <div className={styles.supporting}>
+                        Context fields are a basic building block used in Unleash to control roll-out. They can be used
+                        together with strategy constraints as part of the activation strategy evaluation.
+                    </div>
                     <form onSubmit={this.onSubmit}>
-                        <section className={commonStyles.sectionPadding}>
+                        <section className={styles.formContainer}>
                             <TextField
+                                className={commonStyles.fullwidth}
                                 label="Name"
                                 name="name"
                                 defaultValue={contextField.name}
                                 error={errors.name}
                                 helperText={errors.name}
                                 disabled={editMode}
+                                variant="outlined"
+                                size="small"
                                 onBlur={v => this.validateContextName(v.target.value)}
                                 onChange={v => this.setValue('name', trim(v.target.value))}
                             />
@@ -139,35 +141,47 @@ class AddContextComponent extends Component {
                                 label="Description"
                                 error={errors.description}
                                 helperText={errors.description}
+                                variant="outlined"
+                                size="small"
                                 defaultValue={contextField.description}
                                 onChange={v => this.setValue('description', v.target.value)}
                             />
                             <br />
                             <br />
                         </section>
-                        <section className={commonStyles.sectionPadding}>
+                        <section className={styles.inset}>
                             <h6 className={styles.h6}>Legal values</h6>
                             <p className={styles.alpha}>
                                 By defining the legal values the Unleash Admin UI will validate the user input. A
                                 concrete example would be that we know all values for our “environment” (local,
                                 development, stage, production).
                             </p>
-                            <TextField
-                                label="Value"
-                                name="value"
-                                className={styles.valuefield}
-                                value={this.state.currentLegalValue}
-                                error={errors.currentLegalValue}
-                                helperText={errors.currentLegalValue}
-                                onChange={this.updateCurrentLegalValue}
-                            />
-                            <Button onClick={this.addLegalValue} variant="contained">
-                                Add
-                            </Button>
+                            <div className={styles.legalValueFormContainer}>
+                                <TextField
+                                    label="Value"
+                                    name="value"
+                                    className={styles.valueField}
+                                    value={this.state.currentLegalValue}
+                                    error={!!errors.currentLegalValue}
+                                    helperText={errors.currentLegalValue}
+                                    variant="outlined"
+                                    size="small"
+                                    onChange={this.updateCurrentLegalValue}
+                                />
+                                <Button
+                                    className={styles.legalValueButton}
+                                    startIcon={<Icon>add</Icon>}
+                                    onClick={this.addLegalValue}
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Add
+                                </Button>
+                            </div>
                             <div>{contextField.legalValues.map(this.renderLegalValue)}</div>
                         </section>
                         <br />
-                        <section className={commonStyles.sectionPadding}>
+                        <section>
                             <h6 className={styles.h6}>Custom stickiness (beta)</h6>
                             <p className={styles.alpha}>
                                 By enabling stickiness on this context field you can use it together with the
@@ -182,7 +196,7 @@ class AddContextComponent extends Component {
                             </p>
                             <Switch
                                 label="Allow stickiness"
-                                checked={contextField.stickiness}
+                                value={contextField.stickiness}
                                 onChange={() => this.setValue('stickiness', !contextField.stickiness)}
                             />
                         </section>
