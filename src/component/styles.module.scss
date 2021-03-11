@@ -1,4 +1,5 @@
 .container {
+    height: 100%;
     ul {
         margin: 0;
     }
@@ -10,8 +11,9 @@
 }
 
 .contentWrapper {
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
+    flex: 1;
+    min-height: 100%;
 }
 
 .content {
@@ -20,11 +22,11 @@
     margin-right: auto;
     margin-top: 16px;
     margin-bottom: 16px;
-    flex: 1 0 0%;
 }
 
 .contentContainer {
     padding: var(--page-padding);
+    height: 100%;
 }
 
 @media (max-width: 1260px) {
