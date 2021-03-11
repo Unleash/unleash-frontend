@@ -156,7 +156,7 @@ class AddContextComponent extends Component {
                                 concrete example would be that we know all values for our “environment” (local,
                                 development, stage, production).
                             </p>
-                            <div className={styles.legalValueFormContainer}>
+                            <div>
                                 <TextField
                                     label="Value"
                                     name="value"
@@ -200,7 +200,7 @@ class AddContextComponent extends Component {
                                 onChange={() => this.setValue('stickiness', !contextField.stickiness)}
                             />
                         </section>
-                        <div className={styles.formbuttons}>
+                        <div className={styles.formButtons}>
                             <FormButtons submitText={submitText} onCancel={this.onCancel} />
                         </div>
                     </form>

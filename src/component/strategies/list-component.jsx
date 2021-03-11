@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { List, ListItem, ListItemContent, IconButton, Card } from 'react-mdl';
+import { List, ListItem, ListItemAvatar, IconButton, Icon, Paper, ListItemText, Tooltip } from '@material-ui/core';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../permissions';
 
 import styles from './strategies.module.scss';
+import ConditionallyRender from '../common/conditionally-render';
 
 class StrategiesListComponent extends Component {
     static propTypes = {
@@ -23,77 +24,106 @@ class StrategiesListComponent extends Component {
         this.props.fetchStrategies();
     }
 
+    headerButton = () => {
+        const { hasPermission } = this.props;
+        return (
+            <ConditionallyRender
+                condition={hasPermission(CREATE_STRATEGY)}
+                show={
+                    <Tooltip title="Add new strategy">
+                        <IconButton onClick={() => this.props.history.push('/strategies/create')}>
+                            <Icon>add</Icon>
+                        </IconButton>
+                    </Tooltip>
+                }
+            />
+        );
+    };
+
+    strategyLink = ({ name, deprecated }) => (
+        <Link to={`/strategies/view/${name}`}>
+            <strong>{name}</strong>
+            <ConditionallyRender condition={deprecated} show={<small> (Deprecated)</small>} />
+        </Link>
+    );
+
+    reactivateButton = strategy => {
+        const { reactivateStrategy } = this.props;
+        return (
+            <Tooltip title="Reactivate activation strategy">
+                <IconButton onClick={() => reactivateStrategy(strategy)}>
+                    <Icon>visibility</Icon>
+                </IconButton>
+            </Tooltip>
+        );
+    };
+
+    deprecateButton = strategy => {
+        const { deprecateStrategy } = this.props;
+        return (
+            <Tooltip title="Deprecate activation strategy">
+                <IconButton disabled={strategy.name === 'default'} onClick={() => deprecateStrategy(strategy)}>
+                    <Icon>visibility_off</Icon>
+                </IconButton>
+            </Tooltip>
+        );
+    };
+
+    deleteButton = strategy => {
+        const { removeStrategy } = this.props;
+        return (
+            <ConditionallyRender
+                condition={strategy.editable}
+                show={
+                    <Tooltip title="Delete strategy">
+                        <IconButton onClick={() => removeStrategy(strategy)}>
+                            <Icon>delete</Icon>
+                        </IconButton>
+                    </Tooltip>
+                }
+                elseShow={
+                    <Tooltip title="You cannot delete a built-in strategy">
+                        <IconButton disabled>
+                            <Icon>delete</Icon>
+                        </IconButton>
+                    </Tooltip>
+                }
+            />
+        );
+    };
+
+    strategyList = () => {
+        const { strategies, hasPermission } = this.props;
+        return strategies.map((strategy, i) => (
+            <ListItem key={i} className={strategy.deprecated ? styles.deprecated : undefined}>
+                <ListItemAvatar>
+                    <Icon>extension</Icon>
+                </ListItemAvatar>
+                <ListItemText primary={this.strategyLink(strategy)} secondary={strategy.description} />
+                <ConditionallyRender
+                    condition={strategy.deprecated}
+                    show={this.reactivateButton(strategy)}
+                    elseShow={this.deprecateButton(strategy)}
+                />
+                <ConditionallyRender condition={hasPermission(DELETE_STRATEGY)} show={this.deleteButton(strategy)} />
+            </ListItem>
+        ));
+    };
+
     render() {
-        const { strategies, removeStrategy, hasPermission, reactivateStrategy, deprecateStrategy } = this.props;
+        const { strategies } = this.props;
 
         return (
-            <Card shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <HeaderTitle
-                    title="Strategies"
-                    actions={
-                        hasPermission(CREATE_STRATEGY) ? (
-                            <IconButton
-                                raised
-                                name="add"
-                                onClick={() => this.props.history.push('/strategies/create')}
-                                title="Add new strategy"
-                            />
-                        ) : (
-                            ''
-                        )
-                    }
-                />
+            <Paper shadow={0} className={commonStyles.fullwidth}>
+                <HeaderTitle title="Strategies" actions={this.headerButton()} />
                 <List>
-                    {strategies.length > 0 ? (
-                        strategies.map((strategy, i) => (
-                            <ListItem key={i} twoLine className={strategy.deprecated ? styles.deprecated : ''}>
-                                <ListItemContent icon="extension" subtitle={strategy.description}>
-                                    <Link
-                                        to={`/strategies/view/${strategy.name}`}
-                                        title={strategy.deprecated ? 'Deprecated' : ''}
-                                    >
-                                        <strong>{strategy.name}</strong>
-                                        {strategy.deprecated ? <small> (Deprecated)</small> : null}
-                                    </Link>
-                                </ListItemContent>
-                                <span>
-                                    {strategy.deprecated ? (
-                                        <IconButton
-                                            name="visibility"
-                                            title="Reactivate activation strategy"
-                                            onClick={() => reactivateStrategy(strategy)}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            name="visibility_off"
-                                            title="Deprecate activation strategy"
-                                            disabled={strategy.name === 'default'}
-                                            color="#"
-                                            onClick={() => deprecateStrategy(strategy)}
-                                        />
-                                    )}
-                                    {strategy.editable === false || !hasPermission(DELETE_STRATEGY) ? (
-                                        <IconButton
-                                            name="delete"
-                                            title="You can not delete a built-in strategy"
-                                            disabled
-                                            onClick={() => {}}
-                                        />
-                                    ) : (
-                                        <IconButton
-                                            name="delete"
-                                            title="Delete activation strategy"
-                                            onClick={() => removeStrategy(strategy)}
-                                        />
-                                    )}
-                                </span>
-                            </ListItem>
-                        ))
-                    ) : (
-                        <ListItem>No entries</ListItem>
-                    )}
+                    <ConditionallyRender
+                        condition={strategies.length > 0}
+                        show={this.strategyList()}
+                        elseShow={<ListItem>No strategies found</ListItem>}
+                    />
                 </List>
-            </Card>
+            </Paper>
         );
     }
 }
