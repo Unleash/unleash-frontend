@@ -38,7 +38,7 @@ function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }
             style={{ marginRight: '3px', fontSize: '0.8em' }}
             label={t.value}
             key={`${t.type}:${t.value}`}
-            onDelete={() => onUntagFeature(t)}
+            onDelete={() => setShowDialog(prev => !prev)}
         />
     );
 
