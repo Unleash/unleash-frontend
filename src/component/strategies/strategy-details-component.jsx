@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import ShowStrategy from './show-strategy-component';
 import EditStrategy from './form-container';
 import { HeaderTitle } from '../common';
 import { UPDATE_STRATEGY } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
-import { Edit } from '@material-ui/icons';
 import TabNav from '../common/tabNav';
-
-const TABS = {
-    view: 0,
-    edit: 1,
-};
 
 export default class StrategyDetails extends Component {
     static propTypes = {
