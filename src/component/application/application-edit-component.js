@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-    Paper,
     Avatar,
     Card,
     CardHeader,
@@ -16,8 +15,6 @@ import {
     DialogTitle,
     DialogActions,
     LinearProgress,
-    Tabs,
-    Tab,
 } from '@material-ui/core';
 import ConditionallyRender from '../common/conditionally-render';
 import { styles as commonStyles } from '../common';

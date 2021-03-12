@@ -35,7 +35,7 @@ const Feature = ({
     const featureUrl = toggleFeature === undefined ? `/archive/strategies/${name}` : `/features/strategies/${name}`;
 
     return (
-        <ListItem twoLine>
+        <ListItem>
             <span className={styles.listItemMetric}>
                 <Progress strokeWidth={15} percentage={percent} isFallback={isStale} />
             </span>
