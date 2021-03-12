@@ -20,7 +20,7 @@ import { UPDATE_APPLICATION } from '../../permissions';
 import ApplicationView from './application-view';
 import ApplicationUpdate from './application-update';
 import TabNav from '../common/tabNav';
-import ConfirmDialogue from '../common/ConfirmDialogue/ConfirmDialogue';
+import ConfirmDialogue from '../common/ConfirmDialogue';
 
 class ClientApplications extends PureComponent {
     static propTypes = {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Chip } from '@material-ui/core';
 import ConditionallyRender from '../common/conditionally-render';
-import ConfirmDialogue from '../common/ConfirmDialogue/ConfirmDialogue';
+import ConfirmDialogue from '../common/ConfirmDialogue';
 function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }) {
     const [showDialog, setShowDialog] = useState(false);
 
