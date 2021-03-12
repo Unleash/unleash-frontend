@@ -1,5 +1,5 @@
 import { DragSource, DropTarget } from 'react-dnd';
-import flow from 'lodash/flow';
+import flow from 'lodash.flow';
 
 import StrategyConfigure from './strategy-configure-component';
 

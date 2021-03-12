@@ -8,15 +8,15 @@ import styles from './strategy.module.scss';
 export default function GeneralStrategyInput({ parameters, strategyDefinition, updateParameter, editable }) {
     const onChangeTextField = (field, evt) => {
         const { value } = evt.currentTarget;
- 
+
         evt.preventDefault();
         updateParameter(field, value);
     };
 
     const onChangePercentage = (field, evt, newValue) => {
-        evt.preventDefault(); 
+        evt.preventDefault();
         updateParameter(field, newValue);
-    }
+    };
 
     const handleSwitchChange = (key, currentValue) => {
         const value = currentValue === 'true' ? 'false' : 'true';
@@ -61,7 +61,7 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
             } else if (type === 'number') {
                 const regex = new RegExp('^\\d+$');
                 const error = value.length > 0 ? !regex.test(value) : false;
-  
+
                 return (
                     <div key={name} className={styles.generalSection}>
                         <TextField
@@ -83,7 +83,16 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                 return (
                     <div key={name} style={{ padding: '20px 0' }}>
                         <Tooltip title={description} placement="right-end">
-                            <FormControlLabel label={name} control={<Switch name={name} onChange={handleSwitchChange.bind(this, name, value)} checked={value === 'true'} />} />
+                            <FormControlLabel
+                                label={name}
+                                control={
+                                    <Switch
+                                        name={name}
+                                        onChange={handleSwitchChange.bind(this, name, value)}
+                                        checked={value === 'true'}
+                                    />
+                                }
+                            />
                         </Tooltip>
                     </div>
                 );

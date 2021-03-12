@@ -11,9 +11,6 @@ import {
     Icon,
     IconButton,
     Button,
-    Dialog,
-    DialogTitle,
-    DialogActions,
     LinearProgress,
 } from '@material-ui/core';
 import ConditionallyRender from '../common/conditionally-render';
@@ -23,6 +20,7 @@ import { UPDATE_APPLICATION } from '../../permissions';
 import ApplicationView from './application-view';
 import ApplicationUpdate from './application-update';
 import TabNav from '../common/tabNav';
+import ConfirmDialogue from '../common/ConfirmDialogue/ConfirmDialogue';
 
 class ClientApplications extends PureComponent {
     static propTypes = {
@@ -79,20 +77,12 @@ class ClientApplications extends PureComponent {
         };
 
         const renderModal = () => (
-            <Dialog
+            <ConfirmDialogue
                 open={this.state.prompt}
-                onClose={this.toggleModal}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-            >
-                <DialogTitle>Are you sure you want to delete this application?</DialogTitle>
-                <DialogActions>
-                    <Button color="primary" onClick={this.deleteApplication} autoFocus>
-                        Yes, I'm sure
-                    </Button>
-                    <Button onClick={toggleModal}>No, take me back.</Button>
-                </DialogActions>
-            </Dialog>
+                onClose={toggleModal}
+                onClick={this.deleteApplication}
+                title="Are you sure you want to delete this application?"
+            />
         );
 
         const tabData = [

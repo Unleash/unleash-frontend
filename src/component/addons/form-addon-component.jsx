@@ -6,18 +6,11 @@ import { FormButtons, styles as commonStyles } from '../common';
 import { trim } from '../common/util';
 import AddonParameters from './form-addon-parameters';
 import AddonEvents from './form-addon-events';
-import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from 'lodash.clonedeep';
 
 import styles from './form-addon-component.module.scss';
 
-const AddonFormComponent = ({
-    editMode,
-    provider,
-    addon,
-    fetch,
-    cancel,
-    submit
-}) => {
+const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }) => {
     const [config, setConfig] = useState(addon);
     const [errors, setErrors] = useState({
         parameters: {},

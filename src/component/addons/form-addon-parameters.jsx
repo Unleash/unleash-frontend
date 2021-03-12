@@ -18,7 +18,6 @@ const AddonParameter = ({ definition, config, errors, setParameterValue }) => {
     const value = config.parameters[definition.name] || '';
     const type = resolveType(definition, value);
     const error = errors.parameters[definition.name];
-    const descStyle = { fontSize: '0.8em', color: 'gray', marginTop: error ? '2px' : '-15px' };
 
     return (
         <div style={{ width: '80%', marginTop: '25px' }}>
@@ -59,8 +58,8 @@ const AddonParameters = ({ provider, config, errors, setParameterValue, editMode
             <h4>Parameters</h4>
             {editMode ? (
                 <p>
-                    Sensitive parameters will be masked with value "<i>*****</i>". If you don't change the value they
-                    will not be updated when saving.
+                    Sensitive parameters will be masked with value "<i>*****</i>
+                    ". If you don't change the value they will not be updated when saving.
                 </p>
             ) : null}
             {provider.parameters.map(p => (

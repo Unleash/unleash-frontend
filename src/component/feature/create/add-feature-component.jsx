@@ -65,6 +65,7 @@ class AddFeatureComponent extends Component {
                                 label="Description"
                                 placeholder="A short description of the feature toggle"
                                 error={errors.description}
+                                helperText={errors.description}
                                 value={input.description}
                                 onChange={v => setValue('description', v.target.value)}
                             />

@@ -24,6 +24,8 @@ const ListComponentHeader = ({ settings, setSort, toggleMetrics, updateSetting }
         setSort(target);
     };
 
+    const isDisabled = type => settings.sort === type;
+
     const renderSortingOptions = () =>
         sortingOptions.map(option => (
             <MenuItem key={option.type} disabled={isDisabled(option.type)} data-target={option.type}>
@@ -47,8 +49,6 @@ const ListComponentHeader = ({ settings, setSort, toggleMetrics, updateSetting }
             key={2}
         />,
     ];
-
-    const isDisabled = type => settings.sort === type;
 
     return (
         <div className={styles.listComponentHeader}>

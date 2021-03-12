@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'debounce';
-import classnames from 'classnames';
 
 import { Link } from 'react-router-dom';
 import { Button, Paper, List } from '@material-ui/core';
@@ -11,8 +10,6 @@ import ListComponentHeader from './list-component-header';
 import ConditionallyRender from '../../common/conditionally-render';
 
 import { CREATE_FEATURE } from '../../../permissions';
-
-import { styles as commonStyles } from '../../common';
 
 import styles from './list.module.scss';
 export default class FeatureListComponent extends React.Component {
@@ -66,7 +63,7 @@ export default class FeatureListComponent extends React.Component {
             e.reviveName = e.name;
         });
 
-        return features.map((feature, i) => (
+        return features.map(feature => (
             <Feature
                 key={feature.name}
                 settings={settings}

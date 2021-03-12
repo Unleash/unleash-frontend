@@ -37,9 +37,8 @@ class HeaderComponent extends PureComponent {
     }
 
     render() {
-        const { headerBackground, links, name, flags } = this.props.uiConfig;
+        const { links, name, flags } = this.props.uiConfig;
         const { openDrawer } = this.state;
-        const style = headerBackground ? { background: headerBackground } : {};
         return (
             <React.Fragment>
                 <AppBar style={{ padding: '1rem', boxShadow: 'none' }} position="static">
