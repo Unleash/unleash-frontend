@@ -1,38 +1,47 @@
-import { connect } from 'react-redux';
-import FormComponent from './form-addon-component';
-import { updateAddon, createAddon, fetchAddons } from '../../store/addons/actions';
-import { cloneDeep } from 'lodash/cloneDeep';
+import { connect } from "react-redux";
+import FormComponent from "./form-addon-component";
+import {
+    updateAddon,
+    createAddon,
+    fetchAddons
+} from "../../store/addons/actions";
+import { cloneDeep } from "lodash";
 
 // Required for to fill the initial form.
 const DEFAULT_DATA = {
-    provider: '',
-    description: '',
+    provider: "",
+    description: "",
     enabled: true,
     parameters: {},
-    events: [],
+    events: []
 };
 
 const mapStateToProps = (state, params) => {
     const defaultAddon = cloneDeep(DEFAULT_DATA);
     const editMode = !!params.addonId;
-    const addons = state.addons.get('addons').toJS();
-    const providers = state.addons.get('providers').toJS();
+    const addons = state.addons.get("addons").toJS();
+    const providers = state.addons.get("providers").toJS();
 
     let addon;
     let provider;
 
     if (editMode) {
-        addon = addons.find(addon => addon.id === +params.addonId) || defaultAddon;
-        provider = addon ? providers.find(provider => provider.name === addon.provider) : undefined;
+        addon =
+            addons.find(addon => addon.id === +params.addonId) || defaultAddon;
+        provider = addon
+            ? providers.find(provider => provider.name === addon.provider)
+            : undefined;
     } else {
-        provider = providers.find(provider => provider.name === params.provider);
-        addon = { ...defaultAddon, provider: provider ? provider.name : '' };
+        provider = providers.find(
+            provider => provider.name === params.provider
+        );
+        addon = { ...defaultAddon, provider: provider ? provider.name : "" };
     }
 
     return {
         provider,
         addon,
-        editMode,
+        editMode
     };
 };
 
@@ -43,13 +52,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         submit: async addonConfig => {
             await submit(addonConfig)(dispatch);
-            history.push('/addons');
+            history.push("/addons");
         },
         fetch: () => fetchAddons()(dispatch),
-        cancel: () => history.push('/addons'),
+        cancel: () => history.push("/addons")
     };
 };
 
-const FormAddContainer = connect(mapStateToProps, mapDispatchToProps)(FormComponent);
+const FormAddContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FormComponent);
 
 export default FormAddContainer;

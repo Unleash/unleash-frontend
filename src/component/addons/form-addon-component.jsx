@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { TextField, Paper, FormControlLabel, Switch } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { TextField, Paper, FormControlLabel, Switch } from "@material-ui/core";
 
-import { FormButtons, styles as commonStyles } from '../common';
-import { trim } from '../common/util';
-import AddonParameters from './form-addon-parameters';
-import AddonEvents from './form-addon-events';
-import { cloneDeep } from 'lodash/cloneDeep';
+import { FormButtons, styles as commonStyles } from "../common";
+import { trim } from "../common/util";
+import AddonParameters from "./form-addon-parameters";
+import AddonEvents from "./form-addon-events";
+import { cloneDeep } from "lodash";
 
-import styles from './form-addon-component.module.scss';
+import styles from "./form-addon-component.module.scss";
 
-const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }) => {
+const AddonFormComponent = ({
+    editMode,
+    provider,
+    addon,
+    fetch,
+    cancel,
+    submit
+}) => {
     const [config, setConfig] = useState(addon);
     const [errors, setErrors] = useState({
-        parameters: {},
+        parameters: {}
     });
-    const submitText = editMode ? 'Update' : 'Create';
+    const submitText = editMode ? "Update" : "Create";
 
     useEffect(() => {
         if (!provider) {
@@ -73,14 +80,14 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
 
         // Validations
         if (config.events.length === 0) {
-            updatedErrors.events = 'You must listen to at least one event';
+            updatedErrors.events = "You must listen to at least one event";
             updatedErrors.containsErrors = true;
         }
 
         provider.parameters.forEach(p => {
             const value = trim(config.parameters[p.name]);
             if (p.required && !value) {
-                updatedErrors.parameters[p.name] = 'This field is required';
+                updatedErrors.parameters[p.name] = "This field is required";
                 updatedErrors.containsErrors = true;
             }
         });
@@ -97,10 +104,18 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
         }
     };
 
-    const { name, description, documentationUrl = 'https://unleash.github.io/docs/addons' } = provider ? provider : {};
+    const {
+        name,
+        description,
+        documentationUrl = "https://unleash.github.io/docs/addons"
+    } = provider ? provider : {};
 
     return (
-        <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+        <Paper
+            shadow={0}
+            className={commonStyles.fullwidth}
+            style={{ overflow: "visible" }}
+        >
             <h1 className={styles.header}>
                 Configure <strong>{name}</strong> addon
             </h1>
@@ -123,14 +138,19 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
                         className={styles.nameInput}
                     />
                     <FormControlLabel
-                        control={<Switch checked={config.enabled} onChange={onEnabled} />}
-                        label={config.enabled ? 'Enabled' : 'Disabled'}
+                        control={
+                            <Switch
+                                checked={config.enabled}
+                                onChange={onEnabled}
+                            />
+                        }
+                        label={config.enabled ? "Enabled" : "Disabled"}
                     />
                 </section>
                 <section className={styles.formSection}>
                     <TextField
                         size="small"
-                        style={{ width: '80%' }}
+                        style={{ width: "80%" }}
                         rows={4}
                         multiline
                         label="Description"
@@ -138,7 +158,7 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
                         placeholder=""
                         value={config.description}
                         error={errors.description}
-                        onChange={setFieldValue('description')}
+                        onChange={setFieldValue("description")}
                         variant="outlined"
                     />
                 </section>
@@ -173,7 +193,7 @@ AddonFormComponent.propTypes = {
     fetch: PropTypes.func.isRequired,
     submit: PropTypes.func.isRequired,
     cancel: PropTypes.func.isRequired,
-    editMode: PropTypes.bool.isRequired,
+    editMode: PropTypes.bool.isRequired
 };
 
 export default AddonFormComponent;
