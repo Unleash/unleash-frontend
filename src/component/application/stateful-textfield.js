@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Textfield } from 'react-mdl';
+import { TextField } from '@material-ui/core';
 
 function StatefulTextfield({ value, label, placeholder, rows, onBlur }) {
     const [localValue, setLocalValue] = useState(value);
@@ -11,11 +11,10 @@ function StatefulTextfield({ value, label, placeholder, rows, onBlur }) {
     };
 
     return (
-        <Textfield
+        <TextField
             style={{ width: '100%' }}
             label={label}
             placeholder={placeholder}
-            floatingLabel
             rows={rows}
             value={localValue}
             onChange={onChange}

@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import { Route } from 'react-router-dom';
 import { DrawerMenu } from './drawer';
-import Breadcrum from './breadcrumb';
+import Breadcrumb from './breadcrumb';
 import ShowUserContainer from '../user/show-user-container';
 import { loadInitialData } from './../../store/loader';
 
@@ -47,7 +47,7 @@ class HeaderComponent extends PureComponent {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h1" style={{ fontSize: '1.5rem' }}>
-                            <Route path="/:path" component={Breadcrum} />
+                            <Route path="/:path" component={Breadcrumb} />
                         </Typography>
 
                         <div style={{ marginLeft: 'auto' }}>

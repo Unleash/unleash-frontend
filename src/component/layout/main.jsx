@@ -7,15 +7,13 @@ import { Grid, Container } from '@material-ui/core';
 import styles from '../styles.module.scss';
 import ErrorContainer from '../error/error-container';
 import Header from '../menu/header';
-import ShowApiDetailsContainer from '../api/show-api-details-container';
-import { FooterMenu } from '../menu/footer';
+import Footer from '../menu/Footer/Footer';
 
 const useStyles = makeStyles(theme => ({
     footer: {
         background: theme.palette.neutral.main,
         padding: '2rem 4rem',
         color: '#fff',
-        height: '450px',
         width: '100%',
     },
     container: {
@@ -39,8 +37,7 @@ const Layout = ({ children, location }) => {
                 </div>
                 <div className={muiStyles.footer}>
                     <Container>
-                        <FooterMenu />
-                        <ShowApiDetailsContainer />
+                        <Footer />
                     </Container>
                 </div>
             </Grid>
