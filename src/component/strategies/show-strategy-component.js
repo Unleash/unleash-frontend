@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List, ListItem, ListItemText, ListItemAvatar, Icon } from '@material-ui/core';
-import { AppsLinkList, TogglesLinkList } from '../common';
+import { Grid, List, ListItem, ListItemText, ListItemAvatar, Icon, Tooltip } from '@material-ui/core';
+import { TogglesLinkList } from './toggles-link-list';
+import { AppsLinkList } from '../common';
 import ConditionallyRender from '../common/conditionally-render';
+import styles from './strategies.module.scss';
 
 class ShowStrategyComponent extends PureComponent {
     static propTypes = {
@@ -14,18 +16,22 @@ class ShowStrategyComponent extends PureComponent {
     renderParameters(params) {
         if (params) {
             return params.map(({ name, type, description, required }, i) => (
-                <ListItem key={`${name}-${i}`} title={required ? 'Required' : ''}>
+                <ListItem key={`${name}-${i}`}>
                     <ConditionallyRender
                         condition={required}
                         show={
-                            <ListItemAvatar>
-                                <Icon>add</Icon>
-                            </ListItemAvatar>
+                            <Tooltip title="Required">
+                                <ListItemAvatar>
+                                    <Icon>add</Icon>
+                                </ListItemAvatar>
+                            </Tooltip>
                         }
                         elseShow={
-                            <ListItemAvatar>
-                                <Icon>radio_button_unchecked</Icon>
-                            </ListItemAvatar>
+                            <Tooltip title="Optional">
+                                <ListItemAvatar>
+                                    <Icon>radio_button_unchecked</Icon>
+                                </ListItemAvatar>
+                            </Tooltip>
                         }
                     />
                     <ListItemText
@@ -49,7 +55,7 @@ class ShowStrategyComponent extends PureComponent {
         const { parameters = [] } = strategy;
 
         return (
-            <div>
+            <div className={styles.listcontainer}>
                 <Grid container>
                     <ConditionallyRender
                         condition={strategy.deprecated}

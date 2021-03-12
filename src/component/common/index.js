@@ -8,7 +8,6 @@ import ConditionallyRender from './conditionally-render';
 export { styles };
 
 export const shorten = (str, len = 50) => (str && str.length > len ? `${str.substring(0, len)}...` : str);
-
 export const AppsLinkList = ({ apps }) => (
     <List>
         <ConditionallyRender
@@ -43,7 +42,6 @@ export const AppsLinkList = ({ apps }) => (
 AppsLinkList.propTypes = {
     apps: PropTypes.array.isRequired,
 };
-
 export const HeaderTitle = ({ title, actions, subtitle }) => (
     <div
         style={{
@@ -95,30 +93,6 @@ export const FormButtons = ({ submitText = 'Create', onCancel }) => (
 FormButtons.propTypes = {
     submitText: PropTypes.string,
     onCancel: PropTypes.func.isRequired,
-};
-
-export const TogglesLinkList = ({ toggles }) => (
-    <List style={{ textAlign: 'left' }} className={styles.truncate}>
-        {toggles.length > 0 &&
-            toggles.map(({ name, description = '-', icon = 'toggle_on' }) => (
-                <ListItem key={name}>
-                    <ListItemAvatar>
-                        <Icon>{icon}</Icon>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={
-                            <Link key={name} to={`/features/view/${name}`}>
-                                {name}
-                            </Link>
-                        }
-                        secondary={description}
-                    />
-                </ListItem>
-            ))}
-    </List>
-);
-TogglesLinkList.propTypes = {
-    toggles: PropTypes.array,
 };
 
 export function getIcon(type) {
