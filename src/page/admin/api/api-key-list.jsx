@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-mdl';
+import { Icon } from '@material-ui/core';
 import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import CreateApiKey from './api-key-create';
 import Secret from './secret';
@@ -61,7 +61,7 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                                             deleteKey(item.secret);
                                         }}
                                     >
-                                        <Icon name="delete" />
+                                        <Icon>delete</Icon>
                                     </a>
                                 </td>
                             ) : (
