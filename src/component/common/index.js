@@ -17,6 +17,7 @@ export const AppsLinkList = ({ apps }) => (
                     <ListItemAvatar>
                         <Avatar>
                             <ConditionallyRender
+                                key={`avatar_conditional_${appName}`}
                                 condition={icon}
                                 show={<Icon>{icon}</Icon>}
                                 elseShow={<Icon>apps</Icon>}

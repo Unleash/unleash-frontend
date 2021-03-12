@@ -7,11 +7,12 @@ import { CREATE_FEATURE, CREATE_STRATEGY } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
 
 function ApplicationView({ seenToggles, hasPermission, strategies, instances, formatFullDateTime }) {
-    const notFoundListItem = (createUrl, name, i) => (
+    const notFoundListItem = ({ createUrl, name, permission, i }) => (
         <ConditionallyRender
-            condition={hasPermission(CREATE_FEATURE)}
+            key={`not_found_conditional_${name}_${i}`}
+            condition={hasPermission(permission)}
             show={
-                <ListItem key={i}>
+                <ListItem key={`not_found_${name}-${i}`}>
                     <ListItemAvatar>
                         <Icon>report</Icon>
                     </ListItemAvatar>
@@ -21,15 +22,23 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                     />
                 </ListItem>
             }
-            elseShow={<ListItem key={i} />}
+            elseShow={
+                <ListItem key={`not_found_${name}-${i}`}>
+                    <ListItemAvatar>
+                        <Icon>report</Icon>
+                    </ListItemAvatar>
+                    <ListItemText primary={name} secondary={`Could not find feature toggle with name ${name}`} />
+                </ListItem>
+            }
         />
     );
 
     // eslint-disable-next-line react/prop-types
     const foundListItem = ({ viewUrl, name, showSwitch, enabled, description, i }) => (
-        <ListItem key={`${name}-${i}`}>
+        <ListItem key={`found_${name}-${i}`}>
             <ListItemAvatar>
                 <ConditionallyRender
+                    key={`conditional_avatar_${name}_${i}`}
                     condition={showSwitch}
                     show={<Switch disabled value={!!enabled} />}
                     elseShow={<Icon>extension</Icon>}
@@ -49,8 +58,14 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <List>
                     {seenToggles.map(({ name, description, enabled, notFound }, i) => (
                         <ConditionallyRender
+                            key={`toggle_conditional_${name}_${i}`}
                             condition={notFound}
-                            show={notFoundListItem(name, '/features/create', i)}
+                            show={notFoundListItem({
+                                createUrl: '/features/create',
+                                name,
+                                permission: CREATE_FEATURE,
+                                i,
+                            })}
                             elseShow={foundListItem({
                                 viewUrl: '/features/strategies',
                                 name,
@@ -69,8 +84,14 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <List>
                     {strategies.map(({ name, description, notFound }, i) => (
                         <ConditionallyRender
+                            key={`strategies_conditional_${name}_${i}`}
                             condition={notFound}
-                            show={notFoundListItem('/strategies/create', name, i)}
+                            show={notFoundListItem({
+                                createUrl: '/strategies/create',
+                                name,
+                                permission: CREATE_STRATEGY,
+                                i,
+                            })}
                             elseShow={foundListItem({
                                 viewUrl: '/strategies/view',
                                 name,
@@ -88,13 +109,14 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <hr />
                 <List>
                     {instances.map(({ instanceId, clientIp, lastSeen, sdkVersion }, i) => (
-                        <ListItem key={i}>
+                        <ListItem key={`${instanceId}-${i}`}>
                             <ListItemAvatar>
                                 <Icon>timeline</Icon>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={
                                     <ConditionallyRender
+                                        key={`${instanceId}_conditional`}
                                         condition={sdkVersion}
                                         show={`${instanceId} (${sdkVersion})`}
                                         elseShow={instanceId}

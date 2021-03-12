@@ -17,7 +17,7 @@ const ErrorComponent = ({ errors, ...props }) => {
                 </React.Fragment>
             }
             open={showError}
-            onTimeout={muteError}
+            onClose={muteError}
             autoHideDuration={10000}
             message={
                 <div>

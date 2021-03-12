@@ -16,10 +16,9 @@ function ApplicationUpdate({ application, storeApplicationMetaData }) {
                     options={icons.map(v => ({ key: v, label: v }))}
                     value={icon || 'apps'}
                     onChange={e => storeApplicationMetaData(appName, 'icon', e.target.value)}
-                    filled
                 />
                 <StatefulTextfield
-                    value={url}
+                    value={url || ''}
                     label="Application URL"
                     placeholder="https://example.com"
                     type="url"

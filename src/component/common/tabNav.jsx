@@ -31,11 +31,12 @@ TabPanel.propTypes = {
 const TabNav = ({ tabData, className }) => {
     const [activeTab, setActiveTab] = useState(0);
 
-    const renderTabs = () => tabData.map((tab, index) => <Tab label={tab.label} {...a11yProps(index)} />);
+    const renderTabs = () =>
+        tabData.map((tab, index) => <Tab key={`${tab.label}_${index}`} label={tab.label} {...a11yProps(index)} />);
 
     const renderTabPanels = () =>
         tabData.map((tab, index) => (
-            <TabPanel value={activeTab} index={index}>
+            <TabPanel key={`tab_panel_${index}`} value={activeTab} index={index}>
                 {tab.component}
             </TabPanel>
         ));
