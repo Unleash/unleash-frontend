@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
-import { Button, Textfield, DialogActions } from 'react-mdl';
-import { FormButtons } from '../common';
+
+
+import { DialogContentText, Button, TextField } from '@material-ui/core'; 
 import TagTypeSelect from '../feature/tag-type-select-container';
-import { trim, modalStyles } from '../common/util';
+import Dialogue from '../common/Dialogue';
+import { trim } from '../common/util';
+
+import styles from './add-tag-dialog-component.module.scss';
 
 class AddTagDialogComponent extends Component {
     constructor(props) {
@@ -54,30 +57,25 @@ class AddTagDialogComponent extends Component {
     };
     render() {
         const { tag, errors, openDialog } = this.state;
-        const submitText = 'Tag feature';
         return (
             <React.Fragment>
                 <Button colored onClick={this.handleOpenDialog.bind(this)} ripple>
                     Add tag
                 </Button>
-                <Modal
-                    isOpen={openDialog}
-                    contentLabel="Add tags to feature toggle"
-                    style={modalStyles}
-                    onRequestClose={this.onCancel}
-                >
-                    <h3>{submitText}</h3>
-                    <p>Tags allows you to group features together</p>
+
+                <Dialogue open={openDialog} secondaryButtonText="Cancel" primaryButtonText="Add tag" title="Add tags to feature toggle" onClick={this.onSubmit} onClose={this.onCancel}>
+                    <DialogContentText>Tags allows you to group features together</DialogContentText>
                     <form onSubmit={this.onSubmit}>
-                        <section>
+                        <section className={styles.dialogueFormContent}>
                             <TagTypeSelect
                                 name="type"
                                 value={tag.type}
                                 onChange={v => this.setValue('type', v.target.value)}
                             />
                             <br />
-                            <Textfield
-                                floatingLabel
+                            <TextField
+                                variant="outlined"
+                                size="small"
                                 label="Value"
                                 name="value"
                                 placeholder="Your tag"
@@ -87,11 +85,8 @@ class AddTagDialogComponent extends Component {
                             />
                         </section>
                         {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
-                        <DialogActions>
-                            <FormButtons submitText={submitText} onCancel={this.onCancel} />
-                        </DialogActions>
                     </form>
-                </Modal>
+                </Dialogue>
             </React.Fragment>
         );
     }

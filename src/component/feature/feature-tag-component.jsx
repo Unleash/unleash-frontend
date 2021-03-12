@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Chip } from '@material-ui/core';
 import ConditionallyRender from '../common/conditionally-render';
-import ConfirmDialogue from '../common/ConfirmDialogue';
+import ConfirmDialogue from '../common/Dialogue';
+import Dialogue from '../common/Dialogue';
 function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }) {
     const [showDialog, setShowDialog] = useState(false);
 
@@ -50,7 +51,7 @@ function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }
                     <ConditionallyRender
                         condition={showDialog}
                         show={
-                            <ConfirmDialogue
+                            <Dialogue
                                 open={showDialog}
                                 onClose={() => setShowDialog(prev => !prev)}
                                 onClick={onUntagFeature}

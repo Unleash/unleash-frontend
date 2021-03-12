@@ -20,7 +20,7 @@ import { UPDATE_APPLICATION } from '../../permissions';
 import ApplicationView from './application-view';
 import ApplicationUpdate from './application-update';
 import TabNav from '../common/tabNav';
-import ConfirmDialogue from '../common/ConfirmDialogue';
+import Dialogue from '../common/Dialogue';
 
 class ClientApplications extends PureComponent {
     static propTypes = {
@@ -77,7 +77,7 @@ class ClientApplications extends PureComponent {
         };
 
         const renderModal = () => (
-            <ConfirmDialogue
+            <Dialogue
                 open={this.state.prompt}
                 onClose={toggleModal}
                 onClick={this.deleteApplication}
