@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-import { cloneDeep } from 'lodash/cloneDeep';
-import arrayMove from 'array-move';
-import { Button, Icon } from '@material-ui/core';
+import { cloneDeep } from "lodash";
+import arrayMove from "array-move";
+import { Button, Icon } from "@material-ui/core";
 
-import DragAndDrop from '../../common/drag-and-drop';
-import ConfigureStrategy from './strategy-configure-container';
-import AddStrategy from './strategies-add';
-import { HeaderTitle } from '../../common';
-import { updateIndexInArray } from '../../common/util';
-import styles from './strategy.module.scss';
+import DragAndDrop from "../../common/drag-and-drop";
+import ConfigureStrategy from "./strategy-configure-container";
+import AddStrategy from "./strategies-add";
+import { HeaderTitle } from "../../common";
+import { updateIndexInArray } from "../../common/util";
+import styles from "./strategy.module.scss";
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
     parameters: cloneDeep(strategy.parameters),
-    constraints: cloneDeep(strategy.constraints || []),
+    constraints: cloneDeep(strategy.constraints || [])
 });
 
 const StrategiesList = props => {
-    const [editableStrategies, updateEditableStrategies] = useState(cloneDeep(props.configuredStrategies));
+    const [editableStrategies, updateEditableStrategies] = useState(
+        cloneDeep(props.configuredStrategies)
+    );
     const dirty = editableStrategies.some(p => p.dirty);
 
     useEffect(() => {
@@ -30,7 +32,11 @@ const StrategiesList = props => {
 
     const updateStrategy = index => (strategy, dirty = true) => {
         const newStrategy = { ...strategy, dirty };
-        const newStrategies = updateIndexInArray(editableStrategies, index, newStrategy);
+        const newStrategies = updateIndexInArray(
+            editableStrategies,
+            index,
+            newStrategy
+        );
         updateEditableStrategies(newStrategies);
     };
 
@@ -69,13 +75,21 @@ const StrategiesList = props => {
 
     const removeStrategy = index => async () => {
         // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to remove this activation strategy?')) {
+        if (
+            window.confirm(
+                "Are you sure you want to remove this activation strategy?"
+            )
+        ) {
             const strategy = editableStrategies[index];
             if (!strategy.new) {
-                await props.saveStrategies(props.configuredStrategies.filter((_, i) => i !== index));
+                await props.saveStrategies(
+                    props.configuredStrategies.filter((_, i) => i !== index)
+                );
             }
 
-            updateEditableStrategies(editableStrategies.filter((_, i) => i !== index));
+            updateEditableStrategies(
+                editableStrategies.filter((_, i) => i !== index)
+            );
         }
     };
 
@@ -89,11 +103,16 @@ const StrategiesList = props => {
         updateEditableStrategies(cleanedStrategies);
     };
 
-    const { strategies, configuredStrategies, featureToggleName, editable } = props;
+    const {
+        strategies,
+        configuredStrategies,
+        featureToggleName,
+        editable
+    } = props;
 
     if (!configuredStrategies || configuredStrategies.length === 0) {
         return (
-            <p style={{ padding: '0 16px' }}>
+            <p style={{ padding: "0 16px" }}>
                 <i>No activation strategies selected.</i>
             </p>
         );
@@ -101,7 +120,7 @@ const StrategiesList = props => {
 
     const resolveStrategyDefinition = strategyName => {
         if (!strategies || strategies.length === 0) {
-            return { name: 'Loading' };
+            return { name: "Loading" };
         }
         return strategies.find(s => s.name === strategyName);
     };
@@ -138,11 +157,18 @@ const StrategiesList = props => {
             <div className={styles.strategyList}>{blocks}</div>
             <div
                 style={{
-                    visibility: dirty ? 'visible' : 'hidden',
-                    padding: '10px',
+                    visibility: dirty ? "visible" : "hidden",
+                    padding: "10px"
                 }}
             >
-                <Button type="submit" ripple raised primary icon="add" onClick={saveAll}>
+                <Button
+                    type="submit"
+                    ripple
+                    raised
+                    primary
+                    icon="add"
+                    onClick={saveAll}
+                >
                     <Icon>save</Icon>
                     &nbsp;&nbsp;&nbsp; Save all
                 </Button>
@@ -160,7 +186,7 @@ StrategiesList.propTypes = {
     configuredStrategies: PropTypes.array.isRequired,
     featureToggleName: PropTypes.string.isRequired,
     saveStrategies: PropTypes.func,
-    editable: PropTypes.bool,
+    editable: PropTypes.bool
 };
 
 export default StrategiesList;
