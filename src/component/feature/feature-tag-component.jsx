@@ -1,28 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Chip, ChipContact, Icon } from 'react-mdl';
-function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }) {
+import React from "react";
+import PropTypes from "prop-types";
+import { Icon, Chip } from "@material-ui/core";
+import traverse from "@babel/traverse";
+function FeatureTagComponent({
+    tags,
+    tagTypes,
+    featureToggleName,
+    untagFeature
+}) {
     const onUntagFeature = tag => {
         // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to remove this tag')) {
+        if (window.confirm("Are you sure you want to remove this tag")) {
             untagFeature(featureToggleName, tag);
         }
     };
 
     const tagIcon = typeName => {
         let tagType = tagTypes.find(type => type.name === typeName);
-        const style = { width: '20px', height: '20px', margin: '0' };
+        const style = { width: "20px", height: "20px", margin: "0" };
 
         if (tagType && tagType.icon) {
             switch (tagType.name) {
-                case 'slack':
+                case "slack":
                     return <img style={style} src="public/slack.svg" />;
-                case 'jira':
+                case "jira":
                     return <img style={style} src="public/jira.svg" />;
-                case 'webhook':
+                case "webhook":
                     return <img style={style} src="public/webhooks.svg" />;
                 default:
-                    return <Icon name={tagType.icon} />;
+                    return <Icon>{tagType.icon}</Icon>;
             }
         } else {
             return <span>{typeName[0].toUpperCase()}</span>;
@@ -31,14 +37,12 @@ function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }
 
     const renderTag = t => (
         <Chip
-            onClose={() => onUntagFeature(t)}
-            title={`Type: ${t.type} \nValue: ${t.value}`}
+            icon={tagIcon(t.type)}
+            style={{ marginRight: "3px", fontSize: "0.8em" }}
+            label={t.value}
             key={`${t.type}:${t.value}`}
-            style={{ marginRight: '3px', fontSize: '0.8em' }}
-        >
-            <ChipContact>{tagIcon(t.type)}</ChipContact>
-            <span style={{ paddingRight: '3px' }}>{t.value}</span>
-        </Chip>
+            onDelete={() => onUntagFeature(t)}
+        />
     );
 
     return tags && tags.length > 0 ? (
@@ -53,7 +57,7 @@ FeatureTagComponent.propTypes = {
     tags: PropTypes.array,
     tagTypes: PropTypes.array,
     featureToggleName: PropTypes.string.isRequired,
-    untagFeature: PropTypes.func,
+    untagFeature: PropTypes.func
 };
 
 export default FeatureTagComponent;
