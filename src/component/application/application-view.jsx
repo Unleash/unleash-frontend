@@ -9,10 +9,10 @@ import ConditionallyRender from '../common/conditionally-render';
 function ApplicationView({ seenToggles, hasPermission, strategies, instances, formatFullDateTime }) {
     const notFoundListItem = ({ createUrl, name, permission, i }) => (
         <ConditionallyRender
-            key={`not_found_conditional_${name}_${i}`}
+            key={`not_found_conditional_${name}`}
             condition={hasPermission(permission)}
             show={
-                <ListItem key={`not_found_${name}-${i}`}>
+                <ListItem key={`not_found_${name}`}>
                     <ListItemAvatar>
                         <Icon>report</Icon>
                     </ListItemAvatar>
@@ -38,7 +38,7 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
         <ListItem key={`found_${name}-${i}`}>
             <ListItemAvatar>
                 <ConditionallyRender
-                    key={`conditional_avatar_${name}_${i}`}
+                    key={`conditional_avatar_${name}`}
                     condition={showSwitch}
                     show={<Switch disabled value={!!enabled} />}
                     elseShow={<Icon>extension</Icon>}
@@ -58,7 +58,7 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <List>
                     {seenToggles.map(({ name, description, enabled, notFound }, i) => (
                         <ConditionallyRender
-                            key={`toggle_conditional_${name}_${i}`}
+                            key={`toggle_conditional_${name}`}
                             condition={notFound}
                             show={notFoundListItem({
                                 createUrl: '/features/create',
@@ -84,7 +84,7 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <List>
                     {strategies.map(({ name, description, notFound }, i) => (
                         <ConditionallyRender
-                            key={`strategies_conditional_${name}_${i}`}
+                            key={`strategies_conditional_${name}`}
                             condition={notFound}
                             show={notFoundListItem({
                                 createUrl: '/strategies/create',
@@ -109,7 +109,7 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 <hr />
                 <List>
                     {instances.map(({ instanceId, clientIp, lastSeen, sdkVersion }, i) => (
-                        <ListItem key={`${instanceId}-${i}`}>
+                        <ListItem key={`${instanceId}`}>
                             <ListItemAvatar>
                                 <Icon>timeline</Icon>
                             </ListItemAvatar>
