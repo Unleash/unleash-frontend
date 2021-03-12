@@ -11,16 +11,13 @@ const ConfirmDialogue = ({ children, open, onClick, onClose, title, primaryButto
         aria-describedby={'simple-modal-description'}
     >
         <DialogTitle>{title}</DialogTitle>
-        <ConditionallyRender condition={children} show={<DialogContent>
-            {children}
-            </DialogContent>}       
-        />
+        <ConditionallyRender condition={children} show={<DialogContent>{children}</DialogContent>} />
 
         <DialogActions>
             <Button color="primary" onClick={onClick} autoFocus>
-               {primaryButtonText || "Yes, I'm sure"} 
+                {primaryButtonText || "Yes, I'm sure"}
             </Button>
-            <Button onClick={onClose}>{secondaryButtonText || "No take me back."} </Button>
+            <Button onClick={onClose}>{secondaryButtonText || 'No take me back.'} </Button>
         </DialogActions>
     </Dialog>
 );

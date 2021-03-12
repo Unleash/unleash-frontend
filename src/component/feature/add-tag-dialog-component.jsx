@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
-import { DialogContentText, Button, TextField } from '@material-ui/core'; 
+import { DialogContentText, Button, TextField } from '@material-ui/core';
 import TagTypeSelect from '../feature/tag-type-select-container';
 import Dialogue from '../common/Dialogue';
 import { trim } from '../common/util';
@@ -63,7 +62,14 @@ class AddTagDialogComponent extends Component {
                     Add tag
                 </Button>
 
-                <Dialogue open={openDialog} secondaryButtonText="Cancel" primaryButtonText="Add tag" title="Add tags to feature toggle" onClick={this.onSubmit} onClose={this.onCancel}>
+                <Dialogue
+                    open={openDialog}
+                    secondaryButtonText="Cancel"
+                    primaryButtonText="Add tag"
+                    title="Add tags to feature toggle"
+                    onClick={this.onSubmit}
+                    onClose={this.onCancel}
+                >
                     <DialogContentText>Tags allows you to group features together</DialogContentText>
                     <form onSubmit={this.onSubmit}>
                         <section className={styles.dialogueFormContent}>

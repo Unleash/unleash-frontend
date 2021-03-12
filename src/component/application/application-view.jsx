@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Grid, List, ListItem, ListItemText, ListItemAvatar, Switch, Icon } from '@material-ui/core';
 import { shorten } from '../common';
-import { CREATE_FEATURE, CREATE_STRATEGY } from '../../permissions';
+import { CREATE_FEATURE } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
 
 function ApplicationView({ seenToggles, hasPermission, strategies, instances, formatFullDateTime }) {

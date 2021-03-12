@@ -1,3 +1,3 @@
-import Dialogue from './Dialogue'
+import Dialogue from './Dialogue';
 
 export default Dialogue;
