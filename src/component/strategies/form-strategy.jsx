@@ -1,41 +1,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Paper, TextField, FormControlLabel, Checkbox, MenuItem, Button, Icon } from '@material-ui/core';
+import { Paper, TextField, FormControlLabel, Checkbox, Button, Icon } from '@material-ui/core';
 import { styles as commonStyles, FormButtons } from '../common';
-import DropdownMenu from '../common/dropdown-menu';
 import { trim } from '../common/util';
+import MySelect from '../common/select';
 
 function gerArrayWithEntries(num) {
     return Array.from(Array(num));
 }
 
-const paramTypes = ['string', 'percentage', 'list', 'number', 'boolean'];
+const paramTypesOptions = [
+    { key: 'string', label: 'string' },
+    { key: 'percentage', label: 'percentage' },
+    { key: 'list', label: 'list' },
+    { key: 'number', label: 'number' },
+    { key: 'boolean', label: 'boolean' },
+];
 
 const Parameter = ({ set, input = {}, index }) => {
-    const parameterTypeMenuItems = () =>
-        paramTypes.map(type => (
-            <MenuItem key={`${type}-${index}`} onClick={() => set({ type })}>
-                {type}
-            </MenuItem>
-        ));
+    const handleTypeChange = event => {
+        set({ type: event.target.value });
+    };
 
     return (
         <div style={{ background: 'rgba(158, 158, 158, 0.1)', margin: '10px 0', paddingTop: '10px' }}>
             <section className={commonStyles.section}>
                 <TextField
-                    style={{ width: '50%' }}
+                    style={{ width: '50%', marginRight: '5px' }}
                     label={`Parameter name ${index + 1}`}
                     onChange={({ target }) => set({ name: target.value }, true)}
                     value={input.name || ''}
                     variant="outlined"
                     size="small"
                 />
-                <DropdownMenu
-                    id={`paramType-${index}`}
-                    label={input.type || 'string'}
-                    renderOptions={parameterTypeMenuItems}
-                    title="Paramter Type"
+                <MySelect
+                    label="Type"
+                    options={paramTypesOptions}
+                    value={input.type || 'string'}
+                    onChange={handleTypeChange}
+                    id={`prop-type-${index}-select`}
                 />
             </section>
             <section className={commonStyles.section}>
