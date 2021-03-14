@@ -1,31 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CardActions, Button, Textfield } from 'react-mdl';
+import { Button, TextField } from '@material-ui/core';
 
-class SimpleAuthenticationComponent extends React.Component {
-    static propTypes = {
-        authDetails: PropTypes.object.isRequired,
-        insecureLogin: PropTypes.func.isRequired,
-        loadInitialData: PropTypes.func.isRequired,
-        history: PropTypes.object.isRequired,
-    };
+const SimpleAuthenticationComponent = ({ insecureLogin, loadInitialData, history, authDetails }) => {
+    const [email, setEmail] = useState("")
 
-    handleSubmit = evt => {
+
+    const handleSubmit = evt => {
         evt.preventDefault();
-        const email = this.refs.email.inputRef.value;
         const user = { email };
         const path = evt.target.action;
 
-        this.props
-            .insecureLogin(path, user)
-            .then(this.props.loadInitialData)
-            .then(() => this.props.history.push(`/`));
+        insecureLogin(path, user)
+        .then(loadInitialData)
+        .then(() => history.push(`/`));
     };
 
-    render() {
-        const authDetails = this.props.authDetails;
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setEmail(value)
+    }
+
+ 
+        
         return (
-            <form onSubmit={this.handleSubmit} action={authDetails.path}>
+            <form onSubmit={handleSubmit} action={authDetails.path}>
                 <p>{authDetails.message}</p>
                 <p>
                     This instance of Unleash is not set up with a secure authentication provider. You can read more
@@ -34,17 +33,23 @@ class SimpleAuthenticationComponent extends React.Component {
                         securing Unleash on GitHub
                     </a>
                 </p>
-                <Textfield label="Email" name="email" required type="email" ref="email" />
+                <TextField value={email} onChange={handleChange} inputProps={{"data-test": "email-input-field"}} size="small" variant="outlined" label="Email" name="email" required type="email" />
                 <br />
 
-                <CardActions style={{ textAlign: 'center' }}>
-                    <Button raised colored>
+                <div style={{ textAlign: 'center' }}>
+                    <Button raised type="submit" colored data-test="login-submit">
                         Sign in
                     </Button>
-                </CardActions>
+                </div>
             </form>
         );
-    }
+}
+
+SimpleAuthenticationComponent.propTypes = {
+        authDetails: PropTypes.object.isRequired,
+        insecureLogin: PropTypes.func.isRequired,
+        loadInitialData: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired,
 }
 
 export default SimpleAuthenticationComponent;

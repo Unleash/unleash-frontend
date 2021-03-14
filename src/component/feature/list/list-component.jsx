@@ -94,6 +94,7 @@ export default class FeatureListComponent extends React.Component {
                         show={
                             <Button
                                 to="/features/create"
+                                data-test="add-feature-btn"
                                 size="large"
                                 color="secondary"
                                 variant="contained"
