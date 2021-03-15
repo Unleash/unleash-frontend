@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Cell, IconButton } from 'react-mdl';
+import { Grid, IconButton, Icon } from '@material-ui/core';
 import Select from 'react-select';
 import MySelect from '../../common/select';
 import InputListField from '../../common/input-list-field';
@@ -26,8 +26,8 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
         const options = legalValues.map(v => ({ value: v, label: v, key: v }));
 
         return (
-            <Grid noSpacing key={`override=${i}`}>
-                <Cell col={3}>
+            <Grid container noSpacing key={`override=${i}`}>
+                <Grid item xs={3}>
                     <MySelect
                         name="contextName"
                         label="Context Field"
@@ -35,8 +35,8 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
                         options={contextNames}
                         onChange={updateOverrideType(i)}
                     />
-                </Cell>
-                <Cell col={8}>
+                </Grid>
+                <Grid xs={8} item>
                     {legalValues && legalValues.length > 0 ? (
                         <div style={{ paddingTop: '12px' }}>
                             <Select
@@ -58,10 +58,10 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
                             updateValues={updateValues(i)}
                         />
                     )}
-                </Cell>
-                <Cell col={1} style={{ textAlign: 'right', paddingTop: '12px' }}>
+                </Grid>
+                <Grid item xs={1} style={{ textAlign: 'right', paddingTop: '12px' }}>
                     <IconButton name="delete" onClick={removeOverride(i)} />
-                </Cell>
+                </Grid>
             </Grid>
         );
     });

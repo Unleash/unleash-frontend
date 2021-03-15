@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from 'react-mdl';
+import { Icon, IconButton } from '@material-ui/core';
 import Select from 'react-select';
 import MySelect from '../../../common/select';
 import InputListField from '../../../common/input-list-field';
@@ -120,7 +120,9 @@ export default class StrategyConstraintInputField extends Component {
                     )}
                 </td>
                 <td>
-                    <IconButton name="delete" onClick={removeConstraint} />
+                    <IconButton onClick={removeConstraint}>
+                        <Icon>delete</Icon>
+                    </IconButton>
                 </td>
             </tr>
         );

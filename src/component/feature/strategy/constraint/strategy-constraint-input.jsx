@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip, Icon } from 'react-mdl';
+import { Tooltip, Icon } from '@material-ui/core';
 import StrategyConstraintInputField from './strategy-constraint-input-field';
 
 export default class StrategyConstraintInput extends Component {
@@ -59,8 +59,8 @@ export default class StrategyConstraintInput extends Component {
         return (
             <div>
                 <strong>{'Constraints '}</strong>
-                <Tooltip label={<span>Use context fields to constrain the activation strategy.</span>}>
-                    <Icon name="info" style={{ fontSize: '0.9em', color: 'gray' }} />
+                <Tooltip title={<span>Use context fields to constrain the activation strategy.</span>}>
+                    <Icon style={{ fontSize: '0.9em', color: 'gray' }}>info</Icon>
                 </Tooltip>
                 <table>
                     <tbody>
