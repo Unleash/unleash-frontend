@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CardActions, Button, TextField } from '@material-ui/core';
-
+import commonStyles from '../common/common.module.scss';
 class EnterpriseAuthenticationComponent extends React.Component {
     static propTypes = {
         authDetails: PropTypes.object.isRequired,
@@ -54,7 +54,7 @@ class EnterpriseAuthenticationComponent extends React.Component {
         const authDetails = this.props.authDetails;
         const { username, usernameError, password, passwordError, error } = this.state;
         return (
-            <form onSubmit={this.handleSubmit} action={authDetails.path}>
+            <form onSubmit={this.handleSubmit} action={authDetails.path} className={commonStyles.contentSpacing}>
                 <p>{authDetails.message}</p>
                 <p style={{ color: 'red' }}>{error}</p>
                 <TextField
@@ -65,7 +65,7 @@ class EnterpriseAuthenticationComponent extends React.Component {
                     value={username}
                     error={!!usernameError !== undefined}
                     helperText={usernameError}
-                    variant="filled"
+                    variant="outlined"
                     size="small"
                 />
                 <TextField
@@ -76,7 +76,7 @@ class EnterpriseAuthenticationComponent extends React.Component {
                     value={password}
                     error={!!passwordError}
                     helperText={passwordError}
-                    variant="filled"
+                    variant="outlined"
                     size="small"
                 />
                 <br />

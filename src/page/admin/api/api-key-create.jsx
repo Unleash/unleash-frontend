@@ -27,13 +27,23 @@ function CreateApiKey({ addKey }) {
         setShow(false);
     };
 
+    const handleDialogueClick = evt => {
+        submit(evt);
+        setShow(false);
+    };
+    const typeOptions = () => [
+        <MenuItem value="CLIENT" key="apikey_client" title="Client">
+            Client
+        </MenuItem>,
+        <MenuItem value="ADMIN" key="apikey_admin" title="Admin">
+            Admin
+        </MenuItem>,
+    ];
+
     return (
         <div style={{ margin: '5px' }}>
             <Dialogue
-                onClick={() => {
-                    submit();
-                    setShow(false);
-                }}
+                onClick={handleDialogueClick}
                 open={show}
                 primaryButtonText="Create new key"
                 onClose={toggle}
@@ -53,17 +63,12 @@ function CreateApiKey({ addKey }) {
                         size="small"
                     />
                     <DropdownMenu
-                        renderOptions={() => [
-                            <MenuItem value="CLIENT" key="apikey_client" title="Client">
-                                Client
-                            </MenuItem>,
-                            <MenuItem value="ADMIN" key="apikey_admin" title="Admin">
-                                Admin
-                            </MenuItem>,
-                        ]}
+                        id="apikey"
+                        renderOptions={typeOptions}
                         callback={e => setType(e.target.value)}
                         value={type}
                         label="API key type"
+                        title="API key type"
                     />
                 </form>
             </Dialogue>
