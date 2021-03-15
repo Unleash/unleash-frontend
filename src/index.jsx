@@ -8,8 +8,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@material-ui/core';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
+import mainTheme from './themes/main-theme';
 
 import store from './store';
 import MetricsPoller from './metrics-poller';
@@ -33,9 +35,11 @@ metricsPoller.start();
 ReactDOM.render(
     <Provider store={unleashStore}>
         <HashRouter>
+            <ThemeProvider theme={mainTheme}>
             <ScrollToTop>
                 <Route path="/" component={App} />
             </ScrollToTop>
+        </ThemeProvider>
         </HashRouter>
     </Provider>,
     document.getElementById('app')

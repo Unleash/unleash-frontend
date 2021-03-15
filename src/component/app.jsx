@@ -9,7 +9,6 @@ import Features from '../page/features';
 import AuthenticationContainer from './user/authentication-container';
 import MainLayout from './layout/main';
 
-import mainTheme from '../themes/main-theme';
 import { routes } from './menu/routes';
 
 import styles from './styles.module.scss';
@@ -28,7 +27,6 @@ class App extends PureComponent {
         return (
             <StylesProvider injectFirst>
                 <CssBaseline />
-                <ThemeProvider theme={mainTheme}>
                     <div className={styles.container}>
                         <MainLayout {...this.props}>
                             <Switch>
@@ -39,7 +37,6 @@ class App extends PureComponent {
                             </Switch>
                         </MainLayout>
                     </div>
-                </ThemeProvider>
             </StylesProvider>
         );
     }

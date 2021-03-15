@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardTitle, CardText } from 'react-mdl';
 import Modal from 'react-modal';
-import AuthenticationSimpleComponent from './authentication-simple-component';
+import SimpleAuth from './SimpleAuth/SimpleAuth';
 import AuthenticationCustomComponent from './authentication-custom-component';
 import AuthenticationPasswordComponent from './authentication-password-component';
 
@@ -57,7 +57,7 @@ class AuthComponent extends React.Component {
             );
         } else if (authDetails.type === SIMPLE_TYPE) {
             content = (
-                <AuthenticationSimpleComponent
+                <SimpleAuth
                     insecureLogin={this.props.insecureLogin}
                     authDetails={authDetails}
                     loadInitialData={this.props.loadInitialData}
