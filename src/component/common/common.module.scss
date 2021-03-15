@@ -123,3 +123,11 @@
 .section {
     padding: 8px 16px 8px 16px;
 }
+
+.contentPadding {
+    padding: var(--card-padding);
+}
+
+.contentSpacing > * {
+    margin: 0.5rem 0;
+}

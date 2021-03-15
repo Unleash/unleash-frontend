@@ -106,7 +106,6 @@ function UsersList({
                                     </TableCell>
                                 }
                             />
-                            )}
                         </TableRow>
                     ))}
                 </TableBody>

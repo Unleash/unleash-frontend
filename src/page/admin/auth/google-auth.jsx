@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Switch, TextField } from '@material-ui/core';
+import commonStyles from '../../../component/common/common.module.scss';
 
 const initialState = {
     enabled: false,
@@ -67,9 +68,9 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </p>
                 </Grid>
             </Grid>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className={commonStyles.contentPadding}>
                 <Grid container>
-                    <Grid xs={5}>
+                    <Grid item xs={5}>
                         <strong>Enable</strong>
                         <p>
                             Enable Google users to login. Value is ignored if Client ID and Client Secret are not
@@ -99,11 +100,11 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid col={5}>
+                    <Grid item md={5}>
                         <strong>Client Secret</strong>
                         <p>(Required) Client Secret provided by Google when registering the application.</p>
                     </Grid>
-                    <Grid col={6}>
+                    <Grid item md={6}>
                         <TextField
                             onChange={updateField}
                             label="Client Secret"
@@ -115,7 +116,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid col={5}>
+                    <Grid item md={5}>
                         <strong>Unleash hostname</strong>
                         <p>
                             (Required) The hostname you are running Unleash on that Google should send the user back to.
@@ -125,7 +126,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                             </small>
                         </p>
                     </Grid>
-                    <Grid col={6}>
+                    <Grid item md={6}>
                         <TextField
                             onChange={updateField}
                             label="Unleash Hostname"
@@ -137,22 +138,22 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item col={5}>
+                    <Grid item md={5}>
                         <strong>Auto-create users</strong>
                         <p>Enable automatic creation of new users when signing in with Google.</p>
                     </Grid>
-                    <Grid item col={6} style={{ padding: '20px' }}>
+                    <Grid item md={6} style={{ padding: '20px' }}>
                         <Switch onChange={updateAutoCreate} name="enabled" checked={data.autoCreate}>
                             Auto-create users
                         </Switch>
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item col={5}>
+                    <Grid item md={5}>
                         <strong>Email domains</strong>
                         <p>(Optional) Comma separated list of email domains that should be allowed to sign in.</p>
                     </Grid>
-                    <Grid item col={6}>
+                    <Grid item md={6}>
                         <TextField
                             onChange={updateField}
                             label="Email domains"
@@ -165,8 +166,8 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item col={5}>
-                        <Button raised accent type="submit">
+                    <Grid item md={5}>
+                        <Button variant="contained" color="primary" type="submit">
                             Save
                         </Button>{' '}
                         <small>{info}</small>

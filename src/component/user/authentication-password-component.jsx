@@ -82,7 +82,7 @@ class EnterpriseAuthenticationComponent extends React.Component {
                 <br />
 
                 <CardActions style={{ textAlign: 'center' }}>
-                    <Button raised colored>
+                    <Button variant="contained" color="primary" type="submit">
                         Sign in
                     </Button>
                 </CardActions>

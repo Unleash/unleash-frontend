@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, MenuItem } from '@material-ui/core';
+import Dialogue from '../../../component/common/Dialogue/Dialogue';
+import DropdownMenu from '../../../component/common/dropdown-menu';
 
 function CreateApiKey({ addKey }) {
     const [type, setType] = useState('CLIENT');
@@ -27,7 +29,17 @@ function CreateApiKey({ addKey }) {
 
     return (
         <div style={{ margin: '5px' }}>
-            {show ? (
+            <Dialogue
+                onClick={() => {
+                    submit();
+                    setShow(false);
+                }}
+                open={show}
+                primaryButtonText="Create new key"
+                onClose={toggle}
+                secondaryButtonText="Cancel"
+                title="Add new API key"
+            >
                 <form onSubmit={submit}>
                     <TextField
                         value={username}
@@ -35,23 +47,29 @@ function CreateApiKey({ addKey }) {
                         onChange={e => setUsername(e.target.value)}
                         label="Username"
                         style={{ width: '200px' }}
-                        error={error}
+                        error={error !== undefined}
+                        helperText={error}
+                        variant="outlined"
+                        size="small"
                     />
-
-                    <select value={type} onChange={e => setType(e.target.value)}>
-                        <option value="CLIENT">Client</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
-
-                    <Button primary mini="true" type="submit">
-                        Create new key
-                    </Button>
+                    <DropdownMenu
+                        renderOptions={() => [
+                            <MenuItem value="CLIENT" key="apikey_client" title="Client">
+                                Client
+                            </MenuItem>,
+                            <MenuItem value="ADMIN" key="apikey_admin" title="Admin">
+                                Admin
+                            </MenuItem>,
+                        ]}
+                        callback={e => setType(e.target.value)}
+                        value={type}
+                        label="API key type"
+                    />
                 </form>
-            ) : (
-                <a href="" onClick={toggle}>
-                    Add new access key
-                </a>
-            )}
+            </Dialogue>
+            <Button onClick={toggle} variant="contained" color="primary">
+                Add new API key
+            </Button>
         </div>
     );
 }
