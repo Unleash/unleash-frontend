@@ -1,16 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly with one feature 1`] = `
-<div>
+<div
+  className="featureContainer"
+>
   <div
-    className="toolbar"
+    className="searchBarContainer"
   >
     <div>
-      <react-mdl-Textfield
-        floatingLabel={true}
-        label="Search"
-        onBlur={[Function]}
-        onChange={[Function]}
+      <div
+        className="MuiFormControl-root MuiTextField-root"
         onKeyPress={[Function]}
         style={
           Object {
@@ -18,182 +17,170 @@ exports[`renders correctly with one feature 1`] = `
             "width": "500px",
           }
         }
-        value=""
-      />
-      <react-mdl-FABButton
-        className="mdl-cell--hide-phone"
-        mini={true}
       >
-        <react-mdl-Icon
-          name="search"
-        />
-      </react-mdl-FABButton>
+        <label
+          className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+          data-shrink={false}
+        >
+          Search
+        </label>
+        <div
+          className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+          onClick={[Function]}
+        >
+          <input
+            aria-invalid={false}
+            autoFocus={false}
+            className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+            disabled={false}
+            onAnimationStart={[Function]}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={false}
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden={true}
+            className="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              className="PrivateNotchedOutline-legendLabelled-3"
+            >
+              <span>
+                Search
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
     </div>
     <a
-      className="toolbarButton"
+      aria-disabled={false}
+      className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-containedSizeLarge MuiButton-sizeLarge"
+      data-test="add-feature-btn"
       href="/features/create"
+      onBlur={[Function]}
       onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="button"
+      tabIndex={0}
     >
-      <react-mdl-FABButton
-        accent={true}
-        title="Create feature toggle"
+      <span
+        className="MuiButton-label"
       >
-        <react-mdl-Icon
-          name="add"
-        />
-      </react-mdl-FABButton>
+        Add new feature
+      </span>
     </a>
   </div>
-  <react-mdl-Card
-    className="fullwidth"
+  <div
+    className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
     shadow={0}
-    style={
-      Object {
-        "overflow": "visible",
-      }
-    }
   >
-    <react-mdl-CardActions>
-      <react-mdl-Button
-        className="dropdownButton"
-        id="metric"
-        title="Metric interval"
+    <div>
+      <div
+        className="listComponentHeader"
       >
-        Last minute
-        <react-mdl-Icon
-          className="mdl-color-text--grey-600"
-          name="arrow_drop_down"
-        />
-      </react-mdl-Button>
-      <react-mdl-Menu
-        onClick={[Function]}
-        style={
-          Object {
-            "width": "168px",
-          }
-        }
-        target="metric"
-      >
-        <react-mdl-MenuItem
-          data-target="minute"
-          disabled={true}
-          style={
+        <button
+          aria-controls="metric"
+          aria-haspopup="true"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+          disabled={false}
+          id="metric"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Metric interval"
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            Last minute
+            <span
+              className="MuiButton-endIcon MuiButton-iconSizeMedium"
+            >
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                arrow_drop_down
+              </span>
+            </span>
+          </span>
+        </button>
+        <button
+          aria-controls="sorting"
+          aria-haspopup="true"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+          disabled={false}
+          id="sorting"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Sort by"
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            By name
+            <span
+              className="MuiButton-endIcon MuiButton-iconSizeMedium"
+            >
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                arrow_drop_down
+              </span>
+            </span>
+          </span>
+        </button>
+        <Project
+          settings={
             Object {
-              "alignItems": "center",
-              "display": "flex",
+              "sort": "name",
             }
           }
-        >
-          <react-mdl-Icon
-            name="hourglass_empty"
-            style={
-              Object {
-                "paddingRight": "16px",
-              }
-            }
-          />
-          Last minute
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="hour"
-          style={
-            Object {
-              "alignItems": "center",
-              "display": "flex",
-            }
-          }
-        >
-          <react-mdl-Icon
-            name="hourglass_full"
-            style={
-              Object {
-                "paddingRight": "16px",
-              }
-            }
-          />
-          Last hour
-        </react-mdl-MenuItem>
-      </react-mdl-Menu>
-      <react-mdl-Button
-        className="dropdownButton"
-        id="sorting"
-        title="Sort by"
-      >
-        By name
-        <react-mdl-Icon
-          className="mdl-color-text--grey-600"
-          name="arrow_drop_down"
+          updateSetting={[MockFunction]}
         />
-      </react-mdl-Button>
-      <react-mdl-Menu
-        onClick={[Function]}
-        style={
-          Object {
-            "width": "168px",
-          }
-        }
-        target="sorting"
-      >
-        <react-mdl-MenuItem
-          data-target="name"
-          disabled={true}
-        >
-          Name
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="type"
-          disabled={false}
-        >
-          Type
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="enabled"
-          disabled={false}
-        >
-          Enabled
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="stale"
-          disabled={false}
-        >
-          Stale
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="created"
-          disabled={false}
-        >
-          Created
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="Last seen"
-          disabled={false}
-        >
-          Last seen
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="strategies"
-          disabled={false}
-        >
-          Strategies
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="metrics"
-          disabled={false}
-        >
-          Metrics
-        </react-mdl-MenuItem>
-      </react-mdl-Menu>
-      <Project
-        settings={
-          Object {
-            "sort": "name",
-          }
-        }
-        updateSetting={[MockFunction]}
-      />
-    </react-mdl-CardActions>
+      </div>
+    </div>
     <hr />
-    <react-mdl-List>
+    <ul
+      className="MuiList-root MuiList-padding"
+    >
       <ListItem
         feature={
           Object {
@@ -210,22 +197,21 @@ exports[`renders correctly with one feature 1`] = `
         }
         toggleFeature={[MockFunction]}
       />
-    </react-mdl-List>
-  </react-mdl-Card>
+    </ul>
+  </div>
 </div>
 `;
 
 exports[`renders correctly with one feature without permissions 1`] = `
-<div>
+<div
+  className="featureContainer"
+>
   <div
-    className="toolbar"
+    className="searchBarContainer"
   >
     <div>
-      <react-mdl-Textfield
-        floatingLabel={true}
-        label="Search"
-        onBlur={[Function]}
-        onChange={[Function]}
+      <div
+        className="MuiFormControl-root MuiTextField-root"
         onKeyPress={[Function]}
         style={
           Object {
@@ -233,169 +219,150 @@ exports[`renders correctly with one feature without permissions 1`] = `
             "width": "500px",
           }
         }
-        value=""
-      />
-      <react-mdl-FABButton
-        className="mdl-cell--hide-phone"
-        mini={true}
       >
-        <react-mdl-Icon
-          name="search"
-        />
-      </react-mdl-FABButton>
+        <label
+          className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+          data-shrink={false}
+        >
+          Search
+        </label>
+        <div
+          className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+          onClick={[Function]}
+        >
+          <input
+            aria-invalid={false}
+            autoFocus={false}
+            className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+            disabled={false}
+            onAnimationStart={[Function]}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={false}
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden={true}
+            className="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              className="PrivateNotchedOutline-legendLabelled-3"
+            >
+              <span>
+                Search
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
     </div>
-    
   </div>
-  <react-mdl-Card
-    className="fullwidth"
+  <div
+    className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
     shadow={0}
-    style={
-      Object {
-        "overflow": "visible",
-      }
-    }
   >
-    <react-mdl-CardActions>
-      <react-mdl-Button
-        className="dropdownButton"
-        id="metric"
-        title="Metric interval"
+    <div>
+      <div
+        className="listComponentHeader"
       >
-        Last minute
-        <react-mdl-Icon
-          className="mdl-color-text--grey-600"
-          name="arrow_drop_down"
-        />
-      </react-mdl-Button>
-      <react-mdl-Menu
-        onClick={[Function]}
-        style={
-          Object {
-            "width": "168px",
-          }
-        }
-        target="metric"
-      >
-        <react-mdl-MenuItem
-          data-target="minute"
-          disabled={true}
-          style={
-            Object {
-              "alignItems": "center",
-              "display": "flex",
-            }
-          }
+        <button
+          aria-controls="metric"
+          aria-haspopup="true"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+          disabled={false}
+          id="metric"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Metric interval"
+          type="button"
         >
-          <react-mdl-Icon
-            name="hourglass_empty"
-            style={
-              Object {
-                "paddingRight": "16px",
-              }
-            }
+          <span
+            className="MuiButton-label"
+          >
+            Last minute
+            <span
+              className="MuiButton-endIcon MuiButton-iconSizeMedium"
+            >
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                arrow_drop_down
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
           />
-          Last minute
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="hour"
-          style={
-            Object {
-              "alignItems": "center",
-              "display": "flex",
-            }
-          }
+        </button>
+        <button
+          aria-controls="sorting"
+          aria-haspopup="true"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+          disabled={false}
+          id="sorting"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Sort by"
+          type="button"
         >
-          <react-mdl-Icon
-            name="hourglass_full"
-            style={
-              Object {
-                "paddingRight": "16px",
-              }
-            }
+          <span
+            className="MuiButton-label"
+          >
+            By name
+            <span
+              className="MuiButton-endIcon MuiButton-iconSizeMedium"
+            >
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                arrow_drop_down
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
           />
-          Last hour
-        </react-mdl-MenuItem>
-      </react-mdl-Menu>
-      <react-mdl-Button
-        className="dropdownButton"
-        id="sorting"
-        title="Sort by"
-      >
-        By name
-        <react-mdl-Icon
-          className="mdl-color-text--grey-600"
-          name="arrow_drop_down"
+        </button>
+        <Project
+          settings={
+            Object {
+              "sort": "name",
+            }
+          }
+          updateSetting={[MockFunction]}
         />
-      </react-mdl-Button>
-      <react-mdl-Menu
-        onClick={[Function]}
-        style={
-          Object {
-            "width": "168px",
-          }
-        }
-        target="sorting"
-      >
-        <react-mdl-MenuItem
-          data-target="name"
-          disabled={true}
-        >
-          Name
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="type"
-          disabled={false}
-        >
-          Type
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="enabled"
-          disabled={false}
-        >
-          Enabled
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="stale"
-          disabled={false}
-        >
-          Stale
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="created"
-          disabled={false}
-        >
-          Created
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="Last seen"
-          disabled={false}
-        >
-          Last seen
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="strategies"
-          disabled={false}
-        >
-          Strategies
-        </react-mdl-MenuItem>
-        <react-mdl-MenuItem
-          data-target="metrics"
-          disabled={false}
-        >
-          Metrics
-        </react-mdl-MenuItem>
-      </react-mdl-Menu>
-      <Project
-        settings={
-          Object {
-            "sort": "name",
-          }
-        }
-        updateSetting={[MockFunction]}
-      />
-    </react-mdl-CardActions>
+      </div>
+    </div>
     <hr />
-    <react-mdl-List>
+    <ul
+      className="MuiList-root MuiList-padding"
+    >
       <ListItem
         feature={
           Object {
@@ -412,7 +379,7 @@ exports[`renders correctly with one feature without permissions 1`] = `
         }
         toggleFeature={[MockFunction]}
       />
-    </react-mdl-List>
-  </react-mdl-Card>
+    </ul>
+  </div>
 </div>
 `;

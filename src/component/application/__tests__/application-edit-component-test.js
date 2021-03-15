@@ -1,13 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import ClientApplications from '../application-edit-component';
-import renderer from 'react-test-renderer';
-import { MemoryRouter } from 'react-router-dom';
-import { CREATE_FEATURE, CREATE_STRATEGY, UPDATE_APPLICATION } from '../../../permissions';
+import ClientApplications from "../application-edit-component";
+import renderer from "react-test-renderer";
+import { MemoryRouter } from "react-router-dom";
+import {
+    CREATE_FEATURE,
+    CREATE_STRATEGY,
+    UPDATE_APPLICATION
+} from "../../../permissions";
 
-jest.mock('react-mdl');
-
-test('renders correctly if no application', () => {
+test("renders correctly if no application", () => {
     const tree = renderer
         .create(
             <ClientApplications
@@ -23,7 +25,7 @@ test('renders correctly if no application', () => {
     expect(tree).toMatchSnapshot();
 });
 
-test('renders correctly without permission', () => {
+test("renders correctly without permission", () => {
     const tree = renderer
         .create(
             <MemoryRouter>
@@ -33,43 +35,43 @@ test('renders correctly without permission', () => {
                     deleteApplication={jest.fn()}
                     history={{}}
                     application={{
-                        appName: 'test-app',
+                        appName: "test-app",
                         instances: [
                             {
-                                instanceId: 'instance-1',
-                                clientIp: '123.123.123.123',
-                                lastSeen: '2017-02-23T15:56:49',
-                                sdkVersion: '4.0',
-                            },
+                                instanceId: "instance-1",
+                                clientIp: "123.123.123.123",
+                                lastSeen: "2017-02-23T15:56:49",
+                                sdkVersion: "4.0"
+                            }
                         ],
                         strategies: [
                             {
-                                name: 'StrategyA',
-                                description: 'A description',
+                                name: "StrategyA",
+                                description: "A description"
                             },
                             {
-                                name: 'StrategyB',
-                                description: 'B description',
-                                notFound: true,
-                            },
+                                name: "StrategyB",
+                                description: "B description",
+                                notFound: true
+                            }
                         ],
                         seenToggles: [
                             {
-                                name: 'ToggleA',
-                                description: 'this is A toggle',
-                                enabled: true,
+                                name: "ToggleA",
+                                description: "this is A toggle",
+                                enabled: true
                             },
                             {
-                                name: 'ToggleB',
-                                description: 'this is B toggle',
+                                name: "ToggleB",
+                                description: "this is B toggle",
                                 enabled: false,
-                                notFound: true,
-                            },
+                                notFound: true
+                            }
                         ],
-                        url: 'http://example.org',
-                        description: 'app description',
+                        url: "http://example.org",
+                        description: "app description"
                     }}
-                    location={{ locale: 'en-GB' }}
+                    location={{ locale: "en-GB" }}
                     hasPermission={() => false}
                 />
             </MemoryRouter>
@@ -79,7 +81,7 @@ test('renders correctly without permission', () => {
     expect(tree).toMatchSnapshot();
 });
 
-test('renders correctly with permissions', () => {
+test("renders correctly with permissions", () => {
     const tree = renderer
         .create(
             <MemoryRouter>
@@ -89,45 +91,49 @@ test('renders correctly with permissions', () => {
                     history={{}}
                     deleteApplication={jest.fn()}
                     application={{
-                        appName: 'test-app',
+                        appName: "test-app",
                         instances: [
                             {
-                                instanceId: 'instance-1',
-                                clientIp: '123.123.123.123',
-                                lastSeen: '2017-02-23T15:56:49',
-                                sdkVersion: '4.0',
-                            },
+                                instanceId: "instance-1",
+                                clientIp: "123.123.123.123",
+                                lastSeen: "2017-02-23T15:56:49",
+                                sdkVersion: "4.0"
+                            }
                         ],
                         strategies: [
                             {
-                                name: 'StrategyA',
-                                description: 'A description',
+                                name: "StrategyA",
+                                description: "A description"
                             },
                             {
-                                name: 'StrategyB',
-                                description: 'B description',
-                                notFound: true,
-                            },
+                                name: "StrategyB",
+                                description: "B description",
+                                notFound: true
+                            }
                         ],
                         seenToggles: [
                             {
-                                name: 'ToggleA',
-                                description: 'this is A toggle',
-                                enabled: true,
+                                name: "ToggleA",
+                                description: "this is A toggle",
+                                enabled: true
                             },
                             {
-                                name: 'ToggleB',
-                                description: 'this is B toggle',
+                                name: "ToggleB",
+                                description: "this is B toggle",
                                 enabled: false,
-                                notFound: true,
-                            },
+                                notFound: true
+                            }
                         ],
-                        url: 'http://example.org',
-                        description: 'app description',
+                        url: "http://example.org",
+                        description: "app description"
                     }}
-                    location={{ locale: 'en-GB' }}
+                    location={{ locale: "en-GB" }}
                     hasPermission={permission =>
-                        [CREATE_FEATURE, CREATE_STRATEGY, UPDATE_APPLICATION].indexOf(permission) !== -1
+                        [
+                            CREATE_FEATURE,
+                            CREATE_STRATEGY,
+                            UPDATE_APPLICATION
+                        ].indexOf(permission) !== -1
                     }
                 />
             </MemoryRouter>

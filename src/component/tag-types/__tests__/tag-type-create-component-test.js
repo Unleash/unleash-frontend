@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import TagTypes from '../form-tag-type-component';
-import renderer from 'react-test-renderer';
+import TagTypes from "../form-tag-type-component";
+import renderer from "react-test-renderer";
 
-jest.mock('react-mdl');
-
-test('renders correctly for creating', () => {
+test("renders correctly for creating", () => {
     const tree = renderer
         .create(
             <TagTypes
@@ -14,7 +12,7 @@ test('renders correctly for creating', () => {
                 createTagType={jest.fn()}
                 validateName={() => Promise.resolve(true)}
                 hasPermission={() => true}
-                tagType={{ name: '', description: '', icon: '' }}
+                tagType={{ name: "", description: "", icon: "" }}
                 editMode={false}
                 submit={jest.fn()}
             />
@@ -23,7 +21,7 @@ test('renders correctly for creating', () => {
     expect(tree).toMatchSnapshot();
 });
 
-test('it supports editMode', () => {
+test("it supports editMode", () => {
     const tree = renderer
         .create(
             <TagTypes
@@ -32,7 +30,7 @@ test('it supports editMode', () => {
                 createTagType={jest.fn()}
                 validateName={() => Promise.resolve(true)}
                 hasPermission={() => true}
-                tagType={{ name: '', description: '', icon: '' }}
+                tagType={{ name: "", description: "", icon: "" }}
                 editMode
                 submit={jest.fn()}
             />

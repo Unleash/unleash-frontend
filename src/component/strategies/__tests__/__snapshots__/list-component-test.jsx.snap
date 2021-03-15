@@ -1,18 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly with one strategy 1`] = `
-<react-mdl-Card
-  className="fullwidth"
+<div
+  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
   shadow={0}
-  style={
-    Object {
-      "overflow": "visible",
-    }
-  }
 >
   <div
     style={
       Object {
+        "alignItems": "center",
         "borderBottom": "1px solid #f9f9f9",
         "display": "flex",
         "marginBottom": "10px",
@@ -28,11 +24,7 @@ exports[`renders correctly with one strategy 1`] = `
       }
     >
       <h6
-        style={
-          Object {
-            "margin": 0,
-          }
-        }
+        className="headerTitle"
       >
         Strategies
       </h6>
@@ -45,65 +37,179 @@ exports[`renders correctly with one strategy 1`] = `
         }
       }
     >
-      <react-mdl-IconButton
-        name="add"
+      <button
+        aria-describedby={null}
+        className="MuiButtonBase-root MuiIconButton-root"
+        disabled={false}
+        onBlur={[Function]}
         onClick={[Function]}
-        raised={true}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
         title="Add new strategy"
-      />
+        type="button"
+      >
+        <span
+          className="MuiIconButton-label"
+        >
+          <span
+            aria-hidden={true}
+            className="material-icons MuiIcon-root"
+          >
+            add
+          </span>
+        </span>
+        <span
+          className="MuiTouchRipple-root"
+        />
+      </button>
     </div>
   </div>
-  <react-mdl-List>
-    <react-mdl-ListItem
-      className=""
-      twoLine={true}
+  <ul
+    className="MuiList-root MuiList-padding"
+  >
+    <li
+      className="MuiListItem-root MuiListItem-gutters"
+      disabled={false}
     >
-      <react-mdl-ListItemContent
-        icon="extension"
-        subtitle="another's description"
+      <div
+        className="MuiListItemAvatar-root"
       >
-        <a
-          href="/strategies/view/Another"
-          onClick={[Function]}
-          title=""
+        <span
+          aria-hidden={true}
+          className="material-icons MuiIcon-root"
         >
-          <strong>
-            Another
-          </strong>
-        </a>
-      </react-mdl-ListItemContent>
-      <span>
-        <react-mdl-IconButton
-          color="#"
+          extension
+        </span>
+      </div>
+      <div
+        className="MuiListItemText-root MuiListItemText-multiline"
+      >
+        <span
+          className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+        >
+          <a
+            href="/strategies/view/Another"
+            onClick={[Function]}
+          >
+            <strong>
+              Another
+            </strong>
+          </a>
+        </span>
+        <p
+          className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+        >
+          another's description
+        </p>
+      </div>
+      <div
+        aria-describedby={null}
+        className=""
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        title="Deprecate activation strategy"
+      >
+        <button
+          className="MuiButtonBase-root MuiIconButton-root"
           disabled={false}
-          name="visibility_off"
+          onBlur={[Function]}
           onClick={[Function]}
-          title="Deprecate activation strategy"
-        />
-        <react-mdl-IconButton
-          name="delete"
-          onClick={[Function]}
-          title="Delete activation strategy"
-        />
-      </span>
-    </react-mdl-ListItem>
-  </react-mdl-List>
-</react-mdl-Card>
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              visibility_off
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+      <div
+        aria-describedby={null}
+        className=""
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        title="You cannot delete a built-in strategy"
+      >
+        <button
+          className="MuiButtonBase-root MuiIconButton-root Mui-disabled Mui-disabled"
+          disabled={true}
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              delete
+            </span>
+          </span>
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`renders correctly with one strategy without permissions 1`] = `
-<react-mdl-Card
-  className="fullwidth"
+<div
+  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
   shadow={0}
-  style={
-    Object {
-      "overflow": "visible",
-    }
-  }
 >
   <div
     style={
       Object {
+        "alignItems": "center",
         "borderBottom": "1px solid #f9f9f9",
         "display": "flex",
         "marginBottom": "10px",
@@ -119,52 +225,103 @@ exports[`renders correctly with one strategy without permissions 1`] = `
       }
     >
       <h6
-        style={
-          Object {
-            "margin": 0,
-          }
-        }
+        className="headerTitle"
       >
         Strategies
       </h6>
     </div>
-    
+    <div
+      style={
+        Object {
+          "flex": "1",
+          "textAlign": "right",
+        }
+      }
+    />
   </div>
-  <react-mdl-List>
-    <react-mdl-ListItem
-      className=""
-      twoLine={true}
+  <ul
+    className="MuiList-root MuiList-padding"
+  >
+    <li
+      className="MuiListItem-root MuiListItem-gutters"
+      disabled={false}
     >
-      <react-mdl-ListItemContent
-        icon="extension"
-        subtitle="another's description"
+      <div
+        className="MuiListItemAvatar-root"
       >
-        <a
-          href="/strategies/view/Another"
-          onClick={[Function]}
-          title=""
+        <span
+          aria-hidden={true}
+          className="material-icons MuiIcon-root"
         >
-          <strong>
-            Another
-          </strong>
-        </a>
-      </react-mdl-ListItemContent>
-      <span>
-        <react-mdl-IconButton
-          color="#"
+          extension
+        </span>
+      </div>
+      <div
+        className="MuiListItemText-root MuiListItemText-multiline"
+      >
+        <span
+          className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+        >
+          <a
+            href="/strategies/view/Another"
+            onClick={[Function]}
+          >
+            <strong>
+              Another
+            </strong>
+          </a>
+        </span>
+        <p
+          className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+        >
+          another's description
+        </p>
+      </div>
+      <div
+        aria-describedby={null}
+        className=""
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        title="Deprecate activation strategy"
+      >
+        <button
+          className="MuiButtonBase-root MuiIconButton-root"
           disabled={false}
-          name="visibility_off"
+          onBlur={[Function]}
           onClick={[Function]}
-          title="Deprecate activation strategy"
-        />
-        <react-mdl-IconButton
-          disabled={true}
-          name="delete"
-          onClick={[Function]}
-          title="You can not delete a built-in strategy"
-        />
-      </span>
-    </react-mdl-ListItem>
-  </react-mdl-List>
-</react-mdl-Card>
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              visibility_off
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

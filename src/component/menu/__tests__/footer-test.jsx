@@ -1,15 +1,15 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { MemoryRouter } from 'react-router-dom';
+import React from "react";
+import renderer from "react-test-renderer";
+import { MemoryRouter } from "react-router-dom";
 
-import { FooterMenu } from '../footer';
+import Footer from "../Footer/Footer";
 
-jest.mock('@material-ui/core');
+jest.mock("@material-ui/core");
 
-test('should render DrawerMenu', () => {
+test("should render DrawerMenu", () => {
     const tree = renderer.create(
         <MemoryRouter>
-            <FooterMenu />
+            <Footer />
         </MemoryRouter>
     );
 
@@ -18,8 +18,8 @@ test('should render DrawerMenu', () => {
 
 test('should render DrawerMenu with "features" selected', () => {
     const tree = renderer.create(
-        <MemoryRouter initialEntries={['/features']}>
-            <FooterMenu />
+        <MemoryRouter initialEntries={["/features"]}>
+            <Footer />
         </MemoryRouter>
     );
 

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it supports editMode 1`] = `
-<react-mdl-Card
-  className="fullWidth"
+<div
+  className="MuiPaper-root MuiCard-root fullWidth MuiPaper-elevation1 MuiPaper-rounded"
   shadow={0}
   style={
     Object {
@@ -10,7 +10,8 @@ exports[`it supports editMode 1`] = `
     }
   }
 >
-  <react-mdl-CardTitle
+  <div
+    className="MuiCardHeader-root"
     style={
       Object {
         "paddingBottom": "0",
@@ -19,85 +20,176 @@ exports[`it supports editMode 1`] = `
       }
     }
   >
-    Update
-     Tag type
-  </react-mdl-CardTitle>
-  <react-mdl-CardText>
-    Tag types allows you to group tags together in the management UI
-  </react-mdl-CardText>
-  <form
-    onSubmit={[Function]}
+    <div
+      className="MuiCardHeader-content"
+    />
+  </div>
+  <div
+    className="MuiCardContent-root"
   >
-    <section
-      style={
-        Object {
-          "padding": "16px",
-        }
-      }
+    Tag types allows you to group tags together in the management UI
+    <form
+      onSubmit={[Function]}
     >
-      <p
+      <section
         style={
           Object {
-            "color": "red",
+            "padding": "16px",
           }
         }
-      />
-      <react-mdl-Textfield
-        disabled={true}
-        floatingLabel={true}
-        label="Name"
-        name="name"
-        onBlur={[Function]}
-        onChange={[Function]}
-        placeholder="url-friendly-unique-name"
-        value=""
-      />
-      <react-mdl-Textfield
-        floatingLabel={true}
-        label="Description"
-        name="description"
-        onChange={[Function]}
-        placeholder="Some short helpful descriptive text"
-        rows={1}
-        style={
-          Object {
-            "width": "100%",
+      >
+        <p
+          style={
+            Object {
+              "color": "red",
+            }
           }
-        }
-        value=""
-      />
-    </section>
-    <react-mdl-CardActions>
-      <div>
-        <react-mdl-Button
-          icon="add"
-          primary={true}
-          raised={true}
-          ripple={true}
-          type="submit"
+        />
+        <div
+          className="MuiFormControl-root MuiTextField-root"
         >
-          <react-mdl-Icon
-            name="add"
-          />
-             
-          Update
-        </react-mdl-Button>
-         
-        <react-mdl-Button
-          onClick={[Function]}
-          type="cancel"
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
+            data-shrink={false}
+          >
+            Name
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoFocus={false}
+              className="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled"
+              disabled={true}
+              name="name"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="url-friendly-unique-name"
+              required={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root MuiTextField-root"
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
         >
-          Cancel
-        </react-mdl-Button>
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+          >
+            Description
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoFocus={false}
+              className="MuiInputBase-input MuiInput-input"
+              disabled={false}
+              name="description"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="Some short explanation of the tag type"
+              required={false}
+              rows={1}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </section>
+      <div
+        className="MuiCardActions-root MuiCardActions-spacing"
+      >
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="submit"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              <span
+                className="MuiButton-startIcon MuiButton-iconSizeMedium"
+              >
+                <span
+                  aria-hidden={true}
+                  className="material-icons MuiIcon-root"
+                >
+                  add
+                </span>
+              </span>
+              Update
+            </span>
+            <span
+              className="MuiTouchRipple-root"
+            />
+          </button>
+           
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="cancel"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Cancel
+            </span>
+            <span
+              className="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
       </div>
-    </react-mdl-CardActions>
-  </form>
-</react-mdl-Card>
+    </form>
+  </div>
+</div>
 `;
 
 exports[`renders correctly for creating 1`] = `
-<react-mdl-Card
-  className="fullWidth"
+<div
+  className="MuiPaper-root MuiCard-root fullWidth MuiPaper-elevation1 MuiPaper-rounded"
   shadow={0}
   style={
     Object {
@@ -105,7 +197,8 @@ exports[`renders correctly for creating 1`] = `
     }
   }
 >
-  <react-mdl-CardTitle
+  <div
+    className="MuiCardHeader-root"
     style={
       Object {
         "paddingBottom": "0",
@@ -114,78 +207,163 @@ exports[`renders correctly for creating 1`] = `
       }
     }
   >
-    Create
-     Tag type
-  </react-mdl-CardTitle>
-  <react-mdl-CardText>
-    Tag types allows you to group tags together in the management UI
-  </react-mdl-CardText>
-  <form
-    onSubmit={[Function]}
+    <div
+      className="MuiCardHeader-content"
+    />
+  </div>
+  <div
+    className="MuiCardContent-root"
   >
-    <section
-      style={
-        Object {
-          "padding": "16px",
-        }
-      }
+    Tag types allows you to group tags together in the management UI
+    <form
+      onSubmit={[Function]}
     >
-      <p
+      <section
         style={
           Object {
-            "color": "red",
+            "padding": "16px",
           }
         }
-      />
-      <react-mdl-Textfield
-        disabled={false}
-        floatingLabel={true}
-        label="Name"
-        name="name"
-        onBlur={[Function]}
-        onChange={[Function]}
-        placeholder="url-friendly-unique-name"
-        value=""
-      />
-      <react-mdl-Textfield
-        floatingLabel={true}
-        label="Description"
-        name="description"
-        onChange={[Function]}
-        placeholder="Some short helpful descriptive text"
-        rows={1}
-        style={
-          Object {
-            "width": "100%",
+      >
+        <p
+          style={
+            Object {
+              "color": "red",
+            }
           }
-        }
-        value=""
-      />
-    </section>
-    <react-mdl-CardActions>
-      <div>
-        <react-mdl-Button
-          icon="add"
-          primary={true}
-          raised={true}
-          ripple={true}
-          type="submit"
+        />
+        <div
+          className="MuiFormControl-root MuiTextField-root"
         >
-          <react-mdl-Icon
-            name="add"
-          />
-             
-          Create
-        </react-mdl-Button>
-         
-        <react-mdl-Button
-          onClick={[Function]}
-          type="cancel"
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+          >
+            Name
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoFocus={false}
+              className="MuiInputBase-input MuiInput-input"
+              disabled={false}
+              name="name"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="url-friendly-unique-name"
+              required={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root MuiTextField-root"
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
         >
-          Cancel
-        </react-mdl-Button>
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+          >
+            Description
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoFocus={false}
+              className="MuiInputBase-input MuiInput-input"
+              disabled={false}
+              name="description"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder="Some short explanation of the tag type"
+              required={false}
+              rows={1}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </section>
+      <div
+        className="MuiCardActions-root MuiCardActions-spacing"
+      >
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="submit"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              <span
+                className="MuiButton-startIcon MuiButton-iconSizeMedium"
+              >
+                <span
+                  aria-hidden={true}
+                  className="material-icons MuiIcon-root"
+                >
+                  add
+                </span>
+              </span>
+              Create
+            </span>
+          </button>
+           
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="cancel"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Cancel
+            </span>
+          </button>
+        </div>
       </div>
-    </react-mdl-CardActions>
-  </form>
-</react-mdl-Card>
+    </form>
+  </div>
+</div>
 `;

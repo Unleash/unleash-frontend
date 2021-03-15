@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly with one feature 1`] = `
-<react-mdl-ListItem
-  twoLine={true}
+<li
+  className="MuiListItem-root MuiListItem-gutters"
+  disabled={false}
 >
   <span
     className="listItemMetric"
@@ -20,15 +21,48 @@ exports[`renders correctly with one feature 1`] = `
   <span
     className="listItemToggle"
   >
-    <react-mdl-Switch
-      checked={false}
-      disabled={false}
-      onChange={[Function]}
-      title="Toggle Another"
-    />
+    <span
+      className="MuiSwitch-root"
+    >
+      <span
+        aria-disabled={false}
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiSwitch-switchBase MuiSwitch-colorSecondary"
+        onBlur={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={null}
+        title="Toggle Another"
+      >
+        <span
+          className="MuiIconButton-label"
+        >
+          <input
+            checked={false}
+            className="PrivateSwitchBase-input-4 MuiSwitch-input"
+            disabled={false}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="MuiSwitch-thumb"
+          />
+        </span>
+      </span>
+      <span
+        className="MuiSwitch-track"
+      />
+    </span>
   </span>
   <span
-    className="mdl-list__item-primary-content listItemLink"
+    className="listItemLink"
   >
     <a
       className="listLink truncate"
@@ -41,9 +75,7 @@ exports[`renders correctly with one feature 1`] = `
         Another
          
       </span>
-      <small
-        className="mdl-color-text--blue-grey-300"
-      >
+      <small>
         <time
           dateTime="2018-02-04T20:27:52.127Z"
           title="2018-02-04T20:27:52.127Z"
@@ -51,9 +83,7 @@ exports[`renders correctly with one feature 1`] = `
           3 years ago
         </time>
       </small>
-      <div
-        className="mdl-list__item-sub-title"
-      >
+      <div>
         <span
           className="truncate"
         >
@@ -66,12 +96,13 @@ exports[`renders correctly with one feature 1`] = `
     className="listItemStrategies hideLt920"
   />
   <span />
-</react-mdl-ListItem>
+</li>
 `;
 
 exports[`renders correctly with one feature without permission 1`] = `
-<react-mdl-ListItem
-  twoLine={true}
+<li
+  className="MuiListItem-root MuiListItem-gutters"
+  disabled={false}
 >
   <span
     className="listItemMetric"
@@ -89,14 +120,48 @@ exports[`renders correctly with one feature without permission 1`] = `
   <span
     className="listItemToggle"
   >
-    <react-mdl-Switch
-      checked={false}
-      disabled={true}
-      title="Toggle Another"
-    />
+    <span
+      className="MuiSwitch-root"
+    >
+      <span
+        aria-disabled={true}
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiSwitch-switchBase MuiSwitch-colorSecondary PrivateSwitchBase-disabled-3 Mui-disabled Mui-disabled Mui-disabled"
+        onBlur={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={-1}
+        title="Toggle Another"
+      >
+        <span
+          className="MuiIconButton-label"
+        >
+          <input
+            checked={false}
+            className="PrivateSwitchBase-input-4 MuiSwitch-input"
+            disabled={true}
+            onChange={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="MuiSwitch-thumb"
+          />
+        </span>
+      </span>
+      <span
+        className="MuiSwitch-track"
+      />
+    </span>
   </span>
   <span
-    className="mdl-list__item-primary-content listItemLink"
+    className="listItemLink"
   >
     <a
       className="listLink truncate"
@@ -109,9 +174,7 @@ exports[`renders correctly with one feature without permission 1`] = `
         Another
          
       </span>
-      <small
-        className="mdl-color-text--blue-grey-300"
-      >
+      <small>
         <time
           dateTime="2018-02-04T20:27:52.127Z"
           title="2018-02-04T20:27:52.127Z"
@@ -119,9 +182,7 @@ exports[`renders correctly with one feature without permission 1`] = `
           3 years ago
         </time>
       </small>
-      <div
-        className="mdl-list__item-sub-title"
-      >
+      <div>
         <span
           className="truncate"
         >
@@ -134,5 +195,5 @@ exports[`renders correctly with one feature without permission 1`] = `
     className="listItemStrategies hideLt920"
   />
   <span />
-</react-mdl-ListItem>
+</li>
 `;
