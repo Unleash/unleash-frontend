@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'react-mdl';
+import { Icon } from '@material-ui/core';
 import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import AddUser from './add-user-component';
 import ChangePassword from './change-password-component';
@@ -85,19 +85,19 @@ function UsersList({
                             {hasPermission('ADMIN') ? (
                                 <td>
                                     <a href="" title="Edit" onClick={openUpdateDialog(item)}>
-                                        <Icon name="edit" />
+                                        <Icon>edit</Icon>
                                     </a>
                                     <a href="" title="Change password" onClick={openPwDialog(item)}>
-                                        <Icon name="lock" />
+                                        <Icon>lock</Icon>
                                     </a>
                                     <a href="" title="Remove user" onClick={onDelete(item)}>
-                                        <Icon name="delete" />
+                                        <Icon>delete</Icon>
                                     </a>
                                 </td>
                             ) : (
                                 <td>
                                     <a href="" title="Change password" onClick={openPwDialog(item)}>
-                                        <Icon name="lock" />
+                                        <Icon>lock</Icon>
                                     </a>
                                 </td>
                             )}
