@@ -42,6 +42,8 @@ th.actions {
 td.actions {
     text-align: right;
     vertical-align: top;
+    display: flex;
+    align-items: center;
 }
 
 .modal {

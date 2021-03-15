@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle, CardText } from 'react-mdl';
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 import Modal from 'react-modal';
 import SimpleAuth from './SimpleAuth/SimpleAuth';
 import AuthenticationCustomComponent from './authentication-custom-component';
@@ -71,7 +71,7 @@ class AuthComponent extends React.Component {
             <div>
                 <Modal isOpen={this.props.user.showDialog} contentLabel="test" style={customStyles}>
                     <Card shadow={0}>
-                        <CardTitle
+                        <CardHeader
                             expand
                             style={{
                                 color: '#fff',
@@ -79,8 +79,8 @@ class AuthComponent extends React.Component {
                             }}
                         >
                             Action Required
-                        </CardTitle>
-                        <CardText>{content}</CardText>
+                        </CardHeader>
+                        <CardContent>{content}</CardContent>
                     </Card>
                 </Modal>
             </div>

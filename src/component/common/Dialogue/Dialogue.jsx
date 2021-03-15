@@ -25,8 +25,8 @@ const ConfirmDialogue = ({ children, open, onClick, onClose, title, primaryButto
 ConfirmDialogue.propTypes = {
     children: PropTypes.object,
     open: PropTypes.bool,
-    onClick: PropTypes.function,
-    onClose: PropTypes.function,
+    onClick: PropTypes.func,
+    onClose: PropTypes.func,
     ariaLabel: PropTypes.string,
     ariaDescription: PropTypes.string,
     title: PropTypes.string,

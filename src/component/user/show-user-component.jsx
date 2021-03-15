@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './user.module.scss';
-import { Menu, MenuItem } from 'react-mdl';
-import { Avatar } from '@material-ui/core';
+import { MenuItem, Avatar } from '@material-ui/core';
+import DropdownMenu from '../common/dropdown-menu';
 
 export default class ShowUserComponent extends React.Component {
     static propTypes = {
@@ -56,16 +56,18 @@ export default class ShowUserComponent extends React.Component {
                 <div className={styles.showLocale} id="select-locale" style={{ cursor: 'pointer' }}>
                     <img src={imageLocale} title={`Current locale is ${locale}`} alt={locale} />
                 </div>
-                <Menu target="select-locale" valign="bottom" align="right" ripple>
-                    {this.possibleLocales.map(i => (
-                        <MenuItem key={i.value} style={{ textAlign: 'center' }} onClick={() => this.setLocale(i)}>
-                            <div className={styles.showLocale}>
-                                <img src={`public/${i.image}.png`} title={i.value} alt={i.value} />
-                            </div>
-                        </MenuItem>
-                    ))}
-                </Menu>
-                &nbsp;
+                <DropdownMenu
+                    renderOptions={() =>
+                        this.possibleLocales.map(i => (
+                            <MenuItem key={i.value} style={{ textAlign: 'center' }} onClick={() => this.setLocale(i)}>
+                                <div className={styles.showLocale}>
+                                    <img src={`public/${i.image}.png`} title={i.value} alt={i.value} />
+                                </div>
+                            </MenuItem>
+                        ))
+                    }
+                    label="Locale"
+                />
                 <Avatar alt="user image" src={imageUrl} />
             </div>
         );

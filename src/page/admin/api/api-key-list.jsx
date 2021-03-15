@@ -1,11 +1,12 @@
 /* eslint-disable no-alert */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@material-ui/core';
+import { Icon, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import CreateApiKey from './api-key-create';
 import Secret from './secret';
 import ApiHowTo from './api-howto';
+import ConditionallyRender from '../../../component/common/conditionally-render';
 
 function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermission }) {
     const deleteKey = async key => {
@@ -21,57 +22,48 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
     return (
         <div>
             <ApiHowTo />
-            <table className="mdl-data-table mdl-shadow--2dp">
-                <thead>
-                    <tr>
-                        <th className="mdl-data-table__cell--non-numeric" width="20" style={{ textAlign: 'left' }}>
-                            Created
-                        </th>
-                        <th className="mdl-data-table__cell--non-numeric" width="20" style={{ textAlign: 'left' }}>
-                            Username
-                        </th>
-                        <th className="mdl-data-table__cell--non-numeric" width="10" style={{ textAlign: 'left' }}>
-                            Acess Type
-                        </th>
-                        <th className="mdl-data-table__cell--non-numeric" style={{ textAlign: 'left' }}>
-                            Secret
-                        </th>
-                        <th className="mdl-data-table__cell--non-numeric" width="10" style={{ textAlign: 'lerightft' }}>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table className="mdl-data-table mdl-shadow--2dp">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Created</TableCell>
+                        <TableCell>Username</TableCell>
+                        <TableCell>Access Type</TableCell>
+                        <TableCell>Secret</TableCell>
+                        <TableCell>Action</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
                     {keys.map(item => (
-                        <tr key={item.secret}>
-                            <td style={{ textAlign: 'left' }}>
-                                {formatFullDateTimeWithLocale(item.createdAt, location.locale)}
-                            </td>
-                            <td style={{ textAlign: 'left' }}>{item.username}</td>
-                            <td style={{ textAlign: 'left' }}>{item.type}</td>
-                            <td style={{ textAlign: 'left' }}>
+                        <TableRow key={item.secret}>
+                            <TableCell style={{ textAlign: 'left' }}>
+                                {formatFullDateTimeWithLocale(item.created, location.locale)}
+                            </TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>{item.username}</TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>{item.type}</TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>
                                 <Secret value={item.secret} />
-                            </td>
-                            {hasPermission('ADMIN') ? (
-                                <td style={{ textAlign: 'right' }}>
-                                    <a
-                                        href=""
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            deleteKey(item.secret);
-                                        }}
-                                    >
-                                        <Icon>delete</Icon>
-                                    </a>
-                                </td>
-                            ) : (
-                                <td />
-                            )}
-                        </tr>
+                            </TableCell>
+                            <ConditionallyRender
+                                condition={hasPermission('ADMIN')}
+                                show={
+                                    <TableCell style={{ textAlign: 'right' }}>
+                                        <a
+                                            href=""
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                deleteKey(item.secret);
+                                            }}
+                                        >
+                                            <Icon>delete</Icon>
+                                        </a>
+                                    </TableCell>
+                                }
+                            />
+                        </TableRow>
                     ))}
-                </tbody>
-            </table>
-            {hasPermission('ADMIN') ? <CreateApiKey addKey={addKey} /> : null}
+                </TableBody>
+            </Table>
+            <ConditionallyRender condition={hasPermission('ADMIN')} show={<CreateApiKey addKey={addKey} />} />
         </div>
     );
 }

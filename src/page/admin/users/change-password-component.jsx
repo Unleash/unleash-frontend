@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { Button, Textfield, DialogTitle, DialogContent, DialogActions } from 'react-mdl';
+import { Button, TextField, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import { trim } from '../../../component/common/util';
 import { modalStyles } from './util';
 
@@ -63,28 +63,28 @@ function ChangePassword({ showDialog, closeDialog, changePassword, validatePassw
                 <DialogContent>
                     <p>User: {user.username || user.email}</p>
                     <p style={{ color: 'red' }}>{error.general}</p>
-                    <Textfield
-                        floatingLabel
+                    <TextField
                         label="New passord"
                         name="password"
                         type="password"
                         value={data.password}
-                        error={error.password}
+                        error={error.password !== undefined}
+                        helperText={error.password}
                         onChange={updateField}
                         onBlur={onPasswordBlur}
                     />
-                    <Textfield
-                        floatingLabel
+                    <TextField
                         label="Confirm passord"
                         name="confirm"
                         type="password"
                         value={data.confirm}
-                        error={error.confirm}
+                        error={error.confirm !== undefined}
+                        helperText={error.confirm}
                         onChange={updateField}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button type="button" raised colored type="submit">
+                    <Button raised colored type="submit">
                         Save
                     </Button>
                     <Button type="button" onClick={onCancel}>

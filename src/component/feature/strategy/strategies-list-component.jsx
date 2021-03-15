@@ -142,12 +142,12 @@ const StrategiesList = props => {
                     padding: '10px',
                 }}
             >
-                <Button type="submit" ripple raised primary icon="add" onClick={saveAll}>
+                <Button type="submit" color="primary" variant="contained" icon="add" onClick={saveAll}>
                     <Icon>save</Icon>
                     &nbsp;&nbsp;&nbsp; Save all
                 </Button>
                 &nbsp;
-                <Button accent type="cancel" onClick={clearAll}>
+                <Button type="cancel" onClick={clearAll}>
                     Clear all
                 </Button>
             </div>

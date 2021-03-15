@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
-import { Button, Textfield, DialogTitle, DialogContent, DialogActions, RadioGroup, Radio } from 'react-mdl';
+import {
+    Button,
+    TextField,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    RadioGroup,
+    Radio,
+    Modal,
+} from '@material-ui/core';
 import { showPermissions, modalStyles } from './util';
-
-Modal.setAppElement('#app');
 
 function AddUser({ user, showDialog, closeDialog, updateUser }) {
     if (!user) {
@@ -40,13 +46,13 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
     const userType = data.userType || showPermissions(user.permissions);
 
     return (
-        <Modal isOpen={showDialog} style={modalStyles} onRequestClose={onCancel}>
+        <Modal open={showDialog} style={modalStyles} onClose={onCancel}>
             <form onSubmit={submit}>
                 <DialogTitle>Edit user</DialogTitle>
 
                 <DialogContent>
                     <p>{error.general}</p>
-                    <Textfield
+                    <TextField
                         floatingLabel
                         label="Full name"
                         name="name"
@@ -55,7 +61,7 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                         type="name"
                         onChange={updateField}
                     />
-                    <Textfield
+                    <TextField
                         floatingLabel
                         label="Email"
                         name="email"
@@ -80,7 +86,7 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button type="button" raised colored type="submit">
+                    <Button raised colored type="submit">
                         Update
                     </Button>
                     <Button type="button" onClick={onCancel}>

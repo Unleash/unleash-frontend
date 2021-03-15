@@ -13,10 +13,10 @@ export default function StatusUpdateComponent({ stale, updateStale }) {
     }
 
     const renderOptions = () => [
-        <MenuItem disabled={!stale} data-target="active">
+        <MenuItem disabled={!stale} key="status_update_0" data-target="active">
             Set toggle Active
         </MenuItem>,
-        <MenuItem disabled={stale} data-target="stale">
+        <MenuItem disabled={stale} key="status_update_1" data-target="stale">
             Mark toggle as Stale
         </MenuItem>,
     ];

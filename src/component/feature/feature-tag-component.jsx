@@ -5,10 +5,11 @@ import ConditionallyRender from '../common/conditionally-render';
 import Dialogue from '../common/Dialogue';
 function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }) {
     const [showDialog, setShowDialog] = useState(false);
-
+    const [selectedTag, setSelectedTag] = useState(undefined);
     const onUntagFeature = tag => {
         // eslint-disable-next-line no-alert
         untagFeature(featureToggleName, tag);
+        setSelectedTag(undefined);
     };
 
     const tagIcon = typeName => {
@@ -38,7 +39,10 @@ function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }
             style={{ marginRight: '3px', fontSize: '0.8em' }}
             label={t.value}
             key={`${t.type}:${t.value}`}
-            onDelete={() => setShowDialog(prev => !prev)}
+            onDelete={() => {
+                setSelectedTag(t);
+                setShowDialog(true);
+            }}
         />
     );
 
@@ -47,16 +51,17 @@ function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }
             condition={tags && tags.length > 0}
             show={
                 <div>
-                    <ConditionallyRender
-                        condition={showDialog}
-                        show={
-                            <Dialogue
-                                open={showDialog}
-                                onClose={() => setShowDialog(prev => !prev)}
-                                onClick={onUntagFeature}
-                                title="Are you sure you want to delete this tag?"
-                            />
-                        }
+                    <Dialogue
+                        open={showDialog}
+                        onClose={() => {
+                            setShowDialog(false);
+                            setSelectedTag(undefined);
+                        }}
+                        onClick={() => {
+                            onUntagFeature(selectedTag);
+                            setShowDialog(false);
+                        }}
+                        title="Are you sure you want to delete this tag?"
                     />
                     <p style={{ marginBottom: 0 }}>Tags</p>
                     {tags.map(renderTag)}

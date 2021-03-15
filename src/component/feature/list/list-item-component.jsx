@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import { Link } from 'react-router-dom';
-import ListItem from '@material-ui/core/ListItem';
-import { Switch, Icon, IconButton } from '@material-ui/core';
+import { Switch, Icon, IconButton, ListItem } from '@material-ui/core';
 import TimeAgo from 'react-timeago';
 import Progress from '../progress-component';
 import Status from '../status-component';
@@ -57,10 +56,10 @@ const Feature = ({
             <span className={classnames(styles.listItemLink)}>
                 <Link to={featureUrl} className={classnames(commonStyles.listLink, commonStyles.truncate)}>
                     <span className={commonStyles.toggleName}>{name}&nbsp;</span>
-                    <small className="mdl-color-text--blue-grey-300">
+                    <small>
                         <TimeAgo date={createdAt} live={false} />
                     </small>
-                    <div className="mdl-list__item-sub-title">
+                    <div>
                         <span className={commonStyles.truncate}>{description}</span>
                     </div>
                 </Link>

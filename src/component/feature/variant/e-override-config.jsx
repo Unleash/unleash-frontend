@@ -7,6 +7,7 @@ import Select from 'react-select';
 import MySelect from '../../common/select';
 import InputListField from '../../common/input-list-field';
 import { selectStyles } from '../../common';
+import ConditionallyRender from '../../common/conditionally-render';
 
 function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, removeOverride, contextDefinitions }) {
     const contextNames = contextDefinitions.map(c => ({ key: c.name, label: c.name }));
@@ -26,8 +27,8 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
         const options = legalValues.map(v => ({ value: v, label: v, key: v }));
 
         return (
-            <Grid container noSpacing key={`override=${i}`}>
-                <Grid item xs={3}>
+            <Grid container key={`override=${i}`}>
+                <Grid item md={3}>
                     <MySelect
                         name="contextName"
                         label="Context Field"
@@ -36,31 +37,37 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
                         onChange={updateOverrideType(i)}
                     />
                 </Grid>
-                <Grid xs={8} item>
-                    {legalValues && legalValues.length > 0 ? (
-                        <div style={{ paddingTop: '12px' }}>
-                            <Select
-                                key={`override-select=${i}`}
-                                styles={selectStyles}
-                                value={mapSelectValues(o.values)}
-                                options={options}
-                                isMulti
-                                onChange={updateSelectValues(i)}
+                <Grid md={8} item>
+                    <ConditionallyRender
+                        condition={legalValues && legalValues.length > 0}
+                        show={
+                            <div style={{ paddingTop: '12px' }}>
+                                <Select
+                                    key={`override-select=${i}`}
+                                    styles={selectStyles}
+                                    value={mapSelectValues(o.values)}
+                                    options={options}
+                                    isMulti
+                                    onChange={updateSelectValues(i)}
+                                />
+                            </div>
+                        }
+                        elseShow={
+                            <InputListField
+                                label="Values (v1, v2, ...)"
+                                name="values"
+                                placeholder=""
+                                style={{ width: '100%' }}
+                                values={o.values}
+                                updateValues={updateValues(i)}
                             />
-                        </div>
-                    ) : (
-                        <InputListField
-                            label="Values (v1, v2, ...)"
-                            name="values"
-                            placeholder=""
-                            style={{ width: '100%' }}
-                            values={o.values}
-                            updateValues={updateValues(i)}
-                        />
-                    )}
+                        }
+                    />
                 </Grid>
-                <Grid item xs={1} style={{ textAlign: 'right', paddingTop: '12px' }}>
-                    <IconButton name="delete" onClick={removeOverride(i)} />
+                <Grid item md={1}>
+                    <IconButton onClick={removeOverride(i)}>
+                        <Icon>delete</Icon>
+                    </IconButton>
                 </Grid>
             </Grid>
         );

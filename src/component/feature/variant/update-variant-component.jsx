@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import VariantViewComponent from './variant-view-component';
 import styles from './variant.module.scss';
 import { UPDATE_FEATURE } from '../../../permissions';
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import AddVariant from './add-variant';
 import MySelect from '../../common/select';
 
@@ -67,18 +68,18 @@ class UpdateVariantComponent extends Component {
     );
 
     renderVariants = variants => (
-        <table className={['mdl-data-table mdl-shadow--2dp', styles.variantTable].join(' ')}>
-            <thead>
-                <tr>
-                    <th>Variant name</th>
-                    <th className={styles.labels} />
-                    <th>Weight</th>
-                    <th>Weight Type</th>
-                    <th className={styles.actions} />
-                </tr>
-            </thead>
-            <tbody>{variants.map(this.renderVariant)}</tbody>
-        </table>
+        <Table className={styles.variantTable}>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Variant name</TableCell>
+                    <TableCell className={styles.labels} />
+                    <TableCell>Weight</TableCell>
+                    <TableCell>Weight Type</TableCell>
+                    <TableCell className={styles.actions} />
+                </TableRow>
+            </TableHead>
+            <TableBody>{variants.map(this.renderVariant)}</TableBody>
+        </Table>
     );
 
     renderStickiness = variants => {

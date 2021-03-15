@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Cell, Switch, Textfield } from 'react-mdl';
+import { Button, Grid, Switch, TextField } from '@material-ui/core';
 
 const initialState = {
     enabled: false,
@@ -54,8 +54,8 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
     };
     return (
         <div>
-            <Grid style={{ background: '#EFEFEF' }}>
-                <Cell col={12}>
+            <Grid container style={{ background: '#EFEFEF' }}>
+                <Grid item xs={12}>
                     <p>
                         Please read the{' '}
                         <a href="https://www.unleash-hosted.com/docs/enterprise-authentication/google" target="_blank">
@@ -65,59 +65,57 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                         <br />
                         Callback URL: <code>https://[unleash.hostname.com]/auth/google/callback</code>
                     </p>
-                </Cell>
+                </Grid>
             </Grid>
             <form onSubmit={onSubmit}>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid xs={5}>
                         <strong>Enable</strong>
                         <p>
                             Enable Google users to login. Value is ignored if Client ID and Client Secret are not
                             defined.
                         </p>
-                    </Cell>
-                    <Cell col={6} style={{ padding: '20px' }}>
+                    </Grid>
+                    <Grid item xs={6} style={{ padding: '20px' }}>
                         <Switch onChange={updateEnabled} name="enabled" checked={data.enabled}>
                             {data.enabled ? 'Enabled' : 'Disabled'}
                         </Switch>
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid item xs={5}>
                         <strong>Client ID</strong>
                         <p>(Required) The Client ID provided by Google when registering the application.</p>
-                    </Cell>
-                    <Cell col={6}>
-                        <Textfield
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
                             onChange={updateField}
                             label="Client ID"
                             name="clientId"
                             placeholder=""
                             value={data.clientId}
-                            floatingLabel
                             style={{ width: '400px' }}
                         />
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid col={5}>
                         <strong>Client Secret</strong>
                         <p>(Required) Client Secret provided by Google when registering the application.</p>
-                    </Cell>
-                    <Cell col={6}>
-                        <Textfield
+                    </Grid>
+                    <Grid col={6}>
+                        <TextField
                             onChange={updateField}
                             label="Client Secret"
                             name="clientSecret"
                             value={data.clientSecret}
                             placeholder=""
-                            floatingLabel
                             style={{ width: '400px' }}
                         />
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid col={5}>
                         <strong>Unleash hostname</strong>
                         <p>
                             (Required) The hostname you are running Unleash on that Google should send the user back to.
@@ -126,55 +124,53 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                                 <code>https://[unleash.hostname.com]/auth/google/callback</code>
                             </small>
                         </p>
-                    </Cell>
-                    <Cell col={6}>
-                        <Textfield
+                    </Grid>
+                    <Grid col={6}>
+                        <TextField
                             onChange={updateField}
                             label="Unleash Hostname"
                             name="unleashHostname"
                             placeholder=""
                             value={data.unleashHostname}
-                            floatingLabel
                             style={{ width: '400px' }}
                         />
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid item col={5}>
                         <strong>Auto-create users</strong>
                         <p>Enable automatic creation of new users when signing in with Google.</p>
-                    </Cell>
-                    <Cell col={6} style={{ padding: '20px' }}>
+                    </Grid>
+                    <Grid item col={6} style={{ padding: '20px' }}>
                         <Switch onChange={updateAutoCreate} name="enabled" checked={data.autoCreate}>
                             Auto-create users
                         </Switch>
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid item col={5}>
                         <strong>Email domains</strong>
                         <p>(Optional) Comma separated list of email domains that should be allowed to sign in.</p>
-                    </Cell>
-                    <Cell col={6}>
-                        <Textfield
+                    </Grid>
+                    <Grid item col={6}>
+                        <TextField
                             onChange={updateField}
                             label="Email domains"
                             name="emailDomains"
                             value={data.emailDomains}
                             placeholder="@company.com, @anotherCompany.com"
-                            floatingLabel
                             style={{ width: '400px' }}
                             rows={2}
                         />
-                    </Cell>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <Cell col={5}>
+                <Grid container>
+                    <Grid item col={5}>
                         <Button raised accent type="submit">
                             Save
                         </Button>{' '}
                         <small>{info}</small>
-                    </Cell>
+                    </Grid>
                 </Grid>
             </form>
         </div>

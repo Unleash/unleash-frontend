@@ -24,7 +24,6 @@ const plugins = [
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new CleanWebpackPlugin(),
-    new BundleAnalyzerPlugin(),
 ];
 
 if (devMode) {

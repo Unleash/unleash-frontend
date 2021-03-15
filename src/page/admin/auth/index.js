@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'react-mdl';
 import AdminMenu from '../admin-menu';
 import GoogleAuth from './google-auth-container';
 import SamlAuth from './saml-auth-container';
+import TabNav from '../../../component/common/tabNav';
 
 function AdminAuthPage() {
-    const [activeTab, setActiveTab] = useState(0);
+    const tabs = [
+        {
+            label: 'SAML 2.0',
+            component: <SamlAuth />,
+        },
+        {
+            label: 'Google',
+            component: <GoogleAuth />,
+        },
+    ];
 
     return (
         <div>
             <AdminMenu />
             <h3>Authentication</h3>
             <div className="demo-tabs">
-                <Tabs activeTab={activeTab} onChange={setActiveTab} ripple>
-                    <Tab>SAML 2.0</Tab>
-                    <Tab>Google</Tab>
-                </Tabs>
-                <section>{activeTab === 0 ? <SamlAuth /> : <GoogleAuth />}</section>
+                <TabNav tabData={tabs} />
             </div>
         </div>
     );

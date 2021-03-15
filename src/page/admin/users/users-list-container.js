@@ -7,7 +7,7 @@ import {
     changePassword,
     updateUser,
     validatePassword,
-} from './../../../store/e-user-admin/actions';
+} from '../../../store/e-user-admin/actions';
 import { hasPermission } from '../../../permissions';
 
 const mapStateToProps = state => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Chip, Icon } from '@material-ui/core';
+import { IconButton, Chip, Icon, TableCell, TableRow } from '@material-ui/core';
 import { UPDATE_FEATURE } from '../../../permissions';
 import { weightTypes } from './enums';
 
@@ -10,9 +10,9 @@ import styles from './variant.module.scss';
 function VariantViewComponent({ variant, editVariant, removeVariant, hasPermission }) {
     const { FIX } = weightTypes;
     return (
-        <tr>
-            <td onClick={editVariant}>{variant.name}</td>
-            <td>
+        <TableRow>
+            <TableCell onClick={editVariant}>{variant.name}</TableCell>
+            <TableCell>
                 <ConditionallyRender condition={variant.payload} show={<Chip label="Payload" />} />
                 <ConditionallyRender
                     condition={variant.overrides && variant.overrides.length > 0}
@@ -25,24 +25,24 @@ function VariantViewComponent({ variant, editVariant, removeVariant, hasPermissi
                         />
                     }
                 />
-            </td>
-            <td>{variant.weight / 10.0} %</td>
-            <td>{variant.weightType === FIX ? 'Fix' : 'Variable'}</td>
+            </TableCell>
+            <TableCell>{variant.weight / 10.0} %</TableCell>
+            <TableCell>{variant.weightType === FIX ? 'Fix' : 'Variable'}</TableCell>
             <ConditionallyRender
                 condition={hasPermission(UPDATE_FEATURE)}
                 show={
-                    <td className={styles.actions}>
+                    <TableCell className={styles.actions}>
                         <IconButton onClick={editVariant}>
                             <Icon>edit</Icon>
                         </IconButton>
                         <IconButton onClick={removeVariant}>
                             <Icon>delete</Icon>
                         </IconButton>
-                    </td>
+                    </TableCell>
                 }
-                elseShow={<td className={styles.actions} />}
+                elseShow={<TableCell className={styles.actions} />}
             />
-        </tr>
+        </TableRow>
     );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CardActions, Button, Textfield } from 'react-mdl';
+import { CardActions, Button, TextField } from '@material-ui/core';
 
 class EnterpriseAuthenticationComponent extends React.Component {
     static propTypes = {
@@ -57,23 +57,27 @@ class EnterpriseAuthenticationComponent extends React.Component {
             <form onSubmit={this.handleSubmit} action={authDetails.path}>
                 <p>{authDetails.message}</p>
                 <p style={{ color: 'red' }}>{error}</p>
-                <Textfield
+                <TextField
                     label="Username or email"
-                    floatingLabel
                     name="username"
                     type="string"
                     onChange={evt => this.setState({ username: evt.target.value })}
                     value={username}
-                    error={usernameError}
+                    error={!!usernameError !== undefined}
+                    helperText={usernameError}
+                    variant="filled"
+                    size="small"
                 />
-                <Textfield
+                <TextField
                     label="Password"
                     onChange={evt => this.setState({ password: evt.target.value })}
-                    floatingLabel
                     name="password"
                     type="password"
                     value={password}
-                    error={passwordError}
+                    error={!!passwordError}
+                    helperText={passwordError}
+                    variant="filled"
+                    size="small"
                 />
                 <br />
 

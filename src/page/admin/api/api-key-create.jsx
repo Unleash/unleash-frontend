@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Textfield, Button } from 'react-mdl';
+import { TextField, Button } from '@material-ui/core';
 
 function CreateApiKey({ addKey }) {
     const [type, setType] = useState('CLIENT');
@@ -29,12 +29,11 @@ function CreateApiKey({ addKey }) {
         <div style={{ margin: '5px' }}>
             {show ? (
                 <form onSubmit={submit}>
-                    <Textfield
+                    <TextField
                         value={username}
                         name="username"
                         onChange={e => setUsername(e.target.value)}
                         label="Username"
-                        floatingLabel
                         style={{ width: '200px' }}
                         error={error}
                     />

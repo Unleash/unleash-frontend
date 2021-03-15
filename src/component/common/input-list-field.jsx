@@ -32,6 +32,8 @@ function InputListField({ label, values = [], error, name, updateValues, placeho
             onBlur={onBlur}
             label={label}
             style={{ width: '100%' }}
+            variant="outlined"
+            size="small"
         />
     );
 }

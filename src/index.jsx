@@ -1,7 +1,5 @@
 import 'whatwg-fetch';
-import 'react-mdl/extra/material.js';
 
-import 'react-mdl/extra/css/material.blue_grey-pink.min.css';
 import './app.css';
 
 import React from 'react';
@@ -36,10 +34,10 @@ ReactDOM.render(
     <Provider store={unleashStore}>
         <HashRouter>
             <ThemeProvider theme={mainTheme}>
-            <ScrollToTop>
-                <Route path="/" component={App} />
-            </ScrollToTop>
-        </ThemeProvider>
+                <ScrollToTop>
+                    <Route path="/" component={App} />
+                </ScrollToTop>
+            </ThemeProvider>
         </HashRouter>
     </Provider>,
     document.getElementById('app')

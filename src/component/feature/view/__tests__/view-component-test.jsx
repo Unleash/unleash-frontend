@@ -5,7 +5,7 @@ import ViewFeatureToggleComponent from './../view-component';
 import renderer from 'react-test-renderer';
 import { DELETE_FEATURE, UPDATE_FEATURE } from '../../../../permissions';
 
-jest.mock('react-mdl');
+jest.mock('@material-ui/core');
 jest.mock('../update-strategies-container', () => ({
     __esModule: true,
     default: 'UpdateStrategiesComponent',

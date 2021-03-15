@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { Button, Textfield, DialogTitle, DialogContent, DialogActions, RadioGroup, Radio } from 'react-mdl';
+import { Button, TextField, DialogTitle, DialogContent, DialogActions, RadioGroup, Radio } from '@material-ui/core';
 import { trim } from '../../../component/common/util';
 import { modalStyles } from './util';
 
@@ -70,8 +70,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
 
                 <DialogContent>
                     <p style={{ color: 'red' }}>{error.general}</p>
-                    <Textfield
-                        floatingLabel
+                    <TextField
                         label="Full name"
                         name="name"
                         value={data.name}
@@ -79,8 +78,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
                         type="name"
                         onChange={updateField}
                     />
-                    <Textfield
-                        floatingLabel
+                    <TextField
                         label="Email"
                         name="email"
                         value={data.email}
@@ -88,8 +86,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
                         type="email"
                         onChange={updateFieldWithTrim}
                     />
-                    <Textfield
-                        floatingLabel
+                    <TextField
                         label="Password"
                         name="password"
                         type="password"
@@ -113,9 +110,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button type="button" raised colored type="submit">
-                        Add
-                    </Button>
+                    <Button type="submit">Add</Button>
                     <Button type="button" onClick={onCancel}>
                         Cancel
                     </Button>

@@ -68,7 +68,10 @@ class HistoryList extends Component {
         let entries;
 
         const renderListItemCards = entry => (
-            <Card style={{ padding: '1rem', borderTop: '1px solid #f2f2f2', borderBottom: '1px solid #f2f2f2' }}>
+            <Card
+                key={entry.id}
+                style={{ padding: '1rem', borderTop: '1px solid #f2f2f2', borderBottom: '1px solid #f2f2f2' }}
+            >
                 <HistoryMeta entry={entry} timeFormatted={this.formatFulldateTime(entry.createdAt)} />
             </Card>
         );

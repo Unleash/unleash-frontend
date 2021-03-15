@@ -11,7 +11,8 @@ class TagTypeSelectComponent extends Component {
     }
 
     render() {
-        const { value, types, onChange, ...rest } = this.props;
+        // eslint-disable-next-line no-unused-vars
+        const { value, types, onChange, fetchTagTypes, ...rest } = this.props;
         const options = types.map(t => ({ key: t.name, label: t.name, title: t.name }));
 
         return <MySelect label="Tag type" options={options} value={value} onChange={onChange} {...rest} />;
