@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Paper, Switch, TextField } from '@material-ui/core';
 import commonStyles from '../../../component/common/common.module.scss';
-import { common } from '@material-ui/core/colors';
 
 const initialState = {
     enabled: false,
@@ -125,7 +124,11 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
                             name="certificate"
                             placeholder=""
                             value={data.certificate}
-                            style={{ width: '100%', fontSize: '0.7em', fontFamily: 'monospace' }}
+                            style={{
+                                width: '100%',
+                                fontSize: '0.7em',
+                                fontFamily: 'monospace',
+                            }}
                             rows={14}
                         />
                     </Grid>

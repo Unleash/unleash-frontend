@@ -1,25 +1,25 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
-import FeatureListComponent from "./../list-component";
-import renderer from "react-test-renderer";
-import { CREATE_FEATURE } from "../../../../permissions";
+import FeatureListComponent from './../list-component';
+import renderer from 'react-test-renderer';
+import { CREATE_FEATURE } from '../../../../permissions';
 
-jest.mock("../list-item-component", () => ({
+jest.mock('../list-item-component', () => ({
     __esModule: true,
-    default: "ListItem"
+    default: 'ListItem',
 }));
 
-jest.mock("../project-container", () => "Project");
+jest.mock('../project-container', () => 'Project');
 
-test("renders correctly with one feature", () => {
+test('renders correctly with one feature', () => {
     const features = [
         {
-            name: "Another"
-        }
+            name: 'Another',
+        },
     ];
     const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: "name" };
+    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <FeatureListComponent
@@ -38,14 +38,14 @@ test("renders correctly with one feature", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("renders correctly with one feature without permissions", () => {
+test('renders correctly with one feature without permissions', () => {
     const features = [
         {
-            name: "Another"
-        }
+            name: 'Another',
+        },
     ];
     const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: "name" };
+    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <FeatureListComponent

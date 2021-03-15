@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Paper, MenuItem } from "@material-ui/core";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from 'react';
+import { Paper, MenuItem } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-import ReportToggleListItem from "./ReportToggleListItem/ReportToggleListItem";
-import ReportToggleListHeader from "./ReportToggleListHeader/ReportToggleListHeader";
-import ConditionallyRender from "../../common/conditionally-render";
-import DropdownMenu from "../../common/dropdown-menu";
+import ReportToggleListItem from './ReportToggleListItem/ReportToggleListItem';
+import ReportToggleListHeader from './ReportToggleListHeader/ReportToggleListHeader';
+import ConditionallyRender from '../../common/conditionally-render';
+import DropdownMenu from '../../common/dropdown-menu';
 
-import {
-    getObjectProperties,
-    getCheckedState,
-    applyCheckedToFeatures
-} from "../utils";
+import { getObjectProperties, getCheckedState, applyCheckedToFeatures } from '../utils';
 
-import useSort from "../useSort";
+import useSort from '../useSort';
 
-import styles from "./ReportToggleList.module.scss";
+import styles from './ReportToggleList.module.scss';
 
 /* FLAG TO TOGGLE UNFINISHED BULK ACTIONS FEATURE */
 const BULK_ACTIONS_ON = false;
@@ -27,16 +23,9 @@ const ReportToggleList = ({ features, selectedProject }) => {
 
     useEffect(() => {
         const formattedFeatures = features.map(feature => ({
-            ...getObjectProperties(
-                feature,
-                "name",
-                "lastSeenAt",
-                "createdAt",
-                "stale",
-                "type"
-            ),
+            ...getObjectProperties(feature, 'name', 'lastSeenAt', 'createdAt', 'stale', 'type'),
             checked: getCheckedState(feature.name, features),
-            setFeatures
+            setFeatures,
         }));
 
         setFeatures(formattedFeatures);
@@ -53,11 +42,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
 
     const renderListRows = () =>
         sort(localFeatures).map(feature => (
-            <ReportToggleListItem
-                key={feature.name}
-                {...feature}
-                bulkActionsOn={BULK_ACTIONS_ON}
-            />
+            <ReportToggleListItem key={feature.name} {...feature} bulkActionsOn={BULK_ACTIONS_ON} />
         ));
 
     const renderBulkActionsMenu = () => (
@@ -77,10 +62,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
         <Paper className={styles.reportToggleList}>
             <div className={styles.reportToggleListHeader}>
                 <h3 className={styles.reportToggleListHeading}>Overview</h3>
-                <ConditionallyRender
-                    condition={BULK_ACTIONS_ON}
-                    show={renderBulkActionsMenu}
-                />
+                <ConditionallyRender condition={BULK_ACTIONS_ON} show={renderBulkActionsMenu} />
             </div>
             <div className={styles.reportToggleListInnerContainer}>
                 <table className={styles.reportingToggleTable}>
@@ -100,7 +82,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
 
 ReportToggleList.propTypes = {
     selectedProject: PropTypes.string.isRequired,
-    features: PropTypes.array.isRequired
+    features: PropTypes.array.isRequired,
 };
 
 export default ReportToggleList;

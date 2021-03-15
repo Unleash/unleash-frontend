@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import { StylesProvider } from '@material-ui/core/styles';
 
 import Features from '../page/features';
@@ -27,16 +27,16 @@ class App extends PureComponent {
         return (
             <StylesProvider injectFirst>
                 <CssBaseline />
-                    <div className={styles.container}>
-                        <MainLayout {...this.props}>
-                            <Switch>
-                                <Route exact path="/" render={() => <Redirect to="/features" component={Features} />} />
-                                {routes.map(route => (
-                                    <Route key={route.path} path={route.path} component={route.component} />
-                                ))}
-                            </Switch>
-                        </MainLayout>
-                    </div>
+                <div className={styles.container}>
+                    <MainLayout {...this.props}>
+                        <Switch>
+                            <Route exact path="/" render={() => <Redirect to="/features" component={Features} />} />
+                            {routes.map(route => (
+                                <Route key={route.path} path={route.path} component={route.component} />
+                            ))}
+                        </Switch>
+                    </MainLayout>
+                </div>
             </StylesProvider>
         );
     }

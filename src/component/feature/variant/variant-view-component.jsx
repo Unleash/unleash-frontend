@@ -1,35 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { IconButton, Chip, Icon, TableCell, TableRow } from "@material-ui/core";
-import { UPDATE_FEATURE } from "../../../permissions";
-import { weightTypes } from "./enums";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { IconButton, Chip, Icon, TableCell, TableRow } from '@material-ui/core';
+import { UPDATE_FEATURE } from '../../../permissions';
+import { weightTypes } from './enums';
 
-import ConditionallyRender from "../../common/conditionally-render";
+import ConditionallyRender from '../../common/conditionally-render';
 
-import styles from "./variant.module.scss";
-function VariantViewComponent({
-    variant,
-    editVariant,
-    removeVariant,
-    hasPermission
-}) {
+import styles from './variant.module.scss';
+function VariantViewComponent({ variant, editVariant, removeVariant, hasPermission }) {
     const { FIX } = weightTypes;
     return (
         <TableRow>
             <TableCell onClick={editVariant}>{variant.name}</TableCell>
             <TableCell className={styles.chipContainer}>
+                <ConditionallyRender condition={variant.payload} show={<Chip label="Payload" />} />
                 <ConditionallyRender
-                    condition={variant.payload}
-                    show={<Chip label="Payload" />}
-                />
-                <ConditionallyRender
-                    condition={
-                        variant.overrides && variant.overrides.length > 0
-                    }
+                    condition={variant.overrides && variant.overrides.length > 0}
                     show={
                         <Chip
                             style={{
-                                backgroundColor: "rgba(173, 216, 230, 0.2)"
+                                backgroundColor: 'rgba(173, 216, 230, 0.2)',
                             }}
                             label="Overrides"
                         />
@@ -37,9 +27,7 @@ function VariantViewComponent({
                 />
             </TableCell>
             <TableCell>{variant.weight / 10.0} %</TableCell>
-            <TableCell>
-                {variant.weightType === FIX ? "Fix" : "Variable"}
-            </TableCell>
+            <TableCell>{variant.weightType === FIX ? 'Fix' : 'Variable'}</TableCell>
             <ConditionallyRender
                 condition={hasPermission(UPDATE_FEATURE)}
                 show={
@@ -62,7 +50,7 @@ VariantViewComponent.propTypes = {
     variant: PropTypes.object,
     removeVariant: PropTypes.func,
     editVariant: PropTypes.func,
-    hasPermission: PropTypes.func.isRequired
+    hasPermission: PropTypes.func.isRequired,
 };
 
 export default VariantViewComponent;

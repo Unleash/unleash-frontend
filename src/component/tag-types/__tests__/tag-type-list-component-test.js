@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import TagTypesList from "../list-component";
-import renderer from "react-test-renderer";
-import { MemoryRouter } from "react-router-dom";
+import TagTypesList from '../list-component';
+import renderer from 'react-test-renderer';
+import { MemoryRouter } from 'react-router-dom';
 
-test("renders an empty list correctly", () => {
+test('renders an empty list correctly', () => {
     const tree = renderer.create(
         <TagTypesList
             tagTypes={[]}
@@ -17,16 +17,16 @@ test("renders an empty list correctly", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("renders a list with elements correctly", () => {
+test('renders a list with elements correctly', () => {
     const tree = renderer.create(
         <MemoryRouter>
             <TagTypesList
                 tagTypes={[
                     {
-                        name: "simple",
-                        description: "Some simple description",
-                        icon: "#"
-                    }
+                        name: 'simple',
+                        description: 'Some simple description',
+                        icon: '#',
+                    },
                 ]}
                 fetchTagTypes={jest.fn()}
                 removeTagType={jest.fn()}

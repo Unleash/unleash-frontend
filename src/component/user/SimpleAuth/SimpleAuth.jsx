@@ -5,8 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import styles from './SimpleAuth.module.scss';
 
 const SimpleAuth = ({ insecureLogin, loadInitialData, history, authDetails }) => {
-    const [email, setEmail] = useState("")
-
+    const [email, setEmail] = useState('');
 
     const handleSubmit = evt => {
         evt.preventDefault();
@@ -14,46 +13,54 @@ const SimpleAuth = ({ insecureLogin, loadInitialData, history, authDetails }) =>
         const path = evt.target.action;
 
         insecureLogin(path, user)
-        .then(loadInitialData)
-        .then(() => history.push(`/`));
+            .then(loadInitialData)
+            .then(() => history.push(`/`));
     };
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         const value = e.target.value;
-        setEmail(value)
-    }
+        setEmail(value);
+    };
 
- 
-        
     return (
         <form onSubmit={handleSubmit} action={authDetails.path}>
             <div className={styles.container}>
-            <p>{authDetails.message}</p>
-            <p>
-                This instance of Unleash is not set up with a secure authentication provider. You can read more
-                about{' '}
-                <a href="https://github.com/Unleash/unleash/blob/master/docs/securing-unleash.md" target="_blank">
-                    securing Unleash on GitHub
-                </a>
-            </p>
-            <TextField value={email} onChange={handleChange} inputProps={{"data-test": "email-input-field"}} size="small" variant="outlined" label="Email" name="email" required type="email" />
-            <br />
+                <p>{authDetails.message}</p>
+                <p>
+                    This instance of Unleash is not set up with a secure authentication provider. You can read more
+                    about{' '}
+                    <a href="https://github.com/Unleash/unleash/blob/master/docs/securing-unleash.md" target="_blank">
+                        securing Unleash on GitHub
+                    </a>
+                </p>
+                <TextField
+                    value={email}
+                    onChange={handleChange}
+                    inputProps={{ 'data-test': 'email-input-field' }}
+                    size="small"
+                    variant="outlined"
+                    label="Email"
+                    name="email"
+                    required
+                    type="email"
+                />
+                <br />
 
-            <div>
-                <Button raised type="submit" variant="contained" color="primary" colored data-test="login-submit">
-                    Sign in
-                </Button>
-            </div>
+                <div>
+                    <Button raised type="submit" variant="contained" color="primary" colored data-test="login-submit">
+                        Sign in
+                    </Button>
+                </div>
             </div>
         </form>
     );
-}
+};
 
 SimpleAuth.propTypes = {
-        authDetails: PropTypes.object.isRequired,
-        insecureLogin: PropTypes.func.isRequired,
-        loadInitialData: PropTypes.func.isRequired,
-        history: PropTypes.object.isRequired,
-}
+    authDetails: PropTypes.object.isRequired,
+    insecureLogin: PropTypes.func.isRequired,
+    loadInitialData: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+};
 
 export default SimpleAuth;

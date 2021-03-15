@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, FormControl, FormControlLabel, Grid, Icon, Switch } from '@material-ui/core';
 import Dialog from '../../common/Dialogue';
-import styles from './variant.module.scss';
 import MySelect from '../../common/select';
 import { trim, modalStyles } from '../../common/util';
 import { weightTypes } from './enums';

@@ -1,26 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import {
-    Grid,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar,
-    Switch,
-    Icon
-} from "@material-ui/core";
-import { shorten } from "../common";
-import { CREATE_FEATURE, CREATE_STRATEGY } from "../../permissions";
-import ConditionallyRender from "../common/conditionally-render";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Grid, List, ListItem, ListItemText, ListItemAvatar, Switch, Icon } from '@material-ui/core';
+import { shorten } from '../common';
+import { CREATE_FEATURE, CREATE_STRATEGY } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
 
-function ApplicationView({
-    seenToggles,
-    hasPermission,
-    strategies,
-    instances,
-    formatFullDateTime
-}) {
+function ApplicationView({ seenToggles, hasPermission, strategies, instances, formatFullDateTime }) {
     const notFoundListItem = ({ createUrl, name, permission, i }) => (
         <ConditionallyRender
             key={`not_found_conditional_${name}`}
@@ -31,10 +17,8 @@ function ApplicationView({
                         <Icon>report</Icon>
                     </ListItemAvatar>
                     <ListItemText
-                        primary={
-                            <Link to={`${createUrl}?name=${name}`}>{name}</Link>
-                        }
-                        secondary={"Missing, want to create?"}
+                        primary={<Link to={`${createUrl}?name=${name}`}>{name}</Link>}
+                        secondary={'Missing, want to create?'}
                     />
                 </ListItem>
             }
@@ -43,24 +27,14 @@ function ApplicationView({
                     <ListItemAvatar>
                         <Icon>report</Icon>
                     </ListItemAvatar>
-                    <ListItemText
-                        primary={name}
-                        secondary={`Could not find feature toggle with name ${name}`}
-                    />
+                    <ListItemText primary={name} secondary={`Could not find feature toggle with name ${name}`} />
                 </ListItem>
             }
         />
     );
 
     // eslint-disable-next-line react/prop-types
-    const foundListItem = ({
-        viewUrl,
-        name,
-        showSwitch,
-        enabled,
-        description,
-        i
-    }) => (
+    const foundListItem = ({ viewUrl, name, showSwitch, enabled, description, i }) => (
         <ListItem key={`found_${name}-${i}`}>
             <ListItemAvatar>
                 <ConditionallyRender
@@ -71,9 +45,7 @@ function ApplicationView({
                 />
             </ListItemAvatar>
             <ListItemText
-                primary={
-                    <Link to={`${viewUrl}/${name}`}>{shorten(name, 50)}</Link>
-                }
+                primary={<Link to={`${viewUrl}/${name}`}>{shorten(name, 50)}</Link>}
                 secondary={shorten(description, 60)}
             />
         </ListItem>
@@ -84,28 +56,26 @@ function ApplicationView({
                 <h6> Toggles</h6>
                 <hr />
                 <List>
-                    {seenToggles.map(
-                        ({ name, description, enabled, notFound }, i) => (
-                            <ConditionallyRender
-                                key={`toggle_conditional_${name}`}
-                                condition={notFound}
-                                show={notFoundListItem({
-                                    createUrl: "/features/create",
-                                    name,
-                                    permission: CREATE_FEATURE,
-                                    i
-                                })}
-                                elseShow={foundListItem({
-                                    viewUrl: "/features/strategies",
-                                    name,
-                                    showSwitch: true,
-                                    enabled,
-                                    description,
-                                    i
-                                })}
-                            />
-                        )
-                    )}
+                    {seenToggles.map(({ name, description, enabled, notFound }, i) => (
+                        <ConditionallyRender
+                            key={`toggle_conditional_${name}`}
+                            condition={notFound}
+                            show={notFoundListItem({
+                                createUrl: '/features/create',
+                                name,
+                                permission: CREATE_FEATURE,
+                                i,
+                            })}
+                            elseShow={foundListItem({
+                                viewUrl: '/features/strategies',
+                                name,
+                                showSwitch: true,
+                                enabled,
+                                description,
+                                i,
+                            })}
+                        />
+                    ))}
                 </List>
             </Grid>
             <Grid item xl={6} md={6} xs={12}>
@@ -117,18 +87,18 @@ function ApplicationView({
                             key={`strategies_conditional_${name}`}
                             condition={notFound}
                             show={notFoundListItem({
-                                createUrl: "/strategies/create",
+                                createUrl: '/strategies/create',
                                 name,
                                 permission: CREATE_STRATEGY,
-                                i
+                                i,
                             })}
                             elseShow={foundListItem({
-                                viewUrl: "/strategies/view",
+                                viewUrl: '/strategies/view',
                                 name,
                                 showSwitch: false,
                                 enabled: undefined,
                                 description,
-                                i
+                                i,
                             })}
                         />
                     ))}
@@ -138,33 +108,28 @@ function ApplicationView({
                 <h6>{instances.length} Instances registered</h6>
                 <hr />
                 <List>
-                    {instances.map(
-                        ({ instanceId, clientIp, lastSeen, sdkVersion }, i) => (
-                            <ListItem key={`${instanceId}`}>
-                                <ListItemAvatar>
-                                    <Icon>timeline</Icon>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={
-                                        <ConditionallyRender
-                                            key={`${instanceId}_conditional`}
-                                            condition={sdkVersion}
-                                            show={`${instanceId} (${sdkVersion})`}
-                                            elseShow={instanceId}
-                                        />
-                                    }
-                                    secondary={
-                                        <span>
-                                            {clientIp} last seen at{" "}
-                                            <small>
-                                                {formatFullDateTime(lastSeen)}
-                                            </small>
-                                        </span>
-                                    }
-                                />
-                            </ListItem>
-                        )
-                    )}
+                    {instances.map(({ instanceId, clientIp, lastSeen, sdkVersion }) => (
+                        <ListItem key={`${instanceId}`}>
+                            <ListItemAvatar>
+                                <Icon>timeline</Icon>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={
+                                    <ConditionallyRender
+                                        key={`${instanceId}_conditional`}
+                                        condition={sdkVersion}
+                                        show={`${instanceId} (${sdkVersion})`}
+                                        elseShow={instanceId}
+                                    />
+                                }
+                                secondary={
+                                    <span>
+                                        {clientIp} last seen at <small>{formatFullDateTime(lastSeen)}</small>
+                                    </span>
+                                }
+                            />
+                        </ListItem>
+                    ))}
                 </List>
             </Grid>
         </Grid>
@@ -176,7 +141,7 @@ ApplicationView.propTypes = {
     seenToggles: PropTypes.array.isRequired,
     strategies: PropTypes.array.isRequired,
     hasPermission: PropTypes.func.isRequired,
-    formatFullDateTime: PropTypes.func.isRequired
+    formatFullDateTime: PropTypes.func.isRequired,
 };
 
 export default ApplicationView;
