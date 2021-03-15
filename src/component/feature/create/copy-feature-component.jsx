@@ -1,21 +1,28 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { Button, Icon, TextField, Switch, Paper, FormControlLabel } from '@material-ui/core';
+import {
+    Button,
+    Icon,
+    TextField,
+    Switch,
+    Paper,
+    FormControlLabel
+} from "@material-ui/core";
 
-import { styles as commonStyles } from '../../common';
-import styles from './copy-feature-component.module.scss';
+import { styles as commonStyles } from "../../common";
+import styles from "./copy-feature-component.module.scss";
 
-import { trim } from '../../common/util';
+import { trim } from "../../common/util";
 
 class CopyFeatureComponent extends Component {
     // static displayName = `AddFeatureComponent-${getDisplayName(Component)}`;
 
     constructor() {
         super();
-        this.state = { newToggleName: '', replaceGroupId: true };
+        this.state = { newToggleName: "", replaceGroupId: true };
     }
 
     // eslint-disable-next-line camelcase
@@ -74,7 +81,11 @@ class CopyFeatureComponent extends Component {
             });
         }
 
-        this.props.createFeatureToggle(copyToggle).then(() => history.push(`/features/strategies/${copyToggle.name}`));
+        this.props
+            .createFeatureToggle(copyToggle)
+            .then(() =>
+                history.push(`/features/strategies/${copyToggle.name}`)
+            );
     };
 
     render() {
@@ -85,20 +96,25 @@ class CopyFeatureComponent extends Component {
         const { newToggleName, nameError, replaceGroupId } = this.state;
 
         return (
-            <Paper className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+            <Paper
+                className={commonStyles.fullwidth}
+                style={{ overflow: "visible" }}
+            >
                 <div className={styles.header}>
                     <h1>Copy&nbsp;{copyToggle.name}</h1>
                 </div>
 
                 <section className={styles.content}>
                     <p className={styles.text}>
-                        You are about to create a new feature toggle by cloning the configuration of feature
-                        toggle&nbsp;
-                        <Link to={`/features/strategies/${copyToggle.name}`}>{copyToggle.name}</Link>. You must give the
-                        new feature toggle a unique name before you can proceed.
+                        You are about to create a new feature toggle by cloning
+                        the configuration of feature toggle&nbsp;
+                        <Link to={`/features/strategies/${copyToggle.name}`}>
+                            {copyToggle.name}
+                        </Link>
+                        . You must give the new feature toggle a unique name
+                        before you can proceed.
                     </p>
                     <form onSubmit={this.onSubmit}>
-                        {/* TODO HELPER ERROR TEXT */}
                         <TextField
                             label="Feature toggle name"
                             name="name"
@@ -106,6 +122,8 @@ class CopyFeatureComponent extends Component {
                             error={nameError}
                             onBlur={this.onValidateName}
                             onChange={this.setValue}
+                            error={nameError !== undefined}
+                            helperText={nameError}
                             variant="outlined"
                             size="small"
                         />
@@ -121,7 +139,11 @@ class CopyFeatureComponent extends Component {
                             label="Replace groupId"
                         />
 
-                        <Button type="submit" color="primary" variant="contained">
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                        >
                             <Icon>file_copy</Icon>
                             &nbsp;&nbsp;&nbsp; Copy feature toggle
                         </Button>
@@ -137,7 +159,7 @@ CopyFeatureComponent.propTypes = {
     history: PropTypes.object.isRequired,
     createFeatureToggle: PropTypes.func.isRequired,
     fetchFeatureToggles: PropTypes.func.isRequired,
-    validateName: PropTypes.func.isRequired,
+    validateName: PropTypes.func.isRequired
 };
 
 export default CopyFeatureComponent;
