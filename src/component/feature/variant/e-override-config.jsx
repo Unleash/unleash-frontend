@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, IconButton, Icon } from '@material-ui/core';
-import Select from 'react-select';
 import MySelect from '../../common/select';
 import InputListField from '../../common/input-list-field';
 import { selectStyles } from '../../common';
@@ -42,12 +41,11 @@ function OverrideConfig({ overrides, updateOverrideType, updateOverrideValues, r
                         condition={legalValues && legalValues.length > 0}
                         show={
                             <div style={{ paddingTop: '12px' }}>
-                                <Select
+                                <MySelect
                                     key={`override-select=${i}`}
-                                    styles={selectStyles}
+                                    className={selectStyles}
                                     value={mapSelectValues(o.values)}
                                     options={options}
-                                    isMulti
                                     onChange={updateSelectValues(i)}
                                 />
                             </div>

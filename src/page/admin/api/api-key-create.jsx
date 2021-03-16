@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button, MenuItem } from '@material-ui/core';
+import { Select, TextField, Button, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import Dialogue from '../../../component/common/Dialogue/Dialogue';
-import DropdownMenu from '../../../component/common/dropdown-menu';
 
 function CreateApiKey({ addKey }) {
     const [type, setType] = useState('CLIENT');
@@ -27,23 +26,13 @@ function CreateApiKey({ addKey }) {
         setShow(false);
     };
 
-    const handleDialogueClick = evt => {
-        submit(evt);
-        setShow(false);
-    };
-    const typeOptions = () => [
-        <MenuItem value="CLIENT" key="apikey_client" title="Client">
-            Client
-        </MenuItem>,
-        <MenuItem value="ADMIN" key="apikey_admin" title="Admin">
-            Admin
-        </MenuItem>,
-    ];
-
     return (
         <div style={{ margin: '5px' }}>
             <Dialogue
-                onClick={handleDialogueClick}
+                onClick={e => {
+                    submit(e);
+                    setShow(false);
+                }}
                 open={show}
                 primaryButtonText="Create new key"
                 onClose={toggle}
@@ -62,14 +51,22 @@ function CreateApiKey({ addKey }) {
                         variant="outlined"
                         size="small"
                     />
-                    <DropdownMenu
-                        id="apikey"
-                        renderOptions={typeOptions}
-                        callback={e => setType(e.target.value)}
-                        value={type}
-                        label="API key type"
-                        title="API key type"
-                    />
+                    <FormControl variant="outlined" style={{ minWidth: '120px' }}>
+                        <InputLabel id="apikey_type" />
+                        <Select
+                            labelId="apikey_type"
+                            id="apikey_select"
+                            value={type}
+                            onChange={e => setType(e.target.value)}
+                        >
+                            <MenuItem value="CLIENT" key="apikey_client" title="Client">
+                                Client
+                            </MenuItem>
+                            <MenuItem value="ADMIN" key="apikey_admin" title="Admin">
+                                Admin
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
                 </form>
             </Dialogue>
             <Button onClick={toggle} variant="contained" color="primary">

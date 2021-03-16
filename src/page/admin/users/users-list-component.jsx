@@ -8,6 +8,7 @@ import ChangePassword from './change-password-component';
 import UpdateUser from './update-user-component';
 import { showPermissions } from './util';
 import ConditionallyRender from '../../../component/common/conditionally-render';
+import DelUser from './del-user-component';
 
 function UsersList({
     fetchUsers,
@@ -21,8 +22,10 @@ function UsersList({
     validatePassword,
 }) {
     const [showDialog, setDialog] = useState(false);
-    const [pwDialog, setPwDiaog] = useState({ open: false });
-    const [updateDialog, setUpdateDiaog] = useState({ open: false });
+    const [pwDialog, setPwDialog] = useState({ open: false });
+    const [delDialog, setDelDialog] = useState(false);
+    const [delUser, setDelUser] = useState();
+    const [updateDialog, setUpdateDialog] = useState({ open: false });
     const openDialog = e => {
         e.preventDefault();
         setDialog(true);
@@ -32,30 +35,32 @@ function UsersList({
         setDialog(false);
     };
 
-    const onDelete = user => e => {
-        e.preventDefault();
-        const doIt = confirm(`Are you sure you want to delete ${user.username || user.email}?`);
-        if (doIt) {
-            removeUser(user);
-        }
+    const closeDelDialog = () => {
+        setDelDialog(false);
+        setDelUser(undefined);
     };
 
+    const openDelDialog = user => e => {
+        e.preventDefault();
+        setDelDialog(true);
+        setDelUser(user);
+    };
     const openPwDialog = user => e => {
         e.preventDefault();
-        setPwDiaog({ open: true, user });
+        setPwDialog({ open: true, user });
     };
 
     const closePwDialog = () => {
-        setPwDiaog({ open: false });
+        setPwDialog({ open: false });
     };
 
     const openUpdateDialog = user => e => {
         e.preventDefault();
-        setUpdateDiaog({ open: true, user });
+        setUpdateDialog({ open: true, user });
     };
 
     const closeUpdateDialog = () => {
-        setUpdateDiaog({ open: false });
+        setUpdateDialog({ open: false });
     };
 
     useEffect(() => {
@@ -93,7 +98,7 @@ function UsersList({
                                         <a href="" title="Change password" onClick={openPwDialog(item)}>
                                             <Icon>lock</Icon>
                                         </a>
-                                        <a href="" title="Remove user" onClick={onDelete(item)}>
+                                        <a href="" title="Remove user" onClick={openDelDialog(item)}>
                                             <Icon>delete</Icon>
                                         </a>
                                     </TableCell>
@@ -132,6 +137,15 @@ function UsersList({
                 changePassword={changePassword}
                 validatePassword={validatePassword}
                 user={pwDialog.user}
+            />
+            <DelUser
+                showDialog={delDialog}
+                closeDialog={closeDelDialog}
+                user={delUser}
+                removeUser={() => {
+                    removeUser(delUser);
+                    closeDelDialog();
+                }}
             />
         </div>
     );

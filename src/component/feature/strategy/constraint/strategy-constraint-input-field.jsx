@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, IconButton } from '@material-ui/core';
-import Select from 'react-select';
 import MySelect from '../../../common/select';
 import InputListField from '../../../common/input-list-field';
-import { selectStyles } from '../../../common';
+import ConditionallyRender from '../../../common/conditionally-render';
 
 const constraintOperators = [
     { key: 'IN', label: 'IN' },
@@ -100,24 +99,20 @@ export default class StrategyConstraintInputField extends Component {
                     />
                 </td>
                 <td style={{ width: '100%' }}>
-                    {options ? (
-                        <Select
-                            styles={selectStyles}
-                            value={values}
-                            options={options}
-                            isMulti
-                            onChange={this.handleChangeValue}
-                        />
-                    ) : (
-                        <InputListField
-                            name="values"
-                            error={this.state.error}
-                            onBlur={this.onBlur}
-                            values={constraint.values}
-                            label="Values (v1, v2, v3)"
-                            updateValues={values => updateConstraint(values, 'values')}
-                        />
-                    )}
+                    <ConditionallyRender
+                        condition={options}
+                        show={<MySelect value={values} options={options} onChange={this.handleChangeValue} />}
+                        elseShow={
+                            <InputListField
+                                name="values"
+                                error={this.state.error}
+                                onBlur={this.onBlur}
+                                values={constraint.values}
+                                label="Values (v1, v2, v3)"
+                                updateValues={values => updateConstraint(values, 'values')}
+                            />
+                        }
+                    />
                 </td>
                 <td>
                     <IconButton onClick={removeConstraint}>

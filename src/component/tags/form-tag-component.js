@@ -76,7 +76,7 @@ class AddTagComponent extends Component {
                             size="small"
                             variant="outlined"
                             value={tag.value}
-                            error={errors.value}
+                            error={errors.value !== undefined}
                             helperText={errors.value}
                             onChange={v => this.setValue('value', v.target.value)}
                             className={styles.textfield}

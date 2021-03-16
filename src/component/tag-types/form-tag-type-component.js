@@ -85,7 +85,7 @@ class AddTagTypeComponent extends Component {
                                 name="name"
                                 placeholder="url-friendly-unique-name"
                                 value={tagType.name}
-                                error={errors.name}
+                                error={errors.name !== undefined}
                                 helperText={errors.name}
                                 disabled={editMode}
                                 onBlur={this.onValidateName}
@@ -97,7 +97,7 @@ class AddTagTypeComponent extends Component {
                                 name="description"
                                 placeholder="Some short explanation of the tag type"
                                 rows={1}
-                                error={errors.description}
+                                error={errors.description !== undefined}
                                 helperText={errors.description}
                                 value={tagType.description}
                                 onChange={v => this.setValue('description', v.target.value, false)}

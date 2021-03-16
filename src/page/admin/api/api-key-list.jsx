@@ -1,18 +1,21 @@
 /* eslint-disable no-alert */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Icon, Table, TableHead, TableBody, TableRow, TableCell, IconButton } from '@material-ui/core';
 import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import CreateApiKey from './api-key-create';
 import Secret from './secret';
 import ApiHowTo from './api-howto';
 import ConditionallyRender from '../../../component/common/conditionally-render';
+import Dialogue from '../../../component/common/Dialogue/Dialogue';
 
 function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermission }) {
-    const deleteKey = async key => {
-        if (confirm('Are you sure?')) {
-            await removeKey(key);
-        }
+    const [showDelete, setShowDelete] = useState(false);
+    const [delKey, setDelKey] = useState(undefined);
+    const deleteKey = async () => {
+        await removeKey(delKey);
+        setDelKey(undefined);
+        setShowDelete(false);
     };
 
     useEffect(() => {
@@ -22,7 +25,7 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
     return (
         <div>
             <ApiHowTo />
-            <Table className="mdl-data-table mdl-shadow--2dp">
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Created</TableCell>
@@ -47,15 +50,14 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                                 condition={hasPermission('ADMIN')}
                                 show={
                                     <TableCell style={{ textAlign: 'right' }}>
-                                        <a
-                                            href=""
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                deleteKey(item.secret);
+                                        <IconButton
+                                            onClick={() => {
+                                                setDelKey(item.secret);
+                                                setShowDelete(true);
                                             }}
                                         >
                                             <Icon>delete</Icon>
-                                        </a>
+                                        </IconButton>
                                     </TableCell>
                                 }
                             />
@@ -63,6 +65,22 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                     ))}
                 </TableBody>
             </Table>
+            <ConditionallyRender
+                condition={hasPermission('ADMIN')}
+                show={
+                    <Dialogue
+                        open={showDelete}
+                        onClick={deleteKey}
+                        onClose={() => {
+                            setShowDelete(false);
+                            setDelKey(undefined);
+                        }}
+                        title="Really delete API key?"
+                    >
+                        <div>Are you sure you want to delete?</div>
+                    </Dialogue>
+                }
+            />
             <ConditionallyRender condition={hasPermission('ADMIN')} show={<CreateApiKey addKey={addKey} />} />
         </div>
     );

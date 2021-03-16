@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
-import { Button, TextField, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { TextField, DialogTitle, DialogContent } from '@material-ui/core';
 import { trim } from '../../../component/common/util';
 import { modalStyles } from './util';
+import Dialogue from '../../../component/common/Dialogue/Dialogue';
 
 function ChangePassword({ showDialog, closeDialog, changePassword, validatePassword, user = {} }) {
     const [data, setData] = useState({});
@@ -57,7 +57,14 @@ function ChangePassword({ showDialog, closeDialog, changePassword, validatePassw
     };
 
     return (
-        <Modal isOpen={showDialog} style={modalStyles} onRequestClose={onCancel}>
+        <Dialogue
+            open={showDialog}
+            onClick={submit}
+            style={modalStyles}
+            onClose={onCancel}
+            primaryButtonText="Save"
+            secondaryButtonText="Cancel"
+        >
             <form onSubmit={submit}>
                 <DialogTitle>Update password</DialogTitle>
                 <DialogContent>
@@ -72,6 +79,8 @@ function ChangePassword({ showDialog, closeDialog, changePassword, validatePassw
                         helperText={error.password}
                         onChange={updateField}
                         onBlur={onPasswordBlur}
+                        variant="outlined"
+                        size="small"
                     />
                     <TextField
                         label="Confirm passord"
@@ -81,18 +90,12 @@ function ChangePassword({ showDialog, closeDialog, changePassword, validatePassw
                         error={error.confirm !== undefined}
                         helperText={error.confirm}
                         onChange={updateField}
+                        variant="outlined"
+                        size="small"
                     />
                 </DialogContent>
-                <DialogActions>
-                    <Button raised colored type="submit">
-                        Save
-                    </Button>
-                    <Button type="button" onClick={onCancel}>
-                        Cancel
-                    </Button>
-                </DialogActions>
             </form>
-        </Modal>
+        </Dialogue>
     );
 }
 
