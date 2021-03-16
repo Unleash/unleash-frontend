@@ -47,7 +47,8 @@ class AddFeatureComponent extends Component {
                                 onBlur={v => validateName(v.target.value)}
                                 onChange={v => setValue('name', trim(v.target.value))}
                             />
-
+                        </div>
+                        <div className={styles.formContainer}>
                             <FeatureTypeSelect
                                 value={input.type}
                                 onChange={v => setValue('type', v.target.value)}
@@ -71,7 +72,7 @@ class AddFeatureComponent extends Component {
                                 rows={4}
                                 label="Description"
                                 placeholder="A short description of the feature toggle"
-                                error={errors.description}
+                                error={errors.description !== undefined}
                                 helperText={errors.description}
                                 value={input.description}
                                 inputProps={{

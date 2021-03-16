@@ -47,7 +47,7 @@ const SimpleAuth = ({ insecureLogin, loadInitialData, history, authDetails }) =>
                 <br />
 
                 <div>
-                    <Button raised type="submit" variant="contained" color="primary" colored data-test="login-submit">
+                    <Button type="submit" variant="contained" color="primary" data-test="login-submit">
                         Sign in
                     </Button>
                 </div>

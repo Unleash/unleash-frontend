@@ -23,17 +23,7 @@ class FeatureTypeSelectComponent extends Component {
             options.push({ key: value, label: value });
         }
 
-        return (
-            <MySelect
-                label="Toggle type"
-                options={options}
-                value={value}
-                onChange={onChange}
-                label={label}
-                id={id}
-                {...rest}
-            />
-        );
+        return <MySelect options={options} value={value} onChange={onChange} label={label} id={id} {...rest} />;
     }
 }
 

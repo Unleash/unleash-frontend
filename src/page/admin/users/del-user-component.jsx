@@ -1,6 +1,7 @@
 import React from 'react';
 import Dialogue from '../../../component/common/Dialogue/Dialogue';
 import ConditionallyRender from '../../../component/common/conditionally-render';
+import propTypes from 'prop-types';
 
 const DelUserComponent = ({ showDialog, closeDialog, user, removeUser }) => (
     <ConditionallyRender
@@ -19,4 +20,12 @@ const DelUserComponent = ({ showDialog, closeDialog, user, removeUser }) => (
         }
     />
 );
+
+DelUserComponent.propTypes = {
+    showDialog: propTypes.bool.isRequired,
+    closeDialog: propTypes.func.isRequired,
+    user: propTypes.object.isRequired,
+    removeUser: propTypes.func.isRequired,
+};
+
 export default DelUserComponent;

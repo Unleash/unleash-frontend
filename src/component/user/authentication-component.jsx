@@ -68,10 +68,9 @@ class AuthComponent extends React.Component {
         }
         return (
             <div>
-                <Dialog open={this.props.user.showDialog} contentLabel="test" style={customStyles}>
+                <Dialog open={this.props.user.showDialog} style={customStyles}>
                     <Card shadow={0}>
                         <CardHeader
-                            expand
                             style={{
                                 color: '#fff',
                                 background: 'rgb(96, 125, 139)',
