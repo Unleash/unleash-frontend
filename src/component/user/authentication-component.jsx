@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardHeader, CardContent, Modal, Dialog } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Dialog } from '@material-ui/core';
 import SimpleAuth from './SimpleAuth/SimpleAuth';
 import AuthenticationCustomComponent from './authentication-custom-component';
 import AuthenticationPasswordComponent from './authentication-password-component';
-import Dialogue from '../common/Dialogue/Dialogue';
 
 const SIMPLE_TYPE = 'unsecure';
 const PASSWORD_TYPE = 'password';
