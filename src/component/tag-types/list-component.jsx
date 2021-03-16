@@ -13,7 +13,6 @@ import {
     Tooltip,
     Typography,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { HeaderTitle, styles as commonStyles } from '../common';
 import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../permissions';
 import ConditionallyRender from '../common/conditionally-render';
@@ -30,6 +29,7 @@ const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history
     return (
         <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
             <HeaderTitle
+                className={commonStyles.sectionPadding}
                 title="Tag Types"
                 actions={
                     hasPermission(CREATE_TAG_TYPE) ? (
@@ -53,14 +53,16 @@ const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history
                             </Link>
                         );
                         let deleteButton = (
-                            <IconButton
-                                onClick={() => {
-                                    setDelType(tagType.name);
-                                    setShowDelDialog(true);
-                                }}
-                            >
-                                <Icon>delete</Icon>
-                            </IconButton>
+                            <Tooltip title={`Delete ${tagType.name}`}>
+                                <IconButton
+                                    onClick={() => {
+                                        setDelType(tagType.name);
+                                        setShowDelDialog(true);
+                                    }}
+                                >
+                                    <Icon>delete</Icon>
+                                </IconButton>
+                            </Tooltip>
                         );
                         return (
                             <ListItem key={i}>
