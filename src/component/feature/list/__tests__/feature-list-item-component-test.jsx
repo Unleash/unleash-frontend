@@ -5,7 +5,6 @@ import Feature from '../list-item-component';
 import renderer from 'react-test-renderer';
 import { UPDATE_FEATURE } from '../../../../permissions';
 
-jest.mock('react-mdl');
 jest.mock('../feature-type-container');
 
 test('renders correctly with one feature', () => {
