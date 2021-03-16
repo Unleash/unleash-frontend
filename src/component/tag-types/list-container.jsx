@@ -13,10 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     removeTagType: tagtype => {
-        // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to remove this tag type?')) {
-            removeTagType(tagtype)(dispatch);
-        }
+        removeTagType(tagtype)(dispatch);
     },
     fetchTagTypes: () => fetchTagTypes()(dispatch),
 });
