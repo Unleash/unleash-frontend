@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { TextField, Button, Chip, Icon } from "@material-ui/core";
-import ConditionallyRender from "../../common/conditionally-render";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { TextField, Button, Chip, Icon } from '@material-ui/core';
+import ConditionallyRender from '../../common/conditionally-render';
 
 export default class InputList extends Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
         list: PropTypes.array.isRequired,
         setConfig: PropTypes.func.isRequired,
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
     };
 
     constructor() {
         super();
         this.state = {
-            input: ""
+            input: '',
         };
     }
 
@@ -23,7 +23,7 @@ export default class InputList extends Component {
     };
 
     onKeyDown = e => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
             this.setValue(e);
             e.preventDefault();
             e.stopPropagation();
@@ -36,24 +36,19 @@ export default class InputList extends Component {
 
         const { name, list, setConfig } = this.props;
         if (value) {
-            const newValues = value
-                .split(/,\s*/)
-                .filter(a => !list.includes(a));
+            const newValues = value.split(/,\s*/).filter(a => !list.includes(a));
             if (newValues.length > 0) {
                 const newList = list.concat(newValues).filter(a => a);
-                setConfig(name, newList.join(","));
+                setConfig(name, newList.join(','));
             }
-            this.setState({ input: "" });
+            this.setState({ input: '' });
         }
     };
 
     onClose(index) {
         const { name, list, setConfig } = this.props;
         list[index] = null;
-        setConfig(
-            name,
-            list.length === 1 ? "" : list.filter(Boolean).join(",")
-        );
+        setConfig(name, list.length === 1 ? '' : list.filter(Boolean).join(','));
     }
 
     onChange = e => {
@@ -67,19 +62,17 @@ export default class InputList extends Component {
                 <strong>List of {name}</strong>
                 <div
                     style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        margin: "10px 0"
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        margin: '10px 0',
                     }}
                 >
                     {list.map((entryValue, index) => (
                         <Chip
                             key={index + entryValue}
                             label={entryValue}
-                            style={{ marginRight: "3px", border: "1px solid" }}
-                            onDelete={
-                                disabled ? undefined : () => this.onClose(index)
-                            }
+                            style={{ marginRight: '3px', border: '1px solid' }}
+                            onDelete={disabled ? undefined : () => this.onClose(index)}
                             title="Remove value"
                         />
                     ))}
@@ -87,7 +80,7 @@ export default class InputList extends Component {
                 <ConditionallyRender
                     condition={!disabled}
                     show={
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                             <TextField
                                 name={`input_field`}
                                 variant="outlined"

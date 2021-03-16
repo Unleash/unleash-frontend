@@ -1,27 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    Button,
-    Card,
-    Icon,
-    IconButton,
-    CardHeader,
-    CardContent,
-    CardActions
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import classnames from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Card, Icon, IconButton, CardHeader, CardContent, CardActions } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
-import FlexibleRolloutStrategy from "./flexible-rollout-strategy-container";
-import DefaultStrategy from "./default-strategy";
-import GeneralStrategy from "./general-strategy";
-import UserWithIdStrategy from "./user-with-id-strategy";
-import UnknownStrategy from "./unknown-strategy";
-import LoadingStrategy from "./loading-strategy";
-import StrategyConstraints from "./constraint/strategy-constraint-input-container";
-import ConditionallyRender from "../../common/conditionally-render";
+import FlexibleRolloutStrategy from './flexible-rollout-strategy-container';
+import DefaultStrategy from './default-strategy';
+import GeneralStrategy from './general-strategy';
+import UserWithIdStrategy from './user-with-id-strategy';
+import UnknownStrategy from './unknown-strategy';
+import LoadingStrategy from './loading-strategy';
+import StrategyConstraints from './constraint/strategy-constraint-input-container';
+import ConditionallyRender from '../../common/conditionally-render';
 
-import styles from "./strategy.module.scss";
+import styles from './strategy.module.scss';
 export default class StrategyConfigureComponent extends React.Component {
     /* eslint-enable */
     static propTypes = {
@@ -38,7 +30,7 @@ export default class StrategyConfigureComponent extends React.Component {
         connectDragPreview: PropTypes.func.isRequired,
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
-        editable: PropTypes.bool
+        editable: PropTypes.bool,
     };
 
     updateParameters = parameters => {
@@ -66,13 +58,13 @@ export default class StrategyConfigureComponent extends React.Component {
             return UnknownStrategy;
         }
         switch (strategyDefinition.name) {
-            case "Loading":
+            case 'Loading':
                 return LoadingStrategy;
-            case "default":
+            case 'default':
                 return DefaultStrategy;
-            case "flexibleRollout":
+            case 'flexibleRollout':
                 return FlexibleRolloutStrategy;
-            case "userWithId":
+            case 'userWithId':
                 return UserWithIdStrategy;
             default:
                 return GeneralStrategy;
@@ -92,14 +84,12 @@ export default class StrategyConfigureComponent extends React.Component {
             index,
             removeStrategy,
             saveStrategy,
-            movable
+            movable,
         } = this.props;
 
         const { name, dirty, parameters } = strategy;
 
-        const description = strategyDefinition
-            ? strategyDefinition.description
-            : "Unknown";
+        const description = strategyDefinition ? strategyDefinition.description : 'Unknown';
         const InputType = this.resolveInputType(name);
 
         const cardClasses = [styles.card];
@@ -154,16 +144,8 @@ export default class StrategyConfigureComponent extends React.Component {
                     condition={editable && !movable}
                     show={
                         <span>
-                            <IconButton
-                                disabled
-                                className={classnames(
-                                    styles.actionButton,
-                                    styles.disabled
-                                )}
-                            >
-                                <Icon title="You can not reorder while editing.">
-                                    pan_tool
-                                </Icon>
+                            <IconButton disabled className={classnames(styles.actionButton, styles.disabled)}>
+                                <Icon title="You can not reorder while editing.">pan_tool</Icon>
                             </IconButton>
                         </span>
                     }
@@ -174,12 +156,12 @@ export default class StrategyConfigureComponent extends React.Component {
         return connectDragPreview(
             connectDropTarget(
                 <div className={styles.item}>
-                    <Card className={cardClasses.join(" ")}>
+                    <Card className={cardClasses.join(' ')}>
                         <CardHeader
                             className={styles.cardTitle}
                             title={name}
                             subheaderTypographyProps={{
-                                className: styles.subheader
+                                className: styles.subheader,
                             }}
                             color="primary"
                             subheader={description}
@@ -203,7 +185,7 @@ export default class StrategyConfigureComponent extends React.Component {
                             <Button
                                 onClick={saveStrategy}
                                 style={{
-                                    visibility: dirty ? "visible" : "hidden"
+                                    visibility: dirty ? 'visible' : 'hidden',
                                 }}
                             >
                                 Save changes
