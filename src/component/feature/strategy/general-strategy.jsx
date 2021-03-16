@@ -69,7 +69,7 @@ export default function GeneralStrategyInput({ parameters, strategyDefinition, u
                 return (
                     <div key={name} className={styles.generalSection}>
                         <TextField
-                            error={error}
+                            error={error !== undefined}
                             helperText={error && `${name} is not a number!`}
                             variant="outlined"
                             size="small"
