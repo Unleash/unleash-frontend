@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardHeader, CardContent, Modal } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Modal, Dialog } from '@material-ui/core';
 import SimpleAuth from './SimpleAuth/SimpleAuth';
 import AuthenticationCustomComponent from './authentication-custom-component';
 import AuthenticationPasswordComponent from './authentication-password-component';
+import Dialogue from '../common/Dialogue/Dialogue';
 
 const SIMPLE_TYPE = 'unsecure';
 const PASSWORD_TYPE = 'password';
@@ -68,7 +69,7 @@ class AuthComponent extends React.Component {
         }
         return (
             <div>
-                <Modal open={this.props.user.showDialog} contentLabel="test" style={customStyles}>
+                <Dialog open={this.props.user.showDialog} contentLabel="test" style={customStyles}>
                     <Card shadow={0}>
                         <CardHeader
                             expand
@@ -81,7 +82,7 @@ class AuthComponent extends React.Component {
                         </CardHeader>
                         <CardContent>{content}</CardContent>
                     </Card>
-                </Modal>
+                </Dialog>
             </div>
         );
     }
