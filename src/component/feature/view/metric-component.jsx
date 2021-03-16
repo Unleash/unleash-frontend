@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Chip, Grid } from '@material-ui/core';
+import { Icon, Chip, Grid, CircularProgress } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { Link } from 'react-router-dom';
@@ -75,12 +75,11 @@ export default class MetricComponent extends React.Component {
                         <Progress
                             percentage={lastMinutePercent}
                             isFallback={lastMinute.isFallback}
-                            colorClassName="mdl-color-text--accent"
                             animatePercentageText
                         />
                         <ConditionallyRender
                             condition={lastMinute.isFallback}
-                            show={<p className="mdl-color-text--grey-500">No metrics available</p>}
+                            show={<p>No metrics available</p>}
                             elseShow={
                                 <p>
                                     <strong>Last minute</strong>
@@ -93,7 +92,7 @@ export default class MetricComponent extends React.Component {
                         <Progress percentage={lastHourPercent} isFallback={lastHour.isFallback} />
                         <ConditionallyRender
                             condition={lastHour.isFallback}
-                            show={<p className="mdl-color-text--grey-500">No metrics available</p>}
+                            show={<p>No metrics available</p>}
                             elseShow={
                                 <p>
                                     <strong>Last hour</strong>

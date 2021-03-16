@@ -69,7 +69,7 @@ function UsersList({
 
     return (
         <div>
-            <Table className="mdl-data-table mdl-shadow--2dp">
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Id</TableCell>

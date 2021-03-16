@@ -4,7 +4,7 @@ import styles from './progress.module.scss';
 
 class Progress extends Component {
     constructor(props) {
-        super();
+        super(props);
 
         this.state = {
             percentage: props.initialAnimation ? 0 : props.percentage,
@@ -98,7 +98,7 @@ class Progress extends Component {
         };
 
         return isFallback ? (
-            <svg viewBox="0 0 24 24" className="mdl-color-text--grey-300">
+            <svg viewBox="0 0 24 24">
                 {
                     // eslint-disable-next-line max-len
                 }
@@ -109,12 +109,7 @@ class Progress extends Component {
             </svg>
         ) : (
             <svg viewBox="0 0 100 100">
-                <path
-                    className={[styles.trail, 'mdl-color-text--grey-300'].join(' ')}
-                    d={pathDescription}
-                    strokeWidth={strokeWidth}
-                    fillOpacity={0}
-                />
+                <path className={styles.trail} d={pathDescription} strokeWidth={strokeWidth} fillOpacity={0} />
 
                 <path
                     className={[styles.path, colorClassName].join(' ')}
@@ -146,7 +141,6 @@ Progress.defaultProps = {
     strokeWidth: 10,
     animatePercentageText: false,
     initialAnimation: false,
-    colorClassName: 'mdl-color-text--primary',
     isFallback: false,
 };
 
