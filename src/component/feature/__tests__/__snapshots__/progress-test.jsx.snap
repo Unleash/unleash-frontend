@@ -5,7 +5,7 @@ exports[`renders correctly with 0% done no fallback 1`] = `
   viewBox="0 0 100 100"
 >
   <path
-    className="trail mdl-color-text--grey-300"
+    className="trail"
     d="
       M 50,50 m 0,-42.5
       a 42.5,42.5 0 1 1 0,85
@@ -15,7 +15,7 @@ exports[`renders correctly with 0% done no fallback 1`] = `
     strokeWidth={15}
   />
   <path
-    className="path mdl-color-text--primary"
+    className="path "
     d="
       M 50,50 m 0,-42.5
       a 42.5,42.5 0 1 1 0,85
@@ -43,7 +43,6 @@ exports[`renders correctly with 0% done no fallback 1`] = `
 
 exports[`renders correctly with 0% done with fallback 1`] = `
 <svg
-  className="mdl-color-text--grey-300"
   viewBox="0 0 24 24"
 >
   <path
@@ -58,7 +57,7 @@ exports[`renders correctly with 15% done no fallback 1`] = `
   viewBox="0 0 100 100"
 >
   <path
-    className="trail mdl-color-text--grey-300"
+    className="trail"
     d="
       M 50,50 m 0,-42.5
       a 42.5,42.5 0 1 1 0,85
@@ -68,7 +67,7 @@ exports[`renders correctly with 15% done no fallback 1`] = `
     strokeWidth={15}
   />
   <path
-    className="path mdl-color-text--primary"
+    className="path "
     d="
       M 50,50 m 0,-42.5
       a 42.5,42.5 0 1 1 0,85
@@ -96,7 +95,6 @@ exports[`renders correctly with 15% done no fallback 1`] = `
 
 exports[`renders correctly with 15% done with fallback 1`] = `
 <svg
-  className="mdl-color-text--grey-300"
   viewBox="0 0 24 24"
 >
   <path

@@ -17,7 +17,6 @@ exports[`renders a list with elements correctly 1`] = `
         "borderBottom": "1px solid #f9f9f9",
         "display": "flex",
         "marginBottom": "10px",
-        "padding": "16px",
       }
     }
   >
@@ -67,16 +66,12 @@ exports[`renders a list with elements correctly 1`] = `
         <span
           className="MuiIconButton-label"
         >
-          <svg
+          <span
             aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+            className="material-icons MuiIcon-root"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
+            add
+          </span>
         </span>
         <span
           className="MuiTouchRipple-root"
@@ -94,16 +89,12 @@ exports[`renders a list with elements correctly 1`] = `
       <div
         className="MuiListItemIcon-root"
       >
-        <svg
+        <span
           aria-hidden={true}
-          className="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
+          className="material-icons MuiIcon-root"
         >
-          <path
-            d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"
-          />
-        </svg>
+          label
+        </span>
       </div>
       <div
         className="MuiListItemText-root MuiListItemText-multiline"
@@ -147,16 +138,12 @@ exports[`renders a list with elements correctly 1`] = `
         <span
           className="MuiIconButton-label"
         >
-          <svg
+          <span
             aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+            className="material-icons MuiIcon-root"
           >
-            <path
-              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-            />
-          </svg>
+            delete
+          </span>
         </span>
         <span
           className="MuiTouchRipple-root"
@@ -184,7 +171,6 @@ exports[`renders an empty list correctly 1`] = `
         "borderBottom": "1px solid #f9f9f9",
         "display": "flex",
         "marginBottom": "10px",
-        "padding": "16px",
       }
     }
   >
@@ -234,16 +220,12 @@ exports[`renders an empty list correctly 1`] = `
         <span
           className="MuiIconButton-label"
         >
-          <svg
+          <span
             aria-hidden={true}
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+            className="material-icons MuiIcon-root"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
+            add
+          </span>
         </span>
         <span
           className="MuiTouchRipple-root"

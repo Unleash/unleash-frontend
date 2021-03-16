@@ -9,7 +9,6 @@ exports[`renders correctly with one feature 1`] = `
     className="listItemMetric"
   >
     <svg
-      className="mdl-color-text--grey-300"
       viewBox="0 0 24 24"
     >
       <path
@@ -108,7 +107,6 @@ exports[`renders correctly with one feature without permission 1`] = `
     className="listItemMetric"
   >
     <svg
-      className="mdl-color-text--grey-300"
       viewBox="0 0 24 24"
     >
       <path

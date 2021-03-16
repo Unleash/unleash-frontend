@@ -17,7 +17,6 @@ exports[`renders correctly with one strategy 1`] = `
             "borderBottom": "1px solid #f9f9f9",
             "display": "flex",
             "marginBottom": "10px",
-            "padding": "16px",
           }
         }
       >
