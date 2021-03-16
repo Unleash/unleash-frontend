@@ -1,17 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import { Menu } from '@material-ui/core';
-import { DropdownButton } from '.';
+import { Menu } from "@material-ui/core";
+import { DropdownButton } from ".";
 
-import styles from './common.module.scss';
+import styles from "./common.module.scss";
 
-const DropdownMenu = ({ renderOptions, id, title, callback, icon = 'arrow_drop_down', label, ...rest }) => {
+const DropdownMenu = ({
+    renderOptions,
+    id,
+    title,
+    callback,
+    icon = "arrow_drop_down",
+    label,
+    startIcon,
+    ...rest
+}) => {
     const [anchor, setAnchor] = React.useState(null);
 
     const handleOpen = e => setAnchor(e.currentTarget);
 
     const handleClose = e => {
-        if (callback && typeof callback === 'function') {
+        if (callback && typeof callback === "function") {
             callback(e);
         }
 
@@ -24,6 +33,7 @@ const DropdownMenu = ({ renderOptions, id, title, callback, icon = 'arrow_drop_d
                 id={id}
                 label={label}
                 title={title}
+                startIcon={startIcon}
                 onClick={handleOpen}
                 aria-controls={id}
                 aria-haspopup="true"

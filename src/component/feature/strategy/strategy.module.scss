@@ -15,6 +15,10 @@
     overflow: "visible";
 }
 
+.paragraph {
+    max-width: 400px;
+}
+
 .cardText {
     width: unset;
     padding: 0 10px 10px;
@@ -75,6 +79,7 @@
     color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
     line-height: 14px;
+    margin: 0.5rem 0;
 }
 
 .editLink {
@@ -96,10 +101,13 @@
     }
 }
 
+.strategyListAdd {
+    padding: var(--card-padding);
+}
+
 .strategyList {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px;
     justify-content: space-between;
 }
 
@@ -116,6 +124,14 @@
 */
 .addStrategyButton {
     font-size: 0.935rem;
+}
+
+.subheader {
+    color: #fff;
+}
+
+.isDirty {
+    background-color: red;
 }
 
 @media (max-width: 500px) {

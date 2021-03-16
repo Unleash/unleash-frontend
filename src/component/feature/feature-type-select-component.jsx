@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import MySelect from '../common/select';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import MySelect from "../common/select";
 
 class FeatureTypeSelectComponent extends Component {
     componentDidMount() {
@@ -11,12 +11,21 @@ class FeatureTypeSelectComponent extends Component {
     }
 
     render() {
-        const { value, types, onChange, label, id, ...rest } = this.props;
+        const {
+            value,
+            types,
+            onChange,
+            label,
+            id,
+            // eslint-disable-next-line no-unused-vars
+            fetchFeatureTypes,
+            ...rest
+        } = this.props;
 
         const options = types.map(t => ({
             key: t.id,
             label: t.name,
-            title: t.description,
+            title: t.description
         }));
 
         if (!options.find(o => o.key === value)) {
@@ -32,7 +41,7 @@ FeatureTypeSelectComponent.propTypes = {
     filled: PropTypes.bool,
     types: PropTypes.array.isRequired,
     fetchFeatureTypes: PropTypes.func,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 export default FeatureTypeSelectComponent;
