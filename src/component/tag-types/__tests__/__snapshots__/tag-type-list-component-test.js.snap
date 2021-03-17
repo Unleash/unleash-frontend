@@ -118,6 +118,7 @@ exports[`renders a list with elements correctly 1`] = `
         </p>
       </div>
       <button
+        aria-describedby={null}
         className="MuiButtonBase-root MuiIconButton-root"
         disabled={false}
         onBlur={[Function]}
@@ -128,11 +129,13 @@ exports[`renders a list with elements correctly 1`] = `
         onKeyUp={[Function]}
         onMouseDown={[Function]}
         onMouseLeave={[Function]}
+        onMouseOver={[Function]}
         onMouseUp={[Function]}
         onTouchEnd={[Function]}
         onTouchMove={[Function]}
         onTouchStart={[Function]}
         tabIndex={0}
+        title="Delete simple"
         type="button"
       >
         <span

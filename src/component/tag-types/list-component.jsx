@@ -19,8 +19,7 @@ import ConditionallyRender from '../common/conditionally-render';
 import Dialogue from '../common/Dialogue/Dialogue';
 
 const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermission }) => {
-    const [showDelDialog, setShowDelDialog] = useState(false);
-    const [delType, setDelType] = useState();
+    const [deletion, setDeletion] = useState({ open: false });
 
     useCallback(() => {
         fetchTagTypes();
@@ -46,7 +45,7 @@ const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history
             <List>
                 <ConditionallyRender
                     condition={tagTypes.length > 0}
-                    show={tagTypes.map((tagType, i) => {
+                    show={tagTypes.map(tagType => {
                         let link = (
                             <Link to={`/tag-types/edit/${tagType.name}`}>
                                 <strong>{tagType.name}</strong>
@@ -54,18 +53,13 @@ const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history
                         );
                         let deleteButton = (
                             <Tooltip title={`Delete ${tagType.name}`}>
-                                <IconButton
-                                    onClick={() => {
-                                        setDelType(tagType.name);
-                                        setShowDelDialog(true);
-                                    }}
-                                >
+                                <IconButton onClick={() => setDeletion({ open: true, name: tagType.name })}>
                                     <Icon>delete</Icon>
                                 </IconButton>
                             </Tooltip>
                         );
                         return (
-                            <ListItem key={i}>
+                            <ListItem key={`${tagType.name}`}>
                                 <ListItemIcon>
                                     <Icon>label</Icon>
                                 </ListItemIcon>
@@ -79,15 +73,13 @@ const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history
             </List>
             <Dialogue
                 title="Really delete Tag type?"
-                open={showDelDialog}
+                open={deletion.open}
                 onClick={() => {
-                    removeTagType(delType);
-                    setDelType(undefined);
-                    setShowDelDialog(false);
+                    removeTagType(deletion.name);
+                    setDeletion({ open: false });
                 }}
                 onClose={() => {
-                    setDelType(undefined);
-                    setShowDelDialog(false);
+                    setDeletion({ open: false });
                 }}
             >
                 <Typography>Are you sure?</Typography>
