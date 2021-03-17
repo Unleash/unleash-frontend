@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import { List, ListItem, ListItemText, Paper, IconButton, ListItemIcon, Tooltip, Icon } from '@material-ui/core';
-import { styles as commonStyles } from '../common';
-import styles from './Tag.module.scss';
-import { CREATE_TAG, DELETE_TAG } from '../../permissions';
-import ConditionallyRender from '../common/conditionally-render';
+import {
+    List,
+    ListItem,
+    ListItemText,
+    Paper,
+    IconButton,
+    ListItemIcon,
+    Tooltip,
+    Icon
+} from "@material-ui/core";
+import { styles as commonStyles } from "../common";
+import styles from "./Tag.module.scss";
+import { CREATE_TAG, DELETE_TAG } from "../../permissions";
+import ConditionallyRender from "../common/conditionally-render";
 
 class TagsListComponent extends Component {
     static propTypes = {
@@ -13,7 +22,7 @@ class TagsListComponent extends Component {
         fetchTags: PropTypes.func.isRequired,
         removeTag: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
-        hasPermission: PropTypes.func.isRequired,
+        hasPermission: PropTypes.func.isRequired
     };
 
     componentDidMount() {
@@ -28,7 +37,7 @@ class TagsListComponent extends Component {
     renderListItems = () => {
         const { tags, hasPermission } = this.props;
         return tags.map((tag, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} className={styles.tagListItem}>
                 <ListItemIcon>
                     <Icon>label</Icon>
                 </ListItemIcon>
@@ -43,7 +52,9 @@ class TagsListComponent extends Component {
 
     deleteButton = (tagType, tagValue) => (
         <Tooltip title="Delete tag">
-            <IconButton onClick={this.removeTag.bind(this, { tagType, tagValue })}>
+            <IconButton
+                onClick={this.removeTag.bind(this, { tagType, tagValue })}
+            >
                 <Icon>delete</Icon>
             </IconButton>
         </Tooltip>
@@ -56,7 +67,12 @@ class TagsListComponent extends Component {
                 condition={hasPermission(CREATE_TAG)}
                 show={
                     <Tooltip title="Add new tag">
-                        <IconButton raised onClick={() => this.props.history.push('/tags/create')}>
+                        <IconButton
+                            raised
+                            onClick={() =>
+                                this.props.history.push("/tags/create")
+                            }
+                        >
                             <Icon>add</Icon>
                         </IconButton>
                     </Tooltip>
@@ -68,7 +84,11 @@ class TagsListComponent extends Component {
     render() {
         const { tags } = this.props;
         return (
-            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
+            <Paper
+                shadow={0}
+                className={commonStyles.fullwidth}
+                style={{ overflow: "visible" }}
+            >
                 <div className={styles.header}>
                     <h1>Tags</h1>
                     <div>{this.addButton()}</div>
@@ -78,7 +98,7 @@ class TagsListComponent extends Component {
                         condition={tags.length > 0}
                         show={this.renderListItems(tags)}
                         elseShow={
-                            <ListItem>
+                            <ListItem className={styles.tagListItem}>
                                 <ListItemText primary="No tags available" />
                             </ListItem>
                         }

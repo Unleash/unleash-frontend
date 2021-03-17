@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import HistoryItemDiff from './history-item-diff';
-import HistoryItemJson from './history-item-json';
-import { Card, List, Switch, FormControlLabel } from '@material-ui/core';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import HistoryItemDiff from "./history-item-diff";
+import HistoryItemJson from "./history-item-json";
+import { Card, List, Switch, FormControlLabel } from "@material-ui/core";
 
-import { DataTableHeader } from '../common';
-import { formatFullDateTimeWithLocale } from '../common/util';
+import { DataTableHeader } from "../common";
+import { formatFullDateTimeWithLocale } from "../common/util";
 
-import styles from './history.module.scss';
+import styles from "./history.module.scss";
+import PageContent from "../common/PageContent/PageContent";
 
 const getName = name => {
     if (name) {
@@ -39,7 +40,7 @@ const HistoryMeta = ({ entry, timeFormatted }) => (
 );
 HistoryMeta.propTypes = {
     entry: PropTypes.object.isRequired,
-    timeFormatted: PropTypes.string.isRequired,
+    timeFormatted: PropTypes.string.isRequired
 };
 
 class HistoryList extends Component {
@@ -49,11 +50,11 @@ class HistoryList extends Component {
         settings: PropTypes.object,
         location: PropTypes.object,
         updateSetting: PropTypes.func.isRequired,
-        hideName: PropTypes.bool,
+        hideName: PropTypes.bool
     };
 
     toggleShowDiff() {
-        this.props.updateSetting('showData', !this.props.settings.showData);
+        this.props.updateSetting("showData", !this.props.settings.showData);
     }
     formatFulldateTime(v) {
         return formatFullDateTimeWithLocale(v, this.props.location.locale);
@@ -70,34 +71,52 @@ class HistoryList extends Component {
         const renderListItemCards = entry => (
             <Card
                 key={entry.id}
-                style={{ padding: '1rem', borderTop: '1px solid #f2f2f2', borderBottom: '1px solid #f2f2f2' }}
+                style={{
+                    padding: "1rem"
+                }}
             >
-                <HistoryMeta entry={entry} timeFormatted={this.formatFulldateTime(entry.createdAt)} />
+                <HistoryMeta
+                    entry={entry}
+                    timeFormatted={this.formatFulldateTime(entry.createdAt)}
+                />
             </Card>
         );
 
         if (showData) {
-            entries = history.map(entry => <HistoryItemJson key={`log${entry.id}`} entry={entry} />);
+            entries = history.map(entry => (
+                <HistoryItemJson key={`log${entry.id}`} entry={entry} />
+            ));
         } else {
             entries = history.map(renderListItemCards);
         }
 
         return (
-            <div className={styles.history}>
-                <DataTableHeader
-                    title={this.props.title}
-                    actions={
-                        <FormControlLabel
-                            control={
-                                <Switch checked={showData} onChange={this.toggleShowDiff.bind(this)} color="primary" />
-                            }
-                            label="Full events"
-                        />
-                    }
-                />
-                <List>{entries}</List>
-                {/* <div className={commonStyles.horisontalScroll}>{entries}</div> */}
-            </div>
+            <PageContent
+                headerContent={
+                    <DataTableHeader
+                        title={this.props.title}
+                        actions={
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={showData}
+                                        onChange={this.toggleShowDiff.bind(
+                                            this
+                                        )}
+                                        color="primary"
+                                    />
+                                }
+                                label="Full events"
+                            />
+                        }
+                    />
+                }
+            >
+                <div className={styles.history}>
+                    <List>{entries}</List>
+                    {/* <div className={commonStyles.horisontalScroll}>{entries}</div> */}
+                </div>
+            </PageContent>
         );
     }
 }
