@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import {
     List,
@@ -11,25 +11,19 @@ import {
     Paper,
     IconButton,
     Tooltip,
-    Typography
-} from "@material-ui/core";
+    Typography,
+} from '@material-ui/core';
 
-import { styles as commonStyles } from "../common";
-import HeaderTitle from "../common/HeaderTitle";
-import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from "../../permissions";
-import ConditionallyRender from "../common/conditionally-render";
-import Dialogue from "../common/Dialogue/Dialogue";
-import PageContent from "../common/PageContent/PageContent";
+import { styles as commonStyles } from '../common';
+import HeaderTitle from '../common/HeaderTitle';
+import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../permissions';
+import ConditionallyRender from '../common/conditionally-render';
+import Dialogue from '../common/Dialogue/Dialogue';
+import PageContent from '../common/PageContent/PageContent';
 
-import styles from "../tags/Tag.module.scss";
+import styles from '../tags/Tag.module.scss';
 
-const TagTypesListComponent = ({
-    tagTypes,
-    fetchTagTypes,
-    removeTagType,
-    history,
-    hasPermission
-}) => {
+const TagTypesListComponent = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermission }) => {
     const [deletion, setDeletion] = useState({ open: false });
 
     useCallback(() => {
@@ -48,9 +42,7 @@ const TagTypesListComponent = ({
                                 <Tooltip title="Add tag type">
                                     <IconButton
                                         aria-label="add tag type"
-                                        onClick={() =>
-                                            history.push("/tag-types/create")
-                                        }
+                                        onClick={() => history.push('/tag-types/create')}
                                     >
                                         <Icon>add</Icon>
                                     </IconButton>
@@ -76,7 +68,7 @@ const TagTypesListComponent = ({
                                     onClick={() =>
                                         setDeletion({
                                             open: true,
-                                            name: tagType.name
+                                            name: tagType.name,
                                         })
                                     }
                                 >
@@ -85,21 +77,12 @@ const TagTypesListComponent = ({
                             </Tooltip>
                         );
                         return (
-                            <ListItem
-                                key={`${tagType.name}`}
-                                classes={{ root: styles.tagListItem }}
-                            >
+                            <ListItem key={`${tagType.name}`} classes={{ root: styles.tagListItem }}>
                                 <ListItemIcon>
                                     <Icon>label</Icon>
                                 </ListItemIcon>
-                                <ListItemText
-                                    primary={link}
-                                    secondary={tagType.description}
-                                />
-                                <ConditionallyRender
-                                    condition={hasPermission(DELETE_TAG_TYPE)}
-                                    show={deleteButton}
-                                />
+                                <ListItemText primary={link} secondary={tagType.description} />
+                                <ConditionallyRender condition={hasPermission(DELETE_TAG_TYPE)} show={deleteButton} />
                             </ListItem>
                         );
                     })}
@@ -128,7 +111,7 @@ TagTypesListComponent.propTypes = {
     fetchTagTypes: PropTypes.func.isRequired,
     removeTagType: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired
+    hasPermission: PropTypes.func.isRequired,
 };
 
 export default TagTypesListComponent;

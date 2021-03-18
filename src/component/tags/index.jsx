@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import TagsListComponent from './list-component.jsx';
+import TagsListComponent from './TagList';
 import { fetchTags, removeTag } from '../../store/tag/actions';
 import { hasPermission } from '../../permissions';
 

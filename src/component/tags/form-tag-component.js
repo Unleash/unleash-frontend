@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Paper } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import styles from './Tag.module.scss';
-import { FormButtons, styles as commonStyles } from '../common';
+import { FormButtons } from '../common';
 import TagTypeSelect from '../feature/tag-type-select-container';
+import PageContent from '../common/PageContent/PageContent';
+
 class AddTagComponent extends Component {
     constructor(props) {
         super(props);
@@ -56,10 +58,7 @@ class AddTagComponent extends Component {
         const { tag, errors } = this.state;
         const submitText = 'Create';
         return (
-            <Paper shadow={0} className={commonStyles.fullwidth}>
-                <div className={styles.header}>
-                    <h1>{`${submitText} Tag`}</h1>
-                </div>
+            <PageContent headerContent={`${submitText} Tag`}>
                 <section className={styles.container}>
                     <form onSubmit={this.onSubmit}>
                         <p style={{ color: 'red' }}>{errors.general}</p>
@@ -86,7 +85,7 @@ class AddTagComponent extends Component {
                         </div>
                     </form>
                 </section>
-            </Paper>
+            </PageContent>
         );
     }
 }
