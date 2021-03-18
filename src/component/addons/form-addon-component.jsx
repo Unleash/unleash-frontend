@@ -9,6 +9,7 @@ import AddonEvents from './form-addon-events';
 import cloneDeep from 'lodash.clonedeep';
 
 import styles from './form-addon-component.module.scss';
+import PageContent from '../common/PageContent/PageContent';
 
 const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }) => {
     const [config, setConfig] = useState(addon);
@@ -100,10 +101,7 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
     const { name, description, documentationUrl = 'https://unleash.github.io/docs/addons' } = provider ? provider : {};
 
     return (
-        <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-            <h1 className={styles.header}>
-                Configure <strong>{name}</strong> addon
-            </h1>
+        <PageContent headerContent={`Configure ${name} addon`}>
             <section className={styles.formSection}>
                 {description}&nbsp;
                 <a href={documentationUrl} target="_blank">
@@ -163,7 +161,7 @@ const AddonFormComponent = ({ editMode, provider, addon, fetch, cancel, submit }
                     <FormButtons submitText={submitText} onCancel={cancel} />
                 </section>
             </form>
-        </Paper>
+        </PageContent>
     );
 };
 

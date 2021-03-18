@@ -220,7 +220,7 @@ exports[`renders correctly with one strategy 1`] = `
                     className="MuiList-root MuiList-padding"
                   >
                     <li
-                      className="MuiListItem-root MuiListItem-gutters"
+                      className="MuiListItem-root listItem MuiListItem-gutters"
                       disabled={false}
                     >
                       <div

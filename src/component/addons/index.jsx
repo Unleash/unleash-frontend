@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AddonsListComponent from './list-component.jsx';
+import AddonsListComponent from './AddonList';
 import { fetchAddons, removeAddon, updateAddon } from '../../store/addons/actions';
 import { hasPermission } from '../../permissions';
 
