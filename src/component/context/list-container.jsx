@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import ContextFieldListComponent from './list-component.jsx';
-import { fetchContext, removeContextField } from './../../store/context/actions';
+import ContextFieldListComponent from './ContextList';
+import { fetchContext, removeContextField } from '../../store/context/actions';
 import { hasPermission } from '../../permissions';
 
 const mapStateToProps = state => {
