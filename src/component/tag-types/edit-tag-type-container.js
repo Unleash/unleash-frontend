@@ -15,7 +15,10 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => ({
     validateName: () => {},
-    submit: tagType => updateTagType(tagType)(dispatch),
+    submit: tagType => {
+        console.log('Updating');
+        updateTagType(tagType)(dispatch);
+    },
 });
 
 const FormAddContainer = connect(mapStateToProps, mapDispatchToProps)(Component);

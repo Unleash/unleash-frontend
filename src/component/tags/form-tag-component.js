@@ -74,6 +74,7 @@ class AddTagComponent extends Component {
                             placeholder="Your tag"
                             size="small"
                             variant="outlined"
+                            rowsMax={4}
                             value={tag.value}
                             error={errors.value !== undefined}
                             helperText={errors.value}
