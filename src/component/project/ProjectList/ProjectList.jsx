@@ -72,7 +72,11 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history, hasPermi
             </List>
             <ConfirmDialogue
                 open={showDelDialogue}
-                onClick={() => removeProject(project)}
+                onClick={() => {
+                    removeProject(project);
+                    setProject(undefined);
+                    setShowDelDialogue(false);
+                }}
                 onClose={() => {
                     setProject(undefined);
                     setShowDelDialogue(false);

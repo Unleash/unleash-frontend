@@ -1,14 +1,14 @@
 /* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { formatFullDateTimeWithLocale } from '../../../component/common/util';
-import AddUser from './add-user-component';
-import ChangePassword from './change-password-component';
-import UpdateUser from './update-user-component';
-import { showPermissions } from './util';
-import ConditionallyRender from '../../../component/common/conditionally-render';
-import DelUser from './del-user-component';
+import { Button, Icon, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { formatFullDateTimeWithLocale } from '../../../../component/common/util';
+import AddUser from '../add-user-component';
+import ChangePassword from '../change-password-component';
+import UpdateUser from '../update-user-component';
+import DelUser from '../del-user-component';
+import { showPermissions } from '../util';
+import ConditionallyRender from '../../../../component/common/conditionally-render';
 
 function UsersList({
     fetchUsers,
@@ -116,9 +116,9 @@ function UsersList({
                 </TableBody>
             </Table>
             <br />
-            <a href="" onClick={openDialog}>
+            <Button variant="contained" color="primary" onClick={openDialog}>
                 Add new user
-            </a>
+            </Button>
             <AddUser
                 showDialog={showDialog}
                 closeDialog={closeDialog}

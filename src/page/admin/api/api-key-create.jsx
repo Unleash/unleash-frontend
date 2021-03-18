@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Select, TextField, Button, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import Dialogue from '../../../component/common/Dialogue/Dialogue';
+import classnames from 'classnames';
+import { styles as commonStyles } from '../../../component/common';
+import { useStyles } from './styles';
 
 function CreateApiKey({ addKey }) {
+    const styles = useStyles();
     const [type, setType] = useState('CLIENT');
     const [show, setShow] = useState(false);
     const [username, setUsername] = useState();
@@ -39,7 +43,7 @@ function CreateApiKey({ addKey }) {
                 secondaryButtonText="Cancel"
                 title="Add new API key"
             >
-                <form onSubmit={submit}>
+                <form onSubmit={submit} className={classnames(styles.addApiKeyForm, commonStyles.contentSpacing)}>
                     <TextField
                         value={username}
                         name="username"
@@ -51,7 +55,7 @@ function CreateApiKey({ addKey }) {
                         variant="outlined"
                         size="small"
                     />
-                    <FormControl variant="outlined" style={{ minWidth: '120px' }}>
+                    <FormControl variant="outlined" size="small" style={{ minWidth: '120px' }}>
                         <InputLabel id="apikey_type" />
                         <Select
                             labelId="apikey_type"

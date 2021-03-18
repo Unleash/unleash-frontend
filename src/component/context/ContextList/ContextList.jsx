@@ -4,11 +4,15 @@ import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/conditionally-render';
 import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../../permissions';
 import { Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
+import ConfirmDialogue from '../../common/Dialogue';
 
-const ContextList = ({ removeContextField, hasPermission, history, fetchContext, contextFields }) => {
+const ContextList = ({ removeContextField, hasPermission, history, contextFields }) => {
+    const [showDelDialogue, setShowDelDialogue] = useState(false);
+    const [name, setName] = useState();
+
     const styles = useStyles();
     const contextList = () =>
         contextFields.map(field => (
@@ -28,7 +32,13 @@ const ContextList = ({ removeContextField, hasPermission, history, fetchContext,
                     condition={hasPermission(DELETE_CONTEXT_FIELD)}
                     show={
                         <Tooltip title="Delete context field">
-                            <IconButton aria-label="delete" onClick={() => removeContextField(field)}>
+                            <IconButton
+                                aria-label="delete"
+                                onClick={() => {
+                                    setName(field.name);
+                                    setShowDelDialogue(true);
+                                }}
+                            >
                                 <Icon>delete</Icon>
                             </IconButton>
                         </Tooltip>
@@ -57,13 +67,25 @@ const ContextList = ({ removeContextField, hasPermission, history, fetchContext,
                     elseShow={<ListItem>No context fields defined</ListItem>}
                 />
             </List>
+            <ConfirmDialogue
+                open={showDelDialogue}
+                onClick={() => {
+                    removeContextField({ name });
+                    setName(undefined);
+                    setShowDelDialogue(false);
+                }}
+                onClose={() => {
+                    setName(undefined);
+                    setShowDelDialogue(false);
+                }}
+                title="Really delete context field"
+            />
         </PageContent>
     );
 };
 
 ContextList.propTypes = {
     contextFields: PropTypes.array.isRequired,
-    fetchContext: PropTypes.func.isRequired,
     removeContextField: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     hasPermission: PropTypes.func.isRequired,

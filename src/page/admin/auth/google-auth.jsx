@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Switch, TextField } from '@material-ui/core';
+import { Button, Grid, Switch, TextField, Typography } from '@material-ui/core';
 import commonStyles from '../../../component/common/common.module.scss';
+import PageContent from '../../../component/common/PageContent/PageContent';
 
 const initialState = {
     enabled: false,
@@ -54,22 +55,21 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
         }
     };
     return (
-        <div>
-            <Grid container style={{ background: '#EFEFEF' }}>
+        <PageContent>
+            <Grid container style={{ marginBottom: '1rem' }}>
                 <Grid item xs={12}>
-                    <p>
+                    <Typography variant="subtitle1">
                         Please read the{' '}
                         <a href="https://www.unleash-hosted.com/docs/enterprise-authentication/google" target="_blank">
                             documentation
                         </a>{' '}
                         to learn how to integrate with Google OAuth 2.0. <br />
-                        <br />
                         Callback URL: <code>https://[unleash.hostname.com]/auth/google/callback</code>
-                    </p>
+                    </Typography>
                 </Grid>
             </Grid>
-            <form onSubmit={onSubmit} className={commonStyles.contentPadding}>
-                <Grid container>
+            <form onSubmit={onSubmit}>
+                <Grid container spacing={3}>
                     <Grid item xs={5}>
                         <strong>Enable</strong>
                         <p>
@@ -83,7 +83,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                         </Switch>
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item xs={5}>
                         <strong>Client ID</strong>
                         <p>(Required) The Client ID provided by Google when registering the application.</p>
@@ -96,10 +96,12 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                             placeholder=""
                             value={data.clientId}
                             style={{ width: '400px' }}
+                            variant="outlined"
+                            size="small"
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Client Secret</strong>
                         <p>(Required) Client Secret provided by Google when registering the application.</p>
@@ -112,10 +114,12 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                             value={data.clientSecret}
                             placeholder=""
                             style={{ width: '400px' }}
+                            variant="outlined"
+                            size="small"
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Unleash hostname</strong>
                         <p>
@@ -134,10 +138,12 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                             placeholder=""
                             value={data.unleashHostname}
                             style={{ width: '400px' }}
+                            variant="outlined"
+                            size="small"
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Auto-create users</strong>
                         <p>Enable automatic creation of new users when signing in with Google.</p>
@@ -148,7 +154,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                         </Switch>
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Email domains</strong>
                         <p>(Optional) Comma separated list of email domains that should be allowed to sign in.</p>
@@ -162,10 +168,13 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                             placeholder="@company.com, @anotherCompany.com"
                             style={{ width: '400px' }}
                             rows={2}
+                            multiline
+                            variant="outlined"
+                            size="small"
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item md={5}>
                         <Button variant="contained" color="primary" type="submit">
                             Save
@@ -174,7 +183,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                     </Grid>
                 </Grid>
             </form>
-        </div>
+        </PageContent>
     );
 }
 

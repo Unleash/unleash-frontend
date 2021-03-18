@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UsersList from './users-list-component';
+import UsersList from './UsersList';
 import {
     fetchUsers,
     removeUser,
@@ -7,8 +7,8 @@ import {
     changePassword,
     updateUser,
     validatePassword,
-} from '../../../store/e-user-admin/actions';
-import { hasPermission } from '../../../permissions';
+} from '../../../../store/e-user-admin/actions';
+import { hasPermission } from '../../../../permissions';
 
 const mapStateToProps = state => ({
     users: state.userAdmin.toJS(),

@@ -4,6 +4,7 @@ import AdminMenu from '../admin-menu';
 import GoogleAuth from './google-auth-container';
 import SamlAuth from './saml-auth-container';
 import TabNav from '../../../component/common/tabNav';
+import PageContent from '../../../component/common/PageContent/PageContent';
 
 function AdminAuthPage() {
     const tabs = [
@@ -20,10 +21,9 @@ function AdminAuthPage() {
     return (
         <div>
             <AdminMenu />
-            <h3>Authentication</h3>
-            <div className="demo-tabs">
+            <PageContent headerContent="Authentication">
                 <TabNav tabData={tabs} />
-            </div>
+            </PageContent>
         </div>
     );
 }
