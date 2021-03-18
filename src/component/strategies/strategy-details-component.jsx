@@ -78,15 +78,13 @@ export default class StrategyDetails extends Component {
                             elseShow={
                                 <section>
                                     <div className="content">
-                                        {
-                                            <ShowStrategy
-                                                strategy={this.props.strategy}
-                                                toggles={this.props.toggles}
-                                                applications={
-                                                    this.props.applications
-                                                }
-                                            />
-                                        }
+                                        <ShowStrategy
+                                            strategy={this.props.strategy}
+                                            toggles={this.props.toggles}
+                                            applications={
+                                                this.props.applications
+                                            }
+                                        />
                                     </div>
                                 </section>
                             }
