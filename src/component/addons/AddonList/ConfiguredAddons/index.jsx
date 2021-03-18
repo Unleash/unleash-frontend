@@ -1,3 +1,3 @@
-import ConfiguredAddons from './configured-addons';
+import ConfiguredAddons from "./ConfiguredAddons";
 
 export default ConfiguredAddons;

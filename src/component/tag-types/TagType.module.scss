@@ -31,7 +31,11 @@
     padding: 0;
 }
 
-.formContainer {
-    margin-bottom: 1.5rem;
+.tagTypeContainer {
     max-width: 350px;
+}
+
+.addTagTypeForm {
+    display: flex;
+    flex-direction: column;
 }

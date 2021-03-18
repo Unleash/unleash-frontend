@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import { FormButtons } from '../common';
-import commonStyles from '../common/common.module.scss';
-import styles from './TagType.module.scss';
-import PageContent from '../common/PageContent/PageContent';
-import { Typography } from '@material-ui/core';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
-const AddTagTypeComponent = ({ tagType, validateName, submit, history, editMode }) => {
-    const [tagTypeName, setTagTypeName] = useState(tagType.name || '');
-    const [tagTypeDescription, setTagTypeDescription] = useState(tagType.description || '');
-    const [errors, setErrors] = useState({ general: undefined, name: undefined, description: undefined });
+import TextField from "@material-ui/core/TextField";
+import { FormButtons } from "../common";
+import PageContent from "../common/PageContent/PageContent";
+import { Typography } from "@material-ui/core";
+
+import styles from "./TagType.module.scss";
+import commonStyles from "../common/common.module.scss";
+
+const AddTagTypeComponent = ({
+    tagType,
+    validateName,
+    submit,
+    history,
+    editMode
+}) => {
+    const [tagTypeName, setTagTypeName] = useState(tagType.name || "");
+    const [tagTypeDescription, setTagTypeDescription] = useState(
+        tagType.description || ""
+    );
+    const [errors, setErrors] = useState({
+        general: undefined,
+        name: undefined,
+        description: undefined
+    });
 
     const onValidateName = async evt => {
         evt.preventDefault();
@@ -25,61 +40,75 @@ const AddTagTypeComponent = ({ tagType, validateName, submit, history, editMode 
 
     const onCancel = evt => {
         evt.preventDefault();
-        history.push('/tag-types');
+        history.push("/tag-types");
     };
 
     const onSubmit = async evt => {
         evt.preventDefault();
         try {
-            await submit({ name: tagTypeName, description: tagTypeDescription });
-            history.push('/tag-types');
+            await submit({
+                name: tagTypeName,
+                description: tagTypeDescription
+            });
+            history.push("/tag-types");
         } catch (e) {
             setErrors({ general: e.message });
         }
     };
-    const submitText = editMode ? 'Update' : 'Create';
+    const submitText = editMode ? "Update" : "Create";
     return (
         <PageContent headerContent={`${submitText} Tag type`}>
-            <Typography>Tag types allows you to group tags together in the management UI</Typography>
-            <div className={styles.container}>
-                <form onSubmit={onSubmit}>
-                    <section>
-                        <div className={styles.formContainer}>
-                            <TextField
-                                label="Name"
-                                name="name"
-                                placeholder="url-friendly-unique-name"
-                                value={tagTypeName}
-                                error={errors.name !== undefined}
-                                helperText={errors.name}
-                                disabled={editMode}
-                                onBlur={onValidateName}
-                                onChange={v => setTagTypeName(v.target.value.trim())}
-                                variant="outlined"
-                                size="small"
-                            />
-                        </div>
-                        <div className={styles.formContainer}>
-                            <TextField
-                                label="Description"
-                                name="description"
-                                placeholder="Some short explanation of the tag type"
-                                rowsMax={4}
-                                multiline
-                                error={errors.description !== undefined}
-                                helperText={errors.description}
-                                value={tagTypeDescription}
-                                onChange={v => setTagTypeDescription(v.target.value)}
-                                variant="outlined"
-                                size="small"
-                            />
-                        </div>
-                    </section>
+            <section
+                className={classnames(
+                    commonStyles.contentSpacing,
+                    styles.tagTypeContainer
+                )}
+            >
+                <Typography variant="subtitle1">
+                    Tag types allows you to group tags together in the
+                    management UI
+                </Typography>
+                <form
+                    onSubmit={onSubmit}
+                    className={classnames(
+                        styles.addTagTypeForm,
+                        commonStyles.contentSpacing
+                    )}
+                >
+                    <TextField
+                        label="Name"
+                        name="name"
+                        placeholder="url-friendly-unique-name"
+                        value={tagTypeName}
+                        error={errors.name !== undefined}
+                        helperText={errors.name}
+                        disabled={editMode}
+                        onBlur={onValidateName}
+                        onChange={v => setTagTypeName(v.target.value.trim())}
+                        variant="outlined"
+                        size="small"
+                    />
+                    <TextField
+                        label="Description"
+                        name="description"
+                        placeholder="Some short explanation of the tag type"
+                        rowsMax={4}
+                        multiline
+                        error={errors.description !== undefined}
+                        helperText={errors.description}
+                        value={tagTypeDescription}
+                        onChange={v => setTagTypeDescription(v.target.value)}
+                        variant="outlined"
+                        size="small"
+                    />
                     <div className={styles.formButtons}>
-                        <FormButtons submitText={submitText} onCancel={onCancel} />
+                        <FormButtons
+                            submitText={submitText}
+                            onCancel={onCancel}
+                        />
                     </div>
                 </form>
-            </div>
+            </section>
         </PageContent>
     );
 };
@@ -89,7 +118,7 @@ AddTagTypeComponent.propTypes = {
     validateName: PropTypes.func.isRequired,
     submit: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    editMode: PropTypes.bool.isRequired,
+    editMode: PropTypes.bool.isRequired
 };
 
 export default AddTagTypeComponent;

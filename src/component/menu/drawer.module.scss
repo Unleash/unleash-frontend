@@ -5,6 +5,8 @@
 
 .drawerTitle {
     font-size: var(--h1-size);
+    display: flex;
+    align-items: center;
 }
 
 .drawerContainer {

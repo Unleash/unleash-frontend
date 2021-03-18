@@ -9,6 +9,7 @@ import { formatFullDateTimeWithLocale } from "../common/util";
 
 import styles from "./history.module.scss";
 import PageContent from "../common/PageContent/PageContent";
+import HeaderTitle from "../common/HeaderTitle";
 
 const getName = name => {
     if (name) {
@@ -69,17 +70,12 @@ class HistoryList extends Component {
         let entries;
 
         const renderListItemCards = entry => (
-            <Card
-                key={entry.id}
-                style={{
-                    padding: "1rem"
-                }}
-            >
+            <div key={entry.id} className={styles.eventEntry}>
                 <HistoryMeta
                     entry={entry}
                     timeFormatted={this.formatFulldateTime(entry.createdAt)}
                 />
-            </Card>
+            </div>
         );
 
         if (showData) {
@@ -93,7 +89,7 @@ class HistoryList extends Component {
         return (
             <PageContent
                 headerContent={
-                    <DataTableHeader
+                    <HeaderTitle
                         title={this.props.title}
                         actions={
                             <FormControlLabel
@@ -114,7 +110,6 @@ class HistoryList extends Component {
             >
                 <div className={styles.history}>
                     <List>{entries}</List>
-                    {/* <div className={commonStyles.horisontalScroll}>{entries}</div> */}
                 </div>
             </PageContent>
         );
