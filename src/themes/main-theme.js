@@ -24,7 +24,7 @@ const theme = createMuiTheme({
         default: "1px solid #f1f1f1"
     },
     fontSizes: {
-        mainHeader: "1.2rem"
+        mainHeader: "1.1rem"
     }
 });
 

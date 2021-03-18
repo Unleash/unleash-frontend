@@ -21,6 +21,8 @@ import ConditionallyRender from "../common/conditionally-render";
 import Dialogue from "../common/Dialogue/Dialogue";
 import PageContent from "../common/PageContent/PageContent";
 
+import styles from "../tags/Tag.module.scss";
+
 const TagTypesListComponent = ({
     tagTypes,
     fetchTagTypes,
@@ -83,7 +85,10 @@ const TagTypesListComponent = ({
                             </Tooltip>
                         );
                         return (
-                            <ListItem key={`${tagType.name}`}>
+                            <ListItem
+                                key={`${tagType.name}`}
+                                classes={{ root: styles.tagListItem }}
+                            >
                                 <ListItemIcon>
                                     <Icon>label</Icon>
                                 </ListItemIcon>

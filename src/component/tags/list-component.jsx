@@ -36,8 +36,8 @@ class TagsListComponent extends Component {
 
     renderListItems = () => {
         const { tags, hasPermission } = this.props;
-        return tags.map((tag, i) => (
-            <ListItem key={i} className={styles.tagListItem}>
+        return tags.map(tag => (
+            <ListItem key={tag.name} classes={{ root: styles.tagListItem }}>
                 <ListItemIcon>
                     <Icon>label</Icon>
                 </ListItemIcon>

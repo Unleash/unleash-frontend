@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import {
     Avatar,
@@ -12,21 +12,27 @@ import {
     Paper,
     Button,
     Icon,
-    IconButton,
-} from '@material-ui/core';
-import { HeaderTitle, styles as commonStyles } from '../common';
-import { CREATE_ADDON, DELETE_ADDON, UPDATE_ADDON } from '../../permissions';
-import ConditionallyRender from '../common/conditionally-render';
+    IconButton
+} from "@material-ui/core";
+import { HeaderTitle, styles as commonStyles } from "../common";
+import { CREATE_ADDON, DELETE_ADDON, UPDATE_ADDON } from "../../permissions";
+import ConditionallyRender from "../common/conditionally-render";
+import PageContent from "../common/PageContent/PageContent";
 
-const style = { width: '40px', height: '40px', marginRight: '16px', float: 'left' };
+const style = {
+    width: "40px",
+    height: "40px",
+    marginRight: "16px",
+    float: "left"
+};
 
 const getIcon = name => {
     switch (name) {
-        case 'slack':
+        case "slack":
             return <img style={style} src="public/slack.svg" />;
-        case 'jira-comment':
+        case "jira-comment":
             return <img style={style} src="public/jira.svg" />;
-        case 'webhook':
+        case "webhook":
             return <img style={style} src="public/webhooks.svg" />;
         default:
             return (
@@ -37,7 +43,15 @@ const getIcon = name => {
     }
 };
 
-const AddonListComponent = ({ addons, providers, fetchAddons, removeAddon, toggleAddon, history, hasPermission }) => {
+const AddonListComponent = ({
+    addons,
+    providers,
+    fetchAddons,
+    removeAddon,
+    toggleAddon,
+    history,
+    hasPermission
+}) => {
     useEffect(() => {
         if (addons.length === 0) {
             fetchAddons();
@@ -47,70 +61,107 @@ const AddonListComponent = ({ addons, providers, fetchAddons, removeAddon, toggl
     const onRemoveAddon = addon => () => removeAddon(addon);
 
     return (
-        <div>
-            {addons.length > 0 ? (
-                <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                    <HeaderTitle title="Configured addons" />
-                    <List>
-                        {addons.map(addon => (
-                            <ListItem key={addon.id}>
-                                <ListItemAvatar>{getIcon(addon.provider)}</ListItemAvatar>
-                                <ListItemText
-                                    primary={
-                                        <span>
-                                            <ConditionallyRender
-                                                condition={hasPermission(UPDATE_ADDON)}
-                                                show={
-                                                    <Link to={`/addons/edit/${addon.id}`}>
-                                                        <strong>{addon.provider}</strong>
-                                                    </Link>
-                                                }
-                                                elseShow={<strong>{addon.provider}</strong>}
-                                            />
-                                            {addon.enabled ? null : <small> (Disabled)</small>}
-                                        </span>
-                                    }
-                                    secondary={addon.description}
-                                />
-                                <ListItemSecondaryAction>
-                                    <ConditionallyRender
-                                        condition={hasPermission(UPDATE_ADDON)}
-                                        show={
-                                            <IconButton
-                                                size="small"
-                                                title={addon.enabled ? 'Disable addon' : 'Enable addon'}
-                                                onClick={() => toggleAddon(addon)}
-                                            >
-                                                <Icon>{addon.enabled ? 'visibility' : 'visibility_off'}</Icon>
-                                            </IconButton>
+        <>
+            <ConditionallyRender
+                condition={addons.length > 0}
+                show={
+                    <PageContent headerContent="Configured addons">
+                        <List>
+                            {addons.map(addon => (
+                                <ListItem key={addon.id}>
+                                    <ListItemAvatar>
+                                        {getIcon(addon.provider)}
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={
+                                            <span>
+                                                <ConditionallyRender
+                                                    condition={hasPermission(
+                                                        UPDATE_ADDON
+                                                    )}
+                                                    show={
+                                                        <Link
+                                                            to={`/addons/edit/${addon.id}`}
+                                                        >
+                                                            <strong>
+                                                                {addon.provider}
+                                                            </strong>
+                                                        </Link>
+                                                    }
+                                                    elseShow={
+                                                        <strong>
+                                                            {addon.provider}
+                                                        </strong>
+                                                    }
+                                                />
+                                                {addon.enabled ? null : (
+                                                    <small> (Disabled)</small>
+                                                )}
+                                            </span>
                                         }
+                                        secondary={addon.description}
                                     />
-                                    <ConditionallyRender
-                                        condition={hasPermission(DELETE_ADDON)}
-                                        show={
-                                            <IconButton
-                                                size="small"
-                                                title="Remove addon"
-                                                onClick={onRemoveAddon(addon)}
-                                            >
-                                                <Icon>delete</Icon>
-                                            </IconButton>
-                                        }
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Paper>
-            ) : null}
+                                    <ListItemSecondaryAction>
+                                        <ConditionallyRender
+                                            condition={hasPermission(
+                                                UPDATE_ADDON
+                                            )}
+                                            show={
+                                                <IconButton
+                                                    size="small"
+                                                    title={
+                                                        addon.enabled
+                                                            ? "Disable addon"
+                                                            : "Enable addon"
+                                                    }
+                                                    onClick={() =>
+                                                        toggleAddon(addon)
+                                                    }
+                                                >
+                                                    <Icon>
+                                                        {addon.enabled
+                                                            ? "visibility"
+                                                            : "visibility_off"}
+                                                    </Icon>
+                                                </IconButton>
+                                            }
+                                        />
+                                        <ConditionallyRender
+                                            condition={hasPermission(
+                                                DELETE_ADDON
+                                            )}
+                                            show={
+                                                <IconButton
+                                                    size="small"
+                                                    title="Remove addon"
+                                                    onClick={onRemoveAddon(
+                                                        addon
+                                                    )}
+                                                >
+                                                    <Icon>delete</Icon>
+                                                </IconButton>
+                                            }
+                                        />
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </PageContent>
+                }
+            />
+
             <br />
-            <Paper shadow={0} className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
-                <HeaderTitle title="Available addons" />
+            <PageContent headerContent="Available addons">
                 <List>
                     {providers.map((provider, i) => (
                         <ListItem key={i}>
-                            <ListItemAvatar>{getIcon(provider.name)}</ListItemAvatar>
-                            <ListItemText primary={provider.displayName} secondary={provider.description} />
+                            <ListItemAvatar>
+                                {getIcon(provider.name)}
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={provider.displayName}
+                                secondary={provider.description}
+                            />
                             <ListItemSecondaryAction>
                                 <ConditionallyRender
                                     condition={hasPermission(CREATE_ADDON)}
@@ -118,7 +169,11 @@ const AddonListComponent = ({ addons, providers, fetchAddons, removeAddon, toggl
                                         <Button
                                             variant="contained"
                                             name="device_hub"
-                                            onClick={() => history.push(`/addons/create/${provider.name}`)}
+                                            onClick={() =>
+                                                history.push(
+                                                    `/addons/create/${provider.name}`
+                                                )
+                                            }
                                             title="Configure"
                                         >
                                             Configure
@@ -129,8 +184,8 @@ const AddonListComponent = ({ addons, providers, fetchAddons, removeAddon, toggl
                         </ListItem>
                     ))}
                 </List>
-            </Paper>
-        </div>
+            </PageContent>
+        </>
     );
 };
 AddonListComponent.propTypes = {
@@ -140,7 +195,7 @@ AddonListComponent.propTypes = {
     removeAddon: PropTypes.func.isRequired,
     toggleAddon: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default AddonListComponent;

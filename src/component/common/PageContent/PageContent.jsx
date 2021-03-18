@@ -1,5 +1,6 @@
 import React from "react";
-import { Paper, Typography } from "@material-ui/core";
+import HeaderTitle from "../HeaderTitle";
+import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 
 const PageContent = ({ children, headerContent }) => {
@@ -10,12 +11,14 @@ const PageContent = ({ children, headerContent }) => {
         if (typeof headerContent === "string") {
             header = (
                 <div className={styles.headerContainer}>
-                    <Typography variant="h2">{headerContent}</Typography>
+                    <HeaderTitle title={headerContent} />
                 </div>
             );
+        } else {
+            header = (
+                <div className={styles.headerContainer}>{headerContent}</div>
+            );
         }
-
-        header = <div className={styles.headerContainer}>{headerContent}</div>;
     }
 
     return (
