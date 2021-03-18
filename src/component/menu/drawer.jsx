@@ -1,12 +1,12 @@
-import React from 'react';
-import { Divider, Drawer, List, Icon } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Divider, Drawer, List, Icon } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
+import classnames from "classnames";
+import PropTypes from "prop-types";
 
-import styles from './drawer.module.scss';
+import styles from "./drawer.module.scss";
 
-import { baseRoutes as routes } from './routes';
+import { baseRoutes as routes } from "./routes";
 
 const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
@@ -16,17 +16,26 @@ const filterByFlags = flags => r => {
 };
 
 function getIcon(name) {
-    if (name === 'c_github') {
-        return <i className={classnames('material-icons', styles.navigationIcon, styles.iconGitHub)} />;
+    if (name === "c_github") {
+        return (
+            <i
+                className={classnames(
+                    "material-icons",
+                    styles.navigationIcon,
+                    styles.iconGitHub
+                )}
+            />
+        );
     } else {
         return <Icon className={styles.navigationIcon}>{name}</Icon>;
     }
 }
 
-function renderLink(link) {
+function renderLink(link, toggleDrawer) {
     if (link.path) {
         return (
             <NavLink
+                onClick={() => toggleDrawer()}
                 key={link.path}
                 to={link.path}
                 className={classnames(styles.navigationLink)}
@@ -41,7 +50,7 @@ function renderLink(link) {
                 href={link.href}
                 key={link.href}
                 target="_blank"
-                className={[styles.navigationLink].join(' ')}
+                className={[styles.navigationLink].join(" ")}
                 title={link.title}
             >
                 {getIcon(link.icon)} {link.value}
@@ -50,12 +59,28 @@ function renderLink(link) {
     }
 }
 
-export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = false, toggleDrawer }) => (
-    <Drawer className={styles.drawer} open={open} anchor={'left'} onClose={() => toggleDrawer()}>
+export const DrawerMenu = ({
+    links = [],
+    title = "Unleash",
+    flags = {},
+    open = false,
+    toggleDrawer
+}) => (
+    <Drawer
+        className={styles.drawer}
+        open={open}
+        anchor={"left"}
+        onClose={() => toggleDrawer()}
+    >
         <div className={styles.drawerContainer}>
             <div className={styles.drawerTitleContainer}>
-                <span className={[styles.drawerTitle].join(' ')}>
-                    <img src="public/logo.png" width="32" height="32" className={styles.drawerTitleLogo} />
+                <span className={[styles.drawerTitle].join(" ")}>
+                    <img
+                        src="public/logo.png"
+                        width="32"
+                        height="32"
+                        className={styles.drawerTitleLogo}
+                    />
                     <span className={styles.drawerTitleText}>{title}</span>
                 </span>
             </div>
@@ -67,7 +92,9 @@ export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = f
                         key={item.path}
                         to={item.path}
                         className={classnames(styles.navigationLink)}
-                        activeClassName={classnames(styles.navigationLinkActive)}
+                        activeClassName={classnames(
+                            styles.navigationLinkActive
+                        )}
                     >
                         {getIcon(item.icon)}
                         {item.title}
@@ -75,7 +102,9 @@ export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = f
                 ))}
             </List>
             <Divider />
-            <List className={styles.navigation}>{links.map(renderLink)}</List>
+            <List className={styles.navigation}>
+                {links.map(l => renderLink(l, toggleDrawer))}
+            </List>
         </div>
     </Drawer>
 );
@@ -83,5 +112,5 @@ export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = f
 DrawerMenu.propTypes = {
     links: PropTypes.array,
     title: PropTypes.string,
-    flags: PropTypes.object,
+    flags: PropTypes.object
 };
