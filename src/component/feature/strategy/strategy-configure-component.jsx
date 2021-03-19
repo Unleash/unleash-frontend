@@ -160,11 +160,7 @@ export default class StrategyConfigureComponent extends React.Component {
                         <CardHeader
                             className={styles.cardTitle}
                             title={name}
-                            subheaderTypographyProps={{
-                                className: styles.subheader,
-                            }}
                             color="primary"
-                            subheader={description}
                             avatar={<Icon>extension</Icon>}
                             action={actions}
                         />

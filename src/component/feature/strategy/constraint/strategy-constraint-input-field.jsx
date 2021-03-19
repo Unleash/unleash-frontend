@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, IconButton } from '@material-ui/core';
+import { Icon, IconButton, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import MySelect from '../../../common/select';
 import InputListField from '../../../common/input-list-field';
 import ConditionallyRender from '../../../common/conditionally-render';
@@ -101,7 +102,21 @@ export default class StrategyConstraintInputField extends Component {
                 <td style={{ width: '100%' }}>
                     <ConditionallyRender
                         condition={options}
-                        show={<MySelect value={values} options={options} onChange={this.handleChangeValue} />}
+                        show={
+                            <Autocomplete
+                                multiple
+                                id="tags-outlined"
+                                options={options}
+                                getOptionLabel={option => option.label}
+                                defaultValue={values}
+                                filterSelectedOptions
+                                filterOptions={options => options.filter(o => !values.some(v => v.value === o.value))}
+                                onChange={(evt, values) => this.handleChangeValue(values)}
+                                renderInput={params => (
+                                    <TextField {...params} variant="outlined" label="filterSelectedOptions" />
+                                )}
+                            />
+                        }
                         elseShow={
                             <InputListField
                                 name="values"

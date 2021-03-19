@@ -1,7 +1,6 @@
 .item {
     flex: 1;
-    min-width: 400px;
-    max-width: 515px;
+    width: 100%;
     margin: 5px 0 5px 5px;
     position: relative;
     z-index: 1;
@@ -108,6 +107,7 @@
 .strategyList {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .strategyListAdd {
