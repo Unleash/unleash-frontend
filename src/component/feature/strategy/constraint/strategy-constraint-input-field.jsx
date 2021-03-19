@@ -112,9 +112,7 @@ export default class StrategyConstraintInputField extends Component {
                                 filterSelectedOptions
                                 filterOptions={options => options.filter(o => !values.some(v => v.value === o.value))}
                                 onChange={(evt, values) => this.handleChangeValue(values)}
-                                renderInput={params => (
-                                    <TextField {...params} variant="outlined" label="filterSelectedOptions" />
-                                )}
+                                renderInput={params => <TextField {...params} variant="outlined" label="Values" />}
                             />
                         }
                         elseShow={
