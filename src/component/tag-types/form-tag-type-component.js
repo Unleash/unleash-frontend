@@ -1,30 +1,22 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-import TextField from "@material-ui/core/TextField";
-import { FormButtons } from "../common";
-import PageContent from "../common/PageContent/PageContent";
-import { Typography } from "@material-ui/core";
+import TextField from '@material-ui/core/TextField';
+import { FormButtons } from '../common';
+import PageContent from '../common/PageContent/PageContent';
+import { Typography } from '@material-ui/core';
 
-import styles from "./TagType.module.scss";
-import commonStyles from "../common/common.module.scss";
+import styles from './TagType.module.scss';
+import commonStyles from '../common/common.module.scss';
 
-const AddTagTypeComponent = ({
-    tagType,
-    validateName,
-    submit,
-    history,
-    editMode
-}) => {
-    const [tagTypeName, setTagTypeName] = useState(tagType.name || "");
-    const [tagTypeDescription, setTagTypeDescription] = useState(
-        tagType.description || ""
-    );
+const AddTagTypeComponent = ({ tagType, validateName, submit, history, editMode }) => {
+    const [tagTypeName, setTagTypeName] = useState(tagType.name || '');
+    const [tagTypeDescription, setTagTypeDescription] = useState(tagType.description || '');
     const [errors, setErrors] = useState({
         general: undefined,
         name: undefined,
-        description: undefined
+        description: undefined,
     });
 
     const onValidateName = async evt => {
@@ -40,7 +32,7 @@ const AddTagTypeComponent = ({
 
     const onCancel = evt => {
         evt.preventDefault();
-        history.push("/tag-types");
+        history.push('/tag-types');
     };
 
     const onSubmit = async evt => {
@@ -48,33 +40,21 @@ const AddTagTypeComponent = ({
         try {
             await submit({
                 name: tagTypeName,
-                description: tagTypeDescription
+                description: tagTypeDescription,
             });
-            history.push("/tag-types");
+            history.push('/tag-types');
         } catch (e) {
             setErrors({ general: e.message });
         }
     };
-    const submitText = editMode ? "Update" : "Create";
+    const submitText = editMode ? 'Update' : 'Create';
     return (
         <PageContent headerContent={`${submitText} Tag type`}>
-            <section
-                className={classnames(
-                    commonStyles.contentSpacing,
-                    styles.tagTypeContainer
-                )}
-            >
+            <section className={classnames(commonStyles.contentSpacing, styles.tagTypeContainer)}>
                 <Typography variant="subtitle1">
-                    Tag types allows you to group tags together in the
-                    management UI
+                    Tag types allows you to group tags together in the management UI
                 </Typography>
-                <form
-                    onSubmit={onSubmit}
-                    className={classnames(
-                        styles.addTagTypeForm,
-                        commonStyles.contentSpacing
-                    )}
-                >
+                <form onSubmit={onSubmit} className={classnames(styles.addTagTypeForm, commonStyles.contentSpacing)}>
                     <TextField
                         label="Name"
                         name="name"
@@ -102,10 +82,7 @@ const AddTagTypeComponent = ({
                         size="small"
                     />
                     <div className={styles.formButtons}>
-                        <FormButtons
-                            submitText={submitText}
-                            onCancel={onCancel}
-                        />
+                        <FormButtons submitText={submitText} onCancel={onCancel} />
                     </div>
                 </form>
             </section>
@@ -118,7 +95,7 @@ AddTagTypeComponent.propTypes = {
     validateName: PropTypes.func.isRequired,
     submit: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    editMode: PropTypes.bool.isRequired
+    editMode: PropTypes.bool.isRequired,
 };
 
 export default AddTagTypeComponent;

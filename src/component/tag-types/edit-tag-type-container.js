@@ -16,7 +16,6 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => ({
     validateName: () => {},
     submit: tagType => {
-        console.log('Updating');
         updateTagType(tagType)(dispatch);
     },
 });

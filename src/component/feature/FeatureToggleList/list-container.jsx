@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { toggleFeature, fetchFeatureToggles } from '../../../store/feature-toggle/actions';
 import { updateSettingForGroup } from '../../../store/settings/actions';
 
-import FeatureListComponent from './list-component';
+import FeatureListComponent from './FeatureToggleList';
 import { hasPermission } from '../../../permissions';
 
 function checkConstraints(strategy, regex) {

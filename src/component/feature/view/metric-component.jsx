@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Chip, Grid, CircularProgress } from '@material-ui/core';
+import { Icon, Chip, Grid } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { Link } from 'react-router-dom';

@@ -1,3 +1,3 @@
-import AddonListComponent from "./AddonList";
+import AddonListComponent from './AddonList';
 
 export default AddonListComponent;

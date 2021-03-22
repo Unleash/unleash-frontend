@@ -1,3 +1,3 @@
-import AvailableAddons from "./AvailableAddons";
+import AvailableAddons from './AvailableAddons';
 
 export default AvailableAddons;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Switch, TextField, Typography } from '@material-ui/core';
-import commonStyles from '../../../component/common/common.module.scss';
 import PageContent from '../../../component/common/PageContent/PageContent';
 
 const initialState = {

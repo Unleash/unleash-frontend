@@ -3,12 +3,6 @@
     overflow: visible;
 }
 
-.searchBarContainer {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: space-between;
-}
-
 .listParagraph {
     text-align: center;
     margin-top: 50px;
@@ -29,7 +23,7 @@
 }
 
 .listItemMetric svg path {
-    fill: #E0E0E0;
+    fill: #e0e0e0;
 }
 
 .listItemToggle {
@@ -57,5 +51,4 @@
     margin: 0 8px;
     box-shadow: var(--chip-shadow);
     background-color: #b0bec5;
-    font-size: var(--p-size);
 }

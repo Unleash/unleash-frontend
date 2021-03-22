@@ -1,3 +1,3 @@
-import TagTypeList from "./TagTypeList";
+import TagTypeList from './TagTypeList';
 
 export default TagTypeList;
