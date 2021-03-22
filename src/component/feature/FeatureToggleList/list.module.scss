@@ -3,17 +3,6 @@
     overflow: visible;
 }
 
-.listParagraph {
-    text-align: center;
-    margin-top: 50px;
-    color: gray;
-}
-
-/** LIST COMPONENT HEADER */
-.listComponentHeader {
-    padding: var(--list-header-padding);
-}
-
 /** LIST ITEM **/
 
 .listItemMetric {
@@ -51,4 +40,8 @@
     margin: 0 8px;
     box-shadow: var(--chip-shadow);
     background-color: #b0bec5;
+}
+
+.listItem {
+    padding: 0.25rem 0;
 }

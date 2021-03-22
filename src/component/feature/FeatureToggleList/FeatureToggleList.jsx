@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { debounce } from 'debounce';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { debounce } from "debounce";
 
-import { Link } from 'react-router-dom';
-import { Button, List } from '@material-ui/core';
-import Feature from './list-item-component';
-import SearchField from '../../common/search-field';
-import ListComponentHeader from './list-component-header';
-import ConditionallyRender from '../../common/conditionally-render';
-import PageContent from '../../common/PageContent/PageContent';
-import HeaderTitle from '../../common/HeaderTitle';
+import { Link } from "react-router-dom";
+import { Button, List } from "@material-ui/core";
+import Feature from "./FeatureToggleListItem/FeatureToggleListItem";
+import SearchField from "../../common/search-field";
+import ListComponentHeader from "./list-component-header";
+import ConditionallyRender from "../../common/conditionally-render";
+import PageContent from "../../common/PageContent/PageContent";
+import HeaderTitle from "../../common/HeaderTitle";
 
-import { CREATE_FEATURE } from '../../../permissions';
+import { CREATE_FEATURE } from "../../../permissions";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 const FeatureToggleList = ({
     fetchFeatureToggles,
@@ -24,7 +24,7 @@ const FeatureToggleList = ({
     revive,
     updateSetting,
     featureMetrics,
-    toggleFeature,
+    toggleFeature
 }) => {
     const styles = useStyles();
 
@@ -40,16 +40,16 @@ const FeatureToggleList = ({
     }, [updateSetting, fetchFeatureToggles]);
 
     const toggleMetrics = () => {
-        updateSetting('showLastHour', !settings.showLastHour);
+        updateSetting("showLastHour", !settings.showLastHour);
     };
 
     const setFilter = v => {
-        const value = typeof v === 'string' ? v : '';
+        const value = typeof v === "string" ? v : "";
         updateFilter(value);
     };
 
     const setSort = v => {
-        updateSetting('sort', typeof v === 'string' ? v.trim() : '');
+        updateSetting("sort", typeof v === "string" ? v.trim() : "");
     };
 
     const renderFeatures = () => {
@@ -75,7 +75,11 @@ const FeatureToggleList = ({
     return (
         <div className={styles.featureContainer}>
             <div className={styles.searchBarContainer}>
-                <SearchField value={settings.filter} updateValue={updateSetting} className={styles.searchBar} />
+                <SearchField
+                    value={settings.filter}
+                    updateValue={updateSetting}
+                    className={styles.searchBar}
+                />
             </div>
 
             <PageContent
@@ -114,7 +118,11 @@ const FeatureToggleList = ({
                     <ConditionallyRender
                         condition={features.length > 0}
                         show={renderFeatures}
-                        elseShow={<p className={styles.listParagraph}>Empty list of feature toggles</p>}
+                        elseShow={
+                            <p className={styles.listParagraph}>
+                                Empty list of feature toggles
+                            </p>
+                        }
                     />
                 </List>
             </PageContent>
@@ -132,7 +140,7 @@ FeatureToggleList.propTypes = {
     toggleFeature: PropTypes.func,
     settings: PropTypes.object,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default FeatureToggleList;
