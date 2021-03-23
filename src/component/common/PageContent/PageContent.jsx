@@ -1,28 +1,48 @@
-import React from 'react';
-import HeaderTitle from '../HeaderTitle';
-import { Paper } from '@material-ui/core';
-import { useStyles } from './styles';
+import React from "react";
 
-const PageContent = ({ children, headerContent, ...rest }) => {
+import classnames from "classnames";
+import HeaderTitle from "../HeaderTitle";
+import { Paper } from "@material-ui/core";
+import { useStyles } from "./styles";
+
+const PageContent = ({
+    children,
+    headerContent,
+    disablePadding,
+    disableBorder,
+    ...rest
+}) => {
     const styles = useStyles();
+
+    const headerClasses = classnames(styles.headerContainer, {
+        [styles.paddingDisabled]: disablePadding,
+        [styles.borderDisabled]: disableBorder
+    });
+
+    const bodyClasses = classnames(styles.bodyContainer, {
+        [styles.paddingDisabled]: disablePadding,
+        [styles.borderDisabled]: disableBorder
+    });
 
     let header = null;
     if (headerContent) {
-        if (typeof headerContent === 'string') {
+        if (typeof headerContent === "string") {
             header = (
-                <div className={styles.headerContainer}>
+                <div className={headerClasses}>
                     <HeaderTitle title={headerContent} />
                 </div>
             );
         } else {
-            header = <div className={styles.headerContainer}>{headerContent}</div>;
+            header = <div className={headerClasses}>{headerContent}</div>;
         }
     }
 
+    const paperProps = disableBorder ? { elevation: 0 } : {};
+
     return (
-        <Paper {...rest}>
+        <Paper {...rest} {...paperProps}>
             {header}
-            <div className={styles.bodyContainer}>{children}</div>
+            <div className={bodyClasses}>{children}</div>
         </Paper>
     );
 };
