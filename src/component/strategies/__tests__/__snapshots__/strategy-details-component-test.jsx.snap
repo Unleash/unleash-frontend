@@ -8,11 +8,11 @@ exports[`renders correctly with one strategy 1`] = `
     className="makeStyles-headerContainer-1"
   >
     <div
-      className="makeStyles-headerTitleContainer-3"
+      className="makeStyles-headerTitleContainer-5"
     >
       <div>
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
         >
           Another
         </h2>
@@ -35,12 +35,7 @@ exports[`renders correctly with one strategy 1`] = `
         </h6>
         <div>
           <div
-            className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
-            style={
-              Object {
-                "background": "#efefef",
-              }
-            }
+            className="MuiPaper-root makeStyles-tabNav-8 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
               className="MuiTabs-root"
@@ -124,7 +119,7 @@ exports[`renders correctly with one strategy 1`] = `
                   </button>
                 </div>
                 <span
-                  className="PrivateTabIndicator-root-6 PrivateTabIndicator-colorPrimary-7 MuiTabs-indicator"
+                  className="PrivateTabIndicator-root-9 PrivateTabIndicator-colorPrimary-10 MuiTabs-indicator"
                   style={
                     Object {
                       "left": 0,

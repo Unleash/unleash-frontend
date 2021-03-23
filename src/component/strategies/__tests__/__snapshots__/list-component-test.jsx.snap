@@ -8,17 +8,17 @@ exports[`renders correctly with one strategy 1`] = `
     className="makeStyles-headerContainer-1"
   >
     <div
-      className="makeStyles-headerTitleContainer-3"
+      className="makeStyles-headerTitleContainer-5"
     >
       <div>
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-5"
+        className="makeStyles-headerActions-7"
       >
         <button
           aria-describedby={null}
@@ -197,17 +197,17 @@ exports[`renders correctly with one strategy without permissions 1`] = `
     className="makeStyles-headerContainer-1"
   >
     <div
-      className="makeStyles-headerTitleContainer-3"
+      className="makeStyles-headerTitleContainer-5"
     >
       <div>
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-5"
+        className="makeStyles-headerActions-7"
       />
     </div>
   </div>

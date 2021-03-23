@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'debounce';
 import { InputBase } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/search';
+import SearchIcon from '@material-ui/icons/Search';
 
 import { useStyles } from './styles';
 

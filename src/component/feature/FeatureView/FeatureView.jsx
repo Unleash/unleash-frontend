@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Paper, Typography, Button, Switch, LinearProgress } from '@material-ui/core';
@@ -17,13 +17,14 @@ import FeatureTagComponent from '../feature-tag-component';
 import StatusUpdateComponent from '../view/status-update-component';
 import AddTagDialog from '../add-tag-dialog-container';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import TabNav from '../../common/tabNav';
+import TabNav from '../../common/TabNav';
 
 import { scrollToTop } from '../../common/util';
 
 import styles from './FeatureView.module.scss';
+import ConfirmDialogue from '../../common/Dialogue';
 
-const ViewFeatureToggleComponent = ({
+const FeatureView = ({
     activeTab,
     featureToggleName,
     features,
@@ -44,6 +45,8 @@ const ViewFeatureToggleComponent = ({
     tagTypes,
 }) => {
     const isFeatureView = !!fetchFeatureToggles;
+    const [delDialog, setDelDialog] = useState(false);
+    const [delToggle, setDelToggle] = useState();
     useEffect(() => {
         scrollToTop();
     }, []);
@@ -91,18 +94,26 @@ const ViewFeatureToggleComponent = ({
         {
             label: 'Activation',
             component: getTabComponent('activation'),
+            name: 'strategies',
+            path: `/features/strategies/${featureToggleName}`,
         },
         {
             label: 'Metrics',
             component: getTabComponent('metrics'),
+            name: 'metrics',
+            path: `/features/metrics/${featureToggleName}`,
         },
         {
             label: 'Variants',
             component: getTabComponent('variants'),
+            name: 'variants',
+            path: `/features/variants/${featureToggleName}`,
         },
         {
             label: 'Log',
             component: getTabComponent('log'),
+            name: 'logs',
+            path: `/features/logs/${featureToggleName}`,
         },
     ];
 
@@ -132,13 +143,8 @@ const ViewFeatureToggleComponent = ({
     }
 
     const removeToggle = () => {
-        if (
-            // eslint-disable-next-line no-alert
-            window.confirm('Are you sure you want to remove this toggle?')
-        ) {
-            removeFeatureToggle(featureToggle.name);
-            history.push('/features');
-        }
+        removeFeatureToggle(featureToggle.name);
+        history.push('/features');
     };
     const reviveToggle = () => {
         revive(featureToggle.name);
@@ -184,6 +190,9 @@ const ViewFeatureToggleComponent = ({
         setStale(stale, featureToggleName);
     };
 
+    const tabs = getTabData();
+
+    const findActiveTab = activeTab => tabs.findIndex(tab => tab.name === activeTab);
     return (
         <Paper className={commonStyles.fullwidth} style={{ overflow: 'visible' }}>
             <div>
@@ -253,7 +262,10 @@ const ViewFeatureToggleComponent = ({
 
                             <Button
                                 disabled={!hasPermission(DELETE_FEATURE)}
-                                onClick={removeToggle}
+                                onClick={() => {
+                                    setDelToggle(featureToggle.name);
+                                    setDelDialog(true);
+                                }}
                                 title="Archive feature toggle"
                                 style={{ flexShrink: 0 }}
                             >
@@ -275,12 +287,20 @@ const ViewFeatureToggleComponent = ({
 
             <hr />
 
-            <TabNav tabData={getTabData()} className={styles.tabContentContainer} />
+            <TabNav tabData={tabs} className={styles.tabContentContainer} startingTab={findActiveTab(activeTab)} />
+            <ConfirmDialogue
+                open={delDialog}
+                title="Are you sure you want to archive this toggle"
+                onClick={() => {
+                    setDelDialog(false);
+                    removeToggle();
+                }}
+            />
         </Paper>
     );
 };
 
-ViewFeatureToggleComponent.propTypes = {
+FeatureView.propTypes = {
     activeTab: PropTypes.string.isRequired,
     featureToggleName: PropTypes.string.isRequired,
     features: PropTypes.array.isRequired,
@@ -301,4 +321,4 @@ ViewFeatureToggleComponent.propTypes = {
     tagTypes: PropTypes.array,
 };
 
-export default ViewFeatureToggleComponent;
+export default FeatureView;
