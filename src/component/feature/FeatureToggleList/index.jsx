@@ -122,7 +122,7 @@ export const mapStateToPropsConfigurable = isFeature => state => {
 const mapStateToProps = mapStateToPropsConfigurable(true);
 const mapDispatchToProps = {
     toggleFeature,
-    fetchFeatureToggles,
+    fetcher: () => fetchFeatureToggles(),
     updateSetting: updateSettingForGroup("feature")
 };
 

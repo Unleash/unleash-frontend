@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { debounce } from "debounce";
-
 import { Link } from "react-router-dom";
 import { Button, List } from "@material-ui/core";
+
 import FeatureToggleListItem from "./FeatureToggleListItem";
-import SearchField from "../../common/search-field";
+import SearchField from "../../common/SearchField/SearchField";
 import FeatureToggleListActions from "./FeatureToggleListActions";
 import ConditionallyRender from "../../common/conditionally-render";
 import PageContent from "../../common/PageContent/PageContent";
@@ -18,6 +18,7 @@ import { useStyles } from "./styles";
 const FeatureToggleList = ({
     fetchFeatureToggles,
     fetchArchive,
+    fetcher,
     features,
     hasPermission,
     settings,
@@ -28,24 +29,12 @@ const FeatureToggleList = ({
 }) => {
     const styles = useStyles();
 
-    let updateFilter;
     useEffect(() => {
-        if (fetchFeatureToggles) {
-            fetchFeatureToggles();
-        } else {
-            fetchArchive();
-        }
-
-        updateFilter = debounce(updateSetting, 150);
+        fetcher();
     }, [updateSetting, fetchFeatureToggles]);
 
     const toggleMetrics = () => {
         updateSetting("showLastHour", !settings.showLastHour);
-    };
-
-    const setFilter = v => {
-        const value = typeof v === "string" ? v : "";
-        updateFilter(value);
     };
 
     const setSort = v => {
@@ -67,7 +56,6 @@ const FeatureToggleList = ({
                 toggleFeature={toggleFeature}
                 revive={revive}
                 hasPermission={hasPermission}
-                setFilter={setFilter}
             />
         ));
     };
@@ -77,7 +65,7 @@ const FeatureToggleList = ({
             <div className={styles.searchBarContainer}>
                 <SearchField
                     value={settings.filter}
-                    updateValue={updateSetting}
+                    updateValue={updateSetting.bind(this, "filter")}
                     className={styles.searchBar}
                 />
             </div>
@@ -105,7 +93,7 @@ const FeatureToggleList = ({
                                             variant="contained"
                                             component={Link}
                                         >
-                                            Add new feature
+                                            Add new feature toggle
                                         </Button>
                                     }
                                 />

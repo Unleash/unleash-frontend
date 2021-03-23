@@ -15,7 +15,7 @@ import { calc, styles as commonStyles } from "../../../common";
 
 import { useStyles } from "./styles";
 
-const Feature = ({
+const FeatureToggleListItem = ({
     feature,
     toggleFeature,
     settings,
@@ -123,7 +123,7 @@ const Feature = ({
     );
 };
 
-Feature.propTypes = {
+FeatureToggleListItem.propTypes = {
     feature: PropTypes.object,
     toggleFeature: PropTypes.func,
     settings: PropTypes.object,
@@ -133,4 +133,4 @@ Feature.propTypes = {
     hasPermission: PropTypes.func.isRequired
 };
 
-export default memo(Feature);
+export default memo(FeatureToggleListItem);

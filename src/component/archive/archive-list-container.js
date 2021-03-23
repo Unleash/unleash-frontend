@@ -6,7 +6,7 @@ import { mapStateToPropsConfigurable } from "../feature/FeatureToggleList";
 
 const mapStateToProps = mapStateToPropsConfigurable(false);
 const mapDispatchToProps = {
-    fetchArchive,
+    fetcher: () => fetchArchive(),
     revive,
     updateSetting: updateSettingForGroup("feature")
 };
