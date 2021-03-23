@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import HistoryItemDiff from "./history-item-diff";
-import HistoryItemJson from "./history-item-json";
-import { List, Switch, FormControlLabel } from "@material-ui/core";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import HistoryItemDiff from './history-item-diff';
+import HistoryItemJson from './history-item-json';
+import { List, Switch, FormControlLabel } from '@material-ui/core';
 
-import { formatFullDateTimeWithLocale } from "../common/util";
+import { formatFullDateTimeWithLocale } from '../common/util';
 
-import styles from "./history.module.scss";
-import PageContent from "../common/PageContent/PageContent";
-import HeaderTitle from "../common/HeaderTitle";
+import styles from './history.module.scss';
+import PageContent from '../common/PageContent/PageContent';
+import HeaderTitle from '../common/HeaderTitle';
 
 const getName = name => {
     if (name) {
@@ -40,7 +40,7 @@ const HistoryMeta = ({ entry, timeFormatted }) => (
 );
 HistoryMeta.propTypes = {
     entry: PropTypes.object.isRequired,
-    timeFormatted: PropTypes.string.isRequired
+    timeFormatted: PropTypes.string.isRequired,
 };
 
 class HistoryList extends Component {
@@ -50,11 +50,11 @@ class HistoryList extends Component {
         settings: PropTypes.object,
         location: PropTypes.object,
         updateSetting: PropTypes.func.isRequired,
-        hideName: PropTypes.bool
+        hideName: PropTypes.bool,
     };
 
     toggleShowDiff() {
-        this.props.updateSetting("showData", !this.props.settings.showData);
+        this.props.updateSetting('showData', !this.props.settings.showData);
     }
     formatFulldateTime(v) {
         return formatFullDateTimeWithLocale(v, this.props.location.locale);
@@ -70,17 +70,12 @@ class HistoryList extends Component {
 
         const renderListItemCards = entry => (
             <div key={entry.id} className={styles.eventEntry}>
-                <HistoryMeta
-                    entry={entry}
-                    timeFormatted={this.formatFulldateTime(entry.createdAt)}
-                />
+                <HistoryMeta entry={entry} timeFormatted={this.formatFulldateTime(entry.createdAt)} />
             </div>
         );
 
         if (showData) {
-            entries = history.map(entry => (
-                <HistoryItemJson key={`log${entry.id}`} entry={entry} />
-            ));
+            entries = history.map(entry => <HistoryItemJson key={`log${entry.id}`} entry={entry} />);
         } else {
             entries = history.map(renderListItemCards);
         }
@@ -95,9 +90,7 @@ class HistoryList extends Component {
                                 control={
                                     <Switch
                                         checked={showData}
-                                        onChange={this.toggleShowDiff.bind(
-                                            this
-                                        )}
+                                        onChange={this.toggleShowDiff.bind(this)}
                                         color="primary"
                                     />
                                 }

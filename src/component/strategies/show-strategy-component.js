@@ -1,24 +1,16 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import {
-    Grid,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar,
-    Icon,
-    Tooltip
-} from "@material-ui/core";
-import { TogglesLinkList } from "./toggles-link-list";
-import { AppsLinkList } from "../common";
-import ConditionallyRender from "../common/ConditionallyRender/ConditionallyRender";
-import styles from "./strategies.module.scss";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { Grid, List, ListItem, ListItemText, ListItemAvatar, Icon, Tooltip } from '@material-ui/core';
+import { TogglesLinkList } from './toggles-link-list';
+import { AppsLinkList } from '../common';
+import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
+import styles from './strategies.module.scss';
 
 class ShowStrategyComponent extends PureComponent {
     static propTypes = {
         toggles: PropTypes.array,
         applications: PropTypes.array,
-        strategy: PropTypes.object.isRequired
+        strategy: PropTypes.object.isRequired,
     };
 
     renderParameters(params) {
@@ -69,7 +61,7 @@ class ShowStrategyComponent extends PureComponent {
                         condition={strategy.deprecated}
                         show={
                             <Grid item>
-                                <h5 style={{ color: "#ff0000" }}>Deprecated</h5>
+                                <h5 style={{ color: '#ff0000' }}>Deprecated</h5>
                             </Grid>
                         }
                     />

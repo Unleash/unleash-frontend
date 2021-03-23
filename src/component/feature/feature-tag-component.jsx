@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Icon, Chip } from "@material-ui/core";
-import ConditionallyRender from "../common/ConditionallyRender/ConditionallyRender";
-import Dialogue from "../common/Dialogue";
-function FeatureTagComponent({
-    tags,
-    tagTypes,
-    featureToggleName,
-    untagFeature
-}) {
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Icon, Chip } from '@material-ui/core';
+import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
+import Dialogue from '../common/Dialogue';
+function FeatureTagComponent({ tags, tagTypes, featureToggleName, untagFeature }) {
     const [showDialog, setShowDialog] = useState(false);
     const [selectedTag, setSelectedTag] = useState(undefined);
     const onUntagFeature = tag => {
@@ -20,26 +15,16 @@ function FeatureTagComponent({
     const tagIcon = typeName => {
         let tagType = tagTypes.find(type => type.name === typeName);
 
-        const style = { width: "20px", height: "20px", marginRight: "5px" };
+        const style = { width: '20px', height: '20px', marginRight: '5px' };
 
         if (tagType && tagType.icon) {
             switch (tagType.name) {
-                case "slack":
-                    return (
-                        <img style={style} alt="slack" src="public/slack.svg" />
-                    );
-                case "jira":
-                    return (
-                        <img style={style} alt="jira" src="public/jira.svg" />
-                    );
-                case "webhook":
-                    return (
-                        <img
-                            style={style}
-                            alt="webhook"
-                            src="public/webhooks.svg"
-                        />
-                    );
+                case 'slack':
+                    return <img style={style} alt="slack" src="public/slack.svg" />;
+                case 'jira':
+                    return <img style={style} alt="jira" src="public/jira.svg" />;
+                case 'webhook':
+                    return <img style={style} alt="webhook" src="public/webhooks.svg" />;
                 default:
                     return <Icon>label</Icon>;
             }
@@ -51,7 +36,7 @@ function FeatureTagComponent({
     const renderTag = t => (
         <Chip
             icon={tagIcon(t.type)}
-            style={{ marginRight: "3px", fontSize: "0.8em" }}
+            style={{ marginRight: '3px', fontSize: '0.8em' }}
             label={t.value}
             key={`${t.type}:${t.value}`}
             onDelete={() => {
@@ -90,7 +75,7 @@ FeatureTagComponent.propTypes = {
     tags: PropTypes.array,
     tagTypes: PropTypes.array,
     featureToggleName: PropTypes.string.isRequired,
-    untagFeature: PropTypes.func
+    untagFeature: PropTypes.func,
 };
 
 export default FeatureTagComponent;

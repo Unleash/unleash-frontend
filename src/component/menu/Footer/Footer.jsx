@@ -1,12 +1,12 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { List, ListItem, ListItemText, Grid } from "@material-ui/core";
-import { baseRoutes as routes } from "../../menu/routes";
-import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
-import ShowApiDetailsContainer from "../../api/show-api-details-container";
+import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
+import { baseRoutes as routes } from '../../menu/routes';
+import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
+import ShowApiDetailsContainer from '../../api/show-api-details-container';
 
-import styles from "./Footer.module.scss";
+import styles from './Footer.module.scss';
 
 export const Footer = () => (
     <React.Fragment>
@@ -19,17 +19,10 @@ export const Footer = () => (
                             <ConditionallyRender
                                 condition={routes && routes.length > 0}
                                 show={routes.map(route => (
-                                    <ListItem
-                                        key={`listitem_${route.path}`}
-                                        className={styles.listItem}
-                                    >
+                                    <ListItem key={`listitem_${route.path}`} className={styles.listItem}>
                                         <ListItemText
                                             primary={
-                                                <NavLink
-                                                    key={route.path}
-                                                    to={route.path}
-                                                    className={styles.link}
-                                                >
+                                                <NavLink key={route.path} to={route.path} className={styles.link}>
                                                     {route.title}
                                                 </NavLink>
                                             }
@@ -37,16 +30,10 @@ export const Footer = () => (
                                     </ListItem>
                                 ))}
                             />
-                            <ListItem
-                                key="github_link"
-                                className={styles.listItem}
-                            >
+                            <ListItem key="github_link" className={styles.listItem}>
                                 <ListItemText
                                     primary={
-                                        <a
-                                            href="https://github.com/Unleash/unleash/"
-                                            target="_blank"
-                                        >
+                                        <a href="https://github.com/Unleash/unleash/" target="_blank">
                                             GitHub
                                         </a>
                                     }
@@ -82,19 +69,16 @@ export const Footer = () => (
                                         </a>
                                     }
                                 />
-                            </ListItem>{" "}
+                            </ListItem>{' '}
                             <ListItem>
                                 <ListItemText
                                     primary={
-                                        <a
-                                            href="https://github.com/Unleash/unleash-client-go"
-                                            className={styles.link}
-                                        >
+                                        <a href="https://github.com/Unleash/unleash-client-go" className={styles.link}>
                                             Go
                                         </a>
                                     }
                                 />
-                            </ListItem>{" "}
+                            </ListItem>{' '}
                             <ListItem>
                                 <ListItemText
                                     primary={
@@ -106,7 +90,7 @@ export const Footer = () => (
                                         </a>
                                     }
                                 />
-                            </ListItem>{" "}
+                            </ListItem>{' '}
                             <ListItem>
                                 <ListItemText
                                     primary={
@@ -134,10 +118,7 @@ export const Footer = () => (
                             <ListItem>
                                 <ListItemText
                                     primary={
-                                        <a
-                                            href="https://unleash.github.io/docs/client_sdk"
-                                            className={styles.link}
-                                        >
+                                        <a href="https://unleash.github.io/docs/client_sdk" className={styles.link}>
                                             All client SDKs
                                         </a>
                                     }

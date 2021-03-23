@@ -1,16 +1,16 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core';
 
-import StrategiesListComponent from "../list-component";
-import renderer from "react-test-renderer";
-import { CREATE_STRATEGY, DELETE_STRATEGY } from "../../../permissions";
-import theme from "../../../themes/main-theme";
+import StrategiesListComponent from '../list-component';
+import renderer from 'react-test-renderer';
+import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../../permissions';
+import theme from '../../../themes/main-theme';
 
-test("renders correctly with one strategy", () => {
+test('renders correctly with one strategy', () => {
     const strategy = {
-        name: "Another",
-        description: "another's description"
+        name: 'Another',
+        description: "another's description",
     };
     const tree = renderer.create(
         <MemoryRouter>
@@ -22,11 +22,7 @@ test("renders correctly with one strategy", () => {
                     deprecateStrategy={jest.fn()}
                     reactivateStrategy={jest.fn()}
                     history={{}}
-                    hasPermission={permission =>
-                        [CREATE_STRATEGY, DELETE_STRATEGY].indexOf(
-                            permission
-                        ) !== -1
-                    }
+                    hasPermission={permission => [CREATE_STRATEGY, DELETE_STRATEGY].indexOf(permission) !== -1}
                 />
             </ThemeProvider>
         </MemoryRouter>
@@ -35,10 +31,10 @@ test("renders correctly with one strategy", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("renders correctly with one strategy without permissions", () => {
+test('renders correctly with one strategy without permissions', () => {
     const strategy = {
-        name: "Another",
-        description: "another's description"
+        name: 'Another',
+        description: "another's description",
     };
     const tree = renderer.create(
         <MemoryRouter>

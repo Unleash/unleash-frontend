@@ -1,3 +1,3 @@
-import FeatureToggleListItem from "./FeatureToggleListItem";
+import FeatureToggleListItem from './FeatureToggleListItem';
 
 export default FeatureToggleListItem;

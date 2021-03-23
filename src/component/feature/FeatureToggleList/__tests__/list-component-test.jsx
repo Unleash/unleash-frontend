@@ -1,27 +1,27 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core';
 
-import FeatureToggleList from "../FeatureToggleList";
-import renderer from "react-test-renderer";
-import { CREATE_FEATURE } from "../../../../permissions";
-import theme from "../../../../themes/main-theme";
+import FeatureToggleList from '../FeatureToggleList';
+import renderer from 'react-test-renderer';
+import { CREATE_FEATURE } from '../../../../permissions';
+import theme from '../../../../themes/main-theme';
 
-jest.mock("../FeatureToggleListItem", () => ({
+jest.mock('../FeatureToggleListItem', () => ({
     __esModule: true,
-    default: "ListItem"
+    default: 'ListItem',
 }));
 
-jest.mock("../../../common/ProjectSelect");
+jest.mock('../../../common/ProjectSelect');
 
-test("renders correctly with one feature", () => {
+test('renders correctly with one feature', () => {
     const features = [
         {
-            name: "Another"
-        }
+            name: 'Another',
+        },
     ];
     const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: "name" };
+    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
@@ -42,14 +42,14 @@ test("renders correctly with one feature", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("renders correctly with one feature without permissions", () => {
+test('renders correctly with one feature without permissions', () => {
     const features = [
         {
-            name: "Another"
-        }
+            name: 'Another',
+        },
     ];
     const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: "name" };
+    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>

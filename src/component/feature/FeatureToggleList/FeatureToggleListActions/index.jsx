@@ -1,3 +1,3 @@
-import FeatureToggleListActions from "./FeatureToggleListActions";
+import FeatureToggleListActions from './FeatureToggleListActions';
 
 export default FeatureToggleListActions;

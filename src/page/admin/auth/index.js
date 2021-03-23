@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AdminMenu from '../admin-menu';
 import GoogleAuth from './google-auth-container';
 import SamlAuth from './saml-auth-container';
-import TabNav from '../../../component/common/tabNav';
+import TabNav from '../../../component/common/TabNav/TabNav';
 import PageContent from '../../../component/common/PageContent/PageContent';
 
 function AdminAuthPage() {

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { debounce } from "debounce";
-import { InputBase } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/search";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { debounce } from 'debounce';
+import { InputBase } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/search';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
-function SearchField({ value = "", updateValue }) {
+function SearchField({ value = '', updateValue }) {
     const styles = useStyles();
 
     const [localValue, setLocalValue] = useState(value);
@@ -14,13 +14,13 @@ function SearchField({ value = "", updateValue }) {
 
     const handleCange = e => {
         e.preventDefault();
-        const v = e.target.value || "";
+        const v = e.target.value || '';
         setLocalValue(v);
         debounceUpdateValue(v);
     };
 
     const handleKeyPress = e => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
             updateValue(localValue);
         }
     };
@@ -37,9 +37,9 @@ function SearchField({ value = "", updateValue }) {
                     placeholder="Search…"
                     classes={{
                         root: styles.inputRoot,
-                        input: styles.input
+                        input: styles.input,
                     }}
-                    inputProps={{ "aria-label": "search" }}
+                    inputProps={{ 'aria-label': 'search' }}
                     value={localValue}
                     onChange={handleCange}
                     onBlur={updateNow}
@@ -52,7 +52,7 @@ function SearchField({ value = "", updateValue }) {
 
 SearchField.propTypes = {
     value: PropTypes.string,
-    updateValue: PropTypes.func.isRequired
+    updateValue: PropTypes.func.isRequired,
 };
 
 export default SearchField;

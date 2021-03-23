@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { Button, List, Tooltip, IconButton, Icon } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Button, List, Tooltip, IconButton, Icon } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import FeatureToggleListItem from "./FeatureToggleListItem";
-import SearchField from "../../common/SearchField/SearchField";
-import FeatureToggleListActions from "./FeatureToggleListActions";
-import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
-import PageContent from "../../common/PageContent/PageContent";
-import HeaderTitle from "../../common/HeaderTitle";
+import FeatureToggleListItem from './FeatureToggleListItem';
+import SearchField from '../../common/SearchField/SearchField';
+import FeatureToggleListActions from './FeatureToggleListActions';
+import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
+import PageContent from '../../common/PageContent/PageContent';
+import HeaderTitle from '../../common/HeaderTitle';
 
-import { CREATE_FEATURE } from "../../../permissions";
+import { CREATE_FEATURE } from '../../../permissions';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 const FeatureToggleList = ({
     fetcher,
@@ -23,21 +23,21 @@ const FeatureToggleList = ({
     revive,
     updateSetting,
     featureMetrics,
-    toggleFeature
+    toggleFeature,
 }) => {
     const styles = useStyles();
-    const smallScreen = useMediaQuery("(max-width:700px)");
+    const smallScreen = useMediaQuery('(max-width:700px)');
 
     useEffect(() => {
         fetcher();
     }, [fetcher]);
 
     const toggleMetrics = () => {
-        updateSetting("showLastHour", !settings.showLastHour);
+        updateSetting('showLastHour', !settings.showLastHour);
     };
 
     const setSort = v => {
-        updateSetting("sort", typeof v === "string" ? v.trim() : "");
+        updateSetting('sort', typeof v === 'string' ? v.trim() : '');
     };
 
     const renderFeatures = () => {
@@ -64,7 +64,7 @@ const FeatureToggleList = ({
             <div className={styles.searchBarContainer}>
                 <SearchField
                     value={settings.filter}
-                    updateValue={updateSetting.bind(this, "filter")}
+                    updateValue={updateSetting.bind(this, 'filter')}
                     className={styles.searchBar}
                 />
             </div>
@@ -127,11 +127,7 @@ const FeatureToggleList = ({
                     <ConditionallyRender
                         condition={features.length > 0}
                         show={renderFeatures}
-                        elseShow={
-                            <p className={styles.listParagraph}>
-                                Empty list of feature toggles
-                            </p>
-                        }
+                        elseShow={<p className={styles.listParagraph}>Empty list of feature toggles</p>}
                     />
                 </List>
             </PageContent>
@@ -148,7 +144,7 @@ FeatureToggleList.propTypes = {
     toggleFeature: PropTypes.func,
     settings: PropTypes.object,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired
+    hasPermission: PropTypes.func.isRequired,
 };
 
 export default FeatureToggleList;

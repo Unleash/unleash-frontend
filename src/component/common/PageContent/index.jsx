@@ -1,3 +1,3 @@
-import PageContent from "./PageContent";
+import PageContent from './PageContent';
 
 export default PageContent;

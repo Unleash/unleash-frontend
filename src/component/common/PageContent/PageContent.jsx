@@ -1,32 +1,26 @@
-import React from "react";
+import React from 'react';
 
-import classnames from "classnames";
-import HeaderTitle from "../HeaderTitle";
-import { Paper } from "@material-ui/core";
-import { useStyles } from "./styles";
+import classnames from 'classnames';
+import HeaderTitle from '../HeaderTitle';
+import { Paper } from '@material-ui/core';
+import { useStyles } from './styles';
 
-const PageContent = ({
-    children,
-    headerContent,
-    disablePadding,
-    disableBorder,
-    ...rest
-}) => {
+const PageContent = ({ children, headerContent, disablePadding, disableBorder, ...rest }) => {
     const styles = useStyles();
 
     const headerClasses = classnames(styles.headerContainer, {
         [styles.paddingDisabled]: disablePadding,
-        [styles.borderDisabled]: disableBorder
+        [styles.borderDisabled]: disableBorder,
     });
 
     const bodyClasses = classnames(styles.bodyContainer, {
         [styles.paddingDisabled]: disablePadding,
-        [styles.borderDisabled]: disableBorder
+        [styles.borderDisabled]: disableBorder,
     });
 
     let header = null;
     if (headerContent) {
-        if (typeof headerContent === "string") {
+        if (typeof headerContent === 'string') {
             header = (
                 <div className={headerClasses}>
                     <HeaderTitle title={headerContent} />

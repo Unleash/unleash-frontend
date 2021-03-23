@@ -1,12 +1,10 @@
-import { connect } from "react-redux";
-import { loadInitialData } from "../../../store/loader";
+import { connect } from 'react-redux';
+import { loadInitialData } from '../../../store/loader';
 
-const mapStateToProps = state => {
-    return { uiConfig: state.uiConfig.toJS() };
-};
+const mapStateToProps = state => ({ uiConfig: state.uiConfig.toJS() });
 
-import Header from "./Header";
+import Header from './Header';
 
 export default connect(mapStateToProps, {
-    init: loadInitialData
+    init: loadInitialData,
 })(Header);

@@ -1,24 +1,24 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import ConfiguredAddons from "./ConfiguredAddons";
-import AvailableAddons from "./AvailableAddons";
-import { Avatar, Icon } from "@material-ui/core";
-import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import ConfiguredAddons from './ConfiguredAddons';
+import AvailableAddons from './AvailableAddons';
+import { Avatar, Icon } from '@material-ui/core';
+import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
 const style = {
-    width: "40px",
-    height: "40px",
-    marginRight: "16px",
-    float: "left"
+    width: '40px',
+    height: '40px',
+    marginRight: '16px',
+    float: 'left',
 };
 
 const getIcon = name => {
     switch (name) {
-        case "slack":
+        case 'slack':
             return <img style={style} src="public/slack.svg" />;
-        case "jira-comment":
+        case 'jira-comment':
             return <img style={style} src="public/jira.svg" />;
-        case "webhook":
+        case 'webhook':
             return <img style={style} src="public/webhooks.svg" />;
         default:
             return (
@@ -29,15 +29,7 @@ const getIcon = name => {
     }
 };
 
-const AddonList = ({
-    addons,
-    providers,
-    fetchAddons,
-    removeAddon,
-    toggleAddon,
-    history,
-    hasPermission
-}) => {
+const AddonList = ({ addons, providers, fetchAddons, removeAddon, toggleAddon, history, hasPermission }) => {
     useEffect(() => {
         if (addons.length === 0) {
             fetchAddons();
@@ -60,12 +52,7 @@ const AddonList = ({
             />
 
             <br />
-            <AvailableAddons
-                providers={providers}
-                hasPermission={hasPermission}
-                history={history}
-                getIcon={getIcon}
-            />
+            <AvailableAddons providers={providers} hasPermission={hasPermission} history={history} getIcon={getIcon} />
         </>
     );
 };
@@ -77,7 +64,7 @@ AddonList.propTypes = {
     removeAddon: PropTypes.func.isRequired,
     toggleAddon: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired
+    hasPermission: PropTypes.func.isRequired,
 };
 
 export default AddonList;

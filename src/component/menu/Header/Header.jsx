@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
-import { Route } from "react-router-dom";
-import { AppBar, Container, Typography, IconButton } from "@material-ui/core";
-import { DrawerMenu } from "../drawer";
-import MenuIcon from "@material-ui/icons/Menu";
-import Breadcrumb from "../breadcrumb";
-import ShowUserContainer from "../../user/show-user-container";
-import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import { Route } from 'react-router-dom';
+import { AppBar, Container, Typography, IconButton } from '@material-ui/core';
+import { DrawerMenu } from '../drawer';
+import MenuIcon from '@material-ui/icons/Menu';
+import Breadcrumb from '../breadcrumb';
+import ShowUserContainer from '../../user/show-user-container';
+import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 const Header = ({ uiConfig, init }) => {
     const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const styles = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -30,19 +30,13 @@ const Header = ({ uiConfig, init }) => {
         <React.Fragment>
             <AppBar className={styles.header} position="static">
                 <Container className={styles.container}>
-                    <IconButton
-                        className={styles.drawerButton}
-                        onClick={toggleDrawer}
-                    >
+                    <IconButton className={styles.drawerButton} onClick={toggleDrawer}>
                         <MenuIcon />
                     </IconButton>
                     <ConditionallyRender
                         condition={!smallScreen}
                         show={
-                            <Typography
-                                variant="h1"
-                                className={styles.headerTitle}
-                            >
+                            <Typography variant="h1" className={styles.headerTitle}>
                                 <Route path="/:path" component={Breadcrumb} />
                             </Typography>
                         }
@@ -67,7 +61,7 @@ const Header = ({ uiConfig, init }) => {
 Header.propTypes = {
     uiConfig: PropTypes.object.isRequired,
     init: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
 };
 
 export default Header;
