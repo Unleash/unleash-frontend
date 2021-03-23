@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import ViewFeatureToggleComponent from './../view-component';
+import ViewFeatureToggleComponent from '../../FeatureView/FeatureView';
 import renderer from 'react-test-renderer';
 import { DELETE_FEATURE, UPDATE_FEATURE } from '../../../../permissions';
 

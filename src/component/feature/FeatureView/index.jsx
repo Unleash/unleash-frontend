@@ -7,9 +7,9 @@ import {
     setStale,
     removeFeatureToggle,
     editFeatureToggle,
-} from './../../../store/feature-toggle/actions';
+} from '../../../store/feature-toggle/actions';
 
-import ViewToggleComponent from './view-component';
+import ViewToggleComponent from './FeatureView';
 import { hasPermission } from '../../../permissions';
 import { fetchTags, tagFeature, untagFeature } from '../../../store/feature-tags/actions';
 
