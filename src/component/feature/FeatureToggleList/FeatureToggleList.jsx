@@ -4,9 +4,9 @@ import { debounce } from "debounce";
 
 import { Link } from "react-router-dom";
 import { Button, List } from "@material-ui/core";
-import Feature from "./FeatureToggleListItem/FeatureToggleListItem";
+import FeatureToggleListItem from "./FeatureToggleListItem";
 import SearchField from "../../common/search-field";
-import ListComponentHeader from "./list-component-header";
+import FeatureToggleListActions from "./FeatureToggleListActions";
 import ConditionallyRender from "../../common/conditionally-render";
 import PageContent from "../../common/PageContent/PageContent";
 import HeaderTitle from "../../common/HeaderTitle";
@@ -58,7 +58,7 @@ const FeatureToggleList = ({
         });
 
         return features.map(feature => (
-            <Feature
+            <FeatureToggleListItem
                 key={feature.name}
                 settings={settings}
                 metricsLastHour={featureMetrics.lastHour[feature.name]}
@@ -88,7 +88,7 @@ const FeatureToggleList = ({
                         title="Feature toggles"
                         actions={
                             <div className={styles.actionsContainer}>
-                                <ListComponentHeader
+                                <FeatureToggleListActions
                                     settings={settings}
                                     toggleMetrics={toggleMetrics}
                                     setSort={setSort}

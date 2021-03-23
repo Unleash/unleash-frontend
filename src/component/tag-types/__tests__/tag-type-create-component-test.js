@@ -1,39 +1,48 @@
-import React from 'react';
+import React from "react";
+import { ThemeProvider } from "@material-ui/core";
+import TagTypes from "../form-tag-type-component";
+import renderer from "react-test-renderer";
+import theme from "../../../themes/main-theme";
 
-import TagTypes from '../form-tag-type-component';
-import renderer from 'react-test-renderer';
-
-test('renders correctly for creating', () => {
+test("renders correctly for creating", () => {
     const tree = renderer
         .create(
-            <TagTypes
-                history={{}}
-                title="Add tag type"
-                createTagType={jest.fn()}
-                validateName={() => Promise.resolve(true)}
-                hasPermission={() => true}
-                tagType={{ name: '', description: '', icon: '' }}
-                editMode={false}
-                submit={jest.fn()}
-            />
+            <div>
+                <ThemeProvider theme={theme}>
+                    <TagTypes
+                        history={{}}
+                        title="Add tag type"
+                        createTagType={jest.fn()}
+                        validateName={() => Promise.resolve(true)}
+                        hasPermission={() => true}
+                        tagType={{ name: "", description: "", icon: "" }}
+                        editMode={false}
+                        submit={jest.fn()}
+                    />
+                </ThemeProvider>
+            </>
         )
         .toJSON();
     expect(tree).toMatchSnapshot();
 });
 
-test('it supports editMode', () => {
+test("it supports editMode", () => {
     const tree = renderer
         .create(
-            <TagTypes
-                history={{}}
-                title="Add tag type"
-                createTagType={jest.fn()}
-                validateName={() => Promise.resolve(true)}
-                hasPermission={() => true}
-                tagType={{ name: '', description: '', icon: '' }}
-                editMode
-                submit={jest.fn()}
-            />
+            <>
+                <ThemeProvider theme={theme}>
+                    <TagTypes
+                        history={{}}
+                        title="Add tag type"
+                        createTagType={jest.fn()}
+                        validateName={() => Promise.resolve(true)}
+                        hasPermission={() => true}
+                        tagType={{ name: "", description: "", icon: "" }}
+                        editMode
+                        submit={jest.fn()}
+                    />
+                </ThemeProvider>
+            </>
         )
         .toJSON();
     expect(tree).toMatchSnapshot();

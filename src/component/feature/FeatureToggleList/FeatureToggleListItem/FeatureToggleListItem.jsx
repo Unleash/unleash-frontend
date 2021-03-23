@@ -7,13 +7,11 @@ import { Switch, Icon, IconButton, ListItem } from "@material-ui/core";
 import TimeAgo from "react-timeago";
 import Progress from "../../progress-component";
 import Status from "../../status-component";
-import FeatureType from "../feature-type-container";
+import FeatureToggleListItemChip from "./FeatureToggleListItemChip";
 import ConditionallyRender from "../../../common/conditionally-render";
 
 import { UPDATE_FEATURE } from "../../../../permissions";
 import { calc, styles as commonStyles } from "../../../common";
-
-//mport styles from "../list.module.scss";
 
 import { useStyles } from "./styles";
 
@@ -110,7 +108,7 @@ const Feature = ({
                 )}
             >
                 <Status stale={stale} showActive={false} />
-                <FeatureType type={type} />
+                <FeatureToggleListItemChip type={type} />
             </span>
             <ConditionallyRender
                 condition={revive && hasPermission(UPDATE_FEATURE)}

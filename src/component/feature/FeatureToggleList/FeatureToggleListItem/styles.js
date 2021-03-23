@@ -13,7 +13,8 @@ export const useStyles = makeStyles(theme => ({
         fill: theme.palette.icons.lightGrey
     },
     listItemLink: {
-        marginLeft: "10px"
+        marginLeft: "10px",
+        minWidth: "0"
     },
     listItemStrategies: {
         marginLeft: "auto"

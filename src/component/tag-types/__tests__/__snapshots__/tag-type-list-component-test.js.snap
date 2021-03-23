@@ -2,249 +2,217 @@
 
 exports[`renders a list with elements correctly 1`] = `
 <div
-  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
-  shadow={0}
-  style={
-    Object {
-      "overflow": "visible",
-    }
-  }
+  className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    style={
-      Object {
-        "alignItems": "center",
-        "borderBottom": "1px solid #f9f9f9",
-        "display": "flex",
-        "marginBottom": "10px",
-      }
-    }
+    className="makeStyles-headerContainer-1"
   >
     <div
-      style={
-        Object {
-          "flex": "2",
-        }
-      }
+      className="makeStyles-headerTitleContainer-3"
     >
-      <h6
-        className="headerTitle"
+      <div>
+        <h2
+          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+        >
+          Tag Types
+        </h2>
+      </div>
+      <div
+        className="makeStyles-headerActions-5"
       >
-        Tag Types
-      </h6>
-    </div>
-    <div
-      style={
-        Object {
-          "flex": "1",
-          "textAlign": "right",
-        }
-      }
-    >
-      <button
-        aria-describedby={null}
-        aria-label="add tag type"
-        className="MuiButtonBase-root MuiIconButton-root"
-        disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        title="Add tag type"
-        type="button"
-      >
-        <span
-          className="MuiIconButton-label"
+        <button
+          aria-describedby={null}
+          aria-label="add tag type"
+          className="MuiButtonBase-root MuiIconButton-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Add tag type"
+          type="button"
         >
           <span
-            aria-hidden={true}
-            className="material-icons MuiIcon-root"
+            className="MuiIconButton-label"
           >
-            add
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              add
+            </span>
           </span>
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
     </div>
   </div>
-  <ul
-    className="MuiList-root MuiList-padding"
+  <div
+    className="makeStyles-bodyContainer-2"
   >
-    <li
-      className="MuiListItem-root MuiListItem-gutters"
-      disabled={false}
+    <ul
+      className="MuiList-root MuiList-padding"
     >
-      <div
-        className="MuiListItemIcon-root"
-      >
-        <span
-          aria-hidden={true}
-          className="material-icons MuiIcon-root"
-        >
-          label
-        </span>
-      </div>
-      <div
-        className="MuiListItemText-root MuiListItemText-multiline"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
-        >
-          <a
-            href="/tag-types/edit/simple"
-            onClick={[Function]}
-          >
-            <strong>
-              simple
-            </strong>
-          </a>
-        </span>
-        <p
-          className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-        >
-          Some simple description
-        </p>
-      </div>
-      <button
-        aria-describedby={null}
-        className="MuiButtonBase-root MuiIconButton-root"
+      <li
+        className="MuiListItem-root tagListItem MuiListItem-gutters"
         disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        title="Delete simple"
-        type="button"
       >
-        <span
-          className="MuiIconButton-label"
+        <div
+          className="MuiListItemIcon-root"
         >
           <span
             aria-hidden={true}
             className="material-icons MuiIcon-root"
           >
-            delete
+            label
           </span>
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
-    </li>
-  </ul>
+        </div>
+        <div
+          className="MuiListItemText-root MuiListItemText-multiline"
+        >
+          <span
+            className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            <a
+              href="/tag-types/edit/simple"
+              onClick={[Function]}
+            >
+              <strong>
+                simple
+              </strong>
+            </a>
+          </span>
+          <p
+            className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+          >
+            Some simple description
+          </p>
+        </div>
+        <button
+          aria-describedby={null}
+          className="MuiButtonBase-root MuiIconButton-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Delete simple"
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              delete
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </li>
+    </ul>
+  </div>
 </div>
 `;
 
 exports[`renders an empty list correctly 1`] = `
 <div
-  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
-  shadow={0}
-  style={
-    Object {
-      "overflow": "visible",
-    }
-  }
+  className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    style={
-      Object {
-        "alignItems": "center",
-        "borderBottom": "1px solid #f9f9f9",
-        "display": "flex",
-        "marginBottom": "10px",
-      }
-    }
+    className="makeStyles-headerContainer-1"
   >
     <div
-      style={
-        Object {
-          "flex": "2",
-        }
-      }
+      className="makeStyles-headerTitleContainer-3"
     >
-      <h6
-        className="headerTitle"
+      <div>
+        <h2
+          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+        >
+          Tag Types
+        </h2>
+      </div>
+      <div
+        className="makeStyles-headerActions-5"
       >
-        Tag Types
-      </h6>
-    </div>
-    <div
-      style={
-        Object {
-          "flex": "1",
-          "textAlign": "right",
-        }
-      }
-    >
-      <button
-        aria-describedby={null}
-        aria-label="add tag type"
-        className="MuiButtonBase-root MuiIconButton-root"
-        disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        title="Add tag type"
-        type="button"
-      >
-        <span
-          className="MuiIconButton-label"
+        <button
+          aria-describedby={null}
+          aria-label="add tag type"
+          className="MuiButtonBase-root MuiIconButton-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Add tag type"
+          type="button"
         >
           <span
-            aria-hidden={true}
-            className="material-icons MuiIcon-root"
+            className="MuiIconButton-label"
           >
-            add
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              add
+            </span>
           </span>
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
     </div>
   </div>
-  <ul
-    className="MuiList-root MuiList-padding"
+  <div
+    className="makeStyles-bodyContainer-2"
   >
-    <li
-      className="MuiListItem-root MuiListItem-gutters"
-      disabled={false}
+    <ul
+      className="MuiList-root MuiList-padding"
     >
-      No entries
-    </li>
-  </ul>
+      <li
+        className="MuiListItem-root MuiListItem-gutters"
+        disabled={false}
+      >
+        No entries
+      </li>
+    </ul>
+  </div>
 </div>
 `;

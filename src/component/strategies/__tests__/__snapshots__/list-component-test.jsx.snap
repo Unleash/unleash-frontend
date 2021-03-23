@@ -2,324 +2,302 @@
 
 exports[`renders correctly with one strategy 1`] = `
 <div
-  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
-  shadow={0}
+  className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    style={
-      Object {
-        "alignItems": "center",
-        "borderBottom": "1px solid #f9f9f9",
-        "display": "flex",
-        "marginBottom": "10px",
-      }
-    }
+    className="makeStyles-headerContainer-1"
   >
     <div
-      style={
-        Object {
-          "flex": "2",
-        }
-      }
+      className="makeStyles-headerTitleContainer-3"
     >
-      <h6
-        className="headerTitle"
+      <div>
+        <h2
+          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+        >
+          Strategies
+        </h2>
+      </div>
+      <div
+        className="makeStyles-headerActions-5"
       >
-        Strategies
-      </h6>
+        <button
+          aria-describedby={null}
+          className="MuiButtonBase-root MuiIconButton-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          title="Add new strategy"
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <span
+              aria-hidden={true}
+              className="material-icons MuiIcon-root"
+            >
+              add
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
     </div>
-    <div
-      style={
-        Object {
-          "flex": "1",
-          "textAlign": "right",
-        }
-      }
+  </div>
+  <div
+    className="makeStyles-bodyContainer-2"
+  >
+    <ul
+      className="MuiList-root MuiList-padding"
     >
-      <button
-        aria-describedby={null}
-        className="MuiButtonBase-root MuiIconButton-root"
+      <li
+        className="MuiListItem-root listItem MuiListItem-gutters"
         disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        title="Add new strategy"
-        type="button"
       >
-        <span
-          className="MuiIconButton-label"
+        <div
+          className="MuiListItemAvatar-root"
         >
           <span
             aria-hidden={true}
             className="material-icons MuiIcon-root"
           >
-            add
+            extension
           </span>
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
-    </div>
-  </div>
-  <ul
-    className="MuiList-root MuiList-padding"
-  >
-    <li
-      className="MuiListItem-root MuiListItem-gutters"
-      disabled={false}
-    >
-      <div
-        className="MuiListItemAvatar-root"
-      >
-        <span
-          aria-hidden={true}
-          className="material-icons MuiIcon-root"
+        </div>
+        <div
+          className="MuiListItemText-root MuiListItemText-multiline"
         >
-          extension
-        </span>
-      </div>
-      <div
-        className="MuiListItemText-root MuiListItemText-multiline"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          <span
+            className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            <a
+              href="/strategies/view/Another"
+              onClick={[Function]}
+            >
+              <strong>
+                Another
+              </strong>
+            </a>
+          </span>
+          <p
+            className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+          >
+            another's description
+          </p>
+        </div>
+        <div
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title="Deprecate activation strategy"
         >
-          <a
-            href="/strategies/view/Another"
+          <button
+            className="MuiButtonBase-root MuiIconButton-root"
+            disabled={false}
+            onBlur={[Function]}
             onClick={[Function]}
-          >
-            <strong>
-              Another
-            </strong>
-          </a>
-        </span>
-        <p
-          className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-        >
-          another's description
-        </p>
-      </div>
-      <div
-        aria-describedby={null}
-        className=""
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        title="Deprecate activation strategy"
-      >
-        <button
-          className="MuiButtonBase-root MuiIconButton-root"
-          disabled={false}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
-          type="button"
-        >
-          <span
-            className="MuiIconButton-label"
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
           >
             <span
-              aria-hidden={true}
-              className="material-icons MuiIcon-root"
+              className="MuiIconButton-label"
             >
-              visibility_off
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                visibility_off
+              </span>
             </span>
-          </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
-        </button>
-      </div>
-      <div
-        aria-describedby={null}
-        className=""
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        title="You cannot delete a built-in strategy"
-      >
-        <button
-          className="MuiButtonBase-root MuiIconButton-root Mui-disabled Mui-disabled"
-          disabled={true}
+            <span
+              className="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+        <div
+          aria-describedby={null}
+          className=""
           onBlur={[Function]}
-          onDragLeave={[Function]}
           onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
           onMouseLeave={[Function]}
-          onMouseUp={[Function]}
+          onMouseOver={[Function]}
           onTouchEnd={[Function]}
-          onTouchMove={[Function]}
           onTouchStart={[Function]}
-          tabIndex={-1}
-          type="button"
+          title="You cannot delete a built-in strategy"
         >
-          <span
-            className="MuiIconButton-label"
+          <button
+            className="MuiButtonBase-root MuiIconButton-root Mui-disabled Mui-disabled"
+            disabled={true}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={-1}
+            type="button"
           >
             <span
-              aria-hidden={true}
-              className="material-icons MuiIcon-root"
+              className="MuiIconButton-label"
             >
-              delete
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                delete
+              </span>
             </span>
-          </span>
-        </button>
-      </div>
-    </li>
-  </ul>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 `;
 
 exports[`renders correctly with one strategy without permissions 1`] = `
 <div
-  className="MuiPaper-root fullwidth MuiPaper-elevation1 MuiPaper-rounded"
-  shadow={0}
+  className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    style={
-      Object {
-        "alignItems": "center",
-        "borderBottom": "1px solid #f9f9f9",
-        "display": "flex",
-        "marginBottom": "10px",
-      }
-    }
+    className="makeStyles-headerContainer-1"
   >
     <div
-      style={
-        Object {
-          "flex": "2",
-        }
-      }
+      className="makeStyles-headerTitleContainer-3"
     >
-      <h6
-        className="headerTitle"
-      >
-        Strategies
-      </h6>
+      <div>
+        <h2
+          className="MuiTypography-root makeStyles-headerTitle-4 MuiTypography-h2"
+        >
+          Strategies
+        </h2>
+      </div>
+      <div
+        className="makeStyles-headerActions-5"
+      />
     </div>
-    <div
-      style={
-        Object {
-          "flex": "1",
-          "textAlign": "right",
-        }
-      }
-    />
   </div>
-  <ul
-    className="MuiList-root MuiList-padding"
+  <div
+    className="makeStyles-bodyContainer-2"
   >
-    <li
-      className="MuiListItem-root MuiListItem-gutters"
-      disabled={false}
+    <ul
+      className="MuiList-root MuiList-padding"
     >
-      <div
-        className="MuiListItemAvatar-root"
+      <li
+        className="MuiListItem-root listItem MuiListItem-gutters"
+        disabled={false}
       >
-        <span
-          aria-hidden={true}
-          className="material-icons MuiIcon-root"
-        >
-          extension
-        </span>
-      </div>
-      <div
-        className="MuiListItemText-root MuiListItemText-multiline"
-      >
-        <span
-          className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
-        >
-          <a
-            href="/strategies/view/Another"
-            onClick={[Function]}
-          >
-            <strong>
-              Another
-            </strong>
-          </a>
-        </span>
-        <p
-          className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-        >
-          another's description
-        </p>
-      </div>
-      <div
-        aria-describedby={null}
-        className=""
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        title="Deprecate activation strategy"
-      >
-        <button
-          className="MuiButtonBase-root MuiIconButton-root"
-          disabled={false}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
-          type="button"
+        <div
+          className="MuiListItemAvatar-root"
         >
           <span
-            className="MuiIconButton-label"
+            aria-hidden={true}
+            className="material-icons MuiIcon-root"
+          >
+            extension
+          </span>
+        </div>
+        <div
+          className="MuiListItemText-root MuiListItemText-multiline"
+        >
+          <span
+            className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+          >
+            <a
+              href="/strategies/view/Another"
+              onClick={[Function]}
+            >
+              <strong>
+                Another
+              </strong>
+            </a>
+          </span>
+          <p
+            className="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+          >
+            another's description
+          </p>
+        </div>
+        <div
+          aria-describedby={null}
+          className=""
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          title="Deprecate activation strategy"
+        >
+          <button
+            className="MuiButtonBase-root MuiIconButton-root"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
           >
             <span
-              aria-hidden={true}
-              className="material-icons MuiIcon-root"
+              className="MuiIconButton-label"
             >
-              visibility_off
+              <span
+                aria-hidden={true}
+                className="material-icons MuiIcon-root"
+              >
+                visibility_off
+              </span>
             </span>
-          </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
-        </button>
-      </div>
-    </li>
-  </ul>
+            <span
+              className="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 `;
