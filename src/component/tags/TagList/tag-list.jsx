@@ -1,14 +1,29 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
-import { Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import styles from '../Tag.module.scss';
-import { CREATE_TAG, DELETE_TAG } from '../../../permissions';
-import ConditionallyRender from '../../common/conditionally-render';
-import HeaderTitle from '../../common/HeaderTitle';
-import PageContent from '../../common/PageContent/PageContent';
+import {
+    Button,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Tooltip
+} from "@material-ui/core";
+import styles from "../Tag.module.scss";
+import { CREATE_TAG, DELETE_TAG } from "../../../permissions";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import HeaderTitle from "../../common/HeaderTitle";
+import PageContent from "../../common/PageContent/PageContent";
 
-const TagsListComponent = ({ tags, fetchTags, removeTag, history, hasPermission }) => {
+const TagsListComponent = ({
+    tags,
+    fetchTags,
+    removeTag,
+    history,
+    hasPermission
+}) => {
     useEffect(() => {
         fetchTags();
     }, []);
@@ -33,7 +48,9 @@ const TagsListComponent = ({ tags, fetchTags, removeTag, history, hasPermission 
 
     const DeleteButton = ({ tagType, tagValue }) => (
         <Tooltip title="Delete tag">
-            <IconButton onClick={e => remove({ type: tagType, value: tagValue }, e)}>
+            <IconButton
+                onClick={e => remove({ type: tagType, value: tagValue }, e)}
+            >
                 <Icon>delete</Icon>
             </IconButton>
         </Tooltip>
@@ -44,7 +61,11 @@ const TagsListComponent = ({ tags, fetchTags, removeTag, history, hasPermission 
             condition={hasPermission(CREATE_TAG)}
             show={
                 <Tooltip title="Add new tag">
-                    <Button color="primary" startIcon={<Icon>add</Icon>} onClick={() => history.push('/tags/create')}>
+                    <Button
+                        color="primary"
+                        startIcon={<Icon>add</Icon>}
+                        onClick={() => history.push("/tags/create")}
+                    >
                         Add new tag
                     </Button>
                 </Tooltip>
@@ -52,7 +73,14 @@ const TagsListComponent = ({ tags, fetchTags, removeTag, history, hasPermission 
         />
     );
     return (
-        <PageContent headerContent={<HeaderTitle title="Tags" actions={<AddButton hasPermission={hasPermission} />} />}>
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title="Tags"
+                    actions={<AddButton hasPermission={hasPermission} />}
+                />
+            }
+        >
             <List>
                 <ConditionallyRender
                     condition={tags.length > 0}
@@ -73,7 +101,7 @@ TagsListComponent.propTypes = {
     fetchTags: PropTypes.func.isRequired,
     removeTag: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default TagsListComponent;

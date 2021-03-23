@@ -1,15 +1,29 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import HeaderTitle from '../../common/HeaderTitle';
-import ConditionallyRender from '../../common/conditionally-render';
-import { CREATE_PROJECT, DELETE_PROJECT } from '../../../permissions';
-import { Icon, IconButton, List, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ConfirmDialogue from '../../common/Dialogue';
-import PageContent from '../../common/PageContent/PageContent';
-import { useStyles } from './styles';
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import HeaderTitle from "../../common/HeaderTitle";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import { CREATE_PROJECT, DELETE_PROJECT } from "../../../permissions";
+import {
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Tooltip
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import ConfirmDialogue from "../../common/Dialogue";
+import PageContent from "../../common/PageContent/PageContent";
+import { useStyles } from "./styles";
 
-const ProjectList = ({ projects, fetchProjects, removeProject, history, hasPermission }) => {
+const ProjectList = ({
+    projects,
+    fetchProjects,
+    removeProject,
+    history,
+    hasPermission
+}) => {
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [project, setProject] = useState(undefined);
     const styles = useStyles();
@@ -22,7 +36,10 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history, hasPermi
             condition={hasPermission(CREATE_PROJECT)}
             show={
                 <Tooltip title="Add new project">
-                    <IconButton aria-label="add-project" onClick={() => history.push('/projects/create')}>
+                    <IconButton
+                        aria-label="add-project"
+                        onClick={() => history.push("/projects/create")}
+                    >
                         <Icon>add</Icon>
                     </IconButton>
                 </Tooltip>
@@ -56,13 +73,26 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history, hasPermi
                 <ListItemAvatar>
                     <Icon>folder_open</Icon>
                 </ListItemAvatar>
-                <ListItemText primary={projectLink(project)} secondary={project.description} />
-                <ConditionallyRender condition={hasPermission(DELETE_PROJECT)} show={deleteProjectButton(project)} />
+                <ListItemText
+                    primary={projectLink(project)}
+                    secondary={project.description}
+                />
+                <ConditionallyRender
+                    condition={hasPermission(DELETE_PROJECT)}
+                    show={deleteProjectButton(project)}
+                />
             </ListItem>
         ));
 
     return (
-        <PageContent headerContent={<HeaderTitle title="Projects (beta)" actions={addProjectButton()} />}>
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title="Projects (beta)"
+                    actions={addProjectButton()}
+                />
+            }
+        >
             <List>
                 <ConditionallyRender
                     condition={projects.length > 0}
@@ -92,7 +122,7 @@ ProjectList.propTypes = {
     fetchProjects: PropTypes.func.isRequired,
     removeProject: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default ProjectList;

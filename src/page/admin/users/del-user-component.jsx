@@ -1,7 +1,7 @@
-import React from 'react';
-import Dialogue from '../../../component/common/Dialogue/Dialogue';
-import ConditionallyRender from '../../../component/common/conditionally-render';
-import propTypes from 'prop-types';
+import React from "react";
+import Dialogue from "../../../component/common/Dialogue/Dialogue";
+import ConditionallyRender from "../../../component/common/ConditionallyRender/ConditionallyRender";
+import propTypes from "prop-types";
 
 const DelUserComponent = ({ showDialog, closeDialog, user, removeUser }) => (
     <ConditionallyRender
@@ -15,7 +15,10 @@ const DelUserComponent = ({ showDialog, closeDialog, user, removeUser }) => (
                 primaryButtonText="Delete user"
                 secondaryButtonText="Cancel"
             >
-                <div>Are you sure you want to delete {user ? `${user.name} (${user.email})` : ''}?</div>
+                <div>
+                    Are you sure you want to delete{" "}
+                    {user ? `${user.name} (${user.email})` : ""}?
+                </div>
             </Dialogue>
         }
     />
@@ -25,7 +28,7 @@ DelUserComponent.propTypes = {
     showDialog: propTypes.bool.isRequired,
     closeDialog: propTypes.func.isRequired,
     user: propTypes.object.isRequired,
-    removeUser: propTypes.func.isRequired,
+    removeUser: propTypes.func.isRequired
 };
 
 export default DelUserComponent;

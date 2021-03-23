@@ -6,7 +6,7 @@ import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import CreateApiKey from './api-key-create';
 import Secret from './secret';
 import ApiHowTo from './api-howto';
-import ConditionallyRender from '../../../component/common/conditionally-render';
+import ConditionallyRender from '../../../component/common/ConditionallyRender/ConditionallyRender';
 import Dialogue from '../../../component/common/Dialogue/Dialogue';
 
 function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermission }) {

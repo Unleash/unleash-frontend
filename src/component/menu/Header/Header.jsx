@@ -8,7 +8,7 @@ import { DrawerMenu } from "../drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import Breadcrumb from "../breadcrumb";
 import ShowUserContainer from "../../user/show-user-container";
-import ConditionallyRender from "../../common/conditionally-render";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
 
 import { useStyles } from "./styles";
 

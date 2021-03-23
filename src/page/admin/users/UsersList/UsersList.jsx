@@ -1,14 +1,22 @@
 /* eslint-disable no-alert */
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Icon, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { formatFullDateTimeWithLocale } from '../../../../component/common/util';
-import AddUser from '../add-user-component';
-import ChangePassword from '../change-password-component';
-import UpdateUser from '../update-user-component';
-import DelUser from '../del-user-component';
-import { showPermissions } from '../util';
-import ConditionallyRender from '../../../../component/common/conditionally-render';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import {
+    Button,
+    Icon,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
+} from "@material-ui/core";
+import { formatFullDateTimeWithLocale } from "../../../../component/common/util";
+import AddUser from "../add-user-component";
+import ChangePassword from "../change-password-component";
+import UpdateUser from "../update-user-component";
+import DelUser from "../del-user-component";
+import { showPermissions } from "../util";
+import ConditionallyRender from "../../../../component/common/ConditionallyRender/ConditionallyRender";
 
 function UsersList({
     fetchUsers,
@@ -19,7 +27,7 @@ function UsersList({
     users,
     location,
     hasPermission,
-    validatePassword,
+    validatePassword
 }) {
     const [showDialog, setDialog] = useState(false);
     const [pwDialog, setPwDialog] = useState({ open: false });
@@ -77,35 +85,64 @@ function UsersList({
                         <TableCell>Username</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Access</TableCell>
-                        <TableCell>{hasPermission('ADMIN') ? 'Action' : ''}</TableCell>
+                        <TableCell>
+                            {hasPermission("ADMIN") ? "Action" : ""}
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {users.map(item => (
                         <TableRow key={item.id}>
                             <TableCell>{item.id}</TableCell>
-                            <TableCell>{formatFullDateTimeWithLocale(item.createdAt, location.locale)}</TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>{item.name}</TableCell>
-                            <TableCell>{showPermissions(item.permissions)}</TableCell>
+                            <TableCell>
+                                {formatFullDateTimeWithLocale(
+                                    item.createdAt,
+                                    location.locale
+                                )}
+                            </TableCell>
+                            <TableCell style={{ textAlign: "left" }}>
+                                {item.username || item.email}
+                            </TableCell>
+                            <TableCell style={{ textAlign: "left" }}>
+                                {item.name}
+                            </TableCell>
+                            <TableCell>
+                                {showPermissions(item.permissions)}
+                            </TableCell>
                             <ConditionallyRender
-                                condition={hasPermission('ADMIN')}
+                                condition={hasPermission("ADMIN")}
                                 show={
                                     <TableCell>
-                                        <a href="" title="Edit" onClick={openUpdateDialog(item)}>
+                                        <a
+                                            href=""
+                                            title="Edit"
+                                            onClick={openUpdateDialog(item)}
+                                        >
                                             <Icon>edit</Icon>
                                         </a>
-                                        <a href="" title="Change password" onClick={openPwDialog(item)}>
+                                        <a
+                                            href=""
+                                            title="Change password"
+                                            onClick={openPwDialog(item)}
+                                        >
                                             <Icon>lock</Icon>
                                         </a>
-                                        <a href="" title="Remove user" onClick={openDelDialog(item)}>
+                                        <a
+                                            href=""
+                                            title="Remove user"
+                                            onClick={openDelDialog(item)}
+                                        >
                                             <Icon>delete</Icon>
                                         </a>
                                     </TableCell>
                                 }
                                 elseShow={
                                     <TableCell>
-                                        <a href="" title="Change password" onClick={openPwDialog(item)}>
+                                        <a
+                                            href=""
+                                            title="Change password"
+                                            onClick={openPwDialog(item)}
+                                        >
                                             <Icon>lock</Icon>
                                         </a>
                                     </TableCell>
@@ -160,7 +197,7 @@ UsersList.propTypes = {
     validatePassword: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     changePassword: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
 };
 
 export default UsersList;

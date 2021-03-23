@@ -1,15 +1,31 @@
-import PropTypes from 'prop-types';
-import PageContent from '../../common/PageContent/PageContent';
-import HeaderTitle from '../../common/HeaderTitle';
-import ConditionallyRender from '../../common/conditionally-render';
-import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../../permissions';
-import { Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useStyles } from './styles';
-import ConfirmDialogue from '../../common/Dialogue';
+import PropTypes from "prop-types";
+import PageContent from "../../common/PageContent/PageContent";
+import HeaderTitle from "../../common/HeaderTitle";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import {
+    CREATE_CONTEXT_FIELD,
+    DELETE_CONTEXT_FIELD
+} from "../../../permissions";
+import {
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Tooltip
+} from "@material-ui/core";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useStyles } from "./styles";
+import ConfirmDialogue from "../../common/Dialogue";
 
-const ContextList = ({ removeContextField, hasPermission, history, contextFields }) => {
+const ContextList = ({
+    removeContextField,
+    hasPermission,
+    history,
+    contextFields
+}) => {
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [name, setName] = useState();
 
@@ -51,7 +67,7 @@ const ContextList = ({ removeContextField, hasPermission, history, contextFields
             condition={hasPermission(CREATE_CONTEXT_FIELD)}
             show={
                 <Tooltip title="Add context type">
-                    <IconButton onClick={() => history.push('/context/create')}>
+                    <IconButton onClick={() => history.push("/context/create")}>
                         <Icon>add</Icon>
                     </IconButton>
                 </Tooltip>
@@ -59,7 +75,14 @@ const ContextList = ({ removeContextField, hasPermission, history, contextFields
         />
     );
     return (
-        <PageContent headerContent={<HeaderTitle actions={headerButton()} title={'Context fields'} />}>
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    actions={headerButton()}
+                    title={"Context fields"}
+                />
+            }
+        >
             <List>
                 <ConditionallyRender
                     condition={contextFields.length > 0}
@@ -88,7 +111,7 @@ ContextList.propTypes = {
     contextFields: PropTypes.array.isRequired,
     removeContextField: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default ContextList;

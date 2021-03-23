@@ -5,17 +5,16 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { Switch, Icon, IconButton, ListItem } from "@material-ui/core";
 import TimeAgo from "react-timeago";
-import Progress from "../../progress-component";
-import Status from "../../status-component";
-import FeatureToggleListItemChip from "./FeatureToggleListItemChip";
-import ConditionallyRender from "../../../common/ConditionallyRender/ConditionallyRender";
+import Progress from "../progress-component";
+import Status from "../status-component";
+import FeatureType from "./feature-type-container";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
 
-import { UPDATE_FEATURE } from "../../../../permissions";
-import { calc, styles as commonStyles } from "../../../common";
+import { UPDATE_FEATURE } from "../../../permissions";
+import { calc, styles as commonStyles } from "../../common";
+import styles from "./list.module.scss";
 
-import { useStyles } from "./styles";
-
-const FeatureToggleListItem = ({
+const Feature = ({
     feature,
     toggleFeature,
     settings,
@@ -24,8 +23,6 @@ const FeatureToggleListItem = ({
     revive,
     hasPermission
 }) => {
-    const styles = useStyles();
-
     const { name, description, enabled, type, stale, createdAt } = feature;
     const { showLastHour = false } = settings;
     const isStale = showLastHour
@@ -50,7 +47,7 @@ const FeatureToggleListItem = ({
             : `/features/strategies/${name}`;
 
     return (
-        <ListItem className={styles.listItem}>
+        <ListItem>
             <span className={styles.listItemMetric}>
                 <Progress
                     strokeWidth={15}
@@ -108,7 +105,7 @@ const FeatureToggleListItem = ({
                 )}
             >
                 <Status stale={stale} showActive={false} />
-                <FeatureToggleListItemChip type={type} />
+                <FeatureType type={type} />
             </span>
             <ConditionallyRender
                 condition={revive && hasPermission(UPDATE_FEATURE)}
@@ -123,7 +120,7 @@ const FeatureToggleListItem = ({
     );
 };
 
-FeatureToggleListItem.propTypes = {
+Feature.propTypes = {
     feature: PropTypes.object,
     toggleFeature: PropTypes.func,
     settings: PropTypes.object,
@@ -133,4 +130,4 @@ FeatureToggleListItem.propTypes = {
     hasPermission: PropTypes.func.isRequired
 };
 
-export default memo(FeatureToggleListItem);
+export default memo(Feature);

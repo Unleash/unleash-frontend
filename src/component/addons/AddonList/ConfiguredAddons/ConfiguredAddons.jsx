@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
     Icon,
     IconButton,
@@ -6,15 +6,21 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemSecondaryAction,
-    ListItemText,
-} from '@material-ui/core';
-import ConditionallyRender from '../../../common/conditionally-render';
-import { DELETE_ADDON, UPDATE_ADDON } from '../../../../permissions';
-import { Link } from 'react-router-dom';
-import PageContent from '../../../common/PageContent/PageContent';
-import PropTypes from 'prop-types';
+    ListItemText
+} from "@material-ui/core";
+import ConditionallyRender from "../../../common/ConditionallyRender/ConditionallyRender";
+import { DELETE_ADDON, UPDATE_ADDON } from "../../../../permissions";
+import { Link } from "react-router-dom";
+import PageContent from "../../../common/PageContent/PageContent";
+import PropTypes from "prop-types";
 
-const ConfiguredAddons = ({ addons, hasPermission, removeAddon, getIcon, toggleAddon }) => {
+const ConfiguredAddons = ({
+    addons,
+    hasPermission,
+    removeAddon,
+    getIcon,
+    toggleAddon
+}) => {
     const onRemoveAddon = addon => () => removeAddon(addon);
     const renderAddon = addon => (
         <ListItem key={addon.id}>
@@ -42,17 +48,27 @@ const ConfiguredAddons = ({ addons, hasPermission, removeAddon, getIcon, toggleA
                     show={
                         <IconButton
                             size="small"
-                            title={addon.enabled ? 'Disable addon' : 'Enable addon'}
+                            title={
+                                addon.enabled ? "Disable addon" : "Enable addon"
+                            }
                             onClick={() => toggleAddon(addon)}
                         >
-                            <Icon>{addon.enabled ? 'visibility' : 'visibility_off'}</Icon>
+                            <Icon>
+                                {addon.enabled
+                                    ? "visibility"
+                                    : "visibility_off"}
+                            </Icon>
                         </IconButton>
                     }
                 />
                 <ConditionallyRender
                     condition={hasPermission(DELETE_ADDON)}
                     show={
-                        <IconButton size="small" title="Remove addon" onClick={onRemoveAddon(addon)}>
+                        <IconButton
+                            size="small"
+                            title="Remove addon"
+                            onClick={onRemoveAddon(addon)}
+                        >
                             <Icon>delete</Icon>
                         </IconButton>
                     }
@@ -71,7 +87,7 @@ ConfiguredAddons.propTypes = {
     hasPermission: PropTypes.func.isRequired,
     removeAddon: PropTypes.func.isRequired,
     toggleAddon: PropTypes.func.isRequired,
-    getIcon: PropTypes.func.isRequired,
+    getIcon: PropTypes.func.isRequired
 };
 
 export default ConfiguredAddons;

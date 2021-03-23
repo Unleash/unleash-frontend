@@ -1,15 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import { Link } from "react-router-dom";
 
-import { List, ListItem, ListItemAvatar, IconButton, Icon, ListItemText, Tooltip } from '@material-ui/core';
-import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../permissions';
+import {
+    List,
+    ListItem,
+    ListItemAvatar,
+    IconButton,
+    Icon,
+    ListItemText,
+    Tooltip
+} from "@material-ui/core";
+import { CREATE_STRATEGY, DELETE_STRATEGY } from "../../permissions";
 
-import styles from './strategies.module.scss';
-import ConditionallyRender from '../common/conditionally-render';
-import PageContent from '../common/PageContent/PageContent';
-import HeaderTitle from '../common/HeaderTitle';
+import styles from "./strategies.module.scss";
+import ConditionallyRender from "../common/ConditionallyRender/ConditionallyRender";
+import PageContent from "../common/PageContent/PageContent";
+import HeaderTitle from "../common/HeaderTitle";
 
 class StrategiesListComponent extends Component {
     static propTypes = {
@@ -19,7 +27,7 @@ class StrategiesListComponent extends Component {
         deprecateStrategy: PropTypes.func.isRequired,
         reactivateStrategy: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
-        hasPermission: PropTypes.func.isRequired,
+        hasPermission: PropTypes.func.isRequired
     };
 
     componentDidMount() {
@@ -33,7 +41,11 @@ class StrategiesListComponent extends Component {
                 condition={hasPermission(CREATE_STRATEGY)}
                 show={
                     <Tooltip title="Add new strategy">
-                        <IconButton onClick={() => this.props.history.push('/strategies/create')}>
+                        <IconButton
+                            onClick={() =>
+                                this.props.history.push("/strategies/create")
+                            }
+                        >
                             <Icon>add</Icon>
                         </IconButton>
                     </Tooltip>
@@ -45,7 +57,10 @@ class StrategiesListComponent extends Component {
     strategyLink = ({ name, deprecated }) => (
         <Link to={`/strategies/view/${name}`}>
             <strong>{name}</strong>
-            <ConditionallyRender condition={deprecated} show={<small> (Deprecated)</small>} />
+            <ConditionallyRender
+                condition={deprecated}
+                show={<small> (Deprecated)</small>}
+            />
         </Link>
     );
 
@@ -64,7 +79,7 @@ class StrategiesListComponent extends Component {
         const { deprecateStrategy } = this.props;
         return (
             <ConditionallyRender
-                condition={strategy.name === 'default'}
+                condition={strategy.name === "default"}
                 show={
                     <Tooltip title="You cannot deprecate the default strategy">
                         <div>
@@ -77,7 +92,9 @@ class StrategiesListComponent extends Component {
                 elseShow={
                     <Tooltip title="Deprecate activation strategy">
                         <div>
-                            <IconButton onClick={() => deprecateStrategy(strategy)}>
+                            <IconButton
+                                onClick={() => deprecateStrategy(strategy)}
+                            >
                                 <Icon>visibility_off</Icon>
                             </IconButton>
                         </div>
@@ -119,20 +136,26 @@ class StrategiesListComponent extends Component {
                 key={strategy.name}
                 classes={{
                     root: classnames(styles.listItem, {
-                        [styles.deprecated]: strategy.deprecated,
-                    }),
+                        [styles.deprecated]: strategy.deprecated
+                    })
                 }}
             >
                 <ListItemAvatar>
                     <Icon>extension</Icon>
                 </ListItemAvatar>
-                <ListItemText primary={this.strategyLink(strategy)} secondary={strategy.description} />
+                <ListItemText
+                    primary={this.strategyLink(strategy)}
+                    secondary={strategy.description}
+                />
                 <ConditionallyRender
                     condition={strategy.deprecated}
                     show={this.reactivateButton(strategy)}
                     elseShow={this.deprecateButton(strategy)}
                 />
-                <ConditionallyRender condition={hasPermission(DELETE_STRATEGY)} show={this.deleteButton(strategy)} />
+                <ConditionallyRender
+                    condition={hasPermission(DELETE_STRATEGY)}
+                    show={this.deleteButton(strategy)}
+                />
             </ListItem>
         ));
     };
@@ -141,7 +164,14 @@ class StrategiesListComponent extends Component {
         const { strategies } = this.props;
 
         return (
-            <PageContent headerContent={<HeaderTitle title="Strategies" actions={this.headerButton()} />}>
+            <PageContent
+                headerContent={
+                    <HeaderTitle
+                        title="Strategies"
+                        actions={this.headerButton()}
+                    />
+                }
+            >
                 <List>
                     <ConditionallyRender
                         condition={strategies.length > 0}

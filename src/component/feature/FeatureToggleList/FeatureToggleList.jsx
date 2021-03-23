@@ -7,7 +7,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import FeatureToggleListItem from "./FeatureToggleListItem";
 import SearchField from "../../common/SearchField/SearchField";
 import FeatureToggleListActions from "./FeatureToggleListActions";
-import ConditionallyRender from "../../common/conditionally-render";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
 import PageContent from "../../common/PageContent/PageContent";
 import HeaderTitle from "../../common/HeaderTitle";
 

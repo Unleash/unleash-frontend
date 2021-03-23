@@ -13,7 +13,7 @@ import {
     Typography
 } from "@material-ui/core";
 import styles from "./common.module.scss";
-import ConditionallyRender from "./conditionally-render";
+import ConditionallyRender from "./ConditionallyRender/ConditionallyRender";
 
 export { styles };
 

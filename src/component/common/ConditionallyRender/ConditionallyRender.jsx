@@ -4,14 +4,14 @@ const ConditionallyRender = ({ condition, show, elseShow }) => {
         if (!result) {
             /* eslint-disable-next-line */
             console.warn(
-                'Nothing was returned from your render function. Verify that you are returning a valid react component'
+                "Nothing was returned from your render function. Verify that you are returning a valid react component"
             );
             return null;
         }
         return result;
     };
 
-    const isFunc = param => typeof param === 'function';
+    const isFunc = param => typeof param === "function";
 
     if (condition && show) {
         if (isFunc(show)) {

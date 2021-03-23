@@ -26,7 +26,7 @@ import StatusComponent from "../status-component";
 import FeatureTagComponent from "../feature-tag-component";
 import StatusUpdateComponent from "./status-update-component";
 import AddTagDialog from "../add-tag-dialog-container";
-import ConditionallyRender from "../../common/conditionally-render";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
 import TabNav from "../../common/tabNav";
 
 import { scrollToTop } from "../../common/util";
