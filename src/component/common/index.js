@@ -57,30 +57,6 @@ export const AppsLinkList = ({ apps }) => (
 AppsLinkList.propTypes = {
     apps: PropTypes.array.isRequired
 };
-export const HeaderTitle = ({ title, actions, subtitle }) => (
-    <div
-        style={{
-            display: "flex",
-            borderBottom: "1px solid #f9f9f9",
-            marginBottom: "10px",
-            alignItems: "center"
-        }}
-    >
-        <div style={{ flex: "2" }}>
-            <h6 className={styles.headerTitle}>{title}</h6>
-            {subtitle && <small>{subtitle}</small>}
-        </div>
-
-        {actions && (
-            <div style={{ flex: "1", textAlign: "right" }}>{actions}</div>
-        )}
-    </div>
-);
-HeaderTitle.propTypes = {
-    title: PropTypes.string,
-    subtitle: PropTypes.string,
-    actions: PropTypes.any
-};
 
 export const DataTableHeader = ({ title, actions }) => (
     <div className={styles.dataTableHeader}>
