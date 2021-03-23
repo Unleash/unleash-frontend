@@ -21,6 +21,9 @@ const theme = createMuiTheme({
         },
         searchField: {
             main: "#fff"
+        },
+        iconButtons: {
+            main: "#fff"
         }
     },
     padding: {
