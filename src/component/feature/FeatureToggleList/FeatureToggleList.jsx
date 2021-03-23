@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { debounce } from "debounce";
 import { Link } from "react-router-dom";
-import { Button, List } from "@material-ui/core";
+import { Button, List, Tooltip, IconButton, Icon } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import FeatureToggleListItem from "./FeatureToggleListItem";
 import SearchField from "../../common/SearchField/SearchField";
@@ -16,8 +16,6 @@ import { CREATE_FEATURE } from "../../../permissions";
 import { useStyles } from "./styles";
 
 const FeatureToggleList = ({
-    fetchFeatureToggles,
-    fetchArchive,
     fetcher,
     features,
     hasPermission,
@@ -28,10 +26,11 @@ const FeatureToggleList = ({
     toggleFeature
 }) => {
     const styles = useStyles();
+    const smallScreen = useMediaQuery("(max-width:700px)");
 
     useEffect(() => {
         fetcher();
-    }, [updateSetting, fetchFeatureToggles]);
+    }, [fetcher]);
 
     const toggleMetrics = () => {
         updateSetting("showLastHour", !settings.showLastHour);
@@ -76,25 +75,47 @@ const FeatureToggleList = ({
                         title="Feature toggles"
                         actions={
                             <div className={styles.actionsContainer}>
-                                <FeatureToggleListActions
-                                    settings={settings}
-                                    toggleMetrics={toggleMetrics}
-                                    setSort={setSort}
-                                    updateSetting={updateSetting}
+                                <ConditionallyRender
+                                    condition={!smallScreen}
+                                    show={
+                                        <FeatureToggleListActions
+                                            settings={settings}
+                                            toggleMetrics={toggleMetrics}
+                                            setSort={setSort}
+                                            updateSetting={updateSetting}
+                                        />
+                                    }
                                 />
+
                                 <ConditionallyRender
                                     condition={hasPermission(CREATE_FEATURE)}
                                     show={
-                                        <Button
-                                            to="/features/create"
-                                            data-test="add-feature-btn"
-                                            size="large"
-                                            color="secondary"
-                                            variant="contained"
-                                            component={Link}
-                                        >
-                                            Add new feature toggle
-                                        </Button>
+                                        <ConditionallyRender
+                                            condition={smallScreen}
+                                            show={
+                                                <Tooltip title="Add new feature toggle">
+                                                    <IconButton
+                                                        component={Link}
+                                                        to="/features/create"
+                                                        data-test="add-feature-btn"
+                                                    >
+                                                        <Icon>add</Icon>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            }
+                                            elseShow={
+                                                <Button
+                                                    to="/features/create"
+                                                    data-test="add-feature-btn"
+                                                    size="large"
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    component={Link}
+                                                >
+                                                    Add new feature toggle
+                                                </Button>
+                                            }
+                                        />
                                     }
                                 />
                             </div>
@@ -121,8 +142,7 @@ const FeatureToggleList = ({
 FeatureToggleList.propTypes = {
     features: PropTypes.array.isRequired,
     featureMetrics: PropTypes.object.isRequired,
-    fetchFeatureToggles: PropTypes.func,
-    fetchArchive: PropTypes.func,
+    fetcher: PropTypes.func,
     revive: PropTypes.func,
     updateSetting: PropTypes.func.isRequired,
     toggleFeature: PropTypes.func,

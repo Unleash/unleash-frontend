@@ -18,6 +18,9 @@ const theme = createMuiTheme({
         },
         chips: {
             main: "#b0bec5"
+        },
+        searchField: {
+            main: "#fff"
         }
     },
     padding: {
@@ -27,7 +30,8 @@ const theme = createMuiTheme({
         }
     },
     borders: {
-        default: "1px solid #f1f1f1"
+        default: "1px solid #f1f1f1",
+        radius: { main: "3px" }
     },
     fontSizes: {
         mainHeader: "1.1rem"
