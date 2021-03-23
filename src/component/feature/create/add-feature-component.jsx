@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { CardActions, Switch, TextField } from "@material-ui/core";
 import FeatureTypeSelect from "../feature-type-select-container";
-import ProjectSelect from "../../common/ProjectSelect";
+import ProjectSelect from "../project-select-container";
 import StrategiesList from "../strategy/strategies-list-add-container";
 import PageContent from "../../common/PageContent/PageContent";
 

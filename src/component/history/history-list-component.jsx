@@ -87,8 +87,6 @@ class HistoryList extends Component {
 
         return (
             <PageContent
-                disablePadding
-                disableBorder
                 headerContent={
                     <HeaderTitle
                         title={this.props.title}
