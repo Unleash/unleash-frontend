@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Grid, List, ListItem, ListItemText, ListItemAvatar, Switch, Icon } from '@material-ui/core';
+import { Grid, List, ListItem, ListItemText, ListItemAvatar, Switch, Icon, Typography } from '@material-ui/core';
 import { shorten } from '../common';
 import { CREATE_FEATURE, CREATE_STRATEGY } from '../../permissions';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 
 function ApplicationView({ seenToggles, hasPermission, strategies, instances, formatFullDateTime }) {
-    const notFoundListItem = ({ createUrl, name, permission, i }) => (
+    const notFoundListItem = ({ createUrl, name, permission }) => (
         <ConditionallyRender
             key={`not_found_conditional_${name}`}
             condition={hasPermission(permission)}
@@ -23,7 +23,7 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 </ListItem>
             }
             elseShow={
-                <ListItem key={`not_found_${name}-${i}`}>
+                <ListItem key={`not_found_${name}`}>
                     <ListItemAvatar>
                         <Icon>report</Icon>
                     </ListItemAvatar>
@@ -53,7 +53,9 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
     return (
         <Grid container style={{ margin: 0 }}>
             <Grid item xl={6} md={6} xs={12}>
-                <h6> Toggles</h6>
+                <Typography variant="subtitle1" style={{ padding: '1rem 0' }}>
+                    Toggles
+                </Typography>
                 <hr />
                 <List>
                     {seenToggles.map(({ name, description, enabled, notFound }, i) => (
@@ -79,7 +81,9 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 </List>
             </Grid>
             <Grid item xl={6} md={6} xs={12}>
-                <h6>Implemented strategies</h6>
+                <Typography variant="subtitle1" style={{ padding: '1rem 0' }}>
+                    Implemented strategies
+                </Typography>
                 <hr />
                 <List>
                     {strategies.map(({ name, description, notFound }, i) => (
@@ -105,7 +109,9 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
                 </List>
             </Grid>
             <Grid item xl={12} md={12}>
-                <h6>{instances.length} Instances registered</h6>
+                <Typography variant="subtitle1" style={{ padding: '1rem 0' }}>
+                    {instances.length} Instances registered
+                </Typography>
                 <hr />
                 <List>
                     {instances.map(({ instanceId, clientIp, lastSeen, sdkVersion }) => (
