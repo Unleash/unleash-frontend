@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import StrategyConstraintInput from './strategy-constraint-input';
-import { C } from '../../../common/flags';
+import StrategyConstraintInput from './StrategyConstraintInput';
+import { C } from '../../../../common/flags';
 
 export default connect(
     state => ({

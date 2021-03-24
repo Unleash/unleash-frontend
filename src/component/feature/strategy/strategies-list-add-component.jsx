@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import arrayMove from 'array-move';
 
-import ConfigureStrategy from './strategy-configure-container';
+import ConfigureStrategy from './ConfigureStrategy';
 import AddStrategy from './strategies-add';
 import HeaderTitle from '../../common/HeaderTitle';
 import DragAndDrop from '../../common/drag-and-drop';

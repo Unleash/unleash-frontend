@@ -1,7 +1,7 @@
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash.flow';
 
-import StrategyConfigure from './strategy-configure-component';
+import ConfigureStrategy from './ConfigureStrategy';
 
 const dragSource = {
     beginDrag(props) {
@@ -54,4 +54,4 @@ export default flow(
     DragSource(type, dragSource, collect),
     // eslint-disable-next-line new-cap
     DropTarget(type, dragTarget, collectTarget)
-)(StrategyConfigure);
+)(ConfigureStrategy);

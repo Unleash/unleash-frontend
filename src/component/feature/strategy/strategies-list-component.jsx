@@ -6,7 +6,7 @@ import arrayMove from 'array-move';
 import { Button, Icon } from '@material-ui/core';
 
 import DragAndDrop from '../../common/drag-and-drop';
-import ConfigureStrategy from './strategy-configure-container';
+import ConfigureStrategy from './ConfigureStrategy';
 import AddStrategy from './strategies-add';
 import HeaderTitle from '../../common/HeaderTitle';
 import { updateIndexInArray } from '../../common/util';
