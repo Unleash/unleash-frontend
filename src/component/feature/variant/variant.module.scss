@@ -39,12 +39,12 @@ th.actions {
 }
 
 td.actions {
+    height: 100%;
     text-align: right;
     vertical-align: top;
 }
 
-td.actions, 
-.chipContainer {
+.actionsContainer {
     display: flex;
     align-items: center;
 }

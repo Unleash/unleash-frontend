@@ -1,18 +1,36 @@
-import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import { Link, useHistory } from "react-router-dom";
 
-import { List, ListItem, ListItemIcon, Icon, ListItemText, IconButton, Tooltip, Typography } from '@material-ui/core';
-import HeaderTitle from '../../common/HeaderTitle';
-import PageContent from '../../common/PageContent/PageContent';
-import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../../permissions';
-import Dialogue from '../../common/Dialogue/Dialogue';
+import {
+    List,
+    ListItem,
+    ListItemIcon,
+    Icon,
+    ListItemText,
+    IconButton,
+    Button,
+    Tooltip,
+    Typography
+} from "@material-ui/core";
+import HeaderTitle from "../../common/HeaderTitle";
+import PageContent from "../../common/PageContent/PageContent";
+import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from "../../../permissions";
+import Dialogue from "../../common/Dialogue/Dialogue";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import styles from '../TagType.module.scss';
+import styles from "../TagType.module.scss";
 
-const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermission }) => {
+const TagTypeList = ({
+    tagTypes,
+    fetchTagTypes,
+    removeTagType,
+    hasPermission
+}) => {
     const [deletion, setDeletion] = useState({ open: false });
+    const history = useHistory();
+    const smallScreen = useMediaQuery("(max-width:700px)");
 
     useCallback(() => {
         fetchTagTypes();
@@ -25,11 +43,30 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermi
                 <ConditionallyRender
                     condition={hasPermission(CREATE_TAG_TYPE)}
                     show={
-                        <Tooltip title="Add tag type">
-                            <IconButton aria-label="add tag type" onClick={() => history.push('/tag-types/create')}>
-                                <Icon>add</Icon>
-                            </IconButton>
-                        </Tooltip>
+                        <ConditionallyRender
+                            condition={smallScreen}
+                            show={
+                                <Tooltip title="Add tag type">
+                                    <IconButton
+                                        aria-label="add tag type"
+                                        onClick={() =>
+                                            history.push("/tag-types/create")
+                                        }
+                                    >
+                                        <Icon>add</Icon>
+                                    </IconButton>
+                                </Tooltip>
+                            }
+                            elseShow={
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={history.push("/tag-types/create")}
+                                >
+                                    Add new tag type
+                                </Button>
+                            }
+                        />
                     }
                 />
             }
@@ -48,7 +85,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermi
                     onClick={() =>
                         setDeletion({
                             open: true,
-                            name: tagType.name,
+                            name: tagType.name
                         })
                     }
                 >
@@ -57,12 +94,18 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, history, hasPermi
             </Tooltip>
         );
         return (
-            <ListItem key={`${tagType.name}`} classes={{ root: styles.tagListItem }}>
+            <ListItem
+                key={`${tagType.name}`}
+                classes={{ root: styles.tagListItem }}
+            >
                 <ListItemIcon>
                     <Icon>label</Icon>
                 </ListItemIcon>
                 <ListItemText primary={link} secondary={tagType.description} />
-                <ConditionallyRender condition={hasPermission(DELETE_TAG_TYPE)} show={deleteButton} />
+                <ConditionallyRender
+                    condition={hasPermission(DELETE_TAG_TYPE)}
+                    show={deleteButton}
+                />
             </ListItem>
         );
     };
@@ -96,8 +139,7 @@ TagTypeList.propTypes = {
     tagTypes: PropTypes.array.isRequired,
     fetchTagTypes: PropTypes.func.isRequired,
     removeTagType: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
+    hasPermission: PropTypes.func.isRequired
 };
 
 export default TagTypeList;

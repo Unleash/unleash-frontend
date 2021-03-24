@@ -1,3 +1,3 @@
-import TagsListComponent from './tag-list';
+import TagsListComponent from "./TagList";
 
 export default TagsListComponent;

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { TextField } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import strategyInputProps from './strategy-input-props';
-import Select from '../../common/select';
+import React, { Component } from "react";
+import { TextField } from "@material-ui/core";
+import PropTypes from "prop-types";
+import strategyInputProps from "./strategy-input-props";
+import Select from "../../common/select";
 
-import StrategyInputPercentage from './input-percentage';
+import StrategyInputPercentage from "./input-percentage";
 
 const builtInStickinessOptions = [
-    { key: 'default', label: 'default' },
-    { key: 'userId', label: 'userId' },
-    { key: 'sessionId', label: 'sessionId' },
-    { key: 'random', label: 'random' },
+    { key: "default", label: "default" },
+    { key: "userId", label: "userId" },
+    { key: "sessionId", label: "sessionId" },
+    { key: "random", label: "random" }
 ];
 
 export default class FlexibleRolloutStrategy extends Component {
@@ -25,7 +25,9 @@ export default class FlexibleRolloutStrategy extends Component {
         return builtInStickinessOptions.concat(
             context
                 .filter(c => c.stickiness)
-                .filter(c => !builtInStickinessOptions.find(s => s.key === c.name))
+                .filter(
+                    c => !builtInStickinessOptions.find(s => s.key === c.name)
+                )
                 .map(c => ({ key: c.name, label: c.name }))
         );
     };
@@ -48,7 +50,7 @@ export default class FlexibleRolloutStrategy extends Component {
                     minLabel="off"
                     maxLabel="on"
                     disabled={!editable}
-                    onChange={this.onUpdate.bind(this, 'rollout')}
+                    onChange={this.onUpdate.bind(this, "rollout")}
                     id={`${index}-groupId`}
                 />
                 <div>
@@ -58,17 +60,16 @@ export default class FlexibleRolloutStrategy extends Component {
                         options={stickinessOptions}
                         value={stickiness}
                         disabled={!editable}
-                        onChange={evt => this.onUpdate('stickiness', evt)}
+                        onChange={evt => this.onUpdate("stickiness", evt)}
                     />
                     &nbsp;
                     <TextField
-                        floatingLabel
                         label="groupId"
                         size="small"
                         variant="outlined"
                         value={groupId}
                         disabled={!editable}
-                        onChange={evt => this.onUpdate('groupId', evt)}
+                        onChange={evt => this.onUpdate("groupId", evt)}
                         id={`${index}-groupId`}
                     />
                 </div>

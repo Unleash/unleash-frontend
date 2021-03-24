@@ -1,53 +1,56 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#607d8b',
-            light: '#B2DFDB',
-            dark: '#00796B',
+            main: "#607d8b",
+            light: "#B2DFDB",
+            dark: "#00796B"
         },
         secondary: {
-            main: '#217584',
+            main: "#217584"
         },
         neutral: {
-            main: '#18243e',
+            main: "#18243e"
         },
         icons: {
-            lightGrey: '#e0e0e0',
+            lightGrey: "#e0e0e0"
         },
         chips: {
-            main: '#b0bec5',
+            main: "#b0bec5"
         },
         searchField: {
-            main: '#fff',
+            main: "#fff"
         },
         iconButtons: {
-            main: '#fff',
+            main: "#fff"
         },
         tabs: {
-            main: '#efefef',
+            main: "#efefef"
         },
+        links: {
+            deprecated: "#1d1818"
+        }
     },
     padding: {
         pageContent: {
-            header: '1.8rem 2rem',
-            body: '2rem',
-        },
+            header: "1.8rem 2rem",
+            body: "2rem"
+        }
     },
     borders: {
-        default: '1px solid #f1f1f1',
-        radius: { main: '3px' },
+        default: "1px solid #f1f1f1",
+        radius: { main: "3px" }
     },
     fontSizes: {
-        mainHeader: '1.1rem',
+        mainHeader: "1.1rem"
     },
     boxShadows: {
         chip: {
             main: `0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)`,
-        },
-    },
+        0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)`
+        }
+    }
 });
 
 export default theme;

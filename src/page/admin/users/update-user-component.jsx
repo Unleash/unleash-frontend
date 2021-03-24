@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
     Button,
     TextField,
@@ -8,9 +8,9 @@ import {
     DialogActions,
     RadioGroup,
     Radio,
-    Modal,
-} from '@material-ui/core';
-import { showPermissions, modalStyles } from './util';
+    Modal
+} from "@material-ui/core";
+import { showPermissions, modalStyles } from "./util";
 
 function AddUser({ user, showDialog, closeDialog, updateUser }) {
     if (!user) {
@@ -23,7 +23,7 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
     const updateField = e => {
         setData({
             ...data,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         });
     };
 
@@ -34,7 +34,7 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
             await updateUser(data);
             closeDialog();
         } catch (error) {
-            setError({ general: 'Could not create user' });
+            setError({ general: "Could not create user" });
         }
     };
 
@@ -53,7 +53,6 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                 <DialogContent>
                     <p>{error.general}</p>
                     <TextField
-                        floatingLabel
                         label="Full name"
                         name="name"
                         value={data.name}
@@ -62,7 +61,6 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                         onChange={updateField}
                     />
                     <TextField
-                        floatingLabel
                         label="Email"
                         name="email"
                         contentEditable="false"
@@ -73,7 +71,12 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                     />
                     <br />
                     <br />
-                    <RadioGroup name="userType" value={userType} onChange={updateField} childContainer="div">
+                    <RadioGroup
+                        name="userType"
+                        value={userType}
+                        onChange={updateField}
+                        childContainer="div"
+                    >
                         <Radio value="regular" ripple>
                             Regular user
                         </Radio>
@@ -102,7 +105,7 @@ AddUser.propTypes = {
     showDialog: PropTypes.bool.isRequired,
     closeDialog: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    user: PropTypes.object
 };
 
 export default AddUser;
