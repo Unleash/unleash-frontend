@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
+import classnames from "classnames";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -16,7 +17,6 @@ import EditVariants from "../variant/update-variant-container";
 import FeatureTypeSelect from "../feature-type-select-container";
 import ProjectSelect from "../project-select-container";
 import UpdateDescriptionComponent from "../view/update-description-component";
-import { styles as commonStyles } from "../../common";
 import {
     CREATE_FEATURE,
     DELETE_FEATURE,
@@ -33,6 +33,8 @@ import { scrollToTop } from "../../common/util";
 
 import styles from "./FeatureView.module.scss";
 import ConfirmDialogue from "../../common/Dialogue";
+
+import { useCommonStyles } from "../../../common.styles";
 
 const FeatureView = ({
     activeTab,
@@ -55,6 +57,7 @@ const FeatureView = ({
 }) => {
     const isFeatureView = !!fetchFeatureToggles;
     const [delDialog, setDelDialog] = useState(false);
+    const commonStyles = useCommonStyles();
 
     useEffect(() => {
         scrollToTop();
@@ -222,7 +225,12 @@ const FeatureView = ({
                     </Typography>
                     <StatusComponent stale={featureToggle.stale} />
                 </div>
-                <div className={styles.featureInfoContainer}>
+                <div
+                    className={classnames(
+                        styles.featureInfoContainer,
+                        commonStyles.contentSpacingY
+                    )}
+                >
                     <UpdateDescriptionComponent
                         isFeatureView={isFeatureView}
                         description={featureToggle.description}
