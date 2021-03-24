@@ -4,7 +4,7 @@ import { Button, Card, Icon, IconButton, CardHeader, CardContent, CardActions } 
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
-import FlexibleRolloutStrategy from '../flexible-rollout-strategy-container';
+import FlexibleRolloutStrategy from '../FlexibleRolloutStrategy';
 import DefaultStrategy from '../default-strategy';
 import GeneralStrategy from '../general-strategy';
 import UserWithIdStrategy from '../user-with-id-strategy';
