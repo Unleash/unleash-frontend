@@ -5,6 +5,6 @@ export const useStyles = makeStyles({
         minWidth: '140px',
     },
     operator: {
-        minWidth: '60px',
+        minWidth: '105px',
     },
 });
