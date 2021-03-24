@@ -30,6 +30,9 @@ const theme = createMuiTheme({
         },
         links: {
             deprecated: "#1d1818"
+        },
+        error: {
+            main: "#d95e5e"
         }
     },
     padding: {
