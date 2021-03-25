@@ -9,8 +9,7 @@ import ApiHowTo from './api-howto';
 
 function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermission }) {
     const deleteKey = async key => {
-        const shouldDelte = confirm('Are you sure?');
-        if (shouldDelte) {
+        if (confirm('Are you sure?')) {
             await removeKey(key);
         }
     };
@@ -46,12 +45,12 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                     {keys.map(item => (
                         <tr key={item.key}>
                             <td style={{ textAlign: 'left' }}>
-                                {formatFullDateTimeWithLocale(item.created, location.locale)}
+                                {formatFullDateTimeWithLocale(item.createdAt, location.locale)}
                             </td>
                             <td style={{ textAlign: 'left' }}>{item.username}</td>
-                            <td style={{ textAlign: 'left' }}>{item.priviliges[0]}</td>
+                            <td style={{ textAlign: 'left' }}>{item.type}</td>
                             <td style={{ textAlign: 'left' }}>
-                                <Secret value={item.key} />
+                                <Secret value={item.secret} />
                             </td>
                             {hasPermission('ADMIN') ? (
                                 <td style={{ textAlign: 'right' }}>
@@ -59,7 +58,7 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                                         href=""
                                         onClick={e => {
                                             e.preventDefault();
-                                            deleteKey(item.key);
+                                            deleteKey(item.secret);
                                         }}
                                     >
                                         <Icon name="delete" />
