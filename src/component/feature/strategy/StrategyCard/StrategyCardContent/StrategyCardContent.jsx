@@ -4,11 +4,11 @@ import StrategyCardContentFlexible from "./StrategyCardContentFlexible/StrategyC
 import StrategyCardContentGradRandom from "./StrategyCardContentGradRandom/StrategyCardContentGradRandom";
 import StrategyCardContentList from "./StrategyCardContentList/StrategyCardContentList";
 import StrategyCardContentRollout from "./StrategyCardContentRollout/StrategyCardContentRollout";
+import StrategyCardContentCustom from "./StrategyCardContentCustom/StrategyCardContentCustom";
 
-const StrategyCardContent = ({ strategy }) => {
+const StrategyCardContent = ({ strategy, strategyDefinition }) => {
     const resolveContent = () => {
         switch (strategy.name) {
-            case "default":
             case "flexibleRollout":
                 return <StrategyCardContentFlexible strategy={strategy} />;
             case "userWithId":
@@ -41,7 +41,12 @@ const StrategyCardContent = ({ strategy }) => {
             case "gradualRolloutSessionId":
                 return <StrategyCardContentRollout strategy={strategy} />;
             default:
-                return null;
+                return (
+                    <StrategyCardContentCustom
+                        strategy={strategy}
+                        strategyDefinition={strategyDefinition}
+                    />
+                );
         }
     };
 
