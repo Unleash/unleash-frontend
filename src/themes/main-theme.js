@@ -34,6 +34,18 @@ const theme = createMuiTheme({
         error: {
             main: '#d95e5e',
         },
+        success: {
+            main: '#3bd86e',
+        },
+        division: {
+            main: '#f1f1f1',
+        },
+        cards: {
+            gradient: {
+                top: '#617D8B',
+                bottom: '#31627C',
+            },
+        },
     },
     padding: {
         pageContent: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Typography, IconButton, FormControl, TextField, Button, InputLabel } from '@material-ui/core';
+import { Typography, IconButton, FormControl, TextField, Button } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 

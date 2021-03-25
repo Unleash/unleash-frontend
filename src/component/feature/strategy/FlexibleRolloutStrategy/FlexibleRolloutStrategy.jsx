@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import strategyInputProps from '../strategy-input-props';

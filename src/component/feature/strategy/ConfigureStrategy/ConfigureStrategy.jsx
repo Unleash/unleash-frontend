@@ -22,7 +22,6 @@ const ConfigureStrategy = ({
     updateStrategy,
     saveStrategy,
     removeStrategy,
-    moveStrategy,
     isDragging,
     hovered,
     movable,

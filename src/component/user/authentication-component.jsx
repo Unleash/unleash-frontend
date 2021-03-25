@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardHeader, CardContent, Dialog, Icon, DialogTitle } from '@material-ui/core';
+import { Dialog, Icon, DialogTitle } from '@material-ui/core';
 import SimpleAuth from './SimpleAuth/SimpleAuth';
 import AuthenticationCustomComponent from './authentication-custom-component';
 import AuthenticationPasswordComponent from './PasswordAuth/PasswordAuth';

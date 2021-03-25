@@ -11,6 +11,7 @@ import AddStrategy from './strategies-add';
 import HeaderTitle from '../../common/HeaderTitle';
 import { updateIndexInArray } from '../../common/util';
 import styles from './strategy.module.scss';
+import StrategyCard from './StrategyCard/StrategyCard';
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -121,6 +122,9 @@ const StrategiesList = props => {
             movable={!dirty}
         />
     ));
+
+    const cards = editableStrategies.map((strategy, i) => <StrategyCard key={i} strategy={strategy} />);
+
     return (
         <DragAndDrop>
             {editable && (
@@ -135,6 +139,8 @@ const StrategiesList = props => {
                     }
                 />
             )}
+
+            <div className={styles.strategyListCards}>{cards}</div>
             <div className={styles.strategyList}>{blocks}</div>
             <div
                 style={{
