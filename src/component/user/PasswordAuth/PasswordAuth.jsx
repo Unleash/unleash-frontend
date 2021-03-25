@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
-import { CardActions, Button, TextField, Typography } from "@material-ui/core";
-import ConditionallyRender from "../../common/ConditionallyRender";
-import { useHistory } from "react-router";
-import { useCommonStyles } from "../../../common.styles";
-import { useStyles } from "./PasswordAuth.styles";
+import React, { useState } from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import { CardActions, Button, TextField, Typography } from '@material-ui/core';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import { useHistory } from 'react-router';
+import { useCommonStyles } from '../../../common.styles';
+import { useStyles } from './PasswordAuth.styles';
 
 const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
     const [showFields, setShowFields] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({
-        usernameError: "",
-        passwordError: ""
+        usernameError: '',
+        passwordError: '',
     });
 
     const onShowOptions = e => {
@@ -30,13 +30,13 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
         if (!username) {
             setErrors(prev => ({
                 ...prev,
-                usernameError: "This is a required field"
+                usernameError: 'This is a required field',
             }));
         }
         if (!password) {
             setErrors(prev => ({
                 ...prev,
-                passwordError: "This is a required field"
+                passwordError: 'This is a required field',
             }));
         }
 
@@ -55,13 +55,13 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
             if (error.statusCode === 404 || error.statusCode === 400) {
                 setErrors(prev => ({
                     ...prev,
-                    apiError: "Invalid login details"
+                    apiError: 'Invalid login details',
                 }));
-                setPassword("");
-                setUsername("");
+                setPassword('');
+                setUsername('');
             } else {
                 setErrors({
-                    apiError: "Unknown error while trying to authenticate."
+                    apiError: 'Unknown error while trying to authenticate.',
                 });
             }
         }
@@ -71,23 +71,12 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
         const { usernameError, passwordError, apiError } = errors;
 
         return (
-            <form
-                onSubmit={handleSubmit}
-                action={authDetails.path}
-                className={styles.loginContainer}
-            >
-                <Typography variant="subtitle1">
-                    {authDetails.message}
-                </Typography>
+            <form onSubmit={handleSubmit} action={authDetails.path} className={styles.loginContainer}>
+                <Typography variant="subtitle1">{authDetails.message}</Typography>
                 <Typography variant="subtitle2" className={styles.apiError}>
                     {apiError}
                 </Typography>
-                <div
-                    className={classnames(
-                        styles.contentContainer,
-                        commonStyles.contentSpacingY
-                    )}
-                >
+                <div className={classnames(styles.contentContainer, commonStyles.contentSpacingY)}>
                     <TextField
                         label="Username or email"
                         name="username"
@@ -120,7 +109,7 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
     };
 
     const renderWithOptions = options => (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: 'center' }}>
             {options.map(o => (
                 <CardActions key={o.type}>
                     <Button raised accent href={o.path}>
@@ -155,7 +144,7 @@ PasswordAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
     passwordLogin: PropTypes.func.isRequired,
     loadInitialData: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
 };
 
 export default PasswordAuth;

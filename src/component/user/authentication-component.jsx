@@ -1,19 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    Card,
-    CardHeader,
-    CardContent,
-    Dialog,
-    Icon,
-    DialogTitle
-} from "@material-ui/core";
-import SimpleAuth from "./SimpleAuth/SimpleAuth";
-import AuthenticationCustomComponent from "./authentication-custom-component";
-import AuthenticationPasswordComponent from "./PasswordAuth/PasswordAuth";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Card, CardHeader, CardContent, Dialog, Icon, DialogTitle } from '@material-ui/core';
+import SimpleAuth from './SimpleAuth/SimpleAuth';
+import AuthenticationCustomComponent from './authentication-custom-component';
+import AuthenticationPasswordComponent from './PasswordAuth/PasswordAuth';
 
-const SIMPLE_TYPE = "unsecure";
-const PASSWORD_TYPE = "password";
+const SIMPLE_TYPE = 'unsecure';
+const PASSWORD_TYPE = 'password';
 
 const customStyles = {};
 
@@ -23,7 +16,7 @@ class AuthComponent extends React.Component {
         insecureLogin: PropTypes.func.isRequired,
         passwordLogin: PropTypes.func.isRequired,
         loadInitialData: PropTypes.func.isRequired,
-        history: PropTypes.object.isRequired
+        history: PropTypes.object.isRequired,
     };
 
     render() {
@@ -50,9 +43,7 @@ class AuthComponent extends React.Component {
                 />
             );
         } else {
-            content = (
-                <AuthenticationCustomComponent authDetails={authDetails} />
-            );
+            content = <AuthenticationCustomComponent authDetails={authDetails} />;
         }
         return (
             <div>
@@ -60,17 +51,16 @@ class AuthComponent extends React.Component {
                     <DialogTitle
                         id="simple-dialog-title"
                         style={{
-                            background: "rgb(96, 125, 139)",
-                            color: "#fff"
+                            background: 'rgb(96, 125, 139)',
+                            color: '#fff',
                         }}
                     >
-                        <span style={{ display: "flex", alignItems: "center" }}>
-                            <Icon style={{ marginRight: "8px" }}>person</Icon>{" "}
-                            Login
+                        <span style={{ display: 'flex', alignItems: 'center' }}>
+                            <Icon style={{ marginRight: '8px' }}>person</Icon> Login
                         </span>
                     </DialogTitle>
 
-                    <div style={{ padding: "1rem" }}>{content}</div>
+                    <div style={{ padding: '1rem' }}>{content}</div>
                 </Dialog>
             </div>
         );

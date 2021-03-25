@@ -1,20 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import {
-    Typography,
-    IconButton,
-    FormControl,
-    TextField,
-    Button,
-    InputLabel
-} from "@material-ui/core";
-import CreateIcon from "@material-ui/icons/Create";
-import ConditionallyRender from "../../common/ConditionallyRender/ConditionallyRender";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Typography, IconButton, FormControl, TextField, Button, InputLabel } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
+import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
-import { UPDATE_FEATURE } from "../../../permissions";
+import { UPDATE_FEATURE } from '../../../permissions';
 
-import styles from "./update-description-component.module.scss";
+import styles from './update-description-component.module.scss';
 
 export default class UpdateDescriptionComponent extends React.Component {
     constructor(props) {
@@ -26,7 +19,7 @@ export default class UpdateDescriptionComponent extends React.Component {
         isFeatureView: PropTypes.bool.isRequired,
         update: PropTypes.func,
         featureToggle: PropTypes.object,
-        hasPermission: PropTypes.func.isRequired
+        hasPermission: PropTypes.func.isRequired,
     };
 
     onEditMode = (description, evt) => {
@@ -55,7 +48,7 @@ export default class UpdateDescriptionComponent extends React.Component {
         return (
             <FormControl size="small" variant="outlined">
                 <Typography>
-                    {description || "No feature toggle description"}
+                    {description || 'No feature toggle description'}
                     <ConditionallyRender
                         condition={showButton}
                         show={
@@ -63,10 +56,7 @@ export default class UpdateDescriptionComponent extends React.Component {
                                 aria-label="toggle description edit"
                                 to="#edit"
                                 component={Link}
-                                onClick={this.onEditMode.bind(
-                                    this,
-                                    description
-                                )}
+                                onClick={this.onEditMode.bind(this, description)}
                             >
                                 <CreateIcon />
                             </IconButton>
@@ -91,13 +81,8 @@ export default class UpdateDescriptionComponent extends React.Component {
                     value={description}
                     onChange={this.updateValue}
                 />
-                <div style={{ marginTop: "0.5rem" }}>
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="contained"
-                        onClick={this.onSave}
-                    >
+                <div style={{ marginTop: '0.5rem' }}>
+                    <Button type="submit" color="primary" variant="contained" onClick={this.onSave}>
                         Save
                     </Button>
                     &nbsp;
@@ -111,8 +96,6 @@ export default class UpdateDescriptionComponent extends React.Component {
 
     render() {
         const { editMode } = this.state;
-        return editMode
-            ? this.renderEdit(this.props)
-            : this.renderRead(this.props);
+        return editMode ? this.renderEdit(this.props) : this.renderRead(this.props);
     }
 }

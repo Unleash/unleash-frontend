@@ -1,18 +1,18 @@
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles(theme => ({
     loginContainer: {
-        minWidth: "350px",
-        [theme.breakpoints.down("xs")]: {
-            width: "100%",
-            minWidth: "auto"
-        }
+        minWidth: '350px',
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+            minWidth: 'auto',
+        },
     },
     contentContainer: {
-        display: "flex",
-        flexDirection: "column"
+        display: 'flex',
+        flexDirection: 'column',
     },
     apiError: {
-        color: theme.palette.error.main
-    }
+        color: theme.palette.error.main,
+    },
 }));
