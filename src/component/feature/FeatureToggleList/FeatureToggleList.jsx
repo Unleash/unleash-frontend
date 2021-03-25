@@ -93,7 +93,7 @@ const FeatureToggleList = ({
                                         <ConditionallyRender
                                             condition={smallScreen}
                                             show={
-                                                <Tooltip title="Add new feature toggle">
+                                                <Tooltip title="Create feature toggle">
                                                     <IconButton
                                                         component={Link}
                                                         to="/features/create"
@@ -112,7 +112,7 @@ const FeatureToggleList = ({
                                                     variant="contained"
                                                     component={Link}
                                                 >
-                                                    Add new feature toggle
+                                                    Create feature toggle
                                                 </Button>
                                             }
                                         />
