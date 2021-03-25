@@ -8,7 +8,7 @@ const store = (state = new List(), action) => {
         case ADD_KEY:
             return state.push(action.token);
         case REMOVE_KEY:
-            return state.filter(v => v.key !== action.key);
+            return state.filter(v => v.secret !== action.secret);
         default:
             return state;
     }

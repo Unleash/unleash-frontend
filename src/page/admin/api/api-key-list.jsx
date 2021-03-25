@@ -43,7 +43,7 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
                 </thead>
                 <tbody>
                     {keys.map(item => (
-                        <tr key={item.key}>
+                        <tr key={item.secret}>
                             <td style={{ textAlign: 'left' }}>
                                 {formatFullDateTimeWithLocale(item.createdAt, location.locale)}
                             </td>
@@ -81,7 +81,7 @@ ApiKeyList.propTypes = {
     fetchApiKeys: PropTypes.func.isRequired,
     removeKey: PropTypes.func.isRequired,
     addKey: PropTypes.func.isRequired,
-    keys: PropTypes.object.isRequired,
+    keys: PropTypes.array.isRequired,
     hasPermission: PropTypes.func.isRequired,
 };
 

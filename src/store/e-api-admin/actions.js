@@ -23,11 +23,11 @@ export function fetchApiKeys() {
             .catch(dispatchAndThrow(dispatch, ERROR_FETCH_KEYS));
 }
 
-export function removeKey(key) {
+export function removeKey(secret) {
     return dispatch =>
         api
-            .remove(key)
-            .then(() => dispatch({ type: REMOVE_KEY, key }))
+            .remove(secret)
+            .then(() => dispatch({ type: REMOVE_KEY, secret }))
             .catch(dispatchAndThrow(dispatch, REMOVE_KEY));
 }
 
