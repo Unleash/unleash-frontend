@@ -12,6 +12,7 @@ import HeaderTitle from '../../common/HeaderTitle';
 import { updateIndexInArray } from '../../common/util';
 import styles from './strategy.module.scss';
 import StrategyCard from './StrategyCard/StrategyCard';
+import EditStrategyModal from './EditStrategyModal/EditStrategyModal';
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -124,40 +125,52 @@ const StrategiesList = props => {
     ));
 
     const cards = editableStrategies.map((strategy, i) => <StrategyCard key={i} strategy={strategy} />);
+    // Hard-code for now
+    const editingStrategy = editableStrategies.findIndex(e => e.dirty);
 
     return (
-        <DragAndDrop>
-            {editable && (
-                <HeaderTitle
-                    title="Activation strategies"
-                    actions={
-                        <AddStrategy
-                            strategies={strategies}
-                            addStrategy={addStrategy}
-                            featureToggleName={featureToggleName}
-                        />
-                    }
+        <div>
+            {editingStrategy > -1 ? (
+                <EditStrategyModal
+                    strategy={editableStrategies[editingStrategy]}
+                    updateStrategy={updateStrategy(editingStrategy)}
+                    saveStrategy={saveStrategy(editingStrategy)}
+                    strategyDefinition={resolveStrategyDefinition(editableStrategies[editingStrategy].name)}
+                    onCancel={clearAll}
                 />
-            )}
-
-            <div className={styles.strategyListCards}>{cards}</div>
-            <div className={styles.strategyList}>{blocks}</div>
-            <div
-                style={{
-                    visibility: dirty ? 'visible' : 'hidden',
-                    padding: '10px',
-                }}
-            >
-                <Button type="submit" color="primary" variant="contained" icon="add" onClick={saveAll}>
-                    <Icon>save</Icon>
-                    &nbsp;&nbsp;&nbsp; Save all
-                </Button>
-                &nbsp;
-                <Button type="cancel" onClick={clearAll}>
-                    Clear all
-                </Button>
-            </div>
-        </DragAndDrop>
+            ) : null}
+            <DragAndDrop>
+                {editable && (
+                    <HeaderTitle
+                        title="Activation strategies"
+                        actions={
+                            <AddStrategy
+                                strategies={strategies}
+                                addStrategy={addStrategy}
+                                featureToggleName={featureToggleName}
+                            />
+                        }
+                    />
+                )}
+                <div className={styles.strategyListCards}>{cards}</div>
+                <div className={styles.strategyList}>{blocks}</div>
+                <div
+                    style={{
+                        visibility: dirty ? 'visible' : 'hidden',
+                        padding: '10px',
+                    }}
+                >
+                    <Button type="submit" color="primary" variant="contained" icon="add" onClick={saveAll}>
+                        <Icon>save</Icon>
+                        &nbsp;&nbsp;&nbsp; Save all
+                    </Button>
+                    &nbsp;
+                    <Button type="cancel" onClick={clearAll}>
+                        Clear all
+                    </Button>
+                </div>
+            </DragAndDrop>
+        </div>
     );
 };
 

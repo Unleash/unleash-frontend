@@ -77,6 +77,7 @@ const StrategyConstraintInputField = ({ constraint, updateConstraint, removeCons
                         <Autocomplete
                             multiple
                             id="tags-outlined"
+                            size="small"
                             options={options}
                             getOptionLabel={option => option.label}
                             defaultValue={values}

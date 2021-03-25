@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button, Chip, Icon } from '@material-ui/core';
+import { TextField, Button, Chip, Icon, Typography } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
 export default class InputList extends Component {
@@ -59,7 +59,7 @@ export default class InputList extends Component {
         const { name, list, disabled } = this.props;
         return (
             <div>
-                <strong>List of {name}</strong>
+                <Typography variant="subtitle2">List of {name}</Typography>
                 <div
                     style={{
                         display: 'flex',
@@ -92,12 +92,7 @@ export default class InputList extends Component {
                                 onChange={this.onChange}
                                 onKeyDown={this.onKeyDown}
                             />
-                            <Button
-                                onClick={this.setValue}
-                                color="primary"
-                                variant="contained"
-                                startIcon={<Icon>add</Icon>}
-                            >
+                            <Button onClick={this.setValue} color="secondary" startIcon={<Icon>add</Icon>}>
                                 Add
                             </Button>
                         </div>

@@ -1,57 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Slider, Typography } from '@material-ui/core';
 
-const labelStyle = {
-    textAlign: 'center',
-    color: 'rgb(96,125,139)',
-    fontSize: '2em',
+const useStyles = makeStyles(theme => ({
+    slider: {
+        width: 450,
+        maxWidth: '100%',
+    },
+    margin: {
+        height: theme.spacing(3),
+    },
+}));
+
+const marks = [
+    {
+        value: 0,
+        label: '0%',
+    },
+    {
+        value: 25,
+        label: '25%',
+    },
+    {
+        value: 50,
+        label: '50%',
+    },
+    {
+        value: 75,
+        label: '75%',
+    },
+    {
+        value: 100,
+        label: '100%',
+    },
+];
+
+const InputPercentage = ({ name, value, onChange, disabled = false }) => {
+    const classes = useStyles();
+
+    const valuetext = value => `${value}%`;
+
+    return (
+        <div className={classes.slider}>
+            <Typography id="discrete-slider-always" variant="subtitle2" gutterBottom>
+                {name}
+            </Typography>
+            <br />
+            <Slider
+                min={0}
+                max={100}
+                value={value}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider-always"
+                step={1}
+                marks={marks}
+                onChange={onChange}
+                valueLabelDisplay="on"
+                disabled={disabled}
+            />
+        </div>
+    );
 };
-
-const infoLabelStyle = {
-    fontSize: '0.8em',
-    color: 'gray',
-    paddingBottom: '-3px',
-};
-
-const InputPercentage = ({ name, minLabel, maxLabel, value, onChange, disabled = false }) => (
-    <div style={{ margin: '20px 0' }}>
-        <table style={{ width: '100%' }} colSpan="0" cellSpacing="0" cellPadding="0">
-            <tbody>
-                <tr>
-                    <td
-                        style={{
-                            textAlign: 'left',
-                            paddingLeft: '20px',
-                            width: '20px',
-                        }}
-                    >
-                        <span style={infoLabelStyle}>{minLabel}</span>
-                    </td>
-                    <td style={{ textAlign: 'center' }}>
-                        <strong title={name} style={labelStyle}>
-                            {value}%
-                        </strong>
-                    </td>
-                    <td
-                        style={{
-                            textAlign: 'right',
-                            paddingRight: '20px',
-                            width: '20px',
-                        }}
-                    >
-                        <span style={infoLabelStyle}>{maxLabel}</span>&nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td colSpan="3">
-                        <Slider min={0} max={100} value={value} onChange={onChange} label={name} disabled={disabled} />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-);
 
 InputPercentage.propTypes = {
     name: PropTypes.string,

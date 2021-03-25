@@ -41,7 +41,7 @@ const StrategyConstraintInput = ({ constraints, updateConstraints, contextNames,
                     <Icon style={{ fontSize: '0.9em', color: 'gray' }}>info</Icon>
                 </Tooltip>
             </Typography>
-            <table>
+            <table style={{ margin: 0 }}>
                 <tbody>
                     {constraints.map((c, index) => (
                         <StrategyConstraintInputField
@@ -55,11 +55,11 @@ const StrategyConstraintInput = ({ constraints, updateConstraints, contextNames,
                     ))}
                 </tbody>
             </table>
-            <p>
+            <small>
                 <a href="#add-constraint" title="Add constraint" onClick={addConstraint}>
                     Add constraint
                 </a>
-            </p>
+            </small>
         </div>
     );
 };
