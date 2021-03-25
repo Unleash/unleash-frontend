@@ -85,4 +85,6 @@ DrawerMenu.propTypes = {
     links: PropTypes.array,
     title: PropTypes.string,
     flags: PropTypes.object,
+    open: PropTypes.bool,
+    toggleDrawer: PropTypes.func,
 };
