@@ -76,10 +76,10 @@ const StrategyConstraintInputField = ({ constraint, updateConstraint, removeCons
                     show={
                         <Autocomplete
                             multiple
-                            id="tags-outlined"
                             size="small"
                             options={options}
                             getOptionLabel={option => option.label}
+                            getOptionSelected={(option, value) => option.value === value.value}
                             defaultValue={values}
                             filterSelectedOptions
                             filterOptions={options => options.filter(o => !values.some(v => v.value === o.value))}
