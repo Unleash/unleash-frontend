@@ -1,34 +1,49 @@
-import React from 'react';
-import StrategyCardPercentage from './common/StrategyCardPercentage/StrageyCardPercentage';
-import StrategyCardConstraints from './common/StrategyCardConstraints/StrategyCardConstraints';
-import StrategyCardList from './common/StrategyCardList/StrategyCardList';
+import React from "react";
 
-import { useCommonStyles } from '../../../../../common.styles';
-import StrategyCardSticky from './common/StrategyCardSticky/StrategyCardSticky';
-import StrategyCardContentFlexible from './StrategyCardContentFlexible/StrategyCardContentFlexible';
+import StrategyCardContentFlexible from "./StrategyCardContentFlexible/StrategyCardContentFlexible";
+import StrategyCardContentGradRandom from "./StrategyCardContentGradRandom/StrategyCardContentGradRandom";
+import StrategyCardContentList from "./StrategyCardContentList/StrategyCardContentList";
+import StrategyCardContentRollout from "./StrategyCardContentRollout/StrategyCardContentRollout";
 
 const StrategyCardContent = ({ strategy }) => {
-    const commonStyles = useCommonStyles();
-
     const resolveContent = () => {
         switch (strategy.name) {
-            case 'default':
-            case 'flexibleRollout':
+            case "default":
+            case "flexibleRollout":
                 return <StrategyCardContentFlexible strategy={strategy} />;
-            case 'userWithId':
+            case "userWithId":
+                return (
+                    <StrategyCardContentList
+                        parameter={"userIds"}
+                        valuesName={"userIds"}
+                        strategy={strategy}
+                    />
+                );
+            case "gradualRolloutRandom":
+                return <StrategyCardContentGradRandom strategy={strategy} />;
+            case "remoteAddress":
+                return (
+                    <StrategyCardContentList
+                        parameter={"IPs"}
+                        valuesName={"IPs"}
+                        strategy={strategy}
+                    />
+                );
+            case "applicationHostname":
+                return (
+                    <StrategyCardContentList
+                        parameter={"hostNames"}
+                        valuesName={"hostnames"}
+                        strategy={strategy}
+                    />
+                );
+            case "gradualRolloutUserId":
+            case "gradualRolloutSessionId":
+                return <StrategyCardContentRollout strategy={strategy} />;
             default:
                 return null;
         }
     };
-
-    const dummyData = [
-        { contextName: 'environment', operator: 'IN', values: ['test'] },
-        {
-            contextName: 'environment',
-            operator: 'IN',
-            values: ['prod', 'production', 'test', 'dev', 'prod'],
-        },
-    ];
 
     return resolveContent();
 };

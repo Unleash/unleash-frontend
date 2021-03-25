@@ -7,11 +7,10 @@ import StrategyCardField from "../common/StrategyCardField/StrategyCardField";
 import { useCommonStyles } from "../../../../../../common.styles";
 import ConditionallyRender from "../../../../../common/ConditionallyRender";
 
-const StrategyCardContentFlexible = ({ strategy }) => {
+const StrategyCardContentRollout = ({ strategy }) => {
     const commonStyles = useCommonStyles();
 
-    const rolloutPercentage = strategy.parameters.rollout;
-    const stickyField = strategy.parameters.stickiness;
+    const rolloutPercentage = strategy.parameters.percentage;
     const groupId = strategy.parameters.groupId;
     const { constraints } = strategy;
 
@@ -29,10 +28,9 @@ const StrategyCardContentFlexible = ({ strategy }) => {
             />
 
             <div className={commonStyles.divider} />
-            <StrategyCardField title="Sticky on" value={stickyField} />
             <StrategyCardField title="Group id" value={groupId} />
         </div>
     );
 };
 
-export default StrategyCardContentFlexible;
+export default StrategyCardContentRollout;

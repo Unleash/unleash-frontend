@@ -2,22 +2,24 @@ import React from "react";
 
 import StrategyCardPercentage from "../common/StrategyCardPercentage/StrageyCardPercentage";
 import StrategyCardConstraints from "../common/StrategyCardConstraints/StrategyCardConstraints";
-import StrategyCardField from "../common/StrategyCardField/StrategyCardField";
+import StrategyCardSticky from "../common/StrategyCardField/StrategyCardField";
 
 import { useCommonStyles } from "../../../../../../common.styles";
 import ConditionallyRender from "../../../../../common/ConditionallyRender";
+import StrategyCardList from "../common/StrategyCardList/StrategyCardList";
 
-const StrategyCardContentFlexible = ({ strategy }) => {
+const StrategyCardContentList = ({ strategy, parameter, valuesName }) => {
     const commonStyles = useCommonStyles();
 
-    const rolloutPercentage = strategy.parameters.rollout;
-    const stickyField = strategy.parameters.stickiness;
-    const groupId = strategy.parameters.groupId;
-    const { constraints } = strategy;
+    const { parameters, constraints } = strategy;
+    const list = parameters[parameter].split(",").filter(user => user);
 
     return (
         <div>
-            <StrategyCardPercentage percentage={rolloutPercentage} />
+            <ConditionallyRender
+                condition={list.length > 0}
+                show={<StrategyCardList list={list} valuesName={valuesName} />}
+            />
             <ConditionallyRender
                 condition={constraints && constraints.length > 0}
                 show={
@@ -27,12 +29,8 @@ const StrategyCardContentFlexible = ({ strategy }) => {
                     </>
                 }
             />
-
-            <div className={commonStyles.divider} />
-            <StrategyCardField title="Sticky on" value={stickyField} />
-            <StrategyCardField title="Group id" value={groupId} />
         </div>
     );
 };
 
-export default StrategyCardContentFlexible;
+export default StrategyCardContentList;
