@@ -114,9 +114,14 @@
 
 .strategyListCards {
     display: flex;
+    align-items: stretch;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 2rem 0;
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+}
+
+.strategyListCards > * {
+    margin: 0.25rem;
 }
 
 .strategyListAdd {

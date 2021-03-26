@@ -11,7 +11,7 @@ import AddStrategy from "./strategies-add";
 import HeaderTitle from "../../common/HeaderTitle";
 import { updateIndexInArray } from "../../common/util";
 import styles from "./strategy.module.scss";
-import StrategyCard from "./StrategyCard/StrategyCard";
+import StrategyCard from "./StrategyCard";
 import EditStrategyModal from "./EditStrategyModal/EditStrategyModal";
 
 const cleanStrategy = strategy => ({
@@ -150,6 +150,10 @@ const StrategiesList = props => {
             key={i}
             strategy={strategy}
             strategyDefinition={resolveStrategyDefinition(strategy.name)}
+            removeStrategy={removeStrategy(i)}
+            moveStrategy={moveStrategy}
+            index={i}
+            movable
         />
     ));
 
