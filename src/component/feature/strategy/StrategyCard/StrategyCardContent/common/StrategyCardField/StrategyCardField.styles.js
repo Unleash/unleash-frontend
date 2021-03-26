@@ -9,4 +9,7 @@ export const useStyles = makeStyles({
     fieldTitle: {
         fontWeight: 'bold',
     },
+    fieldValue: {
+        maxWidth: '50%',
+    },
 });

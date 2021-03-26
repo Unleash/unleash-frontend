@@ -11,7 +11,9 @@ const StrategyCardField = ({ title, value }) => {
             <Typography variant="body1" className={styles.fieldTitle}>
                 {title}
             </Typography>
-            <Typography variant="body1">{value}</Typography>
+            <Typography className={styles.fieldValue} variant="body1">
+                {value}
+            </Typography>
         </div>
     );
 };
