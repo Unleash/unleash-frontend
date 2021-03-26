@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Typography } from "@material-ui/core";
+
 import StrategyCardPercentage from "../common/StrategyCardPercentage/StrageyCardPercentage";
 import StrategyCardConstraints from "../common/StrategyCardConstraints/StrategyCardConstraints";
 
@@ -11,6 +13,12 @@ import StrategyCardField from "../common/StrategyCardField/StrategyCardField";
 const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
     const commonStyles = useCommonStyles();
 
+    if (!strategyDefinition)
+        return (
+            <Typography className={commonStyles.textCenter}>
+                No strategy definition defined
+            </Typography>
+        );
     if (strategyDefinition.name === "Loading") return null;
 
     const { constraints } = strategy;

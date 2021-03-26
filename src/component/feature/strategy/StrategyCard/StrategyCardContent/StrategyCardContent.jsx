@@ -5,10 +5,13 @@ import StrategyCardContentGradRandom from "./StrategyCardContentGradRandom/Strat
 import StrategyCardContentList from "./StrategyCardContentList/StrategyCardContentList";
 import StrategyCardContentRollout from "./StrategyCardContentRollout/StrategyCardContentRollout";
 import StrategyCardContentCustom from "./StrategyCardContentCustom/StrategyCardContentCustom";
+import StrategyCardContentDefault from "./StrategyCardContentDefault/StrategyCardContentDefault";
 
 const StrategyCardContent = ({ strategy, strategyDefinition }) => {
     const resolveContent = () => {
         switch (strategy.name) {
+            case "default":
+                return <StrategyCardContentDefault />;
             case "flexibleRollout":
                 return <StrategyCardContentFlexible strategy={strategy} />;
             case "userWithId":
