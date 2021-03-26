@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import StrategyCardPercentage from "../common/StrategyCardPercentage/StrageyCardPercentage";
 import StrategyCardConstraints from "../common/StrategyCardConstraints/StrategyCardConstraints";
@@ -16,7 +17,10 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
     if (!strategyDefinition)
         return (
             <Typography className={commonStyles.textCenter}>
-                No strategy definition defined
+                The strategy definition "{strategy.name}" does not exist.{" "}
+                <Link to={`/strategies/create?name=${strategy.name}`}>
+                    Create a strategy named {strategy.name}
+                </Link>
             </Typography>
         );
     if (strategyDefinition.name === "Loading") return null;
