@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import { Avatar, Link, Icon, IconButton, Button, LinearProgress, Typography } from '@material-ui/core';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
-import { styles as commonStyles } from '../common';
 import { formatFullDateTimeWithLocale, formatDateWithLocale } from '../common/util';
 import { UPDATE_APPLICATION } from '../../permissions';
 import ApplicationView from './application-view';

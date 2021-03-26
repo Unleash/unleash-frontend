@@ -8,6 +8,18 @@ import { useStyles } from './StrategyCardConstraints.styles.js';
 const StrategyCardConstraints = ({ constraints }) => {
     const styles = useStyles();
 
+    const renderConstraintValues = constraint =>
+        constraint.values.map((value, i) => (
+            <Typography
+                className={classnames({
+                    [styles.verticalSpacer]: i !== 0,
+                })}
+                key={value}
+            >
+                {value}
+            </Typography>
+        ));
+
     const renderConstraints = () =>
         constraints.map((constraint, i) => (
             <>
@@ -19,18 +31,6 @@ const StrategyCardConstraints = ({ constraints }) => {
                     {renderConstraintValues(constraint)}
                 </div>
             </>
-        ));
-
-    const renderConstraintValues = constraint =>
-        constraint.values.map((value, i) => (
-            <Typography
-                className={classnames({
-                    [styles.verticalSpacer]: i !== 0,
-                })}
-                key={value}
-            >
-                {value}
-            </Typography>
         ));
 
     return (

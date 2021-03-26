@@ -26,13 +26,11 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
 
     const { constraints } = strategy;
 
-    const renderCustomSections = () =>
-        strategyDefinition.parameters.map(paramDefinition => getSection(paramDefinition));
-
     const getParam = name => strategy.parameters[name];
 
     const getSection = paramDefinition => {
         const param = getParam(paramDefinition.name);
+        const paramList = param.split(',').filter(listItem => listItem);
 
         switch (paramDefinition.type) {
             case 'percentage':
@@ -43,13 +41,11 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
                     </>
                 );
             case 'list':
-                const paramList = param.split(',').filter(listItem => listItem);
                 return (
                     <ConditionallyRender
                         condition={paramList.length > 0}
                         show={
                             <>
-                                {' '}
                                 <StrategyCardList list={paramList} valuesName={paramDefinition.name} />
                                 <div className={commonStyles.divider} />
                             </>
@@ -67,6 +63,9 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
                 );
         }
     };
+
+    const renderCustomSections = () =>
+        strategyDefinition.parameters.map(paramDefinition => getSection(paramDefinition));
 
     return (
         <div>

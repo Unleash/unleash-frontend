@@ -31,7 +31,7 @@ function ApplicationUpdate({ application, storeApplicationMetaData }) {
                         type="url"
                         variant="outlined"
                         size="small"
-                        onBlur={e => storeApplicationMetaData(appName, 'url', localUrl)}
+                        onBlur={() => storeApplicationMetaData(appName, 'url', localUrl)}
                     />
                 </Grid>
                 <Grid item>
@@ -42,7 +42,7 @@ function ApplicationUpdate({ application, storeApplicationMetaData }) {
                         size="small"
                         rows={2}
                         onChange={e => setLocalDescription(e.target.value)}
-                        onBlur={e => storeApplicationMetaData(appName, 'description', localDescription)}
+                        onBlur={() => storeApplicationMetaData(appName, 'description', localDescription)}
                     />
                 </Grid>
             </Grid>
