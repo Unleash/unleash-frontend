@@ -13,6 +13,8 @@ import { updateIndexInArray } from "../../common/util";
 import styles from "./strategy.module.scss";
 import StrategyCard from "./StrategyCard";
 import EditStrategyModal from "./EditStrategyModal/EditStrategyModal";
+import { Alert } from "@material-ui/lab";
+import ConditionallyRender from "../../common/ConditionallyRender";
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -21,6 +23,7 @@ const cleanStrategy = strategy => ({
 });
 
 const StrategiesList = props => {
+    const [showAlert, setShowAlert] = useState(true);
     const [editableStrategies, updateEditableStrategies] = useState(
         cloneDeep(props.configuredStrategies)
     );
@@ -183,6 +186,28 @@ const StrategiesList = props => {
                         }
                     />
                 )}
+                <ConditionallyRender
+                    condition={showAlert}
+                    show={
+                        <Alert
+                            severity="info"
+                            className={styles.infoCard}
+                            onClose={() => setShowAlert(false)}
+                        >
+                            Strategies allow you fine grained control over how
+                            to activate your features, and are composable blocks
+                            that are executed in an OR fashion. As an example,
+                            you can have a gradual rollout that targets 80% of
+                            users in a region of the world (using the enterprise
+                            feature of constraints), and another gradual rollout
+                            that targets 20% of the users in another region. If
+                            you don't add a strategy, the default strategy is
+                            activated which means that the feature will be
+                            strictly on/off for your entire userbase.
+                        </Alert>
+                    }
+                />
+
                 <div className={styles.strategyListCards}>{cards}</div>
                 <div className={styles.strategyList}>{blocks}</div>
                 <div
