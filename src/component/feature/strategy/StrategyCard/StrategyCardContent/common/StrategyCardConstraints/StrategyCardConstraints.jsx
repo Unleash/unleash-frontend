@@ -1,4 +1,5 @@
 import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import React from 'react';
 
@@ -40,6 +41,10 @@ const StrategyCardConstraints = ({ constraints }) => {
             {renderConstraints()}
         </>
     );
+};
+
+StrategyCardConstraints.propTypes = {
+    constraints: PropTypes.array.isRequired,
 };
 
 export default StrategyCardConstraints;

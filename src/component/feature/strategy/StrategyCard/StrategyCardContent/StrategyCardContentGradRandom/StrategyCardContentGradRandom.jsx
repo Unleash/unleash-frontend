@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import StrategyCardPercentage from "../common/StrategyCardPercentage/StrageyCardPercentage";
-import StrategyCardConstraints from "../common/StrategyCardConstraints/StrategyCardConstraints";
+import StrategyCardPercentage from '../common/StrategyCardPercentage/StrageyCardPercentage';
+import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
 
-import { useCommonStyles } from "../../../../../../common.styles";
-import ConditionallyRender from "../../../../../common/ConditionallyRender";
+import { useCommonStyles } from '../../../../../../common.styles';
+import ConditionallyRender from '../../../../../common/ConditionallyRender';
 
 const StrategyCardContentGradRandom = ({ strategy }) => {
     const commonStyles = useCommonStyles();
@@ -26,6 +27,10 @@ const StrategyCardContentGradRandom = ({ strategy }) => {
             />
         </div>
     );
+};
+
+StrategyCardContentGradRandom.propTypes = {
+    strategy: PropTypes.object.isRequired,
 };
 
 export default StrategyCardContentGradRandom;

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Typography } from "@material-ui/core";
+import { Typography } from '@material-ui/core';
 
-import { useCommonStyles } from "../../../../../../common.styles";
+import { useCommonStyles } from '../../../../../../common.styles';
 
 const StrategyCardContentDefault = () => {
     const commonStyles = useCommonStyles();

@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import StrategyCardPercentage from "../common/StrategyCardPercentage/StrageyCardPercentage";
-import StrategyCardConstraints from "../common/StrategyCardConstraints/StrategyCardConstraints";
-import StrategyCardField from "../common/StrategyCardField/StrategyCardField";
+import StrategyCardPercentage from '../common/StrategyCardPercentage/StrageyCardPercentage';
+import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
+import StrategyCardField from '../common/StrategyCardField/StrategyCardField';
 
-import { useCommonStyles } from "../../../../../../common.styles";
-import ConditionallyRender from "../../../../../common/ConditionallyRender";
+import { useCommonStyles } from '../../../../../../common.styles';
+import ConditionallyRender from '../../../../../common/ConditionallyRender';
 
 const StrategyCardContentRollout = ({ strategy }) => {
     const commonStyles = useCommonStyles();
@@ -31,6 +32,10 @@ const StrategyCardContentRollout = ({ strategy }) => {
             <StrategyCardField title="Group id" value={groupId} />
         </div>
     );
+};
+
+StrategyCardContentRollout.propTypes = {
+    strategy: PropTypes.object.isRequired,
 };
 
 export default StrategyCardContentRollout;

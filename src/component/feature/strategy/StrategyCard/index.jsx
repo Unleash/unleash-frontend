@@ -1,13 +1,13 @@
-import { DragSource, DropTarget } from "react-dnd";
-import flow from "lodash.flow";
+import { DragSource, DropTarget } from 'react-dnd';
+import flow from 'lodash.flow';
 
-import StrategyCard from "./StrategyCard";
+import StrategyCard from './StrategyCard';
 
 const dragSource = {
     beginDrag(props) {
         return {
             id: props.id,
-            index: props.index
+            index: props.index,
         };
     },
     endDrag(props, monitor) {
@@ -15,18 +15,18 @@ const dragSource = {
             return;
         }
         const result = monitor.getDropResult();
-        if (typeof result.index === "number" && props.index !== result.index) {
+        if (typeof result.index === 'number' && props.index !== result.index) {
             props.moveStrategy(props.index, result.index);
         }
-    }
+    },
 };
 
 const dragTarget = {
     drop(props) {
         return {
-            index: props.index
+            index: props.index,
         };
-    }
+    },
 };
 
 /**
@@ -36,7 +36,7 @@ function collect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
         connectDragPreview: connect.dragPreview(),
-        isDragging: monitor.isDragging()
+        isDragging: monitor.isDragging(),
     };
 }
 
@@ -44,11 +44,11 @@ function collectTarget(connect, monitor) {
     return {
         highlighted: monitor.canDrop(),
         hovered: monitor.isOver(),
-        connectDropTarget: connect.dropTarget()
+        connectDropTarget: connect.dropTarget(),
     };
 }
 
-const type = "strategy";
+const type = 'strategy';
 
 export default flow(
     // eslint-disable-next-line new-cap

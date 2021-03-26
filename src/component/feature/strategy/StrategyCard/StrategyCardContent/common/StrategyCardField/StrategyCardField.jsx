@@ -1,8 +1,8 @@
-import { Typography } from "@material-ui/core";
-import PropTypes from "prop-types";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { useStyles } from "./StrategyCardField.styles.js";
+import { useStyles } from './StrategyCardField.styles.js';
 
 const StrategyCardField = ({ title, value }) => {
     const styles = useStyles();
@@ -17,8 +17,8 @@ const StrategyCardField = ({ title, value }) => {
 };
 
 StrategyCardField.propTypes = {
-    title: PropTypes.string,
-    value: PropTypes.string
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
 };
 
 export default StrategyCardField;

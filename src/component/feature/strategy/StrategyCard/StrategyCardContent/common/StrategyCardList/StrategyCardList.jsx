@@ -17,4 +17,9 @@ const StrategyCardList = ({ list, valuesName }) => {
     );
 };
 
+StrategyCardList.propTypes = {
+    list: PropTypes.array.isRequired,
+    valuesName: PropTypes.string.isRequired,
+};
+
 export default StrategyCardList;
