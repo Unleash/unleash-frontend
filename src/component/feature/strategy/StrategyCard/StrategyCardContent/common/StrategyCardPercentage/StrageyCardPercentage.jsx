@@ -1,8 +1,8 @@
-import { Typography } from "@material-ui/core";
-import PropTypes from "prop-types";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { useStyles } from "./StrategyCardPercentage.styles.js";
+import { useStyles } from './StrategyCardPercentage.styles.js';
 
 const StrategyCardPercentage = ({ percentage }) => {
     const styles = useStyles();
@@ -19,7 +19,7 @@ const StrategyCardPercentage = ({ percentage }) => {
 };
 
 StrategyCardPercentage.propTypes = {
-    percentage: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    percentage: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default StrategyCardPercentage;

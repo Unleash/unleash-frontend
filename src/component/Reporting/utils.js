@@ -100,6 +100,8 @@ export const sortFeaturesByExpiredAtAscending = features => {
         if (!expired(diffA, a.type)) return -1;
         if (!expired(diffB, b.type)) return 1;
 
+        console.log('EXPIRED');
+
         const expiredByA = diffA - toggleExpiryByTypeMap[a.type];
         const expiredByB = diffB - toggleExpiryByTypeMap[b.type];
 

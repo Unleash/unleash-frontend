@@ -5,6 +5,7 @@ import cloneDeep from 'lodash.clonedeep';
 import arrayMove from 'array-move';
 import { Button, Icon } from '@material-ui/core';
 
+import { Alert } from '@material-ui/lab';
 import DragAndDrop from '../../common/drag-and-drop';
 import ConfigureStrategy from './ConfigureStrategy';
 import AddStrategy from './strategies-add';
@@ -13,8 +14,8 @@ import { updateIndexInArray } from '../../common/util';
 import styles from './strategy.module.scss';
 import StrategyCard from './StrategyCard';
 import EditStrategyModal from './EditStrategyModal/EditStrategyModal';
-import { Alert } from '@material-ui/lab';
 import ConditionallyRender from '../../common/ConditionallyRender';
+import CreateStrategy from './CreateStrategy/CreateStrategy';
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -143,6 +144,8 @@ const StrategiesList = props => {
 
     return (
         <div>
+            <CreateStrategy strategies={strategies} />
+
             {editingStrategy > -1 ? (
                 <EditStrategyModal
                     strategy={editableStrategies[editingStrategy]}
