@@ -1,31 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-import cloneDeep from 'lodash.clonedeep';
-import arrayMove from 'array-move';
-import { Button, Icon } from '@material-ui/core';
+import cloneDeep from "lodash.clonedeep";
+import arrayMove from "array-move";
+import { Button, Icon } from "@material-ui/core";
 
-import { Alert } from '@material-ui/lab';
-import DragAndDrop from '../../common/drag-and-drop';
-import ConfigureStrategy from './ConfigureStrategy';
-import AddStrategy from './strategies-add';
-import HeaderTitle from '../../common/HeaderTitle';
-import { updateIndexInArray } from '../../common/util';
-import styles from './strategy.module.scss';
-import StrategyCard from './StrategyCard';
-import EditStrategyModal from './EditStrategyModal/EditStrategyModal';
-import ConditionallyRender from '../../common/ConditionallyRender';
-import CreateStrategy from './CreateStrategy/CreateStrategy';
+import { Alert } from "@material-ui/lab";
+import DragAndDrop from "../../common/drag-and-drop";
+import ConfigureStrategy from "./ConfigureStrategy";
+import AddStrategy from "./strategies-add";
+import HeaderTitle from "../../common/HeaderTitle";
+import { updateIndexInArray } from "../../common/util";
+import styles from "./strategy.module.scss";
+import StrategyCard from "./StrategyCard";
+import EditStrategyModal from "./EditStrategyModal/EditStrategyModal";
+import ConditionallyRender from "../../common/ConditionallyRender";
+import CreateStrategy from "./CreateStrategy/CreateStrategy";
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
     parameters: cloneDeep(strategy.parameters),
-    constraints: cloneDeep(strategy.constraints || []),
+    constraints: cloneDeep(strategy.constraints || [])
 });
 
 const StrategiesList = props => {
+    const [showCreateStrategy, setShowCreateStrategy] = useState(false);
     const [showAlert, setShowAlert] = useState(true);
-    const [editableStrategies, updateEditableStrategies] = useState(cloneDeep(props.configuredStrategies));
+    const [editableStrategies, updateEditableStrategies] = useState(
+        cloneDeep(props.configuredStrategies)
+    );
     const dirty = editableStrategies.some(p => p.dirty);
 
     useEffect(() => {
@@ -36,7 +39,11 @@ const StrategiesList = props => {
 
     const updateStrategy = index => (strategy, dirty = true) => {
         const newStrategy = { ...strategy, dirty };
-        const newStrategies = updateIndexInArray(editableStrategies, index, newStrategy);
+        const newStrategies = updateIndexInArray(
+            editableStrategies,
+            index,
+            newStrategy
+        );
         updateEditableStrategies(newStrategies);
     };
 
@@ -75,13 +82,21 @@ const StrategiesList = props => {
 
     const removeStrategy = index => async () => {
         // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to remove this activation strategy?')) {
+        if (
+            window.confirm(
+                "Are you sure you want to remove this activation strategy?"
+            )
+        ) {
             const strategy = editableStrategies[index];
             if (!strategy.new) {
-                await props.saveStrategies(props.configuredStrategies.filter((_, i) => i !== index));
+                await props.saveStrategies(
+                    props.configuredStrategies.filter((_, i) => i !== index)
+                );
             }
 
-            updateEditableStrategies(editableStrategies.filter((_, i) => i !== index));
+            updateEditableStrategies(
+                editableStrategies.filter((_, i) => i !== index)
+            );
         }
     };
 
@@ -95,11 +110,16 @@ const StrategiesList = props => {
         updateEditableStrategies(cleanedStrategies);
     };
 
-    const { strategies, configuredStrategies, featureToggleName, editable } = props;
+    const {
+        strategies,
+        configuredStrategies,
+        featureToggleName,
+        editable
+    } = props;
 
     if (!configuredStrategies || configuredStrategies.length === 0) {
         return (
-            <p style={{ padding: '0 16px' }}>
+            <p style={{ padding: "0 16px" }}>
                 <i>No activation strategies selected.</i>
             </p>
         );
@@ -107,26 +127,10 @@ const StrategiesList = props => {
 
     const resolveStrategyDefinition = strategyName => {
         if (!strategies || strategies.length === 0) {
-            return { name: 'Loading' };
+            return { name: "Loading" };
         }
         return strategies.find(s => s.name === strategyName);
     };
-
-    const blocks = editableStrategies.map((strategy, i) => (
-        <ConfigureStrategy
-            index={i}
-            key={i}
-            featureToggleName={featureToggleName}
-            strategy={strategy}
-            moveStrategy={moveStrategy}
-            removeStrategy={removeStrategy(i)}
-            updateStrategy={updateStrategy(i)}
-            saveStrategy={saveStrategy(i)}
-            strategyDefinition={resolveStrategyDefinition(strategy.name)}
-            editable={editable}
-            movable={!dirty}
-        />
-    ));
 
     // Hard-code for now
     const editingStrategy = editableStrategies.findIndex(e => e.dirty);
@@ -144,53 +148,84 @@ const StrategiesList = props => {
 
     return (
         <div>
-            <CreateStrategy strategies={strategies} />
+            <CreateStrategy
+                strategies={strategies}
+                showCreateStrategy={showCreateStrategy}
+                setShowCreateStrategy={setShowCreateStrategy}
+                featureToggleName={featureToggleName}
+                addStrategy={addStrategy}
+            />
 
             {editingStrategy > -1 ? (
                 <EditStrategyModal
                     strategy={editableStrategies[editingStrategy]}
                     updateStrategy={updateStrategy(editingStrategy)}
                     saveStrategy={saveStrategy(editingStrategy)}
-                    strategyDefinition={resolveStrategyDefinition(editableStrategies[editingStrategy].name)}
+                    strategyDefinition={resolveStrategyDefinition(
+                        editableStrategies[editingStrategy].name
+                    )}
                     onCancel={clearAll}
                 />
             ) : null}
             <DragAndDrop>
-                {editable && (
-                    <HeaderTitle
-                        title="Activation strategies"
-                        actions={
-                            <AddStrategy
-                                strategies={strategies}
-                                addStrategy={addStrategy}
-                                featureToggleName={featureToggleName}
-                            />
-                        }
-                    />
-                )}
+                <ConditionallyRender
+                    condition={editable}
+                    show={
+                        <HeaderTitle
+                            title="Activation strategies"
+                            actions={
+                                <>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() =>
+                                            setShowCreateStrategy(true)
+                                        }
+                                    >
+                                        Add strategy
+                                    </Button>
+                                </>
+                            }
+                        />
+                    }
+                />
+
                 <ConditionallyRender
                     condition={showAlert}
                     show={
-                        <Alert severity="info" className={styles.infoCard} onClose={() => setShowAlert(false)}>
-                            Strategies allow you fine grained control over how to activate your features, and are
-                            composable blocks that are executed in an OR fashion. As an example, you can have a gradual
-                            rollout that targets 80% of users in a region of the world (using the enterprise feature of
-                            constraints), and another gradual rollout that targets 20% of the users in another region.
-                            If you don't add a strategy, the default strategy is activated which means that the feature
-                            will be strictly on/off for your entire userbase.
+                        <Alert
+                            severity="info"
+                            className={styles.infoCard}
+                            onClose={() => setShowAlert(false)}
+                        >
+                            Strategies allow you fine grained control over how
+                            to activate your features, and are composable blocks
+                            that are executed in an OR fashion. As an example,
+                            you can have a gradual rollout that targets 80% of
+                            users in a region of the world (using the enterprise
+                            feature of constraints), and another gradual rollout
+                            that targets 20% of the users in another region. If
+                            you don't add a strategy, the default strategy is
+                            activated which means that the feature will be
+                            strictly on/off for your entire userbase.
                         </Alert>
                     }
                 />
 
                 <div className={styles.strategyListCards}>{cards}</div>
-                <div className={styles.strategyList}>{blocks}</div>
                 <div
                     style={{
-                        visibility: dirty ? 'visible' : 'hidden',
-                        padding: '10px',
+                        visibility: dirty ? "visible" : "hidden",
+                        padding: "10px"
                     }}
                 >
-                    <Button type="submit" color="primary" variant="contained" icon="add" onClick={saveAll}>
+                    <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        icon="add"
+                        onClick={saveAll}
+                    >
                         <Icon>save</Icon>
                         &nbsp;&nbsp;&nbsp; Save all
                     </Button>
@@ -209,7 +244,7 @@ StrategiesList.propTypes = {
     configuredStrategies: PropTypes.array.isRequired,
     featureToggleName: PropTypes.string.isRequired,
     saveStrategies: PropTypes.func,
-    editable: PropTypes.bool,
+    editable: PropTypes.bool
 };
 
 export default StrategiesList;

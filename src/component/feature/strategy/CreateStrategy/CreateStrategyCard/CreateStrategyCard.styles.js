@@ -1,9 +1,12 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/styles";
 
 export const useStyles = makeStyles(theme => ({
     createStrategyCard: {
-        width: '200px',
-        textAlign: 'center',
+        width: "200px",
+        minHeight: "200px",
+        textAlign: "center",
         borderTop: `4px solid ${theme.palette.primary.main}`,
-    },
+        display: "flex",
+        flexDirection: "column"
+    }
 }));
