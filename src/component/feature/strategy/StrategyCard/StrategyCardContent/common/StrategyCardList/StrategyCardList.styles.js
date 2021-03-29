@@ -1,15 +1,14 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
     strategyList: {
-        marginBottom: '0.5rem',
+        marginBottom: "0.5rem"
     },
     strategyListChip: {
-        margin: '0.25rem',
+        margin: "0.25rem"
     },
     strategyListHeader: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-        marginBottom: '0.5rem',
-    },
-});
+        fontWeight: theme.fontWeight.semi,
+        marginBottom: "0.5rem"
+    }
+}));

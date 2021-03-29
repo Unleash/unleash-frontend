@@ -1,20 +1,21 @@
-import { Typography } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import React from 'react';
+import { Typography } from "@material-ui/core";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import React from "react";
 
-import { useStyles } from './StrategyCardConstraints.styles.js';
+import { useStyles } from "./StrategyCardConstraints.styles.js";
+import { useCommonStyles } from "../../../../../../../common.styles.js";
 
 const StrategyCardConstraints = ({ constraints }) => {
     const styles = useStyles();
+    const commonStyles = useCommonStyles();
 
     const renderConstraintValues = constraint =>
-        constraint.values.map((value, i) => (
+        constraint.values.map(value => (
             <Typography
-                className={classnames({
-                    [styles.verticalSpacer]: i !== 0,
-                })}
+                variant="body2"
                 key={value}
+                className={styles.constraintValue}
             >
                 {value}
             </Typography>
@@ -22,15 +23,46 @@ const StrategyCardConstraints = ({ constraints }) => {
 
     const renderConstraints = () =>
         constraints.map((constraint, i) => (
-            <>
-                <div key={`${constraint.contextName}-${i}`} className={styles.constraintContainer}>
-                    <Typography variant="body1">{constraint.contextName}</Typography>
-                    <span className={styles.verticalSpacer}>|</span>
-                    <Typography variant="body1">{constraint.operator}</Typography>
-                    <span className={styles.verticalSpacer}>|</span>
-                    {renderConstraintValues(constraint)}
+            <div
+                key={`${constraint.contextName}-${i}`}
+                className={styles.constraintContainer}
+            >
+                <div className={styles.constraintDisplayContainer}>
+                    <Typography variant="body2" className={styles.label}>
+                        context
+                    </Typography>
+                    <Typography variant="body2">
+                        {constraint.contextName}
+                    </Typography>
                 </div>
-            </>
+                <div className={styles.constraintDisplayContainer}>
+                    <Typography variant="body2" className={styles.label}>
+                        operator
+                    </Typography>
+                    <Typography variant="body2">
+                        {constraint.operator}
+                    </Typography>
+                </div>
+
+                <div
+                    className={classnames(
+                        commonStyles.flexColumn,
+                        styles.constraintValuesContainer
+                    )}
+                >
+                    <Typography variant="body2" className={styles.label}>
+                        values
+                    </Typography>
+                    <div
+                        className={classnames(
+                            commonStyles.flexRow,
+                            commonStyles.flexWrap
+                        )}
+                    >
+                        {renderConstraintValues(constraint)}
+                    </div>
+                </div>
+            </div>
         ));
 
     return (
@@ -44,7 +76,7 @@ const StrategyCardConstraints = ({ constraints }) => {
 };
 
 StrategyCardConstraints.propTypes = {
-    constraints: PropTypes.array.isRequired,
+    constraints: PropTypes.array.isRequired
 };
 
 export default StrategyCardConstraints;
