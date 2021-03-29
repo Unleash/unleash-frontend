@@ -33,7 +33,7 @@ const nameMapping = {
         description: "Enable the feature for a specific set of IP addresses"
     },
     userWithId: {
-        name: "Users",
+        name: "UserIDs",
         description: "Enable the feature for a specific set of userIds"
     }
 };
