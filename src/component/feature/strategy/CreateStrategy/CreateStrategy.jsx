@@ -12,20 +12,8 @@ import {
 import CreateStrategyCard from "./CreateStrategyCard/CreateStrategyCard";
 import { useStyles } from "./CreateStrategy.styles";
 import ConditionallyRender from "../../../common/ConditionallyRender";
-
-const resolveDefaultParamValue = (name, featureToggleName) => {
-    switch (name) {
-        case "percentage":
-        case "rollout":
-            return "100";
-        case "stickiness":
-            return "default";
-        case "groupId":
-            return featureToggleName;
-        default:
-            return "";
-    }
-};
+import { resolveDefaultParamValue } from "./utils";
+import { getHumanReadbleStrategy } from "../../../../utils/strategy-names";
 
 const CreateStrategy = ({
     strategies,
@@ -34,59 +22,35 @@ const CreateStrategy = ({
     featureToggleName,
     addStrategy
 }) => {
+    const styles = useStyles();
     if (!strategies) return null;
-
-    const nameMapping = {
-        applicationHostname: {
-            name: "Hosts",
-            description: "Enable the feature for a specific set of hostnames"
-        },
-        default: {
-            name: "Standard",
-            description:
-                "The standard strategy is strictly on / off for your entire userbase."
-        },
-        flexibleRollout: {
-            name: "Gradual rollout",
-            description:
-                "Roll out to a percentage of your userbase, and ensure that the experience is the same for the user on each visit."
-        },
-        gradualRolloutRandom: {
-            name: "Randomized",
-            description:
-                "Roll out to a percentage of your userbase and randomly enable the feature on a per request basis"
-        },
-        gradualRolloutSessionId: {
-            name: "Sessions",
-            description:
-                "Roll out to a percentage of your userbase and configure stickiness based on sessionId"
-        },
-        gradualRolloutUserId: {
-            name: "Users",
-            description:
-                "Roll out to a percentage of your userbase and configure stickiness based on userId"
-        },
-        remoteAddress: {
-            name: "IPs",
-            description: "Enable the feature for a specific set of IP addresses"
-        },
-        userWithId: {
-            name: "Users",
-            description: "Enable the feature for a specific set of userIds"
-        }
-    };
 
     const builtInStrategies = strategies.filter(
         strategy => strategy.editable !== true
     );
     const customStrategies = strategies.filter(strategy => strategy.editable);
 
-    const styles = useStyles();
+    const setStrategyByName = strategyName => {
+        const selectedStrategy = strategies.find(s => s.name === strategyName);
+        const parameters = {};
+
+        selectedStrategy.parameters.forEach(({ name }) => {
+            parameters[name] = resolveDefaultParamValue(
+                name,
+                featureToggleName
+            );
+        });
+
+        addStrategy({
+            name: selectedStrategy.name,
+            parameters
+        });
+    };
 
     const renderBuiltInStrategies = () =>
         builtInStrategies.map(strategy => (
             <CreateStrategyCard
-                strategy={nameMapping[strategy.name]}
+                strategy={getHumanReadbleStrategy(strategy.name)}
                 key={strategy.name}
                 onClick={() => {
                     setShowCreateStrategy(false);
@@ -106,23 +70,6 @@ const CreateStrategy = ({
                 }}
             />
         ));
-
-    const setStrategyByName = strategyName => {
-        const selectedStrategy = strategies.find(s => s.name === strategyName);
-        const parameters = {};
-
-        selectedStrategy.parameters.forEach(({ name }) => {
-            parameters[name] = resolveDefaultParamValue(
-                name,
-                featureToggleName
-            );
-        });
-
-        addStrategy({
-            name: selectedStrategy.name,
-            parameters
-        });
-    };
 
     return (
         <Dialog
@@ -172,12 +119,11 @@ const CreateStrategy = ({
 };
 
 CreateStrategy.propTypes = {
-    strategy: PropTypes.object.isRequired,
-    updateStrategy: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    saveStrategy: PropTypes.func.isRequired,
-    strategyDefinition: PropTypes.object.isRequired,
-    context: PropTypes.array // TODO: fix me
+    strategies: PropTypes.array.isRequired,
+    showCreateStrategy: PropTypes.func.isRequired,
+    setShowCreateStrategy: PropTypes.func.isRequired,
+    featureToggleName: PropTypes.string.isRequired,
+    addStrategy: PropTypes.func.isRequired
 };
 
 export default CreateStrategy;

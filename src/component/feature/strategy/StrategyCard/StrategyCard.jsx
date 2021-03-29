@@ -1,11 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent } from "@material-ui/core";
 
-import { useStyles } from './StrategyCard.styles';
-import StrategyCardContent from './StrategyCardContent/StrategyCardContent';
-import StrategyCardHeader from './StrategyCardHeader/StrategyCardHeader';
+import { useStyles } from "./StrategyCard.styles";
+import StrategyCardContent from "./StrategyCardContent/StrategyCardContent";
+import StrategyCardHeader from "./StrategyCardHeader/StrategyCardHeader";
+import { getHumanReadbleStrategyName } from "../../../../utils/strategy-names";
 
 const StrategyCard = ({
     strategy,
@@ -13,21 +14,24 @@ const StrategyCard = ({
     connectDragPreview,
     connectDragSource,
     removeStrategy,
-    connectDropTarget,
+    connectDropTarget
 }) => {
     const styles = useStyles();
 
     return connectDragPreview(
         connectDropTarget(
-            <span style={{ alignItems: 'stretch' }}>
+            <span style={{ alignItems: "stretch" }}>
                 <Card className={styles.strategyCard}>
                     <StrategyCardHeader
-                        name={strategy.name}
+                        name={getHumanReadbleStrategyName(strategy.name)}
                         connectDragSource={connectDragSource}
                         removeStrategy={removeStrategy}
                     />
                     <CardContent>
-                        <StrategyCardContent strategy={strategy} strategyDefinition={strategyDefinition} />
+                        <StrategyCardContent
+                            strategy={strategy}
+                            strategyDefinition={strategyDefinition}
+                        />
                     </CardContent>
                 </Card>
             </span>
@@ -41,7 +45,7 @@ StrategyCard.propTypes = {
     connectDragPreview: PropTypes.func.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     removeStrategy: PropTypes.func.isRequired,
-    connectDropTarget: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired
 };
 
 export default StrategyCard;
