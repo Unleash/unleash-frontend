@@ -1,28 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogActions
-} from "@material-ui/core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
 
-import FlexibleStrategy from "./FlexibleStrategy";
-import DefaultStrategy from "../default-strategy";
-import UserWithIdStrategy from "../user-with-id-strategy";
-import GeneralStrategy from "../general-strategy";
-import StrategyConstraints from "../StrategyConstraint/StrategyConstraintInput";
+import FlexibleStrategy from './FlexibleStrategy';
+import DefaultStrategy from '../default-strategy';
+import UserWithIdStrategy from '../user-with-id-strategy';
+import GeneralStrategy from '../general-strategy';
+import StrategyConstraints from '../StrategyConstraint/StrategyConstraintInput';
 
-import { getHumanReadbleStrategyName } from "../../../../utils/strategy-names";
+import { getHumanReadbleStrategyName } from '../../../../utils/strategy-names';
 
-const EditStrategyModal = ({
-    onCancel,
-    strategy,
-    saveStrategy,
-    updateStrategy,
-    strategyDefinition
-}) => {
+const EditStrategyModal = ({ onCancel, strategy, saveStrategy, updateStrategy, strategyDefinition }) => {
     const updateParameters = parameters => {
         const updatedStrategy = { ...strategy, parameters };
         updateStrategy(updatedStrategy);
@@ -41,11 +29,11 @@ const EditStrategyModal = ({
 
     const resolveInputType = () => {
         switch (strategyDefinition.name) {
-            case "default":
+            case 'default':
                 return DefaultStrategy;
-            case "flexibleRollout":
+            case 'flexibleRollout':
                 return FlexibleStrategy;
-            case "userWithId":
+            case 'userWithId':
                 return UserWithIdStrategy;
             default:
                 return GeneralStrategy;
@@ -57,12 +45,7 @@ const EditStrategyModal = ({
     const { parameters } = strategy;
 
     return (
-        <Dialog
-            open={!!strategy}
-            aria-labelledby="form-dialog-title"
-            fullWidth
-            maxWidth="md"
-        >
+        <Dialog open={!!strategy} aria-labelledby="form-dialog-title" fullWidth maxWidth="md">
             <DialogTitle id="form-dialog-title">
                 Configure {getHumanReadbleStrategyName(strategy.name)} strategy
             </DialogTitle>
@@ -87,11 +70,7 @@ const EditStrategyModal = ({
                 <Button onClick={onCancel} color="secondary">
                     Cancel
                 </Button>
-                <Button
-                    onClick={saveStrategy}
-                    color="primary"
-                    variant="contained"
-                >
+                <Button onClick={saveStrategy} color="primary" variant="contained">
                     Save
                 </Button>
             </DialogActions>
@@ -105,7 +84,7 @@ EditStrategyModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
     saveStrategy: PropTypes.func.isRequired,
     strategyDefinition: PropTypes.object.isRequired,
-    context: PropTypes.array // TODO: fix me
+    context: PropTypes.array, // TODO: fix me
 };
 
 export default EditStrategyModal;

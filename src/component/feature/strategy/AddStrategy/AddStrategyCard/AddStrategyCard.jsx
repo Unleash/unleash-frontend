@@ -1,13 +1,7 @@
-import {
-    Typography,
-    Card,
-    Button,
-    CardHeader,
-    CardContent
-} from "@material-ui/core";
-import React from "react";
+import { Typography, Card, Button, CardHeader, CardContent } from '@material-ui/core';
+import React from 'react';
 
-import { useStyles } from "./AddStrategyCard.styles";
+import { useStyles } from './AddStrategyCard.styles';
 
 const CreateStrategyCard = ({ strategy, onClick }) => {
     const styles = useStyles();

@@ -10,6 +10,51 @@ body {
     height: 100%;
 }
 
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #e2e8f0;
+    z-index: 9999;
+    box-shadow: none;
+}
+
+.skeleton::before {
+    background-color: #e2e8f0;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    content-visibility: hidden;
+    bottom: 0;
+    z-index: 5000;
+    left: 0;
+}
+
+.skeleton::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.2) 100%,
+        rgba(255, 255, 255, 0.5) 100%,
+        rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 3s infinite;
+    content: "";
+    z-index: 5001;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 :root {
     /* FONT SIZE */
     --h1-size: 1.25rem;

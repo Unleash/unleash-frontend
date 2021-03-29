@@ -1,18 +1,12 @@
-import parseISO from "date-fns/parseISO";
-import differenceInDays from "date-fns/differenceInDays";
+import parseISO from 'date-fns/parseISO';
+import differenceInDays from 'date-fns/differenceInDays';
 
-import {
-    EXPERIMENT,
-    OPERATIONAL,
-    RELEASE,
-    FOURTYDAYS,
-    SEVENDAYS
-} from "./constants";
+import { EXPERIMENT, OPERATIONAL, RELEASE, FOURTYDAYS, SEVENDAYS } from './constants';
 
 export const toggleExpiryByTypeMap = {
     [EXPERIMENT]: FOURTYDAYS,
     [RELEASE]: FOURTYDAYS,
-    [OPERATIONAL]: SEVENDAYS
+    [OPERATIONAL]: SEVENDAYS,
 };
 
 export const applyCheckedToFeatures = (features, checkedState) =>
@@ -27,11 +21,9 @@ export const getCheckedState = (name, features) => {
     return false;
 };
 
-export const getDiffInDays = (date, now) =>
-    Math.abs(differenceInDays(date, now));
+export const getDiffInDays = (date, now) => Math.abs(differenceInDays(date, now));
 
-export const formatProjectOptions = projects =>
-    projects.map(project => ({ key: project.id, label: project.name }));
+export const formatProjectOptions = projects => projects.map(project => ({ key: project.id, label: project.name }));
 
 export const expired = (diff, type) => {
     if (diff >= toggleExpiryByTypeMap[type]) return true;
@@ -64,8 +56,7 @@ export const sortFeaturesByNameAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByNameDescending = features =>
-    sortFeaturesByNameAscending([...features]).reverse();
+export const sortFeaturesByNameDescending = features => sortFeaturesByNameAscending([...features]).reverse();
 
 export const sortFeaturesByLastSeenAscending = features => {
     const sorted = [...features];
@@ -81,8 +72,7 @@ export const sortFeaturesByLastSeenAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByLastSeenDescending = features =>
-    sortFeaturesByLastSeenAscending([...features]).reverse();
+export const sortFeaturesByLastSeenDescending = features => sortFeaturesByLastSeenAscending([...features]).reverse();
 
 export const sortFeaturesByCreatedAtAscending = features => {
     const sorted = [...features];
@@ -95,8 +85,7 @@ export const sortFeaturesByCreatedAtAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByCreatedAtDescending = features =>
-    sortFeaturesByCreatedAtAscending([...features]).reverse();
+export const sortFeaturesByCreatedAtDescending = features => sortFeaturesByCreatedAtAscending([...features]).reverse();
 
 export const sortFeaturesByExpiredAtAscending = features => {
     const sorted = [...features];
@@ -119,8 +108,7 @@ export const sortFeaturesByExpiredAtAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByExpiredAtDescending = features =>
-    sortFeaturesByExpiredAtAscending([...features]).reverse();
+export const sortFeaturesByExpiredAtDescending = features => sortFeaturesByExpiredAtAscending([...features]).reverse();
 
 export const sortFeaturesByStatusAscending = features => {
     const sorted = [...features];
@@ -132,8 +120,7 @@ export const sortFeaturesByStatusAscending = features => {
     return sorted;
 };
 
-export const sortFeaturesByStatusDescending = features =>
-    sortFeaturesByStatusAscending([...features]).reverse();
+export const sortFeaturesByStatusDescending = features => sortFeaturesByStatusAscending([...features]).reverse();
 
 export const pluralize = (items, word) => {
     if (items === 1) return `${items} ${word}`;
@@ -147,8 +134,7 @@ export const getDates = dateString => {
     return [date, now];
 };
 
-export const filterByProject = selectedProject => feature =>
-    feature.project === selectedProject;
+export const filterByProject = selectedProject => feature => feature.project === selectedProject;
 
 export const isFeatureExpired = feature => {
     const [date, now] = getDates(feature.createdAt);

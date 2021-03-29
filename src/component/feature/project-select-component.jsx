@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import MySelect from "../common/select";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import MySelect from '../common/select';
 
 class ProjectSelectComponent extends Component {
     componentDidMount() {
@@ -20,21 +20,14 @@ class ProjectSelectComponent extends Component {
         const options = projects.map(t => ({
             key: t.id,
             label: t.name,
-            title: t.description
+            title: t.description,
         }));
 
         if (!options.find(o => o.key === value)) {
             options.push({ key: value, label: value });
         }
 
-        return (
-            <MySelect
-                label="Project"
-                options={options}
-                value={value}
-                onChange={onChange}
-            />
-        );
+        return <MySelect label="Project" options={options} value={value} onChange={onChange} />;
     }
 }
 
@@ -44,7 +37,7 @@ ProjectSelectComponent.propTypes = {
     enabled: PropTypes.bool,
     projects: PropTypes.array.isRequired,
     fetchProjects: PropTypes.func,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
 };
 
 export default ProjectSelectComponent;
