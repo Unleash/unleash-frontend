@@ -15,7 +15,7 @@ import styles from "./strategy.module.scss";
 import StrategyCard from "./StrategyCard";
 import EditStrategyModal from "./EditStrategyModal/EditStrategyModal";
 import ConditionallyRender from "../../common/ConditionallyRender";
-import CreateStrategy from "./CreateStrategy/CreateStrategy";
+import CreateStrategy from "./AddStrategy/AddStrategy";
 
 const cleanStrategy = strategy => ({
     name: strategy.name,

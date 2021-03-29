@@ -7,18 +7,18 @@ import {
 } from "@material-ui/core";
 import React from "react";
 
-import { useStyles } from "./CreateStrategyCard.styles";
+import { useStyles } from "./AddStrategyCard.styles";
 
 const CreateStrategyCard = ({ strategy, onClick }) => {
     const styles = useStyles();
 
     return (
-        <Card className={styles.createStrategyCard}>
+        <Card className={styles.addStrategyCard}>
             <CardHeader title={strategy.name} />
             <CardContent>
                 <Typography variant="body2">{strategy.description}</Typography>
             </CardContent>
-            <Button style={{ marginTop: "auto" }} onClick={onClick}>
+            <Button className={styles.addStrategyButton} onClick={onClick}>
                 Configure
             </Button>
         </Card>

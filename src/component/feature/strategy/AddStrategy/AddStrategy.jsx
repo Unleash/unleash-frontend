@@ -9,13 +9,13 @@ import {
     Typography
 } from "@material-ui/core";
 
-import CreateStrategyCard from "./CreateStrategyCard/CreateStrategyCard";
-import { useStyles } from "./CreateStrategy.styles";
+import CreateStrategyCard from "./AddStrategyCard/AddStrategyCard";
+import { useStyles } from "./AddStrategy.styles";
 import ConditionallyRender from "../../../common/ConditionallyRender";
 import { resolveDefaultParamValue } from "./utils";
 import { getHumanReadbleStrategy } from "../../../../utils/strategy-names";
 
-const CreateStrategy = ({
+const AddStrategy = ({
     strategies,
     showCreateStrategy,
     setShowCreateStrategy,
@@ -118,7 +118,7 @@ const CreateStrategy = ({
     );
 };
 
-CreateStrategy.propTypes = {
+AddStrategy.propTypes = {
     strategies: PropTypes.array.isRequired,
     showCreateStrategy: PropTypes.func.isRequired,
     setShowCreateStrategy: PropTypes.func.isRequired,
@@ -126,4 +126,4 @@ CreateStrategy.propTypes = {
     addStrategy: PropTypes.func.isRequired
 };
 
-export default CreateStrategy;
+export default AddStrategy;
