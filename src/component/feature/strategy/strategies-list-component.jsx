@@ -117,14 +117,6 @@ const StrategiesList = props => {
         editable
     } = props;
 
-    if (!configuredStrategies || configuredStrategies.length === 0) {
-        return (
-            <p style={{ padding: "0 16px" }}>
-                <i>No activation strategies selected.</i>
-            </p>
-        );
-    }
-
     const resolveStrategyDefinition = strategyName => {
         if (!strategies || strategies.length === 0) {
             return { name: "Loading" };
@@ -189,7 +181,6 @@ const StrategiesList = props => {
                         />
                     }
                 />
-
                 <ConditionallyRender
                     condition={showAlert}
                     show={
@@ -211,29 +202,23 @@ const StrategiesList = props => {
                         </Alert>
                     }
                 />
-
-                <div className={styles.strategyListCards}>{cards}</div>
-                <div
-                    style={{
-                        visibility: dirty ? "visible" : "hidden",
-                        padding: "10px"
-                    }}
-                >
-                    <Button
-                        type="submit"
-                        color="primary"
-                        variant="contained"
-                        icon="add"
-                        onClick={saveAll}
-                    >
-                        <Icon>save</Icon>
-                        &nbsp;&nbsp;&nbsp; Save all
-                    </Button>
-                    &nbsp;
-                    <Button type="cancel" onClick={clearAll}>
-                        Clear all
-                    </Button>
-                </div>
+                <ConditionallyRender
+                    condition={
+                        !configuredStrategies ||
+                        configuredStrategies.length === 0
+                    }
+                    show={
+                        <p style={{ padding: "0 16px" }}>
+                            <i>No activation strategies selected.</i>
+                        </p>
+                    }
+                />
+                <ConditionallyRender
+                    condition={cards.length > 0}
+                    show={
+                        <div className={styles.strategyListCards}>{cards}</div>
+                    }
+                />
             </DragAndDrop>
         </div>
     );
