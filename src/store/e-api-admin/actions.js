@@ -17,7 +17,7 @@ export function fetchApiKeys() {
             .then(value =>
                 dispatch({
                     type: RECIEVE_KEYS,
-                    keys: value,
+                    tokens: value.tokens,
                 })
             )
             .catch(dispatchAndThrow(dispatch, ERROR_FETCH_KEYS));
