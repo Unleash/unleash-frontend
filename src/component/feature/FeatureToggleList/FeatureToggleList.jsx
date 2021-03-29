@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Button, List, Tooltip, IconButton, Icon } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -10,6 +11,8 @@ import FeatureToggleListActions from './FeatureToggleListActions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
+
+import loadingFeatures from './loadingFeatures';
 
 import { CREATE_FEATURE } from '../../../permissions';
 
@@ -24,6 +27,7 @@ const FeatureToggleList = ({
     updateSetting,
     featureMetrics,
     toggleFeature,
+    loading,
 }) => {
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
@@ -45,6 +49,22 @@ const FeatureToggleList = ({
             e.reviveName = e.name;
         });
 
+        if (loading) {
+            return loadingFeatures.map(feature => (
+                <FeatureToggleListItem
+                    key={feature.name}
+                    settings={settings}
+                    metricsLastHour={featureMetrics.lastHour[feature.name]}
+                    metricsLastMinute={featureMetrics.lastMinute[feature.name]}
+                    feature={feature}
+                    toggleFeature={toggleFeature}
+                    revive={revive}
+                    hasPermission={hasPermission}
+                    className={'skeleton'}
+                />
+            ));
+        }
+
         return features.map(feature => (
             <FeatureToggleListItem
                 key={feature.name}
@@ -65,13 +85,16 @@ const FeatureToggleList = ({
                 <SearchField
                     value={settings.filter}
                     updateValue={updateSetting.bind(this, 'filter')}
-                    className={styles.searchBar}
+                    className={classnames(styles.searchBar, {
+                        skeleton: loading,
+                    })}
                 />
             </div>
 
             <PageContent
                 headerContent={
                     <HeaderTitle
+                        loading={loading}
                         title="Feature toggles"
                         actions={
                             <div className={styles.actionsContainer}>
@@ -83,6 +106,7 @@ const FeatureToggleList = ({
                                             toggleMetrics={toggleMetrics}
                                             setSort={setSort}
                                             updateSetting={updateSetting}
+                                            loading={loading}
                                         />
                                     }
                                 />
@@ -111,6 +135,9 @@ const FeatureToggleList = ({
                                                     color="secondary"
                                                     variant="contained"
                                                     component={Link}
+                                                    className={classnames({
+                                                        skeleton: loading,
+                                                    })}
                                                 >
                                                     Create feature toggle
                                                 </Button>
@@ -123,13 +150,7 @@ const FeatureToggleList = ({
                     />
                 }
             >
-                <List>
-                    <ConditionallyRender
-                        condition={features.length > 0}
-                        show={renderFeatures}
-                        elseShow={<p className={styles.listParagraph}>Empty list of feature toggles</p>}
-                    />
-                </List>
+                <List>{renderFeatures()}</List>
             </PageContent>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { debounce } from 'debounce';
 import { InputBase } from '@material-ui/core';
@@ -6,7 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { useStyles } from './styles';
 
-function SearchField({ value = '', updateValue }) {
+function SearchField({ value = '', updateValue, className }) {
     const styles = useStyles();
 
     const [localValue, setLocalValue] = useState(value);
@@ -31,7 +32,7 @@ function SearchField({ value = '', updateValue }) {
 
     return (
         <div>
-            <div className={styles.search}>
+            <div className={classnames(styles.search, className)}>
                 <SearchIcon className={styles.searchIcon} />
                 <InputBase
                     placeholder="Search…"

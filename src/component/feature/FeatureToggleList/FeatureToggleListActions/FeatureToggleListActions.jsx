@@ -18,8 +18,9 @@ const sortingOptions = [
 ];
 
 import { useStyles } from './styles';
+import classnames from 'classnames';
 
-const FeatureToggleListActions = ({ settings, setSort, toggleMetrics, updateSetting }) => {
+const FeatureToggleListActions = ({ settings, setSort, toggleMetrics, updateSetting, loading }) => {
     const styles = useStyles();
 
     const handleSort = e => {
@@ -61,6 +62,7 @@ const FeatureToggleListActions = ({ settings, setSort, toggleMetrics, updateSett
                 title="Metric interval"
                 callback={toggleMetrics}
                 renderOptions={renderMetricsOptions}
+                className={classnames({ skeleton: loading })}
             />
             <DropdownMenu
                 id={'sorting'}
@@ -68,6 +70,7 @@ const FeatureToggleListActions = ({ settings, setSort, toggleMetrics, updateSett
                 callback={handleSort}
                 renderOptions={renderSortingOptions}
                 title="Sort by"
+                className={classnames({ skeleton: loading })}
             />
             <ProjectSelect settings={settings} updateSetting={updateSetting} />
         </div>

@@ -99,6 +99,7 @@ export const mapStateToPropsConfigurable = isFeature => state => {
         featureMetrics,
         settings,
         hasPermission: hasPermission.bind(null, state.user.get('profile')),
+        loading: state.apiCalls.fetchTogglesState.loading,
     };
 };
 const mapStateToProps = mapStateToPropsConfigurable(true);

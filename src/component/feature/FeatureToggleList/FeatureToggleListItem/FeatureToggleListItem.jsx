@@ -23,6 +23,7 @@ const FeatureToggleListItem = ({
     metricsLastMinute = { yes: 0, no: 0, isFallback: true },
     revive,
     hasPermission,
+    ...rest
 }) => {
     const styles = useStyles();
 
@@ -37,7 +38,7 @@ const FeatureToggleListItem = ({
     const featureUrl = toggleFeature === undefined ? `/archive/strategies/${name}` : `/features/strategies/${name}`;
 
     return (
-        <ListItem className={styles.listItem}>
+        <ListItem {...rest} className={classnames(styles.listItem, rest.className)}>
             <span className={styles.listItemMetric}>
                 <Progress strokeWidth={15} percentage={percent} isFallback={isStale} />
             </span>
