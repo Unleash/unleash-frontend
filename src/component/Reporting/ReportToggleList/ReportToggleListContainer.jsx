@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { filterByProject } from '../utils';
+import { filterByProject } from '../utilFuncs';
 
 import ReportToggleList from './ReportToggleList';
 

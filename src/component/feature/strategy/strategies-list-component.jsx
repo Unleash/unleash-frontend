@@ -14,6 +14,7 @@ import StrategyCard from './StrategyCard';
 import EditStrategyModal from './EditStrategyModal/EditStrategyModal';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import CreateStrategy from './AddStrategy/AddStrategy';
+import Dialogue from '../../common/Dialogue/Dialogue';
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -22,6 +23,8 @@ const cleanStrategy = strategy => ({
 });
 
 const StrategiesList = props => {
+    const [showDelDialog, setShowDelDialog] = useState(false);
+    const [delStrategy, setDelStrategy] = useState(null);
     const [showCreateStrategy, setShowCreateStrategy] = useState(false);
     const [showAlert, setShowAlert] = useState(true);
     const [editableStrategies, updateEditableStrategies] = useState(cloneDeep(props.configuredStrategies));
@@ -74,11 +77,15 @@ const StrategiesList = props => {
         }
     };
 
-    const removeStrategy = index => async () => {
-        // eslint-disable-next-line no-alert
-        if (window.confirm('Are you sure you want to remove this activation strategy?')) {
-            updateEditableStrategies(editableStrategies.filter((_, i) => i !== index));
-        }
+    const triggerDelDialog = index => {
+        setShowDelDialog(true);
+        setDelStrategy(index);
+    };
+
+    const removeStrategy = () => {
+        updateEditableStrategies(editableStrategies.filter((_, i) => i !== delStrategy));
+        setDelStrategy(undefined);
+        setShowDelDialog(null);
     };
 
     const clearAll = () => {
@@ -100,7 +107,7 @@ const StrategiesList = props => {
             key={i}
             strategy={strategy}
             strategyDefinition={resolveStrategyDefinition(strategy.name)}
-            removeStrategy={removeStrategy(i)}
+            removeStrategy={() => triggerDelDialog(i)}
             moveStrategy={moveStrategy}
             editStrategy={() => setEditStrategyIndex(i)}
             index={i}
@@ -170,6 +177,16 @@ const StrategiesList = props => {
                             <i>No activation strategies selected.</i>
                         </p>
                     }
+                />
+
+                <Dialogue
+                    title="Really delete strategy?"
+                    open={showDelDialog}
+                    onClick={() => removeStrategy()}
+                    onClose={() => {
+                        setDelStrategy(null);
+                        setShowDelDialog(false);
+                    }}
                 />
                 <ConditionallyRender
                     condition={cards.length > 0}

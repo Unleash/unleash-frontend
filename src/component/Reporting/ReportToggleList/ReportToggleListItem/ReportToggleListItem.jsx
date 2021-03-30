@@ -8,7 +8,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 
-import { pluralize, getDates, expired, toggleExpiryByTypeMap, getDiffInDays } from '../../utils';
+import { pluralize, getDates, expired, toggleExpiryByTypeMap, getDiffInDays } from '../../utilFuncs';
 import { KILLSWITCH, PERMISSION } from '../../constants';
 
 import styles from '../ReportToggleList.module.scss';

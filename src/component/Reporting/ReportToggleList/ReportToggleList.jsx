@@ -7,7 +7,7 @@ import ReportToggleListHeader from './ReportToggleListHeader/ReportToggleListHea
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import DropdownMenu from '../../common/dropdown-menu';
 
-import { getObjectProperties, getCheckedState, applyCheckedToFeatures } from '../utils';
+import { getObjectProperties, getCheckedState, applyCheckedToFeatures } from '../utilFuncs';
 
 import useSort from '../useSort';
 

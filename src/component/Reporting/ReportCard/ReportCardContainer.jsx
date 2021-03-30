@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import ReportCard from './ReportCard';
-import { filterByProject } from '../utils';
+import { filterByProject } from '../utilFuncs';
 
 const mapStateToProps = (state, ownProps) => {
     const features = state.features.toJS();
