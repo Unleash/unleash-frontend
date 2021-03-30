@@ -5,24 +5,25 @@ exports[`renders correctly with one strategy 1`] = `
   className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    className="makeStyles-headerContainer-1"
+    className="makeStyles-headerContainer-3"
   >
     <div
-      className="makeStyles-headerTitleContainer-5"
+      className="makeStyles-headerTitleContainer-7"
     >
-      <div>
+      <div
+        className=""
+      >
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-8 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-7"
+        className="makeStyles-headerActions-9"
       >
         <button
-          aria-describedby={null}
-          className="MuiButtonBase-root MuiIconButton-root"
+          className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32,24 +33,17 @@ exports[`renders correctly with one strategy 1`] = `
           onKeyUp={[Function]}
           onMouseDown={[Function]}
           onMouseLeave={[Function]}
-          onMouseOver={[Function]}
           onMouseUp={[Function]}
           onTouchEnd={[Function]}
           onTouchMove={[Function]}
           onTouchStart={[Function]}
           tabIndex={0}
-          title="Add new strategy"
           type="button"
         >
           <span
-            className="MuiIconButton-label"
+            className="MuiButton-label"
           >
-            <span
-              aria-hidden={true}
-              className="material-icons MuiIcon-root"
-            >
-              add
-            </span>
+            Add new strategy
           </span>
           <span
             className="MuiTouchRipple-root"
@@ -59,13 +53,13 @@ exports[`renders correctly with one strategy 1`] = `
     </div>
   </div>
   <div
-    className="makeStyles-bodyContainer-2"
+    className="makeStyles-bodyContainer-4"
   >
     <ul
       className="MuiList-root MuiList-padding"
     >
       <li
-        className="MuiListItem-root listItem MuiListItem-gutters"
+        className="MuiListItem-root makeStyles-listItem-1 MuiListItem-gutters"
         disabled={false}
       >
         <div
@@ -194,31 +188,33 @@ exports[`renders correctly with one strategy without permissions 1`] = `
   className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
 >
   <div
-    className="makeStyles-headerContainer-1"
+    className="makeStyles-headerContainer-3"
   >
     <div
-      className="makeStyles-headerTitleContainer-5"
+      className="makeStyles-headerTitleContainer-7"
     >
-      <div>
+      <div
+        className=""
+      >
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-8 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-7"
+        className="makeStyles-headerActions-9"
       />
     </div>
   </div>
   <div
-    className="makeStyles-bodyContainer-2"
+    className="makeStyles-bodyContainer-4"
   >
     <ul
       className="MuiList-root MuiList-padding"
     >
       <li
-        className="MuiListItem-root listItem MuiListItem-gutters"
+        className="MuiListItem-root makeStyles-listItem-1 MuiListItem-gutters"
         disabled={false}
       >
         <div
