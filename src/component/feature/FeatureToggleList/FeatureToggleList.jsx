@@ -166,6 +166,7 @@ FeatureToggleList.propTypes = {
     settings: PropTypes.object,
     history: PropTypes.object.isRequired,
     hasPermission: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
 };
 
 export default FeatureToggleList;

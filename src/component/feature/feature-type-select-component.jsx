@@ -42,6 +42,8 @@ FeatureTypeSelectComponent.propTypes = {
     types: PropTypes.array.isRequired,
     fetchFeatureTypes: PropTypes.func,
     onChange: PropTypes.func.isRequired,
+    label: PropTypes.string,
+    id: PropTypes.string,
 };
 
 export default FeatureTypeSelectComponent;

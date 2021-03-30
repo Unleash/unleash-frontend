@@ -82,6 +82,7 @@ FeatureToggleListActions.propTypes = {
     setSort: PropTypes.func,
     toggleMetrics: PropTypes.func,
     updateSetting: PropTypes.func,
+    loading: PropTypes.bool,
 };
 
 export default FeatureToggleListActions;

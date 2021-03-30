@@ -40,7 +40,10 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
                     </div>
                 );
             case 'list':
-                const paramList = param ? param.split(',').filter(listItem => listItem) : [];
+                /* eslint-disable-next-line */
+                const paramList = param
+                    ? param.split(",").filter(listItem => listItem)
+                    : [];
 
                 return (
                     <ConditionallyRender

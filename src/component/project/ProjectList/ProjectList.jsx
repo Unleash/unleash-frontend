@@ -93,6 +93,8 @@ ProjectList.propTypes = {
     removeProject: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     hasPermission: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
 };
 
 export default ProjectList;

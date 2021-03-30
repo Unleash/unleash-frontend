@@ -46,6 +46,11 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
         </Tooltip>
     );
 
+    DeleteButton.propTypes = {
+        tagType: PropTypes.string,
+        tagValue: PropTypes.string,
+    };
+
     const AddButton = ({ hasPermission }) => (
         <ConditionallyRender
             condition={hasPermission(CREATE_TAG)}
