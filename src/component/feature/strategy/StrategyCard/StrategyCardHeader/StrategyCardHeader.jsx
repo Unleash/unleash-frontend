@@ -5,7 +5,7 @@ import { CardHeader, Typography, IconButton, Icon } from '@material-ui/core';
 
 import { useStyles } from './StrategyCardHeader.styles.js';
 
-const StrategyCardHeader = ({ name, connectDragSource, removeStrategy }) => {
+const StrategyCardHeader = ({ name, connectDragSource, removeStrategy, editStrategy }) => {
     const styles = useStyles();
 
     return (
@@ -20,7 +20,7 @@ const StrategyCardHeader = ({ name, connectDragSource, removeStrategy }) => {
                         {name}
                     </Typography>
                     <div className={styles.strategyCardHeaderActions}>
-                        <IconButton>
+                        <IconButton onClick={editStrategy}>
                             <Icon className={styles.strateyCardHeaderIcon}>edit</Icon>
                         </IconButton>
                         {connectDragSource(
@@ -45,6 +45,7 @@ StrategyCardHeader.propTypes = {
     name: PropTypes.string.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     removeStrategy: PropTypes.func.isRequired,
+    editStrategy: PropTypes.func.isRequired,
 };
 
 export default StrategyCardHeader;

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
 
 import FlexibleStrategy from './FlexibleStrategy';
-import DefaultStrategy from '../default-strategy';
-import UserWithIdStrategy from '../user-with-id-strategy';
-import GeneralStrategy from '../general-strategy';
+import DefaultStrategy from './default-strategy';
+import UserWithIdStrategy from './user-with-id-strategy';
+import GeneralStrategy from './general-strategy';
 import StrategyConstraints from '../StrategyConstraint/StrategyConstraintInput';
 
 import { getHumanReadbleStrategyName } from '../../../../utils/strategy-names';

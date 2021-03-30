@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 
 import cloneDeep from 'lodash.clonedeep';
 import arrayMove from 'array-move';
-import { Button, Icon } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { Alert } from '@material-ui/lab';
 import DragAndDrop from '../../common/drag-and-drop';
-import ConfigureStrategy from './ConfigureStrategy';
-import AddStrategy from './strategies-add';
 import HeaderTitle from '../../common/HeaderTitle';
 import { updateIndexInArray } from '../../common/util';
 import styles from './strategy.module.scss';
@@ -27,16 +25,16 @@ const StrategiesList = props => {
     const [showCreateStrategy, setShowCreateStrategy] = useState(false);
     const [showAlert, setShowAlert] = useState(true);
     const [editableStrategies, updateEditableStrategies] = useState(cloneDeep(props.configuredStrategies));
-    const dirty = editableStrategies.some(p => p.dirty);
+    const [editStrategyIndex, setEditStrategyIndex] = useState();
 
     useEffect(() => {
-        if (!dirty) {
+        if (!editStrategyIndex) {
             updateEditableStrategies(cloneDeep(props.configuredStrategies));
         }
     }, [props.configuredStrategies]);
 
-    const updateStrategy = index => (strategy, dirty = true) => {
-        const newStrategy = { ...strategy, dirty };
+    const updateStrategy = index => strategy => {
+        const newStrategy = { ...strategy };
         const newStrategies = updateIndexInArray(editableStrategies, index, newStrategy);
         updateEditableStrategies(newStrategies);
     };
@@ -57,16 +55,18 @@ const StrategiesList = props => {
 
         // update local state
         updateStrategy(index)(cleanedStrategy, false);
+        setEditStrategyIndex(undefined);
     };
 
     const addStrategy = strategy => {
         const strategies = [...editableStrategies];
-        strategies.push({ ...strategy, dirty: true, new: true });
+        strategies.push({ ...strategy });
         updateEditableStrategies(strategies);
+        setEditStrategyIndex(strategies.length - 1);
     };
 
     const moveStrategy = async (index, toIndex) => {
-        if (!dirty) {
+        if (!editStrategyIndex) {
             // console.log(`move strategy from ${index} to ${toIndex}`);
             const strategies = arrayMove(editableStrategies, index, toIndex);
             await props.saveStrategies(strategies);
@@ -77,23 +77,13 @@ const StrategiesList = props => {
     const removeStrategy = index => async () => {
         // eslint-disable-next-line no-alert
         if (window.confirm('Are you sure you want to remove this activation strategy?')) {
-            const strategy = editableStrategies[index];
-            if (!strategy.new) {
-                await props.saveStrategies(props.configuredStrategies.filter((_, i) => i !== index));
-            }
-
             updateEditableStrategies(editableStrategies.filter((_, i) => i !== index));
         }
     };
 
     const clearAll = () => {
         updateEditableStrategies(cloneDeep(props.configuredStrategies));
-    };
-
-    const saveAll = async () => {
-        const cleanedStrategies = editableStrategies.map(cleanStrategy);
-        await props.saveStrategies(cleanedStrategies);
-        updateEditableStrategies(cleanedStrategies);
+        setEditStrategyIndex(undefined);
     };
 
     const { strategies, configuredStrategies, featureToggleName, editable } = props;
@@ -105,8 +95,6 @@ const StrategiesList = props => {
         return strategies.find(s => s.name === strategyName);
     };
 
-    // Hard-code for now
-    const editingStrategy = editableStrategies.findIndex(e => e.dirty);
     const cards = editableStrategies.map((strategy, i) => (
         <StrategyCard
             key={i}
@@ -114,10 +102,13 @@ const StrategiesList = props => {
             strategyDefinition={resolveStrategyDefinition(strategy.name)}
             removeStrategy={removeStrategy(i)}
             moveStrategy={moveStrategy}
+            editStrategy={() => setEditStrategyIndex(i)}
             index={i}
             movable
         />
     ));
+
+    const editingStrategy = editableStrategies[editStrategyIndex];
 
     return (
         <div>
@@ -129,12 +120,12 @@ const StrategiesList = props => {
                 addStrategy={addStrategy}
             />
 
-            {editingStrategy > -1 ? (
+            {editingStrategy ? (
                 <EditStrategyModal
-                    strategy={editableStrategies[editingStrategy]}
-                    updateStrategy={updateStrategy(editingStrategy)}
-                    saveStrategy={saveStrategy(editingStrategy)}
-                    strategyDefinition={resolveStrategyDefinition(editableStrategies[editingStrategy].name)}
+                    strategy={editingStrategy}
+                    updateStrategy={updateStrategy(editStrategyIndex)}
+                    saveStrategy={saveStrategy(editStrategyIndex)}
+                    strategyDefinition={resolveStrategyDefinition(editingStrategy.name)}
                     onCancel={clearAll}
                 />
             ) : null}
@@ -148,6 +139,7 @@ const StrategiesList = props => {
                                 <>
                                     <Button
                                         variant="contained"
+                                        disabled={!featureToggleName}
                                         color="primary"
                                         onClick={() => setShowCreateStrategy(true)}
                                     >

@@ -87,7 +87,7 @@ const AddStrategy = ({ strategies, showCreateStrategy, setShowCreateStrategy, fe
 
 AddStrategy.propTypes = {
     strategies: PropTypes.array.isRequired,
-    showCreateStrategy: PropTypes.func.isRequired,
+    showCreateStrategy: PropTypes.bool.isRequired,
     setShowCreateStrategy: PropTypes.func.isRequired,
     featureToggleName: PropTypes.string.isRequired,
     addStrategy: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@ import { Switch, FormControlLabel, Tooltip, TextField } from '@material-ui/core'
 import strategyInputProps from './strategy-input-props';
 import StrategyInputPercentage from './input-percentage';
 import StrategyInputList from './input-list';
-import styles from './strategy.module.scss';
+import styles from '../strategy.module.scss';
 
 export default function GeneralStrategyInput({ parameters, strategyDefinition, updateParameter, editable }) {
     const onChangeTextField = (field, evt) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import InputPercentage from '../input-percentage';
+import InputPercentage from './input-percentage';
 import Select from '../../../common/select';
 import { TextField, Typography } from '@material-ui/core';
 

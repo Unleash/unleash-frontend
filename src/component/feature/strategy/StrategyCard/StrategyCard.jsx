@@ -14,6 +14,7 @@ const StrategyCard = ({
     connectDragPreview,
     connectDragSource,
     removeStrategy,
+    editStrategy,
     connectDropTarget,
 }) => {
     const styles = useStyles();
@@ -26,6 +27,7 @@ const StrategyCard = ({
                         name={getHumanReadbleStrategyName(strategy.name)}
                         connectDragSource={connectDragSource}
                         removeStrategy={removeStrategy}
+                        editStrategy={editStrategy}
                     />
                     <CardContent>
                         <StrategyCardContent strategy={strategy} strategyDefinition={strategyDefinition} />
@@ -42,6 +44,7 @@ StrategyCard.propTypes = {
     connectDragPreview: PropTypes.func.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     removeStrategy: PropTypes.func.isRequired,
+    editStrategy: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
 };
 
