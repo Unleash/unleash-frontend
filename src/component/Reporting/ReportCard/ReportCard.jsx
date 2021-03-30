@@ -7,7 +7,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
-import { isFeatureExpired } from '../utilFuncs';
+import { isFeatureExpired } from '../utils';
 
 import styles from './ReportCard.module.scss';
 

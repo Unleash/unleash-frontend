@@ -8,10 +8,10 @@ import ReportToggleListContainer from './ReportToggleList/ReportToggleListContai
 
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 
-import { formatProjectOptions } from './utilFuncs';
+import { formatProjectOptions } from './utils';
 import { REPORTING_SELECT_ID } from '../../testIds';
 
-import styles from './ReportingStyle.module.scss';
+import styles from './Reporting.module.scss';
 
 const Reporting = ({ fetchFeatureToggles, projects }) => {
     const [projectOptions, setProjectOptions] = useState([{ key: 'default', label: 'Default' }]);

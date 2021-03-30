@@ -9,7 +9,7 @@ import {
     sortFeaturesByExpiredAtDescending,
     sortFeaturesByStatusAscending,
     sortFeaturesByStatusDescending,
-} from '../utilFuncs';
+} from '../utils';
 
 const getTestData = () => [
     {

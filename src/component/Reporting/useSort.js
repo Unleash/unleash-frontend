@@ -10,7 +10,7 @@ import {
     sortFeaturesByExpiredAtDescending,
     sortFeaturesByStatusAscending,
     sortFeaturesByStatusDescending,
-} from './utilFuncs';
+} from './utils';
 
 import { LAST_SEEN, NAME, CREATED, EXPIRED, STATUS, REPORT } from './constants';
 
