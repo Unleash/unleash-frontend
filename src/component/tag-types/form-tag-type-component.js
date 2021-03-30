@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 import { FormButtons } from '../common';
 import PageContent from '../common/PageContent/PageContent';
 import { Typography } from '@material-ui/core';

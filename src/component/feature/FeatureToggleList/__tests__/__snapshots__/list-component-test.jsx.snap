@@ -207,50 +207,34 @@ exports[`renders correctly with one feature without permissions 1`] = `
   >
     <div>
       <div
-        className="MuiFormControl-root MuiTextField-root"
-        onKeyPress={[Function]}
-        style={
-          Object {
-            "maxWidth": "80%",
-            "width": "500px",
-          }
-        }
+        className="makeStyles-search-4"
       >
-        <label
-          className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-          data-shrink={false}
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root makeStyles-searchIcon-5"
+          focusable="false"
+          viewBox="0 0 24 24"
         >
-          Search
-        </label>
+          <path
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          />
+        </svg>
         <div
-          className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+          className="MuiInputBase-root makeStyles-inputRoot-6"
           onClick={[Function]}
+          onKeyPress={[Function]}
         >
           <input
-            aria-invalid={false}
-            autoFocus={false}
-            className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-            disabled={false}
+            aria-label="search"
+            className="MuiInputBase-input"
             onAnimationStart={[Function]}
             onBlur={[Function]}
             onChange={[Function]}
             onFocus={[Function]}
-            required={false}
+            placeholder="Search…"
             type="text"
             value=""
           />
-          <fieldset
-            aria-hidden={true}
-            className="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
-          >
-            <legend
-              className="PrivateNotchedOutline-legendLabelled-6"
-            >
-              <span>
-                Search
-              </span>
-            </legend>
-          </fieldset>
         </div>
       </div>
     </div>
@@ -259,31 +243,33 @@ exports[`renders correctly with one feature without permissions 1`] = `
     className="MuiPaper-root MuiPaper-elevation1 MuiPaper-rounded"
   >
     <div
-      className="makeStyles-headerContainer-8"
+      className="makeStyles-headerContainer-7"
     >
       <div
-        className="makeStyles-headerTitleContainer-10"
+        className="makeStyles-headerTitleContainer-11"
       >
-        <div>
+        <div
+          className=""
+        >
           <h2
-            className="MuiTypography-root makeStyles-headerTitle-11 MuiTypography-h2"
+            className="MuiTypography-root makeStyles-headerTitle-12 MuiTypography-h2"
           >
             Feature toggles
           </h2>
         </div>
         <div
-          className="makeStyles-headerActions-12"
+          className="makeStyles-headerActions-13"
         >
           <div
             className="makeStyles-actionsContainer-1"
           >
             <div
-              className="makeStyles-actions-13"
+              className="makeStyles-actions-14"
             >
               <button
                 aria-controls="metric"
                 aria-haspopup="true"
-                className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+                className="MuiButtonBase-root MuiButton-root MuiButton-text"
                 disabled={false}
                 id="metric"
                 onBlur={[Function]}
@@ -324,7 +310,7 @@ exports[`renders correctly with one feature without permissions 1`] = `
               <button
                 aria-controls="sorting"
                 aria-haspopup="true"
-                className="MuiButtonBase-root MuiButton-root MuiButton-text dropdownButton"
+                className="MuiButtonBase-root MuiButton-root MuiButton-text"
                 disabled={false}
                 id="sorting"
                 onBlur={[Function]}
@@ -368,7 +354,7 @@ exports[`renders correctly with one feature without permissions 1`] = `
       </div>
     </div>
     <div
-      className="makeStyles-bodyContainer-9"
+      className="makeStyles-bodyContainer-8"
     >
       <ul
         className="MuiList-root MuiList-padding"
@@ -381,7 +367,6 @@ exports[`renders correctly with one feature without permissions 1`] = `
             }
           }
           hasPermission={[Function]}
-          setFilter={[Function]}
           settings={
             Object {
               "sort": "name",

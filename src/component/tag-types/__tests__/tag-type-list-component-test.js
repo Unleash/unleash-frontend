@@ -8,15 +8,17 @@ import theme from '../../../themes/main-theme';
 
 test('renders an empty list correctly', () => {
     const tree = renderer.create(
-        <ThemeProvider theme={theme}>
-            <TagTypesList
-                tagTypes={[]}
-                fetchTagTypes={jest.fn()}
-                removeTagType={jest.fn()}
-                history={{}}
-                hasPermission={() => true}
-            />
-        </ThemeProvider>
+        <MemoryRouter>
+            <ThemeProvider theme={theme}>
+                <TagTypesList
+                    tagTypes={[]}
+                    fetchTagTypes={jest.fn()}
+                    removeTagType={jest.fn()}
+                    history={{}}
+                    hasPermission={() => true}
+                />
+            </ThemeProvider>
+        </MemoryRouter>
     );
     expect(tree).toMatchSnapshot();
 });

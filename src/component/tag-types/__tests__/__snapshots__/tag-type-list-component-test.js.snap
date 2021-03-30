@@ -144,7 +144,9 @@ exports[`renders an empty list correctly 1`] = `
     <div
       className="makeStyles-headerTitleContainer-5"
     >
-      <div>
+      <div
+        className=""
+      >
         <h2
           className="MuiTypography-root makeStyles-headerTitle-6 MuiTypography-h2"
         >
@@ -155,9 +157,7 @@ exports[`renders an empty list correctly 1`] = `
         className="makeStyles-headerActions-7"
       >
         <button
-          aria-describedby={null}
-          aria-label="add tag type"
-          className="MuiButtonBase-root MuiIconButton-root"
+          className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
@@ -167,28 +167,18 @@ exports[`renders an empty list correctly 1`] = `
           onKeyUp={[Function]}
           onMouseDown={[Function]}
           onMouseLeave={[Function]}
-          onMouseOver={[Function]}
           onMouseUp={[Function]}
           onTouchEnd={[Function]}
           onTouchMove={[Function]}
           onTouchStart={[Function]}
           tabIndex={0}
-          title="Add tag type"
           type="button"
         >
           <span
-            className="MuiIconButton-label"
+            className="MuiButton-label"
           >
-            <span
-              aria-hidden={true}
-              className="material-icons MuiIcon-root"
-            >
-              add
-            </span>
+            Add new tag type
           </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
         </button>
       </div>
     </div>

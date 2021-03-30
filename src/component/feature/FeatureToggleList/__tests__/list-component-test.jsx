@@ -32,7 +32,7 @@ test('renders correctly with one feature', () => {
                     featureMetrics={featureMetrics}
                     features={features}
                     toggleFeature={jest.fn()}
-                    fetchFeatureToggles={jest.fn()}
+                    fetcher={jest.fn()}
                     hasPermission={permission => permission === CREATE_FEATURE}
                 />
             </ThemeProvider>
@@ -60,7 +60,7 @@ test('renders correctly with one feature without permissions', () => {
                     featureMetrics={featureMetrics}
                     features={features}
                     toggleFeature={jest.fn()}
-                    fetchFeatureToggles={jest.fn()}
+                    fetcher={jest.fn()}
                     hasPermission={() => false}
                 />
             </ThemeProvider>

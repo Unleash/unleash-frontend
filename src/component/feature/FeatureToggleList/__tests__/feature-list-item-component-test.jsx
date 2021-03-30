@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core';
 import FeatureToggleListItem from '../FeatureToggleListItem';
 import renderer from 'react-test-renderer';
 import { UPDATE_FEATURE } from '../../../../permissions';
+
 import theme from '../../../../themes/main-theme';
 
 jest.mock('../FeatureToggleListItem/FeatureToggleListItemChip');
