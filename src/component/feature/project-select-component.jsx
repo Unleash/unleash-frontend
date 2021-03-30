@@ -23,7 +23,7 @@ class ProjectSelectComponent extends Component {
             title: t.description,
         }));
 
-        if (!options.find(o => o.key === value)) {
+        if (value && !options.find(o => o.key === value)) {
             options.push({ key: value, label: value });
         }
 

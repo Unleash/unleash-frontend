@@ -28,7 +28,7 @@ const HeaderTitle = ({ title, actions, subtitle, variant, loading }) => {
 export default HeaderTitle;
 
 HeaderTitle.propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
     subtitle: PropTypes.string,
     variant: PropTypes.string,
     loading: PropTypes.bool,

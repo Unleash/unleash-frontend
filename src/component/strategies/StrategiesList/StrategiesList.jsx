@@ -158,7 +158,7 @@ StrategiesList.propTypes = {
     history: PropTypes.object.isRequired,
     hasPermission: PropTypes.func.isRequired,
     name: PropTypes.string,
-    deprecated: PropTypes.boolean,
+    deprecated: PropTypes.bool,
 };
 
 export default StrategiesList;

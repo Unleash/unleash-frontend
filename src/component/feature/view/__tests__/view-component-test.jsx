@@ -42,8 +42,8 @@ test('renders correctly with one feature', () => {
     const mockStore = {
         projects: {
             toJS: () => [
-                { id: 'default', inital: true, name: 'Default' },
-                { id: 'myProject', inital: false, name: 'MyProject' },
+                { id: 'default', initial: false, name: 'Default' },
+                { id: 'myProject', initial: false, name: 'MyProject' },
             ],
         },
         uiConfig: {
