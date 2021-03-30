@@ -15,7 +15,10 @@ const DelUserComponent = ({ showDialog, closeDialog, user, removeUser }) => (
                 primaryButtonText="Delete user"
                 secondaryButtonText="Cancel"
             >
-                <div>Are you sure you want to delete {user ? `${user.name} (${user.email})` : ''}?</div>
+                <div>
+                    Are you sure you want to delete{' '}
+                    {user ? `${user.name || 'user'} (${user.email || user.username})` : ''}?
+                </div>
             </Dialogue>
         }
     />

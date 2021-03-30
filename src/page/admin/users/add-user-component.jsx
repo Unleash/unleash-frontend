@@ -74,7 +74,6 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
         <Dialogue
             onClick={e => {
                 submit(e);
-                closeDialog();
             }}
             open={showDialog}
             onClose={onCancel}

@@ -138,15 +138,17 @@ function UsersList({
                 validatePassword={validatePassword}
                 user={pwDialog.user}
             />
-            <DelUser
-                showDialog={delDialog}
-                closeDialog={closeDelDialog}
-                user={delUser}
-                removeUser={() => {
-                    removeUser(delUser);
-                    closeDelDialog();
-                }}
-            />
+            {delUser && (
+                <DelUser
+                    showDialog={delDialog}
+                    closeDialog={closeDelDialog}
+                    user={delUser}
+                    removeUser={() => {
+                        removeUser(delUser);
+                        closeDelDialog();
+                    }}
+                />
+            )}
         </div>
     );
 }

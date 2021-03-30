@@ -89,8 +89,7 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
                             onChange={updateField}
                             label="Entity ID"
                             name="entityId"
-                            placeholder=""
-                            value={data.entityId}
+                            value={data.entityId || ''}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -107,8 +106,7 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
                             onChange={updateField}
                             label="Single Sign-On URL"
                             name="signOnUrl"
-                            value={data.signOnUrl}
-                            placeholder=""
+                            value={data.signOnUrl || ''}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -125,8 +123,7 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
                             onChange={updateField}
                             label="X.509 Certificate"
                             name="certificate"
-                            placeholder=""
-                            value={data.certificate}
+                            value={data.certificate || ''}
                             style={{
                                 width: '100%',
                                 fontSize: '0.7em',
@@ -161,7 +158,7 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
                             onChange={updateField}
                             label="Email domains"
                             name="emailDomains"
-                            value={data.emailDomains}
+                            value={data.emailDomains || ''}
                             placeholder="@company.com, @anotherCompany.com"
                             style={{ width: '400px' }}
                             rows={2}

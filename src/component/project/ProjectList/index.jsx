@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { fetchProjects, removeProject } from './../../store/project/actions';
-import { hasPermission } from '../../permissions';
-import { RBAC } from '../common/flags';
+import { fetchProjects, removeProject } from '../../../store/project/actions';
+import { hasPermission } from '../../../permissions';
+import { RBAC } from '../../common/flags';
 import ProjectList from './ProjectList';
 
 const mapStateToProps = state => {
