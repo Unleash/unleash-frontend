@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import { Typography } from '@material-ui/core';
 import ConditionallyRender from '../ConditionallyRender/ConditionallyRender';
@@ -25,3 +26,11 @@ const HeaderTitle = ({ title, actions, subtitle, variant, loading }) => {
 };
 
 export default HeaderTitle;
+
+HeaderTitle.propTypes = {
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    variant: PropTypes.string,
+    loading: PropTypes.bool,
+    actions: PropTypes.element,
+};

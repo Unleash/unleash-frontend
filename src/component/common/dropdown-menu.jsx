@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Menu } from '@material-ui/core';
 import { DropdownButton } from '.';
 
@@ -42,6 +42,16 @@ const DropdownMenu = ({ renderOptions, id, title, callback, icon = 'arrow_drop_d
             </Menu>
         </>
     );
+};
+
+DropdownMenu.propTypes = {
+    renderOptions: PropTypes.func,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    callback: PropTypes.func,
+    icon: PropTypes.string,
+    label: PropTypes.string,
+    startIcon: PropTypes.string,
 };
 
 export default DropdownMenu;

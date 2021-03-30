@@ -57,6 +57,7 @@ const TabNav = ({ tabData, className, startingTab = 0 }) => {
 TabNav.propTypes = {
     tabData: PropTypes.array.isRequired,
     className: PropTypes.string,
+    startingTab: PropTypes.number,
 };
 
 export default TabNav;

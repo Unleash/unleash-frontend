@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import classnames from 'classnames';
 import HeaderTitle from '../HeaderTitle';
@@ -42,3 +43,9 @@ const PageContent = ({ children, headerContent, disablePadding, disableBorder, .
 };
 
 export default PageContent;
+
+PageContent.propTypes = {
+    headerContent: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+    disablePadding: PropTypes.bool,
+    disableBorder: PropTypes.bool,
+};

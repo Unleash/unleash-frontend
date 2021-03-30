@@ -145,6 +145,8 @@ DropdownButton.propTypes = {
     style: PropTypes.object,
     id: PropTypes.string,
     title: PropTypes.string,
+    icon: PropTypes.string,
+    startIcon: PropTypes.string,
 };
 
 export const MenuItemWithIcon = ({ icon, label, disabled, ...menuItemProps }) => (

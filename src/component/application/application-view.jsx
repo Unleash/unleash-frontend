@@ -143,6 +143,9 @@ function ApplicationView({ seenToggles, hasPermission, strategies, instances, fo
 }
 
 ApplicationView.propTypes = {
+    createUrl: PropTypes.string,
+    name: PropTypes.string,
+    permission: PropTypes.string,
     instances: PropTypes.array.isRequired,
     seenToggles: PropTypes.array.isRequired,
     strategies: PropTypes.array.isRequired,

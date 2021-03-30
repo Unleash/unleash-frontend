@@ -32,8 +32,9 @@ const SelectMenu = ({ name, value, label, options, onChange, id, disabled = fals
     );
 };
 
-Select.propTypes = {
+SelectMenu.propTypes = {
     name: PropTypes.string,
+    id: PropTypes.string,
     value: PropTypes.string,
     label: PropTypes.string,
     options: PropTypes.array,
