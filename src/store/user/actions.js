@@ -52,7 +52,9 @@ export function passwordLogin(path, user) {
 
 export function logoutUser() {
     return dispatch => {
-        dispatch({ type: USER_LOGOUT });
-        window.location = 'logout';
+        return api.logoutUser()
+            .then(() => dispatch({ type: USER_LOGOUT }))
+            .then(() => window.location.href = "/")
+            .catch(handleError);
     };
 }

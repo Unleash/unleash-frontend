@@ -3,7 +3,7 @@ import { throwIfNotSuccess, headers } from '../api-helper';
 const URI = 'api/admin/user';
 
 function logoutUser() {
-    return fetch(`${URI}/logout`, { method: 'GET', credentials: 'include' })
+    return fetch(`logout`, { method: 'GET', credentials: 'include' })
         .then(throwIfNotSuccess)
         .then(response => response.json());
 }
