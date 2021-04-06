@@ -29,7 +29,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, hasPermission }) 
 
     useEffect(() => {
         fetchTagTypes();
-    }, []);
+    }, [fetchTagTypes]);
 
     let header = (
         <HeaderTitle

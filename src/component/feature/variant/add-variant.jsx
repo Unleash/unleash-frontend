@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, FormControl, FormControlLabel, Grid, Icon, Switch } from '@material-ui/core';
 import Dialog from '../../common/Dialogue';
@@ -21,7 +21,7 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
     const [overrides, setOverrides] = useState([]);
     const [error, setError] = useState({});
 
-    const clear = () => {
+    const clear = useCallback(() => {
         if (editVariant) {
             setData({
                 name: editVariant.name,
@@ -42,11 +42,11 @@ function AddVariant({ showDialog, closeDialog, save, validateName, editVariant, 
             setOverrides([]);
         }
         setError({});
-    };
+    }, [editVariant]);
 
     useEffect(() => {
         clear();
-    }, [editVariant]);
+    }, [clear]);
 
     const setVariantValue = e => {
         const { name, value } = e.target;

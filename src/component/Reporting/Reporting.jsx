@@ -20,7 +20,7 @@ const Reporting = ({ fetchFeatureToggles, projects }) => {
     useEffect(() => {
         fetchFeatureToggles();
         setSelectedProject(projects[0].id);
-    }, []);
+    }, [fetchFeatureToggles, projects]);
 
     useEffect(() => {
         setProjectOptions(formatProjectOptions(projects));

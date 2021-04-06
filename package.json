@@ -100,7 +100,9 @@
     ],
     "rules": {
       "no-restricted-globals": "off",
-      "no-useless-computed-key": "off"
+      "no-useless-computed-key": "off",
+      "import/no-anonymous-default-export": "off"
+
     }
   },
   "proxy": "http://localhost:4242",

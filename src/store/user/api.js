@@ -37,9 +37,11 @@ function passwordLogin(path, data) {
         .then((response) => response.json());
 }
 
-export default {
+const api = {
     fetchUser,
     insecureLogin,
     logoutUser,
     passwordLogin,
 };
+
+export default api;

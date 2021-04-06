@@ -27,7 +27,7 @@ const StrategiesList = ({
 
     useEffect(() => {
         fetchStrategies();
-    }, []);
+    }, [fetchStrategies]);
 
     const headerButton = () => (
         <ConditionallyRender

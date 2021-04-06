@@ -15,7 +15,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
 
     useEffect(() => {
         getGoogleConfig();
-    }, []);
+    }, [getGoogleConfig]);
 
     useEffect(() => {
         if (config.clientId) {
@@ -59,7 +59,7 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
                 <Grid item xs={12}>
                     <Typography variant="subtitle1">
                         Please read the{' '}
-                        <a href="https://www.unleash-hosted.com/docs/enterprise-authentication/google" target="_blank">
+                        <a href="https://www.unleash-hosted.com/docs/enterprise-authentication/google" target="_blank" rel="noreferrer">
                             documentation
                         </a>{' '}
                         to learn how to integrate with Google OAuth 2.0. <br />

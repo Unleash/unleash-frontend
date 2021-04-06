@@ -18,7 +18,7 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
 
     useEffect(() => {
         fetchTags();
-    }, []);
+    }, [fetchTags]);
 
     const remove = (tag, evt) => {
         evt.preventDefault();

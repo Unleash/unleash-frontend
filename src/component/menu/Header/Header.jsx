@@ -20,7 +20,7 @@ const Header = ({ uiConfig, init }) => {
 
     useEffect(() => {
         init(uiConfig.flags);
-    }, []);
+    }, [init, uiConfig.flags]);
 
     const toggleDrawer = () => setOpenDrawer(prev => !prev);
 

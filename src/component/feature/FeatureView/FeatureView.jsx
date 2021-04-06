@@ -52,7 +52,7 @@ const FeatureView = ({
     useEffect(() => {
         scrollToTop();
         fetchTags(featureToggleName);
-    }, []);
+    }, [featureToggleName, fetchTags]);
 
     useLayoutEffect(() => {
         if (features.length === 0) {
@@ -62,7 +62,7 @@ const FeatureView = ({
                 fetchArchive();
             }
         }
-    }, [features]);
+    }, [features, fetchArchive, fetchFeatureToggles, isFeatureView]);
 
     const getTabComponent = key => {
         switch (key) {
@@ -91,6 +91,8 @@ const FeatureView = ({
                 );
             case 'log':
                 return <HistoryComponent toggleName={featureToggleName} />;
+            default:
+                return null
         }
     };
     const getTabData = () => [

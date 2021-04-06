@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
     Card,
@@ -30,15 +30,15 @@ function AccessComponent({ projectId, project }) {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState();
 
-    const fetchAccess = async () => {
+    const fetchAccess = useCallback(async () => {
         const access = await projectApi.fetchAccess(projectId);
         setRoles(access.roles);
         setUsers(access.users.map(u => ({ ...u, name: u.name || '(No name)' })));
-    };
+    }, [projectId]);
 
     useEffect(() => {
         fetchAccess();
-    }, [projectId]);
+    }, [fetchAccess]);
 
     if (!project) {
         return <p>....</p>;

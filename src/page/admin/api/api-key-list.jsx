@@ -20,7 +20,7 @@ function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, hasPermis
 
     useEffect(() => {
         fetchApiKeys();
-    }, []);
+    }, [fetchApiKeys]);
 
     return (
         <div>
