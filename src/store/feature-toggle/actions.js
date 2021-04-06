@@ -1,7 +1,7 @@
 import api from './api';
-const debug = require('debug')('unleash:feature-actions');
 import { dispatchAndThrow } from '../util';
 import { MUTE_ERROR } from '../error/actions';
+const debug = require('debug')('unleash:feature-actions');
 
 export const ADD_FEATURE_TOGGLE = 'ADD_FEATURE_TOGGLE';
 export const COPY_FEATURE_TOGGLE = 'COPY_FEATURE_TOGGLE';
