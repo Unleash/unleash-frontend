@@ -15,11 +15,11 @@ const style = {
 const getIcon = name => {
     switch (name) {
         case 'slack':
-            return <img style={style} src="public/slack.svg" />;
+            return <img style={style} src="slack.svg" />;
         case 'jira-comment':
-            return <img style={style} src="public/jira.svg" />;
+            return <img style={style} src="jira.svg" />;
         case 'webhook':
-            return <img style={style} src="public/webhooks.svg" />;
+            return <img style={style} src="webhooks.svg" />;
         default:
             return (
                 <Avatar>
