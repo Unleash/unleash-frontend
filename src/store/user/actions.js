@@ -1,5 +1,5 @@
 import api from './api';
-import { dispatchAndThrow } from '../util';
+import { dispatchError } from '../util';
 export const USER_CHANGE_CURRENT = 'USER_CHANGE_CURRENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_LOGIN = 'USER_LOGIN';
@@ -24,7 +24,7 @@ export function fetchUser() {
         return api
             .fetchUser()
             .then(json => dispatch(updateUser(json)))
-            .catch(dispatchAndThrow(dispatch, ERROR_FETCH_USER));
+            .catch(dispatchError(dispatch, ERROR_FETCH_USER));
     };
 }
 
