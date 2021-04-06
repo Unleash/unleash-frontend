@@ -27,7 +27,8 @@ const StrategiesList = ({
 
     useEffect(() => {
         fetchStrategies();
-    }, [fetchStrategies]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const headerButton = () => (
         <ConditionallyRender

@@ -34,7 +34,8 @@ const AddonList = ({ addons, providers, fetchAddons, removeAddon, toggleAddon, h
         if (addons.length === 0) {
             fetchAddons();
         }
-    }, [addons, fetchAddons]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [addons.length]);
 
     return (
         <>

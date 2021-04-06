@@ -15,7 +15,8 @@ function GoogleAuth({ config, getGoogleConfig, updateGoogleConfig, hasPermission
 
     useEffect(() => {
         getGoogleConfig();
-    }, [getGoogleConfig]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (config.clientId) {

@@ -15,12 +15,14 @@ function SamlAuth({ config, getSamlConfig, updateSamlConfig, hasPermission }) {
 
     useEffect(() => {
         getSamlConfig();
-    }, [getSamlConfig]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (config.entityId) {
             setData(config);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [config]);
 
     if (!hasPermission('ADMIN')) {

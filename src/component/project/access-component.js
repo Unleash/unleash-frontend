@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
+    Avatar,
+    Button,
     Card,
     CardHeader,
-    Avatar,
-    List,
-    ListItem,
-    ListItemSecondaryAction,
-    ListItemText,
-    ListItemAvatar,
-    Select,
-    MenuItem,
-    Icon,
-    IconButton,
     Dialog,
     DialogActions,
-    DialogTitle,
-    DialogContentText,
     DialogContent,
-    Button,
+    DialogContentText,
+    DialogTitle,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemSecondaryAction,
+    ListItemText,
+    MenuItem,
+    Select,
 } from '@material-ui/core';
 
 import AddUserComponent from './access-add-user';
@@ -30,15 +30,16 @@ function AccessComponent({ projectId, project }) {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState();
 
-    const fetchAccess = useCallback(async () => {
+    const fetchAccess = async () => {
         const access = await projectApi.fetchAccess(projectId);
         setRoles(access.roles);
         setUsers(access.users.map(u => ({ ...u, name: u.name || '(No name)' })));
-    }, [projectId]);
+    };
 
     useEffect(() => {
         fetchAccess();
-    }, [fetchAccess]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [projectId]);
 
     if (!project) {
         return <p>....</p>;

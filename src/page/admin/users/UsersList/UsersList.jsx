@@ -65,7 +65,8 @@ function UsersList({
 
     useEffect(() => {
         fetchUsers();
-    }, [fetchUsers]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div>

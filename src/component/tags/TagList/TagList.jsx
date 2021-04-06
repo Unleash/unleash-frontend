@@ -18,7 +18,8 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
 
     useEffect(() => {
         fetchTags();
-    }, [fetchTags]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const remove = (tag, evt) => {
         evt.preventDefault();

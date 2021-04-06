@@ -52,7 +52,8 @@ const FeatureView = ({
     useEffect(() => {
         scrollToTop();
         fetchTags(featureToggleName);
-    }, [featureToggleName, fetchTags]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useLayoutEffect(() => {
         if (features.length === 0) {
@@ -62,7 +63,8 @@ const FeatureView = ({
                 fetchArchive();
             }
         }
-    }, [features, fetchArchive, fetchFeatureToggles, isFeatureView]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [features]);
 
     const getTabComponent = key => {
         switch (key) {
