@@ -2,6 +2,6 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles({
     eventLogHeader: {
-        minWidth: '120px',
+        minWidth: '110px',
     },
 });

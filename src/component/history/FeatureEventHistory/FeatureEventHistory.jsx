@@ -15,7 +15,9 @@ const FeatureEventHistory = ({
         return <span>fetching..</span>;
     }
 
-    return <EventLog history={history} hideName title="Change log" />;
+    return (
+        <EventLog history={history} hideName title="Change log" displayInline />
+    );
 };
 
 FeatureEventHistory.propTypes = {

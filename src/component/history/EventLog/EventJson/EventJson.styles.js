@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
     historyItem: {
         padding: '5px',
-        '&:nth-child': {
-            backgroundColor: '#efefef',
+        '&:nth-child(odd)': {
+            backgroundColor: theme.palette.code.background,
         },
     },
-});
+}));
