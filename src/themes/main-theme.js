@@ -40,6 +40,14 @@ const theme = createMuiTheme({
         division: {
             main: '#f1f1f1',
         },
+        code: {
+            main: '#0b8c8f',
+            diffAdd: 'green',
+            diffSub: 'red',
+            diffNeutral: 'black',
+            edited: 'blue',
+            background: '#efefef',
+        },
         cards: {
             gradient: {
                 top: '#617D8B',

@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
     blue: {
-        color: 'blue',
+        color: theme.palette.code.edited,
     },
     negative: {
-        color: 'red',
+        color: theme.palette.code.diffSub,
     },
     positive: {
-        color: 'green',
+        color: theme.palette.code.diffAdd,
     },
-});
+}));

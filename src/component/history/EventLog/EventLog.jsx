@@ -1,4 +1,5 @@
 import { List, Switch, FormControlLabel } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import { formatFullDateTimeWithLocale } from '../../common/util';
 
@@ -7,16 +8,18 @@ import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
 import EventCard from './EventCard/EventCard';
 
-import styles from '../history.module.scss';
+import { useStyles } from './EventLog.styles.js';
 
 const EventLog = ({
     updateSetting,
     title,
     history,
     settings,
+    displayInline,
     location,
     hideName,
 }) => {
+    const styles = useStyles();
     const toggleShowDiff = () => {
         updateSetting('showData', !settings.showData);
     };
@@ -51,6 +54,8 @@ const EventLog = ({
 
     return (
         <PageContent
+            disablePadding={displayInline}
+            disableBorder={displayInline}
             headerContent={
                 <HeaderTitle
                     title={title}
@@ -74,6 +79,15 @@ const EventLog = ({
             </div>
         </PageContent>
     );
+};
+
+EventLog.propTypes = {
+    updateSettings: PropTypes.func,
+    title: PropTypes.object,
+    settings: PropTypes.object,
+    displayInline: PropTypes.bool,
+    location: PropTypes.object,
+    hideName: PropTypes.bool,
 };
 
 export default EventLog;
