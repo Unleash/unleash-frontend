@@ -1,7 +1,3 @@
-.eventLogHeader {
-    min-width: 110px;
-}
-
 .history {
     code {
         word-wrap: break-word;
@@ -24,18 +20,6 @@
         color: black;
     }
 
-    .negative {
-        color: red;
-    }
-
-    .positive {
-        color: green;
-    }
-
-    .blue {
-        color: blue;
-    }
-
     dl {
         padding: 0em;
     }
@@ -50,14 +34,6 @@
         margin: 0 0 0 83px;
         padding: 0 0 0.5em 0;
     }
-}
-
-.history-item:nth-child(odd) {
-    background-color: #efefef;
-}
-
-.history-item {
-    padding: 5px;
 }
 
 .eventEntry {
