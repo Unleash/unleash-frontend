@@ -14,7 +14,7 @@ const getName = name => {
     if (name) {
         return (
             <React.Fragment>
-                <dt>Name: </dt>
+                <dt className={styles.eventLogHeader}>Name: </dt>
                 <dd>{name}</dd>
             </React.Fragment>
         );
@@ -26,11 +26,11 @@ const getName = name => {
 const HistoryMeta = ({ entry, timeFormatted }) => (
     <div>
         <dl>
-            <dt>Changed at:</dt>
+            <dt className={styles.eventLogHeader}>Changed at:</dt>
             <dd>{timeFormatted}</dd>
-            <dt>Changed by: </dt>
+            <dt className={styles.eventLogHeader}>Changed by: </dt>
             <dd title={entry.createdBy}>{entry.createdBy}</dd>
-            <dt>Type: </dt>
+            <dt className={styles.eventLogHeader}>Type: </dt>
             <dd>{entry.type}</dd>
             {getName(entry.data.name)}
         </dl>
@@ -70,12 +70,17 @@ class HistoryList extends Component {
 
         const renderListItemCards = entry => (
             <div key={entry.id} className={styles.eventEntry}>
-                <HistoryMeta entry={entry} timeFormatted={this.formatFulldateTime(entry.createdAt)} />
+                <HistoryMeta
+                    entry={entry}
+                    timeFormatted={this.formatFulldateTime(entry.createdAt)}
+                />
             </div>
         );
 
         if (showData) {
-            entries = history.map(entry => <HistoryItemJson key={`log${entry.id}`} entry={entry} />);
+            entries = history.map(entry => (
+                <HistoryItemJson key={`log${entry.id}`} entry={entry} />
+            ));
         } else {
             entries = history.map(renderListItemCards);
         }
@@ -90,7 +95,9 @@ class HistoryList extends Component {
                                 control={
                                     <Switch
                                         checked={showData}
-                                        onChange={this.toggleShowDiff.bind(this)}
+                                        onChange={this.toggleShowDiff.bind(
+                                            this
+                                        )}
                                         color="primary"
                                     />
                                 }
