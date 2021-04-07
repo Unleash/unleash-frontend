@@ -6,7 +6,7 @@ import EventLog from '../EventLog';
 const EventHistory = ({ fetchHistory, history }) => {
     useEffect(() => {
         fetchHistory();
-    }, []);
+    }, [fetchHistory]);
 
     if (history.length < 0) {
         return null;

@@ -83,7 +83,7 @@ const EventLog = ({
 
 EventLog.propTypes = {
     updateSettings: PropTypes.func,
-    title: PropTypes.object,
+    title: PropTypes.string,
     settings: PropTypes.object,
     displayInline: PropTypes.bool,
     location: PropTypes.object,
