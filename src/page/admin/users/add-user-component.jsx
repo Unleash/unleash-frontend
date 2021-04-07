@@ -37,7 +37,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
     const submit = async e => {
         e.preventDefault();
         if (!data.email) {
-            setError({ general: 'You must specify the email adress' });
+            setError({ general: 'You must specify the email address' });
             return;
         }
 
@@ -53,7 +53,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
 
     const onPasswordBlur = async e => {
         e.preventDefault();
-        setError({ password: '' });
+        setError({ password: undefined });
         if (data.password) {
             try {
                 await validatePassword(data.password);
@@ -102,6 +102,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
                     <TextField
                         label="Email"
                         name="email"
+                        required
                         value={data.email}
                         error={error.email !== undefined}
                         helperText={error.email}
@@ -125,7 +126,7 @@ function AddUser({ showDialog, closeDialog, addUser, validatePassword }) {
                     <br />
                     <br />
                     <FormControl>
-                        <FormLabel component="legend">User type</FormLabel>
+                        <FormLabel component="legend">Root Role</FormLabel>
                         <RadioGroup name="userType" value={data.userType} onChange={updateField}>
                             <FormControlLabel label="Regular" control={<Radio />} value="regular" />
                             <FormControlLabel label="Admin" control={<Radio />} value="admin" />

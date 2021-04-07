@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Dialogue from '../../../component/common/Dialogue';
 import {
-    Button,
     TextField,
     DialogTitle,
     DialogContent,
-    DialogActions,
     RadioGroup,
     Radio,
-    Modal,
+    FormControl,
+    FormLabel,
+    FormControlLabel,
 } from '@material-ui/core';
-import { showPermissions, modalStyles } from './util';
+import commonStyles from '../../../component/common/common.module.scss';
 
 function AddUser({ user, showDialog, closeDialog, updateUser }) {
-    const [data, setData] = useState(user);
+    const [data, setData] = useState({
+        id: user.id,
+        email: user.email || '',
+        rootRole: user.rootRole,
+        name: user.name || '',
+    });
     const [error, setError] = useState({});
 
     if (!user) {
         return null;
     }
-
 
     const updateField = e => {
         setData({
@@ -35,7 +40,7 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
             await updateUser(data);
             closeDialog();
         } catch (error) {
-            setError({ general: 'Could not create user' });
+            setError({ general: 'Could not update user' });
         }
     };
 
@@ -44,14 +49,23 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
         closeDialog();
     };
 
-    const userType = data.userType || showPermissions(user.permissions);
-
     return (
-        <Modal open={showDialog} style={modalStyles} onClose={onCancel}>
+        <Dialogue
+            onClick={e => {
+                submit(e);
+            }}
+            open={showDialog}
+            onClose={onCancel}
+            primaryButtonText="Update user"
+            secondaryButtonText="Cancel"
+        >
             <form onSubmit={submit}>
                 <DialogTitle>Edit user</DialogTitle>
 
-                <DialogContent>
+                <DialogContent
+                    className={commonStyles.contentSpacing}
+                    style={{ display: 'flex', flexDirection: 'column' }}
+                >
                     <p>{error.general}</p>
                     <TextField
                         label="Full name"
@@ -59,6 +73,8 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                         value={data.name}
                         error={error.name}
                         type="name"
+                        variant="outlined"
+                        size="small"
                         onChange={updateField}
                     />
                     <TextField
@@ -68,32 +84,23 @@ function AddUser({ user, showDialog, closeDialog, updateUser }) {
                         editable="false"
                         readOnly
                         value={data.email}
+                        variant="outlined"
+                        size="small"
                         type="email"
                     />
                     <br />
                     <br />
-                    <RadioGroup name="userType" value={userType} onChange={updateField} childContainer="div">
-                        <Radio value="regular" ripple>
-                            Regular user
-                        </Radio>
-                        <Radio value="admin" ripple>
-                            Admin user
-                        </Radio>
-                        <Radio value="read" ripple>
-                            Read only
-                        </Radio>
-                    </RadioGroup>
+                    <FormControl>
+                        <FormLabel component="legend">Root Role</FormLabel>
+                        <RadioGroup name="rootRole" value={data.rootRole} onChange={updateField}>
+                            <FormControlLabel label="Regular" control={<Radio />} value="Regular" />
+                            <FormControlLabel label="Admin" control={<Radio />} value="Admin" />
+                            <FormControlLabel label="Read-only" control={<Radio />} value="Read" />
+                        </RadioGroup>
+                    </FormControl>
                 </DialogContent>
-                <DialogActions>
-                    <Button raised colored type="submit">
-                        Update
-                    </Button>
-                    <Button type="button" onClick={onCancel}>
-                        Cancel
-                    </Button>
-                </DialogActions>
             </form>
-        </Modal>
+        </Dialogue>
     );
 }
 
