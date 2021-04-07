@@ -12,6 +12,7 @@ import {
     TableCell,
     TableBody,
     Button,
+    Typography,
 } from '@material-ui/core';
 import AddVariant from './AddVariant/AddVariant';
 import MySelect from '../../common/select';
@@ -145,13 +146,13 @@ class UpdateVariantComponent extends Component {
 
         return (
             <section style={{ padding: '16px' }}>
-                <p className={styles.paragraph}>
+                <Typography variant="body1">
                     Variants allows you to return a variant object if the
                     feature toggle is considered enabled for the current
                     request. When using variants you should use the{' '}
                     <code style={{ color: 'navy' }}>getVariant()</code> method
                     in the Client SDK.
-                </p>
+                </Typography>
 
                 <ConditionallyRender
                     condition={variants.length > 0}
