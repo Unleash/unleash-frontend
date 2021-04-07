@@ -31,6 +31,9 @@ const theme = createMuiTheme({
         links: {
             deprecated: '#1d1818',
         },
+        borders: {
+            main: '#f1f1f1',
+        },
         error: {
             main: '#d95e5e',
         },
