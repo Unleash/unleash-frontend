@@ -10,6 +10,7 @@ import DelUser from '../del-user-component';
 import ConditionallyRender from '../../../../component/common/ConditionallyRender/ConditionallyRender';
 
 function UsersList({
+    roles,
     fetchUsers,
     removeUser,
     addUser,
@@ -67,6 +68,11 @@ function UsersList({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const renderRole = roleId => {
+        const role = roles.find(r => r.id === roleId);
+        return role ? role.name : '';
+    }
+
     return (
         <div>
             <Table>
@@ -87,7 +93,7 @@ function UsersList({
                             <TableCell>{formatFullDateTimeWithLocale(item.createdAt, location.locale)}</TableCell>
                             <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
                             <TableCell style={{ textAlign: 'left' }}>{item.name}</TableCell>
-                            <TableCell>{item.rootRole}</TableCell>
+                            <TableCell>{renderRole(item.rootRole)}</TableCell>
                             <ConditionallyRender
                                 condition={hasPermission('ADMIN')}
                                 show={
@@ -125,12 +131,14 @@ function UsersList({
                 closeDialog={closeDialog}
                 addUser={addUser}
                 validatePassword={validatePassword}
+                roles={roles}
             />
             <UpdateUser
                 showDialog={updateDialog.open}
                 closeDialog={closeUpdateDialog}
                 updateUser={updateUser}
                 user={updateDialog.user}
+                roles={roles}
             />
             <ChangePassword
                 showDialog={pwDialog.open}
@@ -155,6 +163,7 @@ function UsersList({
 }
 
 UsersList.propTypes = {
+    roles: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     fetchUsers: PropTypes.func.isRequired,
     removeUser: PropTypes.func.isRequired,
