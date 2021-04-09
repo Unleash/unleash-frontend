@@ -133,13 +133,13 @@ function UsersList({
                 validatePassword={validatePassword}
                 roles={roles}
             />
-            <UpdateUser
+            {updateDialog && <UpdateUser
                 showDialog={updateDialog.open}
                 closeDialog={closeUpdateDialog}
                 updateUser={updateUser}
                 user={updateDialog.user}
                 roles={roles}
-            />
+            />}
             <ChangePassword
                 showDialog={pwDialog.open}
                 closeDialog={closePwDialog}
