@@ -17,7 +17,15 @@ const filterByFlags = flags => r => {
 
 function getIcon(name) {
     if (name === 'c_github') {
-        return <i className={classnames('material-icons', styles.navigationIcon, styles.iconGitHub)} />;
+        return (
+            <i
+                className={classnames(
+                    'material-icons',
+                    styles.navigationIcon,
+                    styles.iconGitHub
+                )}
+            />
+        );
     } else {
         return <Icon className={styles.navigationIcon}>{name}</Icon>;
     }
@@ -43,7 +51,8 @@ function renderLink(link, toggleDrawer) {
                 key={link.href}
                 target="_blank"
                 className={[styles.navigationLink].join(' ')}
-                title={link.title} rel="noreferrer"
+                title={link.title}
+                rel="noreferrer"
             >
                 {getIcon(link.icon)} {link.value}
             </a>
@@ -51,12 +60,29 @@ function renderLink(link, toggleDrawer) {
     }
 }
 
-export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = false, toggleDrawer }) => (
-    <Drawer className={styles.drawer} open={open} anchor={'left'} onClose={() => toggleDrawer()}>
+export const DrawerMenu = ({
+    links = [],
+    title = 'Unleash',
+    flags = {},
+    open = false,
+    toggleDrawer,
+}) => (
+    <Drawer
+        className={styles.drawer}
+        open={open}
+        anchor={'left'}
+        onClose={() => toggleDrawer()}
+    >
         <div className={styles.drawerContainer}>
             <div className={styles.drawerTitleContainer}>
                 <span className={[styles.drawerTitle].join(' ')}>
-                    <img alt="Unleash Logo" src="logo.png" width="32" height="32" className={styles.drawerTitleLogo} />
+                    <img
+                        alt="Unleash Logo"
+                        src="/logo.png"
+                        width="32"
+                        height="32"
+                        className={styles.drawerTitleLogo}
+                    />
                     <span className={styles.drawerTitleText}>{title}</span>
                 </span>
             </div>
@@ -68,7 +94,9 @@ export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = f
                         key={item.path}
                         to={item.path}
                         className={classnames(styles.navigationLink)}
-                        activeClassName={classnames(styles.navigationLinkActive)}
+                        activeClassName={classnames(
+                            styles.navigationLinkActive
+                        )}
                     >
                         {getIcon(item.icon)}
                         {item.title}
@@ -76,7 +104,9 @@ export const DrawerMenu = ({ links = [], title = 'Unleash', flags = {}, open = f
                 ))}
             </List>
             <Divider />
-            <List className={styles.navigation}>{links.map(l => renderLink(l, toggleDrawer))}</List>
+            <List className={styles.navigation}>
+                {links.map(l => renderLink(l, toggleDrawer))}
+            </List>
         </div>
     </Drawer>
 );

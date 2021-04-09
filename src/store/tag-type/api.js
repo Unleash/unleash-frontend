@@ -1,6 +1,6 @@
 import { throwIfNotSuccess, headers } from '../api-helper';
 
-const URI = 'api/admin/tag-types';
+const URI = '/api/admin/tag-types';
 
 function fetchTagTypes() {
     return fetch(URI, { credentials: 'include' })
@@ -53,5 +53,5 @@ const api = {
     update,
     deleteTagType,
     validateTagType,
-}
+};
 export default api;

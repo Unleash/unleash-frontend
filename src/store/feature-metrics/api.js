@@ -1,6 +1,6 @@
 import { throwIfNotSuccess } from '../api-helper';
 
-const URI = 'api/admin/metrics/feature-toggles';
+const URI = '/api/admin/metrics/feature-toggles';
 
 function fetchFeatureMetrics() {
     return fetch(URI, { credentials: 'include' })
@@ -8,7 +8,7 @@ function fetchFeatureMetrics() {
         .then(response => response.json());
 }
 
-const seenURI = 'api/admin/metrics/seen-apps';
+const seenURI = '/api/admin/metrics/seen-apps';
 
 function fetchSeenApps() {
     return fetch(seenURI, { credentials: 'include' })

@@ -29,7 +29,11 @@ const TabNav = ({ tabData, className, startingTab = 0 }) => {
 
     const renderTabPanels = () =>
         tabData.map((tab, index) => (
-            <TabPanel key={`tab_panel_${index}`} value={activeTab} index={index}>
+            <TabPanel
+                key={`tab_panel_${index}`}
+                value={activeTab}
+                index={index}
+            >
                 {tab.component}
             </TabPanel>
         ));

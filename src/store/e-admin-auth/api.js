@@ -1,7 +1,7 @@
 import { throwIfNotSuccess, headers } from '../api-helper';
 
-const GOOGLE_URI = 'api/admin/auth/google/settings';
-const SAML_URI = 'api/admin/auth/saml/settings';
+const GOOGLE_URI = '/api/admin/auth/google/settings';
+const SAML_URI = '/api/admin/auth/saml/settings';
 
 function getGoogleConfig() {
     return fetch(GOOGLE_URI, { headers, credentials: 'include' })

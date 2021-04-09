@@ -1,6 +1,6 @@
 import { throwIfNotSuccess, headers } from '../api-helper';
 
-const URI = 'api/admin/user-admin';
+const URI = '/api/admin/user-admin';
 
 function fetchAll() {
     return fetch(URI, { headers, credentials: 'include' })

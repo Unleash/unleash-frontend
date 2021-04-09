@@ -1,6 +1,6 @@
 import { throwIfNotSuccess, headers } from '../api-helper';
 
-const URI = 'api/admin/features';
+const URI = '/api/admin/features';
 
 function tagFeature(featureToggle, tag) {
     return fetch(`${URI}/${featureToggle}/tags`, {
@@ -14,11 +14,16 @@ function tagFeature(featureToggle, tag) {
 }
 
 function untagFeature(featureToggle, tag) {
-    return fetch(`${URI}/${featureToggle}/tags/${tag.type}/${encodeURIComponent(tag.value)}`, {
-        method: 'DELETE',
-        headers,
-        credentials: 'include',
-    }).then(throwIfNotSuccess);
+    return fetch(
+        `${URI}/${featureToggle}/tags/${tag.type}/${encodeURIComponent(
+            tag.value
+        )}`,
+        {
+            method: 'DELETE',
+            headers,
+            credentials: 'include',
+        }
+    ).then(throwIfNotSuccess);
 }
 
 function fetchFeatureToggleTags(featureToggle) {

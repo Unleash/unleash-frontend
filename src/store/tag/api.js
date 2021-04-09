@@ -1,6 +1,6 @@
 import { throwIfNotSuccess, headers } from '../api-helper';
 
-const URI = 'api/admin/tags';
+const URI = '/api/admin/tags';
 
 function fetchTags() {
     return fetch(URI, { credentials: 'include' })

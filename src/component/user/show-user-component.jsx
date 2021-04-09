@@ -67,7 +67,7 @@ export default class ShowUserComponent extends React.Component {
                         <Icon
                             component={'img'}
                             alt={locale}
-                            src={imageLocale}
+                            src={`/${imageLocale}`}
                             className={styles.labelFlag}
                         />
                     }
@@ -79,7 +79,7 @@ export default class ShowUserComponent extends React.Component {
                             >
                                 <div className={styles.showLocale}>
                                     <img
-                                        src={`${i.image}.png`}
+                                        src={`/${i.image}.png`}
                                         title={i.value}
                                         alt={i.value}
                                     />

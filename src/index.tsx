@@ -2,9 +2,8 @@ import 'whatwg-fetch';
 
 import './app.css';
 
-import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import thunkMiddleware from 'redux-thunk';
@@ -39,7 +38,7 @@ metricsPoller.start();
 
 ReactDOM.render(
     <Provider store={unleashStore}>
-        <HashRouter>
+        <BrowserRouter>
             <ThemeProvider theme={mainTheme}>
                 <StylesProvider injectFirst>
                     <CssBaseline />
@@ -48,7 +47,7 @@ ReactDOM.render(
                     </ScrollToTop>
                 </StylesProvider>
             </ThemeProvider>
-        </HashRouter>
+        </BrowserRouter>
     </Provider>,
     document.getElementById('app')
 );
