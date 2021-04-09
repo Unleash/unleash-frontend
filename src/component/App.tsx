@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
