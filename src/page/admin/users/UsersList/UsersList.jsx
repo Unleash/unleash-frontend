@@ -82,7 +82,7 @@ function UsersList({
                         <TableCell>Created</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Root Role</TableCell>
+                        <TableCell>Role</TableCell>
                         <TableCell>{hasPermission('ADMIN') ? 'Action' : ''}</TableCell>
                     </TableRow>
                 </TableHead>
@@ -133,7 +133,7 @@ function UsersList({
                 validatePassword={validatePassword}
                 roles={roles}
             />
-            {updateDialog && <UpdateUser
+            {updateDialog.open && <UpdateUser
                 showDialog={updateDialog.open}
                 closeDialog={closeUpdateDialog}
                 updateUser={updateUser}
