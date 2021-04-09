@@ -25,11 +25,15 @@ const App = ({ location, user }: IAppProps) => {
             .map(renderRoute);
     };
 
+    const isUnauthorized = () => {
+        // authDetails only exists if the user is not logged in.
+        return user?.authDetails !== undefined;
+    };
+
     // Change this to IRoute once snags with HashRouter and TS is worked out
     const renderRoute = (route: any) => {
         if (route.type === 'protected') {
-            // authDetails only exists if the user is not logged in.
-            const unauthorized = user?.authDetails !== undefined;
+            const unauthorized = isUnauthorized();
 
             return (
                 <ProtectedRoute
@@ -56,7 +60,7 @@ const App = ({ location, user }: IAppProps) => {
                     <ProtectedRoute
                         exact
                         path="/"
-                        unauthorized={user?.authDetails !== undefined}
+                        unauthorized={isUnauthorized()}
                         component={Redirect}
                         renderProps={{ to: '/features' }}
                     />
