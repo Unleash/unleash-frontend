@@ -32,6 +32,7 @@ import AdminApi from '../../page/admin/api';
 import AdminUsers from '../../page/admin/users';
 import AdminAuth from '../../page/admin/auth';
 import Reporting from '../../page/reporting';
+import AuthenticationContainer from '../user/authentication-container';
 import { P, C } from '../common/flags';
 
 export const routes = [
@@ -41,24 +42,28 @@ export const routes = [
         parent: '/features',
         title: 'Create',
         component: CreateFeatureToggle,
+        type: 'protected',
     },
     {
         path: '/features/copy/:copyToggle',
         parent: '/features',
         title: 'Copy',
         component: CopyFeatureToggle,
+        type: 'protected',
     },
     {
         path: '/features/:activeTab/:name',
         parent: '/features',
         title: ':name',
         component: ViewFeatureToggle,
+        type: 'protected',
     },
     {
         path: '/features',
         title: 'Feature Toggles',
         icon: 'list',
         component: Features,
+        type: 'protected',
     },
 
     // Strategies
@@ -67,18 +72,21 @@ export const routes = [
         title: 'Create',
         parent: '/strategies',
         component: CreateStrategies,
+        type: 'protected',
     },
     {
         path: '/strategies/:activeTab/:strategyName',
         title: ':strategyName',
         parent: '/strategies',
         component: StrategyView,
+        type: 'protected',
     },
     {
         path: '/strategies',
         title: 'Strategies',
         icon: 'extension',
         component: Strategies,
+        type: 'protected',
     },
 
     // History
@@ -87,12 +95,14 @@ export const routes = [
         title: ':toggleName',
         parent: '/history',
         component: HistoryTogglePage,
+        type: 'protected',
     },
     {
         path: '/history',
         title: 'Event History',
         icon: 'history',
         component: HistoryPage,
+        type: 'protected',
     },
 
     // Archive
@@ -101,12 +111,14 @@ export const routes = [
         title: ':name',
         parent: '/archive',
         component: ShowArchive,
+        type: 'protected',
     },
     {
         path: '/archive',
         title: 'Archived Toggles',
         icon: 'archive',
         component: Archive,
+        type: 'protected',
     },
 
     // Applications
@@ -115,12 +127,14 @@ export const routes = [
         title: ':name',
         parent: '/applications',
         component: ApplicationView,
+        type: 'protected',
     },
     {
         path: '/applications',
         title: 'Applications',
         icon: 'apps',
         component: Applications,
+        type: 'protected',
     },
 
     // Context
@@ -129,18 +143,21 @@ export const routes = [
         parent: '/context',
         title: 'Create',
         component: CreateContextField,
+        type: 'protected',
     },
     {
         path: '/context/edit/:name',
         parent: '/context',
         title: ':name',
         component: EditContextField,
+        type: 'protected',
     },
     {
         path: '/context',
         title: 'Context Fields',
         icon: 'album',
         component: ContextFields,
+        type: 'protected',
         flag: C,
     },
 
@@ -150,18 +167,21 @@ export const routes = [
         parent: '/projects',
         title: 'Create',
         component: CreateProject,
+        type: 'protected',
     },
     {
         path: '/projects/edit/:id',
         parent: '/projects',
         title: ':id',
         component: EditProject,
+        type: 'protected',
     },
     {
         path: '/projects/:id/access',
         parent: '/projects',
         title: ':id',
         component: EditProjectAccess,
+        type: 'protected',
     },
 
     {
@@ -170,6 +190,7 @@ export const routes = [
         icon: 'folder_open',
         component: ListProjects,
         flag: P,
+        type: 'protected',
     },
 
     // Admin
@@ -178,18 +199,21 @@ export const routes = [
         parent: '/admin',
         title: 'API access',
         component: AdminApi,
+        type: 'protected',
     },
     {
         path: '/admin/users',
         parent: '/admin',
         title: 'Users',
         component: AdminUsers,
+        type: 'protected',
     },
     {
         path: '/admin/auth',
         parent: '/admin',
         title: 'Authentication',
         component: AdminAuth,
+        type: 'protected',
     },
     {
         path: '/admin',
@@ -197,6 +221,7 @@ export const routes = [
         icon: 'album',
         component: Admin,
         hidden: true,
+        type: 'protected',
     },
 
     {
@@ -204,18 +229,21 @@ export const routes = [
         parent: '/tag-types',
         title: 'Create',
         component: CreateTagType,
+        type: 'protected',
     },
     {
         path: '/tag-types/edit/:name',
         parent: '/tag-types',
         title: ':name',
         component: EditTagType,
+        type: 'protected',
     },
     {
         path: '/tag-types',
         title: 'Tag types',
         icon: 'label',
         component: ListTagTypes,
+        type: 'protected',
     },
 
     {
@@ -223,6 +251,7 @@ export const routes = [
         parent: '/tags',
         title: 'Create',
         component: CreateTag,
+        type: 'protected',
     },
     {
         path: '/tags',
@@ -230,6 +259,7 @@ export const routes = [
         icon: 'label',
         component: ListTags,
         hidden: true,
+        type: 'protected',
     },
 
     // Addons
@@ -238,12 +268,14 @@ export const routes = [
         parent: '/addons',
         title: 'Create',
         component: AddonsCreate,
+        type: 'protected',
     },
     {
         path: '/addons/edit/:id',
         parent: '/addons',
         title: 'Edit',
         component: AddonsEdit,
+        type: 'protected',
     },
     {
         path: '/addons',
@@ -251,21 +283,34 @@ export const routes = [
         icon: 'device_hub',
         component: Addons,
         hidden: false,
+        type: 'protected',
     },
     {
         path: '/reporting',
         title: 'Reporting',
         icon: 'report',
         component: Reporting,
+        type: 'protected',
     },
     {
         path: '/logout',
         title: 'Sign out',
         icon: 'exit_to_app',
         component: LogoutFeatures,
+        type: 'protected',
+    },
+    {
+        path: '/login',
+        title: 'Log in',
+        icon: 'user',
+        component: AuthenticationContainer,
+        type: 'unprotected',
+        hidden: true,
     },
 ];
 
 export const getRoute = path => routes.find(route => route.path === path);
 
-export const baseRoutes = routes.filter(route => !route.hidden).filter(route => !route.parent);
+export const baseRoutes = routes
+    .filter(route => !route.hidden)
+    .filter(route => !route.parent);
