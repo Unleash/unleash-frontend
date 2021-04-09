@@ -20,8 +20,8 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     gradient: {
-        background: 'linear-gradient(#607D8B, #173341)',
-        color: '#fff',
+        background: `linear-gradient(${theme.palette.login.gradient.top}, ${theme.palette.login.gradient.bottom})`,
+        color: theme.palette.login.main,
     },
     title: {
         fontSize: '1.5rem',

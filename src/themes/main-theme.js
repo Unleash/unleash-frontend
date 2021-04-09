@@ -66,6 +66,13 @@ const theme = createMuiTheme({
                 bg: '#f1f1f1',
             },
         },
+        login: {
+            gradient: {
+                top: '#607D8B',
+                bottom: '#173341',
+            },
+            main: '#fff',
+        },
     },
     padding: {
         pageContent: {
