@@ -35,4 +35,7 @@ export const useCommonStyles = makeStyles(theme => ({
     fullWidth: {
         width: '100%',
     },
+    fullHeight: {
+        height: '100%',
+    },
 }));

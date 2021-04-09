@@ -2,56 +2,67 @@ import { connect } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
-import MainLayout from './layout/main';
+import MainLayout from './layout/MainLayout/MainLayout';
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
+import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
 
 import { routes } from './menu/routes';
 
 import styles from './styles.module.scss';
 
 import IUser from '../interfaces/user';
+import IRoute from '../interfaces/route';
 interface IAppProps extends RouteComponentProps {
     user: IUser;
 }
 
 const App = ({ location, user }: IAppProps) => {
-    const renderRoutes = () => {
-        return routes.map(route => {
-            if (route.type === 'protected') {
-                // authDetails only exists if the user is not logged in.
-                const unauthorized = user?.authDetails !== undefined;
+    const renderMainLayoutRoutes = () => {
+        return routes.filter(route => route.layout === 'main').map(renderRoute);
+    };
 
-                return (
-                    <ProtectedRoute
-                        key={route.path}
-                        path={route.path}
-                        component={route.component}
-                        unauthorized={unauthorized}
-                    />
-                );
-            }
+    const renderStandaloneRoutes = () => {
+        return routes
+            .filter((route: any) => route.layout === 'standalone')
+            .map(renderRoute);
+    };
+
+    const renderRoute = (route: any) => {
+        if (route.type === 'protected') {
+            // authDetails only exists if the user is not logged in.
+            const unauthorized = user?.authDetails !== undefined;
+
             return (
-                <Route
+                <ProtectedRoute
                     key={route.path}
                     path={route.path}
                     component={route.component}
+                    unauthorized={unauthorized}
                 />
             );
-        });
+        }
+        return (
+            <Route
+                key={route.path}
+                path={route.path}
+                render={props => <route.component {...props} />}
+            />
+        );
     };
 
     return (
         <div className={styles.container}>
-            <MainLayout location={location}>
+            <LayoutPicker location={location}>
                 <Switch>
                     <Route
                         exact
                         path="/"
                         render={() => <Redirect to="/features" />}
                     />
-                    {renderRoutes()}
+                    {renderMainLayoutRoutes()}
+                    {renderStandaloneRoutes()}
                 </Switch>
-            </MainLayout>
+            </LayoutPicker>
         </div>
     );
 };

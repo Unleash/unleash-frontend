@@ -32,7 +32,7 @@ import AdminApi from '../../page/admin/api';
 import AdminUsers from '../../page/admin/users';
 import AdminAuth from '../../page/admin/auth';
 import Reporting from '../../page/reporting';
-import AuthenticationContainer from '../user/authentication-container';
+import Login from '../user/Login';
 import { P, C } from '../common/flags';
 
 export const routes = [
@@ -43,6 +43,7 @@ export const routes = [
         title: 'Create',
         component: CreateFeatureToggle,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/features/copy/:copyToggle',
@@ -50,6 +51,7 @@ export const routes = [
         title: 'Copy',
         component: CopyFeatureToggle,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/features/:activeTab/:name',
@@ -57,6 +59,7 @@ export const routes = [
         title: ':name',
         component: ViewFeatureToggle,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/features',
@@ -64,6 +67,7 @@ export const routes = [
         icon: 'list',
         component: Features,
         type: 'protected',
+        layout: 'main',
     },
 
     // Strategies
@@ -73,6 +77,7 @@ export const routes = [
         parent: '/strategies',
         component: CreateStrategies,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/strategies/:activeTab/:strategyName',
@@ -80,6 +85,7 @@ export const routes = [
         parent: '/strategies',
         component: StrategyView,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/strategies',
@@ -87,6 +93,7 @@ export const routes = [
         icon: 'extension',
         component: Strategies,
         type: 'protected',
+        layout: 'main',
     },
 
     // History
@@ -96,6 +103,7 @@ export const routes = [
         parent: '/history',
         component: HistoryTogglePage,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/history',
@@ -103,6 +111,7 @@ export const routes = [
         icon: 'history',
         component: HistoryPage,
         type: 'protected',
+        layout: 'main',
     },
 
     // Archive
@@ -112,6 +121,7 @@ export const routes = [
         parent: '/archive',
         component: ShowArchive,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/archive',
@@ -119,6 +129,7 @@ export const routes = [
         icon: 'archive',
         component: Archive,
         type: 'protected',
+        layout: 'main',
     },
 
     // Applications
@@ -128,6 +139,7 @@ export const routes = [
         parent: '/applications',
         component: ApplicationView,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/applications',
@@ -135,6 +147,7 @@ export const routes = [
         icon: 'apps',
         component: Applications,
         type: 'protected',
+        layout: 'main',
     },
 
     // Context
@@ -144,6 +157,7 @@ export const routes = [
         title: 'Create',
         component: CreateContextField,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/context/edit/:name',
@@ -151,6 +165,7 @@ export const routes = [
         title: ':name',
         component: EditContextField,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/context',
@@ -159,6 +174,7 @@ export const routes = [
         component: ContextFields,
         type: 'protected',
         flag: C,
+        layout: 'main',
     },
 
     // Project
@@ -168,6 +184,7 @@ export const routes = [
         title: 'Create',
         component: CreateProject,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/projects/edit/:id',
@@ -175,6 +192,7 @@ export const routes = [
         title: ':id',
         component: EditProject,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/projects/:id/access',
@@ -182,6 +200,7 @@ export const routes = [
         title: ':id',
         component: EditProjectAccess,
         type: 'protected',
+        layout: 'main',
     },
 
     {
@@ -191,6 +210,7 @@ export const routes = [
         component: ListProjects,
         flag: P,
         type: 'protected',
+        layout: 'main',
     },
 
     // Admin
@@ -200,6 +220,7 @@ export const routes = [
         title: 'API access',
         component: AdminApi,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/admin/users',
@@ -207,6 +228,7 @@ export const routes = [
         title: 'Users',
         component: AdminUsers,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/admin/auth',
@@ -214,6 +236,7 @@ export const routes = [
         title: 'Authentication',
         component: AdminAuth,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/admin',
@@ -222,6 +245,7 @@ export const routes = [
         component: Admin,
         hidden: true,
         type: 'protected',
+        layout: 'main',
     },
 
     {
@@ -230,6 +254,7 @@ export const routes = [
         title: 'Create',
         component: CreateTagType,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/tag-types/edit/:name',
@@ -237,6 +262,7 @@ export const routes = [
         title: ':name',
         component: EditTagType,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/tag-types',
@@ -244,6 +270,7 @@ export const routes = [
         icon: 'label',
         component: ListTagTypes,
         type: 'protected',
+        layout: 'main',
     },
 
     {
@@ -252,6 +279,7 @@ export const routes = [
         title: 'Create',
         component: CreateTag,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/tags',
@@ -260,6 +288,7 @@ export const routes = [
         component: ListTags,
         hidden: true,
         type: 'protected',
+        layout: 'main',
     },
 
     // Addons
@@ -269,6 +298,7 @@ export const routes = [
         title: 'Create',
         component: AddonsCreate,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/addons/edit/:id',
@@ -276,6 +306,7 @@ export const routes = [
         title: 'Edit',
         component: AddonsEdit,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/addons',
@@ -284,6 +315,7 @@ export const routes = [
         component: Addons,
         hidden: false,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/reporting',
@@ -291,6 +323,7 @@ export const routes = [
         icon: 'report',
         component: Reporting,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/logout',
@@ -298,14 +331,16 @@ export const routes = [
         icon: 'exit_to_app',
         component: LogoutFeatures,
         type: 'protected',
+        layout: 'main',
     },
     {
         path: '/login',
         title: 'Log in',
         icon: 'user',
-        component: AuthenticationContainer,
+        component: Login,
         type: 'unprotected',
         hidden: true,
+        layout: 'standalone',
     },
 ];
 

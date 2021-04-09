@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Container } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-import styles from '../styles.module.scss';
-import ErrorContainer from '../error/error-container';
-import Header from '../menu/Header';
-import Footer from '../menu/Footer/Footer';
+import styles from '../../styles.module.scss';
+import ErrorContainer from '../../error/error-container';
+import Header from '../../menu/Header';
+import Footer from '../../menu/Footer/Footer';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Layout = ({ children, location }) => {
+const MainLayout = ({ children, location }) => {
     const muiStyles = useStyles();
 
     return (
@@ -37,8 +37,8 @@ const Layout = ({ children, location }) => {
     );
 };
 
-Layout.propTypes = {
+MainLayout.propTypes = {
     location: PropTypes.object.isRequired,
 };
 
-export default Layout;
+export default MainLayout;
