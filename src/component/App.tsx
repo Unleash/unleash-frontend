@@ -10,6 +10,7 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 
 import IUser from '../interfaces/user';
+import Features from '../page/features';
 interface IAppProps extends RouteComponentProps {
     user: IUser;
 }
@@ -53,10 +54,11 @@ const App = ({ location, user }: IAppProps) => {
         <div className={styles.container}>
             <LayoutPicker location={location}>
                 <Switch>
-                    <Route
+                    <ProtectedRoute
                         exact
                         path="/"
-                        render={() => <Redirect to="/features" />}
+                        unauthorized={user?.authDetails !== undefined}
+                        component={Features}
                     />
                     {renderMainLayoutRoutes()}
                     {renderStandaloneRoutes()}
