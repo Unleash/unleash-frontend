@@ -1,25 +1,20 @@
-import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 
-import Features from '../page/features';
 import MainLayout from './layout/main';
+import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 
 import { routes } from './menu/routes';
 
 import styles from './styles.module.scss';
-import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 
-interface IAppProps {
-    location: Location;
-    match: any;
-    history: History;
-    user: any;
+import IUser from '../interfaces/user';
+interface IAppProps extends RouteComponentProps {
+    user: IUser;
 }
 
-const App = ({ location, match, history, user }: IAppProps) => {
-    console.log(user);
+const App = ({ location, user }: IAppProps) => {
     const renderRoutes = () => {
         return routes.map(route => {
             if (route.type === 'protected') {
@@ -52,9 +47,7 @@ const App = ({ location, match, history, user }: IAppProps) => {
                     <Route
                         exact
                         path="/"
-                        render={() => (
-                            <Redirect to="/features" component={Features} />
-                        )}
+                        render={() => <Redirect to="/features" />}
                     />
                     {renderRoutes()}
                 </Switch>
@@ -63,7 +56,8 @@ const App = ({ location, match, history, user }: IAppProps) => {
     );
 };
 
-const mapStateToProps = state => ({
+// Set state to any for now, to avoid typing up entire state object while converting to tsx.
+const mapStateToProps = (state: any) => ({
     user: state.user.toJS(),
 });
 
