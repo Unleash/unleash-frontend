@@ -1,9 +1,11 @@
+import React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 interface IRoute {
     path: string;
     icon?: string;
-    component: React.ComponentType<RouteComponentProps | undefined>;
+    title?: string;
+    component: React.ComponentType;
     type: string;
     layout: string;
     hidden?: boolean;

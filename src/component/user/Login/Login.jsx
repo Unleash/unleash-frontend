@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import classnames from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 import AuthenticationContainer from '../authentication-container';
 import ConditionallyRender from '../../common/ConditionallyRender';
@@ -18,6 +19,7 @@ const Login = ({ history, loadInitialData, authDetails }) => {
         if (!authDetails) {
             loadInitialData();
         }
+        /* eslint-disable-next-line */
     }, [authDetails]);
 
     return (
@@ -30,9 +32,9 @@ const Login = ({ history, loadInitialData, authDetails }) => {
                     )}
                 >
                     <h1 className={styles.title}>Unleash</h1>
-                    <p className={styles.subTitle}>
+                    <Typography variant="body1" className={styles.subTitle}>
                         Committed to creating new ways of developing
-                    </p>
+                    </Typography>
                     <ConditionallyRender
                         condition={smallScreen}
                         show={

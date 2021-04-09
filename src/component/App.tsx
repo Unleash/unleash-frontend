@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
-import MainLayout from './layout/MainLayout/MainLayout';
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
 
@@ -11,7 +10,6 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 
 import IUser from '../interfaces/user';
-import IRoute from '../interfaces/route';
 interface IAppProps extends RouteComponentProps {
     user: IUser;
 }
@@ -23,10 +21,11 @@ const App = ({ location, user }: IAppProps) => {
 
     const renderStandaloneRoutes = () => {
         return routes
-            .filter((route: any) => route.layout === 'standalone')
+            .filter(route => route.layout === 'standalone')
             .map(renderRoute);
     };
 
+    // Change this to IRoute once snags with HashRouter and TS is worked out
     const renderRoute = (route: any) => {
         if (route.type === 'protected') {
             // authDetails only exists if the user is not logged in.

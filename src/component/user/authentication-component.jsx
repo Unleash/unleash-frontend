@@ -7,8 +7,6 @@ import PasswordAuth from './PasswordAuth/PasswordAuth';
 const SIMPLE_TYPE = 'unsecure';
 const PASSWORD_TYPE = 'password';
 
-const customStyles = {};
-
 class AuthComponent extends React.Component {
     static propTypes = {
         user: PropTypes.object.isRequired,
