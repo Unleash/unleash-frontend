@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
@@ -10,7 +10,6 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 
 import IUser from '../interfaces/user';
-import Features from '../page/features';
 interface IAppProps extends RouteComponentProps {
     user: IUser;
 }
@@ -58,7 +57,8 @@ const App = ({ location, user }: IAppProps) => {
                         exact
                         path="/"
                         unauthorized={user?.authDetails !== undefined}
-                        component={Features}
+                        component={Redirect}
+                        renderProps={{ to: '/features' }}
                     />
                     {renderMainLayoutRoutes()}
                     {renderStandaloneRoutes()}

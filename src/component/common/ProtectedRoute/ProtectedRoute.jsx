@@ -1,6 +1,11 @@
 import { Route, Redirect } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, unauthorized, ...rest }) => {
+const ProtectedRoute = ({
+    component: Component,
+    unauthorized,
+    renderProps = {},
+    ...rest
+}) => {
     return (
         <Route
             {...rest}
@@ -8,7 +13,7 @@ const ProtectedRoute = ({ component: Component, unauthorized, ...rest }) => {
                 if (unauthorized) {
                     return <Redirect to="/login" />;
                 } else {
-                    return <Component {...props} />;
+                    return <Component {...props} {...renderProps} />;
                 }
             }}
         />
