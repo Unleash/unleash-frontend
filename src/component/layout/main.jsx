@@ -10,12 +10,6 @@ import Header from '../menu/Header';
 import Footer from '../menu/Footer/Footer';
 
 const useStyles = makeStyles(theme => ({
-    footer: {
-        background: theme.palette.neutral.main,
-        padding: '2rem 4rem',
-        color: '#fff',
-        width: '100%',
-    },
     container: {
         height: '100%',
         justifyContent: 'space-between',
@@ -31,15 +25,13 @@ const Layout = ({ children, location }) => {
             <Grid container className={muiStyles.container}>
                 <div className={classnames(styles.contentWrapper)}>
                     <Grid item className={styles.content} xs={12} sm={12}>
-                        <div className={styles.contentContainer}>{children}</div>
+                        <div className={styles.contentContainer}>
+                            {children}
+                        </div>
                         <ErrorContainer />
                     </Grid>
                 </div>
-                <div className={muiStyles.footer}>
-                    <Container>
-                        <Footer />
-                    </Container>
-                </div>
+                <Footer />
             </Grid>
         </>
     );

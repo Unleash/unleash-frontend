@@ -45,6 +45,10 @@ const theme = createMuiTheme({
         division: {
             main: '#f1f1f1',
         },
+        footer: {
+            main: '#000',
+            background: '#fff',
+        },
         code: {
             main: '#0b8c8f',
             diffAdd: 'green',
