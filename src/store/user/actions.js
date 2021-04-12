@@ -57,7 +57,6 @@ export function logoutUser() {
             .logoutUser()
             .then(() => dispatch({ type: USER_LOGOUT }))
             .then(() => dispatch({ type: RESET_LOADING }))
-            .then(() => (window.location = '/login'))
             .catch(handleError);
     };
 }

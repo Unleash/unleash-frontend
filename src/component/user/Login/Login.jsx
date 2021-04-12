@@ -20,7 +20,7 @@ const Login = ({ history, loadInitialData, authDetails }) => {
             loadInitialData();
         }
         /* eslint-disable-next-line */
-    }, [authDetails]);
+    }, []);
 
     return (
         <div className={styles.loginContainer}>

@@ -27,7 +27,9 @@ const App = ({ location, user }: IAppProps) => {
 
     const isUnauthorized = () => {
         // authDetails only exists if the user is not logged in.
-        return user?.authDetails !== undefined;
+        return (
+            user?.authDetails !== undefined || Object.keys(user).length === 0
+        );
     };
 
     // Change this to IRoute once snags with HashRouter and TS is worked out
