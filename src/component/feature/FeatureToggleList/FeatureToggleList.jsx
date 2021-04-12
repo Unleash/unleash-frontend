@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,7 @@ const FeatureToggleList = ({
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetcher();
     }, [fetcher]);
 

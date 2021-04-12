@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import EventLog from '../EventLog';
 
-const EventHistory = ({ fetchHistory, history }) => {
+interface IEventLogProps {
+    fetchHistory: () => void;
+    history: History;
+}
+
+const EventHistory = ({ fetchHistory, history }: IEventLogProps) => {
     useEffect(() => {
         fetchHistory();
     }, [fetchHistory]);
@@ -13,11 +17,6 @@ const EventHistory = ({ fetchHistory, history }) => {
     }
 
     return <EventLog history={history} title="Recent changes" />;
-};
-
-EventHistory.propTypes = {
-    fetchHistory: PropTypes.func.isRequired,
-    history: PropTypes.array.isRequired,
 };
 
 export default EventHistory;

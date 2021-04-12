@@ -1,5 +1,6 @@
 import api from './api';
 import { dispatchError } from '../util';
+import { RESET_LOADING } from '../feature-toggle/actions';
 export const USER_CHANGE_CURRENT = 'USER_CHANGE_CURRENT';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_LOGIN = 'USER_LOGIN';
@@ -55,7 +56,8 @@ export function logoutUser() {
         return api
             .logoutUser()
             .then(() => dispatch({ type: USER_LOGOUT }))
-            .then(() => (window.location = '/'))
+            .then(() => dispatch({ type: RESET_LOADING }))
+            .then(() => (window.location = '/login'))
             .catch(handleError);
     };
 }
