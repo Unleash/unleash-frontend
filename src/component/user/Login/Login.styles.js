@@ -26,6 +26,13 @@ export const useStyles = makeStyles(theme => ({
     title: {
         fontSize: '1.5rem',
         marginBottom: '0.5rem',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    logo: {
+        marginRight: '10px',
+        width: '40px',
+        height: '30px',
     },
     subTitle: {
         fontSize: '1.25rem',
@@ -36,6 +43,6 @@ export const useStyles = makeStyles(theme => ({
     imageContainer: {
         display: 'flex',
         justifyContent: 'center',
-        marginTop: '6rem',
+        marginTop: '8rem',
     },
 }));

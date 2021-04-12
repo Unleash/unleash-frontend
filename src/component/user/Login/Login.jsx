@@ -7,6 +7,7 @@ import { Typography } from '@material-ui/core';
 import AuthenticationContainer from '../authentication-container';
 import ConditionallyRender from '../../common/ConditionallyRender';
 
+import { ReactComponent as UnleashLogo } from '../../../icons/unleash-logo-inverted.svg';
 import { ReactComponent as SwitchesSVG } from '../../../icons/switches.svg';
 import { useStyles } from './Login.styles';
 
@@ -31,7 +32,9 @@ const Login = ({ history, loadInitialData, authDetails }) => {
                         styles.gradient
                     )}
                 >
-                    <h1 className={styles.title}>Unleash</h1>
+                    <h1 className={styles.title}>
+                        <UnleashLogo className={styles.logo} /> Unleash
+                    </h1>
                     <Typography variant="body1" className={styles.subTitle}>
                         Committed to creating new ways of developing
                     </Typography>
