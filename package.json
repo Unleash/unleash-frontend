@@ -105,5 +105,8 @@
       "import/no-anonymous-default-export": "off"
     }
   },
-  "proxy": "http://localhost:4242"
+  "proxy": "http://localhost:4242",
+  "dependencies": {
+    "swr": "^0.5.5"
+  }
 }

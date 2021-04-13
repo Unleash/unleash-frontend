@@ -16,6 +16,11 @@ export const useCommonStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.division.main,
         height: '3px',
     },
+    largeDivider: {
+        margin: '2rem 0',
+        backgroundColor: theme.palette.division.main,
+        height: '3px',
+    },
     bold: {
         fontWeight: 'bold',
     },
