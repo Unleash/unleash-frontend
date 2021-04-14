@@ -6,7 +6,7 @@ const LayoutPicker = ({ children, location }) => {
         const isLoginPage = location.pathname.includes('login');
         const isNewUserPage = location.pathname.includes('new-user');
         const isChangePasswordPage = location.pathname.includes(
-            'change-password'
+            'reset-password'
         );
 
         return isLoginPage || isNewUserPage || isChangePasswordPage;

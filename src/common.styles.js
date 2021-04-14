@@ -43,4 +43,7 @@ export const useCommonStyles = makeStyles(theme => ({
     fullHeight: {
         height: '100%',
     },
+    title: {
+        fontSize: theme.fontSizes.mainHeader,
+    },
 }));

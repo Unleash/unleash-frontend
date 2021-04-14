@@ -35,7 +35,7 @@ import Reporting from '../../page/reporting';
 import Login from '../user/Login';
 import { P, C } from '../common/flags';
 import NewUser from '../user/NewUser/NewUser';
-import ChangePassword from '../user/ChangePassword/ChangePassword';
+import ChangePassword from '../user/ResetPassword/ResetPassword';
 
 export const routes = [
     // Features

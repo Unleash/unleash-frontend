@@ -3,10 +3,13 @@ import { makeStyles } from '@material-ui/styles';
 export const useStyles = makeStyles(theme => ({
     title: {
         color: '#fff',
-        fontSize: '1.25rem',
+        fontSize: '1.2rem',
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: '2rem',
+        marginBottom: '1rem',
+    },
+    container: {
+        padding: '4rem 2rem',
+        color: '#fff',
     },
     switchesContainer: {
         position: 'fixed',

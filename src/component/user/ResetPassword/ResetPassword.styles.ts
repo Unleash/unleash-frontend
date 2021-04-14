@@ -4,12 +4,9 @@ export const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
     },
-    roleContainer: {
-        marginTop: '2rem',
-    },
-    innerContainer: {
-        width: '60%',
-        minHeight: '100vh',
-        padding: '4rem 3rem',
+    innerContainer: { width: '40%', minHeight: '100vh' },
+    title: {
+        fontSize: '1.2rem',
+        marginBottom: '1rem',
     },
 }));

@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { Typography, useTheme } from '@material-ui/core';
 import Gradient from '../../common/Gradient/Gradient';
 import { ReactComponent as StarIcon } from '../../../icons/star.svg';
@@ -5,31 +7,41 @@ import { ReactComponent as RightToggleIcon } from '../../../icons/toggleRight.sv
 import { ReactComponent as LeftToggleIcon } from '../../../icons/toggleLeft.svg';
 
 import { useStyles } from './StandaloneBanner.styles';
+import ConditionallyRender from '../../common/ConditionallyRender';
 
-const StandaloneBanner = () => {
+interface IStandaloneBannerProps {
+    showStars?: boolean;
+    title: string;
+}
+
+const StandaloneBanner: FC<IStandaloneBannerProps> = ({
+    showStars = false,
+    title,
+    children,
+}) => {
     const theme = useTheme();
     const styles = useStyles();
     return (
         <Gradient from={theme.palette.primary.main} to={'#173341'}>
-            <div
-                style={{
-                    padding: '4rem 2rem',
-                    textAlign: 'center',
-                    color: '#fff',
-                }}
-            >
+            <div className={styles.container}>
                 <Typography variant="h1" className={styles.title}>
-                    Welcome to unleash
+                    {title}
                 </Typography>
-                <Typography variant="body1">
-                    Fredrik Oseberg has invited you to Unleash.
-                </Typography>
+                {children}
             </div>
-            <StarIcon className={styles.midLeftStarTwo} />
-            <StarIcon className={styles.midLeftStar} />
-            <StarIcon className={styles.midRightStar} />
-            <StarIcon className={styles.bottomRightStar} />
-            <StarIcon className={styles.bottomStar} />
+            <ConditionallyRender
+                condition={showStars}
+                show={
+                    <>
+                        <StarIcon className={styles.midLeftStarTwo} />
+                        <StarIcon className={styles.midLeftStar} />
+                        <StarIcon className={styles.midRightStar} />
+                        <StarIcon className={styles.bottomRightStar} />
+                        <StarIcon className={styles.bottomStar} />
+                    </>
+                }
+            />
+
             <div className={styles.switchesContainer}>
                 <RightToggleIcon className={styles.switchIcon} />
                 <br></br>
