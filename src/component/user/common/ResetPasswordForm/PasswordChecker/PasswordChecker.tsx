@@ -32,20 +32,16 @@ const LOWERCASE_ERROR =
 
 const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
     const styles = useStyles();
-    const [loading, setLoading] = useState(false);
     const [casingError, setCasingError] = useState(true);
     const [numberError, setNumberError] = useState(true);
     const [symbolError, setSymbolError] = useState(true);
     const [lengthError, setLengthError] = useState(true);
-    const ref = useLoading(loading);
 
     useEffect(() => {
         checkPassword();
     }, [password]);
 
     const checkPassword = async () => {
-        setLoading(true);
-
         try {
             const res = await fetch('auth/reset/validate-password', {
                 headers: {
@@ -64,10 +60,8 @@ const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
             if (res.status === OK) {
                 clearErrors();
             }
-
-            setLoading(false);
         } catch (e) {
-            setLoading(false);
+            console.log(e);
         }
     };
 
@@ -150,7 +144,7 @@ const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
                 </div>
             </div>
             <div className={styles.divider} />
-            <div className={styles.statusBarContainer} ref={ref}>
+            <div className={styles.statusBarContainer}>
                 <div className={styles.checkContainer}>
                     <div className={lengthStatusBarClasses} data-loading />
                 </div>
