@@ -72,6 +72,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8",
     "typescript": "^4.2.3",
+    "swr": "^0.5.5",
     "web-vitals": "^1.0.1"
   },
   "jest": {
@@ -106,8 +107,5 @@
       "import/no-anonymous-default-export": "off"
     }
   },
-  "proxy": "http://localhost:4242",
-  "dependencies": {
-    "swr": "^0.5.5"
-  }
+  "proxy": "http://localhost:4242"
 }
