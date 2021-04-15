@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from '@material-ui/core';
-import { formatFullDateTimeWithLocale } from '../../../../component/common/util';
+import { formatDateWithLocale } from '../../../../component/common/util';
 import AddUser from '../add-user-component';
 import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
@@ -80,24 +80,24 @@ function UsersList({
                     <TableRow>
                         <TableCell></TableCell>
                         <TableCell>Created</TableCell>
-                        <TableCell>Username</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Role</TableCell>
-                        <TableCell>{hasPermission('ADMIN') ? 'Action' : ''}</TableCell>
+                        <TableCell>Username</TableCell>
+                        <TableCell align="center">Role</TableCell>
+                        <TableCell align="right">{hasPermission('ADMIN') ? 'Action' : ''}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {users.map(item => (
                         <TableRow key={item.id}>
-                            <TableCell><Avatar alt={item.name} src={item.imageUrl} title={`${item.name || item.email || item.username} (id: ${item.id})`} /></TableCell>
-                            <TableCell>{formatFullDateTimeWithLocale(item.createdAt, location.locale)}</TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
+                            <TableCell><Avatar variant="rounded" alt={item.name} src={item.imageUrl} title={`${item.name || item.email || item.username} (id: ${item.id})`} /></TableCell>
+                            <TableCell>{formatDateWithLocale(item.createdAt, location.locale)}</TableCell>
                             <TableCell style={{ textAlign: 'left' }}>{item.name}</TableCell>
-                            <TableCell>{renderRole(item.rootRole)}</TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
+                            <TableCell align="center">{renderRole(item.rootRole)}</TableCell>
                             <ConditionallyRender
                                 condition={hasPermission('ADMIN')}
                                 show={
-                                    <TableCell>
+                                    <TableCell align="right">
                                         <IconButton aria-label="Edit" title="Edit" onClick={openUpdateDialog(item)}>
                                             <Icon>edit</Icon>
                                         </IconButton>

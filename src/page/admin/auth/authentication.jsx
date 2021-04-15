@@ -8,7 +8,7 @@ import TabNav from '../../../component/common/TabNav/TabNav';
 import PageContent from '../../../component/common/PageContent/PageContent';
 import ConditionallyRender from '../../../component/common/ConditionallyRender/ConditionallyRender';
 
-function AdminAuthPage({ authenticationType }) {
+function AdminAuthPage({ authenticationType, history }) {
     const tabs = [
         {
             label: 'SAML 2.0',
@@ -22,7 +22,7 @@ function AdminAuthPage({ authenticationType }) {
 
     return (
         <div>
-            <AdminMenu />
+            <AdminMenu history={history} />
             <PageContent headerContent="Authentication">
                 <ConditionallyRender condition={authenticationType === 'enterprise'}
                     show={
