@@ -29,6 +29,7 @@ const NewUser = () => {
     return (
         <div ref={ref}>
             <StandaloneLayout
+                showMenu={false}
                 BannerComponent={
                     <StandaloneBanner showStars title={'Welcome to Unleash'}>
                         <ConditionallyRender
