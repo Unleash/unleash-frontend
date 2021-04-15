@@ -10,11 +10,14 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import { ReactComponent as UnleashLogo } from '../../../icons/unleash-logo-inverted.svg';
 import { ReactComponent as SwitchesSVG } from '../../../icons/switches.svg';
 import { useStyles } from './Login.styles';
+import useQueryParams from '../../../hooks/useQueryParams';
+import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSuccess';
 
 const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
     const theme = useTheme();
     const styles = useStyles();
     const smallScreen = useMediaQuery(theme.breakpoints.up('md'));
+    const query = useQueryParams();
 
     useEffect(() => {
         if (isUnauthorized()) {
@@ -24,6 +27,8 @@ const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
         }
         /* eslint-disable-next-line */
     }, [authDetails]);
+
+    const resetPassword = query.get('reset') === 'true';
 
     return (
         <div className={styles.loginContainer}>
@@ -51,6 +56,10 @@ const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
                 </div>
                 <div className={styles.contentContainer}>
                     <h2 className={styles.title}>Login</h2>
+                    <ConditionallyRender
+                        condition={resetPassword}
+                        show={<ResetPasswordSuccess />}
+                    />
                     <div className={styles.loginFormContainer}>
                         <AuthenticationContainer history={history} />
                     </div>

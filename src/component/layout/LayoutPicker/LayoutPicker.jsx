@@ -8,8 +8,16 @@ const LayoutPicker = ({ children, location }) => {
         const isChangePasswordPage = location.pathname.includes(
             'reset-password'
         );
+        const isResetPasswordSuccessPage = location.pathname.includes(
+            'reset-password-success'
+        );
 
-        return isLoginPage || isNewUserPage || isChangePasswordPage;
+        return (
+            isLoginPage ||
+            isNewUserPage ||
+            isChangePasswordPage ||
+            isResetPasswordSuccessPage
+        );
     };
 
     return (

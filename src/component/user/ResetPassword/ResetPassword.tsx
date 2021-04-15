@@ -1,5 +1,3 @@
-import useSWR from 'swr';
-import useQueryParams from '../../../hooks/useQueryParams';
 import useLoading from '../../../hooks/useLoading';
 
 import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
@@ -9,26 +7,19 @@ import { useStyles } from './ResetPassword.styles';
 import { Typography } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
-
-const getFetcher = (token: string) => () =>
-    fetch(`http://localhost:4242/auth/reset/validate?token=${token}`, {
-        method: 'GET',
-    });
+import useResetPassword from '../../../hooks/useResetPassword';
 
 const ResetPassword = () => {
     const styles = useStyles();
-    const query = useQueryParams();
-    const token = query.get('token') || '';
-    const fetcher = getFetcher(token);
-    const { data, error } = useSWR(
-        `/auth/reset/validate?token=${token}`,
-        fetcher
-    );
-    const loading = !error && !data;
+    const [
+        token,
+        data,
+        error,
+        loading,
+        setLoading,
+        invalidToken,
+    ] = useResetPassword();
     const ref = useLoading(loading);
-
-    console.log(data);
-    const invalidToken = !loading && data?.status === 401;
 
     return (
         <div className={styles.container} ref={ref}>
@@ -40,10 +31,14 @@ const ResetPassword = () => {
                 </StandaloneBanner>
             </div>
             <ConditionallyRender
-                condition={false}
+                condition={invalidToken}
                 show={<InvalidToken />}
                 elseShow={
-                    <ResetPasswordDetails data={data} token={token}>
+                    <ResetPasswordDetails
+                        data={data}
+                        token={token}
+                        setLoading={setLoading}
+                    >
                         <Typography
                             variant="h2"
                             className={styles.title}

@@ -1,13 +1,12 @@
-import { Typography } from '@material-ui/core';
+import { Tooltip, Typography } from '@material-ui/core';
 import classnames from 'classnames';
-import { useEffect, useState } from 'react';
-import ConditionallyRender from '../../../../common/ConditionallyRender';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { BAD_REQUEST, OK } from '../../../../../constants/statusCodes';
 import { useStyles } from './PasswordChecker.styles';
-import { debounce } from 'debounce';
-import useLoading from '../../../../../hooks/useLoading';
 
 interface IPasswordCheckerProps {
     password: string;
+    callback: Dispatch<SetStateAction<boolean>>;
 }
 
 interface IErrorResponse {
@@ -19,8 +18,6 @@ interface IErrorDetails {
     validationErrors: string[];
 }
 
-const BAD_REQUEST = 400;
-const OK = 200;
 const LENGTH_ERROR = 'The password must be at least 10 characters long.';
 const NUMBER_ERROR = 'The password must contain at least one number.';
 const SYMBOL_ERROR =
@@ -30,7 +27,7 @@ const UPPERCASE_ERROR =
 const LOWERCASE_ERROR =
     'The password must contain at least one lowercase letter.';
 
-const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
+const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
     const styles = useStyles();
     const [casingError, setCasingError] = useState(true);
     const [numberError, setNumberError] = useState(true);
@@ -41,24 +38,28 @@ const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
         checkPassword();
     }, [password]);
 
+    const makeValidatePassReq = () => {
+        return fetch('auth/reset/validate-password', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({ password }),
+        });
+    };
+
     const checkPassword = async () => {
         try {
-            const res = await fetch('auth/reset/validate-password', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify({ password }),
-            });
-
+            const res = await makeValidatePassReq();
             if (res.status === BAD_REQUEST) {
                 const data = await res.json();
-                console.log(data);
                 handleErrorResponse(data);
+                callback(false);
             }
 
             if (res.status === OK) {
                 clearErrors();
+                callback(true);
             }
         } catch (e) {
             console.log(e);
@@ -120,45 +121,59 @@ const PasswordChecker = ({ password }: IPasswordCheckerProps) => {
     });
 
     return (
-        <div className={styles.container}>
-            <div className={styles.headerContainer}>
-                <div className={styles.checkContainer}>
-                    <Typography variant="body2" data-loading>
-                        Length
-                    </Typography>
+        <>
+            <Tooltip
+                arrow
+                title="Your password needs to be at least ten characters long, and include an uppercase letter, a lowercase letter, a number and a symbol to be a valid OWASP password"
+            >
+                <Typography
+                    variant="body2"
+                    className={styles.title}
+                    data-loading
+                >
+                    OWASP password strength
+                </Typography>
+            </Tooltip>
+            <div className={styles.container}>
+                <div className={styles.headerContainer}>
+                    <div className={styles.checkContainer}>
+                        <Typography variant="body2" data-loading>
+                            Length
+                        </Typography>
+                    </div>
+                    <div className={styles.checkContainer}>
+                        <Typography variant="body2" data-loading>
+                            Casing
+                        </Typography>
+                    </div>
+                    <div className={styles.checkContainer}>
+                        <Typography variant="body2" data-loading>
+                            Number
+                        </Typography>
+                    </div>
+                    <div className={styles.checkContainer}>
+                        <Typography variant="body2" data-loading>
+                            Symbol
+                        </Typography>
+                    </div>
                 </div>
-                <div className={styles.checkContainer}>
-                    <Typography variant="body2" data-loading>
-                        Casing
-                    </Typography>
-                </div>
-                <div className={styles.checkContainer}>
-                    <Typography variant="body2" data-loading>
-                        Number
-                    </Typography>
-                </div>
-                <div className={styles.checkContainer}>
-                    <Typography variant="body2" data-loading>
-                        Symbol
-                    </Typography>
+                <div className={styles.divider} />
+                <div className={styles.statusBarContainer}>
+                    <div className={styles.checkContainer}>
+                        <div className={lengthStatusBarClasses} data-loading />
+                    </div>
+                    <div className={styles.checkContainer}>
+                        <div className={casingStatusBarClasses} data-loading />
+                    </div>{' '}
+                    <div className={styles.checkContainer}>
+                        <div className={numberStatusBarClasses} data-loading />
+                    </div>
+                    <div className={styles.checkContainer}>
+                        <div className={symbolStatusBarClasses} data-loading />
+                    </div>
                 </div>
             </div>
-            <div className={styles.divider} />
-            <div className={styles.statusBarContainer}>
-                <div className={styles.checkContainer}>
-                    <div className={lengthStatusBarClasses} data-loading />
-                </div>
-                <div className={styles.checkContainer}>
-                    <div className={casingStatusBarClasses} data-loading />
-                </div>{' '}
-                <div className={styles.checkContainer}>
-                    <div className={numberStatusBarClasses} data-loading />
-                </div>
-                <div className={styles.checkContainer}>
-                    <div className={symbolStatusBarClasses} data-loading />
-                </div>
-            </div>
-        </div>
+        </>
     );
 };
 

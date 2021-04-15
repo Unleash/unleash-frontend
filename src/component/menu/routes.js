@@ -35,7 +35,7 @@ import Reporting from '../../page/reporting';
 import Login from '../user/Login';
 import { P, C } from '../common/flags';
 import NewUser from '../user/NewUser/NewUser';
-import ChangePassword from '../user/ResetPassword/ResetPassword';
+import ResetPassword from '../user/ResetPassword/ResetPassword';
 
 export const routes = [
     // Features
@@ -355,7 +355,7 @@ export const routes = [
         path: '/reset-password',
         title: 'reset-password',
         hidden: true,
-        component: ChangePassword,
+        component: ResetPassword,
         type: 'unprotected',
         layout: 'standalone',
     },

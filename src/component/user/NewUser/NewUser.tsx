@@ -1,5 +1,3 @@
-import useSWR from 'swr';
-import useQueryParams from '../../../hooks/useQueryParams';
 import useLoading from '../../../hooks/useLoading';
 import { TextField, Typography } from '@material-ui/core';
 
@@ -8,21 +6,15 @@ import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDe
 
 import { useStyles } from './NewUser.styles';
 import { useCommonStyles } from '../../../common.styles';
+import useResetPassword from '../../../hooks/useResetPassword';
 
 const getFetcher = (token: string) => () =>
-    fetch(`http://localhost:4242/auth/reset/validate?token=${token}`, {
+    fetch(`auth/reset/validate?token=${token}`, {
         method: 'GET',
     });
 
 const NewUser = () => {
-    const query = useQueryParams();
-    const token = query.get('token') || '';
-    const fetcher = getFetcher(token);
-    const { data, error } = useSWR(
-        `/auth/reset/validate?token=${token}`,
-        fetcher
-    );
-    const loading = !error && !data;
+    const [token, data, error, loading, setLoading] = useResetPassword();
     const ref = useLoading(loading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();
@@ -32,7 +24,11 @@ const NewUser = () => {
             <div style={{ width: '40%', minHeight: '100vh' }}>
                 <StandaloneBanner showStars title={'Welcome to Unleash'} />
             </div>
-            <ResetPasswordDetails data={data} token={token}>
+            <ResetPasswordDetails
+                data={data}
+                token={token}
+                setLoading={setLoading}
+            >
                 <Typography
                     data-loading
                     variant="subtitle1"

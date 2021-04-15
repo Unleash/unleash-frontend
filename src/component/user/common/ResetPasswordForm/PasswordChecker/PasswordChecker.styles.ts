@@ -29,6 +29,9 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: 'red',
         height: '6px',
     },
+    title: {
+        marginBottom: '0',
+    },
     statusBarSuccess: {
         backgroundColor: theme.palette.primary.main,
     },
