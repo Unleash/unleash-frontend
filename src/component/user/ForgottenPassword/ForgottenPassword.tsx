@@ -6,9 +6,9 @@ import { useCommonStyles } from '../../../common.styles';
 import useLoading from '../../../hooks/useLoading';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
-import { useStyles } from './GenerateResetLink.styles';
+import { useStyles } from './ForgottenPassword.styles';
 
-const GenerateResetLink = () => {
+const ForgottenPassword = () => {
     const [email, setEmail] = useState('');
     const [attempted, setAttempted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -109,4 +109,4 @@ const GenerateResetLink = () => {
     );
 };
 
-export default GenerateResetLink;
+export default ForgottenPassword;

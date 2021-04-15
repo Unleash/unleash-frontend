@@ -18,7 +18,7 @@ const InvalidToken = () => {
                 variant="contained"
                 color="primary"
                 component={Link}
-                to="reset-password-link"
+                to="forgotten-password"
             >
                 Reset password
             </Button>

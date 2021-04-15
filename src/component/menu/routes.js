@@ -36,7 +36,7 @@ import Login from '../user/Login';
 import { P, C } from '../common/flags';
 import NewUser from '../user/NewUser/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
-import GenerateResetLink from '../user/GenerateResetLink/GenerateResetLink';
+import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 
 export const routes = [
     // Features
@@ -361,10 +361,10 @@ export const routes = [
         layout: 'standalone',
     },
     {
-        path: '/reset-password-link',
+        path: '/forgotten-password',
         title: 'reset-password',
         hidden: true,
-        component: GenerateResetLink,
+        component: ForgottenPassword,
         type: 'unprotected',
         layout: 'standalone',
     },

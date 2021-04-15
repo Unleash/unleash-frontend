@@ -11,12 +11,16 @@ const LayoutPicker = ({ children, location }) => {
         const isResetPasswordSuccessPage = location.pathname.includes(
             'reset-password-success'
         );
+        const isForgottenPasswordPage = location.pathname.includes(
+            'forgotten-password'
+        );
 
         return (
             isLoginPage ||
             isNewUserPage ||
             isChangePasswordPage ||
-            isResetPasswordSuccessPage
+            isResetPasswordSuccessPage ||
+            isForgottenPasswordPage
         );
     };
 
