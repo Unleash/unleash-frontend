@@ -48,7 +48,7 @@ const GenerateResetLink = () => {
                     className={commonStyles.title}
                     data-loading
                 >
-                    Send a new reset link
+                    Forgotten password
                 </Typography>
                 <ConditionallyRender
                     condition={attempted}

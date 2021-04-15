@@ -25,7 +25,7 @@ const NewUser = () => {
     const ref = useLoading(loading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();
-    console.log(data);
+
     return (
         <div ref={ref}>
             <StandaloneLayout

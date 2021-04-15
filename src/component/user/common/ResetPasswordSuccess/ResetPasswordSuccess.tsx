@@ -4,7 +4,7 @@ const ResetPasswordSuccess = () => {
     return (
         <Alert severity="success">
             <AlertTitle>Success</AlertTitle>
-            You successfully reset your password. Login to start using Unleash.
+            You successfully reset your password.
         </Alert>
     );
 };
