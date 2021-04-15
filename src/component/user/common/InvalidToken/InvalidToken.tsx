@@ -5,10 +5,7 @@ import { useCommonStyles } from '../../../../common.styles';
 const InvalidToken = () => {
     const commonStyles = useCommonStyles();
     return (
-        <div
-            style={{ padding: '4rem 3rem', width: '60%' }}
-            className={commonStyles.contentSpacingY}
-        >
+        <div className={commonStyles.contentSpacingY}>
             <Typography variant="h2" className={commonStyles.title}>
                 Invalid token
             </Typography>

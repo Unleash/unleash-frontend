@@ -10,6 +10,7 @@ export const useStyles = makeStyles(theme => ({
     container: {
         padding: '4rem 2rem',
         color: '#fff',
+        position: 'relative',
     },
     switchesContainer: {
         position: 'fixed',
@@ -22,27 +23,27 @@ export const useStyles = makeStyles(theme => ({
     },
     bottomStar: {
         position: 'absolute',
-        bottom: '233px',
-        left: '315px',
+        bottom: '-54px',
+        left: '100px',
     },
     bottomRightStar: {
         position: 'absolute',
-        bottom: '350px',
-        left: '420px',
+        bottom: '-100px',
+        left: '200px',
     },
     midRightStar: {
         position: 'absolute',
-        bottom: '550px',
-        left: '500px',
+        bottom: '-80px',
+        left: '300px',
     },
     midLeftStar: {
         position: 'absolute',
-        bottom: '500px',
+        top: '10px',
         left: '150px',
     },
     midLeftStarTwo: {
         position: 'absolute',
-        bottom: '700px',
-        left: '100px',
+        top: '25px',
+        left: '350px',
     },
 }));

@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react';
 const getFetcher = (token: string) => () =>
     fetch(`auth/reset/validate?token=${token}`, {
         method: 'GET',
-    });
+    }).then(res => res.json());
 
 const useResetPassword = () => {
     const query = useQueryParams();
-    const token = query.get('token') || '';
+    const initialToken = query.get('token') || '';
+    const [token, setToken] = useState(initialToken);
+
     const fetcher = getFetcher(token);
     const { data, error } = useSWR(
         `auth/reset/validate?token=${token}`,
@@ -17,13 +19,19 @@ const useResetPassword = () => {
     );
     const [loading, setLoading] = useState(!error && !data);
 
+    const retry = () => {
+        const token = query.get('token') || '';
+        console.log('updating', token);
+        setToken(token);
+    };
+
     useEffect(() => {
         setLoading(!error && !data);
     }, [data, error]);
 
-    const invalidToken = !loading && data?.status === 401;
+    const invalidToken = !loading && data?.name === 'InvalidTokenError';
 
-    return [token, data, error, loading, setLoading, invalidToken];
+    return [token, data, error, loading, setLoading, invalidToken, retry];
 };
 
 export default useResetPassword;

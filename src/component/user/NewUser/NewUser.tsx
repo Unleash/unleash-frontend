@@ -1,5 +1,5 @@
 import useLoading from '../../../hooks/useLoading';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
 
 import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
@@ -7,69 +7,97 @@ import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDe
 import { useStyles } from './NewUser.styles';
 import { useCommonStyles } from '../../../common.styles';
 import useResetPassword from '../../../hooks/useResetPassword';
-
-const getFetcher = (token: string) => () =>
-    fetch(`auth/reset/validate?token=${token}`, {
-        method: 'GET',
-    });
+import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import InvalidToken from '../common/InvalidToken/InvalidToken';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 
 const NewUser = () => {
-    const [token, data, error, loading, setLoading] = useResetPassword();
+    const [
+        token,
+        data,
+        error,
+        loading,
+        setLoading,
+        invalidToken,
+    ] = useResetPassword();
     const ref = useLoading(loading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();
-
+    console.log(data);
     return (
-        <div className={styles.container} ref={ref}>
-            <div style={{ width: '40%', minHeight: '100vh' }}>
-                <StandaloneBanner showStars title={'Welcome to Unleash'} />
-            </div>
-            <ResetPasswordDetails
-                data={data}
-                token={token}
-                setLoading={setLoading}
+        <div ref={ref}>
+            <StandaloneLayout
+                BannerComponent={
+                    <StandaloneBanner showStars title={'Welcome to Unleash'}>
+                        <Typography variant="body1">
+                            You have been invited by {data?.createdBy}
+                        </Typography>
+                    </StandaloneBanner>
+                }
             >
-                <Typography
-                    data-loading
-                    variant="subtitle1"
-                    style={{ marginBottom: '0.5rem', fontSize: '1.1rem' }}
-                >
-                    Your username is
-                </Typography>
-                <TextField
-                    data-loading
-                    value="fredrik@getunleash.ai"
-                    variant="outlined"
-                    size="small"
-                    style={{ minWidth: '300px' }}
-                    disabled
+                <ConditionallyRender
+                    condition={invalidToken}
+                    show={<InvalidToken />}
+                    elseShow={
+                        <ResetPasswordDetails
+                            token={token}
+                            setLoading={setLoading}
+                        >
+                            <Typography
+                                data-loading
+                                variant="subtitle1"
+                                style={{
+                                    marginBottom: '0.5rem',
+                                    fontSize: '1.1rem',
+                                }}
+                            >
+                                Your username is
+                            </Typography>
+                            <TextField
+                                data-loading
+                                value={data?.email}
+                                variant="outlined"
+                                size="small"
+                                style={{ minWidth: '300px' }}
+                                disabled
+                            />
+                            <div className={styles.roleContainer}>
+                                <Typography
+                                    data-loading
+                                    variant="subtitle1"
+                                    style={{
+                                        marginBottom: '0.5rem',
+                                        fontSize: '1.1rem',
+                                    }}
+                                >
+                                    In unleash you are an{' '}
+                                    <i>{data?.role?.name}</i>
+                                </Typography>
+                                <Typography variant="body1" data-loading>
+                                    {data?.role?.description}
+                                </Typography>
+                                <div
+                                    className={commonStyles.largeDivider}
+                                    data-loading
+                                />
+                                <Typography
+                                    variant="subtitle1"
+                                    style={{
+                                        marginBottom: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                    data-loading
+                                >
+                                    In order to get started with Unleash. Please
+                                    set a new password for your account.
+                                </Typography>
+                            </div>
+                        </ResetPasswordDetails>
+                    }
                 />
-                <div className={styles.roleContainer}>
-                    <Typography
-                        data-loading
-                        variant="subtitle1"
-                        style={{ marginBottom: '0.5rem', fontSize: '1.1rem' }}
-                    >
-                        In unleash you are an <i>Editor</i>
-                    </Typography>
-                    <Typography variant="body1" data-loading>
-                        As Editor you have access to most features in Unleash,
-                        but you can not manage users and roles in the global
-                        scope. If you create a project, you will become a
-                        project owner and receive superuser rights within the
-                        context of that project.
-                    </Typography>
-                    <div className={commonStyles.largeDivider} data-loading />
-                    <Typography
-                        variant="subtitle1"
-                        style={{ marginBottom: '0.5rem', fontSize: '1rem' }}
-                        data-loading
-                    >
-                        In order to get started with Unleash. Please set a new
-                        password for your account.
-                    </Typography>
-                </div>
-            </ResetPasswordDetails>
+            </StandaloneLayout>
         </div>
     );
 };

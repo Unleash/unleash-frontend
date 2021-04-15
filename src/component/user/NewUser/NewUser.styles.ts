@@ -12,4 +12,11 @@ export const useStyles = makeStyles(theme => ({
         minHeight: '100vh',
         padding: '4rem 3rem',
     },
+    buttonContainer: {
+        display: 'flex',
+        marginTop: '1rem',
+    },
+    primaryBtn: {
+        marginRight: '8px',
+    },
 }));

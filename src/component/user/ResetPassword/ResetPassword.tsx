@@ -8,12 +8,13 @@ import { Typography } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
 import useResetPassword from '../../../hooks/useResetPassword';
+import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
 const ResetPassword = () => {
     const styles = useStyles();
     const [
         token,
-        data,
+        _,
         error,
         loading,
         setLoading,
@@ -22,33 +23,27 @@ const ResetPassword = () => {
     const ref = useLoading(loading);
 
     return (
-        <div className={styles.container} ref={ref}>
-            <div className={styles.innerContainer}>
-                <StandaloneBanner title="Unleash">
-                    <Typography variant="subtitle1">
-                        Committed to creating new ways of developing.
-                    </Typography>
-                </StandaloneBanner>
-            </div>
-            <ConditionallyRender
-                condition={invalidToken}
-                show={<InvalidToken />}
-                elseShow={
-                    <ResetPasswordDetails
-                        data={data}
-                        token={token}
-                        setLoading={setLoading}
-                    >
-                        <Typography
-                            variant="h2"
-                            className={styles.title}
-                            data-loading
+        <div ref={ref}>
+            <StandaloneLayout>
+                <ConditionallyRender
+                    condition={invalidToken}
+                    show={<InvalidToken />}
+                    elseShow={
+                        <ResetPasswordDetails
+                            token={token}
+                            setLoading={setLoading}
                         >
-                            Reset password
-                        </Typography>
-                    </ResetPasswordDetails>
-                }
-            />
+                            <Typography
+                                variant="h2"
+                                className={styles.title}
+                                data-loading
+                            >
+                                Reset password
+                            </Typography>
+                        </ResetPasswordDetails>
+                    }
+                />
+            </StandaloneLayout>
         </div>
     );
 };
