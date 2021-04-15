@@ -31,9 +31,14 @@ const NewUser = () => {
             <StandaloneLayout
                 BannerComponent={
                     <StandaloneBanner showStars title={'Welcome to Unleash'}>
-                        <Typography variant="body1">
-                            You have been invited by {data?.createdBy}
-                        </Typography>
+                        <ConditionallyRender
+                            condition={data?.createdBy}
+                            show={
+                                <Typography variant="body1">
+                                    You have been invited by {data?.createdBy}
+                                </Typography>
+                            }
+                        />
                     </StandaloneBanner>
                 }
             >

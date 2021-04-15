@@ -45,5 +45,7 @@ export const useCommonStyles = makeStyles(theme => ({
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,
+        fontWeight: 'bold',
+        marginBottom: '0.5rem',
     },
 }));

@@ -61,13 +61,13 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
             const res = await makeResetPasswordReq();
             setLoading(false);
             if (res.status === OK) {
+                console.log('PUSHING TO LOGIN');
                 history.push('login?reset=true');
                 setApiError(false);
             } else {
                 setApiError(true);
             }
         } catch (e) {
-            // Set error state and render error component
             setApiError(true);
             setLoading(false);
         }
