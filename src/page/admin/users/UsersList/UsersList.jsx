@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Button, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from '@material-ui/core';
 import { formatFullDateTimeWithLocale } from '../../../../component/common/util';
 import AddUser from '../add-user-component';
 import ChangePassword from '../change-password-component';
@@ -78,7 +78,7 @@ function UsersList({
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Id</TableCell>
+                        <TableCell></TableCell>
                         <TableCell>Created</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell>Name</TableCell>
@@ -89,7 +89,7 @@ function UsersList({
                 <TableBody>
                     {users.map(item => (
                         <TableRow key={item.id}>
-                            <TableCell>{item.id}</TableCell>
+                            <TableCell><Avatar alt={item.name} src={item.imageUrl} title={`${item.name || item.email || item.username} (id: ${item.id})`} /></TableCell>
                             <TableCell>{formatFullDateTimeWithLocale(item.createdAt, location.locale)}</TableCell>
                             <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
                             <TableCell style={{ textAlign: 'left' }}>{item.name}</TableCell>
