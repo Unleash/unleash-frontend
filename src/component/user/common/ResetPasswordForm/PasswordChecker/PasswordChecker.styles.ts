@@ -31,8 +31,13 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         marginBottom: '0',
+        display: 'flex',
+        alignItems: 'center',
     },
     statusBarSuccess: {
         backgroundColor: theme.palette.primary.main,
+    },
+    helpIcon: {
+        height: '17.5px',
     },
 }));

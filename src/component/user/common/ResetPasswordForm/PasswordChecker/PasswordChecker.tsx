@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { BAD_REQUEST, OK } from '../../../../../constants/statusCodes';
 import { useStyles } from './PasswordChecker.styles';
+import HelpIcon from '@material-ui/icons/Help';
 
 interface IPasswordCheckerProps {
     password: string;
@@ -131,7 +132,8 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
                     className={styles.title}
                     data-loading
                 >
-                    OWASP password strength
+                    Please set a strong password
+                    <HelpIcon className={styles.helpIcon} />
                 </Typography>
             </Tooltip>
             <div className={styles.container}>
