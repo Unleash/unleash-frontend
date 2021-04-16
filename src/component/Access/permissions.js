@@ -21,9 +21,7 @@ export const CREATE_ADDON = 'CREATE_ADDON';
 export const UPDATE_ADDON = 'UPDATE_ADDON';
 export const DELETE_ADDON = 'DELETE_ADDON';
 
-export function hasPermission(user, permission) {
-    return (
-        user &&
-        (!user.permissions || user.permissions.indexOf(ADMIN) !== -1 || user.permissions.indexOf(permission) !== -1)
-    );
+export function hasPermission() {
+    console.log('legacy method.')
+    return false;
 }

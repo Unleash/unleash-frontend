@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TagsListComponent from './TagList';
 import { fetchTags, removeTag } from '../../store/tag/actions';
-import { hasPermission } from '../../permissions';
+import { hasPermission } from '../Access/permissions';
 
 const mapStateToProps = state => {
     const list = state.tags.toJS();

@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/core';
 
 import UpdateVariant from './../update-variant-component';
 import renderer from 'react-test-renderer';
-import { UPDATE_FEATURE } from '../../../../permissions';
+import { UPDATE_FEATURE } from '../../../Access/permissions';
 import { weightTypes } from '../enums';
 import theme from '../../../../themes/main-theme';
 

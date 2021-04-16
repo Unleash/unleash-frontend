@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import Component from './api-key-list';
 import { fetchApiKeys, removeKey, addKey } from './../../../store/e-api-admin/actions';
-import { hasPermission } from '../../../permissions';
+import { hasPermission } from '../../../component/Access/permissions';
 
 export default connect(
     state => ({

@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core';
 
 import StrategiesListComponent from '../StrategiesList/StrategiesList';
 import renderer from 'react-test-renderer';
-import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../../permissions';
+import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../Access/permissions';
 import theme from '../../../themes/main-theme';
 
 test('renders correctly with one strategy', () => {

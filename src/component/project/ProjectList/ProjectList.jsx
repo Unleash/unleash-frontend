@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from '../../../permissions';
+import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from '../../Access/permissions';
 import { Icon, IconButton, List, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ConfirmDialogue from '../../common/Dialogue';

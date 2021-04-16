@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import component from './authentication';
-import { hasPermission } from '../../../permissions';
+import { hasPermission } from '../../../component/Access/permissions';
 
 const mapStateToProps = state => ({
     authenticationType: state.uiConfig.toJS().authenticationType,

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ import {
     CREATE_FEATURE,
     DELETE_FEATURE,
     UPDATE_FEATURE,
-} from '../../../permissions';
+} from '../../Access/permissions';
 import StatusComponent from '../status-component';
 import FeatureTagComponent from '../feature-tag-component';
 import StatusUpdateComponent from '../view/status-update-component';
@@ -35,6 +35,7 @@ import styles from './FeatureView.module.scss';
 import ConfirmDialogue from '../../common/Dialogue';
 
 import { useCommonStyles } from '../../../common.styles';
+import AccessContext from '../../Access/access-context';
 
 const FeatureView = ({
     activeTab,
@@ -49,7 +50,6 @@ const FeatureView = ({
     editFeatureToggle,
     featureToggle,
     history,
-    hasPermission,
     untagFeature,
     featureTags,
     fetchTags,
@@ -58,6 +58,8 @@ const FeatureView = ({
     const isFeatureView = !!fetchFeatureToggles;
     const [delDialog, setDelDialog] = useState(false);
     const commonStyles = useCommonStyles();
+    const { hasAccess } = useContext(AccessContext);
+    const { project } = featureToggle || { };
 
     useEffect(() => {
         scrollToTop();
@@ -79,7 +81,7 @@ const FeatureView = ({
     const getTabComponent = key => {
         switch (key) {
             case 'activation':
-                if (isFeatureView && hasPermission(UPDATE_FEATURE)) {
+                if (isFeatureView && hasAccess(UPDATE_FEATURE, project)) {
                     return (
                         <UpdateStrategies
                             featureToggle={featureToggle}
@@ -104,7 +106,7 @@ const FeatureView = ({
                         featureToggle={featureToggle}
                         features={features}
                         history={history}
-                        hasPermission={hasPermission}
+                        hasAccess={hasAccess}
                     />
                 );
             case 'log':
@@ -152,7 +154,7 @@ const FeatureView = ({
             <span>
                 Could not find the toggle{' '}
                 <ConditionallyRender
-                    condition={hasPermission(CREATE_FEATURE)}
+                    condition={hasAccess(CREATE_FEATURE, project)}
                     show={
                         <Link
                             to={{
@@ -243,7 +245,7 @@ const FeatureView = ({
                         isFeatureView={isFeatureView}
                         description={featureToggle.description}
                         update={updateDescription}
-                        hasPermission={hasPermission}
+                        hasAccess={() => hasAccess(UPDATE_FEATURE, project)}
                     />
                     <div className={styles.selectContainer}>
                         <FeatureTypeSelect
@@ -271,7 +273,7 @@ const FeatureView = ({
             <div className={styles.actions}>
                 <span style={{ paddingRight: '24px' }}>
                     <ConditionallyRender
-                        condition={hasPermission(UPDATE_FEATURE)}
+                        condition={hasAccess(UPDATE_FEATURE, project)}
                         show={
                             <>
                                 <Switch
@@ -327,7 +329,7 @@ const FeatureView = ({
                             </Button>
 
                             <Button
-                                disabled={!hasPermission(DELETE_FEATURE)}
+                                disabled={!hasAccess(DELETE_FEATURE, project)}
                                 onClick={() => {
                                     setDelDialog(true);
                                 }}
@@ -340,7 +342,7 @@ const FeatureView = ({
                     }
                     elseShow={
                         <Button
-                            disabled={!hasPermission(UPDATE_FEATURE)}
+                            disabled={!hasAccess(UPDATE_FEATURE, hasAccess)}
                             onClick={reviveToggle}
                             style={{ flexShrink: 0 }}
                         >
@@ -383,7 +385,6 @@ FeatureView.propTypes = {
     editFeatureToggle: PropTypes.func,
     featureToggle: PropTypes.object,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
     fetchTags: PropTypes.func,
     untagFeature: PropTypes.func,
     featureTags: PropTypes.array,

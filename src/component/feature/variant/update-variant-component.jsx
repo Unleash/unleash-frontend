@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import VariantViewComponent from './variant-view-component';
 import styles from './variant.module.scss';
-import { UPDATE_FEATURE } from '../../../permissions';
+import { UPDATE_FEATURE } from '../../Access/permissions';
 import {
     Table,
     TableHead,

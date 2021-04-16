@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core';
 import ViewFeatureToggleComponent from '../../FeatureView/FeatureView';
 import renderer from 'react-test-renderer';
-import { DELETE_FEATURE, UPDATE_FEATURE } from '../../../../permissions';
+import { DELETE_FEATURE, UPDATE_FEATURE } from '../../../Access/permissions';
 
 import theme from '../../../../themes/main-theme';
 

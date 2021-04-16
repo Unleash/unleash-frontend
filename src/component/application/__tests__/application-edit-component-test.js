@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core';
 import ClientApplications from '../application-edit-component';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
-import { CREATE_FEATURE, CREATE_STRATEGY, UPDATE_APPLICATION } from '../../../permissions';
+import { CREATE_FEATURE, CREATE_STRATEGY, UPDATE_APPLICATION } from '../../Access/permissions';
 import theme from '../../../themes/main-theme';
 
 test('renders correctly if no application', () => {
@@ -14,7 +14,6 @@ test('renders correctly if no application', () => {
                 fetchApplication={() => Promise.resolve({})}
                 storeApplicationMetaData={jest.fn()}
                 deleteApplication={jest.fn()}
-                hasPermission={() => true}
                 history={{}}
             />
         )
@@ -71,7 +70,6 @@ test('renders correctly without permission', () => {
                             description: 'app description',
                         }}
                         location={{ locale: 'en-GB' }}
-                        hasPermission={() => false}
                     />
                 </ThemeProvider>
             </MemoryRouter>
@@ -129,9 +127,6 @@ test('renders correctly with permissions', () => {
                             description: 'app description',
                         }}
                         location={{ locale: 'en-GB' }}
-                        hasPermission={permission =>
-                            [CREATE_FEATURE, CREATE_STRATEGY, UPDATE_APPLICATION].indexOf(permission) !== -1
-                        }
                     />
                 </ThemeProvider>
             </MemoryRouter>

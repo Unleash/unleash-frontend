@@ -5,7 +5,7 @@ import { Typography, IconButton, FormControl, TextField, Button } from '@materia
 import CreateIcon from '@material-ui/icons/Create';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
-import { UPDATE_FEATURE } from '../../../permissions';
+import { UPDATE_FEATURE } from '../../Access/permissions';
 
 import styles from './update-description-component.module.scss';
 
@@ -19,7 +19,7 @@ export default class UpdateDescriptionComponent extends React.Component {
         isFeatureView: PropTypes.bool.isRequired,
         update: PropTypes.func,
         featureToggle: PropTypes.object,
-        hasPermission: PropTypes.func.isRequired,
+        hasAccess: PropTypes.func.isRequired,
     };
 
     onEditMode = (description, evt) => {
@@ -43,8 +43,8 @@ export default class UpdateDescriptionComponent extends React.Component {
         this.setState({ editMode: false, description: undefined });
     };
 
-    renderRead({ description, isFeatureView, hasPermission }) {
-        const showButton = isFeatureView && hasPermission(UPDATE_FEATURE);
+    renderRead({ description, isFeatureView, hasAccess }) {
+        const showButton = isFeatureView && hasAccess(UPDATE_FEATURE);
         return (
             <FormControl size="small" variant="outlined">
                 <Typography>

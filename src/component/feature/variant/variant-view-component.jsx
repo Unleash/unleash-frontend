@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Chip, Icon, TableCell, TableRow } from '@material-ui/core';
-import { UPDATE_FEATURE } from '../../../permissions';
+import { UPDATE_FEATURE } from '../../Access/permissions';
 import { weightTypes } from './enums';
 
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';

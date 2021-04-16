@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core';
 
 import FeatureToggleList from '../FeatureToggleList';
 import renderer from 'react-test-renderer';
-import { CREATE_FEATURE } from '../../../../permissions';
+import { CREATE_FEATURE } from '../../../Access/permissions';
 import theme from '../../../../themes/main-theme';
 
 jest.mock('../FeatureToggleListItem', () => ({
@@ -33,7 +33,6 @@ test('renders correctly with one feature', () => {
                     features={features}
                     toggleFeature={jest.fn()}
                     fetcher={jest.fn()}
-                    hasPermission={permission => permission === CREATE_FEATURE}
                 />
             </ThemeProvider>
         </MemoryRouter>
@@ -61,7 +60,6 @@ test('renders correctly with one feature without permissions', () => {
                     features={features}
                     toggleFeature={jest.fn()}
                     fetcher={jest.fn()}
-                    hasPermission={() => false}
                 />
             </ThemeProvider>
         </MemoryRouter>

@@ -6,7 +6,7 @@ import {
     deprecateStrategy,
     reactivateStrategy,
 } from '../../../store/strategy/actions';
-import { hasPermission } from '../../../permissions';
+import { hasPermission } from '../../Access/permissions';
 
 const mapStateToProps = state => {
     const list = state.strategies.get('list').toArray();

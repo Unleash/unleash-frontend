@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@material-ui/core';
 import StrategyDetails from '../strategy-details-component';
 import renderer from 'react-test-renderer';
-import { UPDATE_STRATEGY } from '../../../permissions';
+import { UPDATE_STRATEGY } from '../../Access/permissions';
 import { MemoryRouter } from 'react-router-dom';
 import theme from '../../../themes/main-theme';
 

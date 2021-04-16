@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import SamlAuth from './saml-auth';
 import { getSamlConfig, updateSamlConfig } from './../../../store/e-admin-auth/actions';
-import { hasPermission } from '../../../permissions';
+import { hasPermission } from '../../../component/Access/permissions';
 
 const mapStateToProps = state => ({
     config: state.authAdmin.get('saml'),

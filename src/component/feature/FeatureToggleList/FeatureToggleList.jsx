@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -21,21 +21,24 @@ import HeaderTitle from '../../common/HeaderTitle';
 
 import loadingFeatures from './loadingFeatures';
 
-import { CREATE_FEATURE } from '../../../permissions';
+import { CREATE_FEATURE } from '../../Access/permissions';
+
+import AccessContext from '../../Access/access-context';
 
 import { useStyles } from './styles';
 
 const FeatureToggleList = ({
     fetcher,
     features,
-    hasPermission,
     settings,
     revive,
+    currentProjectId,
     updateSetting,
     featureMetrics,
     toggleFeature,
     loading,
 }) => {
+    const { hasAccess } = useContext(AccessContext);
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
 
@@ -66,7 +69,7 @@ const FeatureToggleList = ({
                     feature={feature}
                     toggleFeature={toggleFeature}
                     revive={revive}
-                    hasPermission={hasPermission}
+                    hasAccess={hasAccess}
                     className={'skeleton'}
                 />
             ));
@@ -86,7 +89,7 @@ const FeatureToggleList = ({
                         feature={feature}
                         toggleFeature={toggleFeature}
                         revive={revive}
-                        hasPermission={hasPermission}
+                        hasAccess={hasAccess}
                     />
                 ))}
                 elseShow={
@@ -133,7 +136,7 @@ const FeatureToggleList = ({
                                 />
 
                                 <ConditionallyRender
-                                    condition={hasPermission(CREATE_FEATURE)}
+                                    condition={hasAccess(CREATE_FEATURE, currentProjectId)}
                                     show={
                                         <ConditionallyRender
                                             condition={smallScreen}
@@ -185,8 +188,8 @@ FeatureToggleList.propTypes = {
     toggleFeature: PropTypes.func,
     settings: PropTypes.object,
     history: PropTypes.object.isRequired,
-    hasPermission: PropTypes.func.isRequired,
     loading: PropTypes.bool,
+    currentProjectId: PropTypes.string.isRequired,
 };
 
 export default FeatureToggleList;

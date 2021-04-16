@@ -16,7 +16,7 @@ import {
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../../permissions';
+import { CREATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../Access/permissions';
 import Dialogue from '../../common/Dialogue/Dialogue';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
