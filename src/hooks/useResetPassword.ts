@@ -23,7 +23,6 @@ const useResetPassword = () => {
 
     const retry = () => {
         const token = query.get('token') || '';
-        console.log('updating', token);
         setToken(token);
     };
 
