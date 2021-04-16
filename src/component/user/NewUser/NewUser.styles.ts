@@ -19,4 +19,11 @@ export const useStyles = makeStyles(theme => ({
     primaryBtn: {
         marginRight: '8px',
     },
+    subtitle: {
+        marginBottom: '0.5rem',
+        fontSize: '1.1rem',
+    },
+    emailField: {
+        minWidth: '300px',
+    },
 }));

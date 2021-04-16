@@ -51,10 +51,7 @@ const NewUser = () => {
                             <Typography
                                 data-loading
                                 variant="subtitle1"
-                                style={{
-                                    marginBottom: '0.5rem',
-                                    fontSize: '1.1rem',
-                                }}
+                                className={styles.subtitle}
                             >
                                 Your username is
                             </Typography>
@@ -63,17 +60,14 @@ const NewUser = () => {
                                 value={data?.email}
                                 variant="outlined"
                                 size="small"
-                                style={{ minWidth: '300px' }}
+                                className={styles.emailField}
                                 disabled
                             />
                             <div className={styles.roleContainer}>
                                 <Typography
                                     data-loading
                                     variant="subtitle1"
-                                    style={{
-                                        marginBottom: '0.5rem',
-                                        fontSize: '1.1rem',
-                                    }}
+                                    className={styles.subtitle}
                                 >
                                     In Unleash your role is:{' '}
                                     <i>{data?.role?.name}</i>
@@ -85,14 +79,7 @@ const NewUser = () => {
                                     className={commonStyles.largeDivider}
                                     data-loading
                                 />
-                                <Typography
-                                    variant="subtitle1"
-                                    style={{
-                                        marginBottom: '0.5rem',
-                                        fontSize: '1rem',
-                                    }}
-                                    data-loading
-                                >
+                                <Typography variant="body1" data-loading>
                                     Set a password for your account.
                                 </Typography>
                             </div>
