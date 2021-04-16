@@ -78,7 +78,7 @@ const NewUser = () => {
                                         fontSize: '1.1rem',
                                     }}
                                 >
-                                    In unleash you are an{' '}
+                                    In Unleash your role is:{' '}
                                     <i>{data?.role?.name}</i>
                                 </Typography>
                                 <Typography variant="body1" data-loading>
@@ -96,8 +96,7 @@ const NewUser = () => {
                                     }}
                                     data-loading
                                 >
-                                    In order to get started with Unleash. Please
-                                    set a new password for your account.
+                                    Set a password for your account.
                                 </Typography>
                             </div>
                         </ResetPasswordDetails>
