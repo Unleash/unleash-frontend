@@ -19,19 +19,13 @@ const useResetPassword = () => {
     );
     const [loading, setLoading] = useState(!error && !data);
 
-    const retry = () => {
-        const token = query.get('token') || '';
-        console.log('updating', token);
-        setToken(token);
-    };
-
     useEffect(() => {
         setLoading(!error && !data);
     }, [data, error]);
 
     const invalidToken = !loading && data?.name === 'InvalidTokenError';
 
-    return { token, data, error, loading, setLoading, invalidToken, retry };
+    return { token, data, error, loading, setLoading, invalidToken };
 };
 
 export default useResetPassword;
