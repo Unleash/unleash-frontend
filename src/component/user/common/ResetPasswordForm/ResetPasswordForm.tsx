@@ -34,7 +34,9 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
 
     const submittable = matchingPasswords && validOwaspPassword;
 
-    const setValidOwaspPasswordMemo = useCallback(setValidOwaspPassword, []);
+    const setValidOwaspPasswordMemo = useCallback(setValidOwaspPassword, [
+        setValidOwaspPassword,
+    ]);
 
     useEffect(() => {
         if (password === confirmPassword) {
