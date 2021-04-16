@@ -15,6 +15,7 @@ import ResetPasswordError from '../ResetPasswordError/ResetPasswordError';
 import PasswordChecker from './PasswordChecker/PasswordChecker';
 import PasswordMatcher from './PasswordMatcher/PasswordMatcher';
 import { useStyles } from './ResetPasswordForm.styles';
+import { useCallback } from 'react';
 
 interface IResetPasswordProps {
     token: string;
@@ -32,6 +33,8 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
     const history = useHistory();
 
     const submittable = matchingPasswords && validOwaspPassword;
+
+    const setValidOwaspPasswordMemo = useCallback(setValidOwaspPassword, []);
 
     useEffect(() => {
         if (password === confirmPassword) {
@@ -61,7 +64,6 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
             const res = await makeResetPasswordReq();
             setLoading(false);
             if (res.status === OK) {
-                console.log('PUSHING TO LOGIN');
                 history.push('login?reset=true');
                 setApiError(false);
             } else {
@@ -98,7 +100,7 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
             >
                 <PasswordChecker
                     password={password}
-                    callback={setValidOwaspPassword}
+                    callback={setValidOwaspPasswordMemo}
                 />
                 <TextField
                     variant="outlined"
