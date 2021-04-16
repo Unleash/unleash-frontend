@@ -7,6 +7,8 @@ const getFetcher = (token: string) => () =>
         method: 'GET',
     }).then(res => res.json());
 
+const INVALID_TOKEN_ERROR = 'InvalidTokenError';
+
 const useResetPassword = () => {
     const query = useQueryParams();
     const initialToken = query.get('token') || '';
@@ -19,13 +21,19 @@ const useResetPassword = () => {
     );
     const [loading, setLoading] = useState(!error && !data);
 
+    const retry = () => {
+        const token = query.get('token') || '';
+        console.log('updating', token);
+        setToken(token);
+    };
+
     useEffect(() => {
         setLoading(!error && !data);
     }, [data, error]);
 
-    const invalidToken = !loading && data?.name === 'InvalidTokenError';
+    const invalidToken = !loading && data?.name === INVALID_TOKEN_ERROR;
 
-    return { token, data, error, loading, setLoading, invalidToken };
+    return { token, data, error, loading, setLoading, invalidToken, retry };
 };
 
 export default useResetPassword;
