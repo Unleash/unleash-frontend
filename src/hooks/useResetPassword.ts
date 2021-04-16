@@ -31,7 +31,7 @@ const useResetPassword = () => {
 
     const invalidToken = !loading && data?.name === 'InvalidTokenError';
 
-    return [token, data, error, loading, setLoading, invalidToken, retry];
+    return { token, data, error, loading, setLoading, invalidToken, retry };
 };
 
 export default useResetPassword;

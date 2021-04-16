@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { BAD_REQUEST, OK } from '../../../../../constants/statusCodes';
 import { useStyles } from './PasswordChecker.styles';
 import HelpIcon from '@material-ui/icons/Help';
+import { useCallback } from 'react';
 
 interface IPasswordCheckerProps {
     password: string;
@@ -35,11 +36,7 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
     const [symbolError, setSymbolError] = useState(true);
     const [lengthError, setLengthError] = useState(true);
 
-    useEffect(() => {
-        checkPassword();
-    }, [password]);
-
-    const makeValidatePassReq = () => {
+    const makeValidatePassReq = useCallback(() => {
         return fetch('auth/reset/validate-password', {
             headers: {
                 'Content-Type': 'application/json',
@@ -47,9 +44,9 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
             method: 'POST',
             body: JSON.stringify({ password }),
         });
-    };
+    }, [password]);
 
-    const checkPassword = async () => {
+    const checkPassword = useCallback(async () => {
         try {
             const res = await makeValidatePassReq();
             if (res.status === BAD_REQUEST) {
@@ -65,7 +62,11 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
         } catch (e) {
             console.log(e);
         }
-    };
+    }, [makeValidatePassReq, callback]);
+
+    useEffect(() => {
+        checkPassword();
+    }, [password, checkPassword]);
 
     const clearErrors = () => {
         setCasingError(false);

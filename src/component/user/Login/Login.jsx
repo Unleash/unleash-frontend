@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
 import AuthenticationContainer from '../authentication-container';
 import ConditionallyRender from '../../common/ConditionallyRender';
@@ -11,9 +9,7 @@ import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSu
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
 const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
-    const theme = useTheme();
     const styles = useStyles();
-    const smallScreen = useMediaQuery(theme.breakpoints.up('md'));
     const query = useQueryParams();
 
     useEffect(() => {

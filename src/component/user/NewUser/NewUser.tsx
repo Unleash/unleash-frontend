@@ -1,5 +1,5 @@
 import useLoading from '../../../hooks/useLoading';
-import { TextField, Typography, Button } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 
 import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
@@ -10,18 +10,15 @@ import useResetPassword from '../../../hooks/useResetPassword';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { Link } from 'react-router-dom';
 
 const NewUser = () => {
-    const [
+    const {
         token,
         data,
-        error,
         loading,
         setLoading,
         invalidToken,
-    ] = useResetPassword();
+    } = useResetPassword();
     const ref = useLoading(loading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();

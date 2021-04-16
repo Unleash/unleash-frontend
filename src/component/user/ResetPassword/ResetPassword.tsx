@@ -1,6 +1,5 @@
 import useLoading from '../../../hooks/useLoading';
 
-import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
 
 import { useStyles } from './ResetPassword.styles';
@@ -12,14 +11,7 @@ import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
 const ResetPassword = () => {
     const styles = useStyles();
-    const [
-        token,
-        _,
-        error,
-        loading,
-        setLoading,
-        invalidToken,
-    ] = useResetPassword();
+    const { token, loading, setLoading, invalidToken } = useResetPassword();
     const ref = useLoading(loading);
 
     return (
