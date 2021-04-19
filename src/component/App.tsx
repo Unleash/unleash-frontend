@@ -53,6 +53,7 @@ const App = ({ location, user }: IAppProps) => {
                     <route.component
                         {...props}
                         isUnauthorized={isUnauthorized}
+                        authDetails={user.authDetails}
                     />
                 )}
             />

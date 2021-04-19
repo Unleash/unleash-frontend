@@ -8,18 +8,23 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSuccess';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
-const Login = ({ history, loadInitialData, isUnauthorized }) => {
+const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
     const styles = useStyles();
     const query = useQueryParams();
 
     useEffect(() => {
         if (isUnauthorized()) {
             loadInitialData();
-        } else {
-            history.push('features');
         }
         /* eslint-disable-next-line */
     }, []);
+
+    useEffect(() => {
+        if (!isUnauthorized()) {
+            history.push('features');
+        }
+        /* eslint-disable-next-line */
+    }, [authDetails]);
 
     const resetPassword = query.get('reset') === 'true';
 
