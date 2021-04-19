@@ -2,14 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styles from './progress.module.scss';
 
-//     percentage: PropTypes.number.isRequired,
-// strokeWidth: PropTypes.number,
-// initialAnimation: PropTypes.bool,
-// animatePercentageText: PropTypes.bool,
-// textForPercentage: PropTypes.func,
-// colorClassName: PropTypes.string,
-// isFallback: PropTypes.bool,
-
 const Progress = ({
     percentage,
     strokeWidth = 10,
@@ -43,6 +35,7 @@ const Progress = ({
             window.cancelAnimationFrame(rafTimerInit.current);
             window.cancelAnimationFrame(rafCounterTimer.current);
         };
+        /* eslint-disable-next-line */
     }, []);
 
     useEffect(() => {
@@ -55,6 +48,7 @@ const Progress = ({
             }
             setLocalPercentage(prev => ({ ...prev, ...nextState }));
         }
+        /* eslint-disable-next-line */
     }, [percentage]);
 
     const getTarget = target => {
