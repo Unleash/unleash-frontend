@@ -5,8 +5,9 @@ const AccessContext = React.createContext()
 const AccessProvider = ({store, children}) => {
   const hasAccess = (permission, project) => {
     const permissions = store.getState().user.get('permissions');
+    
 
-    return permissions.some(p => {
+    const result = permissions.some(p => {
       if(p.permission === 'ADMIN') {
         return true
       }
@@ -14,7 +15,10 @@ const AccessProvider = ({store, children}) => {
         return true;
       }
       return false;
-    })
+    });
+
+    console.log(permission, project, result);
+    return result;
     
   };
 

@@ -18,7 +18,6 @@ import FeatureTypeSelect from '../feature-type-select-container';
 import ProjectSelect from '../project-select-container';
 import UpdateDescriptionComponent from '../view/update-description-component';
 import {
-    CREATE_FEATURE,
     DELETE_FEATURE,
     UPDATE_FEATURE,
 } from '../../Access/permissions';
@@ -78,26 +77,17 @@ const FeatureView = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const editable = isFeatureView && hasAccess(UPDATE_FEATURE, project);
+
     const getTabComponent = key => {
         switch (key) {
             case 'activation':
-                if (isFeatureView && hasAccess(UPDATE_FEATURE, project)) {
-                    return (
-                        <UpdateStrategies
-                            featureToggle={featureToggle}
-                            features={features}
-                            history={history}
-                        />
-                    );
-                }
-                return (
-                    <UpdateStrategies
+                return <UpdateStrategies
                         featureToggle={featureToggle}
                         features={features}
                         history={history}
-                        editable={false}
+                        editable={editable}
                     />
-                );
             case 'metrics':
                 return <MetricComponent featureToggle={featureToggle} />;
             case 'variants':
@@ -106,7 +96,7 @@ const FeatureView = ({
                         featureToggle={featureToggle}
                         features={features}
                         history={history}
-                        hasAccess={hasAccess}
+                        editable={editable}
                     />
                 );
             case 'log':
@@ -154,7 +144,7 @@ const FeatureView = ({
             <span>
                 Could not find the toggle{' '}
                 <ConditionallyRender
-                    condition={hasAccess(CREATE_FEATURE, project)}
+                    condition={editable}
                     show={
                         <Link
                             to={{
@@ -245,13 +235,14 @@ const FeatureView = ({
                         isFeatureView={isFeatureView}
                         description={featureToggle.description}
                         update={updateDescription}
-                        hasAccess={() => hasAccess(UPDATE_FEATURE, project)}
+                        editable={editable}
                     />
                     <div className={styles.selectContainer}>
                         <FeatureTypeSelect
                             value={featureToggle.type}
                             onChange={updateType}
                             label="Feature type"
+                            editable={editable}
                         />
                         &nbsp;
                         <ProjectSelect
@@ -259,6 +250,7 @@ const FeatureView = ({
                             onChange={updateProject}
                             label="Project"
                             filled
+                            editable={editable}
                         />
                     </div>
                     <FeatureTagComponent
@@ -273,7 +265,7 @@ const FeatureView = ({
             <div className={styles.actions}>
                 <span style={{ paddingRight: '24px' }}>
                     <ConditionallyRender
-                        condition={hasAccess(UPDATE_FEATURE, project)}
+                        condition={editable}
                         show={
                             <>
                                 <Switch

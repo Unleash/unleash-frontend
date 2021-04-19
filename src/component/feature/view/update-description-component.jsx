@@ -43,14 +43,13 @@ export default class UpdateDescriptionComponent extends React.Component {
         this.setState({ editMode: false, description: undefined });
     };
 
-    renderRead({ description, isFeatureView, hasAccess }) {
-        const showButton = isFeatureView && hasAccess(UPDATE_FEATURE);
+    renderRead({ description, editable }) {
         return (
             <FormControl size="small" variant="outlined">
                 <Typography>
                     {description || 'No feature toggle description'}
                     <ConditionallyRender
-                        condition={showButton}
+                        condition={editable}
                         show={
                             <IconButton
                                 aria-label="toggle description edit"
