@@ -5,6 +5,9 @@ import { ThemeProvider } from '@material-ui/core';
 import FeatureToggleList from '../FeatureToggleList';
 import renderer from 'react-test-renderer';
 import theme from '../../../../themes/main-theme';
+import { AccessProvider } from '../../../Access/access-context';
+import { createFakeStore } from '../../../../accessStoreFake';
+import { ADMIN, CREATE_FEATURE } from '../../../Access/permissions';
 
 jest.mock('../FeatureToggleListItem', () => ({
     __esModule: true,
@@ -24,6 +27,7 @@ test('renders correctly with one feature', () => {
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
+                <AccessProvider store={createFakeStore([{permission: CREATE_FEATURE}])}>
                 <FeatureToggleList
                     updateSetting={jest.fn()}
                     settings={settings}
@@ -32,7 +36,9 @@ test('renders correctly with one feature', () => {
                     features={features}
                     toggleFeature={jest.fn()}
                     fetcher={jest.fn()}
+                    currentProjectId='default'
                 />
+                </AccessProvider>
             </ThemeProvider>
         </MemoryRouter>
     );
@@ -51,6 +57,7 @@ test('renders correctly with one feature without permissions', () => {
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
+                <AccessProvider store={createFakeStore([{permission: CREATE_FEATURE}])}>
                 <FeatureToggleList
                     updateSetting={jest.fn()}
                     settings={settings}
@@ -59,7 +66,9 @@ test('renders correctly with one feature without permissions', () => {
                     features={features}
                     toggleFeature={jest.fn()}
                     fetcher={jest.fn()}
+                    currentProjectId='default'
                 />
+                </AccessProvider>
             </ThemeProvider>
         </MemoryRouter>
     );

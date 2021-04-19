@@ -7,9 +7,11 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core';
 import ViewFeatureToggleComponent from '../../FeatureView/FeatureView';
 import renderer from 'react-test-renderer';
-import { DELETE_FEATURE, UPDATE_FEATURE } from '../../../Access/permissions';
+import { ADMIN, DELETE_FEATURE, UPDATE_FEATURE } from '../../../Access/permissions';
 
 import theme from '../../../../themes/main-theme';
+import { AccessProvider } from '../../../Access/access-context';
+import { createFakeStore } from '../../../../accessStoreFake';
 
 jest.mock('../update-strategies-container', () => ({
     __esModule: true,
@@ -61,6 +63,7 @@ test('renders correctly with one feature', () => {
         <MemoryRouter>
             <Provider store={createStore(mockReducer, mockStore)}>
                 <ThemeProvider theme={theme}>
+                    <AccessProvider store={createFakeStore([{permission: ADMIN}])}>
                     <ViewFeatureToggleComponent
                         activeTab={'strategies'}
                         featureToggleName="another"
@@ -72,6 +75,7 @@ test('renders correctly with one feature', () => {
                         fetchTags={jest.fn()}
                         untagFeature={jest.fn()}
                     />
+                    </AccessProvider>
                 </ThemeProvider>
             </Provider>
         </MemoryRouter>

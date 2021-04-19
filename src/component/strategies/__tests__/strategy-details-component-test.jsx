@@ -4,6 +4,8 @@ import StrategyDetails from '../strategy-details-component';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import theme from '../../../themes/main-theme';
+import { AccessProvider } from '../../Access/access-context';
+import { createFakeStore } from '../../../accessStoreFake';
 
 test('renders correctly with one strategy', () => {
     const strategy = {
@@ -33,19 +35,21 @@ test('renders correctly with one strategy', () => {
     ];
     const tree = renderer.create(
         <MemoryRouter>
+            <AccessProvider store={createFakeStore()}>
             <ThemeProvider theme={theme}>
-                <StrategyDetails
-                    strategyName={'Another'}
-                    strategy={strategy}
-                    activeTab="view"
-                    applications={applications}
-                    toggles={toggles}
-                    fetchStrategies={jest.fn()}
-                    fetchApplications={jest.fn()}
-                    fetchFeatureToggles={jest.fn()}
-                    history={{}}
-                />
+                    <StrategyDetails
+                        strategyName={'Another'}
+                        strategy={strategy}
+                        activeTab="view"
+                        applications={applications}
+                        toggles={toggles}
+                        fetchStrategies={jest.fn()}
+                        fetchApplications={jest.fn()}
+                        fetchFeatureToggles={jest.fn()}
+                        history={{}}
+                    />
             </ThemeProvider>
+            </AccessProvider>
         </MemoryRouter>
     );
 

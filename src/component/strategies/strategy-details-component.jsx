@@ -63,7 +63,7 @@ export default class StrategyDetails extends Component {
                     <Grid item xs={12} sm={12}>
                         <Typography variant="subtitle1">{strategy.description}</Typography>
                         <ConditionallyRender
-                            condition={strategy.editable && this.props.hasAccess(UPDATE_STRATEGY)}
+                            condition={strategy.editable && hasAccess(UPDATE_STRATEGY)}
                             show={
                                 <div>
                                     <TabNav tabData={tabData} />

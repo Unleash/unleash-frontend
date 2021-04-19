@@ -5,8 +5,6 @@ import { Typography, IconButton, FormControl, TextField, Button } from '@materia
 import CreateIcon from '@material-ui/icons/Create';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
-import { UPDATE_FEATURE } from '../../Access/permissions';
-
 import styles from './update-description-component.module.scss';
 
 export default class UpdateDescriptionComponent extends React.Component {
@@ -19,7 +17,7 @@ export default class UpdateDescriptionComponent extends React.Component {
         isFeatureView: PropTypes.bool.isRequired,
         update: PropTypes.func,
         featureToggle: PropTypes.object,
-        hasAccess: PropTypes.func.isRequired,
+        editable: PropTypes.bool,
     };
 
     onEditMode = (description, evt) => {
