@@ -27,7 +27,7 @@ const App = ({ location, user }: IAppProps) => {
 
     const isUnauthorized = () => {
         // authDetails only exists if the user is not logged in.
-        if (Object.keys(user).length === 0) return true;
+
         return user?.authDetails !== undefined;
     };
 
