@@ -37,6 +37,7 @@ test('renders correctly with one feature', () => {
                     metricsLastMinute={featureMetrics.lastMinute[feature.name]}
                     feature={feature}
                     toggleFeature={jest.fn()}
+                    hasAccess={() => true}
                 />
             </ThemeProvider>
         </MemoryRouter>
@@ -73,6 +74,7 @@ test('renders correctly with one feature without permission', () => {
                     metricsLastMinute={featureMetrics.lastMinute[feature.name]}
                     feature={feature}
                     toggleFeature={jest.fn()}
+                    hasAccess={() => true}
                 />
             </ThemeProvider>
         </MemoryRouter>
