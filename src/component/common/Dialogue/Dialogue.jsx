@@ -36,12 +36,28 @@ const ConfirmDialogue = ({
             />
 
             <DialogActions>
-                <Button color="primary" onClick={onClick} autoFocus>
-                    {primaryButtonText || "Yes, I'm sure"}
-                </Button>
-                <Button onClick={onClose}>
-                    {secondaryButtonText || 'No take me back.'}{' '}
-                </Button>
+                <ConditionallyRender
+                    condition={onClick}
+                    show={
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={onClick}
+                            autoFocus
+                        >
+                            {primaryButtonText || "Yes, I'm sure"}
+                        </Button>
+                    }
+                />
+
+                <ConditionallyRender
+                    condition={onClose}
+                    show={
+                        <Button onClick={onClose}>
+                            {secondaryButtonText || 'No take me back.'}{' '}
+                        </Button>
+                    }
+                />
             </DialogActions>
         </Dialog>
     );

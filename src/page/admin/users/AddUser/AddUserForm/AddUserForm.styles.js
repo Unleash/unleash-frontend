@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '1rem',
     },
     userInfoContainer: {
-        margin: '-20px',
+        margin: '-20px 0',
     },
     roleRadio: {
         marginRight: '15px',

@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React, { useContext, useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -18,8 +18,12 @@ import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
 import ConditionallyRender from '../../../../component/common/ConditionallyRender/ConditionallyRender';
+<<<<<<< HEAD
 import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../../component/AccessProvider/permissions';
+=======
+import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
+>>>>>>> feat: add screens for email and copy
 
 function UsersList({
     roles,
@@ -36,6 +40,10 @@ function UsersList({
     const [showDialog, setDialog] = useState(false);
     const [pwDialog, setPwDialog] = useState({ open: false });
     const [delDialog, setDelDialog] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [inviteLink, setInviteLink] = useState(
+        'https://localhost:3000/new-user?token=123-tokena-asd1243asd12asd'
+    );
     const [delUser, setDelUser] = useState();
     const [updateDialog, setUpdateDialog] = useState({ open: false });
     const openDialog = e => {
@@ -73,6 +81,15 @@ function UsersList({
 
     const closeUpdateDialog = () => {
         setUpdateDialog({ open: false });
+    };
+
+    const onAddUser = data => {
+        addUser(data);
+        setShowConfirm(true);
+    };
+
+    const closeConfirm = () => {
+        setShowConfirm(false);
     };
 
     useEffect(() => {
@@ -174,10 +191,16 @@ function UsersList({
                 elseShow={<small>PS! Only admins can add/remove users.</small>}
             />
 
+            <ConfirmUserAdded
+                open={showConfirm}
+                closeConfirm={closeConfirm}
+                inviteLink={inviteLink}
+            />
+
             <AddUser
                 showDialog={showDialog}
                 closeDialog={closeDialog}
-                addUser={addUser}
+                addUser={onAddUser}
                 validatePassword={validatePassword}
                 roles={roles}
             />

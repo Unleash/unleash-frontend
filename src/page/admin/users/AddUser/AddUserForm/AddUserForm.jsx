@@ -49,7 +49,6 @@ function UserForm({ submit, data, error, setData, roles }) {
                         commonStyles.flexColumn,
                         styles.userInfoContainer
                     )}
-                    style={{ margin: '-20px 0' }}
                 >
                     <Typography variant="subtitle1">
                         Who is your team member?

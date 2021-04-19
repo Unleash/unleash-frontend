@@ -6,6 +6,11 @@ export const useCommonStyles = makeStyles(theme => ({
             margin: '0.5rem 0',
         },
     },
+    contentSpacingYLarge: {
+        '& > *': {
+            margin: '1.5rem 0',
+        },
+    },
     contentSpacingX: {
         '& > *': {
             margin: '0 0.8rem',

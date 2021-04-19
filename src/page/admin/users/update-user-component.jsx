@@ -49,10 +49,10 @@ function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
             onClose={onCancel}
             primaryButtonText="Update user"
             secondaryButtonText="Cancel"
+            title="Update team member"
             fullWidth
         >
             <UserForm
-                title="Update user"
                 data={data}
                 setData={setData}
                 roles={roles}
