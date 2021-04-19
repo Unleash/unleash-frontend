@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Dialogue from '../../../component/common/Dialogue';
-import UserForm from './user-form';
+import UserForm from './AddUser/AddUserForm/AddUserForm';
 
 function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
     const [data, setData] = useState({});
@@ -14,9 +14,7 @@ function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
             rootRole: user.rootRole || '',
             name: user.name || '',
         });
-    }, [user])
-
-
+    }, [user]);
 
     if (!user) {
         return null;
@@ -53,7 +51,14 @@ function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
             secondaryButtonText="Cancel"
             fullWidth
         >
-            <UserForm title="Update user" data={data} setData={setData} roles={roles} submit={submit} error={error} />
+            <UserForm
+                title="Update user"
+                data={data}
+                setData={setData}
+                roles={roles}
+                submit={submit}
+                error={error}
+            />
         </Dialogue>
     );
 }

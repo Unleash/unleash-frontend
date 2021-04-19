@@ -1,9 +1,19 @@
 /* eslint-disable no-alert */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from '@material-ui/core';
+import {
+    Button,
+    Icon,
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Avatar,
+} from '@material-ui/core';
 import { formatDateWithLocale } from '../../../../component/common/util';
-import AddUser from '../add-user-component';
+import AddUser from '../AddUser/AddUser';
 import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
@@ -73,7 +83,7 @@ function UsersList({
     const renderRole = roleId => {
         const role = roles.find(r => r.id === roleId);
         return role ? role.name : '';
-    }
+    };
 
     return (
         <div>
@@ -85,28 +95,60 @@ function UsersList({
                         <TableCell>Name</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell align="center">Role</TableCell>
-                        <TableCell align="right">{hasAccess('ADMIN') ? 'Action' : ''}</TableCell>
+                        <TableCell align="right">{hasAccess(ADMIN) ? 'Action' : ''}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {users.map(item => (
                         <TableRow key={item.id}>
-                            <TableCell><Avatar variant="rounded" alt={item.name} src={item.imageUrl} title={`${item.name || item.email || item.username} (id: ${item.id})`} /></TableCell>
-                            <TableCell>{formatDateWithLocale(item.createdAt, location.locale)}</TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>{item.name}</TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>{item.username || item.email}</TableCell>
-                            <TableCell align="center">{renderRole(item.rootRole)}</TableCell>
+                            <TableCell>
+                                <Avatar
+                                    variant="rounded"
+                                    alt={item.name}
+                                    src={item.imageUrl}
+                                    title={`${
+                                        item.name || item.email || item.username
+                                    } (id: ${item.id})`}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                {formatDateWithLocale(
+                                    item.createdAt,
+                                    location.locale
+                                )}
+                            </TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>
+                                {item.name}
+                            </TableCell>
+                            <TableCell style={{ textAlign: 'left' }}>
+                                {item.username || item.email}
+                            </TableCell>
+                            <TableCell align="center">
+                                {renderRole(item.rootRole)}
+                            </TableCell>
                             <ConditionallyRender
                                 condition={hasAccess(ADMIN)}
                                 show={
                                     <TableCell align="right">
-                                        <IconButton aria-label="Edit" title="Edit" onClick={openUpdateDialog(item)}>
+                                        <IconButton
+                                            aria-label="Edit"
+                                            title="Edit"
+                                            onClick={openUpdateDialog(item)}
+                                        >
                                             <Icon>edit</Icon>
                                         </IconButton>
-                                        <IconButton aria-label="Change password" title="Change password" onClick={openPwDialog(item)}>
+                                        <IconButton
+                                            aria-label="Change password"
+                                            title="Change password"
+                                            onClick={openPwDialog(item)}
+                                        >
                                             <Icon>lock</Icon>
                                         </IconButton>
-                                        <IconButton aria-label="Remove user" title="Remove user" onClick={openDelDialog(item)}>
+                                        <IconButton
+                                            aria-label="Remove user"
+                                            title="Remove user"
+                                            onClick={openDelDialog(item)}
+                                        >
                                             <Icon>delete</Icon>
                                         </IconButton>
                                     </TableCell>
@@ -121,7 +163,11 @@ function UsersList({
             <ConditionallyRender
                 condition={hasAccess(ADMIN)}
                 show={
-                    <Button variant="contained" color="primary" onClick={openDialog}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={openDialog}
+                    >
                         Add new user
                     </Button>
                 }
@@ -135,13 +181,15 @@ function UsersList({
                 validatePassword={validatePassword}
                 roles={roles}
             />
-            {updateDialog.open && <UpdateUser
-                showDialog={updateDialog.open}
-                closeDialog={closeUpdateDialog}
-                updateUser={updateUser}
-                user={updateDialog.user}
-                roles={roles}
-            />}
+            {updateDialog.open && (
+                <UpdateUser
+                    showDialog={updateDialog.open}
+                    closeDialog={closeUpdateDialog}
+                    updateUser={updateUser}
+                    user={updateDialog.user}
+                    roles={roles}
+                />
+            )}
             <ChangePassword
                 showDialog={pwDialog.open}
                 closeDialog={closePwDialog}
