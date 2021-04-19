@@ -69,7 +69,6 @@ test('renders correctly with one feature', () => {
                         fetchFeatureToggles={jest.fn()}
                         history={{}}
                         featureTags={[]}
-                        hasPermission={permission => [DELETE_FEATURE, UPDATE_FEATURE].indexOf(permission) !== -1}
                         fetchTags={jest.fn()}
                         untagFeature={jest.fn()}
                     />

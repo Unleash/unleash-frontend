@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -21,11 +21,14 @@ import Dialogue from '../../common/Dialogue/Dialogue';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import styles from '../TagType.module.scss';
+import AccessContext from '../../Access/access-context';
 
-const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, hasPermission }) => {
+const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
+    const { hasAccess } = useContext(AccessContext);
     const [deletion, setDeletion] = useState({ open: false });
     const history = useHistory();
     const smallScreen = useMediaQuery('(max-width:700px)');
+    
 
     useEffect(() => {
         fetchTagTypes();
@@ -37,7 +40,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, hasPermission }) 
             title="Tag Types"
             actions={
                 <ConditionallyRender
-                    condition={hasPermission(CREATE_TAG_TYPE)}
+                    condition={hasAccess(CREATE_TAG_TYPE)}
                     show={
                         <ConditionallyRender
                             condition={smallScreen}
@@ -93,7 +96,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType, hasPermission }) 
                     <Icon>label</Icon>
                 </ListItemIcon>
                 <ListItemText primary={link} secondary={tagType.description} />
-                <ConditionallyRender condition={hasPermission(DELETE_TAG_TYPE)} show={deleteButton} />
+                <ConditionallyRender condition={hasAccess(DELETE_TAG_TYPE)} show={deleteButton} />
             </ListItem>
         );
     };
@@ -127,7 +130,6 @@ TagTypeList.propTypes = {
     tagTypes: PropTypes.array.isRequired,
     fetchTagTypes: PropTypes.func.isRequired,
     removeTagType: PropTypes.func.isRequired,
-    hasPermission: PropTypes.func.isRequired,
 };
 
 export default TagTypeList;

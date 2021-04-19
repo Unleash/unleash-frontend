@@ -15,7 +15,6 @@ test('renders an empty list correctly', () => {
                     fetchTagTypes={jest.fn()}
                     removeTagType={jest.fn()}
                     history={{}}
-                    hasPermission={() => true}
                 />
             </ThemeProvider>
         </MemoryRouter>
@@ -38,7 +37,6 @@ test('renders a list with elements correctly', () => {
                     fetchTagTypes={jest.fn()}
                     removeTagType={jest.fn()}
                     history={{}}
-                    hasPermission={() => true}
                 />
             </MemoryRouter>
         </ThemeProvider>

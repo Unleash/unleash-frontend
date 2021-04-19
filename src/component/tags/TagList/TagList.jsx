@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
@@ -10,11 +10,13 @@ import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 
 import { useStyles } from './TagList.styles';
+import AccessContext from '../../Access/access-context';
 
-const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
+const TagList = ({ tags, fetchTags, removeTag }) => {
     const history = useHistory();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const styles = useStyles();
+    const { hasAccess } = useContext(AccessContext);
 
     useEffect(() => {
         fetchTags();
@@ -33,7 +35,7 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
             </ListItemIcon>
             <ListItemText primary={tag.value} secondary={tag.type} />
             <ConditionallyRender
-                condition={hasPermission(DELETE_TAG)}
+                condition={hasAccess(DELETE_TAG)}
                 show={<DeleteButton tagType={tag.type} tagValue={tag.value} />}
             />
         </ListItem>
@@ -52,9 +54,9 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
         tagValue: PropTypes.string,
     };
 
-    const AddButton = ({ hasPermission }) => (
+    const AddButton = ({ hasAccess }) => (
         <ConditionallyRender
-            condition={hasPermission(CREATE_TAG)}
+            condition={hasAccess(CREATE_TAG)}
             show={
                 <ConditionallyRender
                     condition={smallScreen}
@@ -80,7 +82,7 @@ const TagList = ({ tags, fetchTags, removeTag, hasPermission }) => {
         />
     );
     return (
-        <PageContent headerContent={<HeaderTitle title="Tags" actions={<AddButton hasPermission={hasPermission} />} />}>
+        <PageContent headerContent={<HeaderTitle title="Tags" actions={<AddButton hasAccess={hasAccess} />} />}>
             <List>
                 <ConditionallyRender
                     condition={tags.length > 0}
@@ -100,7 +102,6 @@ TagList.propTypes = {
     tags: PropTypes.array.isRequired,
     fetchTags: PropTypes.func.isRequired,
     removeTag: PropTypes.func.isRequired,
-    hasPermission: PropTypes.func.isRequired,
 };
 
 export default TagList;

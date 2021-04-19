@@ -6,14 +6,12 @@ import {
     deprecateStrategy,
     reactivateStrategy,
 } from '../../../store/strategy/actions';
-import { hasPermission } from '../../Access/permissions';
 
 const mapStateToProps = state => {
     const list = state.strategies.get('list').toArray();
 
     return {
         strategies: list,
-        hasPermission: hasPermission.bind(null, state.user.get('profile')),
     };
 };
 
