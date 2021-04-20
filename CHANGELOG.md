@@ -13,9 +13,13 @@ The latest version of this document is always available in
 
 # 4.0.0-alpha.5
 <<<<<<< HEAD
+<<<<<<< HEAD
 - fix: require ADMIN role to manage users
 - fix: add permissions for tag-types and project
 
+=======
+- feat: frontend should understand rbac permissions
+>>>>>>> chore: update changelog
 =======
 - feat: frontend should understand rbac permissions
 >>>>>>> chore: update changelog
