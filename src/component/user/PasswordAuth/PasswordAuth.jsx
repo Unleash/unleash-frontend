@@ -51,7 +51,7 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
         }
 
         const user = { username, password };
-        const path = evt.target.action;
+        const path = `${authDetails.path}`;
 
         try {
             await passwordLogin(path, user);
