@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core';
 import StrategiesListComponent from '../StrategiesList/StrategiesList';
 import renderer from 'react-test-renderer';
 import theme from '../../../themes/main-theme';
-import { AccessProvider } from '../../../contexts/AccessContext';
+import AccessProvider from '../../AccessProvider/AccessProvider';
 import { createFakeStore } from '../../../accessStoreFake';
 import { ADMIN } from '../../AccessProvider/permissions';
 
