@@ -40,12 +40,6 @@ const ReportCard = ({ features }) => {
         const potentiallyStalePercentage =
             (potentiallyStaleTogglesCount / total) * 100;
 
-        console.log(stalePercentage, potentiallyStalePercentage);
-        console.log(
-            Math.round(
-                startPercentage - stalePercentage - potentiallyStalePercentage
-            )
-        );
         return Math.round(
             startPercentage - stalePercentage - potentiallyStalePercentage
         );
