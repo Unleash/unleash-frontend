@@ -12,7 +12,7 @@ const ConfirmUserResolver = ({
     closeConfirm,
     inviteLink,
 }: IConfirmUserResolverProps) => {
-    const email = false;
+    const email = true;
 
     if (email) {
         return <ConfirmUserEmail open={open} closeConfirm={closeConfirm} />;

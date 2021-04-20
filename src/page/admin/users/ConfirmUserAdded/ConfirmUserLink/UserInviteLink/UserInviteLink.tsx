@@ -8,10 +8,6 @@ interface IInviteLinkProps {
     inviteLink: string;
 }
 
-interface IUserInviteState {
-    snackbar: ISnackbar;
-}
-
 interface ISnackbar {
     show: boolean;
     type: 'success' | 'error';

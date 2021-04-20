@@ -56,9 +56,15 @@ export function updateUser(user) {
 }
 
 export function changePassword(user, newPassword) {
-    return dispatch => api.changePassword(user, newPassword).catch(dispatchError(dispatch, CHANGE_PASSWORD_ERROR));
+    return dispatch =>
+        api
+            .changePassword(user, newPassword)
+            .catch(dispatchError(dispatch, CHANGE_PASSWORD_ERROR));
 }
 
 export function validatePassword(password) {
-    return dispatch => api.validatePassword(password).catch(dispatchError(dispatch, VALIDATE_PASSWORD_ERROR));
+    return dispatch =>
+        api
+            .validatePassword(password)
+            .catch(dispatchError(dispatch, VALIDATE_PASSWORD_ERROR));
 }
