@@ -7,11 +7,11 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core';
 import ViewFeatureToggleComponent from '../../FeatureView/FeatureView';
 import renderer from 'react-test-renderer';
-import { ADMIN, DELETE_FEATURE, UPDATE_FEATURE } from '../../../Access/permissions';
+import { ADMIN, DELETE_FEATURE, UPDATE_FEATURE } from '../../../AccessProvider/permissions';
 
 import theme from '../../../../themes/main-theme';
-import { AccessProvider } from '../../../Access/access-context';
 import { createFakeStore } from '../../../../accessStoreFake';
+import AccessProvider from '../../../AccessProvider/AccessProvider';
 
 jest.mock('../update-strategies-container', () => ({
     __esModule: true,

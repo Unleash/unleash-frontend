@@ -5,9 +5,9 @@ import { ThemeProvider } from '@material-ui/core';
 import StrategiesListComponent from '../StrategiesList/StrategiesList';
 import renderer from 'react-test-renderer';
 import theme from '../../../themes/main-theme';
-import { AccessProvider } from '../../Access/access-context';
+import { AccessProvider } from '../../../contexts/AccessContext';
 import { createFakeStore } from '../../../accessStoreFake';
-import { ADMIN } from '../../Access/permissions';
+import { ADMIN } from '../../AccessProvider/permissions';
 
 test('renders correctly with one strategy', () => {
     const strategy = {

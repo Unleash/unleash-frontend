@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Grid, Typography } from '@material-ui/core';
 import ShowStrategy from './show-strategy-component';
 import EditStrategy from './form-container';
-import { UPDATE_STRATEGY } from '../Access/permissions';
+import { UPDATE_STRATEGY } from '../AccessProvider/permissions';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 import TabNav from '../common/TabNav/TabNav';
 import PageContent from '../common/PageContent/PageContent';
-import AccessContext from '../Access/access-context';
+import AccessContext from '../../contexts/AccessContext';
 
 export default class StrategyDetails extends Component {
     static contextType = AccessContext;

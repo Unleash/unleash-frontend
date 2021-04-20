@@ -5,9 +5,11 @@ import { ThemeProvider } from '@material-ui/core';
 import FeatureToggleList from '../FeatureToggleList';
 import renderer from 'react-test-renderer';
 import theme from '../../../../themes/main-theme';
-import { AccessProvider } from '../../../Access/access-context';
 import { createFakeStore } from '../../../../accessStoreFake';
-import { ADMIN, CREATE_FEATURE } from '../../../Access/permissions';
+import { ADMIN, CREATE_FEATURE } from '../../../AccessProvider/permissions';
+import AccessProvider from '../../../AccessProvider/AccessProvider';
+
+
 
 jest.mock('../FeatureToggleListItem', () => ({
     __esModule: true,

@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import { Avatar, Link, Icon, IconButton, Button, LinearProgress, Typography } from '@material-ui/core';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 import { formatFullDateTimeWithLocale, formatDateWithLocale } from '../common/util';
-import { UPDATE_APPLICATION } from '../Access/permissions';
+import { UPDATE_APPLICATION } from '../AccessProvider/permissions';
 import ApplicationView from './application-view';
 import ApplicationUpdate from './application-update';
 import TabNav from '../common/TabNav/TabNav';
 import Dialogue from '../common/Dialogue';
 import PageContent from '../common/PageContent';
 import HeaderTitle from '../common/HeaderTitle';
-import AccessContext from '../Access/access-context';
+import AccessContext from '../../contexts/AccessContext';
 
 class ClientApplications extends PureComponent {
     static contextType = AccessContext;

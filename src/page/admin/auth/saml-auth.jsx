@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, Grid, Switch, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import PageContent from '../../../component/common/PageContent/PageContent';
-import AccessContext from '../../../component/Access/access-context';
-import { ADMIN } from '../../../component/Access/permissions';
+import AccessContext from '../../../contexts/AccessContext';
+import { ADMIN } from '../../../component/AccessProvider/permissions';
 
 const initialState = {
     enabled: false,

@@ -4,13 +4,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
 
 import { Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import { CREATE_TAG, DELETE_TAG } from '../../Access/permissions';
+import { CREATE_TAG, DELETE_TAG } from '../../AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 
 import { useStyles } from './TagList.styles';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const TagList = ({ tags, fetchTags, removeTag }) => {
     const history = useHistory();

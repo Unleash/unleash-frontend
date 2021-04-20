@@ -4,7 +4,7 @@ import ConfiguredAddons from './ConfiguredAddons';
 import AvailableAddons from './AvailableAddons';
 import { Avatar, Icon } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const style = {
     width: '40px',

@@ -9,7 +9,7 @@ import {
     ListItemText,
 } from '@material-ui/core';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
-import { DELETE_ADDON, UPDATE_ADDON } from '../../../Access/permissions';
+import { DELETE_ADDON, UPDATE_ADDON } from '../../../AccessProvider/permissions';
 import { Link } from 'react-router-dom';
 import PageContent from '../../../common/PageContent/PageContent';
 import PropTypes from 'prop-types';

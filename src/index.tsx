@@ -16,7 +16,7 @@ import MetricsPoller from './metrics-poller';
 import App from './component/App';
 import ScrollToTop from './component/scroll-to-top';
 import { writeWarning } from './security-logger';
-import { AccessProvider } from './component/Access/access-context';
+import AccessProvider from './component/AccessProvider/AccessProvider';
 
 let composeEnhancers;
 

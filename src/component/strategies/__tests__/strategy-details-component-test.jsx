@@ -4,8 +4,8 @@ import StrategyDetails from '../strategy-details-component';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import theme from '../../../themes/main-theme';
-import { AccessProvider } from '../../Access/access-context';
 import { createFakeStore } from '../../../accessStoreFake';
+import AccessProvider from '../../AccessProvider/AccessProvider';
 
 test('renders correctly with one strategy', () => {
     const strategy = {

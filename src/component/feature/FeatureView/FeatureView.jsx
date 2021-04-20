@@ -20,7 +20,7 @@ import UpdateDescriptionComponent from '../view/update-description-component';
 import {
     DELETE_FEATURE,
     UPDATE_FEATURE,
-} from '../../Access/permissions';
+} from '../../AccessProvider/permissions';
 import StatusComponent from '../status-component';
 import FeatureTagComponent from '../feature-tag-component';
 import StatusUpdateComponent from '../view/status-update-component';
@@ -34,7 +34,7 @@ import styles from './FeatureView.module.scss';
 import ConfirmDialogue from '../../common/Dialogue';
 
 import { useCommonStyles } from '../../../common.styles';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const FeatureView = ({
     activeTab,

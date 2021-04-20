@@ -8,8 +8,8 @@ import CreateApiKey from './api-key-create';
 import Secret from './secret';
 import ConditionallyRender from '../../../component/common/ConditionallyRender/ConditionallyRender';
 import Dialogue from '../../../component/common/Dialogue/Dialogue';
-import AccessContext from '../../../component/Access/access-context';
-import { DELETE_API_TOKEN, CREATE_API_TOKEN } from '../../../component/Access/permissions';
+import AccessContext from '../../../contexts/AccessContext';
+import { DELETE_API_TOKEN, CREATE_API_TOKEN } from '../../../component/AccessProvider/permissions';
 
 function ApiKeyList({ location, fetchApiKeys, removeKey, addKey, keys, unleashUrl }) {
     const { hasAccess } = useContext(AccessContext);

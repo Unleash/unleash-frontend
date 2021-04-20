@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from '../../Access/permissions';
+import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from '../../AccessProvider/permissions';
 import { Icon, IconButton, List, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ConfirmDialogue from '../../common/Dialogue';
 import PageContent from '../../common/PageContent/PageContent';
 import { useStyles } from './styles';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
     const { hasAccess } = useContext(AccessContext);

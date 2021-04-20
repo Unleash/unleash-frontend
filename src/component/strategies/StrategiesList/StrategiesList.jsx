@@ -5,14 +5,14 @@ import { Link, useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { List, ListItem, ListItemAvatar, IconButton, Icon, ListItemText, Button, Tooltip } from '@material-ui/core';
-import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../Access/permissions';
+import { CREATE_STRATEGY, DELETE_STRATEGY } from '../../AccessProvider/permissions';
 
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
 
 import { useStyles } from './styles';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const StrategiesList = ({
     strategies,

@@ -5,10 +5,10 @@ import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from '../../../themes/main-theme';
-import { AccessProvider } from '../../Access/access-context';
 import { createFakeStore } from '../../../accessStoreFake';
+import AccessProvider from '../../AccessProvider/AccessProvider';
 
-import { ADMIN, CREATE_TAG_TYPE, UPDATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../Access/permissions';
+import { ADMIN, CREATE_TAG_TYPE, UPDATE_TAG_TYPE, DELETE_TAG_TYPE } from '../../AccessProvider/permissions';
 
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PageContent from '../../../common/PageContent/PageContent';
 import { Button, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_ADDON } from '../../../Access/permissions';
+import { CREATE_ADDON } from '../../../AccessProvider/permissions';
 import PropTypes from 'prop-types';
 
 const AvailableAddons = ({ providers, getIcon, hasAccess, history }) => {

@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../Access/permissions';
+import { CREATE_CONTEXT_FIELD, DELETE_CONTEXT_FIELD } from '../../AccessProvider/permissions';
 import { Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import ConfirmDialogue from '../../common/Dialogue';
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 const ContextList = ({ removeContextField, history, contextFields }) => {
     const { hasAccess } = useContext(AccessContext);

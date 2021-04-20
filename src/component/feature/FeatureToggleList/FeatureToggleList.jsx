@@ -21,9 +21,9 @@ import HeaderTitle from '../../common/HeaderTitle';
 
 import loadingFeatures from './loadingFeatures';
 
-import { CREATE_FEATURE } from '../../Access/permissions';
+import { CREATE_FEATURE } from '../../AccessProvider/permissions';
 
-import AccessContext from '../../Access/access-context';
+import AccessContext from '../../../contexts/AccessContext';
 
 import { useStyles } from './styles';
 

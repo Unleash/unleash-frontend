@@ -8,7 +8,7 @@ import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
 import ConditionallyRender from '../../../../component/common/ConditionallyRender/ConditionallyRender';
-import AccessContext from '../../../../component/Access/access-context';
+import AccessContext from '../../../../contexts/AccessContext';
 
 function UsersList({
     roles,
