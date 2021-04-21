@@ -50,6 +50,7 @@ const UserInviteLink = ({ inviteLink }: IInviteLinkProps) => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                wordBreak: 'break-all',
             }}
         >
             {inviteLink}

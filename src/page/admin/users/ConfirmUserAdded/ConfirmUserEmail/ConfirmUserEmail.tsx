@@ -1,12 +1,16 @@
 import { Typography } from '@material-ui/core';
 import Dialogue from '../../../../../component/common/Dialogue';
 
+import { ReactComponent as EmailIcon } from '../../../../../icons/email.svg';
+import { useStyles } from './ConfirmUserEmail.styles';
+
 interface IConfirmUserEmailProps {
     open: boolean;
     closeConfirm: () => void;
 }
 
 const ConfirmUserEmail = ({ open, closeConfirm }: IConfirmUserEmailProps) => {
+    const styles = useStyles();
     return (
         <Dialogue
             open={open}
@@ -15,9 +19,13 @@ const ConfirmUserEmail = ({ open, closeConfirm }: IConfirmUserEmailProps) => {
             onClick={closeConfirm}
         >
             <Typography>
-                A new team member has been added. An email has been sent to the
-                specified email address with instructions on how to get started.
+                A new team member has been added. We’ve sent an email on your
+                behalf to inform them of their new account and role. No further
+                steps are required.
             </Typography>
+            <div className={styles.iconContainer}>
+                <EmailIcon className={styles.emailIcon} />
+            </div>
         </Dialogue>
     );
 };

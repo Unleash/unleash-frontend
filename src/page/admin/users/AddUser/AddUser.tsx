@@ -1,5 +1,12 @@
+import { Alert } from '@material-ui/lab';
 import { useState } from 'react';
+import ConditionallyRender from '../../../../component/common/ConditionallyRender';
 import Dialogue from '../../../../component/common/Dialogue';
+
+import {
+    ADD_USER_ERROR,
+    IUserApiErrors,
+} from '../../../../hooks/useAdminUsersApi';
 import IRole from '../../../../interfaces/role';
 import AddUserForm from './AddUserForm/AddUserForm';
 
@@ -8,6 +15,8 @@ interface IAddUserProps {
     closeDialog: () => void;
     addUser: (data: any) => any;
     validatePassword: () => boolean;
+    userLoading: boolean;
+    userApiErrors: IUserApiErrors;
     roles: IRole[];
 }
 
@@ -24,7 +33,9 @@ const initialData = { email: '', name: '', rootRole: EDITOR_ROLE_ID };
 const AddUser = ({
     showDialog,
     closeDialog,
+    userLoading,
     addUser,
+    userApiErrors,
     roles,
 }: IAddUserProps) => {
     const [data, setData] = useState<IAddUserFormData>(initialData);
@@ -42,15 +53,9 @@ const AddUser = ({
             return;
         }
 
-        try {
-            await addUser(data);
-            setData(initialData);
-            setError({});
-            closeDialog();
-        } catch (error) {
-            const msg = error.message || 'Could not create user';
-            setError({ general: msg });
-        }
+        await addUser(data);
+        setData(initialData);
+        setError({});
     };
 
     const onCancel = (e: Event) => {
@@ -72,12 +77,22 @@ const AddUser = ({
             title="Add team member"
             fullWidth
         >
+            <ConditionallyRender
+                condition={!!userApiErrors[ADD_USER_ERROR]}
+                show={
+                    <Alert severity="error">
+                        {userApiErrors[ADD_USER_ERROR]}
+                    </Alert>
+                }
+            />
             <AddUserForm
+                userApiErrors={userApiErrors}
                 data={data}
                 setData={setData}
                 roles={roles}
                 submit={submit}
                 error={error}
+                userLoading={userLoading}
             />
         </Dialogue>
     );

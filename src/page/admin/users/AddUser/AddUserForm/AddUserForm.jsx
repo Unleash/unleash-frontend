@@ -14,8 +14,20 @@ import { trim } from '../../../../../component/common/util';
 import { useCommonStyles } from '../../../../../common.styles';
 import ConditionallyRender from '../../../../../component/common/ConditionallyRender';
 import { useStyles } from './AddUserForm.styles';
+import useLoading from '../../../../../hooks/useLoading';
+import { ADD_USER_ERROR } from '../../../../../hooks/useAdminUsersApi';
+import { Alert } from '@material-ui/lab';
 
-function UserForm({ submit, data, error, setData, roles }) {
+function UserForm({
+    submit,
+    data,
+    error,
+    setData,
+    roles,
+    userLoading,
+    userApiErrors,
+}) {
+    const ref = useLoading(userLoading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();
 
@@ -41,87 +53,105 @@ function UserForm({ submit, data, error, setData, roles }) {
     };
 
     return (
-        <form onSubmit={submit}>
-            <DialogContent>
-                <div
-                    className={classnames(
-                        commonStyles.contentSpacingY,
-                        commonStyles.flexColumn,
-                        styles.userInfoContainer
-                    )}
-                >
-                    <Typography variant="subtitle1">
-                        Who is your team member?
-                    </Typography>
+        <div ref={ref}>
+            <form onSubmit={submit}>
+                <DialogContent>
                     <ConditionallyRender
-                        condition={error.general}
-                        show={<p style={{ color: 'red' }}>{error.general}</p>}
+                        condition={!!userApiErrors[ADD_USER_ERROR]}
+                        show={
+                            <Alert severity="error" data-loading>
+                                {userApiErrors[ADD_USER_ERROR]}
+                            </Alert>
+                        }
                     />
+                    <div
+                        className={classnames(
+                            commonStyles.contentSpacingY,
+                            commonStyles.flexColumn,
+                            styles.userInfoContainer
+                        )}
+                    >
+                        <Typography variant="subtitle1" data-loading>
+                            Who is your team member?
+                        </Typography>
+                        <ConditionallyRender
+                            condition={error.general}
+                            show={
+                                <p data-loading style={{ color: 'red' }}>
+                                    {error.general}
+                                </p>
+                            }
+                        />
 
-                    <TextField
-                        label="Full name"
-                        name="name"
-                        value={data.name || ''}
-                        error={error.name !== undefined}
-                        helperText={error.name}
-                        type="name"
-                        variant="outlined"
-                        size="small"
-                        onChange={updateField}
-                    />
-                    <TextField
-                        label="Email"
-                        name="email"
-                        required
-                        value={data.email || ''}
-                        error={error.email !== undefined}
-                        helperText={error.email}
-                        variant="outlined"
-                        size="small"
-                        type="email"
-                        onChange={updateFieldWithTrim}
-                    />
-                    <br />
-                    <br />
-                </div>
-                <FormControl>
-                    <Typography
-                        variant="subtitle1"
-                        className={styles.roleSubtitle}
-                    >
-                        What is your team member allowed to do?
-                    </Typography>
-                    <RadioGroup
-                        name="rootRole"
-                        value={data.rootRole || ''}
-                        onChange={updateNumberField}
-                    >
-                        {roles.map(role => (
-                            <FormControlLabel
-                                key={`role-${role.id}`}
-                                labelPlacement="end"
-                                className={styles.roleBox}
-                                label={
-                                    <div>
-                                        <strong>{role.name}</strong>
-                                        <Typography variant="body2">
-                                            {role.description}
-                                        </Typography>
-                                    </div>
-                                }
-                                control={
-                                    <Radio
-                                        checked={role.id === data.rootRole}
-                                        className={styles.roleRadio}
-                                    />
-                                }
-                                value={role.id}
-                            />
-                        ))}
-                    </RadioGroup>
-                </FormControl>
-            </DialogContent>
-        </form>
+                        <TextField
+                            label="Full name"
+                            data-loading
+                            name="name"
+                            value={data.name || ''}
+                            error={error.name !== undefined}
+                            helperText={error.name}
+                            type="name"
+                            variant="outlined"
+                            size="small"
+                            onChange={updateField}
+                        />
+                        <TextField
+                            label="Email"
+                            data-loading
+                            name="email"
+                            required
+                            value={data.email || ''}
+                            error={error.email !== undefined}
+                            helperText={error.email}
+                            variant="outlined"
+                            size="small"
+                            type="email"
+                            onChange={updateFieldWithTrim}
+                        />
+                        <br />
+                        <br />
+                    </div>
+                    <FormControl>
+                        <Typography
+                            variant="subtitle1"
+                            className={styles.roleSubtitle}
+                            data-loading
+                        >
+                            What is your team member allowed to do?
+                        </Typography>
+                        <RadioGroup
+                            name="rootRole"
+                            value={data.rootRole || ''}
+                            onChange={updateNumberField}
+                            data-loading
+                        >
+                            {roles.map(role => (
+                                <FormControlLabel
+                                    key={`role-${role.id}`}
+                                    labelPlacement="end"
+                                    className={styles.roleBox}
+                                    label={
+                                        <div>
+                                            <strong>{role.name}</strong>
+                                            <Typography variant="body2">
+                                                {role.description}
+                                            </Typography>
+                                        </div>
+                                    }
+                                    control={
+                                        <Radio
+                                            checked={role.id === data.rootRole}
+                                            className={styles.roleRadio}
+                                        />
+                                    }
+                                    value={role.id}
+                                />
+                            ))}
+                        </RadioGroup>
+                    </FormControl>
+                </DialogContent>
+            </form>
+        </div>
     );
 }
 

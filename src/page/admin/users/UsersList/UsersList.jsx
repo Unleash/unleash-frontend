@@ -21,26 +21,27 @@ import ConditionallyRender from '../../../../component/common/ConditionallyRende
 import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../../component/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
+import useUsers from '../../../../hooks/useUsers';
+import useRequest from '../../../../hooks/useRequest';
+import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 
-function UsersList({
-    roles,
-    fetchUsers,
-    removeUser,
-    addUser,
-    updateUser,
-    changePassword,
-    users,
-    location,
-    validatePassword,
-}) {
+function UsersList({ location, validatePassword }) {
+    const { users, roles, error, loading, refetch } = useUsers();
+    const {
+        addUser,
+        removeUser,
+        updateUser,
+        changePassword,
+        userLoading,
+        userApiErrors,
+    } = useAdminUsersApi();
     const { hasAccess } = useContext(AccessContext);
     const [showDialog, setDialog] = useState(false);
     const [pwDialog, setPwDialog] = useState({ open: false });
     const [delDialog, setDelDialog] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [inviteLink, setInviteLink] = useState(
-        'https://localhost:3000/new-user?token=123-tokena-asd1243asd12asd'
-    );
+    const [addedUser, setAddedUser] = useState(0);
+    const [emailSent, setEmailSent] = useState(false);
     const [delUser, setDelUser] = useState();
     const [updateDialog, setUpdateDialog] = useState({ open: false });
     const openDialog = e => {
@@ -81,23 +82,48 @@ function UsersList({
     };
 
     const onAddUser = data => {
-        addUser(data);
-        setShowConfirm(true);
+        setAddedUser(data);
+        addUser(data)
+            .then(res => res.json())
+            .then(user => {
+                setEmailSent(user.emailSent);
+                closeDialog();
+                refetch();
+                setShowConfirm(true);
+            })
+            .catch(e => console.log(e));
+    };
+
+    const onDeleteUser = () => {
+        removeUser(delUser).then(() => {
+            refetch();
+            closeDelDialog();
+        });
+    };
+
+    const onUpdateUser = data => {
+        updateUser(data).then(() => {
+            refetch();
+        });
     };
 
     const closeConfirm = () => {
         setShowConfirm(false);
+        setEmailSent(false);
+        setAddedUser(null);
     };
-
-    useEffect(() => {
-        fetchUsers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const renderRole = roleId => {
         const role = roles.find(r => r.id === roleId);
         return role ? role.name : '';
     };
+
+    let currentAddedUser;
+    if (addedUser) {
+        currentAddedUser = users.find(user => user.email === addedUser.email);
+    }
+
+    if (!users) return null;
 
     return (
         <div>
@@ -109,7 +135,9 @@ function UsersList({
                         <TableCell>Name</TableCell>
                         <TableCell>Username</TableCell>
                         <TableCell align="center">Role</TableCell>
-                        <TableCell align="right">{hasAccess(ADMIN) ? 'Action' : ''}</TableCell>
+                        <TableCell align="right">
+                            {hasAccess(ADMIN) ? 'Action' : ''}
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -191,21 +219,24 @@ function UsersList({
             <ConfirmUserAdded
                 open={showConfirm}
                 closeConfirm={closeConfirm}
-                inviteLink={inviteLink}
+                emailSent={emailSent}
+                addedUser={currentAddedUser}
             />
 
             <AddUser
                 showDialog={showDialog}
                 closeDialog={closeDialog}
                 addUser={onAddUser}
+                userLoading={userLoading}
                 validatePassword={validatePassword}
+                userApiErrors={userApiErrors}
                 roles={roles}
             />
             {updateDialog.open && (
                 <UpdateUser
                     showDialog={updateDialog.open}
                     closeDialog={closeUpdateDialog}
-                    updateUser={updateUser}
+                    updateUser={onUpdateUser}
                     user={updateDialog.user}
                     roles={roles}
                 />
@@ -222,10 +253,7 @@ function UsersList({
                     showDialog={delDialog}
                     closeDialog={closeDelDialog}
                     user={delUser}
-                    removeUser={() => {
-                        removeUser(delUser);
-                        closeDelDialog();
-                    }}
+                    removeUser={onDeleteUser}
                 />
             )}
         </div>

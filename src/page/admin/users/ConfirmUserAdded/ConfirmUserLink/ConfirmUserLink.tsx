@@ -32,7 +32,7 @@ const ConfirmUserLink = ({
 
                 <Typography variant="body1">
                     Copy the link and send it to the user. This will allow them
-                    to set upo their password and get started with their Unleash
+                    to set up their password and get started with their Unleash
                     account.
                 </Typography>
                 <Alert severity="info">

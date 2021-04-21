@@ -1,29 +1,33 @@
+import { IAddedUser } from '../../../../interfaces/user';
 import ConfirmUserEmail from './ConfirmUserEmail/ConfirmUserEmail';
 import ConfirmUserLink from './ConfirmUserLink/ConfirmUserLink';
 
 interface IConfirmUserResolverProps {
     open: boolean;
     closeConfirm: () => void;
-    inviteLink: string;
+    addedUser: IAddedUser | undefined;
+    emailSent: boolean;
 }
 
-const ConfirmUserResolver = ({
+const ConfirmUserAdded = ({
     open,
     closeConfirm,
-    inviteLink,
+    emailSent,
+    addedUser,
 }: IConfirmUserResolverProps) => {
-    const email = true;
-
-    if (email) {
+    if (!addedUser) return null;
+    console.log(emailSent);
+    if (emailSent) {
         return <ConfirmUserEmail open={open} closeConfirm={closeConfirm} />;
     }
+
     return (
         <ConfirmUserLink
             open={open}
             closeConfirm={closeConfirm}
-            inviteLink={inviteLink}
+            inviteLink={addedUser.inviteLink}
         />
     );
 };
 
-export default ConfirmUserResolver;
+export default ConfirmUserAdded;

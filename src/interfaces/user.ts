@@ -1,7 +1,7 @@
-interface IUser {
+interface IAuthStatus {
     authDetails: IAuthDetails;
     showDialog: boolean;
-    profile?: IProfile;
+    profile?: IUser;
 }
 
 interface IAuthDetails {
@@ -11,14 +11,28 @@ interface IAuthDetails {
     options: string[];
 }
 
-interface IProfile {
+interface IUser {
     id: number;
+    email: string;
+    name: string;
     createdAt: string;
     imageUrl: string;
     loginAttempts: number;
     permissions: string[];
-    seenAt: string;
+    inviteLink: string;
+    rootRole: number;
+    seenAt: string | null;
     username: string;
 }
 
-export default IUser;
+export interface IUserPayload {
+    name: string;
+    email: string;
+    id?: string;
+}
+
+export interface IAddedUser extends IUser {
+    emailSent?: boolean;
+}
+
+export default IAuthStatus;
