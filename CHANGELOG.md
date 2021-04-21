@@ -12,17 +12,9 @@ The latest version of this document is always available in
 - feat: add support for demo sign-in
 
 # 4.0.0-alpha.5
-<<<<<<< HEAD
-<<<<<<< HEAD
 - fix: require ADMIN role to manage users
 - fix: add permissions for tag-types and project
 
-=======
-- feat: frontend should understand rbac permissions
->>>>>>> chore: update changelog
-=======
-- feat: frontend should understand rbac permissions
->>>>>>> chore: update changelog
 # 4.0.0-alpha.4
 - fix: overall bugs
 - feat: user flow
