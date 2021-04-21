@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import  { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -18,12 +18,9 @@ import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
 import ConditionallyRender from '../../../../component/common/ConditionallyRender/ConditionallyRender';
-<<<<<<< HEAD
 import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../../component/AccessProvider/permissions';
-=======
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
->>>>>>> feat: add screens for email and copy
 
 function UsersList({
     roles,
