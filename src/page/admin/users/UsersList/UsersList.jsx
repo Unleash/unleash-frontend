@@ -22,16 +22,16 @@ import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../../component/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
 import useUsers from '../../../../hooks/useUsers';
-import useRequest from '../../../../hooks/useRequest';
 import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 
-function UsersList({ location, validatePassword }) {
+function UsersList({ location }) {
     const { users, roles, error, loading, refetch } = useUsers();
     const {
         addUser,
         removeUser,
         updateUser,
         changePassword,
+        validatePassword,
         userLoading,
         userApiErrors,
     } = useAdminUsersApi();
@@ -40,10 +40,11 @@ function UsersList({ location, validatePassword }) {
     const [pwDialog, setPwDialog] = useState({ open: false });
     const [delDialog, setDelDialog] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [addedUser, setAddedUser] = useState(0);
     const [emailSent, setEmailSent] = useState(false);
+    const [inviteLink, setInviteLink] = useState('');
     const [delUser, setDelUser] = useState();
     const [updateDialog, setUpdateDialog] = useState({ open: false });
+
     const openDialog = e => {
         e.preventDefault();
         setDialog(true);
@@ -82,46 +83,46 @@ function UsersList({ location, validatePassword }) {
     };
 
     const onAddUser = data => {
-        setAddedUser(data);
         addUser(data)
             .then(res => res.json())
             .then(user => {
                 setEmailSent(user.emailSent);
+                setInviteLink(user.inviteLink);
                 closeDialog();
                 refetch();
                 setShowConfirm(true);
             })
-            .catch(e => console.log(e));
+            .catch(() => console.log('An exception was thrown and handled.'));
     };
 
     const onDeleteUser = () => {
-        removeUser(delUser).then(() => {
-            refetch();
-            closeDelDialog();
-        });
+        removeUser(delUser)
+            .then(() => {
+                refetch();
+                closeDelDialog();
+            })
+            .catch(() => console.log('An exception was thrown and handled.'));
     };
 
     const onUpdateUser = data => {
-        updateUser(data).then(() => {
-            refetch();
-        });
+        updateUser(data)
+            .then(() => {
+                refetch();
+                closeUpdateDialog();
+            })
+            .catch(() => console.log('An exception was thrown and handled'));
     };
 
     const closeConfirm = () => {
         setShowConfirm(false);
         setEmailSent(false);
-        setAddedUser(null);
+        setInviteLink('');
     };
 
     const renderRole = roleId => {
         const role = roles.find(r => r.id === roleId);
         return role ? role.name : '';
     };
-
-    let currentAddedUser;
-    if (addedUser) {
-        currentAddedUser = users.find(user => user.email === addedUser.email);
-    }
 
     if (!users) return null;
 
@@ -220,7 +221,7 @@ function UsersList({ location, validatePassword }) {
                 open={showConfirm}
                 closeConfirm={closeConfirm}
                 emailSent={emailSent}
-                addedUser={currentAddedUser}
+                inviteLink={inviteLink}
             />
 
             <AddUser
@@ -232,15 +233,17 @@ function UsersList({ location, validatePassword }) {
                 userApiErrors={userApiErrors}
                 roles={roles}
             />
-            {updateDialog.open && (
-                <UpdateUser
-                    showDialog={updateDialog.open}
-                    closeDialog={closeUpdateDialog}
-                    updateUser={onUpdateUser}
-                    user={updateDialog.user}
-                    roles={roles}
-                />
-            )}
+
+            <UpdateUser
+                showDialog={updateDialog.open}
+                closeDialog={closeUpdateDialog}
+                updateUser={onUpdateUser}
+                userLoading={userLoading}
+                userApiErrors={userApiErrors}
+                user={updateDialog.user}
+                roles={roles}
+            />
+
             <ChangePassword
                 showDialog={pwDialog.open}
                 closeDialog={closePwDialog}
@@ -254,6 +257,8 @@ function UsersList({ location, validatePassword }) {
                     closeDialog={closeDelDialog}
                     user={delUser}
                     removeUser={onDeleteUser}
+                    userLoading={userLoading}
+                    userApiErrors={userApiErrors}
                 />
             )}
         </div>

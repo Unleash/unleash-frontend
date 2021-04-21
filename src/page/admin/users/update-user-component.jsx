@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import Dialogue from '../../../component/common/Dialogue';
 import UserForm from './AddUser/AddUserForm/AddUserForm';
 
-function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
+function AddUser({
+    user,
+    showDialog,
+    closeDialog,
+    updateUser,
+    roles,
+    userApiErrors,
+    userLoading,
+}) {
     const [data, setData] = useState({});
     const [error, setError] = useState({});
 
     useEffect(() => {
         setData({
-            id: user.id,
-            email: user.email || '',
-            rootRole: user.rootRole || '',
-            name: user.name || '',
+            ...user,
         });
     }, [user]);
 
@@ -27,7 +32,6 @@ function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
             await updateUser(data);
             setData({});
             setError({});
-            closeDialog();
         } catch (error) {
             setError({ general: 'Could not update user' });
         }
@@ -58,6 +62,8 @@ function AddUser({ user = {}, showDialog, closeDialog, updateUser, roles }) {
                 roles={roles}
                 submit={submit}
                 error={error}
+                userApiErrors={userApiErrors}
+                userLoading={userLoading}
             />
         </Dialogue>
     );

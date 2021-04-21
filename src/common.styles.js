@@ -31,6 +31,7 @@ export const useCommonStyles = makeStyles(theme => ({
     },
     flexRow: {
         display: 'flex',
+        alignItems: 'center',
     },
     flexColumn: {
         display: 'flex',

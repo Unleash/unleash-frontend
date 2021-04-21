@@ -3,6 +3,7 @@ import {
     BAD_REQUEST,
     FORBIDDEN,
     NOT_FOUND,
+    OK,
     UNAUTHORIZED,
 } from '../constants/statusCodes';
 import { IUserPayload } from '../interfaces/user';
@@ -40,15 +41,18 @@ const useAdminUsersApi = () => {
         apiCaller: any,
         type: string
     ): Promise<Response> => {
-        setUserApiErrors({});
         setUserLoading(true);
         try {
             const res = await apiCaller();
             setUserLoading(false);
-
             if (res.status > 299) {
                 await handleResponses(res, type);
             }
+
+            if (res.status === OK) {
+                setUserApiErrors({});
+            }
+
             return res;
         } catch (e) {
             setUserLoading(false);
@@ -106,8 +110,9 @@ const useAdminUsersApi = () => {
     };
 
     const handleResponses = async (res: Response, type: string) => {
-        const data = await res.json();
         if (res.status === BAD_REQUEST) {
+            const data = await res.json();
+
             setUserApiErrors(prev => ({
                 ...prev,
                 [type]: data[0].msg,
@@ -119,13 +124,15 @@ const useAdminUsersApi = () => {
         if (res.status === NOT_FOUND) {
             setUserApiErrors(prev => ({
                 ...prev,
-                [type]: data[0].msg,
+                [type]: 'Could not find the requested resource.',
             }));
 
             throw new NotFoundError(res.status);
         }
 
         if (res.status === UNAUTHORIZED) {
+            const data = await res.json();
+
             setUserApiErrors(prev => ({
                 ...prev,
                 [type]: data[0].msg,
@@ -135,6 +142,8 @@ const useAdminUsersApi = () => {
         }
 
         if (res.status === FORBIDDEN) {
+            const data = await res.json();
+
             setUserApiErrors(prev => ({
                 ...prev,
                 [type]: data[0].msg,

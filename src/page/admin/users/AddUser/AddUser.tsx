@@ -77,14 +77,6 @@ const AddUser = ({
             title="Add team member"
             fullWidth
         >
-            <ConditionallyRender
-                condition={!!userApiErrors[ADD_USER_ERROR]}
-                show={
-                    <Alert severity="error">
-                        {userApiErrors[ADD_USER_ERROR]}
-                    </Alert>
-                }
-            />
             <AddUserForm
                 userApiErrors={userApiErrors}
                 data={data}

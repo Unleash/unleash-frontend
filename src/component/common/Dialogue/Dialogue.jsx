@@ -32,7 +32,11 @@ const ConfirmDialogue = ({
             <DialogTitle className={styles.dialogTitle}>{title}</DialogTitle>
             <ConditionallyRender
                 condition={children}
-                show={<DialogContent>{children}</DialogContent>}
+                show={
+                    <DialogContent className={styles.dialogContentPadding}>
+                        {children}
+                    </DialogContent>
+                }
             />
 
             <DialogActions>

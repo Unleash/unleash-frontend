@@ -15,10 +15,13 @@ import { useCommonStyles } from '../../../../../common.styles';
 import ConditionallyRender from '../../../../../component/common/ConditionallyRender';
 import { useStyles } from './AddUserForm.styles';
 import useLoading from '../../../../../hooks/useLoading';
-import { ADD_USER_ERROR } from '../../../../../hooks/useAdminUsersApi';
+import {
+    ADD_USER_ERROR,
+    UPDATE_USER_ERROR,
+} from '../../../../../hooks/useAdminUsersApi';
 import { Alert } from '@material-ui/lab';
 
-function UserForm({
+function AddUserForm({
     submit,
     data,
     error,
@@ -52,15 +55,21 @@ function UserForm({
         });
     };
 
+    const apiError =
+        userApiErrors[ADD_USER_ERROR] || userApiErrors[UPDATE_USER_ERROR];
     return (
         <div ref={ref}>
             <form onSubmit={submit}>
                 <DialogContent>
                     <ConditionallyRender
-                        condition={!!userApiErrors[ADD_USER_ERROR]}
+                        condition={apiError}
                         show={
-                            <Alert severity="error" data-loading>
-                                {userApiErrors[ADD_USER_ERROR]}
+                            <Alert
+                                className={styles.errorAlert}
+                                severity="error"
+                                data-loading
+                            >
+                                {apiError}
                             </Alert>
                         }
                     />
@@ -155,7 +164,7 @@ function UserForm({
     );
 }
 
-UserForm.propTypes = {
+AddUserForm.propTypes = {
     data: PropTypes.object.isRequired,
     error: PropTypes.object.isRequired,
     submit: PropTypes.func.isRequired,
@@ -163,4 +172,4 @@ UserForm.propTypes = {
     roles: PropTypes.array.isRequired,
 };
 
-export default UserForm;
+export default AddUserForm;

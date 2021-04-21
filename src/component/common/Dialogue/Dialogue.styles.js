@@ -8,4 +8,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '2rem 3rem',
         clipPath: ' ellipse(130% 115px at 120% 20%)',
     },
+    dialogContentPadding: {
+        padding: '2rem 3rem',
+    },
 }));
