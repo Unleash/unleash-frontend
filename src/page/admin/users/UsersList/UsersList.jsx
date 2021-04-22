@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -25,7 +25,7 @@ import useUsers from '../../../../hooks/useUsers';
 import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 
 function UsersList({ location }) {
-    const { users, roles, error, loading, refetch } = useUsers();
+    const { users, roles, loading, refetch } = useUsers();
     const {
         addUser,
         removeUser,

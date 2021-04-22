@@ -1,4 +1,3 @@
-import { IAddedUser } from '../../../../interfaces/user';
 import ConfirmUserEmail from './ConfirmUserEmail/ConfirmUserEmail';
 import ConfirmUserLink from './ConfirmUserLink/ConfirmUserLink';
 
