@@ -4,6 +4,7 @@ import {
     Avatar,
     IconButton,
     Icon,
+    Typography,
 } from '@material-ui/core';
 import { SyntheticEvent, useContext } from 'react';
 import { ADMIN } from '../../../../../component/AccessProvider/permissions';
@@ -18,7 +19,11 @@ interface IUserListItemProps {
     openUpdateDialog: (user: IUser) => (e: SyntheticEvent) => void;
     openPwDialog: (user: IUser) => (e: SyntheticEvent) => void;
     openDelDialog: (user: IUser) => (e: SyntheticEvent) => void;
-    location: any;
+    location: ILocation;
+}
+
+interface ILocation {
+    locale: string;
 }
 
 const UserListItem = ({
@@ -35,6 +40,7 @@ const UserListItem = ({
         <TableRow key={user.id}>
             <TableCell>
                 <Avatar
+                    data-loading
                     variant="rounded"
                     alt={user.name}
                     src={user.imageUrl}
@@ -44,18 +50,31 @@ const UserListItem = ({
                 />
             </TableCell>
             <TableCell>
-                {formatDateWithLocale(user.createdAt, location.locale)}
+                <span data-loading>
+                    {formatDateWithLocale(user.createdAt, location.locale)}
+                </span>
             </TableCell>
-            <TableCell style={{ textAlign: 'left' }}>{user.name}</TableCell>
             <TableCell style={{ textAlign: 'left' }}>
-                {user.username || user.email}
+                <Typography variant="body2" data-loading>
+                    {user.name}
+                </Typography>
             </TableCell>
-            <TableCell align="center">{renderRole(user.rootRole)}</TableCell>
+            <TableCell style={{ textAlign: 'left' }}>
+                <Typography variant="body2" data-loading>
+                    {user.username || user.email}
+                </Typography>
+            </TableCell>
+            <TableCell align="center">
+                <Typography variant="body2" data-loading>
+                    {renderRole(user.rootRole)}
+                </Typography>
+            </TableCell>
             <ConditionallyRender
                 condition={hasAccess(ADMIN)}
                 show={
                     <TableCell align="right">
                         <IconButton
+                            data-loading
                             aria-label="Edit"
                             title="Edit"
                             onClick={openUpdateDialog(user)}
@@ -63,6 +82,7 @@ const UserListItem = ({
                             <Icon>edit</Icon>
                         </IconButton>
                         <IconButton
+                            data-loading
                             aria-label="Change password"
                             title="Change password"
                             onClick={openPwDialog(user)}
@@ -70,6 +90,7 @@ const UserListItem = ({
                             <Icon>lock</Icon>
                         </IconButton>
                         <IconButton
+                            data-loading
                             aria-label="Remove user"
                             title="Remove user"
                             onClick={openDelDialog(user)}

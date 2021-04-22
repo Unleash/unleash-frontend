@@ -57,7 +57,11 @@ const DelUserComponent = ({
                         {user.username || user.email}
                     </Typography>
                 </div>
-                <Typography variant="body1" style={{ marginTop: '1rem' }}>
+                <Typography
+                    data-loading
+                    variant="body1"
+                    style={{ marginTop: '1rem' }}
+                >
                     Are you sure you want to delete{' '}
                     {user
                         ? `${user.name || 'user'} (${

@@ -20,9 +20,11 @@ import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
 import useUsers from '../../../../hooks/useUsers';
 import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 import UserListItem from './UserListItem/UserListItem';
+import loadingData from './loadingData';
+import useLoading from '../../../../hooks/useLoading';
 
 function UsersList({ location }) {
-    const { users, roles, refetch } = useUsers();
+    const { users, roles, refetch, loading } = useUsers();
     const {
         addUser,
         removeUser,
@@ -41,6 +43,7 @@ function UsersList({ location }) {
     const [inviteLink, setInviteLink] = useState('');
     const [delUser, setDelUser] = useState();
     const [updateDialog, setUpdateDialog] = useState({ open: false });
+    const ref = useLoading(loading);
 
     const openDialog = e => {
         e.preventDefault();
@@ -89,7 +92,7 @@ function UsersList({ location }) {
                 refetch();
                 setShowConfirm(true);
             })
-            .catch(() => console.log('An exception was thrown and handled.'));
+            .catch(handleCatch);
     };
 
     const onDeleteUser = () => {
@@ -98,7 +101,7 @@ function UsersList({ location }) {
                 refetch();
                 closeDelDialog();
             })
-            .catch(() => console.log('An exception was thrown and handled.'));
+            .catch(handleCatch);
     };
 
     const onUpdateUser = data => {
@@ -107,8 +110,11 @@ function UsersList({ location }) {
                 refetch();
                 closeUpdateDialog();
             })
-            .catch(() => console.log('An exception was thrown and handled'));
+            .catch(handleCatch);
     };
+
+    const handleCatch = () =>
+        console.log('An exception was thrown and handled.');
 
     const closeConfirm = () => {
         setShowConfirm(false);
@@ -122,6 +128,20 @@ function UsersList({ location }) {
     };
 
     const renderUsers = () => {
+        if (loading) {
+            return loadingData.map(user => (
+                <UserListItem
+                    key={user.id}
+                    user={user}
+                    openUpdateDialog={openUpdateDialog}
+                    openPwDialog={openPwDialog}
+                    openDelDialog={openDelDialog}
+                    location={location}
+                    renderRole={renderRole}
+                />
+            ));
+        }
+
         return users.map(user => {
             return (
                 <UserListItem
@@ -140,7 +160,7 @@ function UsersList({ location }) {
     if (!users) return null;
 
     return (
-        <div>
+        <div ref={ref}>
             <Table>
                 <TableHead>
                     <TableRow>
