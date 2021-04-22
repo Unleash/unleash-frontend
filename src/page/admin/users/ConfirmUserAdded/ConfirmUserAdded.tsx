@@ -1,7 +1,7 @@
 import ConfirmUserEmail from './ConfirmUserEmail/ConfirmUserEmail';
 import ConfirmUserLink from './ConfirmUserLink/ConfirmUserLink';
 
-interface IConfirmUserResolverProps {
+interface IConfirmUserAddedProps {
     open: boolean;
     closeConfirm: () => void;
     inviteLink: string;
@@ -13,7 +13,7 @@ const ConfirmUserAdded = ({
     closeConfirm,
     emailSent,
     inviteLink,
-}: IConfirmUserResolverProps) => {
+}: IConfirmUserAddedProps) => {
     if (emailSent) {
         return <ConfirmUserEmail open={open} closeConfirm={closeConfirm} />;
     }

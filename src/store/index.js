@@ -16,7 +16,6 @@ import uiConfig from './ui-config';
 import context from './context';
 import projects from './project';
 import addons from './addons';
-import roles from './e-user-admin/roles-store';
 import apiAdmin from './e-api-admin';
 import authAdmin from './e-admin-auth';
 import apiCalls from './api-calls';
@@ -39,7 +38,6 @@ const unleashStore = combineReducers({
     context,
     projects,
     addons,
-    roles,
     apiAdmin,
     authAdmin,
     apiCalls,
