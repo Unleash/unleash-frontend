@@ -3,16 +3,12 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
-    Icon,
-    IconButton,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-    Avatar,
 } from '@material-ui/core';
-import { formatDateWithLocale } from '../../../../component/common/util';
 import AddUser from '../AddUser/AddUser';
 import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
@@ -26,7 +22,7 @@ import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 import UserListItem from './UserListItem/UserListItem';
 
 function UsersList({ location }) {
-    const { users, roles, loading, refetch } = useUsers();
+    const { users, roles, refetch } = useUsers();
     const {
         addUser,
         removeUser,

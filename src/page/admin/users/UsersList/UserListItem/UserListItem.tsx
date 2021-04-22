@@ -5,7 +5,7 @@ import {
     IconButton,
     Icon,
 } from '@material-ui/core';
-import { useContext } from 'react';
+import { SyntheticEvent, useContext } from 'react';
 import { ADMIN } from '../../../../../component/AccessProvider/permissions';
 import ConditionallyRender from '../../../../../component/common/ConditionallyRender';
 import { formatDateWithLocale } from '../../../../../component/common/util';
@@ -15,9 +15,9 @@ import { IUser } from '../../../../../interfaces/user';
 interface IUserListItemProps {
     user: IUser;
     renderRole: (roleId: number) => string;
-    openUpdateDialog: (user: IUser) => void;
-    openPwDialog: (user: IUser) => void;
-    openDelDialog: (user: IUser) => void;
+    openUpdateDialog: (user: IUser) => (e: SyntheticEvent) => void;
+    openPwDialog: (user: IUser) => (e: SyntheticEvent) => void;
+    openDelDialog: (user: IUser) => (e: SyntheticEvent) => void;
     location: any;
 }
 
@@ -58,21 +58,21 @@ const UserListItem = ({
                         <IconButton
                             aria-label="Edit"
                             title="Edit"
-                            onClick={() => openUpdateDialog(user)}
+                            onClick={openUpdateDialog(user)}
                         >
                             <Icon>edit</Icon>
                         </IconButton>
                         <IconButton
                             aria-label="Change password"
                             title="Change password"
-                            onClick={() => openPwDialog(user)}
+                            onClick={openPwDialog(user)}
                         >
                             <Icon>lock</Icon>
                         </IconButton>
                         <IconButton
                             aria-label="Remove user"
                             title="Remove user"
-                            onClick={() => openDelDialog(user)}
+                            onClick={openDelDialog(user)}
                         >
                             <Icon>delete</Icon>
                         </IconButton>
