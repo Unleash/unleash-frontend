@@ -5,6 +5,7 @@ export const useStyles = makeStyles(theme => ({
         border: '1px solid #f1f1f1',
         borderRadius: '3px',
         right: '100px',
+        maxWidth: '350px',
         color: '#44606e',
         maxWidth: '350px',
     },

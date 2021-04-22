@@ -7,7 +7,7 @@ import { AppBar, Container, Typography, IconButton } from '@material-ui/core';
 import { DrawerMenu } from '../drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import Breadcrumb from '../breadcrumb';
-import ShowUserContainer from '../../user/show-user-container';
+import ShowUserContainer from '../../user/UserProfile';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
 import { useStyles } from './styles';
@@ -31,13 +31,19 @@ const Header = ({ uiConfig, init }) => {
         <React.Fragment>
             <AppBar className={styles.header} position="static">
                 <Container className={styles.container}>
-                    <IconButton className={styles.drawerButton} onClick={toggleDrawer}>
+                    <IconButton
+                        className={styles.drawerButton}
+                        onClick={toggleDrawer}
+                    >
                         <MenuIcon />
                     </IconButton>
                     <ConditionallyRender
                         condition={!smallScreen}
                         show={
-                            <Typography variant="h1" className={styles.headerTitle}>
+                            <Typography
+                                variant="h1"
+                                className={styles.headerTitle}
+                            >
                                 <Route path="/:path" component={Breadcrumb} />
                             </Typography>
                         }
