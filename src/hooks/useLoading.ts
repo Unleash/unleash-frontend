@@ -1,4 +1,4 @@
-import { useEffect, createRef, useLayoutEffect } from 'react';
+import { createRef, useLayoutEffect } from 'react';
 
 type refElement = HTMLDivElement;
 
