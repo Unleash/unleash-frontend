@@ -11,18 +11,18 @@ interface IAuthDetails {
     options: string[];
 }
 
-interface IUser {
+export interface IUser {
     id: number;
     email: string;
     name: string;
     createdAt: string;
     imageUrl: string;
     loginAttempts: number;
-    permissions: string[];
+    permissions: string[] | null;
     inviteLink: string;
     rootRole: number;
     seenAt: string | null;
-    username: string;
+    username?: string;
 }
 
 export interface IUserPayload {

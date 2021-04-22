@@ -23,6 +23,7 @@ import { ADMIN } from '../../../../component/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
 import useUsers from '../../../../hooks/useUsers';
 import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
+import UserListItem from './UserListItem/UserListItem';
 
 function UsersList({ location }) {
     const { users, roles, loading, refetch } = useUsers();
@@ -124,6 +125,22 @@ function UsersList({ location }) {
         return role ? role.name : '';
     };
 
+    const renderUsers = () => {
+        return users.map(user => {
+            return (
+                <UserListItem
+                    key={user.id}
+                    user={user}
+                    openUpdateDialog={openUpdateDialog}
+                    openPwDialog={openPwDialog}
+                    openDelDialog={openDelDialog}
+                    location={location}
+                    renderRole={renderRole}
+                />
+            );
+        });
+    };
+
     if (!users) return null;
 
     return (
@@ -141,66 +158,7 @@ function UsersList({ location }) {
                         </TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    {users.map(item => (
-                        <TableRow key={item.id}>
-                            <TableCell>
-                                <Avatar
-                                    variant="rounded"
-                                    alt={item.name}
-                                    src={item.imageUrl}
-                                    title={`${
-                                        item.name || item.email || item.username
-                                    } (id: ${item.id})`}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                {formatDateWithLocale(
-                                    item.createdAt,
-                                    location.locale
-                                )}
-                            </TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>
-                                {item.name}
-                            </TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>
-                                {item.username || item.email}
-                            </TableCell>
-                            <TableCell align="center">
-                                {renderRole(item.rootRole)}
-                            </TableCell>
-                            <ConditionallyRender
-                                condition={hasAccess(ADMIN)}
-                                show={
-                                    <TableCell align="right">
-                                        <IconButton
-                                            aria-label="Edit"
-                                            title="Edit"
-                                            onClick={openUpdateDialog(item)}
-                                        >
-                                            <Icon>edit</Icon>
-                                        </IconButton>
-                                        <IconButton
-                                            aria-label="Change password"
-                                            title="Change password"
-                                            onClick={openPwDialog(item)}
-                                        >
-                                            <Icon>lock</Icon>
-                                        </IconButton>
-                                        <IconButton
-                                            aria-label="Remove user"
-                                            title="Remove user"
-                                            onClick={openDelDialog(item)}
-                                        >
-                                            <Icon>delete</Icon>
-                                        </IconButton>
-                                    </TableCell>
-                                }
-                                elseShow={<TableCell />}
-                            />
-                        </TableRow>
-                    ))}
-                </TableBody>
+                <TableBody>{renderUsers()}</TableBody>
             </Table>
             <br />
             <ConditionallyRender
