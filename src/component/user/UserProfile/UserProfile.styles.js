@@ -7,4 +7,8 @@ export const useStyles = makeStyles({
     profileContainer: {
         position: 'relative',
     },
+    button: {
+        color: '#fff',
+        padding: '0.2rem 1rem',
+    },
 });

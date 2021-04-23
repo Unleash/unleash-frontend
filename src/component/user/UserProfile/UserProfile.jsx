@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { useStyles } from './UserProfile.styles';
 import { useCommonStyles } from '../../../common.styles';
@@ -55,18 +55,20 @@ const UserProfile = ({
     return (
         <OutsideClickHandler onOutsideClick={() => setShowProfile(false)}>
             <div className={styles.profileContainer}>
-                <div
+                <Button
                     className={classnames(
                         commonStyles.flexRow,
-                        commonStyles.itemsCenter
+                        commonStyles.itemsCenter,
+                        styles.button
                     )}
                     onClick={() => setShowProfile(prev => !prev)}
                     tabIndex="1"
                     role="button"
+                    disableRipple
                 >
                     <Avatar alt="user image" src={imageUrl} />
                     <KeyboardArrowDownIcon />
-                </div>
+                </Button>
                 <UserProfileContent
                     showProfile={showProfile}
                     imageUrl={imageUrl}
