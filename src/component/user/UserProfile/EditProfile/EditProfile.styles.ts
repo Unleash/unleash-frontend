@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
     container: {
         width: '100%',
         transform: 'translateY(-30px)',
@@ -14,5 +14,8 @@ export const useStyles = makeStyles({
     button: {
         width: '150px',
         marginTop: '1.15rem',
+        [theme.breakpoints.down('sm')]: {
+            width: '100px',
+        },
     },
-});
+}));
