@@ -3,25 +3,13 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
-<<<<<<< HEAD
-=======
-    Icon,
-    IconButton,
->>>>>>> feat: user profile
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-<<<<<<< HEAD
 } from '@material-ui/core';
 import AddUser from '../AddUser/AddUser';
-=======
-    Avatar,
-} from '@material-ui/core';
-import { formatDateWithLocale } from '../../../../component/common/util';
-import AddUser from '../add-user-component';
->>>>>>> feat: user profile
 import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
@@ -138,7 +126,6 @@ function UsersList({ location }) {
         const role = roles.find(r => r.id === roleId);
         return role ? role.name : '';
     };
-<<<<<<< HEAD
 
     const renderUsers = () => {
         if (loading) {
@@ -171,8 +158,6 @@ function UsersList({ location }) {
     };
 
     if (!users) return null;
-=======
->>>>>>> feat: user profile
 
     return (
         <div ref={ref}>
@@ -185,77 +170,11 @@ function UsersList({ location }) {
                         <TableCell>Username</TableCell>
                         <TableCell align="center">Role</TableCell>
                         <TableCell align="right">
-<<<<<<< HEAD
                             {hasAccess(ADMIN) ? 'Action' : ''}
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>{renderUsers()}</TableBody>
-=======
-                            {hasAccess('ADMIN') ? 'Action' : ''}
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {users.map(item => (
-                        <TableRow key={item.id}>
-                            <TableCell>
-                                <Avatar
-                                    alt={item.name}
-                                    src={item.imageUrl}
-                                    title={`${
-                                        item.name || item.email || item.username
-                                    } (id: ${item.id})`}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                {formatDateWithLocale(
-                                    item.createdAt,
-                                    location.locale
-                                )}
-                            </TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>
-                                {item.name}
-                            </TableCell>
-                            <TableCell style={{ textAlign: 'left' }}>
-                                {item.username || item.email}
-                            </TableCell>
-                            <TableCell align="center">
-                                {renderRole(item.rootRole)}
-                            </TableCell>
-                            <ConditionallyRender
-                                condition={hasAccess(ADMIN)}
-                                show={
-                                    <TableCell align="right">
-                                        <IconButton
-                                            aria-label="Edit"
-                                            title="Edit"
-                                            onClick={openUpdateDialog(item)}
-                                        >
-                                            <Icon>edit</Icon>
-                                        </IconButton>
-                                        <IconButton
-                                            aria-label="Change password"
-                                            title="Change password"
-                                            onClick={openPwDialog(item)}
-                                        >
-                                            <Icon>lock</Icon>
-                                        </IconButton>
-                                        <IconButton
-                                            aria-label="Remove user"
-                                            title="Remove user"
-                                            onClick={openDelDialog(item)}
-                                        >
-                                            <Icon>delete</Icon>
-                                        </IconButton>
-                                    </TableCell>
-                                }
-                                elseShow={<TableCell />}
-                            />
-                        </TableRow>
-                    ))}
-                </TableBody>
->>>>>>> feat: user profile
             </Table>
             <br />
             <ConditionallyRender
@@ -288,7 +207,6 @@ function UsersList({ location }) {
                 userApiErrors={userApiErrors}
                 roles={roles}
             />
-<<<<<<< HEAD
 
             <UpdateUser
                 showDialog={updateDialog.open}
@@ -300,17 +218,6 @@ function UsersList({ location }) {
                 roles={roles}
             />
 
-=======
-            {updateDialog.open && (
-                <UpdateUser
-                    showDialog={updateDialog.open}
-                    closeDialog={closeUpdateDialog}
-                    updateUser={updateUser}
-                    user={updateDialog.user}
-                    roles={roles}
-                />
-            )}
->>>>>>> feat: user profile
             <ChangePassword
                 showDialog={pwDialog.open}
                 closeDialog={closePwDialog}

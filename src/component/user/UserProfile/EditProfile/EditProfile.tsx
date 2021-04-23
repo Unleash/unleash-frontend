@@ -1,7 +1,6 @@
 import { SyntheticEvent, useState } from 'react';
 import { Button, TextField, Typography } from '@material-ui/core';
 import classnames from 'classnames';
-import { styles } from '../../../common';
 import { useStyles } from './EditProfile.styles';
 import { useCommonStyles } from '../../../../common.styles';
 import PasswordChecker from '../../common/ResetPasswordForm/PasswordChecker/PasswordChecker';
@@ -119,6 +118,7 @@ const EditProfile = ({
                     type="password"
                     name="password"
                     value={password}
+                    autoComplete="on"
                     onChange={e => setPassword(e.target.value)}
                 />
                 <TextField
@@ -129,6 +129,7 @@ const EditProfile = ({
                     type="password"
                     name="confirmPassword"
                     value={confirmPassword}
+                    autoComplete="on"
                     onChange={e => setConfirmPassword(e.target.value)}
                 />
                 <PasswordMatcher
