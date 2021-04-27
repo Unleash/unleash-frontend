@@ -46,7 +46,6 @@ const UserProfileContent = ({
 
     const handleChange = e => {
         const { value } = e.target;
-        console.log(value);
         setCurrentLocale(value);
         setLocale(value);
     };
@@ -117,7 +116,6 @@ const UserProfileContent = ({
                                             }}
                                         >
                                             {possibleLocales.map(locale => {
-                                                console.log(locale);
                                                 return (
                                                     <option
                                                         key={locale}
