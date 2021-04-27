@@ -22,11 +22,12 @@ const UserProfileContent = ({
     possibleLocales,
     updateSettingLocation,
     imageUrl,
+    currentLocale,
+    setCurrentLocale,
     location,
     logoutUser,
 }) => {
     const commonStyles = useCommonStyles();
-    const [currentLocale, setCurrentLocale] = useState(location.locale);
     const [updatedPassword, setUpdatedPassword] = useState(false);
     const [edititingProfile, setEditingProfile] = useState(false);
     const styles = useStyles();
@@ -45,6 +46,7 @@ const UserProfileContent = ({
 
     const handleChange = e => {
         const { value } = e.target;
+        console.log(value);
         setCurrentLocale(value);
         setLocale(value);
     };
@@ -103,11 +105,10 @@ const UserProfileContent = ({
                                         >
                                             Date/Time formatting
                                         </InputLabel>
-
                                         <Select
                                             id="locale-select"
-                                            native
                                             value={currentLocale || ''}
+                                            native
                                             onChange={handleChange}
                                             MenuProps={{
                                                 style: {
@@ -116,12 +117,13 @@ const UserProfileContent = ({
                                             }}
                                         >
                                             {possibleLocales.map(locale => {
+                                                console.log(locale);
                                                 return (
                                                     <option
-                                                        key={locale.value}
-                                                        value={locale.value}
+                                                        key={locale}
+                                                        value={locale}
                                                     >
-                                                        {locale.value}
+                                                        {locale}
                                                     </option>
                                                 );
                                             })}
