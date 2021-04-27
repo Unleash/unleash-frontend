@@ -39,7 +39,9 @@ const UserProfile = ({
         fetchUser();
 
         const locale = navigator.language || navigator.userLanguage;
-        let found = possibleLocales.find(l => l.includes(locale));
+        let found = possibleLocales.find(l =>
+            l.toLowerCase().includes(locale.toLowerCase())
+        );
         setCurrentLocale(found);
 
         if (!found) {
