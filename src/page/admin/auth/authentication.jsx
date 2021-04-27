@@ -36,10 +36,22 @@ function AdminAuthPage({ authenticationType, history }) {
                             in order configure Single Sign-on.</Alert>
                     }
                 />
+                <ConditionallyRender condition={authenticationType === 'demo'}
+                    show={
+                        <Alert severity="warning">
+                            You are running Unleash in demo mode. You have to use the Enterprise edition 
+                            in order configure Single Sign-on.</Alert>
+                    }
+                />
                 <ConditionallyRender condition={authenticationType === 'custom'}
                     show={
                         <Alert severity="warning">You have decided to use custom authentication type. You have to use the Enterprise edition 
                             in order configure Single Sign-on from the user interface.</Alert>
+                    }
+                />
+                <ConditionallyRender condition={authenticationType === 'hosted'}
+                    show={
+                        <Alert severity="info">Hurray you are managed by us!</Alert>
                     }
                 />
             </PageContent>
