@@ -25,7 +25,7 @@ const Header = ({ uiConfig, init }) => {
     const [openDrawer, setOpenDrawer] = useState(false);
 
     useEffect(() => {
-        init(uiConfig.flags);
+        // init(uiConfig.flags);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

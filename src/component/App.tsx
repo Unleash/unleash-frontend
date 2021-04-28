@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
@@ -12,9 +13,33 @@ import styles from './styles.module.scss';
 import IAuthStatus from '../interfaces/user';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
+    projects: any;
+    strategies: any;
+    featureTypes: any;
 }
 
-const App = ({ location, user }: IAppProps) => {
+const App = ({
+    location,
+    user,
+    projects,
+    strategies,
+    featureTypes,
+}: IAppProps) => {
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch('api/admin/ui-bootstrap')
+            .then(res => res.json())
+            .then(data => {});
+        // setLoading(true)
+        // fetchData()
+        // handle response
+        // dispatche
+    }, []);
+
+    console.log(projects, strategies, featureTypes);
+
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
     };
