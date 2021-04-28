@@ -48,7 +48,7 @@ test('renders correctly with without variants', () => {
     expect(tree).toMatchSnapshot();
 });
 
-test('renders correctly with without variants and no permissions', () => {
+test('renders correctly without variants and no permissions', () => {
     const tree = renderer.create(
         <Provider store={createStore(mockReducer, mockStore)}>
             <ThemeProvider theme={theme}>
