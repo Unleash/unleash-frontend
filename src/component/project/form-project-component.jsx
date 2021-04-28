@@ -40,7 +40,9 @@ class AddContextComponent extends Component {
 
     validateId = async id => {
         const { errors } = this.state;
-        const { validateId } = this.props;
+        const { validateId, editMode } = this.props;
+        if (editMode) return true;
+
         try {
             await validateId(id);
             errors.id = undefined;

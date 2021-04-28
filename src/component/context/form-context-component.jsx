@@ -68,7 +68,10 @@ class AddContextComponent extends Component {
 
     validateContextName = async name => {
         const { errors } = this.state;
-        const { validateName } = this.props;
+        const { validateName, editMode } = this.props;
+
+        if (editMode) return true;
+
         try {
             await validateName(name);
             errors.name = undefined;
@@ -280,8 +283,10 @@ class AddContextComponent extends Component {
                                 Read more
                             </a>
                         </p>
+                        {console.log(contextField.stickiness)}
                         <Switch
                             label="Allow stickiness"
+                            checked={contextField.stickiness}
                             value={contextField.stickiness}
                             onChange={() =>
                                 this.setValue(
