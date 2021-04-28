@@ -137,6 +137,7 @@ const AddVariant = ({
                 if (i === index) {
                     o[e.target.name] = e.target.value;
                 }
+
                 return o;
             })
         );
@@ -264,6 +265,7 @@ const AddVariant = ({
                         />
                     </Grid>
                 </Grid>
+
                 {overrides.length > 0 && (
                     <p style={{ marginBottom: '.5rem' }}>
                         <strong>Overrides </strong>
