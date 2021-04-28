@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -13,7 +13,6 @@ import classnames from 'classnames';
 import { FormButtons, styles as commonStyles } from '../common';
 import { trim } from '../common/util';
 import PageContent from '../common/PageContent/PageContent';
-import { OK } from '../../constants/statusCodes';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
 
