@@ -78,7 +78,6 @@ class AddContextComponent extends Component {
         } catch (err) {
             errors.name = err.message;
         }
-        console.log(errors.name);
         this.setState({ errors });
         if (errors.name) return false;
         return true;
