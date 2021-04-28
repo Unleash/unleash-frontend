@@ -280,7 +280,7 @@ const AddVariant = ({
                                         <strong>Overrides </strong>
                                         <Icon
                                             name="info"
-                                            title="Here you can specify which users that should get this variant."
+                                            title="Here you can specify which users should get this variant."
                                         />
                                     </p>
                                 }
