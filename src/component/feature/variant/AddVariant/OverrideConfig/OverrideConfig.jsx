@@ -36,7 +36,6 @@ const OverrideConfig = ({
         const legalValues =
             contextDefinitions.find(c => c.name === o.contextName)
                 .legalValues || [];
-        const options = legalValues;
 
         return (
             <Grid container key={`override=${i}`} alignItems="center">
@@ -62,7 +61,7 @@ const OverrideConfig = ({
                                 getOptionSelected={(option, value) => {
                                     return option === value;
                                 }}
-                                options={options}
+                                options={legalValues}
                                 onChange={updateSelectValues(i)}
                                 getOptionLabel={option => option}
                                 defaultValue={o.values}
