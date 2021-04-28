@@ -13,7 +13,7 @@ import {
     Button,
     Typography,
 } from '@material-ui/core';
-import AddVariant from './AddVariant';
+import AddVariant from './AddVariant/AddVariant';
 import MySelect from '../../common/select';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 

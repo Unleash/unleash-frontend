@@ -17,7 +17,6 @@ import { weightTypes } from '../enums';
 import OverrideConfig from './OverrideConfig/OverrideConfig';
 import { useCommonStyles } from '../../../../common.styles';
 import ConditionallyRender from '../../../common/ConditionallyRender';
-import { C } from '../../../common/flags';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -34,7 +33,6 @@ const AddVariant = ({
     validateName,
     editVariant,
     title,
-    uiConfig,
 }) => {
     const [data, setData] = useState({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
@@ -268,36 +266,26 @@ const AddVariant = ({
                         />
                     </Grid>
                 </Grid>
-
                 <ConditionallyRender
-                    condition={uiConfig.flags[C]}
+                    condition={overrides.length > 0}
                     show={
-                        <>
-                            <ConditionallyRender
-                                condition={overrides.length > 0}
-                                show={
-                                    <p style={{ marginBottom: '.5rem' }}>
-                                        <strong>Overrides </strong>
-                                        <Icon
-                                            name="info"
-                                            title="Here you can specify which users should get this variant."
-                                        />
-                                    </p>
-                                }
+                        <p style={{ marginBottom: '.5rem' }}>
+                            <strong>Overrides </strong>
+                            <Icon
+                                name="info"
+                                title="Here you can specify which users should get this variant."
                             />
-                            <OverrideConfig
-                                overrides={overrides}
-                                removeOverride={removeOverride}
-                                updateOverrideType={updateOverrideType}
-                                updateOverrideValues={updateOverrideValues}
-                                updateValues={updateOverrideValues}
-                            />
-                            <Button onClick={onAddOverride}>
-                                Add override
-                            </Button>{' '}
-                        </>
+                        </p>
                     }
                 />
+                <OverrideConfig
+                    overrides={overrides}
+                    removeOverride={removeOverride}
+                    updateOverrideType={updateOverrideType}
+                    updateOverrideValues={updateOverrideValues}
+                    updateValues={updateOverrideValues}
+                />
+                <Button onClick={onAddOverride}>Add override</Button>{' '}
             </form>
         </Dialog>
     );
