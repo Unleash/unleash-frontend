@@ -18,7 +18,8 @@ import MetricsPoller from './metrics-poller';
 import App from './component/AppContainer';
 import ScrollToTop from './component/scroll-to-top';
 import { writeWarning } from './security-logger';
-import AccessProvider from './component/AccessProvider/AccessProvider';
+import AccessProvider from './component/providers/AccessProvider/AccessProvider';
+import PathProvider from './component/providers/PathProvider/PathProvider';
 
 let composeEnhancers;
 
@@ -43,16 +44,18 @@ ReactDOM.render(
     <Provider store={unleashStore}>
         <DndProvider backend={HTML5Backend}>
             <AccessProvider store={unleashStore}>
-                <HashRouter>
-                    <ThemeProvider theme={mainTheme}>
-                        <StylesProvider injectFirst>
-                            <CssBaseline />
-                            <ScrollToTop>
-                                <Route path="/" component={App} />
-                            </ScrollToTop>
-                        </StylesProvider>
-                    </ThemeProvider>
-                </HashRouter>
+                <PathProvider store={unleashStore}>
+                    <HashRouter>
+                        <ThemeProvider theme={mainTheme}>
+                            <StylesProvider injectFirst>
+                                <CssBaseline />
+                                <ScrollToTop>
+                                    <Route path="/" component={App} />
+                                </ScrollToTop>
+                            </StylesProvider>
+                        </ThemeProvider>
+                    </HashRouter>
+                </PathProvider>
             </AccessProvider>
         </DndProvider>
     </Provider>,

@@ -7,7 +7,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import { SyntheticEvent, useContext } from 'react';
-import { ADMIN } from '../../../../../component/AccessProvider/permissions';
+import { ADMIN } from '../../../../../component/providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../../component/common/ConditionallyRender';
 import { formatDateWithLocale } from '../../../../../component/common/util';
 import AccessContext from '../../../../../contexts/AccessContext';

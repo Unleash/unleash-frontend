@@ -3,8 +3,20 @@ import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import { CREATE_TAG, DELETE_TAG } from '../../AccessProvider/permissions';
+import {
+    Button,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Tooltip,
+} from '@material-ui/core';
+import {
+    CREATE_TAG,
+    DELETE_TAG,
+} from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
@@ -29,7 +41,10 @@ const TagList = ({ tags, fetchTags, removeTag }) => {
     };
 
     const listItem = tag => (
-        <ListItem key={`${tag.type}_${tag.value}`} className={styles.tagListItem}>
+        <ListItem
+            key={`${tag.type}_${tag.value}`}
+            className={styles.tagListItem}
+        >
             <ListItemIcon>
                 <Icon>label</Icon>
             </ListItemIcon>
@@ -43,7 +58,9 @@ const TagList = ({ tags, fetchTags, removeTag }) => {
 
     const DeleteButton = ({ tagType, tagValue }) => (
         <Tooltip title="Delete tag">
-            <IconButton onClick={e => remove({ type: tagType, value: tagValue }, e)}>
+            <IconButton
+                onClick={e => remove({ type: tagType, value: tagValue }, e)}
+            >
                 <Icon>delete</Icon>
             </IconButton>
         </Tooltip>
@@ -61,7 +78,10 @@ const TagList = ({ tags, fetchTags, removeTag }) => {
                 <ConditionallyRender
                     condition={smallScreen}
                     show={
-                        <IconButton aria-label="add tag" onClick={() => history.push('/tags/create')}>
+                        <IconButton
+                            aria-label="add tag"
+                            onClick={() => history.push('/tags/create')}
+                        >
                             <Icon>add</Icon>
                         </IconButton>
                     }
@@ -82,7 +102,14 @@ const TagList = ({ tags, fetchTags, removeTag }) => {
         />
     );
     return (
-        <PageContent headerContent={<HeaderTitle title="Tags" actions={<AddButton hasAccess={hasAccess} />} />}>
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title="Tags"
+                    actions={<AddButton hasAccess={hasAccess} />}
+                />
+            }
+        >
             <List>
                 <ConditionallyRender
                     condition={tags.length > 0}

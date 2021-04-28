@@ -9,7 +9,7 @@ import { trim } from '../common/util';
 import PageContent from '../common/PageContent/PageContent';
 import AccessContext from '../../contexts/AccessContext';
 import ConditionallyRender from '../common/ConditionallyRender';
-import { CREATE_PROJECT } from '../AccessProvider/permissions';
+import { CREATE_PROJECT } from '../providers/AccessProvider/permissions';
 
 class AddContextComponent extends Component {
     static contextType = AccessContext;

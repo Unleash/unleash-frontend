@@ -15,6 +15,7 @@ interface IAppProps extends RouteComponentProps {
     projects: any;
     strategies: any;
     featureTypes: any;
+    uiConfig: any;
 }
 
 const App = ({
@@ -23,8 +24,9 @@ const App = ({
     projects,
     strategies,
     featureTypes,
+    uiConfig,
 }: IAppProps) => {
-    console.log(projects, strategies, featureTypes);
+    console.log(projects, strategies, featureTypes, uiConfig);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);

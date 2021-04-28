@@ -20,7 +20,7 @@ import UpdateDescriptionComponent from '../view/update-description-component';
 import {
     DELETE_FEATURE,
     UPDATE_FEATURE,
-} from '../../AccessProvider/permissions';
+} from '../../providers/AccessProvider/permissions';
 import StatusComponent from '../status-component';
 import FeatureTagComponent from '../feature-tag-component';
 import StatusUpdateComponent from '../view/status-update-component';
@@ -58,7 +58,7 @@ const FeatureView = ({
     const [delDialog, setDelDialog] = useState(false);
     const commonStyles = useCommonStyles();
     const { hasAccess } = useContext(AccessContext);
-    const { project } = featureToggle || { };
+    const { project } = featureToggle || {};
 
     useEffect(() => {
         scrollToTop();
@@ -82,12 +82,14 @@ const FeatureView = ({
     const getTabComponent = key => {
         switch (key) {
             case 'activation':
-                return <UpdateStrategies
+                return (
+                    <UpdateStrategies
                         featureToggle={featureToggle}
                         features={features}
                         history={history}
                         editable={editable}
                     />
+                );
             case 'metrics':
                 return <MetricComponent featureToggle={featureToggle} />;
             case 'variants':
