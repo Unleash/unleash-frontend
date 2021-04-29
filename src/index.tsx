@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import './app.css';
 
 import ReactDOM from 'react-dom';
-import { HashRouter, Route } from 'react-router-dom';
+import { HashRouter, Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import thunkMiddleware from 'redux-thunk';
@@ -19,7 +19,7 @@ import App from './component/AppContainer';
 import ScrollToTop from './component/scroll-to-top';
 import { writeWarning } from './security-logger';
 import AccessProvider from './component/providers/AccessProvider/AccessProvider';
-import PathProvider from './component/providers/PathProvider/PathProvider';
+import { getBasePath } from './utils/format-path';
 
 let composeEnhancers;
 
@@ -42,20 +42,19 @@ metricsPoller.start();
 
 ReactDOM.render(
     <Provider store={unleashStore}>
+        {console.log('GETTING BASEPATH', getBasePath())}
         <DndProvider backend={HTML5Backend}>
             <AccessProvider store={unleashStore}>
-                <PathProvider store={unleashStore}>
-                    <HashRouter>
-                        <ThemeProvider theme={mainTheme}>
-                            <StylesProvider injectFirst>
-                                <CssBaseline />
-                                <ScrollToTop>
-                                    <Route path="/" component={App} />
-                                </ScrollToTop>
-                            </StylesProvider>
-                        </ThemeProvider>
-                    </HashRouter>
-                </PathProvider>
+                <Router basename={`/${getBasePath()}`}>
+                    <ThemeProvider theme={mainTheme}>
+                        <StylesProvider injectFirst>
+                            <CssBaseline />
+                            <ScrollToTop>
+                                <Route path="/" component={App} />
+                            </ScrollToTop>
+                        </StylesProvider>
+                    </ThemeProvider>
+                </Router>
             </AccessProvider>
         </DndProvider>
     </Provider>,

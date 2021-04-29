@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import {
     Paper,
@@ -24,7 +24,6 @@ const UserProfileContent = ({
     imageUrl,
     currentLocale,
     setCurrentLocale,
-    location,
     logoutUser,
 }) => {
     const commonStyles = useCommonStyles();

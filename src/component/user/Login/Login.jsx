@@ -13,13 +13,6 @@ const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
     const query = useQueryParams();
 
     useEffect(() => {
-        if (isUnauthorized()) {
-            loadInitialData();
-        }
-        /* eslint-disable-next-line */
-    }, []);
-
-    useEffect(() => {
         if (!isUnauthorized()) {
             history.push('features');
         }

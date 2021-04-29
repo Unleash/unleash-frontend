@@ -1,6 +1,7 @@
+import { formatApiPath } from '../../utils/format-path';
 import { throwIfNotSuccess } from '../api-helper';
 
-const URI = 'api/admin/ui-bootstrap';
+const URI = formatApiPath('api/admin/ui-bootstrap');
 
 function fetchUIBootstrap() {
     return fetch(URI, { credentials: 'include' })

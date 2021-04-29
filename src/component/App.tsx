@@ -10,12 +10,14 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
+import { useEffect } from 'react';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     projects: any;
     strategies: any;
     featureTypes: any;
     uiConfig: any;
+    fetchUiBootstrap: any;
 }
 
 const App = ({
@@ -24,9 +26,12 @@ const App = ({
     projects,
     strategies,
     featureTypes,
+    fetchUiBootstrap,
     uiConfig,
 }: IAppProps) => {
-    console.log(projects, strategies, featureTypes, uiConfig);
+    useEffect(() => {
+        fetchUiBootstrap();
+    }, []);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);

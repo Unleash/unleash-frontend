@@ -14,6 +14,7 @@ const mapStateToProps = (state: any) => ({
     featureTypes: state.featureTypes.toJS(),
     strategies: state.strategies.toJS(),
     uiConfig: state.uiConfig.toJS(),
+    user: state.user.toJS(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

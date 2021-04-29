@@ -5,6 +5,7 @@ import { BAD_REQUEST, OK } from '../../../../../constants/statusCodes';
 import { useStyles } from './PasswordChecker.styles';
 import HelpIcon from '@material-ui/icons/Help';
 import { useCallback } from 'react';
+import { formatApiPath } from '../../../../../utils/format-path';
 
 interface IPasswordCheckerProps {
     password: string;
@@ -37,7 +38,8 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
     const [lengthError, setLengthError] = useState(true);
 
     const makeValidatePassReq = useCallback(() => {
-        return fetch('auth/reset/validate-password', {
+        const path = formatApiPath('auth/reset/validate-password');
+        return fetch(path, {
             headers: {
                 'Content-Type': 'application/json',
             },

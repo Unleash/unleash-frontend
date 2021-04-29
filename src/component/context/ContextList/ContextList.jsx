@@ -15,7 +15,7 @@ import {
     ListItemText,
     Tooltip,
 } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import ConfirmDialogue from '../../common/Dialogue';

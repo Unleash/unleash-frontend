@@ -1,6 +1,7 @@
+import { formatApiPath } from '../../utils/format-path';
 import { throwIfNotSuccess } from '../api-helper';
 
-const URI = 'api/admin/metrics/feature-toggles';
+const URI = formatApiPath('api/admin/metrics/feature-toggles');
 
 function fetchFeatureMetrics() {
     return fetch(URI, { credentials: 'include' })

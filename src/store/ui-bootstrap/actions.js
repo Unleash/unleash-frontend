@@ -13,7 +13,7 @@ export const ERROR_RECEIVE_BOOTSTRAP = 'ERROR_RECEIVE_CONFIG';
 export function fetchUiBootstrap() {
     return dispatch =>
         api
-            .fetchConfig()
+            .fetchUIBootstrap()
             .then(json => {
                 dispatch(receiveProjects(json.projects));
                 dispatch(receiveConfig(json));

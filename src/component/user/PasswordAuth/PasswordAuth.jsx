@@ -50,7 +50,7 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
 
         try {
             await passwordLogin(path, user);
-            await loadInitialData();
+
             history.push(`/`);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {
