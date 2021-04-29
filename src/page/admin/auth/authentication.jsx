@@ -51,7 +51,7 @@ function AdminAuthPage({ authenticationType, history }) {
                 />
                 <ConditionallyRender condition={authenticationType === 'hosted'}
                     show={
-                        <Alert severity="info">Hurray you are managed by us!</Alert>
+                        <Alert severity="info">You Unleash instance is managed by the Unleash-hosted team.</Alert>
                     }
                 />
             </PageContent>
