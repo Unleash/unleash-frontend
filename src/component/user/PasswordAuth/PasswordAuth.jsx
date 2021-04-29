@@ -134,7 +134,7 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
                     )}
                 >
                     <Button color="primary" variant="contained" href={o.path}>
-                        {o.value}
+                        {o.message || o.value}
                     </Button>
                 </div>
             ))}
