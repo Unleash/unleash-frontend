@@ -6,7 +6,7 @@ export const ERROR_RECEIVE_CONFIG = 'ERROR_RECEIVE_CONFIG';
 
 export const receiveConfig = json => ({
     type: RECEIVE_CONFIG,
-    value: json.ui,
+    value: json,
 });
 
 export function fetchUIConfig() {
