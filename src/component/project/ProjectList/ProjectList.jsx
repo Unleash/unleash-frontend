@@ -6,7 +6,7 @@ import {
     CREATE_PROJECT,
     DELETE_PROJECT,
     UPDATE_PROJECT,
-} from '../../providers/AccessProvider/permissions';
+} from '../../AccessProvider/permissions';
 import {
     Icon,
     IconButton,

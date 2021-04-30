@@ -6,11 +6,8 @@ import FeatureToggleList from '../FeatureToggleList';
 import renderer from 'react-test-renderer';
 import theme from '../../../../themes/main-theme';
 import { createFakeStore } from '../../../../accessStoreFake';
-import {
-    ADMIN,
-    CREATE_FEATURE,
-} from '../../../providers/AccessProvider/permissions';
-import AccessProvider from '../../../providers/AccessProvider/AccessProvider';
+import { ADMIN, CREATE_FEATURE } from '../../../AccessProvider/permissions';
+import AccessProvider from '../../../AccessProvider/AccessProvider';
 
 jest.mock('../FeatureToggleListItem', () => ({
     __esModule: true,

@@ -13,10 +13,7 @@ import {
     ListItemText,
     Tooltip,
 } from '@material-ui/core';
-import {
-    CREATE_TAG,
-    DELETE_TAG,
-} from '../../providers/AccessProvider/permissions';
+import { CREATE_TAG, DELETE_TAG } from '../../AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';

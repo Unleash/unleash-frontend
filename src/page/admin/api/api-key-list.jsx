@@ -20,7 +20,7 @@ import AccessContext from '../../../contexts/AccessContext';
 import {
     DELETE_API_TOKEN,
     CREATE_API_TOKEN,
-} from '../../../component/providers/AccessProvider/permissions';
+} from '../../../component/AccessProvider/permissions';
 
 function ApiKeyList({
     location,

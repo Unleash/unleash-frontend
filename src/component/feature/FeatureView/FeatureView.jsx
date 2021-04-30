@@ -20,7 +20,7 @@ import UpdateDescriptionComponent from '../view/update-description-component';
 import {
     DELETE_FEATURE,
     UPDATE_FEATURE,
-} from '../../providers/AccessProvider/permissions';
+} from '../../AccessProvider/permissions';
 import StatusComponent from '../status-component';
 import FeatureTagComponent from '../feature-tag-component';
 import StatusUpdateComponent from '../view/status-update-component';

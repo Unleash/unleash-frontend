@@ -9,11 +9,11 @@ import {
     CREATE_FEATURE,
     CREATE_STRATEGY,
     UPDATE_APPLICATION,
-} from '../../providers/AccessProvider/permissions';
+} from '../../AccessProvider/permissions';
 import theme from '../../../themes/main-theme';
 
 import { createFakeStore } from '../../../accessStoreFake';
-import AccessProvider from '../../providers/AccessProvider/AccessProvider';
+import AccessProvider from '../../AccessProvider/AccessProvider';
 
 test('renders correctly if no application', () => {
     const tree = renderer

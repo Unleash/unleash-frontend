@@ -4,7 +4,7 @@ import { Button, Grid, Switch, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import PageContent from '../../../component/common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
-import { ADMIN } from '../../../component/providers/AccessProvider/permissions';
+import { ADMIN } from '../../../component/AccessProvider/permissions';
 
 const initialState = {
     enabled: false,

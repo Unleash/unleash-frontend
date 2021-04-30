@@ -12,10 +12,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import { shorten } from '../common';
-import {
-    CREATE_FEATURE,
-    CREATE_STRATEGY,
-} from '../providers/AccessProvider/permissions';
+import { CREATE_FEATURE, CREATE_STRATEGY } from '../AccessProvider/permissions';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 
 function ApplicationView({

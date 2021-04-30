@@ -10,7 +10,7 @@ import Status from '../../status-component';
 import FeatureToggleListItemChip from './FeatureToggleListItemChip';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 
-import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE } from '../../../AccessProvider/permissions';
 import { calc, styles as commonStyles } from '../../../common';
 
 import { useStyles } from './styles';

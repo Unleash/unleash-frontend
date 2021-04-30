@@ -21,7 +21,7 @@ import HeaderTitle from '../../common/HeaderTitle';
 
 import loadingFeatures from './loadingFeatures';
 
-import { CREATE_FEATURE } from '../../providers/AccessProvider/permissions';
+import { CREATE_FEATURE } from '../../AccessProvider/permissions';
 
 import AccessContext from '../../../contexts/AccessContext';
 
