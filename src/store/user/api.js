@@ -2,10 +2,9 @@ import { formatApiPath } from '../../utils/format-path';
 import { throwIfNotSuccess, headers } from '../api-helper';
 
 const URI = formatApiPath('api/admin/user');
-console.log(formatApiPath('api/admin/user'));
 
 function logoutUser() {
-    return fetch(`logout`, {
+    return fetch(formatApiPath('logout'), {
         method: 'GET',
         credentials: 'include',
     }).then(throwIfNotSuccess);

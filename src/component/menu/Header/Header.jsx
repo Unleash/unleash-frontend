@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -78,7 +78,6 @@ const Header = ({ uiConfig }) => {
 
 Header.propTypes = {
     uiConfig: PropTypes.object.isRequired,
-    init: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
 };
 

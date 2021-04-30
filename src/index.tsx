@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import './app.css';
 
 import ReactDOM from 'react-dom';
-import { HashRouter, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import thunkMiddleware from 'redux-thunk';

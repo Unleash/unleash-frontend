@@ -52,7 +52,7 @@ export function fetchStrategies() {
 
         return api
             .fetchAll()
-            .then(json => dispatch(receiveStrategies(json)))
+            .then(json => dispatch(receiveStrategies(json.strategies)))
             .catch(dispatchError(dispatch, ERROR_RECEIVE_STRATEGIES));
     };
 }

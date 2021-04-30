@@ -20,17 +20,10 @@ interface IAppProps extends RouteComponentProps {
     fetchUiBootstrap: any;
 }
 
-const App = ({
-    location,
-    user,
-    projects,
-    strategies,
-    featureTypes,
-    fetchUiBootstrap,
-    uiConfig,
-}: IAppProps) => {
+const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     useEffect(() => {
         fetchUiBootstrap();
+        /* eslint-disable-next-line */
     }, []);
 
     const renderMainLayoutRoutes = () => {
