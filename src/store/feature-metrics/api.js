@@ -9,7 +9,7 @@ function fetchFeatureMetrics() {
         .then(response => response.json());
 }
 
-const seenURI = 'api/admin/metrics/seen-apps';
+const seenURI = formatApiPath('api/admin/metrics/seen-apps');
 
 function fetchSeenApps() {
     return fetch(seenURI, { credentials: 'include' })

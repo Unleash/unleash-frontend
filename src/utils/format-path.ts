@@ -290,18 +290,34 @@ const routes = [
     },
 ];
 
-export const getBasePath = () => {
-    const path = window.location.pathname;
-    const match = routes.filter(route => route.path.includes(path));
-    console.log(match.length > 0);
-    if (match.length > 0) return '';
+export const getBasePathGenerator = () => {
+    let basePath: string | undefined;
 
-    const paths = window.location.pathname.split('/').filter(path => path);
-    if (!paths.length) return '';
-    if (paths[0].includes('features')) return '';
+    return () => {
+        if (basePath !== undefined) {
+            return basePath;
+        }
 
-    return paths[0];
+        const path = window.location.pathname;
+        const match = routes.filter(route => route.path.includes(path));
+
+        if (match.length > 0) {
+            basePath = '';
+            return '';
+        }
+
+        const paths = window.location.pathname.split('/').filter(path => path);
+        if (!paths.length) {
+            basePath = '';
+            return '';
+        }
+
+        basePath = paths[0];
+        return paths[0];
+    };
 };
+
+export const getBasePath = getBasePathGenerator();
 
 export const formatApiPath = (path: string) => {
     const basePath = getBasePath();
