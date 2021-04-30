@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { RouteComponentProps, useRouteMatch } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
