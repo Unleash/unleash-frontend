@@ -71,7 +71,7 @@ export function logoutUser() {
             .then(() => dispatch({ type: USER_LOGOUT }))
             .then(() => dispatch({ type: RESET_LOADING }))
             .then(() => {
-                window.location = `/${basepath}`;
+                window.location = `${basepath}`;
             })
             .catch(handleError);
     };

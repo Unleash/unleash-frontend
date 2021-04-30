@@ -45,7 +45,7 @@ ReactDOM.render(
         {console.log('GETTING BASEPATH', getBasePath())}
         <DndProvider backend={HTML5Backend}>
             <AccessProvider store={unleashStore}>
-                <Router basename={`/${getBasePath()}`}>
+                <Router basename={`${getBasePath()}`}>
                     <ThemeProvider theme={mainTheme}>
                         <StylesProvider injectFirst>
                             <CssBaseline />
