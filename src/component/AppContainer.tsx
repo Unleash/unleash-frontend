@@ -8,12 +8,6 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state: any) => ({
-    projects: state.projects.toJS(),
-    tagTypes: state.tagTypes.toJS(),
-    context: state.context.toJS(),
-    featureTypes: state.featureTypes.toJS(),
-    strategies: state.strategies.toJS(),
-    uiConfig: state.uiConfig.toJS(),
     user: state.user.toJS(),
 });
 

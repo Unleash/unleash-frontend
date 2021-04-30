@@ -13,10 +13,6 @@ import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
-    projects: any;
-    strategies: any;
-    featureTypes: any;
-    uiConfig: any;
     fetchUiBootstrap: any;
 }
 
