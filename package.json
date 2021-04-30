@@ -25,7 +25,6 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "react-scripts build",
-    "build-watch": "react-scripts build --watch",
     "start": "react-scripts start",
     "start:heroku": "UNLEASH_API=https://unleash.herokuapp.com yarn run start",
     "test": "react-scripts test",
