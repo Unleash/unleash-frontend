@@ -8,7 +8,7 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSuccess';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
-const Login = ({ history, loadInitialData, isUnauthorized, authDetails }) => {
+const Login = ({ history, isUnauthorized, authDetails }) => {
     const styles = useStyles();
     const query = useQueryParams();
 

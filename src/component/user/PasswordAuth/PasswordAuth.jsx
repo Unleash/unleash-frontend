@@ -8,7 +8,7 @@ import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './PasswordAuth.styles';
 import { Link } from 'react-router-dom';
 
-const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
+const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
@@ -168,7 +168,6 @@ const PasswordAuth = ({ authDetails, passwordLogin, loadInitialData }) => {
 PasswordAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
     passwordLogin: PropTypes.func.isRequired,
-    loadInitialData: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
 };
 

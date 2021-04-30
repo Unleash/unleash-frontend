@@ -22,7 +22,7 @@ export const ERROR_REACTIVATING_STRATEGY = 'ERROR_REACTIVATING_STRATEGY';
 
 export const receiveStrategies = json => ({
     type: RECEIVE_STRATEGIES,
-    value: json.strategies,
+    value: json,
 });
 
 const addStrategy = strategy => ({ type: ADD_STRATEGY, strategy });

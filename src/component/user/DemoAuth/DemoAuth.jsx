@@ -4,12 +4,7 @@ import { Button, TextField } from '@material-ui/core';
 
 import styles from './DemoAuth.module.scss';
 
-const DemoAuth = ({
-    demoLogin,
-    loadInitialData,
-    history,
-    authDetails,
-}) => {
+const DemoAuth = ({ demoLogin, history, authDetails }) => {
     const [email, setEmail] = useState('');
 
     const handleSubmit = evt => {
@@ -17,9 +12,7 @@ const DemoAuth = ({
         const user = { email };
         const path = evt.target.action;
 
-        demoLogin(path, user)
-            .then(loadInitialData)
-            .then(() => history.push(`/`));
+        demoLogin(path, user).then(() => history.push(`/`));
     };
 
     const handleChange = e => {
@@ -46,7 +39,6 @@ const DemoAuth = ({
                         type="email"
                     />
                     &nbsp;&nbsp;
-             
                     <Button
                         type="submit"
                         variant="contained"
@@ -58,16 +50,23 @@ const DemoAuth = ({
                     </Button>
                 </div>
                 <p>
-                    By accessing our demo instance, you agree to the Unleash&nbsp; 
+                    By accessing our demo instance, you agree to the
+                    Unleash&nbsp;
                     <a
                         href="https://www.unleash-hosted.com/tos/"
-                        target="_blank" rel="noreferrer">
-                            Customer Terms of Service
-                    </a> and&nbsp; 
-                    <a href="https://www.unleash-hosted.com/privacy-policy/" target="_blank" rel="noreferrer">
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Customer Terms of Service
+                    </a>{' '}
+                    and&nbsp;
+                    <a
+                        href="https://www.unleash-hosted.com/privacy-policy/"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
                         Privacy Policy
                     </a>
-
                 </p>
             </div>
         </form>
@@ -77,7 +76,6 @@ const DemoAuth = ({
 DemoAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
     demoLogin: PropTypes.func.isRequired,
-    loadInitialData: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
 };
 

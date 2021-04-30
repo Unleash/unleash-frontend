@@ -13,6 +13,6 @@ export function fetchFeatureTypes() {
     return dispatch =>
         api
             .fetchAll()
-            .then(json => dispatch(receiveFeatureTypes(json)))
+            .then(json => dispatch(receiveFeatureTypes(json.types)))
             .catch(dispatchError(dispatch, ERROR_RECEIVE_FEATURE_TYPES));
 }

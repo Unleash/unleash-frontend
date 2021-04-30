@@ -15,12 +15,14 @@ export function fetchUiBootstrap() {
         api
             .fetchUIBootstrap()
             .then(json => {
+                console.log(json);
+
                 dispatch(receiveProjects(json.projects));
                 dispatch(receiveConfig(json));
-                dispatch(receiveContext(json));
+                dispatch(receiveContext(json.context));
                 dispatch(receiveTagTypes(json));
-                dispatch(receiveFeatureTypes(json));
-                dispatch(receiveStrategies(json));
+                dispatch(receiveFeatureTypes(json.featureTypes));
+                dispatch(receiveStrategies(json.strategies));
             })
             .catch(dispatchError(dispatch, ERROR_RECEIVE_BOOTSTRAP));
 }

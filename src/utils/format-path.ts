@@ -3,7 +3,7 @@ export const getBasePathGenerator = () => {
 
     return () => {
         if (process.env.NODE_ENV === 'development') {
-            return '/hosted';
+            return '';
         }
 
         if (basePath !== undefined) {
