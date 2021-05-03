@@ -11,16 +11,22 @@ import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
+import { Alert } from '@material-ui/lab';
+import ConditionallyRender from './common/ConditionallyRender';
+import Proclamation from './common/Proclamation/Proclamation';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
+    uiConfig: any;
 }
 
-const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
+const App = ({ location, user, fetchUiBootstrap, uiConfig }: IAppProps) => {
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
     }, []);
+
+    console.log(uiConfig);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
@@ -70,6 +76,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     return (
         <div className={styles.container}>
             <LayoutPicker location={location}>
+                <Proclamation toast={uiConfig.toast} />
                 <Switch>
                     <ProtectedRoute
                         exact
