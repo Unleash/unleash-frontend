@@ -15,14 +15,8 @@ export function fetchUiBootstrap() {
         api
             .fetchUIBootstrap()
             .then(json => {
-                // console.log(json);
-                // const { flags, name, unleashUrl, environment, }
-                // const uiConfig = {
-
-                // };
-
                 dispatch(receiveProjects(json.projects));
-                dispatch(receiveConfig(json));
+                dispatch(receiveConfig(json.uiConfig));
                 dispatch(receiveContext(json.context));
                 dispatch(receiveTagTypes(json));
                 dispatch(receiveFeatureTypes(json.featureTypes));
