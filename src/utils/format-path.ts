@@ -1,5 +1,6 @@
 export const getBasePathGenerator = () => {
     let basePath: string | undefined;
+    const DEFAULT = '::baseUriPath::';
 
     return () => {
         if (process.env.NODE_ENV === 'development') {
@@ -15,6 +16,11 @@ export const getBasePathGenerator = () => {
 
         if (baseUriPath?.content) {
             basePath = baseUriPath?.content;
+
+            if (basePath === DEFAULT) {
+                return '';
+            }
+
             return basePath;
         }
         basePath = '';
