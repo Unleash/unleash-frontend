@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import { useStyles } from './Proclamation.styles';
 
 interface IProclamationProps {
-    toast: IToast;
+    toast?: IToast;
 }
 
 interface IToast {
@@ -16,6 +16,7 @@ interface IToast {
 }
 
 const renderProclamation = (id: string) => {
+    if (!id) return false;
     if (localStorage) {
         const value = localStorage.getItem(id);
         if (value) {
@@ -26,15 +27,17 @@ const renderProclamation = (id: string) => {
 };
 
 const Proclamation = ({ toast }: IProclamationProps) => {
-    const [show, setShow] = useState(renderProclamation(toast.id));
+    const [show, setShow] = useState(renderProclamation(toast?.id || ''));
     const styles = useStyles();
 
     const onClose = () => {
         if (localStorage) {
-            localStorage.setItem(toast.id, 'seen');
+            localStorage.setItem(toast?.id || '', 'seen');
         }
         setShow(false);
     };
+
+    if (!toast) return null;
 
     return (
         <ConditionallyRender
