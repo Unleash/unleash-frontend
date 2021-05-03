@@ -11,20 +11,16 @@ import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
-import Proclamation from './common/Proclamation/Proclamation';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
-    uiConfig: any;
 }
 
-const App = ({ location, user, fetchUiBootstrap, uiConfig }: IAppProps) => {
+const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
     }, []);
-
-    console.log(uiConfig);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
