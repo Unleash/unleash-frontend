@@ -26,9 +26,19 @@ export const getBasePath = getBasePathGenerator();
 
 export const formatApiPath = (path: string) => {
     const basePath = getBasePath();
-    console.log(basePath);
+
     if (basePath) {
         return `${basePath}/${path}`;
     }
     return `/${path}`;
+};
+
+export const formatAssetPath = (path: string) => {
+    const basePath = getBasePath();
+
+    if (basePath) {
+        return `${basePath}/${path}`;
+    }
+
+    return path;
 };

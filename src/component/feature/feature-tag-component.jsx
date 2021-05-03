@@ -7,6 +7,7 @@ import Dialogue from '../common/Dialogue';
 import slackIcon from '../../assets/icons/slack.svg';
 import jiraIcon from '../../assets/icons/jira.svg';
 import webhookIcon from '../../assets/icons/webhooks.svg';
+import { formatAssetPath } from '../../utils/format-path';
 
 function FeatureTagComponent({
     tags,
@@ -30,12 +31,28 @@ function FeatureTagComponent({
         if (tagType && tagType.icon) {
             switch (tagType.name) {
                 case 'slack':
-                    return <img style={style} alt="slack" src={slackIcon} />;
+                    return (
+                        <img
+                            style={style}
+                            alt="slack"
+                            src={formatAssetPath(slackIcon)}
+                        />
+                    );
                 case 'jira':
-                    return <img style={style} alt="jira" src={jiraIcon} />;
+                    return (
+                        <img
+                            style={style}
+                            alt="jira"
+                            src={formatAssetPath(jiraIcon)}
+                        />
+                    );
                 case 'webhook':
                     return (
-                        <img style={style} alt="webhook" src={webhookIcon} />
+                        <img
+                            style={style}
+                            alt="webhook"
+                            src={formatAssetPath(webhookIcon)}
+                        />
                     );
                 default:
                     return <Icon>label</Icon>;

@@ -5,6 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import styles from './DemoAuth.module.scss';
 
 import logoIcon from '../../../assets/img/logo.png';
+import { formatAssetPath } from '../../../utils/format-path';
 
 const DemoAuth = ({ demoLogin, history, authDetails }) => {
     const [email, setEmail] = useState('');

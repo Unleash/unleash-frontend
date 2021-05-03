@@ -11,6 +11,7 @@ import jiraIcon from '../../../assets/icons/jira.svg';
 import webhooksIcon from '../../../assets/icons/webhooks.svg';
 import teamsIcon from '../../../assets/icons/teams.svg';
 import dataDogIcon from '../../../assets/icons/datadog.svg';
+import { formatAssetPath } from '../../../utils/format-path';
 
 const style = {
     width: '40px',
@@ -22,23 +23,45 @@ const style = {
 const getIcon = name => {
     switch (name) {
         case 'slack':
-            return <img style={style} alt="Slack Logo" src={slackIcon} />;
+            return (
+                <img
+                    style={style}
+                    alt="Slack Logo"
+                    src={formatAssetPath(slackIcon)}
+                />
+            );
         case 'jira-comment':
-            return <img style={style} alt="JIRA Logo" src={jiraIcon} />;
+            return (
+                <img
+                    style={style}
+                    alt="JIRA Logo"
+                    src={formatAssetPath(jiraIcon)}
+                />
+            );
         case 'webhook':
             return (
                 <img
                     style={style}
                     alt="Generic Webhook logo"
-                    src={webhooksIcon}
+                    src={formatAssetPath(webhooksIcon)}
                 />
             );
         case 'teams':
             return (
-                <img style={style} alt="Microsoft Teams Logo" src={teamsIcon} />
+                <img
+                    style={style}
+                    alt="Microsoft Teams Logo"
+                    src={formatAssetPath(teamsIcon)}
+                />
             );
         case 'datadog':
-            return <img style={style} alt="Datadog" src={dataDogIcon} />;
+            return (
+                <img
+                    style={style}
+                    alt="Datadog"
+                    src={formatAssetPath(dataDogIcon)}
+                />
+            );
         default:
             return (
                 <Avatar>
