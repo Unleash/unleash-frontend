@@ -11,8 +11,6 @@ import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
-import { Alert } from '@material-ui/lab';
-import ConditionallyRender from './common/ConditionallyRender';
 import Proclamation from './common/Proclamation/Proclamation';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -76,7 +74,6 @@ const App = ({ location, user, fetchUiBootstrap, uiConfig }: IAppProps) => {
     return (
         <div className={styles.container}>
             <LayoutPicker location={location}>
-                <Proclamation toast={uiConfig.toast} />
                 <Switch>
                     <ProtectedRoute
                         exact
