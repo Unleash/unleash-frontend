@@ -56,7 +56,7 @@ function ApiKeyList({
                     >
                         Getting started guide
                     </a>{' '}
-                    to learn how to connect to the Unleash API form your
+                    to learn how to connect to the Unleash API from your
                     application or programmatically. Please note it can take up
                     to 1 minute before a new API key is activated.
                 </p>
