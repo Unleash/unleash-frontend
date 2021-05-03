@@ -6,6 +6,12 @@ import { Avatar, Icon } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import AccessContext from '../../../contexts/AccessContext';
 
+import slackIcon from '../../../assets/icons/slack.svg';
+import jiraIcon from '../../../assets/icons/jira.svg';
+import webhooksIcon from '../../../assets/icons/webhooks.svg';
+import teamsIcon from '../../../assets/icons/teams.svg';
+import dataDogIcon from '../../../assets/icons/datadog.svg';
+
 const style = {
     width: '40px',
     height: '40px',
@@ -16,15 +22,23 @@ const style = {
 const getIcon = name => {
     switch (name) {
         case 'slack':
-            return <img style={style} alt="Slack Logo" src="slack.svg" />;
+            return <img style={style} alt="Slack Logo" src={slackIcon} />;
         case 'jira-comment':
-            return <img style={style} alt="JIRA Logo" src="jira.svg" />;
+            return <img style={style} alt="JIRA Logo" src={jiraIcon} />;
         case 'webhook':
-            return <img style={style} alt="Generic Webhook logo" src="webhooks.svg" />;
+            return (
+                <img
+                    style={style}
+                    alt="Generic Webhook logo"
+                    src={webhooksIcon}
+                />
+            );
         case 'teams':
-                return <img style={style} alt="Microsoft Teams Logo" src="teams.svg" />;
+            return (
+                <img style={style} alt="Microsoft Teams Logo" src={teamsIcon} />
+            );
         case 'datadog':
-            return <img style={style} alt="Datadog" src="datadog.svg" />;
+            return <img style={style} alt="Datadog" src={dataDogIcon} />;
         default:
             return (
                 <Avatar>
@@ -34,7 +48,14 @@ const getIcon = name => {
     }
 };
 
-const AddonList = ({ addons, providers, fetchAddons, removeAddon, toggleAddon, history }) => {
+const AddonList = ({
+    addons,
+    providers,
+    fetchAddons,
+    removeAddon,
+    toggleAddon,
+    history,
+}) => {
     const { hasAccess } = useContext(AccessContext);
     useEffect(() => {
         if (addons.length === 0) {
@@ -59,7 +80,12 @@ const AddonList = ({ addons, providers, fetchAddons, removeAddon, toggleAddon, h
             />
 
             <br />
-            <AvailableAddons providers={providers} hasAccess={hasAccess} history={history} getIcon={getIcon} />
+            <AvailableAddons
+                providers={providers}
+                hasAccess={hasAccess}
+                history={history}
+                getIcon={getIcon}
+            />
         </>
     );
 };
