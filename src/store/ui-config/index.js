@@ -49,6 +49,7 @@ function updateConfig(state, config) {
 const strategies = (state = getInitState(), action) => {
     switch (action.type) {
         case RECEIVE_CONFIG:
+            console.log(action.value);
             return updateConfig(state, action.value);
         default:
             return state;
