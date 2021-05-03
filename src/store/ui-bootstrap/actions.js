@@ -15,8 +15,6 @@ export function fetchUiBootstrap() {
         api
             .fetchUIBootstrap()
             .then(json => {
-                console.log(json);
-
                 dispatch(receiveProjects(json.projects));
                 dispatch(receiveConfig(json));
                 dispatch(receiveContext(json.context));

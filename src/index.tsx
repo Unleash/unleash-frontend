@@ -42,7 +42,6 @@ metricsPoller.start();
 
 ReactDOM.render(
     <Provider store={unleashStore}>
-        {console.log('GETTING BASEPATH', getBasePath())}
         <DndProvider backend={HTML5Backend}>
             <AccessProvider store={unleashStore}>
                 <Router basename={`${getBasePath()}`}>

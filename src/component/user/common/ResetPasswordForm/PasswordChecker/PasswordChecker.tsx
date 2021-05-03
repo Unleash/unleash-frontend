@@ -65,7 +65,7 @@ const PasswordChecker = ({ password, callback }: IPasswordCheckerProps) => {
             }
         } catch (e) {
             // ResetPasswordForm handles errors related to submitting the form.
-            console.log(e);
+            console.log('An exception was caught and handled');
         }
     }, [makeValidatePassReq, callback, password]);
 
