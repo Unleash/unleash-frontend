@@ -10,5 +10,6 @@ export const useStyles = makeStyles({
     link: {
         display: 'block',
         marginTop: '0.5rem',
+        width: '100px',
     },
 });

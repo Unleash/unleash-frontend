@@ -48,7 +48,12 @@ const Proclamation = ({ toast }: IProclamationProps) => {
                     <Typography className={styles.content} variant="body2">
                         {toast.message}
                     </Typography>
-                    <a href={toast.link} className={styles.link}>
+                    <a
+                        href={toast.link}
+                        className={styles.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         View more
                     </a>
                 </Alert>
