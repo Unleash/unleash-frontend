@@ -18,6 +18,7 @@ export const getBasePathGenerator = () => {
             basePath = baseUriPath?.content;
 
             if (basePath === DEFAULT) {
+                basePath = '';
                 return '';
             }
 
