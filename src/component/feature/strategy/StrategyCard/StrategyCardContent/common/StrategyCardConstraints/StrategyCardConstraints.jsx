@@ -6,8 +6,16 @@ import React from 'react';
 import { useStyles } from './StrategyCardConstraints.styles.js';
 import ConditionallyRender from '../../../../../../common/ConditionallyRender/ConditionallyRender';
 
-const StrategyCardConstraints = ({ constraints }) => {
+const StrategyCardConstraints = ({ constraints, version }) => {
     const styles = useStyles();
+
+    const isOSS = () => {
+        if (!version) return true;
+        if (version.current.oss) {
+            return true;
+        }
+        return false;
+    };
 
     const renderConstraintValues = constraint =>
         constraint.values.map(value => <span key={value}>'{value}'</span>);
@@ -53,9 +61,24 @@ const StrategyCardConstraints = ({ constraints }) => {
                     </>
                 }
                 elseShow={
-                    <Typography variant="body2">
-                        No pre-conditions defined for this strategy.
-                    </Typography>
+                    <>
+                        <Typography variant="body2">
+                            No pre-conditions defined for this strategy.
+                        </Typography>
+                        <ConditionallyRender
+                            condition={isOSS()}
+                            show={
+                                <Typography variant="body2">
+                                    Constraints are only available as an
+                                    enterprise feature.{' '}
+                                    <a href="https://docs.getunleash.io/docs/advanced/strategy_constraints">
+                                        Learn more
+                                    </a>
+                                </Typography>
+                            }
+                            elseShow={<div>Get started</div>}
+                        />
+                    </>
                 }
             />
         </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
+import StrategyCardConstraints from '../common/StrategyCardConstraints';
 
 import { useCommonStyles } from '../../../../../../common.styles';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';

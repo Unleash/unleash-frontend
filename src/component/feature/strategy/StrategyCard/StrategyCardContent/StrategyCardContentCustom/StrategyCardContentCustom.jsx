@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import StrategyCardPercentage from '../common/StrategyCardPercentage/StrageyCardPercentage';
-import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
+import StrategyCardConstraints from '../common/StrategyCardConstraints';
 
 import { useCommonStyles } from '../../../../../../common.styles';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';

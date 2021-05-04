@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StrategyCardPercentage from '../common/StrategyCardPercentage/StrageyCardPercentage';
-import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
+import StrategyCardConstraints from '../common/StrategyCardConstraints';
 import StrategyCardField from '../common/StrategyCardField/StrategyCardField';
 
 import { useCommonStyles } from '../../../../../../common.styles';
@@ -13,7 +13,7 @@ const StrategyCardContentRollout = ({ strategy }) => {
     const rolloutPercentage = strategy.parameters.percentage;
     const groupId = strategy.parameters.groupId;
     const { constraints } = strategy;
-    console.log('gradual rollout');
+
     return (
         <div>
             <StrategyCardConstraints constraints={constraints} />

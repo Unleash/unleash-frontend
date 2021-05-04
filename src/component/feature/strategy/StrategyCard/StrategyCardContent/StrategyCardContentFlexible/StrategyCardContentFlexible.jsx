@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StrategyCardPercentage from '../common/StrategyCardPercentage/StrageyCardPercentage';
-import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyCardConstraints';
+import StrategyCardConstraints from '../common/StrategyCardConstraints';
 import StrategyCardField from '../common/StrategyCardField/StrategyCardField';
 
 import { useCommonStyles } from '../../../../../../common.styles';
