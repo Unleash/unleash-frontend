@@ -1,17 +1,18 @@
 import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import React from 'react';
 
 import { useStyles } from './StrategyCardConstraints.styles.js';
 import ConditionallyRender from '../../../../../../common/ConditionallyRender/ConditionallyRender';
+import { C } from '../../../../../../common/flags.js';
 
-const StrategyCardConstraints = ({ constraints, version }) => {
+const StrategyCardConstraints = ({ constraints, flags }) => {
     const styles = useStyles();
 
-    const isOSS = () => {
-        if (!version) return true;
-        if (version.current.oss) {
+    const isEnterprise = () => {
+        console.log(flags);
+        if (!flags) return false;
+        if (flags[C]) {
             return true;
         }
         return false;
@@ -66,17 +67,41 @@ const StrategyCardConstraints = ({ constraints, version }) => {
                             No pre-conditions defined for this strategy.
                         </Typography>
                         <ConditionallyRender
-                            condition={isOSS()}
+                            condition={isEnterprise()}
                             show={
-                                <Typography variant="body2">
-                                    Constraints are only available as an
-                                    enterprise feature.{' '}
-                                    <a href="https://docs.getunleash.io/docs/advanced/strategy_constraints">
+                                <Typography
+                                    variant="body2"
+                                    className={styles.placeholderText}
+                                >
+                                    Constraints allow you fine grained control
+                                    over how to execute your strategies.
+                                    <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.link}
+                                        href="https://docs.getunleash.io/docs/advanced/strategy_constraints"
+                                    >
                                         Learn more
                                     </a>
                                 </Typography>
                             }
-                            elseShow={<div>Get started</div>}
+                            elseShow={
+                                <Typography
+                                    variant="body2"
+                                    className={styles.placeholderText}
+                                >
+                                    Constraints are only available as an
+                                    enterprise feature.{' '}
+                                    <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.link}
+                                        href="https://docs.getunleash.io/docs/advanced/strategy_constraints"
+                                    >
+                                        Learn more
+                                    </a>
+                                </Typography>
+                            }
                         />
                     </>
                 }

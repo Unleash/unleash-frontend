@@ -9,12 +9,21 @@ export const useStyles = makeStyles(theme => ({
         margin: '0.5rem 0',
         borderRadius: theme.borders.radius.main,
         padding: '0.8rem',
-        overflow: 'scroll',
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap',
+        '& pre': {
+            fontSize: '0.8rem',
+        },
         '& span': {
             marginRight: '0.4rem',
         },
+    },
+    placeholderText: {
+        marginTop: '0.25rem',
+    },
+    link: {
+        display: 'block',
+        marginTop: '0.2rem',
     },
 }));
