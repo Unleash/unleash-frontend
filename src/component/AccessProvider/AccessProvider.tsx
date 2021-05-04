@@ -22,13 +22,14 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
                 return true;
             }
 
+            if (p.permission === permission && p.project === project) {
+                return true;
+            }
+
             if (p.permission === permission && project === undefined) {
                 return true;
             }
 
-            if (p.permission === permission && p.project === project) {
-                return true;
-            }
             return false;
         });
 
