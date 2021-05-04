@@ -10,7 +10,6 @@ const StrategyCardConstraints = ({ constraints, flags }) => {
     const styles = useStyles();
 
     const isEnterprise = () => {
-        console.log(flags);
         if (!flags) return false;
         if (flags[C]) {
             return true;
