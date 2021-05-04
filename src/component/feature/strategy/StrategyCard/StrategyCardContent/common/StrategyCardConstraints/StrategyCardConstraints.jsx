@@ -18,8 +18,20 @@ const StrategyCardConstraints = ({ constraints, flags }) => {
         return false;
     };
 
-    const renderConstraintValues = constraint =>
-        constraint.values.map(value => <span key={value}>'{value}'</span>);
+    const renderConstraintValues = constraint => {
+        const multiple = constraint.values.length > 1;
+        return constraint.values.map((value, index) => {
+            const notLastItem = index !== constraint.values.length - 1;
+            return (
+                <ConditionallyRender
+                    key={value}
+                    condition={multiple && notLastItem}
+                    show={<span>'{value}',</span>}
+                    elseShow={<span>'{value}'</span>}
+                />
+            );
+        });
+    };
 
     const renderConstraints = () => {
         return constraints.map((constraint, i) => (

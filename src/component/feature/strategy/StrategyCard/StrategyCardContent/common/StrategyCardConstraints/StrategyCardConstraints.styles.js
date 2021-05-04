@@ -12,11 +12,9 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap',
-        '& pre': {
-            fontSize: '0.8rem',
-        },
         '& span': {
             marginRight: '0.4rem',
+            fontSize: '0.9rem',
         },
     },
     placeholderText: {
