@@ -6,7 +6,6 @@ import StrategyCardConstraints from '../common/StrategyCardConstraints/StrategyC
 import StrategyCardField from '../common/StrategyCardField/StrategyCardField';
 
 import { useCommonStyles } from '../../../../../../common.styles';
-import ConditionallyRender from '../../../../../common/ConditionallyRender';
 
 const StrategyCardContentRollout = ({ strategy }) => {
     const commonStyles = useCommonStyles();
@@ -14,19 +13,12 @@ const StrategyCardContentRollout = ({ strategy }) => {
     const rolloutPercentage = strategy.parameters.percentage;
     const groupId = strategy.parameters.groupId;
     const { constraints } = strategy;
-
+    console.log('gradual rollout');
     return (
         <div>
+            <StrategyCardConstraints constraints={constraints} />
+            <div className={commonStyles.divider} />
             <StrategyCardPercentage percentage={rolloutPercentage} />
-            <ConditionallyRender
-                condition={constraints && constraints.length > 0}
-                show={
-                    <>
-                        <div className={commonStyles.divider} />
-                        <StrategyCardConstraints constraints={constraints} />
-                    </>
-                }
-            />
 
             <div className={commonStyles.divider} />
             <StrategyCardField title="Group id" value={groupId} />

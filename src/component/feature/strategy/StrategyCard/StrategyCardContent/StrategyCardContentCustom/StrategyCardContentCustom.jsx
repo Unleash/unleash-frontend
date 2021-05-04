@@ -19,7 +19,9 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
         return (
             <Typography className={commonStyles.textCenter}>
                 The strategy definition "{strategy.name}" does not exist.{' '}
-                <Link to={`/strategies/create?name=${strategy.name}`}>Create a strategy named {strategy.name}</Link>
+                <Link to={`/strategies/create?name=${strategy.name}`}>
+                    Create a strategy named {strategy.name}
+                </Link>
             </Typography>
         );
     if (strategyDefinition.name === 'Loading') return null;
@@ -42,7 +44,7 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
             case 'list':
                 /* eslint-disable-next-line */
                 const paramList = param
-                    ? param.split(",").filter(listItem => listItem)
+                    ? param.split(',').filter(listItem => listItem)
                     : [];
 
                 return (
@@ -51,7 +53,10 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
                         condition={paramList.length > 0}
                         show={
                             <>
-                                <StrategyCardList list={paramList} valuesName={paramDefinition.name} />
+                                <StrategyCardList
+                                    list={paramList}
+                                    valuesName={paramDefinition.name}
+                                />
                                 <div className={commonStyles.divider} />
                             </>
                         }
@@ -64,29 +69,28 @@ const StrategyCardContentCustom = ({ strategy, strategyDefinition }) => {
                     <ConditionallyRender
                         key={paramDefinition.name}
                         condition={param || param === false}
-                        show={<StrategyCardField title={paramDefinition.name} value={param} />}
+                        show={
+                            <StrategyCardField
+                                title={paramDefinition.name}
+                                value={param}
+                            />
+                        }
                     />
                 );
             default:
-                return null
+                return null;
         }
     };
 
     const renderCustomSections = () =>
-        strategyDefinition.parameters.map(paramDefinition => getSection(paramDefinition));
+        strategyDefinition.parameters.map(paramDefinition =>
+            getSection(paramDefinition)
+        );
 
     return (
         <div>
+            <StrategyCardConstraints constraints={constraints} />
             {renderCustomSections()}
-            <ConditionallyRender
-                condition={constraints && constraints.length > 0}
-                show={
-                    <>
-                        <div className={commonStyles.divider} />
-                        <StrategyCardConstraints constraints={constraints} />
-                    </>
-                }
-            />
         </div>
     );
 };

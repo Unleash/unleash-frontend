@@ -4,52 +4,60 @@ import classnames from 'classnames';
 import React from 'react';
 
 import { useStyles } from './StrategyCardConstraints.styles.js';
-import { useCommonStyles } from '../../../../../../../common.styles.js';
+import ConditionallyRender from '../../../../../../common/ConditionallyRender/ConditionallyRender';
 
 const StrategyCardConstraints = ({ constraints }) => {
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
 
     const renderConstraintValues = constraint =>
-        constraint.values.map(value => (
-            <Typography variant="body2" key={value} className={styles.constraintValue}>
-                {value}
-            </Typography>
-        ));
+        constraint.values.map(value => <span key={value}>'{value}'</span>);
 
-    const renderConstraints = () =>
-        constraints.map((constraint, i) => (
-            <div key={`${constraint.contextName}-${i}`} className={styles.constraintContainer}>
-                <div className={styles.constraintDisplayContainer}>
-                    <Typography variant="body2" className={styles.label}>
-                        context
-                    </Typography>
-                    <Typography variant="body2">{constraint.contextName}</Typography>
-                </div>
-                <div className={styles.constraintDisplayContainer}>
-                    <Typography variant="body2" className={styles.label}>
-                        operator
-                    </Typography>
-                    <Typography variant="body2">{constraint.operator}</Typography>
-                </div>
+    const renderConstraints = () => {
+        return constraints.map((constraint, i) => (
+            <div key={`${constraint.contextName}-${constraint.operator}`}>
+                <ConditionallyRender
+                    condition={i > 0}
+                    show={<span>and</span>}
+                />
+                <pre
+                    key={`${constraint.contextName}-${i}`}
+                    className={classnames(styles.constraintContainer)}
+                >
+                    <span>{constraint.contextName}</span>
 
-                <div className={classnames(commonStyles.flexColumn, styles.constraintValuesContainer)}>
-                    <Typography variant="body2" className={styles.label}>
-                        values
-                    </Typography>
-                    <div className={classnames(commonStyles.flexRow, commonStyles.flexWrap)}>
-                        {renderConstraintValues(constraint)}
-                    </div>
-                </div>
+                    <span>{constraint.operator}</span>
+
+                    {renderConstraintValues(constraint)}
+                </pre>
             </div>
         ));
+    };
 
     return (
         <>
             <Typography className={styles.title} variant="subtitle1">
                 Constraints
             </Typography>
-            {renderConstraints()}
+
+            <ConditionallyRender
+                condition={constraints && constraints.length > 0}
+                show={
+                    <>
+                        <Typography variant="body2">
+                            The following pre-conditions must be fulfilled for
+                            this strategy to be executed
+                        </Typography>
+                        <div className={styles.constraints}>
+                            {renderConstraints()}
+                        </div>
+                    </>
+                }
+                elseShow={
+                    <Typography variant="body2">
+                        No pre-conditions defined for this strategy.
+                    </Typography>
+                }
+            />
         </>
     );
 };

@@ -15,16 +15,14 @@ const StrategyCardContentList = ({ strategy, parameter, valuesName }) => {
 
     return (
         <div>
+            <StrategyCardConstraints constraints={constraints} />
+
             <ConditionallyRender
                 condition={list.length > 0}
-                show={<StrategyCardList list={list} valuesName={valuesName} />}
-            />
-            <ConditionallyRender
-                condition={constraints && constraints.length > 0}
                 show={
                     <>
                         <div className={commonStyles.divider} />
-                        <StrategyCardConstraints constraints={constraints} />
+                        <StrategyCardList list={list} valuesName={valuesName} />
                     </>
                 }
             />

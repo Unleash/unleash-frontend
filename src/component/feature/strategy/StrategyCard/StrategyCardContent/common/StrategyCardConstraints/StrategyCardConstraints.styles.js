@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles(theme => ({
+    constraints: {
+        marginTop: '1rem',
+    },
     constraintContainer: {
         backgroundColor: theme.palette.cards.container.bg,
         margin: '0.5rem 0',
@@ -10,25 +13,8 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap',
-    },
-    verticalSpacer: {
-        margin: '0 0.25rem',
-    },
-    title: {
-        fontWeight: theme.fontWeight.semi,
-    },
-    constraintDisplayContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '50%',
-    },
-    label: {
-        fontWeight: theme.fontWeight.bold,
-    },
-    constraintValuesContainer: {
-        marginTop: '0.25rem',
-    },
-    constraintValue: {
-        marginRight: '0.25rem',
+        '& span': {
+            marginRight: '0.4rem',
+        },
     },
 }));
