@@ -15,7 +15,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const history = useHistory();
     const [showFields, setShowFields] = useState(false);
     const params = useQueryParams();
-    const [username, setUsername] = useState(params.get('email'));
+    const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({
         usernameError: '',
@@ -93,6 +93,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                         error={!!usernameError}
                         helperText={usernameError}
                         variant="outlined"
+                        autoComplete="true"
                         size="small"
                     />
                     <TextField
@@ -104,6 +105,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                         error={!!passwordError}
                         helperText={passwordError}
                         variant="outlined"
+                        autoComplete="true"
                         size="small"
                     />
 

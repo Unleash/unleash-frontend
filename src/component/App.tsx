@@ -34,8 +34,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
 
     const isUnauthorized = () => {
         // authDetails only exists if the user is not logged in.
-        console.log(user);
-        if (!user) return;
+        if (user?.permissions.length === 0) return true;
         return user?.authDetails !== undefined;
     };
 
