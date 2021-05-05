@@ -54,6 +54,8 @@ const ProjectSelect = ({
         ];
     };
 
+    const { updateSetting, fetchProjects, ...passDown } = rest;
+
     return (
         <React.Fragment>
             <DropdownMenu
@@ -63,7 +65,7 @@ const ProjectSelect = ({
                 callback={handleChangeProject}
                 renderOptions={renderProjectOptions}
                 className=""
-                {...rest}
+                {...passDown}
             />
         </React.Fragment>
     );
