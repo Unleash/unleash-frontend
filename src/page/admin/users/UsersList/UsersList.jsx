@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Button,
@@ -22,7 +22,6 @@ import useAdminUsersApi from '../../../../hooks/useAdminUsersApi';
 import UserListItem from './UserListItem/UserListItem';
 import loadingData from './loadingData';
 import useLoading from '../../../../hooks/useLoading';
-import { scrollToTop } from '../../../../component/common/util';
 
 function UsersList({ location }) {
     const { users, roles, refetch, loading } = useUsers();

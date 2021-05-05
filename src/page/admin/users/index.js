@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import UsersList from './UsersList';
 import AdminMenu from '../admin-menu';
