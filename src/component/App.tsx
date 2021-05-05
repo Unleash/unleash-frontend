@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
+import NotFound from './common/NotFound/NotFound';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
@@ -80,6 +81,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                     />
                     {renderMainLayoutRoutes()}
                     {renderStandaloneRoutes()}
+                    <Route component={NotFound} />
                 </Switch>
             </LayoutPicker>
         </div>
