@@ -22,8 +22,6 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
         /* eslint-disable-next-line */
     }, [user.authDetails?.type]);
 
-    console.log(user.authDetails);
-
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
     };
