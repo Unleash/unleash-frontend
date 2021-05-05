@@ -7,6 +7,9 @@ export const useStyles = makeStyles({
         alignItems: 'center',
         minHeight: '100vh',
         padding: '2rem',
+        position: 'fixed',
+        backgroundColor: '#fff',
+        width: '100%',
     },
     logo: {
         height: '80px',

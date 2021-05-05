@@ -8,7 +8,7 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSuccess';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
-const Login = ({ history, isUnauthorized, user, fetchUser }) => {
+const Login = ({ history, user, fetchUser }) => {
     const styles = useStyles();
     const query = useQueryParams();
 
@@ -18,11 +18,11 @@ const Login = ({ history, isUnauthorized, user, fetchUser }) => {
     }, []);
 
     useEffect(() => {
-        if (!isUnauthorized()) {
+        if (user.permissions.length > 0) {
             history.push('features');
         }
         /* eslint-disable-next-line */
-    }, [user.permissions, user.authDetails]);
+    }, [user.permissions]);
 
     const resetPassword = query.get('reset') === 'true';
 

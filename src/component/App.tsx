@@ -35,7 +35,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
 
     const isUnauthorized = () => {
         // authDetails only exists if the user is not logged in.
-        if (user?.permissions.length === 0) return true;
+        //if (user?.permissions.length === 0) return true;
         return user?.authDetails !== undefined;
     };
 
@@ -81,7 +81,8 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                     />
                     {renderMainLayoutRoutes()}
                     {renderStandaloneRoutes()}
-                    <Route component={NotFound} />
+                    <Route path="/404" component={NotFound} />
+                    <Redirect to="/404" />
                 </Switch>
             </LayoutPicker>
         </div>
