@@ -66,6 +66,10 @@ class WrapperComponent extends Component {
         const { createFeatureToggles, history } = this.props;
         const { featureToggle } = this.state;
 
+        if (Object.keys(this.state.errors)) {
+            return;
+        }
+
         if (featureToggle.strategies < 1) {
             featureToggle.strategies = [defaultStrategy];
         }
