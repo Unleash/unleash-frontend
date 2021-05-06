@@ -148,7 +148,6 @@ const StrategiesList = props => {
                 featureToggleName={featureToggleName}
                 addStrategy={addStrategy}
             />
-            {console.log('EDITING', editingStrategy)}
             {editingStrategy ? (
                 <EditStrategyModal
                     strategy={editingStrategy}

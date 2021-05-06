@@ -23,8 +23,6 @@ const EditStrategyModal = ({
     updateStrategy,
     strategyDefinition,
 }) => {
-    console.log(strategy);
-
     const updateParameters = parameters => {
         const updatedStrategy = { ...strategy, parameters };
         updateStrategy(updatedStrategy);
