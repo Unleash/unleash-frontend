@@ -131,9 +131,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
                 onClose={() => {
                     setDeletion({ open: false });
                 }}
-            >
-                <Typography>Are you sure?</Typography>
-            </Dialogue>
+            />
         </PageContent>
     );
 };
