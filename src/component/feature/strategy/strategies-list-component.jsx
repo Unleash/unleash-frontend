@@ -32,7 +32,8 @@ const StrategiesList = props => {
     const [editStrategyIndex, setEditStrategyIndex] = useState();
 
     useEffect(() => {
-        if (!editStrategyIndex) {
+        const notEditing = editStrategyIndex < 0;
+        if (notEditing) {
             updateEditableStrategies(cloneDeep(props.configuredStrategies));
         }
         /* eslint-disable-next-line */
@@ -147,7 +148,7 @@ const StrategiesList = props => {
                 featureToggleName={featureToggleName}
                 addStrategy={addStrategy}
             />
-
+            {console.log('EDITING', editingStrategy)}
             {editingStrategy ? (
                 <EditStrategyModal
                     strategy={editingStrategy}
