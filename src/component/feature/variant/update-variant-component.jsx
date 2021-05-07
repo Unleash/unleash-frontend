@@ -66,7 +66,7 @@ class UpdateVariantComponent extends Component {
         try {
             this.props.removeVariant(index);
         } catch (e) {
-            console.log(e);
+            console.log('An exception was caught.');
         }
     };
 

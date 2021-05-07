@@ -28,7 +28,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const currentVariants = featureToggle.variants || [];
 
         const variants = currentVariants.filter((v, i) => i !== index);
-        console.log(currentVariants);
         if (variants.length > 0) {
             updateWeight(variants, 1000);
         }
