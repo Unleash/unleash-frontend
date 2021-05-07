@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { formatApiPath } from '../../utils/format-path';
 
 function AddUserComponent({ roles, addUserToRole }) {
     const [user, setUser] = useState();
@@ -23,7 +24,9 @@ function AddUserComponent({ roles, addUserToRole }) {
 
     useEffect(() => {
         if (roles.length > 0) {
-            const regularRole = roles.find(r => r.name.toLowerCase() === 'regular');
+            const regularRole = roles.find(
+                r => r.name.toLowerCase() === 'regular'
+            );
             setRole(regularRole || roles[0]);
         }
     }, [roles]);
@@ -32,7 +35,8 @@ function AddUserComponent({ roles, addUserToRole }) {
         if (q.length > 1) {
             setLoading(true);
             // TODO: Do not hard-code fetch here.
-            const response = await fetch(`api/admin/user-admin/search?q=${q}`);
+            const path = formatApiPath(`api/admin/user-admin/search?q=${q}`);
+            const response = await fetch(path);
             const users = await response.json();
             setOptions([...users]);
         } else {
@@ -80,7 +84,9 @@ function AddUserComponent({ roles, addUserToRole }) {
                     filterOptions={o => o}
                     getOptionLabel={option => {
                         if (option) {
-                            return `${option.name || '(Empty name)'} <${option.email || option.username}>`;
+                            return `${option.name || '(Empty name)'} <${
+                                option.email || option.username
+                            }>`;
                         } else return '';
                     }}
                     options={options}
@@ -100,7 +106,12 @@ function AddUserComponent({ roles, addUserToRole }) {
                                 ),
                                 endAdornment: (
                                     <React.Fragment>
-                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                        {loading ? (
+                                            <CircularProgress
+                                                color="inherit"
+                                                size={20}
+                                            />
+                                        ) : null}
                                         {params.InputProps.endAdornment}
                                     </React.Fragment>
                                 ),
@@ -111,7 +122,9 @@ function AddUserComponent({ roles, addUserToRole }) {
             </Grid>
             <Grid item>
                 <FormControl>
-                    <InputLabel id="add-user-select-role-label">Role</InputLabel>
+                    <InputLabel id="add-user-select-role-label">
+                        Role
+                    </InputLabel>
                     <Select
                         labelId="add-user-select-role-label"
                         id="add-user-select-role"
@@ -128,7 +141,12 @@ function AddUserComponent({ roles, addUserToRole }) {
                 </FormControl>
             </Grid>
             <Grid item>
-                <Button variant="contained" color="primary" disabled={!user} onClick={handleSubmit}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={!user}
+                    onClick={handleSubmit}
+                >
                     Add user
                 </Button>
             </Grid>
