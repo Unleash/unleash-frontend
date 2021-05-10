@@ -7,6 +7,6 @@ const mapStateToProps = state => ({
     unleashUrl: state.uiConfig.toJS().unleashUrl,
 });
 
-const Container = connect(mapStateToProps, { getOidcConfig, updateOidcConfig })(OidcAuth);
+const OidcContainer = connect(mapStateToProps, { getOidcConfig, updateOidcConfig })(OidcAuth);
 
 export default Container;
