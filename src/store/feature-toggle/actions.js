@@ -110,7 +110,10 @@ export function createFeatureToggles(featureToggle) {
                     featureToggle: createdFeature,
                 });
             })
-            .catch(dispatchError(dispatch, ERROR_CREATING_FEATURE_TOGGLE));
+            .catch(e => {
+                dispatchError(dispatch, ERROR_CREATING_FEATURE_TOGGLE);
+                throw e;
+            });
     };
 }
 
