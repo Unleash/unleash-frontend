@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
 
 const OidcContainer = connect(mapStateToProps, { getOidcConfig, updateOidcConfig })(OidcAuth);
 
-export default Container;
+export default OidcContainer;
