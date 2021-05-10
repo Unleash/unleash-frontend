@@ -48,6 +48,14 @@ const reactivateStrategyEvent = strategy => ({
     strategy,
 });
 
+const setInfoMessage = (info, dispatch) => {
+    dispatch({
+        type: UPDATE_STRATEGY_SUCCESS,
+        info: info,
+    });
+    setTimeout(() => dispatch({ type: MUTE_ERROR, error: info }), 1500);
+};
+
 export function fetchStrategies() {
     return dispatch => {
         dispatch(startRequest());
@@ -67,15 +75,7 @@ export function createStrategy(strategy) {
             .create(strategy)
             .then(() => dispatch(addStrategy(strategy)))
             .then(() => {
-                const info = 'Strategy successfully created.';
-                dispatch({
-                    type: UPDATE_STRATEGY_SUCCESS,
-                    info: info,
-                });
-                setTimeout(
-                    () => dispatch({ type: MUTE_ERROR, error: info }),
-                    1500
-                );
+                setInfoMessage('Strategy successfully created.', dispatch);
             })
             .catch(e => {
                 dispatchError(dispatch, ERROR_CREATING_STRATEGY);
@@ -92,15 +92,7 @@ export function updateStrategy(strategy) {
             .update(strategy)
             .then(() => dispatch(updatedStrategy(strategy)))
             .then(() => {
-                const info = 'Strategy successfully updated.';
-                dispatch({
-                    type: UPDATE_STRATEGY_SUCCESS,
-                    info: info,
-                });
-                setTimeout(
-                    () => dispatch({ type: MUTE_ERROR, error: info }),
-                    1500
-                );
+                setInfoMessage('Strategy successfully updated.', dispatch);
             })
             .catch(dispatchError(dispatch, ERROR_UPDATING_STRATEGY));
     };
@@ -112,15 +104,7 @@ export function removeStrategy(strategy) {
             .remove(strategy)
             .then(() => dispatch(createRemoveStrategy(strategy)))
             .then(() => {
-                const info = 'Strategy successfully deleted.';
-                dispatch({
-                    type: UPDATE_STRATEGY_SUCCESS,
-                    info: 'Strategy successfully deleted.',
-                });
-                setTimeout(
-                    () => dispatch({ type: MUTE_ERROR, error: info }),
-                    1500
-                );
+                setInfoMessage('Strategy successfully deleted.', dispatch);
             })
             .catch(dispatchError(dispatch, ERROR_REMOVING_STRATEGY));
 }
@@ -134,6 +118,9 @@ export function deprecateStrategy(strategy) {
         dispatch(startDeprecate());
         api.deprecate(strategy)
             .then(() => dispatch(deprecateStrategyEvent(strategy)))
+            .then(() =>
+                setInfoMessage('Strategy successfully deprecated', dispatch)
+            )
             .catch(dispatchError(dispatch, ERROR_DEPRECATING_STRATEGY));
     };
 }
@@ -143,6 +130,9 @@ export function reactivateStrategy(strategy) {
         dispatch(startReactivate());
         api.reactivate(strategy)
             .then(() => dispatch(reactivateStrategyEvent(strategy)))
+            .then(() =>
+                setInfoMessage('Strategy successfully reactivated', dispatch)
+            )
             .catch(dispatchError(dispatch, ERROR_REACTIVATING_STRATEGY));
     };
 }
