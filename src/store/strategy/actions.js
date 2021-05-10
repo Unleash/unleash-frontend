@@ -1,6 +1,7 @@
 import api from './api';
 import applicationApi from '../application/api';
 import { dispatchError } from '../util';
+import { MUTE_ERROR } from '../error/actions';
 
 export const ADD_STRATEGY = 'ADD_STRATEGY';
 export const UPDATE_STRATEGY = 'UPDATE_STRATEGY';
@@ -19,6 +20,7 @@ export const ERROR_UPDATING_STRATEGY = 'ERROR_UPDATING_STRATEGY';
 export const ERROR_REMOVING_STRATEGY = 'ERROR_REMOVING_STRATEGY';
 export const ERROR_DEPRECATING_STRATEGY = 'ERROR_DEPRECATING_STRATEGY';
 export const ERROR_REACTIVATING_STRATEGY = 'ERROR_REACTIVATING_STRATEGY';
+export const UPDATE_STRATEGY_SUCCESS = 'UPDATE_STRATEGY_SUCCESS';
 
 export const receiveStrategies = json => ({
     type: RECEIVE_STRATEGIES,
@@ -64,6 +66,17 @@ export function createStrategy(strategy) {
         return api
             .create(strategy)
             .then(() => dispatch(addStrategy(strategy)))
+            .then(() => {
+                const info = 'Strategy successfully created.';
+                dispatch({
+                    type: UPDATE_STRATEGY_SUCCESS,
+                    info: info,
+                });
+                setTimeout(
+                    () => dispatch({ type: MUTE_ERROR, error: info }),
+                    1500
+                );
+            })
             .catch(e => {
                 dispatchError(dispatch, ERROR_CREATING_STRATEGY);
                 throw e;
@@ -78,6 +91,17 @@ export function updateStrategy(strategy) {
         return api
             .update(strategy)
             .then(() => dispatch(updatedStrategy(strategy)))
+            .then(() => {
+                const info = 'Strategy successfully updated.';
+                dispatch({
+                    type: UPDATE_STRATEGY_SUCCESS,
+                    info: info,
+                });
+                setTimeout(
+                    () => dispatch({ type: MUTE_ERROR, error: info }),
+                    1500
+                );
+            })
             .catch(dispatchError(dispatch, ERROR_UPDATING_STRATEGY));
     };
 }
@@ -87,6 +111,17 @@ export function removeStrategy(strategy) {
         api
             .remove(strategy)
             .then(() => dispatch(createRemoveStrategy(strategy)))
+            .then(() => {
+                const info = 'Strategy successfully deleted.';
+                dispatch({
+                    type: UPDATE_STRATEGY_SUCCESS,
+                    info: 'Strategy successfully deleted.',
+                });
+                setTimeout(
+                    () => dispatch({ type: MUTE_ERROR, error: info }),
+                    1500
+                );
+            })
             .catch(dispatchError(dispatch, ERROR_REMOVING_STRATEGY));
 }
 
