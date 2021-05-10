@@ -196,6 +196,7 @@ const AddVariant = ({
                     value={data.name || ''}
                     error={Boolean(error.name)}
                     variant="outlined"
+                    required
                     size="small"
                     type="name"
                     onChange={setVariantValue}
