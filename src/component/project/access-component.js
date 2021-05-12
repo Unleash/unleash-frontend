@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Avatar,
@@ -19,7 +19,6 @@ import {
     MenuItem,
     Select,
     FormControl,
-    Divider,
 } from '@material-ui/core';
 
 import AddUserComponent from './access-add-user';
