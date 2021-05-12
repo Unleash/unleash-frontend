@@ -6,6 +6,7 @@ import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent';
 
 import FeatureToggleListItem from '../../feature/FeatureToggleList/FeatureToggleListItem';
+import ConditionallyRender from '../../common/ConditionallyRender';
 
 const ViewProjectComponent = ({
     project,
@@ -65,10 +66,21 @@ const ViewProjectComponent = ({
                     />
                 }
             >
-                <Typography variant="subtitle2">
-                    {project.description}
-                </Typography>
+                <ConditionallyRender
+                    condition={project.description}
+                    show={
+                        <div style={{ marginBottom: '2rem' }}>
+                            <Typography variant="subtitle2">
+                                Description
+                            </Typography>
+                            <Typography>{project.description}</Typography>
+                        </div>
+                    }
+                />
 
+                <Typography variant="subtitle2">
+                    Feature toggles in this project
+                </Typography>
                 <List>{renderProjectFeatures()}</List>
             </PageContent>
         </div>
