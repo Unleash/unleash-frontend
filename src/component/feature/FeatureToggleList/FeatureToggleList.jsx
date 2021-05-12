@@ -41,7 +41,7 @@ const FeatureToggleList = ({
 }) => {
     const { hasAccess } = useContext(AccessContext);
     const styles = useStyles();
-    const smallScreen = useMediaQuery('(max-width:700px)');
+    const smallScreen = useMediaQuery('(max-width:800px)');
 
     useLayoutEffect(() => {
         fetcher();
