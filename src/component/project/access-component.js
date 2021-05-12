@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import {
     Avatar,
     Button,
-    Card,
-    CardHeader,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
+    InputLabel,
     Icon,
     IconButton,
     List,
@@ -19,11 +18,14 @@ import {
     ListItemText,
     MenuItem,
     Select,
+    FormControl,
+    Divider,
 } from '@material-ui/core';
 
 import AddUserComponent from './access-add-user';
 
 import projectApi from '../../store/project/api';
+import PageContent from '../common/PageContent';
 
 function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);
@@ -33,7 +35,9 @@ function AccessComponent({ projectId, project }) {
     const fetchAccess = async () => {
         const access = await projectApi.fetchAccess(projectId);
         setRoles(access.roles);
-        setUsers(access.users.map(u => ({ ...u, name: u.name || '(No name)' })));
+        setUsers(
+            access.users.map(u => ({ ...u, name: u.name || '(No name)' }))
+        );
     };
 
     useEffect(() => {
@@ -85,8 +89,10 @@ function AccessComponent({ projectId, project }) {
     };
 
     return (
-        <Card style={{ minHeight: '400px' }}>
-            <CardHeader title={`Managed Access for project "${project.name}"`} />
+        <PageContent
+            style={{ minHeight: '400px' }}
+            headerContent={`Manage Access for project "${project.name}"`}
+        >
             <AddUserComponent roles={roles} addUserToRole={addUser} />
             <Dialog
                 open={!!error}
@@ -96,14 +102,29 @@ function AccessComponent({ projectId, project }) {
             >
                 <DialogTitle id="alert-dialog-title">{'Error'}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{error}</DialogContentText>
+                    <DialogContentText id="alert-dialog-description">
+                        {error}
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseError} color="secondary" autoFocus>
+                    <Button
+                        onClick={handleCloseError}
+                        color="secondary"
+                        autoFocus
+                    >
                         Close
                     </Button>
                 </DialogActions>
             </Dialog>
+            <div
+                style={{
+                    height: '1px',
+                    width: '110%',
+                    marginLeft: '-2rem',
+                    backgroundColor: '#efefef',
+                    marginTop: '2rem',
+                }}
+            ></div>
             <List>
                 {users.map(user => {
                     const labelId = `checkbox-list-secondary-label-${user.id}`;
@@ -112,24 +133,43 @@ function AccessComponent({ projectId, project }) {
                             <ListItemAvatar>
                                 <Avatar alt={user.name} src={user.imageUrl} />
                             </ListItemAvatar>
-                            <ListItemText id={labelId} primary={user.name} secondary={user.email || user.username} />
+                            <ListItemText
+                                id={labelId}
+                                primary={user.name}
+                                secondary={user.email || user.username}
+                            />
                             <ListItemSecondaryAction>
-                                <Select
-                                    labelId={`role-${user.id}-select-label`}
-                                    id={`role-${user.id}-select`}
-                                    placeholder="Choose role"
-                                    value={user.roleId}
-                                    onChange={handleRoleChange(user.id, user.roleId)}
-                                >
-                                    <MenuItem value="" disabled>
-                                        Choose role
-                                    </MenuItem>
-                                    {roles.map(role => (
-                                        <MenuItem key={`${user.id}:${role.id}`} value={role.id}>
-                                            {role.name}
+                                <FormControl variant="outlined" size="small">
+                                    <InputLabel
+                                        style={{ backgroundColor: '#fff' }}
+                                        for="add-user-select-role-label"
+                                    >
+                                        Role
+                                    </InputLabel>
+                                    <Select
+                                        labelId={`role-${user.id}-select-label`}
+                                        id={`role-${user.id}-select`}
+                                        key={user.id}
+                                        placeholder="Choose role"
+                                        value={user.roleId || ''}
+                                        onChange={handleRoleChange(
+                                            user.id,
+                                            user.roleId
+                                        )}
+                                    >
+                                        <MenuItem value="" disabled>
+                                            Choose role
                                         </MenuItem>
-                                    ))}
-                                </Select>
+                                        {roles.map(role => (
+                                            <MenuItem
+                                                key={`${user.id}:${role.id}`}
+                                                value={role.id}
+                                            >
+                                                {role.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                                 <IconButton
                                     edge="end"
                                     aria-label="delete"
@@ -143,7 +183,7 @@ function AccessComponent({ projectId, project }) {
                     );
                 })}
             </List>
-        </Card>
+        </PageContent>
     );
 }
 
