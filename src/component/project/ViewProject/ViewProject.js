@@ -50,13 +50,13 @@ const ViewProjectComponent = ({
                             <>
                                 <Button
                                     component={Link}
-                                    to={`/projects/edit/${project.name}`}
+                                    to={`/projects/edit/${project.id}`}
                                 >
                                     Edit
                                 </Button>
                                 <Button
                                     component={Link}
-                                    to={`/projects/${project.name}/access`}
+                                    to={`/projects/${project.id}/access`}
                                 >
                                     Manage access
                                 </Button>
