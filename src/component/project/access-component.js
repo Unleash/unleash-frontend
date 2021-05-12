@@ -26,6 +26,8 @@ import AddUserComponent from './access-add-user';
 
 import projectApi from '../../store/project/api';
 import PageContent from '../common/PageContent';
+import HeaderTitle from '../common/HeaderTitle';
+import { Link } from 'react-router-dom';
 
 function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);
@@ -91,7 +93,21 @@ function AccessComponent({ projectId, project }) {
     return (
         <PageContent
             style={{ minHeight: '400px' }}
-            headerContent={`Manage Access for project "${project.name}"`}
+            headerContent={
+                <HeaderTitle
+                    title={`Manage Access for project "${project.name}"`}
+                    actions={
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={Link}
+                            to="/projects"
+                        >
+                            Back
+                        </Button>
+                    }
+                />
+            }
         >
             <AddUserComponent roles={roles} addUserToRole={addUser} />
             <Dialog
@@ -119,7 +135,7 @@ function AccessComponent({ projectId, project }) {
             <div
                 style={{
                     height: '1px',
-                    width: '110%',
+                    width: '106.65%',
                     marginLeft: '-2rem',
                     backgroundColor: '#efefef',
                     marginTop: '2rem',
@@ -138,7 +154,12 @@ function AccessComponent({ projectId, project }) {
                                 primary={user.name}
                                 secondary={user.email || user.username}
                             />
-                            <ListItemSecondaryAction>
+                            <ListItemSecondaryAction
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <FormControl variant="outlined" size="small">
                                     <InputLabel
                                         style={{ backgroundColor: '#fff' }}
@@ -171,6 +192,7 @@ function AccessComponent({ projectId, project }) {
                                     </Select>
                                 </FormControl>
                                 <IconButton
+                                    style={{ marginLeft: '0.5rem' }}
                                     edge="end"
                                     aria-label="delete"
                                     title="Remove access"
