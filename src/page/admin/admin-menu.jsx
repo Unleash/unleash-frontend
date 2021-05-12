@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Paper, Icon, Tabs, Tab } from '@material-ui/core';
+import { Paper, Tabs, Tab } from '@material-ui/core';
 
 const navLinkStyle = {
     display: 'flex',
@@ -16,10 +16,6 @@ const activeNavLinkStyle = {
     fontWeight: 'bold',
     borderRadius: '3px',
     padding: '0.8rem 1.5rem',
-};
-
-const iconStyle = {
-    marginRight: '5px',
 };
 
 function AdminMenu({ history }) {
