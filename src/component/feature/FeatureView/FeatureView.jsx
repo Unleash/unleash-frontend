@@ -368,6 +368,7 @@ const FeatureView = ({
                     setDelDialog(false);
                     removeToggle();
                 }}
+                onClose={() => setDelDialog(false)}
             />
         </Paper>
     );
