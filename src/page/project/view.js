@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewProject from '../../component/project/view-project-container';
+import ViewProject from '../../component/project/ViewProject';
 import PropTypes from 'prop-types';
 
 const render = ({ match: { params }, history }) => (
