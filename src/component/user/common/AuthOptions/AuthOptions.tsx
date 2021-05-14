@@ -23,6 +23,7 @@ const AuthOptions = ({ options }: IAuthOptionProps) => {
                 >
                     <Button
                         color="primary"
+                        data-loading
                         variant="outlined"
                         href={o.path}
                         size="small"

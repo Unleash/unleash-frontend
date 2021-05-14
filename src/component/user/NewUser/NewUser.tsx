@@ -58,7 +58,7 @@ const NewUser = ({ user }: INewUserProps) => {
                             </Typography>
                             <TextField
                                 data-loading
-                                value={data?.email}
+                                value={data?.email || ''}
                                 variant="outlined"
                                 size="small"
                                 className={styles.emailField}
@@ -86,7 +86,7 @@ const NewUser = ({ user }: INewUserProps) => {
                                     }
                                     show={
                                         <>
-                                            <Typography>
+                                            <Typography data-loading>
                                                 Login with 3rd party providers
                                             </Typography>
                                             <AuthOptions
@@ -104,6 +104,7 @@ const NewUser = ({ user }: INewUserProps) => {
                                                 className={
                                                     styles.passwordHeader
                                                 }
+                                                data-loading
                                             >
                                                 OR set a new password for your
                                                 account
