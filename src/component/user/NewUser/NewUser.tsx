@@ -94,6 +94,12 @@ const NewUser = ({ user }: INewUserProps) => {
                                                     user?.authDetails?.options
                                                 }
                                             />
+                                            <div
+                                                className={
+                                                    commonStyles.largeDivider
+                                                }
+                                                data-loading
+                                            />
                                             <Typography
                                                 className={
                                                     styles.passwordHeader
