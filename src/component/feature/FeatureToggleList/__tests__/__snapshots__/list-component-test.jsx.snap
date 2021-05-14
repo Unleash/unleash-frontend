@@ -68,6 +68,7 @@ exports[`renders correctly with one feature 1`] = `
             >
               <p
                 className="MuiTypography-root MuiTypography-body2"
+                data-loading={true}
               >
                 Sorted by:
               </p>
@@ -285,6 +286,7 @@ exports[`renders correctly with one feature without permissions 1`] = `
             >
               <p
                 className="MuiTypography-root MuiTypography-body2"
+                data-loading={true}
               >
                 Sorted by:
               </p>
