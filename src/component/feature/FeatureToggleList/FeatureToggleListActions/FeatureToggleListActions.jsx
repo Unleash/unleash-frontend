@@ -66,7 +66,9 @@ const FeatureToggleListActions = ({
 
     return (
         <div className={styles.actions} ref={ref}>
-            <Typography variant="body2">Sorted by:</Typography>
+            <Typography variant="body2" data-loading>
+                Sorted by:
+            </Typography>
             <DropdownMenu
                 id={'metric'}
                 label={`Last ${settings.showLastHour ? 'hour' : 'minute'}`}
