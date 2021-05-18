@@ -90,8 +90,6 @@ const ProjectView = ({
                             <ListPlaceholder
                                 text="No features available. Get started by adding a
                                 new feature toggle."
-                                link="/features/create"
-                                linkText="Add your first toggle"
                             />
                         }
                     />

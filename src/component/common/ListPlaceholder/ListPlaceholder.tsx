@@ -1,11 +1,12 @@
 import { ListItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import ConditionallyRender from '../ConditionallyRender';
 import { useStyles } from './ListPlaceholder.styles';
 
 interface IListPlaceholderProps {
     text: string;
-    link: string;
-    linkText: string;
+    link?: string;
+    linkText?: string;
 }
 
 const ListPlaceholder = ({ text, link, linkText }: IListPlaceholderProps) => {
@@ -13,8 +14,11 @@ const ListPlaceholder = ({ text, link, linkText }: IListPlaceholderProps) => {
 
     return (
         <ListItem className={styles.emptyStateListItem}>
-            No features available. Get started by adding a new feature toggle.
-            <Link to="/features/create">Add your first toggle</Link>
+            {text}
+            <ConditionallyRender
+                condition={Boolean(link && linkText)}
+                show={<Link to="/features/create">Add your first toggle</Link>}
+            />
         </ListItem>
     );
 };

@@ -75,8 +75,15 @@ class ProjectFormComponent extends Component {
     };
 
     onCancel = evt => {
+        const { editMode } = this.props;
+        const { project } = this.state;
+
         evt.preventDefault();
-        this.props.history.push('/projects');
+        if (editMode) {
+            this.props.history.push(`/projects/view/${project.id}`);
+        } else {
+            this.props.history.push('/projects');
+        }
     };
 
     onSubmit = async evt => {
