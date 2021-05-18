@@ -87,7 +87,7 @@ class ProjectFormComponent extends Component {
 
         if (valid) {
             await this.props.submit(project);
-            this.props.history.push('/projects');
+            this.props.history.push(`/projects/view/${project.id}`);
         }
     };
 
@@ -98,21 +98,24 @@ class ProjectFormComponent extends Component {
         const submitText = editMode ? 'Update' : 'Create';
 
         return (
-            <PageContent 
-            headerContent={<div>
-                <span>{submitText} Project</span>
-                <ConditionallyRender
-                    condition={hasAccess(CREATE_PROJECT) && editMode}
-                    show={
-                        <Link
-                        to={`/projects/${project.id}/access`}
-                        style={{float: 'right'}}
-                    >
-                        Manage access
-                    </Link>
-                    }
-                />
-                </div>}>
+            <PageContent
+                headerContent={
+                    <div>
+                        <span>{submitText} Project</span>
+                        <ConditionallyRender
+                            condition={hasAccess(CREATE_PROJECT) && editMode}
+                            show={
+                                <Link
+                                    to={`/projects/${project.id}/access`}
+                                    style={{ float: 'right' }}
+                                >
+                                    Manage access
+                                </Link>
+                            }
+                        />
+                    </div>
+                }
+            >
                 <Typography
                     variant="subtitle1"
                     style={{ marginBottom: '0.5rem' }}
@@ -169,8 +172,6 @@ class ProjectFormComponent extends Component {
                             this.setValue('description', v.target.value)
                         }
                     />
-                    
-
 
                     <ConditionallyRender
                         condition={hasAccess(CREATE_PROJECT)}

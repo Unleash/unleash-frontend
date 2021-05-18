@@ -26,12 +26,13 @@ import AddUserComponent from './access-add-user';
 import projectApi from '../../store/project/api';
 import PageContent from '../common/PageContent';
 import HeaderTitle from '../common/HeaderTitle';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState();
+    const history = useHistory();
 
     const fetchAccess = async () => {
         const access = await projectApi.fetchAccess(projectId);
@@ -99,8 +100,7 @@ function AccessComponent({ projectId, project }) {
                         <Button
                             variant="contained"
                             color="primary"
-                            component={Link}
-                            to="/projects"
+                            onClick={() => history.goBack()}
                         >
                             Back
                         </Button>
