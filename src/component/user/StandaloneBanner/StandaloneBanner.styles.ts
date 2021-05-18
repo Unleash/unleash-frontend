@@ -11,8 +11,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '4rem 2rem',
         color: '#fff',
         position: 'relative',
-        borderTopLeftRadius: '3px',
-        borderBottomLeftRadius: '3px',
+
         [theme.breakpoints.down('sm')]: {
             padding: '3rem 2rem',
         },
