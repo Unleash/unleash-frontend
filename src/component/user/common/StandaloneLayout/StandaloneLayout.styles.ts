@@ -2,15 +2,18 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
+        padding: '4rem',
+        background: '#3a5663',
         display: 'flex',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
         overflow: 'hidden',
+        minHeight: '100vh',
     },
     leftContainer: {
         width: '40%',
-        minHeight: '100vh',
+        borderRadius: '3px',
         [theme.breakpoints.down('sm')]: {
             width: '100%',
             minHeight: 'auto',
@@ -23,7 +26,9 @@ export const useStyles = makeStyles(theme => ({
     },
     rightContainer: {
         width: '60%',
-        minHeight: '100vh',
+        borderTopRightRadius: '3px',
+        borderBottomRightRadius: '3px',
+        backgroundColor: '#fff',
         position: 'relative',
         [theme.breakpoints.down('sm')]: {
             width: '100%',

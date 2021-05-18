@@ -9,7 +9,6 @@ export const useStyles = makeStyles(theme => ({
     },
     innerContainer: {
         width: '60%',
-        minHeight: '100vh',
         padding: '4rem 3rem',
     },
     buttonContainer: {

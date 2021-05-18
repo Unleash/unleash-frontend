@@ -11,6 +11,8 @@ export const useStyles = makeStyles(theme => ({
         padding: '4rem 2rem',
         color: '#fff',
         position: 'relative',
+        borderTopLeftRadius: '3px',
+        borderBottomLeftRadius: '3px',
         [theme.breakpoints.down('sm')]: {
             padding: '3rem 2rem',
         },
@@ -20,7 +22,11 @@ export const useStyles = makeStyles(theme => ({
     },
     switchesContainer: {
         position: 'absolute',
+<<<<<<< HEAD
         bottom: '40px',
+=======
+        bottom: '100px',
+>>>>>>> 2bc9135 (feat: change layout)
         display: 'flex',
         flexDirection: 'column',
         [theme.breakpoints.down('sm')]: {
@@ -28,46 +34,6 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     switchIcon: {
-        height: '180px',
-    },
-    bottomStar: {
-        position: 'absolute',
-        bottom: '-54px',
-        left: '100px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    bottomRightStar: {
-        position: 'absolute',
-        bottom: '-100px',
-        left: '200px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    midRightStar: {
-        position: 'absolute',
-        bottom: '-80px',
-        left: '300px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    midLeftStar: {
-        position: 'absolute',
-        top: '10px',
-        left: '150px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    midLeftStarTwo: {
-        position: 'absolute',
-        top: '25px',
-        left: '350px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
+        height: '130px',
     },
 }));

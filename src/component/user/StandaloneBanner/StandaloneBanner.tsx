@@ -28,19 +28,6 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({
                     {title}
                 </Typography>
                 {children}
-
-                <ConditionallyRender
-                    condition={showStars}
-                    show={
-                        <>
-                            <StarIcon className={styles.midLeftStarTwo} />
-                            <StarIcon className={styles.midLeftStar} />
-                            <StarIcon className={styles.midRightStar} />
-                            <StarIcon className={styles.bottomRightStar} />
-                            <StarIcon className={styles.bottomStar} />
-                        </>
-                    }
-                />
             </div>
 
             <div className={styles.switchesContainer}>
