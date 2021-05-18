@@ -8,7 +8,7 @@ import PageContent from '../../common/PageContent';
 import FeatureToggleListItem from '../../feature/FeatureToggleList/FeatureToggleListItem';
 import ConditionallyRender from '../../common/ConditionallyRender';
 
-const ViewProject = ({
+const ProjectView = ({
     project,
     features,
     settings,
@@ -87,4 +87,4 @@ const ViewProject = ({
     );
 };
 
-export default ViewProject;
+export default ProjectView;
