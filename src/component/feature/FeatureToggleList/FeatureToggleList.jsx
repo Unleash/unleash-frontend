@@ -26,6 +26,7 @@ import { CREATE_FEATURE } from '../../AccessProvider/permissions';
 import AccessContext from '../../../contexts/AccessContext';
 
 import { useStyles } from './styles';
+import ListPlaceholder from '../../common/ListPlaceholder/ListPlaceholder';
 
 const FeatureToggleList = ({
     fetcher,
@@ -102,13 +103,12 @@ const FeatureToggleList = ({
                             </ListItem>
                         }
                         elseShow={
-                            <ListItem className={styles.emptyStateListItem}>
-                                No features available. Get started by adding a
-                                new feature toggle.
-                                <Link to="/features/create">
-                                    Add your first toggle
-                                </Link>
-                            </ListItem>
+                            <ListPlaceholder
+                                text="No features available. Get started by adding a
+                                new feature toggle."
+                                link="/features/create"
+                                linkText="Add your first toggle"
+                            />
                         }
                     />
                 }
