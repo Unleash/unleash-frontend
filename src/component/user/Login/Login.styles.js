@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles(theme => ({
+    login: {
+        width: '350px',
+    },
     loginContainer: {
         minHeight: '100vh',
         width: '100%',

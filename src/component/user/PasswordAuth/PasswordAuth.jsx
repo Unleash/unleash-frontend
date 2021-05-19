@@ -9,12 +9,12 @@ import { useStyles } from './PasswordAuth.styles';
 import { Link } from 'react-router-dom';
 import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
+import DividerText from '../../common/DividerText/DividerText';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
-    const [showFields, setShowFields] = useState(false);
     const params = useQueryParams();
     const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
@@ -22,11 +22,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
         usernameError: '',
         passwordError: '',
     });
-
-    const onShowOptions = e => {
-        e.preventDefault();
-        setShowFields(true);
-    };
 
     const handleSubmit = async evt => {
         evt.preventDefault();
@@ -119,7 +114,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        style={{ maxWidth: '150px' }}
+                        style={{ width: '150px', margin: '1rem auto' }}
                     >
                         Sign in
                     </Button>
@@ -131,24 +126,8 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const renderWithOptions = options => (
         <div>
             <AuthOptions options={options} />
-            <span
-                style={{
-                    textAlign: 'center',
-                    margin: '1rem 0',
-                    display: 'block',
-                }}
-            >
-                Or signin with username
-            </span>
-            <ConditionallyRender
-                condition={showFields}
-                show={renderLoginForm()}
-                elseShow={
-                    <IconButton size="small" onClick={onShowOptions}>
-                        Show more options
-                    </IconButton>
-                }
-            />
+            <DividerText text="Or signin with username" />
+            {renderLoginForm()}
         </div>
     );
 
@@ -156,7 +135,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
     return (
         <div>
-            <Typography variant="subtitle1">{authDetails.message}</Typography>
             <ConditionallyRender
                 condition={options.length > 0}
                 show={renderWithOptions(options)}

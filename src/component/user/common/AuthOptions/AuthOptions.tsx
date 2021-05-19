@@ -27,7 +27,6 @@ const AuthOptions = ({ options }: IAuthOptionProps) => {
                         variant="outlined"
                         href={o.path}
                         size="small"
-                        style={{ maxWidth: '300px' }}
                         startIcon={
                             o.type === 'google' ? (
                                 <GoogleSvg />
