@@ -23,6 +23,8 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             maxWidth: '300px',
         },
+        fontSize: '2rem',
+        fontWeight: '300',
     },
     rightContainer: {
         width: '60%',
@@ -56,7 +58,9 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: '1rem',
     },
     innerRightContainer: {
-        padding: '4rem 3rem',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '6rem 3rem',
         [theme.breakpoints.down('sm')]: {
             padding: '2rem 2rem',
         },

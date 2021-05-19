@@ -2,23 +2,16 @@ import { FC } from 'react';
 
 import { Typography, useTheme } from '@material-ui/core';
 import Gradient from '../../common/Gradient/Gradient';
-import { ReactComponent as StarIcon } from '../../../assets/icons/star.svg';
 import { ReactComponent as RightToggleIcon } from '../../../assets/icons/toggleRight.svg';
 import { ReactComponent as LeftToggleIcon } from '../../../assets/icons/toggleLeft.svg';
 
 import { useStyles } from './StandaloneBanner.styles';
-import ConditionallyRender from '../../common/ConditionallyRender';
 
 interface IStandaloneBannerProps {
-    showStars?: boolean;
     title: string;
 }
 
-const StandaloneBanner: FC<IStandaloneBannerProps> = ({
-    showStars = false,
-    title,
-    children,
-}) => {
+const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
     const theme = useTheme();
     const styles = useStyles();
     return (

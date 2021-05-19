@@ -29,7 +29,7 @@ const NewUser = ({ user }: INewUserProps) => {
             <StandaloneLayout
                 showMenu={false}
                 BannerComponent={
-                    <StandaloneBanner showStars title={'Welcome to Unleash'}>
+                    <StandaloneBanner title={'Welcome to Unleash'}>
                         <ConditionallyRender
                             condition={data?.createdBy}
                             show={

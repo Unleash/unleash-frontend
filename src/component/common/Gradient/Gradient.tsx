@@ -15,6 +15,8 @@ const Gradient: React.FC<IGradientProps> = ({
                 background: `linear-gradient(${from}, ${to})`,
                 height: '100%',
                 width: '100%',
+                position: 'relative',
+                overflow: 'hidden',
             }}
             {...rest}
         >

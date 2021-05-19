@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Button, TextField, Typography, IconButton } from '@material-ui/core';
-import LockRounded from '@material-ui/icons/LockRounded';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './PasswordAuth.styles';
 import { Link } from 'react-router-dom';
 import useQueryParams from '../../../hooks/useQueryParams';
-import { GoogleSvg } from '../HostedAuth/Icons';
+import AuthOptions from '../common/AuthOptions/AuthOptions';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
@@ -131,24 +130,20 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
     const renderWithOptions = options => (
         <div>
-            {options.map(o => (
-                <div
-                    key={o.type}
-                    className={classnames(
-                        styles.contentContainer,
-                        commonStyles.contentSpacingY
-                    )}
-                >
-                    <Button color="primary" variant="outlined" href={o.path} startIcon={o.type === 'google' ? <GoogleSvg /> : <LockRounded />}>
-                        {o.message}
-                    </Button>
-                </div>
-            ))}
+            <AuthOptions options={options} />
+            <span
+                style={{
+                    textAlign: 'center',
+                    margin: '1rem 0',
+                    display: 'block',
+                }}
+            >
+                Or signin with username
+            </span>
             <ConditionallyRender
                 condition={showFields}
                 show={renderLoginForm()}
                 elseShow={
-                    
                     <IconButton size="small" onClick={onShowOptions}>
                         Show more options
                     </IconButton>

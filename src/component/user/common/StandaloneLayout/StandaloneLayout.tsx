@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import StandaloneBanner from '../../StandaloneBanner/StandaloneBanner';
+import { matchPath } from 'react-router';
 
 import { Typography } from '@material-ui/core';
 
@@ -22,7 +23,7 @@ const StandaloneLayout: FC<IStandaloneLayout> = ({
 
     let banner = (
         <StandaloneBanner title="Unleash">
-            <Typography variant="subtitle1" className={styles.bannerSubtitle}>
+            <Typography className={styles.bannerSubtitle}>
                 Committed to creating new ways of developing software.
             </Typography>
         </StandaloneBanner>
@@ -32,7 +33,7 @@ const StandaloneLayout: FC<IStandaloneLayout> = ({
         banner = BannerComponent;
     }
 
-    const isLoginpage = location.pathname.includes('login');
+    const isLoginpage = matchPath(location.pathname, { path: '/login' });
 
     return (
         <div className={styles.container}>
