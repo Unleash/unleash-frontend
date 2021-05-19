@@ -5,6 +5,10 @@ export const useStyles = makeStyles(theme => ({
         color: '#fff',
         marginBottom: '1rem',
         fontSize: '2rem',
+        [theme.breakpoints.down('sm')]: {
+            textAlign: 'left',
+            fontSize: '1.75rem',
+        },
     },
     container: {
         padding: '6rem 4rem',

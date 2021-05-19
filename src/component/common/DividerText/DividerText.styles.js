@@ -4,7 +4,8 @@ export const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         alignItems: 'center',
-        margin: '1rem 0',
+        justifyContent: 'center',
+        margin: '1rem auto',
     },
     wing: {
         width: '80px',

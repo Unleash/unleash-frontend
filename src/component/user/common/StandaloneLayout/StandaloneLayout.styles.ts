@@ -8,6 +8,9 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
+        [theme.breakpoints.down('xs')]: {
+            padding: '0',
+        },
         overflow: 'hidden',
         minHeight: '100vh',
     },
@@ -22,12 +25,18 @@ export const useStyles = makeStyles(theme => ({
     bannerSubtitle: {
         [theme.breakpoints.down('sm')]: {
             maxWidth: '300px',
+            fontSize: '1.75rem',
+            textAlign: 'left',
+        },
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
         },
         fontSize: '2rem',
         fontWeight: '300',
     },
     rightContainer: {
         width: '60%',
+        flex: '1',
         borderTopRightRadius: '3px',
         borderBottomRightRadius: '3px',
         backgroundColor: '#fff',
@@ -36,20 +45,6 @@ export const useStyles = makeStyles(theme => ({
             width: '100%',
             position: 'static',
             minHeight: 'auto',
-        },
-    },
-    menu: {
-        position: 'absolute',
-        right: '20px',
-        top: '20px',
-        '& a': {
-            textDecoration: 'none',
-            color: '#000',
-        },
-        [theme.breakpoints.down('sm')]: {
-            '& a': {
-                color: '#fff',
-            },
         },
     },
     title: {

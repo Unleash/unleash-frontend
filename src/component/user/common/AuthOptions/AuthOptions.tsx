@@ -27,11 +27,16 @@ const AuthOptions = ({ options }: IAuthOptionProps) => {
                         variant="outlined"
                         href={o.path}
                         size="small"
+                        style={{ height: '40px' }}
                         startIcon={
                             o.type === 'google' ? (
-                                <GoogleSvg />
+                                <GoogleSvg
+                                    style={{ height: '35px', width: '35px' }}
+                                />
                             ) : (
-                                <LockRounded />
+                                <LockRounded
+                                    style={{ height: '25px', width: '25px' }}
+                                />
                             )
                         }
                     >
