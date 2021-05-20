@@ -124,7 +124,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                     </Grid>
                 </div>
             </form>
-            <SecondaryLoginActions />
         </>
     );
 };

@@ -24,8 +24,14 @@ class AuthComponent extends React.Component {
     };
 
     render() {
-        const authDetails = this.props.user.authDetails;
-
+        //const authDetails = this.props.user.authDetails;
+        const authDetails = {
+            type: HOSTED_TYPE,
+            options: [
+                { type: 'google', message: 'Sign in with Google' },
+                { type: 'github', message: 'Sign in with github' },
+            ],
+        };
         if (!authDetails) return null;
 
         let content;
