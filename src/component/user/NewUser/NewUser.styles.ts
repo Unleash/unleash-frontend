@@ -7,8 +7,15 @@ export const useStyles = makeStyles(theme => ({
             width: '100%',
         },
     },
+    title: {
+        fontSize: theme.fontSizes.mainHeader,
+        marginBottom: '1.25rem',
+        display: 'flex',
+        alignItems: 'center',
+    },
     inviteText: {
         marginBottom: '1rem',
+        textAlign: 'center',
     },
     container: {
         display: 'flex',

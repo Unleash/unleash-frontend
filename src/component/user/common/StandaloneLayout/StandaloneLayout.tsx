@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import StandaloneBanner from '../../StandaloneBanner/StandaloneBanner';
 
-import { Typography } from '@material-ui/core';
-
 import { useStyles } from './StandaloneLayout.styles';
 
 interface IStandaloneLayout {

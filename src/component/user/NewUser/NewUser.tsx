@@ -38,6 +38,10 @@ const NewUser = ({ user }: INewUserProps) => {
                                 token={token}
                                 setLoading={setLoading}
                             >
+                                <h2 className={styles.title}>
+                                    Enter your personal details and start your
+                                    journey
+                                </h2>
                                 <ConditionallyRender
                                     condition={data?.createdBy}
                                     show={
@@ -46,8 +50,9 @@ const NewUser = ({ user }: INewUserProps) => {
                                             data-loading
                                             className={styles.inviteText}
                                         >
-                                            <strong>{data?.createdBy}</strong>{' '}
-                                            has invited you to join Unleash.
+                                            {data?.createdBy}
+                                            <br></br> has invited you to join
+                                            Unleash.
                                         </Typography>
                                     }
                                 />

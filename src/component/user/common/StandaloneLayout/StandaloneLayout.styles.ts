@@ -11,7 +11,6 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             padding: '0',
         },
-        overflow: 'hidden',
         minHeight: '100vh',
     },
     leftContainer: {
@@ -43,6 +42,7 @@ export const useStyles = makeStyles(theme => ({
     innerRightContainer: {
         display: 'flex',
         justifyContent: 'center',
+        height: '100%',
         padding: '6rem 3rem',
         [theme.breakpoints.down('sm')]: {
             padding: '2rem 2rem',

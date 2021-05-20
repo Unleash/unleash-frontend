@@ -5,11 +5,11 @@ import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './HostedAuth.styles';
-import { Link } from 'react-router-dom';
 import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
 import ConditionallyRender from '../../common/ConditionallyRender';
+import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
@@ -69,7 +69,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const { options = [] } = authDetails;
 
     return (
-        <div>
+        <>
             <ConditionallyRender
                 condition={options.length > 0}
                 show={
@@ -113,14 +113,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                         size="small"
                     />
                     <Grid container>
-                        <Grid item xs={12}>
-                            <Link to="/forgotten-password">
-                                <Typography variant="body2">
-                                    Forgot your password?
-                                </Typography>
-                            </Link>
-                        </Grid>
-
                         <Button
                             variant="contained"
                             color="primary"
@@ -130,19 +122,10 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                             Sign in
                         </Button>
                     </Grid>
-
-                    <DividerText text="Don't have an account?" />
-                    <Button
-                        className={styles.button}
-                        variant="outlined"
-                        element={'a'}
-                        href="https://www.unleash-hosted.com/pricing"
-                    >
-                        Sign up
-                    </Button>
                 </div>
             </form>
-        </div>
+            <SecondaryLoginActions />
+        </>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Button, TextField, Typography } from '@material-ui/core';
@@ -6,10 +6,10 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './PasswordAuth.styles';
-import { Link } from 'react-router-dom';
 import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
+import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
@@ -104,12 +104,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                         autoComplete="true"
                         size="small"
                     />
-
-                    <Link to="/forgotten-password">
-                        <Typography variant="body2">
-                            Forgot your password?
-                        </Typography>
-                    </Link>
                     <Button
                         variant="contained"
                         color="primary"
@@ -124,23 +118,24 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     };
 
     const renderWithOptions = options => (
-        <div>
+        <>
             <AuthOptions options={options} />
             <DividerText text="Or signin with username" />
             {renderLoginForm()}
-        </div>
+            <SecondaryLoginActions />
+        </>
     );
 
     const { options = [] } = authDetails;
 
     return (
-        <div>
+        <>
             <ConditionallyRender
                 condition={options.length > 0}
                 show={renderWithOptions(options)}
                 elseShow={renderLoginForm()}
             />
-        </div>
+        </>
     );
 };
 

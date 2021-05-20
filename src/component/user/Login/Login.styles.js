@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,
-        marginBottom: '0.5rem',
+        marginBottom: '1rem',
         display: 'flex',
         alignItems: 'center',
     },
@@ -46,6 +46,12 @@ export const useStyles = makeStyles(theme => ({
     },
     loginFormContainer: {
         maxWidth: '500px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.down('sm')]: {
+            height: 'auto',
+        },
     },
     imageContainer: {
         display: 'flex',
