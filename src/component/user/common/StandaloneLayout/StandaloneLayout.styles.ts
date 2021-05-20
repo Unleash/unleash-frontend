@@ -22,18 +22,6 @@ export const useStyles = makeStyles(theme => ({
             minHeight: 'auto',
         },
     },
-    bannerSubtitle: {
-        [theme.breakpoints.down('sm')]: {
-            maxWidth: '300px',
-            fontSize: '1.75rem',
-            textAlign: 'left',
-        },
-        [theme.breakpoints.down('xs')]: {
-            display: 'none',
-        },
-        fontSize: '2rem',
-        fontWeight: '300',
-    },
     rightContainer: {
         width: '60%',
         flex: '1',

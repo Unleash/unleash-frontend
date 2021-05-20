@@ -1,12 +1,14 @@
 interface IGradientProps {
     from: string;
     to: string;
+    style?: object;
 }
 
 const Gradient: React.FC<IGradientProps> = ({
     children,
     from,
     to,
+    style,
     ...rest
 }) => {
     return (
@@ -17,6 +19,7 @@ const Gradient: React.FC<IGradientProps> = ({
                 width: '100%',
                 position: 'relative',
                 overflow: 'hidden',
+                ...style,
             }}
             {...rest}
         >

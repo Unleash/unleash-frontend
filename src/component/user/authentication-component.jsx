@@ -6,10 +6,12 @@ import PasswordAuth from './PasswordAuth/PasswordAuth';
 import HostedAuth from './HostedAuth/HostedAuth';
 import DemoAuth from './DemoAuth';
 
-const SIMPLE_TYPE = 'unsecure';
-const DEMO_TYPE = 'demo';
-const PASSWORD_TYPE = 'password';
-const HOSTED_TYPE = 'enterprise-hosted';
+import {
+    SIMPLE_TYPE,
+    DEMO_TYPE,
+    PASSWORD_TYPE,
+    HOSTED_TYPE,
+} from '../../constants/authTypes';
 
 class AuthComponent extends React.Component {
     static propTypes = {

@@ -16,13 +16,7 @@ const StandaloneLayout: FC<IStandaloneLayout> = ({
 }) => {
     const styles = useStyles();
 
-    let banner = (
-        <StandaloneBanner title="Unleash">
-            <Typography className={styles.bannerSubtitle}>
-                Committed to creating new ways of developing software.
-            </Typography>
-        </StandaloneBanner>
-    );
+    let banner = <StandaloneBanner title="Unleash" />;
 
     if (BannerComponent) {
         banner = BannerComponent;

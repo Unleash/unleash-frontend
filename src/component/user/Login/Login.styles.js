@@ -3,6 +3,10 @@ import { makeStyles } from '@material-ui/styles';
 export const useStyles = makeStyles(theme => ({
     login: {
         width: '350px',
+        maxWidth: '350px',
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
+        },
     },
     loginContainer: {
         minHeight: '100vh',

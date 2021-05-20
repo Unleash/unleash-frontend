@@ -5,11 +5,11 @@ interface IDividerTextProps {
     text: string;
 }
 
-const DividerText = ({ text }: IDividerTextProps) => {
+const DividerText = ({ text, ...rest }: IDividerTextProps) => {
     const styles = useStyles();
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} {...rest}>
             <span className={styles.wing} />
             <Typography variant="body2" className={styles.text}>
                 {text}

@@ -15,12 +15,21 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
     const theme = useTheme();
     const styles = useStyles();
     return (
-        <Gradient from={theme.palette.primary.main} to={'#173341'}>
+        <Gradient
+            from={theme.palette.primary.main}
+            to={theme.palette.login.gradient.bottom}
+            style={{
+                borderBottomLeftRadius: '3px',
+                borderTopLeftRadius: '3px',
+            }}
+        >
             <div className={styles.container}>
                 <Typography variant="h1" className={styles.title}>
                     {title}
                 </Typography>
-                {children}
+                <Typography className={styles.bannerSubtitle}>
+                    Committed to creating new ways of developing software
+                </Typography>
             </div>
 
             <div className={styles.switchesContainer}>

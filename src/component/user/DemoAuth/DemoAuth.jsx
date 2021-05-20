@@ -4,7 +4,6 @@ import { Button, TextField } from '@material-ui/core';
 
 import styles from './DemoAuth.module.scss';
 
-import logoIcon from '../../../assets/img/logo.png';
 import { ReactComponent as Logo } from '../../../assets/img/logo.svg';
 
 const DemoAuth = ({ demoLogin, history, authDetails }) => {

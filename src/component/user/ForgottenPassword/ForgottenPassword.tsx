@@ -7,6 +7,7 @@ import { useCommonStyles } from '../../../common.styles';
 import useLoading from '../../../hooks/useLoading';
 import { formatApiPath } from '../../../utils/format-path';
 import ConditionallyRender from '../../common/ConditionallyRender';
+import DividerText from '../../common/DividerText/DividerText';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 import { useStyles } from './ForgottenPassword.styles';
 
@@ -107,11 +108,7 @@ const ForgottenPassword = () => {
                             elseShow={<span>Try again</span>}
                         />
                     </Button>
-                    <div className={commonStyles.divider} />
-
-                    <Typography className={styles.loginText} variant="body1">
-                        Or log in
-                    </Typography>
+                    <DividerText text="Or log in" />
                     <Button
                         type="submit"
                         data-loading

@@ -24,6 +24,18 @@ export const useStyles = makeStyles(theme => ({
             padding: '3rem 1rem',
         },
     },
+    bannerSubtitle: {
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: '300px',
+            fontSize: '1.75rem',
+            textAlign: 'left',
+        },
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        },
+        fontSize: '2rem',
+        fontWeight: '300',
+    },
     switchesContainer: {
         position: 'absolute',
         bottom: '15px',
