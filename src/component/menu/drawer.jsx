@@ -8,7 +8,7 @@ import styles from './drawer.module.scss';
 
 import { baseRoutes as routes } from './routes';
 
-import logo from '../../assets/img/logo.png';
+import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
 
 const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
@@ -78,13 +78,8 @@ export const DrawerMenu = ({
         <div className={styles.drawerContainer}>
             <div className={styles.drawerTitleContainer}>
                 <span className={[styles.drawerTitle].join(' ')}>
-                    <img
-                        alt="Unleash Logo"
-                        src={logo}
-                        width="32"
-                        height="32"
-                        className={styles.drawerTitleLogo}
-                    />
+                    <LogoIcon className={styles.drawerTitleLogo} />
+
                     <span className={styles.drawerTitleText}>{title}</span>
                 </span>
             </div>
