@@ -5,9 +5,11 @@ export const useStyles = makeStyles(theme => ({
         color: '#fff',
         marginBottom: '1rem',
         fontSize: '2rem',
+        marginTop: '5rem',
         [theme.breakpoints.down('sm')]: {
             textAlign: 'left',
             fontSize: '1.75rem',
+            marginTop: 0,
         },
     },
     container: {

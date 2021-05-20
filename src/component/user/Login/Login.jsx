@@ -29,7 +29,9 @@ const Login = ({ history, user, fetchUser }) => {
     return (
         <StandaloneLayout>
             <div>
-                <h2 className={styles.title}>Login</h2>
+                <h2 className={styles.title}>
+                    Login to continue the great work
+                </h2>
                 <ConditionallyRender
                     condition={resetPassword}
                     show={<ResetPasswordSuccess />}
