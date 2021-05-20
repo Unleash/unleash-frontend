@@ -9,9 +9,8 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
 import ConditionallyRender from '../../common/ConditionallyRender';
-import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
 
-const PasswordAuth = ({ authDetails, passwordLogin }) => {
+const HostedAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
@@ -128,10 +127,10 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     );
 };
 
-PasswordAuth.propTypes = {
+HostedAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
     passwordLogin: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
 };
 
-export default PasswordAuth;
+export default HostedAuth;
