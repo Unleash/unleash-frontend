@@ -9,7 +9,6 @@ import { useStyles } from './PasswordAuth.styles';
 import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
-import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
@@ -122,7 +121,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
             <AuthOptions options={options} />
             <DividerText text="Or signin with username" />
             {renderLoginForm()}
-            <SecondaryLoginActions />
         </>
     );
 

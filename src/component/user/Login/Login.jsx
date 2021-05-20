@@ -28,7 +28,7 @@ const Login = ({ history, user, fetchUser }) => {
 
     return (
         <StandaloneLayout>
-            <div>
+            <div className={styles.loginFormContainer}>
                 <h2 className={styles.title}>
                     Login to continue the great work
                 </h2>
@@ -36,9 +36,7 @@ const Login = ({ history, user, fetchUser }) => {
                     condition={resetPassword}
                     show={<ResetPasswordSuccess />}
                 />
-                <div className={styles.loginFormContainer}>
-                    <AuthenticationContainer history={history} />
-                </div>
+                <AuthenticationContainer history={history} />
             </div>
         </StandaloneLayout>
     );

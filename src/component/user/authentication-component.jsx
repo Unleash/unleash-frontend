@@ -12,6 +12,7 @@ import {
     PASSWORD_TYPE,
     HOSTED_TYPE,
 } from '../../constants/authTypes';
+import SecondaryLoginActions from './common/SecondaryLoginActions/SecondaryLoginActions';
 
 class AuthComponent extends React.Component {
     static propTypes = {
@@ -30,11 +31,14 @@ class AuthComponent extends React.Component {
         let content;
         if (authDetails.type === PASSWORD_TYPE) {
             content = (
-                <PasswordAuth
-                    passwordLogin={this.props.passwordLogin}
-                    authDetails={authDetails}
-                    history={this.props.history}
-                />
+                <>
+                    <PasswordAuth
+                        passwordLogin={this.props.passwordLogin}
+                        authDetails={authDetails}
+                        history={this.props.history}
+                    />
+                    <SecondaryLoginActions />
+                </>
             );
         } else if (authDetails.type === SIMPLE_TYPE) {
             content = (
@@ -54,11 +58,14 @@ class AuthComponent extends React.Component {
             );
         } else if (authDetails.type === HOSTED_TYPE) {
             content = (
-                <HostedAuth
-                    passwordLogin={this.props.passwordLogin}
-                    authDetails={authDetails}
-                    history={this.props.history}
-                />
+                <>
+                    <HostedAuth
+                        passwordLogin={this.props.passwordLogin}
+                        authDetails={authDetails}
+                        history={this.props.history}
+                    />
+                    <SecondaryLoginActions />
+                </>
             );
         } else {
             content = (

@@ -45,13 +45,8 @@ export const useStyles = makeStyles(theme => ({
         fontSize: '1.25rem',
     },
     loginFormContainer: {
-        maxWidth: '500px',
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        [theme.breakpoints.down('sm')]: {
-            height: 'auto',
-        },
     },
     imageContainer: {
         display: 'flex',
