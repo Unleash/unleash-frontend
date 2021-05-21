@@ -21,6 +21,7 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
             style={{
                 borderBottomLeftRadius: '3px',
                 borderTopLeftRadius: '3px',
+                overflow: 'hidden',
             }}
         >
             <div className={styles.container}>
