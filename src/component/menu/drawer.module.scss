@@ -4,17 +4,12 @@
 }
 
 .drawerTitle {
-    font-size: var(--h1-size);
     display: flex;
     align-items: center;
 }
 
 .drawerContainer {
     width: var(--drawer-width);
-}
-
-.drawerTitleContainer {
-    padding: var(--drawer-padding);
 }
 
 .drawerTitleLogo {

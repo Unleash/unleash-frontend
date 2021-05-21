@@ -76,7 +76,7 @@ export const DrawerMenu = ({
         onClose={() => toggleDrawer()}
     >
         <div className={styles.drawerContainer}>
-            <div className={styles.drawerTitleContainer}>
+            <div>
                 <span className={[styles.drawerTitle].join(' ')}>
                     <LogoIcon className={styles.drawerTitleLogo} />
 
