@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     Table,
@@ -23,20 +23,20 @@ function InvoiceList({
     invoices,
 }) {
 
+    const [isLoaded, setLoaded] = useState(false);
+
     useEffect(() => {
-        fetchInvoices();
+        fetchInvoices().finally(() => setLoaded(true));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <PageContent headerContent={<HeaderTitle title="Invoices" actions={
-            <ConditionallyRender condition={invoices.length > 0} 
+        <ConditionallyRender condition={invoices.length > 0} 
                     show={
-                    <Button href={PORTAL_URL} rel="noreferrer" target="_blank" endIcon={<OpenInNew />}>
-                        Billing portal
-                    </Button>}>
-                </ConditionallyRender>
-        }/>} >
+        <PageContent headerContent={<HeaderTitle title="Invoices" actions={
+            <Button href={PORTAL_URL} rel="noreferrer" target="_blank" endIcon={<OpenInNew />}>
+                Billing portal
+            </Button>} />}>
             <div>
                 
                 <Table>
@@ -75,7 +75,7 @@ function InvoiceList({
                     </TableBody>
                 </Table>
             </div>
-        </PageContent>
+        </PageContent>} elseShow={<div>{isLoaded && "No invoices to show."}</div>} />
     );
 }
 
