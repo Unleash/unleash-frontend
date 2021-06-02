@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
+import Feedback from './common/Feedback/Feedback';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
@@ -84,6 +85,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                     <Route path="/404" component={NotFound} />
                     <Redirect to="/404" />
                 </Switch>
+                <Feedback />
             </LayoutPicker>
         </div>
     );
