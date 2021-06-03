@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
 import CloseIcon from '@material-ui/icons/Close';
@@ -9,20 +9,28 @@ import { useStyles } from './Feedback.styles';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
 import { formatApiPath } from '../../../utils/format-path';
+import { Action, Dispatch } from 'redux';
 
-const Feedback = () => {
-    const [show, setShow] = useState(true);
+interface IFeedbackProps {
+    show?: boolean;
+    hideFeedback: () => Dispatch<Action>;
+    fetchUser: () => void;
+    feedbackId: string;
+    openUrl: string;
+}
+
+const Feedback = ({
+    show,
+    hideFeedback,
+    fetchUser,
+    feedbackId,
+    openUrl,
+}: IFeedbackProps) => {
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
     const styles = useStyles();
     const commonStyles = useCommonStyles();
 
-    useEffect(() => {
-        // Perform show logic
-    }, []);
-
     const onConfirm = async () => {
-        const feedbackId = 'pnps';
-        const openUrl = 'https://getunleash.ai/pnps';
         const url = formatApiPath('api/admin/feedback');
 
         try {
@@ -34,14 +42,15 @@ const Feedback = () => {
                 },
                 body: JSON.stringify({ feedbackId }),
             });
+            await fetchUser();
         } catch {
-            setShow(false);
+            hideFeedback();
         }
 
         // Await api call to register confirmation
         window.open(openUrl, '_blank');
         setTimeout(() => {
-            setShow(false);
+            hideFeedback();
         }, 200);
     };
 
@@ -60,12 +69,13 @@ const Feedback = () => {
                 },
                 body: JSON.stringify({ feedbackId, neverShow: true }),
             });
+            await fetchUser();
         } catch {
-            setShow(false);
+            hideFeedback();
         }
 
         setTimeout(() => {
-            setShow(false);
+            hideFeedback();
         }, 100);
     };
 
@@ -86,7 +96,7 @@ const Feedback = () => {
                 >
                     <IconButton
                         className={styles.close}
-                        onClick={() => setShow(false)}
+                        onClick={() => hideFeedback()}
                     >
                         <CloseIcon />
                     </IconButton>
