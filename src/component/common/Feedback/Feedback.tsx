@@ -8,6 +8,7 @@ import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './Feedback.styles';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
+import { formatApiPath } from '../../../utils/format-path';
 
 const Feedback = () => {
     const [show, setShow] = useState(true);
@@ -20,15 +21,46 @@ const Feedback = () => {
     }, []);
 
     const onConfirm = async () => {
+        const feedbackId = 'pnps';
+        const openUrl = 'https://getunleash.ai/pnps';
+        const url = formatApiPath('api/admin/feedback');
+
+        // TODO: Error handling
+        await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ feedbackId }),
+        });
+
         // Await api call to register confirmation
-        window.open('https://getunleash.ai', '_blank');
+        window.open(openUrl, '_blank');
         setTimeout(() => {
             setShow(false);
         }, 200);
     };
 
-    const onNeverAgain = async () => {
-        // Await api call to register never again
+    const onDontShowAgain = async () => {
+        const feedbackId = 'pnps';
+        const url = formatApiPath(
+            `api/admin/feedback/${encodeURIComponent(feedbackId)}`
+        );
+
+        // TODO: Error handling
+        await fetch(url, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ feedbackId, neverShow: true }),
+        });
+
+        setTimeout(() => {
+            setShow(false);
+        }, 100);
     };
 
     return (
@@ -73,7 +105,10 @@ const Feedback = () => {
                         <ConditionallyRender
                             condition={answeredNotNow}
                             show={
-                                <Button variant="outlined">
+                                <Button
+                                    variant="outlined"
+                                    onClick={onDontShowAgain}
+                                >
                                     Don't show again
                                 </Button>
                             }

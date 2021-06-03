@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     feedbackLeave: {
         transform: 'translateY(400px)',
         opacity: '0',
-        transition: 'transform 0.6s ease, opacity 1s ease',
+        transition: 'transform 1.25s ease, opacity 1s ease',
     },
     container: {
         display: 'flex',
