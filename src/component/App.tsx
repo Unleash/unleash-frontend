@@ -13,8 +13,6 @@ import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
-import ConditionallyRender from './common/ConditionallyRender';
-import { showPnpsFeedback } from './common/util';
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
@@ -25,7 +23,6 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
-        showPnpsFeedback(user);
     }, [user.authDetails?.type]);
 
     const renderMainLayoutRoutes = () => {
