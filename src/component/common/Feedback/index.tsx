@@ -10,7 +10,9 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-    hideFeedback: () => hideFeedback(dispatch),
+    hideFeedback: () => {
+        hideFeedback(dispatch)();
+    },
     fetchUser: () => fetchUser()(dispatch),
 });
 
