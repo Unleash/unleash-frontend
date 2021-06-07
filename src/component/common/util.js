@@ -132,11 +132,7 @@ export const showPnpsFeedback = user => {
             const now = new Date();
             const difference = differenceInDays(now, new Date(feedback.given));
 
-            console.log(difference, difference > SIX_MONTHS_IN_DAYS);
-
-            if (difference > SIX_MONTHS_IN_DAYS) {
-                return true;
-            }
+            return difference > SIX_MONTHS_IN_DAYS;
         }
         return false;
     }
