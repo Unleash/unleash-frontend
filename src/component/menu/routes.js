@@ -40,6 +40,7 @@ import NewUser from '../user/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 import ProjectListNew from '../project/ProjectListNew/ProjectListNew';
+import Project from '../project/Project/Project';
 
 import {
     List,
@@ -242,8 +243,18 @@ export const routes = [
         layout: 'main',
     },
     {
+        path: '/projects-new/:id',
+        parent: '/projects-new',
+        title: ':id',
+        component: Project,
+        flag: P,
+        hidden: true,
+        type: 'protected',
+        layout: 'main',
+    },
+    {
         path: '/projects-new',
-        title: 'Projects New',
+        title: 'Projects new',
         icon: 'folder_open',
         component: ProjectListNew,
         flag: P,
