@@ -9,7 +9,7 @@ const ProjectListNew = () => {
             <h1>Projects</h1>
             <div className={styles.container}>
                 <Link
-                    to="/projects-new/myproject"
+                    to="/projects/myproject"
                     style={{ color: 'inherit', textDecoration: 'none' }}
                 >
                     <ProjectCard
