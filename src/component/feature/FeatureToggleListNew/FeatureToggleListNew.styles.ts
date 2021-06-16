@@ -1,15 +1,27 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    list: { margin: '0', padding: '0', listStyleType: 'none' },
-    listItem: {
-        display: 'flex',
-        margin: '0.8rem 0',
+    tableRow: {
+        cursor: 'pointer',
     },
-    listItemNameContainer: { width: '30%' },
-    listItemTypeContainer: { width: '20%' },
-    listItemEnvContainer: {
-        marginLeft: 'auto',
+    tableCell: {
+        border: 'none',
+        padding: '0.25rem 0',
+    },
+    tableCellHeader: {
+        paddingBottom: '0.5rem',
+    },
+    tableCellName: {
+        width: '250px',
+    },
+    tableCellEnv: {
+        width: '20px',
+    },
+    tableCellType: {
         display: 'flex',
+        alignItems: 'center',
+    },
+    icon: {
+        marginRight: '0.3rem',
     },
 }));

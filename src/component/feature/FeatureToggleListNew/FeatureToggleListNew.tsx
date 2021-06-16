@@ -1,67 +1,66 @@
-import { Switch } from '@material-ui/core';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+} from '@material-ui/core';
+import classnames from 'classnames';
 import { useStyles } from './FeatureToggleListNew.styles';
+import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleListNewItem';
 
 const FeatureToggleListNew = () => {
     const styles = useStyles();
     return (
-        <ul className={styles.list}>
-            <li className={styles.listItem}>
-                <span className={styles.listItemNameContainer}>
-                    <p style={{ fontWeight: 'bold' }}>name</p>
-                </span>
-
-                <span className={styles.listItemTypeContainer}>
-                    <p style={{ fontWeight: 'bold' }}>type</p>
-                </span>
-                <span className={styles.listItemEnvContainer}>
-                    <p style={{ fontWeight: 'bold', width: '70px' }}>dev</p>
-                    <p style={{ fontWeight: 'bold', width: '70px' }}>prod</p>
-                </span>
-            </li>
-
-            <li className={styles.listItem}>
-                <span className={styles.listItemNameContainer}>
-                    <p>my-feature-toggle</p>
-                </span>
-
-                <span className={styles.listItemTypeContainer}>
-                    <p>type</p>
-                </span>
-                <span className={styles.listItemEnvContainer}>
-                    <span style={{ width: '70px' }}>
-                        <Switch checked />
-                    </span>
-
-                    <span style={{ width: '70px' }}>
-                        <Switch checked />
-                    </span>
-                </span>
-            </li>
-        </ul>
-        // <TableContainer>
-        //     <Table>
-        //         <TableHead>
-        //             <TableRow>
-        //                 <TableCell align="center">name</TableCell>
-        //                 <TableCell align="center">type</TableCell>
-        //                 <TableCell align="center">dev</TableCell>
-        //                 <TableCell align="center">prod</TableCell>
-        //             </TableRow>
-        //         </TableHead>
-        //         <TableBody>
-        //             <TableRow>
-        //                 <TableCell align="center">my-feature-toggle</TableCell>
-        //                 <TableCell align="center">release</TableCell>
-        //                 <TableCell align="center">
-        //                     <Switch checked />
-        //                 </TableCell>
-        //                 <TableCell align="center">
-        //                     <Switch checked />
-        //                 </TableCell>
-        //             </TableRow>
-        //         </TableBody>
-        //     </Table>
-        // </TableContainer>
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell
+                        className={classnames(
+                            styles.tableCell,
+                            styles.tableCellName,
+                            styles.tableCellHeader
+                        )}
+                        align="left"
+                    >
+                        name
+                    </TableCell>
+                    <TableCell
+                        className={classnames(
+                            styles.tableCell,
+                            styles.tableCellHeader
+                        )}
+                        align="left"
+                    >
+                        type
+                    </TableCell>
+                    <TableCell
+                        className={classnames(
+                            styles.tableCell,
+                            styles.tableCellEnv,
+                            styles.tableCellHeader
+                        )}
+                        align="center"
+                    >
+                        dev
+                    </TableCell>
+                    <TableCell
+                        className={classnames(
+                            styles.tableCell,
+                            styles.tableCellEnv,
+                            styles.tableCellHeader
+                        )}
+                        align="center"
+                    >
+                        prod
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <FeatureToggleListNewItem name="my-toggle" type="release" />
+                <FeatureToggleListNewItem name="Fredrik" type="experiment" />
+            </TableBody>
+        </Table>
     );
 };
 
