@@ -41,7 +41,7 @@ const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
 
                 <div className={styles.infoSection}>
                     <p className={styles.subtitle}>Project members</p>
-                    <p className={styles.emphazisedText}>{membersCount}</p>
+                    <p className={styles.emphazisedText}>{memberCount}</p>
                     <Link
                         className={classnames(
                             commonStyles.flexRow,

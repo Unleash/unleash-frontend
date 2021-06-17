@@ -16,7 +16,7 @@ const Project = () => {
                 <ProjectInfo
                     id={id}
                     memberCount={members}
-                    featureCount={features.length}
+                    featureCount={features?.length}
                 />
                 <ProjectFeatureToggles features={features} />
             </div>
