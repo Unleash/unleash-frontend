@@ -5,7 +5,11 @@ import PageContent from '../../../common/PageContent';
 import FeatureToggleListNew from '../../../feature/FeatureToggleListNew/FeatureToggleListNew';
 import { useStyles } from './ProjectFeatureToggles.styles';
 
-const ProjectFeatureToggles = () => {
+interface IProjectFeatureToggles {
+    features: any[];
+}
+
+const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
     const styles = useStyles();
     return (
         <PageContent

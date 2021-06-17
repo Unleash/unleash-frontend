@@ -7,7 +7,13 @@ import classnames from 'classnames';
 import { ReactComponent as ProjectIcon } from '../../../../assets/icons/projectIcon.svg';
 import { useCommonStyles } from '../../../../common.styles';
 
-const ProjectInfo = () => {
+interface IProjectInfoProps {
+    id: string;
+    memberCount: number;
+    featureCount: number;
+}
+
+const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     return (
@@ -26,7 +32,7 @@ const ProjectInfo = () => {
                             commonStyles.flexRow,
                             commonStyles.justifyCenter
                         )}
-                        to=""
+                        to="/reporting"
                     >
                         view more{' '}
                         <ArrowForwardIcon className={styles.arrowIcon} />
@@ -35,13 +41,13 @@ const ProjectInfo = () => {
 
                 <div className={styles.infoSection}>
                     <p className={styles.subtitle}>Project members</p>
-                    <p className={styles.emphazisedText}>2</p>
+                    <p className={styles.emphazisedText}>{membersCount}</p>
                     <Link
                         className={classnames(
                             commonStyles.flexRow,
                             commonStyles.justifyCenter
                         )}
-                        to=""
+                        to={`/projects/${id}/access`}
                     >
                         view more{' '}
                         <ArrowForwardIcon className={styles.arrowIcon} />
@@ -50,7 +56,7 @@ const ProjectInfo = () => {
 
                 <div className={styles.infoSection}>
                     <p className={styles.subtitle}>Feature toggles</p>
-                    <p className={styles.emphazisedText}>13</p>
+                    <p className={styles.emphazisedText}>{featureCount}</p>
                 </div>
             </Paper>
         </aside>
