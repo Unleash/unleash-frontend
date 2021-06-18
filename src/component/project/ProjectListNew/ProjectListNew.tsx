@@ -7,10 +7,18 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import { useStyles } from './ProjectListNew.styles';
 
+import loadingData from './loadingData';
+import useLoading from '../../../hooks/useLoading';
+
+type projectMap = {
+    [index: string]: boolean;
+};
+
 const ProjectListNew = () => {
     const styles = useStyles();
     const { projects, loading } = useProjects();
-    const [fetchedProjects, setFetchedProjects] = useState({});
+    const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
+    const ref = useLoading(loading);
 
     const handleHover = (projectId: string) => {
         if (fetchedProjects[projectId]) {
@@ -19,10 +27,14 @@ const ProjectListNew = () => {
 
         const { KEY, fetcher } = getProjectFetcher(projectId);
         mutate(KEY, fetcher);
-        setFetchedProjects((prev: Object) => ({ ...prev, [projectId]: true }));
+        setFetchedProjects(prev => ({ ...prev, [projectId]: true }));
     };
 
     const renderProjects = () => {
+        if (loading) {
+            return renderLoading();
+        }
+
         return projects.map((project: any) => {
             return (
                 <Link
@@ -31,7 +43,7 @@ const ProjectListNew = () => {
                         pathname: `/projects/${project.id}`,
                         state: { projectName: project.name },
                     }}
-                    style={{ color: 'inherit', textDecoration: 'none' }}
+                    className={styles.cardLink}
                 >
                     <ProjectCard
                         onHover={() => handleHover(project.id)}
@@ -45,17 +57,33 @@ const ProjectListNew = () => {
         });
     };
 
+    const renderLoading = () => {
+        return loadingData.map((project: any) => {
+            return (
+                <ProjectCard
+                    data-loading
+                    onHover={() => {}}
+                    key={project.id}
+                    projectName={project.name}
+                    members={project.members}
+                    health={project.health}
+                    toggles={project.toggles}
+                />
+            );
+        });
+    };
+
     return (
-        <section>
+        <div ref={ref}>
             <h1>Projects</h1>
             <div className={styles.container}>
                 <ConditionallyRender
-                    condition={projects.length > 0}
-                    show={renderProjects()}
-                    elseShow={<div>No projects available.</div>}
+                    condition={projects.length < 1 && !loading}
+                    show={<div>No projects available.</div>}
+                    elseShow={renderProjects()}
                 />
             </div>
-        </section>
+        </div>
     );
 };
 

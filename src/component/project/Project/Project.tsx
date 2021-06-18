@@ -9,8 +9,6 @@ const Project = () => {
     const { project } = useProject(id);
     const { members, features } = project;
 
-    console.log(id, project);
-
     return (
         <section>
             <h1>{state?.projectName}</h1>

@@ -22,26 +22,34 @@ const ProjectCard = ({
     const styles = useStyles();
     return (
         <Card className={styles.projectCard} onMouseEnter={onHover}>
-            <div className={styles.header}>
+            <div className={styles.header} data-loading>
                 <h2 className={styles.title}>{projectName}</h2>
-                <IconButton>
+                <IconButton data-loading>
                     <MoreVertIcon />
                 </IconButton>
             </div>
-            <ProjectIcon className={styles.projectIcon} />
+            <div data-loading>
+                <ProjectIcon className={styles.projectIcon} />
+            </div>
             <div className={styles.info}>
                 <div className={styles.infoBox}>
-                    <p className={styles.infoStats}>{toggles}</p>
-                    <p>toggles</p>
+                    <p className={styles.infoStats} data-loading>
+                        {toggles}
+                    </p>
+                    <p data-loading>toggles</p>
                 </div>
                 <div className={styles.infoBox}>
-                    <p className={styles.infoStats}>{health}%</p>
-                    <p>health</p>
+                    <p className={styles.infoStats} data-loading>
+                        {health}%
+                    </p>
+                    <p data-loading>health</p>
                 </div>
 
                 <div className={styles.infoBox}>
-                    <p className={styles.infoStats}>{members}</p>
-                    <p>members</p>
+                    <p className={styles.infoStats} data-loading>
+                        {members}
+                    </p>
+                    <p data-loading>members</p>
                 </div>
             </div>
         </Card>

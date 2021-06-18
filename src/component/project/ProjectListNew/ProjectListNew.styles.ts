@@ -5,4 +5,5 @@ export const useStyles = makeStyles(theme => ({
         margin: '2rem 0',
         display: 'flex',
     },
+    cardLink: { color: 'inherit', textDecoration: 'none' },
 }));
