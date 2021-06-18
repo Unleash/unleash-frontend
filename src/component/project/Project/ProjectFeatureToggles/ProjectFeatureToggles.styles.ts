@@ -5,6 +5,7 @@ export const useStyles = makeStyles(theme => ({
         boxShadow: 'none',
         marginLeft: '2rem',
         width: '100%',
+        position: 'relative',
     },
     header: {
         padding: '1rem',

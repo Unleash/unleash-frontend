@@ -22,7 +22,6 @@ const Project = () => {
             <h1>{state?.projectName}</h1>
             <div style={containerStyles}>
                 <ProjectInfo
-                    description={state?.description}
                     id={id}
                     memberCount={members}
                     featureCount={features?.length}

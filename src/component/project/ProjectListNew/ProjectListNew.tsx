@@ -44,7 +44,6 @@ const ProjectListNew = () => {
                         pathname: `/projects/${project.id}`,
                         state: {
                             projectName: project.name,
-                            description: project.description,
                         },
                     }}
                     className={styles.cardLink}
