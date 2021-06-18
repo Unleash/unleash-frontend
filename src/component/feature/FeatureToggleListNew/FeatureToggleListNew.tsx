@@ -195,6 +195,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                 {page.map((feature: any) => {
                     return (
                         <FeatureToggleListNewItem
+                            key={feature.name}
                             name={feature.name}
                             type={feature.type}
                             environments={feature.environments}
@@ -232,6 +233,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                         {getEnvironments().map((env: any) => {
                             return (
                                 <TableCell
+                                    key={env.name}
                                     className={classnames(
                                         styles.tableCell,
                                         styles.tableCellEnv,
@@ -249,7 +251,6 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                     <ConditionallyRender
                         condition={features.length > 0}
                         show={renderFeatures()}
-                        elseShow={<div>No feature toggles</div>}
                     />
                 </TableBody>
             </Table>
@@ -278,6 +279,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                                 const active = pageIndex === idx;
                                 return (
                                     <button
+                                        key={idx}
                                         className={classnames(
                                             styles.paginationButton,
                                             {
