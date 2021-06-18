@@ -5,15 +5,15 @@ import {
     NOT_FOUND,
     OK,
     UNAUTHORIZED,
-} from '../../constants/statusCodes';
-import { IUserPayload } from '../../interfaces/user';
+} from '../../../constants/statusCodes';
+import { IUserPayload } from '../../../interfaces/user';
 import {
     AuthenticationError,
     ForbiddenError,
     headers,
     NotFoundError,
-} from '../../store/api-helper';
-import { formatApiPath } from '../../utils/format-path';
+} from '../../../store/api-helper';
+import { formatApiPath } from '../../../utils/format-path';
 
 export interface IUserApiErrors {
     addUser?: string;

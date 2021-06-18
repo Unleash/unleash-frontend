@@ -1,6 +1,6 @@
 import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
-import { formatApiPath } from '../../utils/format-path';
+import { formatApiPath } from '../../../utils/format-path';
 
 const useUsers = () => {
     const fetcher = () => {

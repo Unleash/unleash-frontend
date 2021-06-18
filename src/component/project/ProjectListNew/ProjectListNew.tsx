@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { mutate } from 'swr';
 import { getProjectFetcher } from '../../../hooks/api/useProject/getProjectFetcher';
-import useProjects from '../../../hooks/api/useProjects';
+import useProjects from '../../../hooks/api/useProjects/useProjects';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import { useStyles } from './ProjectListNew.styles';
+import { IProjectCard } from '../../../interfaces/project';
 
 import loadingData from './loadingData';
 import useLoading from '../../../hooks/useLoading';
@@ -35,7 +36,7 @@ const ProjectListNew = () => {
             return renderLoading();
         }
 
-        return projects.map((project: any) => {
+        return projects.map((project: IProjectCard) => {
             return (
                 <Link
                     key={project.id}
@@ -58,16 +59,16 @@ const ProjectListNew = () => {
     };
 
     const renderLoading = () => {
-        return loadingData.map((project: any) => {
+        return loadingData.map((project: IProjectCard) => {
             return (
                 <ProjectCard
                     data-loading
                     onHover={() => {}}
                     key={project.id}
                     projectName={project.name}
-                    members={project.members}
-                    health={project.health}
-                    toggles={project.toggles}
+                    members={2}
+                    health={95}
+                    toggles={4}
                 />
             );
         });
