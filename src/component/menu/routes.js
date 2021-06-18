@@ -259,6 +259,7 @@ export const routes = [
         component: ProjectListNew,
         flag: P,
         type: 'protected',
+        hidden: true,
         layout: 'main',
     },
 
