@@ -254,7 +254,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                 </TableBody>
             </Table>
             <ConditionallyRender
-                condition={pages.length > 0}
+                condition={pages.length > 1}
                 show={
                     <div className={styles.pagination}>
                         <div className={styles.paginationInnerContainer}>
