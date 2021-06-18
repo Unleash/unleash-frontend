@@ -9,6 +9,7 @@ interface IProjectCard {
     toggles: number;
     health: number;
     members: number;
+    onHover: () => void;
 }
 
 const ProjectCard = ({
@@ -16,10 +17,11 @@ const ProjectCard = ({
     toggles,
     health,
     members,
+    onHover,
 }: IProjectCard) => {
     const styles = useStyles();
     return (
-        <Card className={styles.projectCard}>
+        <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header}>
                 <h2 className={styles.title}>{projectName}</h2>
                 <IconButton>

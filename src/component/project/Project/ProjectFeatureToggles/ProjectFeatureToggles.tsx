@@ -10,6 +10,7 @@ interface IProjectFeatureToggles {
 }
 
 const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
+    console.log(features);
     const styles = useStyles();
     return (
         <PageContent
@@ -31,7 +32,7 @@ const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
                 />
             }
         >
-            <FeatureToggleListNew />
+            <FeatureToggleListNew features={features} />
         </PageContent>
     );
 };

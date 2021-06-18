@@ -1,16 +1,9 @@
 import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
-import { formatApiPath } from '../../utils/format-path';
+import { getProjectFetcher } from './getProjectFetcher';
 
 const useProject = (id: string) => {
-    const fetcher = () => {
-        const path = formatApiPath(`api/admin/projects/${id}/features`);
-        return fetch(path, {
-            method: 'GET',
-        }).then(res => res.json());
-    };
-
-    const KEY = `api/admin/projects`;
+    const { KEY, fetcher } = getProjectFetcher(id);
 
     const { data, error } = useSWR(KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
