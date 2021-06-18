@@ -17,7 +17,7 @@ const useProject = (id: string) => {
     }, [data, error]);
 
     return {
-        project: data || {},
+        project: data || { features: [] },
         error,
         loading,
         refetch,

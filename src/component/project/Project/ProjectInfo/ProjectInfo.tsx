@@ -11,16 +11,22 @@ interface IProjectInfoProps {
     id: string;
     memberCount: number;
     featureCount: number;
+    description: string;
 }
 
-const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
+const ProjectInfo = ({
+    id,
+    memberCount,
+    featureCount,
+    description,
+}: IProjectInfoProps) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     return (
         <aside>
             <Paper className={styles.projectInfo}>
                 <div className={styles.infoSection}>
-                    <p className={styles.subtitle}>Project activity</p>
+                    <p>{description}</p>
                     <ProjectIcon />
                 </div>
 

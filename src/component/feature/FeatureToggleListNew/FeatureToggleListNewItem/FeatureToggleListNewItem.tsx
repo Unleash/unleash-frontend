@@ -7,11 +7,13 @@ import { useStyles } from '../FeatureToggleListNew.styles';
 interface IFeatureToggleListNewItemProps {
     name: string;
     type: string;
+    environments: any;
 }
 
 const FeatureToggleListNewItem = ({
     name,
     type,
+    environments,
 }: IFeatureToggleListNewItemProps) => {
     const styles = useStyles();
     const history = useHistory();
@@ -32,12 +34,17 @@ const FeatureToggleListNewItem = ({
                     <IconComponent className={styles.icon} /> {type}
                 </div>
             </TableCell>
-            <TableCell className={styles.tableCell} align="center">
-                <Switch checked />
-            </TableCell>
-            <TableCell className={styles.tableCell} align="center">
-                <Switch checked />
-            </TableCell>
+            {environments.map((env: any) => {
+                return (
+                    <TableCell
+                        className={styles.tableCell}
+                        align="center"
+                        key={env.name}
+                    >
+                        <Switch checked={env.enabled} />
+                    </TableCell>
+                );
+            })}
         </TableRow>
     );
 };

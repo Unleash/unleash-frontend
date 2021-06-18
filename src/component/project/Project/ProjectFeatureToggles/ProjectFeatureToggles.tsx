@@ -10,8 +10,8 @@ interface IProjectFeatureToggles {
 }
 
 const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
-    console.log(features);
     const styles = useStyles();
+
     return (
         <PageContent
             className={styles.container}

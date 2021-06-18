@@ -42,7 +42,10 @@ const ProjectListNew = () => {
                     key={project.id}
                     to={{
                         pathname: `/projects/${project.id}`,
-                        state: { projectName: project.name },
+                        state: {
+                            projectName: project.name,
+                            description: project.description,
+                        },
                     }}
                     className={styles.cardLink}
                 >
