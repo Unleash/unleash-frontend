@@ -1,10 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, List, ListItem, ListItemText, ListItemAvatar, Icon, Tooltip } from '@material-ui/core';
+import {
+    Grid,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemAvatar,
+    Tooltip,
+} from '@material-ui/core';
 import { TogglesLinkList } from './toggles-link-list';
 import { AppsLinkList } from '../common';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 import styles from './strategies.module.scss';
+import { Add, RadioButtonChecked } from '@material-ui/icons';
 
 class ShowStrategyComponent extends PureComponent {
     static propTypes = {
@@ -22,14 +30,14 @@ class ShowStrategyComponent extends PureComponent {
                         show={
                             <Tooltip title="Required">
                                 <ListItemAvatar>
-                                    <Icon>add</Icon>
+                                    <Add />
                                 </ListItemAvatar>
                             </Tooltip>
                         }
                         elseShow={
                             <Tooltip title="Optional">
                                 <ListItemAvatar>
-                                    <Icon>radio_button_unchecked</Icon>
+                                    <RadioButtonChecked />
                                 </ListItemAvatar>
                             </Tooltip>
                         }

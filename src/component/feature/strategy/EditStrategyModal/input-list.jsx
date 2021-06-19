@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button, Chip, Icon, Typography } from '@material-ui/core';
+import { TextField, Button, Chip, Typography } from '@material-ui/core';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
+import { Add } from '@material-ui/icons';
 
 export default class InputList extends Component {
     static propTypes = {
@@ -36,7 +37,9 @@ export default class InputList extends Component {
 
         const { name, list, setConfig } = this.props;
         if (value) {
-            const newValues = value.split(/,\s*/).filter(a => !list.includes(a));
+            const newValues = value
+                .split(/,\s*/)
+                .filter(a => !list.includes(a));
             if (newValues.length > 0) {
                 const newList = list.concat(newValues).filter(a => a);
                 setConfig(name, newList.join(','));
@@ -48,7 +51,10 @@ export default class InputList extends Component {
     onClose(index) {
         const { name, list, setConfig } = this.props;
         list[index] = null;
-        setConfig(name, list.length === 1 ? '' : list.filter(Boolean).join(','));
+        setConfig(
+            name,
+            list.length === 1 ? '' : list.filter(Boolean).join(',')
+        );
     }
 
     onChange = e => {
@@ -72,7 +78,9 @@ export default class InputList extends Component {
                             key={index + entryValue}
                             label={entryValue}
                             style={{ marginRight: '3px', border: '1px solid' }}
-                            onDelete={disabled ? undefined : () => this.onClose(index)}
+                            onDelete={
+                                disabled ? undefined : () => this.onClose(index)
+                            }
                             title="Remove value"
                         />
                     ))}
@@ -92,7 +100,11 @@ export default class InputList extends Component {
                                 onChange={this.onChange}
                                 onKeyDown={this.onKeyDown}
                             />
-                            <Button onClick={this.setValue} color="secondary" startIcon={<Icon>add</Icon>}>
+                            <Button
+                                onClick={this.setValue}
+                                color="secondary"
+                                startIcon={<Add />}
+                            >
                                 Add
                             </Button>
                         </div>

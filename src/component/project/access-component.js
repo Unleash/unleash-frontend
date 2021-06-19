@@ -9,7 +9,6 @@ import {
     DialogContentText,
     DialogTitle,
     InputLabel,
-    Icon,
     IconButton,
     List,
     ListItem,
@@ -27,6 +26,7 @@ import projectApi from '../../store/project/api';
 import PageContent from '../common/PageContent';
 import HeaderTitle from '../common/HeaderTitle';
 import { useHistory } from 'react-router-dom';
+import { Delete } from '@material-ui/icons';
 
 function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);
@@ -197,7 +197,7 @@ function AccessComponent({ projectId, project }) {
                                     title="Remove access"
                                     onClick={removeAccess(user.id, user.roleId)}
                                 >
-                                    <Icon>delete</Icon>
+                                    <Delete />
                                 </IconButton>
                             </ListItemSecondaryAction>
                         </ListItem>

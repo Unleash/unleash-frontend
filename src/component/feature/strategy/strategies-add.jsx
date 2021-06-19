@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from '@material-ui/core';
 import DropdownMenu from '../../common/DropdownMenu/DropdownMenu';
-
+import { Add } from '@material-ui/icons';
 import styles from './strategy.module.scss';
 
 function resolveDefaultParamVale(name, featureToggleName) {
@@ -69,7 +69,7 @@ class AddStrategy extends React.Component {
                     id="strategies-add"
                     renderOptions={addStrategiesOptions}
                     label="Add strategy"
-                    icon="add"
+                    icon={<Add />}
                     className={styles.addStrategyButton}
                     color="secondary"
                     variant="contained"

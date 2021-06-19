@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Icon,
     IconButton,
     List,
     ListItem,
@@ -16,6 +15,7 @@ import {
 import { Link } from 'react-router-dom';
 import PageContent from '../../../common/PageContent/PageContent';
 import PropTypes from 'prop-types';
+import { Visibility, VisibilityOff, Delete } from '@material-ui/icons';
 
 const ConfiguredAddons = ({
     addons,
@@ -62,11 +62,7 @@ const ConfiguredAddons = ({
                             }
                             onClick={() => toggleAddon(addon)}
                         >
-                            <Icon>
-                                {addon.enabled
-                                    ? 'visibility'
-                                    : 'visibility_off'}
-                            </Icon>
+                            {addon.enabled ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                     }
                 />
@@ -78,7 +74,7 @@ const ConfiguredAddons = ({
                             title="Remove addon"
                             onClick={onRemoveAddon(addon)}
                         >
-                            <Icon>delete</Icon>
+                            <Delete />
                         </IconButton>
                     }
                 />

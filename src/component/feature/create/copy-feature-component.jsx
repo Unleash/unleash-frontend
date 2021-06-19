@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import {
     Button,
-    Icon,
     TextField,
     Switch,
     Paper,
@@ -18,6 +17,7 @@ import styles from './copy-feature-component.module.scss';
 import { trim } from '../../common/util';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
+import { FileCopy } from '@material-ui/icons';
 
 class CopyFeatureComponent extends Component {
     // static displayName = `AddFeatureComponent-${getDisplayName(Component)}`;
@@ -154,7 +154,7 @@ class CopyFeatureComponent extends Component {
                             color="primary"
                             variant="contained"
                         >
-                            <Icon>file_copy</Icon>
+                            <FileCopy />
                             &nbsp;&nbsp;&nbsp; Create from copy
                         </Button>
                     </form>

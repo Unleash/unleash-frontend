@@ -10,11 +10,11 @@ import {
     FormControl,
     Grid,
     Button,
-    Icon,
     InputAdornment,
 } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Search } from '@material-ui/icons';
 
 function AddUserComponent({ roles, addUserToRole }) {
     const [user, setUser] = useState();
@@ -101,7 +101,7 @@ function AddUserComponent({ roles, addUserToRole }) {
                                 ...params.InputProps,
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Icon>search</Icon>
+                                        <Search />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (

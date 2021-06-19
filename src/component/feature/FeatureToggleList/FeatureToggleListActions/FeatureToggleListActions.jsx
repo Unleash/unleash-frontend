@@ -7,6 +7,7 @@ import DropdownMenu from '../../../common/DropdownMenu/DropdownMenu';
 import ProjectSelect from '../../../common/ProjectSelect';
 import { useStyles } from './styles';
 import useLoading from '../../../../hooks/useLoading';
+import { HourglassEmpty, HourglassFull } from '@material-ui/icons';
 
 const sortingOptions = [
     { type: 'name', displayName: 'Name' },
@@ -49,14 +50,14 @@ const FeatureToggleListActions = ({
 
     const renderMetricsOptions = () => [
         <MenuItemWithIcon
-            icon="hourglass_empty"
+            icon={HourglassEmpty}
             disabled={!settings.showLastHour}
             data-target="minute"
             label="Last minute"
             key={1}
         />,
         <MenuItemWithIcon
-            icon="hourglass_full"
+            icon={HourglassFull}
             disabled={settings.showLastHour}
             data-target="hour"
             label="Last hour"

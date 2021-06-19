@@ -2,13 +2,14 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import PropTypes from 'prop-types';
-import { Grid, IconButton, Icon, TextField } from '@material-ui/core';
+import { Grid, IconButton, TextField } from '@material-ui/core';
 import MySelect from '../../../../common/select';
 import InputListField from '../../../../common/input-list-field';
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
 import { useCommonStyles } from '../../../../../common.styles';
 import { useStyles } from './OverrideConfig.styles.js';
 import { Autocomplete } from '@material-ui/lab';
+import { Delete } from '@material-ui/icons';
 
 const OverrideConfig = ({
     overrides,
@@ -92,7 +93,7 @@ const OverrideConfig = ({
                 </Grid>
                 <Grid item md={1}>
                     <IconButton onClick={removeOverride(i)}>
-                        <Icon>delete</Icon>
+                        <Delete />
                     </IconButton>
                 </Grid>
             </Grid>

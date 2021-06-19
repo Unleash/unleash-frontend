@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Chip, Grid } from '@material-ui/core';
+import { Chip, Grid } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { AppsLinkList, calc } from '../../common';
 import { formatFullDateTimeWithLocale } from '../../common/util';
 import Progress from '../ProgressWheel';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
+import { ReportProblem } from '@material-ui/icons';
 
 import styles from './metric.module.scss';
 
@@ -123,12 +124,10 @@ export default class MetricComponent extends React.Component {
                             }
                             elseShow={
                                 <div>
-                                    <Icon
+                                    <ReportProblem
                                         className={styles.problemIcon}
                                         title="Not used in an app in the last hour"
-                                    >
-                                        report problem
-                                    </Icon>
+                                    />
                                     <div>
                                         <small>
                                             <strong>

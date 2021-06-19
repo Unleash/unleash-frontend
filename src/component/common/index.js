@@ -12,6 +12,8 @@ import {
     Avatar,
     Typography,
 } from '@material-ui/core';
+import { Apps } from '@material-ui/icons';
+
 import styles from './common.module.scss';
 import ConditionallyRender from './ConditionallyRender/ConditionallyRender';
 
@@ -31,7 +33,7 @@ export const AppsLinkList = ({ apps }) => (
                                 key={`avatar_conditional_${appName}`}
                                 condition={icon}
                                 show={<Icon>{icon}</Icon>}
-                                elseShow={<Icon>apps</Icon>}
+                                elseShow={<Apps />}
                             />
                         </Avatar>
                     </ListItemAvatar>
@@ -114,19 +116,19 @@ export function getIcon(type) {
     }
 }
 
-export const IconLink = ({ url, icon }) => (
+export const IconLink = ({ url, icon: IconComponent }) => (
     <a
         href={url}
         target="_blank"
         rel="noreferrer"
         className="mdl-color-text--grey-600"
     >
-        <Icon>{icon}</Icon>
+        <IconComponent />
     </a>
 );
 IconLink.propTypes = {
     url: PropTypes.string,
-    icon: PropTypes.string,
+    icon: PropTypes.object,
 };
 
 export const DropdownButton = ({
@@ -157,12 +159,12 @@ DropdownButton.propTypes = {
     style: PropTypes.object,
     id: PropTypes.string,
     title: PropTypes.string,
-    icon: PropTypes.string,
+    icon: PropTypes.object,
     startIcon: PropTypes.object,
 };
 
 export const MenuItemWithIcon = ({
-    icon,
+    icon: IconComponent,
     label,
     disabled,
     ...menuItemProps
@@ -172,12 +174,12 @@ export const MenuItemWithIcon = ({
         style={{ display: 'flex', alignItems: 'center' }}
         {...menuItemProps}
     >
-        <Icon style={{ paddingRight: '16px' }}>{icon}</Icon>
+        <IconComponent style={{ paddingRight: '16px' }} />
         {label}
     </MenuItem>
 );
 MenuItemWithIcon.propTypes = {
-    icon: PropTypes.string,
+    icon: PropTypes.object,
     label: PropTypes.string,
     disabled: PropTypes.bool,
 };

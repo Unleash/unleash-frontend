@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Drawer, List, Icon } from '@material-ui/core';
+import { Divider, Drawer, List } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -17,8 +17,8 @@ const filterByFlags = flags => r => {
     return true;
 };
 
-function getIcon(name) {
-    if (name === 'c_github') {
+function getIcon(IconComponent) {
+    if (IconComponent === 'c_github') {
         return (
             <i
                 className={classnames(
@@ -29,7 +29,7 @@ function getIcon(name) {
             />
         );
     } else {
-        return <Icon className={styles.navigationIcon}>{name}</Icon>;
+        return <IconComponent className={styles.navigationIcon} />;
     }
 }
 

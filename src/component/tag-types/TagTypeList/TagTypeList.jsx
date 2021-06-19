@@ -6,7 +6,6 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    Icon,
     ListItemText,
     IconButton,
     Button,
@@ -24,6 +23,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import styles from '../TagType.module.scss';
 import AccessContext from '../../../contexts/AccessContext';
+import { Add, Delete, Label } from '@material-ui/icons';
 
 const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
     const { hasAccess } = useContext(AccessContext);
@@ -53,7 +53,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
                                             history.push('/tag-types/create')
                                         }
                                     >
-                                        <Icon>add</Icon>
+                                        <Add />
                                     </IconButton>
                                 </Tooltip>
                             }
@@ -91,7 +91,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
                         })
                     }
                 >
-                    <Icon>delete</Icon>
+                    <Delete />
                 </IconButton>
             </Tooltip>
         );
@@ -101,7 +101,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
                 classes={{ root: styles.tagListItem }}
             >
                 <ListItemIcon>
-                    <Icon>label</Icon>
+                    <Label />
                 </ListItemIcon>
                 <ListItemText primary={link} secondary={tagType.description} />
                 <ConditionallyRender

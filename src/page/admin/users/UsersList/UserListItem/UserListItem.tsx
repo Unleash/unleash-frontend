@@ -3,7 +3,6 @@ import {
     TableCell,
     Avatar,
     IconButton,
-    Icon,
     Typography,
 } from '@material-ui/core';
 import { SyntheticEvent, useContext } from 'react';
@@ -12,6 +11,7 @@ import ConditionallyRender from '../../../../../component/common/ConditionallyRe
 import { formatDateWithLocale } from '../../../../../component/common/util';
 import AccessContext from '../../../../../contexts/AccessContext';
 import { IUser } from '../../../../../interfaces/user';
+import { Edit, Lock, Delete } from '@material-ui/icons';
 
 interface IUserListItemProps {
     user: IUser;
@@ -78,7 +78,7 @@ const UserListItem = ({
                             title="Edit"
                             onClick={openUpdateDialog(user)}
                         >
-                            <Icon>edit</Icon>
+                            <Edit />
                         </IconButton>
                         <IconButton
                             data-loading
@@ -86,7 +86,7 @@ const UserListItem = ({
                             title="Change password"
                             onClick={openPwDialog(user)}
                         >
-                            <Icon>lock</Icon>
+                            <Lock />
                         </IconButton>
                         <IconButton
                             data-loading
@@ -94,7 +94,7 @@ const UserListItem = ({
                             title="Remove user"
                             onClick={openDelDialog(user)}
                         >
-                            <Icon>delete</Icon>
+                            <Delete />
                         </IconButton>
                     </TableCell>
                 }

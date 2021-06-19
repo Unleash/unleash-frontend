@@ -8,7 +8,6 @@ import {
     UPDATE_PROJECT,
 } from '../../AccessProvider/permissions';
 import {
-    Icon,
     IconButton,
     List,
     ListItem,
@@ -23,6 +22,12 @@ import ConfirmDialogue from '../../common/Dialogue';
 import PageContent from '../../common/PageContent/PageContent';
 import { useStyles } from './styles';
 import AccessContext from '../../../contexts/AccessContext';
+import {
+    Add,
+    SupervisedUserCircle,
+    Delete,
+    FolderOpen,
+} from '@material-ui/icons';
 
 const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
     const { hasAccess } = useContext(AccessContext);
@@ -45,7 +50,7 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
                             <IconButton
                                 onClick={() => history.push('/projects/create')}
                             >
-                                <Icon>add</Icon>
+                                <Add />
                             </IconButton>
                         </Tooltip>
                     }
@@ -76,7 +81,7 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
                 style={{ color: 'black' }}
             >
                 <IconButton aria-label="manage_access">
-                    <Icon>supervised_user_circle</Icon>
+                    <SupervisedUserCircle />
                 </IconButton>
             </Link>
         </Tooltip>
@@ -91,7 +96,7 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
                     setShowDelDialogue(true);
                 }}
             >
-                <Icon>delete</Icon>
+                <Delete />
             </IconButton>
         </Tooltip>
     );
@@ -100,7 +105,7 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
         projects.map(project => (
             <ListItem key={project.id} classes={{ root: styles.listItem }}>
                 <ListItemAvatar>
-                    <Icon>folder_open</Icon>
+                    <FolderOpen />
                 </ListItemAvatar>
                 <ListItemText
                     primary={projectLink(project)}

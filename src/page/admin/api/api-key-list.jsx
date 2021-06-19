@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-    Icon,
     Table,
     TableHead,
     TableBody,
@@ -23,6 +22,7 @@ import {
 } from '../../../component/AccessProvider/permissions';
 import PageContent from '../../../component/common/PageContent';
 import HeaderTitle from '../../../component/common/HeaderTitle';
+import { Delete } from '@material-ui/icons';
 
 function ApiKeyList({
     location,
@@ -132,7 +132,7 @@ function ApiKeyList({
                                                     setShowDelete(true);
                                                 }}
                                             >
-                                                <Icon>delete</Icon>
+                                                <Delete />
                                             </IconButton>
                                         </TableCell>
                                     }

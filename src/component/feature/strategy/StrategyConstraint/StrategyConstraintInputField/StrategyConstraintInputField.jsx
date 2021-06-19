@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, IconButton, TextField } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import MySelect from '../../../../common/select';
 import InputListField from '../../../../common/input-list-field';
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
 import { useCommonStyles } from '../../../../../common.styles';
 import { useStyles } from './StrategyConstraintInputField.styles';
+import { Delete } from '@material-ui/icons';
 
 const constraintOperators = [
     { key: 'IN', label: 'IN' },
@@ -130,7 +131,7 @@ const StrategyConstraintInputField = ({
             </td>
             <td>
                 <IconButton onClick={removeConstraint}>
-                    <Icon>delete</Icon>
+                    <Delete />
                 </IconButton>
             </td>
         </tr>
