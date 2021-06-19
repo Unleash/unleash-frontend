@@ -11,6 +11,8 @@ import {
     Button,
     Tooltip,
 } from '@material-ui/core';
+import { Add, Delete, Label } from '@material-ui/icons';
+
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
@@ -23,7 +25,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import styles from '../TagType.module.scss';
 import AccessContext from '../../../contexts/AccessContext';
-import { Add, Delete, Label } from '@material-ui/icons';
 
 const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
     const { hasAccess } = useContext(AccessContext);

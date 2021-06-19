@@ -12,9 +12,8 @@ import {
     Button,
     InputAdornment,
 } from '@material-ui/core';
-
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Search } from '@material-ui/icons';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 function AddUserComponent({ roles, addUserToRole }) {
     const [user, setUser] = useState();

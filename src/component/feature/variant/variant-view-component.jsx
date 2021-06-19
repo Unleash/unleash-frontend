@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Chip, TableCell, TableRow } from '@material-ui/core';
+import { Edit, Delete } from '@material-ui/icons';
+
 import { weightTypes } from './enums';
 
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
 import styles from './variant.module.scss';
-import { Edit, Delete } from '@material-ui/icons';
 function VariantViewComponent({
     variant,
     editVariant,

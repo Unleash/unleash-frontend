@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ConfiguredAddons from './ConfiguredAddons';
 import AvailableAddons from './AvailableAddons';
 import { Avatar } from '@material-ui/core';
+import { DeviceHub } from '@material-ui/icons';
+
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import AccessContext from '../../../contexts/AccessContext';
 
@@ -12,7 +14,6 @@ import webhooksIcon from '../../../assets/icons/webhooks.svg';
 import teamsIcon from '../../../assets/icons/teams.svg';
 import dataDogIcon from '../../../assets/icons/datadog.svg';
 import { formatAssetPath } from '../../../utils/format-path';
-import { DeviceHub } from '@material-ui/icons';
 
 const style = {
     width: '40px',

@@ -19,6 +19,7 @@ import {
     Select,
     FormControl,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 
 import AddUserComponent from './access-add-user';
 
@@ -26,7 +27,6 @@ import projectApi from '../../store/project/api';
 import PageContent from '../common/PageContent';
 import HeaderTitle from '../common/HeaderTitle';
 import { useHistory } from 'react-router-dom';
-import { Delete } from '@material-ui/icons';
 
 function AccessComponent({ projectId, project }) {
     const [roles, setRoles] = useState([]);

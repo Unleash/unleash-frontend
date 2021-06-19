@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Button, Chip, Typography } from '@material-ui/core';
-import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 import { Add } from '@material-ui/icons';
+
+import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 
 export default class InputList extends Component {
     static propTypes = {

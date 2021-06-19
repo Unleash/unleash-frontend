@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip, Typography } from '@material-ui/core';
+import { Info } from '@material-ui/icons';
+
 import StrategyConstraintInputField from '../StrategyConstraintInputField';
 import { useCommonStyles } from '../../../../../common.styles';
-import { Info } from '@material-ui/icons';
 
 const StrategyConstraintInput = ({
     constraints,

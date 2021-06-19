@@ -10,6 +10,7 @@ import {
     Paper,
     FormControlLabel,
 } from '@material-ui/core';
+import { FileCopy } from '@material-ui/icons';
 
 import { styles as commonStyles } from '../../common';
 import styles from './copy-feature-component.module.scss';
@@ -17,7 +18,6 @@ import styles from './copy-feature-component.module.scss';
 import { trim } from '../../common/util';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
-import { FileCopy } from '@material-ui/icons';
 
 class CopyFeatureComponent extends Component {
     // static displayName = `AddFeatureComponent-${getDisplayName(Component)}`;

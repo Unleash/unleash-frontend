@@ -17,17 +17,18 @@ import {
     Button,
     useMediaQuery,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ConfirmDialogue from '../../common/Dialogue';
-import PageContent from '../../common/PageContent/PageContent';
-import { useStyles } from './styles';
-import AccessContext from '../../../contexts/AccessContext';
 import {
     Add,
     SupervisedUserCircle,
     Delete,
     FolderOpen,
 } from '@material-ui/icons';
+
+import { Link } from 'react-router-dom';
+import ConfirmDialogue from '../../common/Dialogue';
+import PageContent from '../../common/PageContent/PageContent';
+import { useStyles } from './styles';
+import AccessContext from '../../../contexts/AccessContext';
 
 const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
     const { hasAccess } = useContext(AccessContext);

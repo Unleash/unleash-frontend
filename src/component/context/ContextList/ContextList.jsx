@@ -16,12 +16,13 @@ import {
     useMediaQuery,
     Button,
 } from '@material-ui/core';
+import { Add, Album, Delete } from '@material-ui/icons';
+
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import ConfirmDialogue from '../../common/Dialogue';
 import AccessContext from '../../../contexts/AccessContext';
-import { Add, Album, Delete } from '@material-ui/icons';
 
 const ContextList = ({ removeContextField, history, contextFields }) => {
     const { hasAccess } = useContext(AccessContext);

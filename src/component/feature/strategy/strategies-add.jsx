@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from '@material-ui/core';
-import DropdownMenu from '../../common/DropdownMenu/DropdownMenu';
 import { Add } from '@material-ui/icons';
+
+import DropdownMenu from '../../common/DropdownMenu/DropdownMenu';
 import styles from './strategy.module.scss';
 
 function resolveDefaultParamVale(name, featureToggleName) {

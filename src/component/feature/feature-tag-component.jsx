@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Chip } from '@material-ui/core';
+import { Label } from '@material-ui/icons';
+
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 import Dialogue from '../common/Dialogue';
 
@@ -8,7 +10,6 @@ import slackIcon from '../../assets/icons/slack.svg';
 import jiraIcon from '../../assets/icons/jira.svg';
 import webhookIcon from '../../assets/icons/webhooks.svg';
 import { formatAssetPath } from '../../utils/format-path';
-import { Label } from '@material-ui/icons';
 
 function FeatureTagComponent({
     tags,

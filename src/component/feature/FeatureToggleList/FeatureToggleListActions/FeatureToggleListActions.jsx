@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { MenuItem, Typography } from '@material-ui/core';
+import { HourglassEmpty, HourglassFull } from '@material-ui/icons';
+
 import { MenuItemWithIcon } from '../../../common';
 import DropdownMenu from '../../../common/DropdownMenu/DropdownMenu';
 import ProjectSelect from '../../../common/ProjectSelect';
 import { useStyles } from './styles';
 import useLoading from '../../../../hooks/useLoading';
-import { HourglassEmpty, HourglassFull } from '@material-ui/icons';
 
 const sortingOptions = [
     { type: 'name', displayName: 'Name' },

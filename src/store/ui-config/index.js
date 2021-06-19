@@ -1,8 +1,8 @@
 import { Map as $Map } from 'immutable';
+import { LibraryBooks } from '@material-ui/icons';
 import { RECEIVE_CONFIG } from './actions';
 
 import { getBasePath } from '../../utils/format-path';
-import { LibraryBooks } from '@material-ui/icons';
 
 const localStorage = window.localStorage || {
     setItem: () => {},

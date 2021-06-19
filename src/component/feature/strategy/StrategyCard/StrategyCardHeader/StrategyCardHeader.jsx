@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CardHeader, Typography, IconButton, Tooltip } from '@material-ui/core';
+import { CardHeader, Typography, IconButton } from '@material-ui/core';
+import { Edit, Delete } from '@material-ui/icons';
 
 import { useStyles } from './StrategyCardHeader.styles.js';
 import { ReactComponent as ReorderIcon } from '../../../../../assets/icons/reorder.svg';
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
-import { Edit, Delete } from '@material-ui/icons';
 
 const StrategyCardHeader = ({
     name,

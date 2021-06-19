@@ -4,6 +4,8 @@ import classnames from 'classnames';
 
 import { Link } from 'react-router-dom';
 import { Switch, IconButton, ListItem } from '@material-ui/core';
+import { Undo } from '@material-ui/icons';
+
 import TimeAgo from 'react-timeago';
 import Progress from '../../ProgressWheel';
 import Status from '../../status-component';
@@ -14,7 +16,6 @@ import { UPDATE_FEATURE } from '../../../AccessProvider/permissions';
 import { calc, styles as commonStyles } from '../../../common';
 
 import { useStyles } from './styles';
-import { Undo } from '@material-ui/icons';
 
 const FeatureToggleListItem = ({
     feature,

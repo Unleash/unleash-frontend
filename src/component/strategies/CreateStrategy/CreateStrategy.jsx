@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { Typography, TextField, Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
@@ -8,7 +9,6 @@ import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyR
 import { styles as commonStyles, FormButtons } from '../../common';
 import { trim } from '../../common/util';
 import StrategyParameters from './StrategyParameters/StrategyParameters';
-import { Add } from '@material-ui/icons';
 
 const CreateStrategy = ({
     input,

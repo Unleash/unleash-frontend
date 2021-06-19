@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu } from '@material-ui/core';
+import { ArrowDropDown } from '@material-ui/icons';
+
 import { DropdownButton } from '..';
 
 import styles from '../common.module.scss';
-import { ArrowDropDown } from '@material-ui/icons';
 
 const DropdownMenu = ({
     renderOptions,

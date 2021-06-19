@@ -9,6 +9,7 @@ import {
     TableCell,
     IconButton,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { formatFullDateTimeWithLocale } from '../../../component/common/util';
 import CreateApiKey from './api-key-create';
@@ -22,7 +23,6 @@ import {
 } from '../../../component/AccessProvider/permissions';
 import PageContent from '../../../component/common/PageContent';
 import HeaderTitle from '../../../component/common/HeaderTitle';
-import { Delete } from '@material-ui/icons';
 
 function ApiKeyList({
     location,

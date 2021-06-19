@@ -5,12 +5,13 @@ import {
     ListItemText,
     Tooltip,
 } from '@material-ui/core';
+import { PlayArrow, Pause } from '@material-ui/icons';
+
 import styles from '../common/common.module.scss';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
-import { PlayArrow, Pause } from '@material-ui/icons';
 
 export const TogglesLinkList = ({ toggles }) => (
     <List style={{ textAlign: 'left' }} className={styles.truncate}>

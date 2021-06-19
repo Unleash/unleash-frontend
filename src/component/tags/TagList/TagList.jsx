@@ -12,6 +12,8 @@ import {
     ListItemText,
     Tooltip,
 } from '@material-ui/core';
+import { Add, Label, Delete } from '@material-ui/icons';
+
 import { CREATE_TAG, DELETE_TAG } from '../../AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import HeaderTitle from '../../common/HeaderTitle';
@@ -19,7 +21,6 @@ import PageContent from '../../common/PageContent/PageContent';
 
 import { useStyles } from './TagList.styles';
 import AccessContext from '../../../contexts/AccessContext';
-import { Add, Label, Delete } from '@material-ui/icons';
 
 const TagList = ({ tags, fetchTags, removeTag }) => {
     const history = useHistory();

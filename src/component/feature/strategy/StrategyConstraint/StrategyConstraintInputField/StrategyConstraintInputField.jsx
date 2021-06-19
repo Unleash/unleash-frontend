@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import { Delete } from '@material-ui/icons';
+
 import MySelect from '../../../../common/select';
 import InputListField from '../../../../common/input-list-field';
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
 import { useCommonStyles } from '../../../../../common.styles';
 import { useStyles } from './StrategyConstraintInputField.styles';
-import { Delete } from '@material-ui/icons';
 
 const constraintOperators = [
     { key: 'IN', label: 'IN' },

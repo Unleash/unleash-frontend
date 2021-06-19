@@ -10,10 +10,11 @@ import {
     Switch,
     Typography,
 } from '@material-ui/core';
+import { Report, Extension, Timeline } from '@material-ui/icons';
+
 import { shorten } from '../common';
 import { CREATE_FEATURE, CREATE_STRATEGY } from '../AccessProvider/permissions';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
-import { Report, Extension, Timeline } from '@material-ui/icons';
 
 function ApplicationView({
     seenToggles,

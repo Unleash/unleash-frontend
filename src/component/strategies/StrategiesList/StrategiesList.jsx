@@ -14,6 +14,14 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import {
+    Add,
+    Visibility,
+    VisibilityOff,
+    Delete,
+    Extension,
+} from '@material-ui/icons';
+
+import {
     CREATE_STRATEGY,
     DELETE_STRATEGY,
 } from '../../AccessProvider/permissions';
@@ -25,13 +33,6 @@ import HeaderTitle from '../../common/HeaderTitle';
 import { useStyles } from './styles';
 import AccessContext from '../../../contexts/AccessContext';
 import Dialogue from '../../common/Dialogue';
-import {
-    Add,
-    Visibility,
-    VisibilityOff,
-    Delete,
-    Extension,
-} from '@material-ui/icons';
 
 const StrategiesList = ({
     strategies,

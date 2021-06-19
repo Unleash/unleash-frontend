@@ -3,13 +3,13 @@ import classnames from 'classnames';
 
 import PropTypes from 'prop-types';
 import { Grid, IconButton, TextField } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import MySelect from '../../../../common/select';
 import InputListField from '../../../../common/input-list-field';
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
 import { useCommonStyles } from '../../../../../common.styles';
 import { useStyles } from './OverrideConfig.styles.js';
 import { Autocomplete } from '@material-ui/lab';
-import { Delete } from '@material-ui/icons';
 
 const OverrideConfig = ({
     overrides,

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress } from '@material-ui/core';
+import { Warning } from '@material-ui/icons';
+
 import { AppsLinkList, styles as commonStyles } from '../common';
 import SearchField from '../common/SearchField/SearchField';
 import PageContent from '../common/PageContent/PageContent';
 import HeaderTitle from '../common/HeaderTitle';
-import { Warning } from '@material-ui/icons';
 
 const Empty = () => (
     <React.Fragment>
