@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Chip, Grid } from '@material-ui/core';
-import { ReportProblem, LinkIcon } from '@material-ui/icons';
+import { ReportProblem, Link as LinkIcon } from '@material-ui/icons';
 
 import { Link } from 'react-router-dom';
 import { AppsLinkList, calc } from '../../common';

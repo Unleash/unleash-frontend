@@ -163,20 +163,17 @@ DropdownButton.propTypes = {
     startIcon: PropTypes.object,
 };
 
-export const MenuItemWithIcon = ({
-    icon: IconComponent,
-    label,
-    disabled,
-    ...menuItemProps
-}) => (
-    <MenuItem
-        disabled={disabled}
-        style={{ display: 'flex', alignItems: 'center' }}
-        {...menuItemProps}
-    >
-        <IconComponent style={{ paddingRight: '16px' }} />
-        {label}
-    </MenuItem>
+export const MenuItemWithIcon = React.forwardRef(
+    ({ icon: IconComponent, label, disabled, ...menuItemProps }, ref) => (
+        <MenuItem
+            disabled={disabled}
+            style={{ display: 'flex', alignItems: 'center' }}
+            {...menuItemProps}
+        >
+            <IconComponent />
+            {label}
+        </MenuItem>
+    )
 );
 MenuItemWithIcon.propTypes = {
     icon: PropTypes.object,
