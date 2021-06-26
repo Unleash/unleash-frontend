@@ -63,7 +63,11 @@ const ConfiguredAddons = ({
                             }
                             onClick={() => toggleAddon(addon)}
                         >
-                            {addon.enabled ? <Visibility /> : <VisibilityOff />}
+                            <ConditionallyRender
+                                condition={addon.enabled}
+                                show={<Visibility />}
+                                elseShow={<VisibilityOff />}
+                            />
                         </IconButton>
                     }
                 />
