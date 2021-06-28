@@ -1,6 +1,6 @@
 import React from 'react';
-import { Divider, Drawer, List } from '@material-ui/core';
 import { ExitToApp } from '@material-ui/icons';
+import { Divider, Drawer, List } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
