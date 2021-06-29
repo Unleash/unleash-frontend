@@ -1,5 +1,4 @@
-import React from 'react';
-import { Divider, Drawer, List } from '@material-ui/core';
+import { Divider, Drawer, List, Icon } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -28,6 +27,8 @@ function getIcon(IconComponent) {
                 )}
             />
         );
+    } else if (IconComponent === 'library_books') {
+        return <Icon className={styles.navigationIcon}>library_books</Icon>;
     } else {
         return <IconComponent className={styles.navigationIcon} />;
     }
