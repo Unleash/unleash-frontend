@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { mutate } from 'swr';
 import { getProjectFetcher } from '../../../hooks/api/useProject/getProjectFetcher';
@@ -13,12 +13,15 @@ import useLoading from '../../../hooks/useLoading';
 import PageContent from '../../common/PageContent';
 import { Alert } from '@material-ui/lab';
 import { Button } from '@material-ui/core';
+import AccessContext from '../../../contexts/AccessContext';
 
 type projectMap = {
     [index: string]: boolean;
 };
 
 const ProjectListNew = () => {
+    const { hasAccess } = useContext(AccessContext);
+
     const styles = useStyles();
     const { projects, loading, error, refetch } = useProjects();
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
