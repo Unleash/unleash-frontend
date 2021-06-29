@@ -20,7 +20,7 @@ const HeaderTitle = ({
 
     return (
         <div className={styles.headerTitleContainer}>
-            <div className={headerClasses}>
+            <div className={headerClasses} data-loading>
                 <Typography
                     variant={variant || 'h2'}
                     className={classnames(styles.headerTitle, className)}

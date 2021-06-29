@@ -11,22 +11,28 @@ interface IProjectInfoProps {
     id: string;
     memberCount: number;
     featureCount: number;
+    health: number;
 }
 
-const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
+const ProjectInfo = ({
+    id,
+    memberCount,
+    featureCount,
+    health,
+}: IProjectInfoProps) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
 
     return (
         <aside>
             <Paper className={styles.projectInfo}>
-                <div className={styles.infoSection}>
+                <div className={styles.infoSection} data-loading>
                     <ProjectIcon />
                 </div>
 
-                <div className={styles.infoSection}>
+                <div className={styles.infoSection} data-loading>
                     <p className={styles.subtitle}>Overall health rating</p>
-                    <p className={styles.emphazisedText}>83%</p>
+                    <p className={styles.emphazisedText}>{health}%</p>
                     <Link
                         className={classnames(
                             commonStyles.flexRow,
@@ -39,7 +45,7 @@ const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
                     </Link>
                 </div>
 
-                <div className={styles.infoSection}>
+                <div className={styles.infoSection} data-loading>
                     <p className={styles.subtitle}>Project members</p>
                     <p className={styles.emphazisedText}>{memberCount}</p>
                     <Link
@@ -54,7 +60,7 @@ const ProjectInfo = ({ id, memberCount, featureCount }: IProjectInfoProps) => {
                     </Link>
                 </div>
 
-                <div className={styles.infoSection}>
+                <div className={styles.infoSection} data-loading>
                     <p className={styles.subtitle}>Feature toggles</p>
                     <p className={styles.emphazisedText}>{featureCount}</p>
                 </div>

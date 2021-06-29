@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { mutate } from 'swr';
 import { getProjectFetcher } from '../../../hooks/api/useProject/getProjectFetcher';
 import useProjects from '../../../hooks/api/useProjects/useProjects';
@@ -14,6 +14,11 @@ import PageContent from '../../common/PageContent';
 import { Alert } from '@material-ui/lab';
 import { Button } from '@material-ui/core';
 import AccessContext from '../../../contexts/AccessContext';
+import HeaderTitle from '../../common/HeaderTitle';
+import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
+import { CREATE_PROJECT } from '../../AccessProvider/permissions';
+
+import { Add } from '@material-ui/icons';
 
 type projectMap = {
     [index: string]: boolean;
@@ -21,6 +26,7 @@ type projectMap = {
 
 const ProjectListNew = () => {
     const { hasAccess } = useContext(AccessContext);
+    const history = useHistory();
 
     const styles = useStyles();
     const { projects, loading, error, refetch } = useProjects();
@@ -100,7 +106,28 @@ const ProjectListNew = () => {
 
     return (
         <div ref={ref}>
-            <PageContent headerContent="Projects">
+            <PageContent
+                headerContent={
+                    <HeaderTitle
+                        title="Projects"
+                        actions={
+                            <ConditionallyRender
+                                condition={hasAccess(CREATE_PROJECT)}
+                                show={
+                                    <ResponsiveButton
+                                        Icon={Add}
+                                        onClick={() =>
+                                            history.push('/projects/create')
+                                        }
+                                        maxWidth="700px"
+                                        tooltip="Add new project"
+                                    />
+                                }
+                            />
+                        }
+                    />
+                }
+            >
                 <ConditionallyRender condition={error} show={renderError()} />
                 <div className={styles.container}>
                     <ConditionallyRender

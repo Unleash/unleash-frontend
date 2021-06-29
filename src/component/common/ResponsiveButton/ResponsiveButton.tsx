@@ -4,16 +4,23 @@ import ConditionallyRender from '../ConditionallyRender';
 interface IResponsiveButtonProps {
     Icon: React.ElementType;
     onClick: () => void;
+    tooltip?: string;
+    maxWidth: string;
 }
 
-const ResponsiveButton = ({ Icon, onClick }: IResponsiveButtonProps) => {
-    const smallScreen = useMediaQuery('(max-width:700px)');
+const ResponsiveButton = ({
+    Icon,
+    onClick,
+    maxWidth,
+    tooltip,
+}: IResponsiveButtonProps) => {
+    const smallScreen = useMediaQuery(`(max-width:${maxWidth})`);
 
     return (
         <ConditionallyRender
             condition={smallScreen}
             show={
-                <Tooltip title="Add new project">
+                <Tooltip title={tooltip ? tooltip : ''}>
                     <IconButton onClick={onClick}>
                         <Icon />
                     </IconButton>

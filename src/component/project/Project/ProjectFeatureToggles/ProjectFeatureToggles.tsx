@@ -7,9 +7,13 @@ import { useStyles } from './ProjectFeatureToggles.styles';
 
 interface IProjectFeatureToggles {
     features: any[];
+    loading: boolean;
 }
 
-const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
+const ProjectFeatureToggles = ({
+    features,
+    loading,
+}: IProjectFeatureToggles) => {
     const styles = useStyles();
 
     return (
@@ -21,10 +25,17 @@ const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
                     title="Feature toggles"
                     actions={
                         <>
-                            <IconButton className={styles.iconButton}>
+                            <IconButton
+                                className={styles.iconButton}
+                                data-loading
+                            >
                                 <FilterListIcon className={styles.icon} />
                             </IconButton>
-                            <Button variant="contained" color="primary">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                data-loading
+                            >
                                 New feature toggle
                             </Button>
                         </>
@@ -32,7 +43,7 @@ const ProjectFeatureToggles = ({ features }: IProjectFeatureToggles) => {
                 />
             }
         >
-            <FeatureToggleListNew features={features} />
+            <FeatureToggleListNew features={features} loading={loading} />
         </PageContent>
     );
 };

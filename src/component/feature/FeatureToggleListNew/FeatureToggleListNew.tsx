@@ -13,8 +13,10 @@ import usePagination from '../../../hooks/usePagination';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
 interface IFeatureToggleListNewProps {
     features: any[];
+    loading: boolean;
 }
 
 // const data = {
@@ -169,7 +171,10 @@ interface IFeatureToggleListNewProps {
 //     ],
 // };
 
-const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
+const FeatureToggleListNew = ({
+    features,
+    loading,
+}: IFeatureToggleListNewProps) => {
     const styles = useStyles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(features, 9);
@@ -177,7 +182,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
 
     const getEnvironments = () => {
         if (features.length > 0) {
-            const envs = features[0].environments;
+            const envs = features[0].environments || [];
             return envs;
         }
         return [
@@ -190,20 +195,28 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
     };
 
     const renderFeatures = () => {
-        return (
-            <>
-                {page.map((feature: any) => {
-                    return (
-                        <FeatureToggleListNewItem
-                            key={feature.name}
-                            name={feature.name}
-                            type={feature.type}
-                            environments={feature.environments}
-                        />
-                    );
-                })}
-            </>
-        );
+        if (loading) {
+            return loadingFeatures.map((feature: any) => {
+                return (
+                    <FeatureToggleListNewItem
+                        key={feature.name}
+                        name={feature.name}
+                        type={feature.type}
+                        environments={feature.environments}
+                    />
+                );
+            });
+        }
+        return page.map((feature: any) => {
+            return (
+                <FeatureToggleListNewItem
+                    key={feature.name}
+                    name={feature.name}
+                    type={feature.type}
+                    environments={feature.environments}
+                />
+            );
+        });
     };
 
     return (
@@ -219,7 +232,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                             )}
                             align="left"
                         >
-                            name
+                            <span data-loading>name</span>
                         </TableCell>
                         <TableCell
                             className={classnames(
@@ -228,7 +241,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                             )}
                             align="left"
                         >
-                            type
+                            <span data-loading>type</span>
                         </TableCell>
                         {getEnvironments().map((env: any) => {
                             return (
@@ -241,7 +254,7 @@ const FeatureToggleListNew = ({ features }: IFeatureToggleListNewProps) => {
                                     )}
                                     align="center"
                                 >
-                                    {env.name}
+                                    <span data-loading>{env.name}</span>
                                 </TableCell>
                             );
                         })}
