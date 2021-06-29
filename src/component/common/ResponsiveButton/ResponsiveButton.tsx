@@ -2,7 +2,7 @@ import { IconButton, Tooltip, Button, useMediaQuery } from '@material-ui/core';
 import ConditionallyRender from '../ConditionallyRender';
 
 interface IResponsiveButtonProps {
-    Icon: JSX.Element;
+    Icon: React.ElementType;
     onClick: () => void;
 }
 
