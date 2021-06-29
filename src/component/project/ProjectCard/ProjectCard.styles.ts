@@ -5,6 +5,8 @@ export const useStyles = makeStyles(theme => ({
         padding: '1rem',
         width: '220px',
         margin: '0.5rem',
+        boxShadow: 'none',
+        border: '1px solid #efefef',
     },
     header: {
         display: 'flex',

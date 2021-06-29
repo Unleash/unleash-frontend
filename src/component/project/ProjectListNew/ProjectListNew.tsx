@@ -10,6 +10,9 @@ import { IProjectCard } from '../../../interfaces/project';
 
 import loadingData from './loadingData';
 import useLoading from '../../../hooks/useLoading';
+import PageContent from '../../common/PageContent';
+import { Alert } from '@material-ui/lab';
+import { Button } from '@material-ui/core';
 
 type projectMap = {
     [index: string]: boolean;
@@ -17,7 +20,7 @@ type projectMap = {
 
 const ProjectListNew = () => {
     const styles = useStyles();
-    const { projects, loading } = useProjects();
+    const { projects, loading, error, refetch } = useProjects();
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
     const ref = useLoading(loading);
 
@@ -29,6 +32,22 @@ const ProjectListNew = () => {
         const { KEY, fetcher } = getProjectFetcher(projectId);
         mutate(KEY, fetcher);
         setFetchedProjects(prev => ({ ...prev, [projectId]: true }));
+    };
+
+    const renderError = () => {
+        return (
+            <Alert
+                className={styles.apiError}
+                action={
+                    <Button color="inherit" size="small" onClick={refetch}>
+                        TRY AGAIN
+                    </Button>
+                }
+                severity="error"
+            >
+                Error fetching projects
+            </Alert>
+        );
     };
 
     const renderProjects = () => {
@@ -78,14 +97,16 @@ const ProjectListNew = () => {
 
     return (
         <div ref={ref}>
-            <h1>Projects</h1>
-            <div className={styles.container}>
-                <ConditionallyRender
-                    condition={projects.length < 1 && !loading}
-                    show={<div>No projects available.</div>}
-                    elseShow={renderProjects()}
-                />
-            </div>
+            <PageContent headerContent="Projects">
+                <ConditionallyRender condition={error} show={renderError()} />
+                <div className={styles.container}>
+                    <ConditionallyRender
+                        condition={projects.length < 1 && !loading}
+                        show={<div>No projects available.</div>}
+                        elseShow={renderProjects()}
+                    />
+                </div>
+            </PageContent>
         </div>
     );
 };
