@@ -48,7 +48,6 @@ import {
     Label,
     DeviceHub,
     Album,
-    ExitToApp,
     FolderOpen,
     Report,
     Money,

@@ -98,7 +98,7 @@ export const DrawerMenu = ({
                     </NavLink>
                 ))}
                 <a className={classnames(styles.navigationLink)} href={`${getBasePath()}/logout`}>
-                    {getIcon('exit_to_app')}
+                    {getIcon(ExitToApp)}
                     Sign out
                 </a>
             </List>
