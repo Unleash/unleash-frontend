@@ -25,7 +25,6 @@ const UserProfileContent = ({
     imageUrl,
     currentLocale,
     setCurrentLocale,
-    logoutUser,
 }) => {
     const commonStyles = useCommonStyles();
     const [updatedPassword, setUpdatedPassword] = useState(false);
