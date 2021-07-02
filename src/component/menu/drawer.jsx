@@ -1,3 +1,5 @@
+import React from 'react';
+import { ExitToApp } from '@material-ui/icons';
 import { Divider, Drawer, List } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
@@ -10,6 +12,7 @@ import styles from './drawer.module.scss';
 import { baseRoutes as routes } from './routes';
 
 import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
+import { getBasePath } from '../../utils/format-path';
 
 const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
@@ -94,6 +97,10 @@ export const DrawerMenu = ({
                         {item.title}
                     </NavLink>
                 ))}
+                <a className={classnames(styles.navigationLink)} href={`${getBasePath()}/logout`}>
+                    {getIcon(ExitToApp)}
+                    Sign out
+                </a>
             </List>
             <Divider />
             <List className={styles.navigation}>
