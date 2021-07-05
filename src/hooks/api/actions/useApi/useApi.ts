@@ -76,7 +76,11 @@ const useAPI = ({
         }
     };
 
-    const createRequest = (path: string, options: any, requestId: string) => {
+    const createRequest = (
+        path: string,
+        options: any,
+        requestId: string = ''
+    ) => {
         return {
             caller: () => {
                 return fetch(formatApiPath(path), {

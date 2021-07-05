@@ -3,7 +3,9 @@ import useAPI from '../useApi/useApi';
 
 const useToggleFeatureByEnv = (projectId: string, name: string) => {
     const { refetch } = useProject(projectId);
-    const { loading, makeRequest, createRequest, errors } = useAPI({});
+    const { makeRequest, createRequest, errors } = useAPI({
+        propagateErrors: true,
+    });
 
     const toggleFeatureByEnvironment = async (
         env: string,
@@ -13,10 +15,11 @@ const useToggleFeatureByEnv = (projectId: string, name: string) => {
         const req = createRequest(path, { method: 'POST' });
 
         try {
-            await makeRequest(req);
+            const res = await makeRequest(req.caller, req.id);
             refetch();
+            return res;
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     };
 
