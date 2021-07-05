@@ -41,7 +41,7 @@ const FeatureToggleListNewItem = ({
                         align="center"
                         key={env.name}
                     >
-                        <span data-loading>
+                        <span data-loading style={{ display: 'block' }}>
                             <Switch checked={env.enabled} />
                         </span>
                     </TableCell>

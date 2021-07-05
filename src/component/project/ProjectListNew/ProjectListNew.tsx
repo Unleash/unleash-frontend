@@ -11,14 +11,13 @@ import { IProjectCard } from '../../../interfaces/project';
 import loadingData from './loadingData';
 import useLoading from '../../../hooks/useLoading';
 import PageContent from '../../common/PageContent';
-import { Alert } from '@material-ui/lab';
-import { Button } from '@material-ui/core';
 import AccessContext from '../../../contexts/AccessContext';
 import HeaderTitle from '../../common/HeaderTitle';
 import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
 import { CREATE_PROJECT } from '../../AccessProvider/permissions';
 
 import { Add } from '@material-ui/icons';
+import ApiError from '../../common/ApiError/ApiError';
 
 type projectMap = {
     [index: string]: boolean;
@@ -45,17 +44,11 @@ const ProjectListNew = () => {
 
     const renderError = () => {
         return (
-            <Alert
+            <ApiError
+                onClick={refetch}
                 className={styles.apiError}
-                action={
-                    <Button color="inherit" size="small" onClick={refetch}>
-                        TRY AGAIN
-                    </Button>
-                }
-                severity="error"
-            >
-                Error fetching projects
-            </Alert>
+                text="Error fetching projects"
+            />
         );
     };
 

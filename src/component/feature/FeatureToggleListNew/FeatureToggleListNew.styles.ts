@@ -52,6 +52,7 @@ export const useStyles = makeStyles(theme => ({
     idxBtn: {
         border: 'none',
         borderRadius: '3px',
+        background: 'transparent',
         position: 'absolute',
         height: '23px',
         cursor: 'pointer',

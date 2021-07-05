@@ -14,8 +14,6 @@ import {
     ListItemAvatar,
     ListItemText,
     Tooltip,
-    Button,
-    useMediaQuery,
 } from '@material-ui/core';
 import {
     Add,
@@ -33,7 +31,6 @@ import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
 
 const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
     const { hasAccess } = useContext(AccessContext);
-    const smallScreen = useMediaQuery('(max-width:700px)');
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [project, setProject] = useState(undefined);
     const styles = useStyles();

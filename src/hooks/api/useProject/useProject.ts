@@ -1,11 +1,13 @@
 import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
 import { getProjectFetcher } from './getProjectFetcher';
+import { IProject } from '../../../interfaces/project';
+import { fallbackProject } from './fallbackProject';
 
 const useProject = (id: string) => {
     const { KEY, fetcher } = getProjectFetcher(id);
 
-    const { data, error } = useSWR(KEY, fetcher);
+    const { data, error } = useSWR<IProject>(KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
@@ -17,7 +19,7 @@ const useProject = (id: string) => {
     }, [data, error]);
 
     return {
-        project: data || { features: [] },
+        project: data || fallbackProject,
         error,
         loading,
         refetch,

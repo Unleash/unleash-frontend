@@ -12,7 +12,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading2',
+        name: 'loadg2',
         environments: [
             {
                 name: ':global:',
@@ -34,7 +34,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading4',
+        name: 'loadi4',
         environments: [
             {
                 name: ':global:',
@@ -45,7 +45,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading5',
+        name: 'loadi5',
         environments: [
             {
                 name: ':global:',
@@ -56,7 +56,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading6',
+        name: 'loadg6',
         environments: [
             {
                 name: ':global:',
@@ -78,7 +78,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading8',
+        name: 'ln8',
         environments: [
             {
                 name: ':global:',
@@ -89,51 +89,7 @@ const loadingFeatures = [
     },
     {
         type: 'release',
-        name: 'loading9',
-        environments: [
-            {
-                name: ':global:',
-                displayName: 'Across all environments',
-                enabled: true,
-            },
-        ],
-    },
-    {
-        type: 'release',
-        name: 'loading10',
-        environments: [
-            {
-                name: ':global:',
-                displayName: 'Across all environments',
-                enabled: true,
-            },
-        ],
-    },
-    {
-        type: 'release',
-        name: 'loading11',
-        environments: [
-            {
-                name: ':global:',
-                displayName: 'Across all environments',
-                enabled: true,
-            },
-        ],
-    },
-    {
-        type: 'release',
-        name: 'loading12',
-        environments: [
-            {
-                name: ':global:',
-                displayName: 'Across all environments',
-                enabled: true,
-            },
-        ],
-    },
-    {
-        type: 'release',
-        name: 'loading13',
+        name: 'load9',
         environments: [
             {
                 name: ':global:',

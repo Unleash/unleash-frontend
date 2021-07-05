@@ -14,162 +14,11 @@ import usePagination from '../../../hooks/usePagination';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
+import { IFeatureToggleListItem } from '../../../interfaces/featureToggle';
 interface IFeatureToggleListNewProps {
-    features: any[];
+    features: IFeatureToggleListItem[];
     loading: boolean;
 }
-
-// const data = {
-//     features: [
-//         {
-//             type: 'release',
-//             name: 'hallo',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'hello-worldas',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'thisismytogg',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'hello-togga',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'hello-mr-togg',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'haitogg',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//         {
-//             type: 'release',
-//             name: 'da',
-//             environments: [
-//                 {
-//                     name: 'dev',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: 'prod',
-//                     displayName: 'development',
-//                     enabled: false,
-//                 },
-//                 {
-//                     name: ':global:',
-//                     displayName: 'Across all environments',
-//                     enabled: true,
-//                 },
-//             ],
-//         },
-//     ],
-// };
 
 const FeatureToggleListNew = ({
     features,
@@ -178,7 +27,6 @@ const FeatureToggleListNew = ({
     const styles = useStyles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(features, 9);
-    // const { features } = data;
 
     const getEnvironments = () => {
         if (features.length > 0) {
@@ -196,7 +44,7 @@ const FeatureToggleListNew = ({
 
     const renderFeatures = () => {
         if (loading) {
-            return loadingFeatures.map((feature: any) => {
+            return loadingFeatures.map((feature: IFeatureToggleListItem) => {
                 return (
                     <FeatureToggleListNewItem
                         key={feature.name}
@@ -207,7 +55,8 @@ const FeatureToggleListNew = ({
                 );
             });
         }
-        return page.map((feature: any) => {
+
+        return page.map((feature: IFeatureToggleListItem) => {
             return (
                 <FeatureToggleListNewItem
                     key={feature.name}
@@ -260,12 +109,7 @@ const FeatureToggleListNew = ({
                         })}
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    <ConditionallyRender
-                        condition={features.length > 0}
-                        show={renderFeatures()}
-                    />
-                </TableBody>
+                <TableBody>{renderFeatures()}</TableBody>
             </Table>
             <ConditionallyRender
                 condition={pages.length > 1}
