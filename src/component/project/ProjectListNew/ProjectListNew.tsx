@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { mutate } from 'swr';
-import { getProjectFetcher } from '../../../hooks/api/useProject/getProjectFetcher';
-import useProjects from '../../../hooks/api/useProjects/useProjects';
+import { getProjectFetcher } from '../../../hooks/api/getters/useProject/getProjectFetcher';
+import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import { useStyles } from './ProjectListNew.styles';

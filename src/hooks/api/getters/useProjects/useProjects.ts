@@ -1,20 +1,22 @@
 import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
-import { formatApiPath } from '../../../utils/format-path';
+import { formatApiPath } from '../../../../utils/format-path';
 
-const useUsers = () => {
+const useProjects = () => {
     const fetcher = () => {
-        const path = formatApiPath(`api/admin/user-admin`);
+        const path = formatApiPath(`api/admin/projects`);
         return fetch(path, {
             method: 'GET',
         }).then(res => res.json());
     };
 
-    const { data, error } = useSWR(`api/admin/user-admin`, fetcher);
+    const KEY = `api/admin/projects`;
+
+    const { data, error } = useSWR(KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
-        mutate(`api/admin/user-admin`);
+        mutate(KEY);
     };
 
     useEffect(() => {
@@ -22,12 +24,11 @@ const useUsers = () => {
     }, [data, error]);
 
     return {
-        users: data?.users || [],
-        roles: data?.rootRoles || [],
+        projects: data?.projects || [],
         error,
         loading,
         refetch,
     };
 };
 
-export default useUsers;
+export default useProjects;

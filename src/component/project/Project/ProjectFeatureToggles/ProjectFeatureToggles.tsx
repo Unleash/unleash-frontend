@@ -1,5 +1,6 @@
 import { Button, IconButton } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { useParams } from 'react-router';
 import HeaderTitle from '../../../common/HeaderTitle';
 import PageContent from '../../../common/PageContent';
 import FeatureToggleListNew from '../../../feature/FeatureToggleListNew/FeatureToggleListNew';
@@ -15,6 +16,7 @@ const ProjectFeatureToggles = ({
     loading,
 }: IProjectFeatureToggles) => {
     const styles = useStyles();
+    const { id } = useParams();
 
     return (
         <PageContent
@@ -43,7 +45,11 @@ const ProjectFeatureToggles = ({
                 />
             }
         >
-            <FeatureToggleListNew features={features} loading={loading} />
+            <FeatureToggleListNew
+                features={features}
+                loading={loading}
+                projectId={id}
+            />
         </PageContent>
     );
 };

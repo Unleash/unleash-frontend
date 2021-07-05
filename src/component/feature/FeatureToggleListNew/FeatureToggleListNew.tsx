@@ -18,11 +18,13 @@ import { IFeatureToggleListItem } from '../../../interfaces/featureToggle';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
+    projectId: string;
 }
 
 const FeatureToggleListNew = ({
     features,
     loading,
+    projectId,
 }: IFeatureToggleListNewProps) => {
     const styles = useStyles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
@@ -51,6 +53,7 @@ const FeatureToggleListNew = ({
                         name={feature.name}
                         type={feature.type}
                         environments={feature.environments}
+                        projectId={projectId}
                     />
                 );
             });
@@ -63,6 +66,7 @@ const FeatureToggleListNew = ({
                     name={feature.name}
                     type={feature.type}
                     environments={feature.environments}
+                    projectId={projectId}
                 />
             );
         });

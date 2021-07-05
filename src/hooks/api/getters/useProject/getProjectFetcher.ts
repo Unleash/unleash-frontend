@@ -1,4 +1,4 @@
-import { formatApiPath } from '../../../utils/format-path';
+import { formatApiPath } from '../../../../utils/format-path';
 
 export const getProjectFetcher = (id: string) => {
     const fetcher = () => {

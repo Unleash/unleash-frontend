@@ -16,8 +16,8 @@ import ConditionallyRender from '../../../../component/common/ConditionallyRende
 import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../../component/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
-import useUsers from '../../../../hooks/api/useUsers/useUsers';
-import useAdminUsersApi from '../../../../hooks/api/useAdminUsersApi/useAdminUsersApi';
+import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
+import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 import UserListItem from './UserListItem/UserListItem';
 import loadingData from './loadingData';
 import useLoading from '../../../../hooks/useLoading';
