@@ -10,7 +10,7 @@ import { IEnvironments } from '../../../../interfaces/featureToggle';
 interface IFeatureToggleListNewItemProps {
     name: string;
     type: string;
-    environments: IEnvironments;
+    environments: IEnvironments[];
     projectId: string;
 }
 
@@ -75,7 +75,7 @@ const FeatureToggleListNewItem = ({
                         <span data-loading>{type}</span>
                     </div>
                 </TableCell>
-                {environments.map((env: IEnvironments[]) => {
+                {environments.map((env: IEnvironments) => {
                     return (
                         <TableCell
                             className={styles.tableCell}
