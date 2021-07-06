@@ -6,15 +6,13 @@ import {
     TableRow,
 } from '@material-ui/core';
 import classnames from 'classnames';
-import ConditionallyRender from '../../common/ConditionallyRender';
 import { useStyles } from './FeatureToggleListNew.styles';
 import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleListNewItem';
 import usePagination from '../../../hooks/usePagination';
 
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
 import { IFeatureToggleListItem } from '../../../interfaces/featureToggle';
+import PaginateUI from '../../common/PaginateUI/PaginateUI';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
@@ -120,64 +118,12 @@ const FeatureToggleListNew = ({
                 </TableHead>
                 <TableBody>{renderFeatures()}</TableBody>
             </Table>
-            <ConditionallyRender
-                condition={pages.length > 1}
-                show={
-                    <div className={styles.pagination}>
-                        <div className={styles.paginationInnerContainer}>
-                            <ConditionallyRender
-                                condition={pageIndex > 0}
-                                show={
-                                    <button
-                                        className={classnames(
-                                            styles.idxBtn,
-                                            styles.idxBtnLeft
-                                        )}
-                                        onClick={() => prevPage()}
-                                    >
-                                        <ArrowBackIosIcon
-                                            className={styles.idxBtnIcon}
-                                        />
-                                    </button>
-                                }
-                            />
-                            {pages.map((page, idx) => {
-                                const active = pageIndex === idx;
-                                return (
-                                    <button
-                                        key={idx}
-                                        className={classnames(
-                                            styles.paginationButton,
-                                            {
-                                                [styles.paginationButtonActive]:
-                                                    active,
-                                            }
-                                        )}
-                                        onClick={() => setPageIndex(idx)}
-                                    >
-                                        {idx + 1}
-                                    </button>
-                                );
-                            })}
-                            <ConditionallyRender
-                                condition={pageIndex < pages.length - 1}
-                                show={
-                                    <button
-                                        onClick={() => nextPage()}
-                                        className={classnames(
-                                            styles.idxBtn,
-                                            styles.idxBtnRight
-                                        )}
-                                    >
-                                        <ArrowForwardIosIcon
-                                            className={styles.idxBtnIcon}
-                                        />
-                                    </button>
-                                }
-                            />
-                        </div>
-                    </div>
-                }
+            <PaginateUI
+                pages={pages}
+                pageIndex={pageIndex}
+                setPageIndex={setPageIndex}
+                nextPage={nextPage}
+                prevPage={prevPage}
             />
         </>
     );
