@@ -1,6 +1,7 @@
 import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
+import { defaultValue } from './defaultValue';
 
 const REQUEST_KEY = 'api/admin/ui-config';
 
@@ -26,7 +27,7 @@ const useUiConfig = () => {
     }, [data, error]);
 
     return {
-        uiConfig: data || {},
+        uiConfig: data || defaultValue,
         error,
         loading,
         refetch,

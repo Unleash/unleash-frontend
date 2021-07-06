@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 import useProject from '../../../hooks/api/getters/useProject/useProject';
-import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useLoading from '../../../hooks/useLoading';
 import ApiError from '../../common/ApiError/ApiError';
 import ConditionallyRender from '../../common/ConditionallyRender';
