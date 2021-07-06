@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import { Switch, TableCell, TableRow, Snackbar } from '@material-ui/core';
+import { Switch, TableCell, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { getFeatureTypeIcons } from '../../../../utils/get-feature-type-icons';
 import { useStyles } from '../FeatureToggleListNew.styles';
 import useToggleFeatureByEnv from '../../../../hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
-import { Alert } from '@material-ui/lab';
 import { IEnvironments } from '../../../../interfaces/featureToggle';
 import Toast from '../../../common/Toast/Toast';
 
