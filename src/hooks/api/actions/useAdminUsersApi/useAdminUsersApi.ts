@@ -68,7 +68,7 @@ const useAdminUsersApi = () => {
             requestId
         );
 
-        return makeRequest(req);
+        return makeRequest(req.caller, req.id);
     };
 
     const changePassword = async (user: IUserPayload, password: string) => {
@@ -82,7 +82,7 @@ const useAdminUsersApi = () => {
             requestId
         );
 
-        return makeRequest(req);
+        return makeRequest(req.caller, req.id);
     };
 
     const validatePassword = async (password: string) => {
@@ -96,7 +96,7 @@ const useAdminUsersApi = () => {
             requestId
         );
 
-        return makeRequest(req);
+        return makeRequest(req.caller, req.id);
     };
 
     return {
