@@ -95,22 +95,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "flag": "P",
-    "icon": Object {
-      "$$typeof": Symbol(react.memo),
-      "compare": null,
-      "type": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-    },
-    "layout": "main",
-    "path": "/projects",
-    "title": "Projects",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
     "icon": Object {
       "$$typeof": Symbol(react.memo),
       "compare": null,
