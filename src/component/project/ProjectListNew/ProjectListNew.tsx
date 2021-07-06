@@ -70,11 +70,11 @@ const ProjectListNew = () => {
                     className={styles.cardLink}
                 >
                     <ProjectCard
-                        onHover={() => handleHover(project.id)}
-                        projectName={project.name}
-                        members={2}
-                        health={95}
-                        toggles={4}
+                        onHover={() => handleHover(project?.id)}
+                        name={project?.name}
+                        memberCount={project?.memberCount}
+                        health={project?.health}
+                        featureCount={project?.featureCount}
                     />
                 </Link>
             );

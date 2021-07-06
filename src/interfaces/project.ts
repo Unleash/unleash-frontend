@@ -6,6 +6,8 @@ export interface IProjectCard {
     createdAt: string;
     health: number;
     description: string;
+    featureCount: number;
+    memberCount: number;
 }
 
 export interface IProject {
@@ -15,4 +17,10 @@ export interface IProject {
     description: string;
     health: number;
     features: IFeatureToggleListItem[];
+}
+
+export interface IProjectHealthReport extends IProject {
+    staleCount: number;
+    potentiallyStaleCount: number;
+    activeCount: number;
 }

@@ -6,26 +6,26 @@ import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { PROJECTCARDACTIONS } from '../../common/flags';
 
-interface IProjectCard {
-    projectName: string;
-    toggles: number;
+interface IProjectCardProps {
+    name: string;
+    featureCount: number;
     health: number;
-    members: number;
+    memberCount: number;
     onHover: () => void;
 }
 
 const ProjectCard = ({
-    projectName,
-    toggles,
+    name,
+    featureCount,
     health,
-    members,
+    memberCount,
     onHover,
-}: IProjectCard) => {
+}: IProjectCardProps) => {
     const styles = useStyles();
     return (
         <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header} data-loading>
-                <h2 className={styles.title}>{projectName}</h2>
+                <h2 className={styles.title}>{name}</h2>
                 <ConditionallyRender
                     condition={PROJECTCARDACTIONS}
                     show={
@@ -41,7 +41,7 @@ const ProjectCard = ({
             <div className={styles.info}>
                 <div className={styles.infoBox}>
                     <p className={styles.infoStats} data-loading>
-                        {toggles}
+                        {featureCount}
                     </p>
                     <p data-loading>toggles</p>
                 </div>
@@ -54,7 +54,7 @@ const ProjectCard = ({
 
                 <div className={styles.infoBox}>
                     <p className={styles.infoStats} data-loading>
-                        {members}
+                        {memberCount}
                     </p>
                     <p data-loading>members</p>
                 </div>
