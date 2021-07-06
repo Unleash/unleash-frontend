@@ -2,6 +2,7 @@ import { Button, IconButton } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { IFeatureToggleListItem } from '../../../../interfaces/featureToggle';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { PROJECTFILTERING } from '../../../common/flags';
 import HeaderTitle from '../../../common/HeaderTitle';
@@ -10,7 +11,7 @@ import FeatureToggleListNew from '../../../feature/FeatureToggleListNew/FeatureT
 import { useStyles } from './ProjectFeatureToggles.styles';
 
 interface IProjectFeatureToggles {
-    features: any[];
+    features: IFeatureToggleListItem[];
     loading: boolean;
 }
 

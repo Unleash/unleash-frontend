@@ -3,6 +3,9 @@ import { IFeatureToggleListItem } from './featureToggle';
 export interface IProjectCard {
     name: string;
     id: string;
+    createdAt: string;
+    health: number;
+    description: string;
 }
 
 export interface IProject {

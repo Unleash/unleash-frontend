@@ -2,6 +2,8 @@ import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 
+import { IProjectCard } from '../../../../interfaces/project';
+
 const useProjects = () => {
     const fetcher = () => {
         const path = formatApiPath(`api/admin/projects`);
@@ -12,7 +14,7 @@ const useProjects = () => {
 
     const KEY = `api/admin/projects`;
 
-    const { data, error } = useSWR(KEY, fetcher);
+    const { data, error } = useSWR<{ projects: IProjectCard[] }>(KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {

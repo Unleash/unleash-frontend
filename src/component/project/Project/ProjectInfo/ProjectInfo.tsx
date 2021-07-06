@@ -44,7 +44,8 @@ const ProjectInfo = ({
                     <Link
                         className={classnames(
                             commonStyles.flexRow,
-                            commonStyles.justifyCenter
+                            commonStyles.justifyCenter,
+                            styles.infoLink
                         )}
                         to="/reporting"
                     >
@@ -59,7 +60,8 @@ const ProjectInfo = ({
                     <Link
                         className={classnames(
                             commonStyles.flexRow,
-                            commonStyles.justifyCenter
+                            commonStyles.justifyCenter,
+                            styles.infoLink
                         )}
                         to={link}
                     >

@@ -27,13 +27,11 @@ export const mapStateToPropsConfigurable = isFeature => state => {
         ? state.features.toJS()
         : state.archive.get('list').toArray();
 
-    console.log(features);
     if (settings.currentProjectId && settings.currentProjectId !== '*') {
         features = features.filter(
             f => f.project === settings.currentProjectId
         );
     }
-    console.log('no features?', features);
 
     if (settings.filter) {
         try {

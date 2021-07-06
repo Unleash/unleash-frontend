@@ -24,4 +24,8 @@ export const useStyles = makeStyles(theme => ({
         color: '#635dc5',
         marginLeft: '0.5rem',
     },
+    infoLink: {
+        textDecoration: 'none',
+        color: '#635dc5',
+    },
 }));

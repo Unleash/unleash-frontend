@@ -80,10 +80,10 @@ body {
     z-index: 5001;
 }
 
-a {
+/* a {
     text-decoration: none;
     color: #635dc5;
-}
+} */
 
 @keyframes shimmer {
     100% {
