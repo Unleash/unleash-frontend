@@ -80,11 +80,6 @@ body {
     z-index: 5001;
 }
 
-/* a {
-    text-decoration: none;
-    color: #635dc5;
-} */
-
 @keyframes shimmer {
     100% {
         transform: translateX(100%);
