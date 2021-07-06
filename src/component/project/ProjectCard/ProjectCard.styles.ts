@@ -4,6 +4,10 @@ export const useStyles = makeStyles(theme => ({
     projectCard: {
         padding: '1rem',
         width: '220px',
+        height: '204px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         margin: '0.5rem',
         boxShadow: 'none',
         border: '1px solid #efefef',
@@ -23,7 +27,6 @@ export const useStyles = makeStyles(theme => ({
         display: 'block',
     },
     info: {
-        marginTop: '2rem',
         display: 'flex',
         justifyContent: 'space-between',
         fontSize: '0.8rem',

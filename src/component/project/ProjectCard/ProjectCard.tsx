@@ -3,6 +3,8 @@ import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import { PROJECTCARDACTIONS } from '../../common/flags';
 
 interface IProjectCard {
     projectName: string;
@@ -24,9 +26,14 @@ const ProjectCard = ({
         <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header} data-loading>
                 <h2 className={styles.title}>{projectName}</h2>
-                <IconButton data-loading>
-                    <MoreVertIcon />
-                </IconButton>
+                <ConditionallyRender
+                    condition={PROJECTCARDACTIONS}
+                    show={
+                        <IconButton data-loading>
+                            <MoreVertIcon />
+                        </IconButton>
+                    }
+                />
             </div>
             <div data-loading>
                 <ProjectIcon className={styles.projectIcon} />

@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 import { ReactComponent as ProjectIcon } from '../../../../assets/icons/projectIcon.svg';
 import { useCommonStyles } from '../../../../common.styles';
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 interface IProjectInfoProps {
     id: string;
@@ -22,6 +23,13 @@ const ProjectInfo = ({
 }: IProjectInfoProps) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
+    const { uiConfig } = useUiConfig();
+
+    let link = `/admin/users`;
+
+    if (uiConfig?.versionInfo?.current?.enterprise) {
+        link = `/projects/${id}/access`;
+    }
 
     return (
         <aside>
@@ -53,7 +61,7 @@ const ProjectInfo = ({
                             commonStyles.flexRow,
                             commonStyles.justifyCenter
                         )}
-                        to={`/projects/${id}/access`}
+                        to={link}
                     >
                         view more{' '}
                         <ArrowForwardIcon className={styles.arrowIcon} />

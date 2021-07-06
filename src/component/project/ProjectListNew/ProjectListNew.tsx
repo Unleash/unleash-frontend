@@ -32,6 +32,8 @@ const ProjectListNew = () => {
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
     const ref = useLoading(loading);
 
+    console.log(projects);
+
     const handleHover = (projectId: string) => {
         if (fetchedProjects[projectId]) {
             return;

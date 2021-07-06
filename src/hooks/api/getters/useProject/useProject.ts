@@ -22,7 +22,7 @@ const useProject = (id: string) => {
 
     const sortedData = (data: IProject | undefined): IProject => {
         if (data) {
-            return { ...data, features: sort(data.features) };
+            return { ...data, features: sort(data.features || []) };
         }
         return fallbackProject;
     };
