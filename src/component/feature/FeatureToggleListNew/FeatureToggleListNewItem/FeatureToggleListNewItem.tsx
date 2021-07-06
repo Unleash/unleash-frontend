@@ -6,6 +6,7 @@ import { useStyles } from '../FeatureToggleListNew.styles';
 import useToggleFeatureByEnv from '../../../../hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
 import { Alert } from '@material-ui/lab';
 import { IEnvironments } from '../../../../interfaces/featureToggle';
+import Toast from '../../../common/Toast/Toast';
 
 interface IFeatureToggleListNewItemProps {
     name: string;
@@ -93,19 +94,12 @@ const FeatureToggleListNewItem = ({
                     );
                 })}
             </TableRow>
-            <Snackbar
-                autoHideDuration={6000}
-                open={snackbarData.show}
+            <Toast
+                show={snackbarData.show}
                 onClose={hideSnackbar}
-            >
-                <Alert
-                    variant="filled"
-                    severity={snackbarData.type}
-                    onClose={hideSnackbar}
-                >
-                    {snackbarData.text}
-                </Alert>
-            </Snackbar>
+                text={snackbarData.text}
+                type={snackbarData.type}
+            />
         </>
     );
 };

@@ -1,6 +1,7 @@
 import { Button, IconButton } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import HeaderTitle from '../../../common/HeaderTitle';
 import PageContent from '../../../common/PageContent';
 import FeatureToggleListNew from '../../../feature/FeatureToggleListNew/FeatureToggleListNew';
@@ -36,6 +37,8 @@ const ProjectFeatureToggles = ({
                             <Button
                                 variant="contained"
                                 color="primary"
+                                component={Link}
+                                to="/features/create"
                                 data-loading
                             >
                                 New feature toggle

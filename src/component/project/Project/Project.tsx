@@ -12,6 +12,8 @@ const Project = () => {
     const ref = useLoading(loading);
     const { members, features, health } = project;
 
+    console.log(project.features);
+
     const containerStyles = { marginTop: '1.5rem', display: 'flex' };
 
     return (

@@ -35,6 +35,7 @@ const FeatureToggleListNew = ({
             const envs = features[0].environments || [];
             return envs;
         }
+
         return [
             {
                 name: ':global:',
@@ -107,7 +108,11 @@ const FeatureToggleListNew = ({
                                     )}
                                     align="center"
                                 >
-                                    <span data-loading>{env.name}</span>
+                                    <span data-loading>
+                                        {env.name === ':global:'
+                                            ? 'global'
+                                            : env.name}
+                                    </span>
                                 </TableCell>
                             );
                         })}
