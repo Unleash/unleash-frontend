@@ -26,7 +26,7 @@ const FeatureToggleListNew = ({
 }: IFeatureToggleListNewProps) => {
     const styles = useStyles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(features, 9);
+        usePagination(features, 1);
 
     const getEnvironments = () => {
         if (features.length > 0) {
