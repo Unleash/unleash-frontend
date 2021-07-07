@@ -248,7 +248,6 @@ export const routes = [
         icon: FolderOpen,
         component: ListProjects,
         flag: P,
-        hidden: true,
         type: 'protected',
         layout: 'main',
     },
