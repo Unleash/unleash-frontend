@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     AppBar,
     Container,
@@ -16,10 +16,15 @@ import Breadcrumb from '../breadcrumb';
 import UserProfile from '../../user/UserProfile';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import { useStyles } from './styles';
+import { ReactComponent as UnleashLogo } from '../../../assets/img/logo-with-name.svg';
+import { useStyles } from './Header.styles';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import { useCommonStyles } from '../../../common.styles';
 
-const Header = ({ uiConfig }) => {
+const Header = () => {
     const theme = useTheme();
+    const commonStyles = useCommonStyles();
+    const { uiConfig } = useUiConfig();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const styles = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -29,16 +34,19 @@ const Header = ({ uiConfig }) => {
     const { links, name, flags } = uiConfig;
 
     return (
-        <React.Fragment>
+        <>
             <AppBar className={styles.header} position="static">
                 <Container className={styles.container}>
-                    <IconButton
+                    {/* <IconButton
                         className={styles.drawerButton}
                         onClick={toggleDrawer}
                     >
                         <MenuIcon />
-                    </IconButton>
-                    <ConditionallyRender
+                    </IconButton> */}
+                    <Link to="/" className={commonStyles.flexRow}>
+                        <UnleashLogo />
+                    </Link>
+                    {/* <ConditionallyRender
                         condition={!smallScreen}
                         show={
                             <Typography
@@ -48,7 +56,14 @@ const Header = ({ uiConfig }) => {
                                 <Route path="/:path" component={Breadcrumb} />
                             </Typography>
                         }
-                    />
+                    /> */}
+
+                    <div className={styles.links}>
+                        <Link to="/reporting">Dashboard</Link>
+                        <Link to="/projects-new">Projects</Link>
+                        <Link to="/applications">Applications</Link>
+                        <Link to="/api">Advanced</Link>
+                    </div>
 
                     <div className={styles.userContainer}>
                         <Tooltip title="Go to the documentation">
@@ -61,6 +76,7 @@ const Header = ({ uiConfig }) => {
                                 <MenuBookIcon className={styles.docsIcon} />
                             </a>
                         </Tooltip>
+
                         <UserProfile />
                     </div>
                     <DrawerMenu
@@ -72,7 +88,7 @@ const Header = ({ uiConfig }) => {
                     />
                 </Container>
             </AppBar>
-        </React.Fragment>
+        </>
     );
 };
 

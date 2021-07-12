@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core';
 
 import styles from '../../styles.module.scss';
 import ErrorContainer from '../../error/error-container';
-import Header from '../../menu/Header';
+import Header from '../../menu/Header/Header';
 import Footer from '../../menu/Footer/Footer';
 import Proclamation from '../../common/Proclamation/Proclamation';
 
