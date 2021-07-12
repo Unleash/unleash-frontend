@@ -1,11 +1,23 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     header: {
-        padding: '1rem',
+        backgroundColor: '#fff',
+        color: '#000',
+        padding: '0.5rem',
         boxShadow: 'none',
         [theme.breakpoints.down('sm')]: {
             padding: '1rem 0.5rem',
+        },
+    },
+    links: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginLeft: '1.5rem',
+        ['& a']: {
+            textDecoration: 'none',
+            color: 'inherit',
+            marginRight: '1.5rem',
         },
     },
     container: {
@@ -27,7 +39,7 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     docsLink: {
-        color: '#fff',
+        color: '#000',
         textDecoration: 'none',
         padding: '0.25rem 0.8rem',
         display: 'flex',
