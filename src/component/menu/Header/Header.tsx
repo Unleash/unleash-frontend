@@ -68,6 +68,16 @@ const advancedOptions = [
         permission: EDITOR,
         text: 'Tag types',
     },
+    {
+        path: '/archive',
+        permission: EDITOR,
+        text: 'Archived toggles',
+    },
+    {
+        path: '/strategies',
+        permission: EDITOR,
+        text: 'Strategies',
+    },
 ];
 
 const Header = () => {
