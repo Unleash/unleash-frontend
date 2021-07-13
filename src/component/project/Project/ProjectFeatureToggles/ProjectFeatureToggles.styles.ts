@@ -6,6 +6,10 @@ export const useStyles = makeStyles(theme => ({
         marginLeft: '2rem',
         width: '100%',
         position: 'relative',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '0',
+            paddingBottom: '4rem',
+        },
     },
     header: {
         padding: '1rem',
