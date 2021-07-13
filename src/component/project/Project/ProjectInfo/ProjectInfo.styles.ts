@@ -3,11 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
     projectInfo: {
         width: '275px',
-        padding: '1rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         boxShadow: 'none',
+    },
+    projectIcon: {
+        margin: '2rem 0',
     },
     subtitle: {
         marginBottom: '1.25rem',
@@ -17,8 +19,13 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: '1rem',
     },
     infoSection: {
-        margin: '1.8rem 0',
+        margin: '0',
         textAlign: 'center',
+        marginBottom: '1.5rem',
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        width: '100%',
+        padding: '1.5rem 1rem 1.5rem 1rem',
     },
     arrowIcon: {
         color: '#635dc5',

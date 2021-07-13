@@ -6,9 +6,6 @@ export const useStyles = makeStyles(theme => ({
         color: '#000',
         padding: '0.5rem',
         boxShadow: 'none',
-        [theme.breakpoints.down('sm')]: {
-            padding: '1rem 0.5rem',
-        },
     },
     links: {
         display: 'flex',
@@ -30,6 +27,16 @@ export const useStyles = makeStyles(theme => ({
     drawerButton: {
         color: theme.palette.iconButtons.main,
     },
+    advancedNavButton: {
+        border: 'none',
+        background: 'transparent',
+        height: '100%',
+        display: 'flex',
+        fontSize: '1rem',
+        fontFamily: theme.typography.fontFamily,
+        alignItems: 'center',
+        color: 'inherit',
+    },
     headerTitle: {
         fontSize: '1.4rem',
     },
@@ -37,6 +44,9 @@ export const useStyles = makeStyles(theme => ({
         marginLeft: 'auto',
         display: 'flex',
         alignItems: 'center',
+    },
+    logoOnly: {
+        width: '60px',
     },
     logo: {
         width: '150px',
