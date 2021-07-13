@@ -38,6 +38,29 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
+    logo: {
+        width: '150px',
+    },
+    popover: {
+        top: '25px',
+    },
+    menuItem: {
+        minWidth: '150px',
+    },
+    menuItemBox: {
+        width: '12.5px',
+        height: '12.5px',
+        display: 'block',
+        backgroundColor: theme.palette.primary.main,
+        marginRight: '1rem',
+        borderRadius: '2px',
+    },
+    navMenuLink: {
+        textDecoration: 'none',
+        alignItems: 'center',
+        display: 'flex',
+        color: '#000',
+    },
     docsLink: {
         color: '#000',
         textDecoration: 'none',
@@ -46,6 +69,7 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     docsIcon: {
+        color: '#6C6C6C',
         height: '25px',
         width: '25px',
     },

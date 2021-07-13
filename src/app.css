@@ -24,7 +24,7 @@
 
 @font-face {
     font-family: 'Sen';
-    font-weight: 300;
+    font-weight: 400;
     src: url('./assets/fonts/Sen-Regular.ttf');
 }
 
@@ -57,7 +57,7 @@ body {
 
 .MuiButton-root {
     border-radius: 3px;
-    text-transform: lowercase;
+    text-transform: none;
 }
 
 .skeleton {
