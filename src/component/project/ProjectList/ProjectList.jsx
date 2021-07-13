@@ -47,7 +47,9 @@ const ProjectList = ({ projects, fetchProjects, removeProject, history }) => {
                     onClick={() => history.push('/projects/create')}
                     maxWidth="700px"
                     tooltip="Add new project"
-                />
+                >
+                    Add new project
+                </ResponsiveButton>
             }
         />
     );

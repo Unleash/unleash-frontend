@@ -46,7 +46,7 @@ const ProjectInfo = ({
                         )}
                         to="/reporting"
                     >
-                        view more{' '}
+                        <span className={styles.linkText}>view more </span>
                         <ArrowForwardIcon className={styles.arrowIcon} />
                     </Link>
                 </div>
@@ -71,7 +71,7 @@ const ProjectInfo = ({
                         )}
                         to={link}
                     >
-                        view more{' '}
+                        <span className={styles.linkText}>view more </span>
                         <ArrowForwardIcon className={styles.arrowIcon} />
                     </Link>
                 </div>

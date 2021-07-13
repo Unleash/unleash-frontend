@@ -6,6 +6,7 @@ import ApiError from '../../common/ApiError/ApiError';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectFeatureToggles from './ProjectFeatureToggles/ProjectFeatureToggles';
 import ProjectInfo from './ProjectInfo/ProjectInfo';
+import { useStyles } from './Project.styles';
 
 const Project = () => {
     const { id } = useParams<{ id: string }>();
@@ -14,10 +15,10 @@ const Project = () => {
     const { members, features, health } = project;
     const commonStyles = useCommonStyles();
 
-    const containerStyles = { marginTop: '1.5rem', display: 'flex' };
+    const styles = useStyles();
 
     return (
-        <div ref={ref}>
+        <div ref={ref} style={{ padding: '1rem' }}>
             <h1 data-loading className={commonStyles.title}>
                 {project?.name}
             </h1>
@@ -32,7 +33,7 @@ const Project = () => {
                     />
                 }
             />
-            <div style={containerStyles}>
+            <div className={styles.containerStyles}>
                 <ProjectInfo
                     id={id}
                     memberCount={members}

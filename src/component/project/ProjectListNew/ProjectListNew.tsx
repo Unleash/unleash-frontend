@@ -114,7 +114,9 @@ const ProjectListNew = () => {
                                         }
                                         maxWidth="700px"
                                         tooltip="Add new project"
-                                    />
+                                    >
+                                        Add new project
+                                    </ResponsiveButton>
                                 }
                             />
                         }
