@@ -24,8 +24,6 @@ const NavigationMenu = ({
 }: INavigationMenuProps) => {
     const styles = useStyles();
 
-    console.log(anchorEl);
-
     return (
         <Menu
             id={id}
@@ -33,6 +31,7 @@ const NavigationMenu = ({
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             style={{ top: '45px', left: '-90px' }}
+            onMouseLeave={handleClose}
         >
             {options.map(option => {
                 return (

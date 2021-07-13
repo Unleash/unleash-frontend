@@ -21,64 +21,16 @@ import UserProfile from '../../user/UserProfile';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { ReactComponent as UnleashLogo } from '../../../assets/img/logo-dark-with-text.svg';
+import { ReactComponent as UnleashLogoIconOnly } from '../../../assets/img/logo-dark.svg';
+
 import { useStyles } from './Header.styles';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useCommonStyles } from '../../../common.styles';
-import { ADMIN, EDITOR } from '../../AccessProvider/permissions';
+import { ADMIN } from '../../AccessProvider/permissions';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
-
-const options = [
-    {
-        path: '/admin/users',
-        permission: ADMIN,
-        text: 'Users and roles',
-    },
-    {
-        path: '/admin/api',
-        permission: ADMIN,
-        text: 'API access',
-    },
-    {
-        path: '/admin/auth',
-        permission: ADMIN,
-        text: 'Authentication',
-    },
-    {
-        path: '/history',
-        permission: ADMIN,
-        text: 'Event log',
-    },
-    {
-        path: '/addons',
-        permission: EDITOR,
-        text: 'Addons',
-    },
-];
-
-const advancedOptions = [
-    {
-        path: '/context',
-        permission: EDITOR,
-        text: 'Context fields',
-    },
-    {
-        path: '/tag-types',
-        permission: EDITOR,
-        text: 'Tag types',
-    },
-    {
-        path: '/archive',
-        permission: EDITOR,
-        text: 'Archived toggles',
-    },
-    {
-        path: '/strategies',
-        permission: EDITOR,
-        text: 'Strategies',
-    },
-];
+import { adminOptions, advancedOptions } from './navOptions';
 
 const Header = () => {
     const theme = useTheme();
@@ -108,9 +60,9 @@ const Header = () => {
 
     const selectOptions = () => {
         if (admin) {
-            return options;
+            return adminOptions;
         }
-        return options.filter(option => option.permission !== ADMIN);
+        return adminOptions.filter(option => option.permission !== ADMIN);
     };
 
     const { links, name, flags } = uiConfig;
@@ -126,7 +78,15 @@ const Header = () => {
                         <MenuIcon />
                     </IconButton> */}
                     <Link to="/" className={commonStyles.flexRow}>
-                        <UnleashLogo className={styles.logo} />
+                        <ConditionallyRender
+                            condition={smallScreen}
+                            show={
+                                <UnleashLogoIconOnly
+                                    className={styles.logoOnly}
+                                />
+                            }
+                            elseShow={<UnleashLogo className={styles.logo} />}
+                        />
                     </Link>
                     {/* <ConditionallyRender
                         condition={!smallScreen}
@@ -141,18 +101,22 @@ const Header = () => {
                     /> */}
 
                     <div className={styles.links}>
-                        <Link to="/reporting">Dashboard</Link>
                         <ConditionallyRender
-                            condition={flags.P}
+                            condition={flags?.P}
                             show={<Link to="/projects-new">Projects</Link>}
                         />
 
-                        <Link to="/applications">Applications</Link>
-                        <Link
+                        <button
+                            rol="button"
+                            className={styles.advancedNavButton}
+                            tabIndex={0}
                             onClick={e => setAnchorElAdvanced(e.currentTarget)}
+                            onMouseEnter={e =>
+                                setAnchorElAdvanced(e.currentTarget)
+                            }
                         >
                             Advanced
-                        </Link>
+                        </button>
                         <NavigationMenu
                             id="settings-navigation"
                             options={advancedOptions}
@@ -172,7 +136,10 @@ const Header = () => {
                                 <MenuBookIcon className={styles.docsIcon} />
                             </a>
                         </Tooltip>
-                        <IconButton onClick={e => setAnchorEl(e.currentTarget)}>
+                        <IconButton
+                            onClick={e => setAnchorEl(e.currentTarget)}
+                            onMouseEnter={e => setAnchorEl(e.currentTarget)}
+                        >
                             <SettingsIcon className={styles.docsIcon} />
                         </IconButton>
                         <NavigationMenu
@@ -184,22 +151,10 @@ const Header = () => {
 
                         <UserProfile />
                     </div>
-                    <DrawerMenu
-                        links={links}
-                        title={name}
-                        flags={flags}
-                        open={openDrawer}
-                        toggleDrawer={toggleDrawer}
-                    />
                 </Container>
             </AppBar>
         </>
     );
-};
-
-Header.propTypes = {
-    uiConfig: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
 };
 
 export default Header;
