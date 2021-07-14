@@ -30,6 +30,7 @@ import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
 import { getRoutes } from '../routes';
+import { KeyboardArrowDown } from '@material-ui/icons';
 
 const Header = () => {
     const theme = useTheme();
@@ -116,7 +117,8 @@ const Header = () => {
                                         setAnchorElAdvanced(e.currentTarget)
                                     }
                                 >
-                                    Customize
+                                    Navigate
+                                    <KeyboardArrowDown />
                                 </button>
                                 <NavigationMenu
                                     id="settings-navigation"

@@ -15,6 +15,8 @@ export const useStyles = makeStyles(theme => ({
             textDecoration: 'none',
             color: 'inherit',
             marginRight: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
         },
     },
     container: {
