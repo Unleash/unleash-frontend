@@ -144,18 +144,24 @@ const Header = () => {
                                             />
                                         </a>
                                     </Tooltip>
-                                    <IconButton
-                                        onClick={e =>
-                                            setAnchorEl(e.currentTarget)
+                                    <ConditionallyRender
+                                        condition={admin}
+                                        show={
+                                            <IconButton
+                                                onClick={e =>
+                                                    setAnchorEl(e.currentTarget)
+                                                }
+                                                onMouseEnter={e =>
+                                                    setAnchorEl(e.currentTarget)
+                                                }
+                                            >
+                                                <SettingsIcon
+                                                    className={styles.docsIcon}
+                                                />
+                                            </IconButton>
                                         }
-                                        onMouseEnter={e =>
-                                            setAnchorEl(e.currentTarget)
-                                        }
-                                    >
-                                        <SettingsIcon
-                                            className={styles.docsIcon}
-                                        />
-                                    </IconButton>
+                                    />
+
                                     <NavigationMenu
                                         id="admin-navigation"
                                         options={routes.adminRoutes}
