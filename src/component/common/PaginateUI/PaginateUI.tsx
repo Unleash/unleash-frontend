@@ -23,7 +23,7 @@ const PaginateUI = ({
     setPageIndex,
     nextPage,
 }: IPaginateUIProps) => {
-    const STARTLIMIT = 6;
+    const STARTLIMIT = 4;
     const styles = useStyles();
     const [limit, setLimit] = useState(STARTLIMIT);
     const [start, setStart] = useState(0);

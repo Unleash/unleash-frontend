@@ -8,8 +8,11 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import styles from './drawer.module.scss';
 
 import { baseRoutes as routes } from './routes';
+import { getRoutes } from './routes';
 
 import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
+import NavigationLink from './Header/NavigationLink/NavigationLink';
+import ConditionallyRender from '../common/ConditionallyRender';
 
 const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
@@ -18,90 +21,92 @@ const filterByFlags = flags => r => {
     return true;
 };
 
-function getIcon(IconComponent) {
-    if (IconComponent === 'c_github') {
-        return <GitHubIcon className={classnames(styles.navigationIcon)} />;
-    } else if (IconComponent === 'library_books') {
-        return <LibraryBooksIcon className={styles.navigationIcon} />;
-    } else {
-        return <IconComponent className={styles.navigationIcon} />;
-    }
-}
-
-function renderLink(link, toggleDrawer) {
-    if (link.path) {
-        return (
-            <NavLink
-                onClick={() => toggleDrawer()}
-                key={link.path}
-                to={link.path}
-                className={classnames(styles.navigationLink)}
-                activeClassName={classnames(styles.navigationLinkActive)}
-            >
-                {getIcon(link.icon)} {link.value}
-            </NavLink>
-        );
-    } else {
-        return (
-            <a
-                href={link.href}
-                key={link.href}
-                target="_blank"
-                className={[styles.navigationLink].join(' ')}
-                title={link.title}
-                rel="noreferrer"
-            >
-                {getIcon(link.icon)} {link.value}
-            </a>
-        );
-    }
-}
-
 export const DrawerMenu = ({
     links = [],
     title = 'Unleash',
     flags = {},
     open = false,
     toggleDrawer,
-}) => (
-    <Drawer
-        className={styles.drawer}
-        open={open}
-        anchor={'left'}
-        onClose={() => toggleDrawer()}
-    >
-        <div className={styles.drawerContainer}>
-            <div>
-                <span className={[styles.drawerTitle].join(' ')}>
-                    <LogoIcon className={styles.drawerTitleLogo} />
+    admin,
+    routes,
+}) => {
+    const renderLinks = () => {
+        return links.map(link => {
+            let icon = null;
+            if (link.value === 'GitHub') {
+                icon = <GitHubIcon className={styles.navigationIcon} />;
+            } else if (link.value === 'Documentation') {
+                icon = <LibraryBooksIcon className={styles.navigationIcon} />;
+            }
 
-                    <span className={styles.drawerTitleText}>{title}</span>
-                </span>
+            return (
+                <a
+                    href={link.href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className={styles.iconLink}
+                    key={link.value}
+                >
+                    {icon}
+                    {link.value}
+                </a>
+            );
+        });
+    };
+
+    return (
+        <Drawer
+            className={styles.drawer}
+            open={open}
+            anchor={'left'}
+            onClose={() => toggleDrawer()}
+        >
+            <div className={styles.drawerContainer}>
+                <div>
+                    <span className={[styles.drawerTitle].join(' ')}>
+                        <LogoIcon className={styles.drawerTitleLogo} />
+
+                        <span className={styles.drawerTitleText}>{title}</span>
+                    </span>
+                </div>
+                <Divider />
+                <List className={styles.drawerList}>
+                    {routes.mainNavRoutes
+                        .filter(filterByFlags(flags))
+                        .map(item => (
+                            <NavigationLink
+                                handleClose={() => toggleDrawer()}
+                                path={item.path}
+                                text={item.title}
+                                key={item.path}
+                            />
+                        ))}
+                </List>
+                <ConditionallyRender
+                    condition={admin}
+                    show={
+                        <>
+                            <Divider />
+
+                            <List className={styles.drawerList}>
+                                {routes.adminRoutes.map(item => (
+                                    <NavigationLink
+                                        handleClose={() => toggleDrawer()}
+                                        path={item.path}
+                                        text={item.title}
+                                        key={item.path}
+                                    />
+                                ))}
+                            </List>
+                        </>
+                    }
+                />
+                <Divider />
+                <div className={styles.iconLinkList}>{renderLinks()}</div>
             </div>
-            <Divider />
-            <List className={styles.drawerList}>
-                {routes.filter(filterByFlags(flags)).map(item => (
-                    <NavLink
-                        onClick={() => toggleDrawer()}
-                        key={item.path}
-                        to={item.path}
-                        className={classnames(styles.navigationLink)}
-                        activeClassName={classnames(
-                            styles.navigationLinkActive
-                        )}
-                    >
-                        {getIcon(item.icon)}
-                        {item.title}
-                    </NavLink>
-                ))}
-            </List>
-            <Divider />
-            <List className={styles.navigation}>
-                {links.map(l => renderLink(l, toggleDrawer))}
-            </List>
-        </div>
-    </Drawer>
-);
+        </Drawer>
+    );
+};
 
 DrawerMenu.propTypes = {
     links: PropTypes.array,

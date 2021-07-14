@@ -1,16 +1,7 @@
-import { Menu, MenuItem } from '@material-ui/core';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useStyles } from './NavigationMenu.styles';
-
-interface INavigationMenuOptions {
-    permission: string;
-    path: string;
-    text: string;
-}
-
+import { Menu } from '@material-ui/core';
+import NavigationLink from '../NavigationLink/NavigationLink';
 interface INavigationMenuProps {
-    options: INavigationMenuOptions[];
+    options: any[];
     id: string;
     anchorEl: any;
     handleClose: () => void;
@@ -22,29 +13,23 @@ const NavigationMenu = ({
     handleClose,
     anchorEl,
 }: INavigationMenuProps) => {
-    const styles = useStyles();
-
     return (
         <Menu
             id={id}
             onClose={handleClose}
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            style={{ top: '45px', left: '-90px' }}
             onMouseLeave={handleClose}
+            style={{ top: '30px', left: '-90px' }}
         >
             {options.map(option => {
                 return (
-                    <MenuItem
-                        className={styles.menuItem}
+                    <NavigationLink
                         key={option.path}
-                        onClick={handleClose}
-                    >
-                        <Link className={styles.navMenuLink} to={option.path}>
-                            <span className={styles.menuItemBox} />
-                            {option.text}
-                        </Link>
-                    </MenuItem>
+                        handleClose={handleClose}
+                        path={option.path}
+                        text={option.title}
+                    />
                 );
             })}
         </Menu>

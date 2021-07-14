@@ -25,7 +25,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     drawerButton: {
-        color: theme.palette.iconButtons.main,
+        color: '#000',
     },
     advancedNavButton: {
         border: 'none',

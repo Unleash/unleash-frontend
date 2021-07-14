@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState, useRef } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -30,7 +29,7 @@ import { ADMIN } from '../../AccessProvider/permissions';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
-import { adminOptions, advancedOptions } from './navOptions';
+import { getRoutes } from '../routes';
 
 const Header = () => {
     const theme = useTheme();
@@ -58,32 +57,23 @@ const Header = () => {
         }
     }, [permissions]);
 
-    const selectOptions = () => {
-        if (admin) {
-            return adminOptions;
-        }
-        return adminOptions.filter(option => option.permission !== ADMIN);
-    };
-
     const { links, name, flags } = uiConfig;
+    const routes = getRoutes();
 
     return (
         <>
             <AppBar className={styles.header} position="static">
                 <Container className={styles.container}>
-                    {/* <IconButton
-                        className={styles.drawerButton}
-                        onClick={toggleDrawer}
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
                     <Link to="/" className={commonStyles.flexRow}>
                         <ConditionallyRender
                             condition={smallScreen}
                             show={
-                                <UnleashLogoIconOnly
-                                    className={styles.logoOnly}
-                                />
+                                <IconButton
+                                    className={styles.drawerButton}
+                                    onClick={toggleDrawer}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
                             }
                             elseShow={<UnleashLogo className={styles.logo} />}
                         />
@@ -99,54 +89,81 @@ const Header = () => {
                             </Typography>
                         }
                     /> */}
+                    <DrawerMenu
+                        title={name}
+                        flags={flags}
+                        links={links}
+                        open={openDrawer}
+                        toggleDrawer={toggleDrawer}
+                        admin={admin}
+                        routes={routes}
+                    />
+                    <ConditionallyRender
+                        condition={!smallScreen}
+                        show={
+                            <div className={styles.links}>
+                                <ConditionallyRender
+                                    condition={flags?.P}
+                                    show={<Link to="/projects">Projects</Link>}
+                                />
 
-                    <div className={styles.links}>
-                        <ConditionallyRender
-                            condition={flags?.P}
-                            show={<Link to="/projects-new">Projects</Link>}
-                        />
-
-                        <button
-                            rol="button"
-                            className={styles.advancedNavButton}
-                            tabIndex={0}
-                            onClick={e => setAnchorElAdvanced(e.currentTarget)}
-                            onMouseEnter={e =>
-                                setAnchorElAdvanced(e.currentTarget)
-                            }
-                        >
-                            Advanced
-                        </button>
-                        <NavigationMenu
-                            id="settings-navigation"
-                            options={advancedOptions}
-                            anchorEl={anchorElAdvanced}
-                            handleClose={handleCloseAdvanced}
-                        />
-                    </div>
-
+                                <button
+                                    className={styles.advancedNavButton}
+                                    onClick={e =>
+                                        setAnchorElAdvanced(e.currentTarget)
+                                    }
+                                    onMouseEnter={e =>
+                                        setAnchorElAdvanced(e.currentTarget)
+                                    }
+                                >
+                                    Customize
+                                </button>
+                                <NavigationMenu
+                                    id="settings-navigation"
+                                    options={routes.mainNavRoutes}
+                                    anchorEl={anchorElAdvanced}
+                                    handleClose={handleCloseAdvanced}
+                                />
+                            </div>
+                        }
+                    />
                     <div className={styles.userContainer}>
-                        <Tooltip title="Go to the documentation">
-                            <a
-                                href="https://docs.getunleash.io/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.docsLink}
-                            >
-                                <MenuBookIcon className={styles.docsIcon} />
-                            </a>
-                        </Tooltip>
-                        <IconButton
-                            onClick={e => setAnchorEl(e.currentTarget)}
-                            onMouseEnter={e => setAnchorEl(e.currentTarget)}
-                        >
-                            <SettingsIcon className={styles.docsIcon} />
-                        </IconButton>
-                        <NavigationMenu
-                            id="settings-navigation"
-                            options={selectOptions()}
-                            anchorEl={anchorEl}
-                            handleClose={handleClose}
+                        <ConditionallyRender
+                            condition={!smallScreen}
+                            show={
+                                <>
+                                    <Tooltip title="Go to the documentation">
+                                        <a
+                                            href="https://docs.getunleash.io/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={styles.docsLink}
+                                        >
+                                            <MenuBookIcon
+                                                className={styles.docsIcon}
+                                            />
+                                        </a>
+                                    </Tooltip>
+                                    <IconButton
+                                        onClick={e =>
+                                            setAnchorEl(e.currentTarget)
+                                        }
+                                        onMouseEnter={e =>
+                                            setAnchorEl(e.currentTarget)
+                                        }
+                                    >
+                                        <SettingsIcon
+                                            className={styles.docsIcon}
+                                        />
+                                    </IconButton>
+                                    <NavigationMenu
+                                        id="admin-navigation"
+                                        options={routes.adminRoutes}
+                                        anchorEl={anchorEl}
+                                        handleClose={handleClose}
+                                    />
+                                </>
+                            }
                         />
 
                         <UserProfile />

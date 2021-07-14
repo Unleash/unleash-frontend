@@ -245,20 +245,10 @@ export const routes = [
     {
         path: '/projects',
         title: 'Projects',
-        icon: FolderOpen,
-        component: ListProjects,
-        flag: P,
-        type: 'protected',
-        layout: 'main',
-    },
-    {
-        path: '/projects-new',
-        title: 'Projects new',
         icon: 'folder_open',
         component: ProjectListNew,
         flag: P,
         type: 'protected',
-        hidden: true,
         layout: 'main',
     },
 
@@ -430,3 +420,26 @@ export const getRoute = path => routes.find(route => route.path === path);
 export const baseRoutes = routes
     .filter(route => !route.hidden)
     .filter(route => !route.parent);
+
+const computeRoutes = () => {
+    const computedRoutes = {
+        mainNavRoutes: baseRoutes.filter(
+            route =>
+                route.path !== '/admin' &&
+                route.path !== '/logout' &&
+                route.path !== '/history'
+        ),
+        adminRoutes: routes.filter(
+            route =>
+                (route.path.startsWith('/admin') &&
+                    route.path !== '/admin-invoices' &&
+                    route.path !== '/admin') ||
+                route.path === '/history'
+        ),
+    };
+    return () => {
+        return computedRoutes;
+    };
+};
+
+export const getRoutes = computeRoutes();

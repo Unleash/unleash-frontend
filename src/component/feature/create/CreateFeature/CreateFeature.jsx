@@ -18,6 +18,7 @@ import {
 } from '../../../../testIds';
 import { CREATE_FEATURE } from '../../../AccessProvider/permissions';
 import { projectFilterGenerator } from '../../../../utils/project-filter-generator';
+import { useHistory } from 'react-router-dom';
 
 const CreateFeature = ({
     input,
@@ -25,9 +26,9 @@ const CreateFeature = ({
     setValue,
     validateName,
     onSubmit,
-    onCancel,
     user,
 }) => {
+    const history = useHistory();
     useEffect(() => {
         window.onbeforeunload = () =>
             'Data will be lost if you leave the page, are you sure?';
@@ -36,6 +37,8 @@ const CreateFeature = ({
             window.onbeforeunload = false;
         };
     }, []);
+
+    const onCancel = () => history.goBack();
 
     return (
         <PageContent headerContent="Create new feature toggle">
