@@ -14,13 +14,6 @@ import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
 import NavigationLink from './Header/NavigationLink/NavigationLink';
 import ConditionallyRender from '../common/ConditionallyRender';
 
-const filterByFlags = flags => r => {
-    if (r.flag && !flags[r.flag]) {
-        return false;
-    }
-    return true;
-};
-
 export const DrawerMenu = ({
     links = [],
     title = 'Unleash',
@@ -71,16 +64,14 @@ export const DrawerMenu = ({
                 </div>
                 <Divider />
                 <List className={styles.drawerList}>
-                    {routes.mainNavRoutes
-                        .filter(filterByFlags(flags))
-                        .map(item => (
-                            <NavigationLink
-                                handleClose={() => toggleDrawer()}
-                                path={item.path}
-                                text={item.title}
-                                key={item.path}
-                            />
-                        ))}
+                    {routes.mainNavRoutes.map(item => (
+                        <NavigationLink
+                            handleClose={() => toggleDrawer()}
+                            path={item.path}
+                            text={item.title}
+                            key={item.path}
+                        />
+                    ))}
                 </List>
                 <ConditionallyRender
                     condition={admin}

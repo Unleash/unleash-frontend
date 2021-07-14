@@ -31,6 +31,7 @@ import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
 import { getRoutes } from '../routes';
 import { KeyboardArrowDown } from '@material-ui/icons';
+import { filterByFlags } from '../../common/util';
 
 const Header = () => {
     const theme = useTheme();
@@ -60,6 +61,11 @@ const Header = () => {
 
     const { links, name, flags } = uiConfig;
     const routes = getRoutes();
+    console.log(flags);
+    const filteredMainRoutes = {
+        mainNavRoutes: routes.mainNavRoutes.filter(filterByFlags(flags)),
+        adminRoutes: routes.adminRoutes,
+    };
 
     return (
         <>
@@ -97,7 +103,7 @@ const Header = () => {
                         open={openDrawer}
                         toggleDrawer={toggleDrawer}
                         admin={admin}
-                        routes={routes}
+                        routes={filteredMainRoutes}
                     />
                     <ConditionallyRender
                         condition={!smallScreen}
@@ -122,7 +128,7 @@ const Header = () => {
                                 </button>
                                 <NavigationMenu
                                     id="settings-navigation"
-                                    options={routes.mainNavRoutes}
+                                    options={filteredMainRoutes.mainNavRoutes}
                                     anchorEl={anchorElAdvanced}
                                     handleClose={handleCloseAdvanced}
                                 />

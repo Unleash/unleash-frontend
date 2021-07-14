@@ -423,19 +423,21 @@ export const baseRoutes = routes
 
 const computeRoutes = () => {
     const computedRoutes = {
-        mainNavRoutes: baseRoutes.filter(
-            route =>
-                route.path !== '/admin' &&
-                route.path !== '/logout' &&
-                route.path !== '/history'
-        ),
-        adminRoutes: routes.filter(
-            route =>
-                (route.path.startsWith('/admin') &&
-                    route.path !== '/admin-invoices' &&
-                    route.path !== '/admin') ||
-                route.path === '/history'
-        ),
+        mainNavRoutes:
+            baseRoutes.filter(
+                route =>
+                    route.path !== '/admin' &&
+                    route.path !== '/logout' &&
+                    route.path !== '/history'
+            ) || [],
+        adminRoutes:
+            routes.filter(
+                route =>
+                    (route.path.startsWith('/admin') &&
+                        route.path !== '/admin-invoices' &&
+                        route.path !== '/admin') ||
+                    route.path === '/history'
+            ) || [],
     };
     return () => {
         return computedRoutes;
