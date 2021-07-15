@@ -1,8 +1,10 @@
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Link, useLocation } from 'react-router-dom';
 import ConditionallyRender from '../ConditionallyRender';
+import { useStyles } from './BreadcrumbNav.styles';
 
 const BreadcrumbNav = () => {
+    const styles = useStyles();
     const location = useLocation();
 
     const paths = location.pathname
@@ -16,27 +18,19 @@ const BreadcrumbNav = () => {
         <ConditionallyRender
             condition={paths.length > 1}
             show={
-                <Breadcrumbs style={{ marginBottom: '1rem' }}>
+                <Breadcrumbs className={styles.breadcrumbNav}>
                     {paths.map((path, index) => {
                         const lastItem = index === paths.length - 1;
                         if (lastItem) {
                             return (
-                                <p
-                                    style={{
-                                        textTransform: 'capitalize',
-                                        color: 'inherit',
-                                    }}
-                                >
+                                <p className={styles.breadcrumbNavParagraph}>
                                     {path}
                                 </p>
                             );
                         }
                         return (
                             <Link
-                                style={{
-                                    textTransform: 'capitalize',
-                                    textDecoration: 'none',
-                                }}
+                                className={styles.breadcrumbLink}
                                 to={`/${path}`}
                             >
                                 {path}
