@@ -4,6 +4,9 @@ export const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
+        [theme.breakpoints.down('xs')]: {
+            justifyContent: 'center',
+        },
     },
     apiError: {
         maxWidth: '400px',

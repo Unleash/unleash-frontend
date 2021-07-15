@@ -12,12 +12,17 @@ const NavigationLink = ({ path, text, handleClose }: INavigationLinkProps) => {
     const styles = useStyles();
 
     return (
-        <MenuItem className={styles.menuItem} onClick={handleClose}>
-            <Link className={styles.navMenuLink} to={path}>
+        <Link className={styles.navMenuLink} to={path}>
+            <MenuItem
+                className={styles.menuItem}
+                onClick={() => {
+                    handleClose();
+                }}
+            >
                 <span className={styles.menuItemBox} />
                 {text}
-            </Link>
-        </MenuItem>
+            </MenuItem>
+        </Link>
     );
 };
 

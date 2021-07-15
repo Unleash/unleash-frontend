@@ -28,7 +28,7 @@ const useUiConfig = () => {
     }, [data, error]);
 
     return {
-        uiConfig: { ...data, flags: { ...defaultValue.flags } } || defaultValue,
+        uiConfig: { ...defaultValue, ...data } || defaultValue,
         error,
         loading,
         refetch,

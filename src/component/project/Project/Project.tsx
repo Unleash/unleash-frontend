@@ -7,20 +7,42 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectFeatureToggles from './ProjectFeatureToggles/ProjectFeatureToggles';
 import ProjectInfo from './ProjectInfo/ProjectInfo';
 import { useStyles } from './Project.styles';
+import { IconButton } from '@material-ui/core';
+import { Edit } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import useToast from '../../../hooks/useToast';
+import useQueryParams from '../../../hooks/useQueryParams';
+import { useEffect } from 'react';
 
 const Project = () => {
     const { id } = useParams<{ id: string }>();
+    const params = useQueryParams();
     const { project, error, loading, refetch } = useProject(id);
     const ref = useLoading(loading);
+    const { toast, setToastData } = useToast();
     const { members, features, health } = project;
     const commonStyles = useCommonStyles();
-
     const styles = useStyles();
+
+    useEffect(() => {
+        const created = params.get('created');
+
+        if (created) {
+            setToastData({
+                show: true,
+                type: 'success',
+                text: 'Project created',
+            });
+        }
+    }, []);
 
     return (
         <div ref={ref} style={{ padding: '1rem' }}>
             <h1 data-loading className={commonStyles.title}>
-                {project?.name}
+                {project?.name}{' '}
+                <IconButton component={Link} to={`/projects/edit/${id}`}>
+                    <Edit />
+                </IconButton>
             </h1>
             <ConditionallyRender
                 condition={error}
@@ -42,6 +64,7 @@ const Project = () => {
                 />
                 <ProjectFeatureToggles features={features} loading={loading} />
             </div>
+            {toast}
         </div>
     );
 };

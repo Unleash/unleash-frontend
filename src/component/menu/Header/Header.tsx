@@ -1,17 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import {
-    AppBar,
-    Container,
-    Typography,
-    IconButton,
-    Tooltip,
-    Button,
-    Menu,
-    MenuItem,
-} from '@material-ui/core';
+import { AppBar, Container, IconButton, Tooltip } from '@material-ui/core';
 import { DrawerMenu } from '../drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import Breadcrumb from '../breadcrumb';
@@ -20,7 +11,6 @@ import UserProfile from '../../user/UserProfile';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { ReactComponent as UnleashLogo } from '../../../assets/img/logo-dark-with-text.svg';
-import { ReactComponent as UnleashLogoIconOnly } from '../../../assets/img/logo-dark.svg';
 
 import { useStyles } from './Header.styles';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
@@ -61,7 +51,7 @@ const Header = () => {
 
     const { links, name, flags } = uiConfig;
     const routes = getRoutes();
-    console.log(flags);
+
     const filteredMainRoutes = {
         mainNavRoutes: routes.mainNavRoutes.filter(filterByFlags(flags)),
         adminRoutes: routes.adminRoutes,
@@ -71,20 +61,23 @@ const Header = () => {
         <>
             <AppBar className={styles.header} position="static">
                 <Container className={styles.container}>
-                    <Link to="/" className={commonStyles.flexRow}>
-                        <ConditionallyRender
-                            condition={smallScreen}
-                            show={
-                                <IconButton
-                                    className={styles.drawerButton}
-                                    onClick={toggleDrawer}
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                            }
-                            elseShow={<UnleashLogo className={styles.logo} />}
-                        />
-                    </Link>
+                    <ConditionallyRender
+                        condition={smallScreen}
+                        show={
+                            <IconButton
+                                className={styles.drawerButton}
+                                onClick={toggleDrawer}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        }
+                        elseShow={
+                            <Link to="/" className={commonStyles.flexRow}>
+                                <UnleashLogo className={styles.logo} />{' '}
+                            </Link>
+                        }
+                    />
+
                     {/* <ConditionallyRender
                         condition={!smallScreen}
                         show={

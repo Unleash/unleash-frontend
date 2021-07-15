@@ -26,4 +26,10 @@ export const useStyles = makeStyles(theme => ({
         height: '30px',
         width: '30px',
     },
+    noTogglesFound: {
+        marginBottom: '0.5rem',
+    },
+    link: {
+        textDecoration: 'none',
+    },
 }));
