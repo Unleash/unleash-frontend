@@ -44,4 +44,8 @@ export const useStyles = makeStyles(theme => ({
     actionsBtn: {
         transform: 'translateX(15px)',
     },
+    icon: {
+        color: theme.palette.grey[700],
+        marginRight: '0.5rem',
+    },
 }));

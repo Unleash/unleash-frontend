@@ -1,5 +1,5 @@
 import { Card, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import Dialogue from '../../common/Dialogue';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
+import { Delete, Edit } from '@material-ui/icons';
 interface IProjectCardProps {
     name: string;
     featureCount: number;
@@ -68,6 +69,10 @@ const ProjectCard = ({
                     open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
                     style={{ top: '40px', left: '-60px' }}
+                    onClose={e => {
+                        e.preventDefault();
+                        setAnchorEl(null);
+                    }}
                 >
                     <MenuItem
                         onClick={e => {
@@ -75,6 +80,7 @@ const ProjectCard = ({
                             history.push(`/projects/edit/${id}`);
                         }}
                     >
+                        <Edit className={styles.icon} />
                         Edit project
                     </MenuItem>
                     <MenuItem
@@ -83,6 +89,7 @@ const ProjectCard = ({
                             setShowDelDialog(true);
                         }}
                     >
+                        <Delete className={styles.icon} />
                         Delete project
                     </MenuItem>
                 </Menu>

@@ -12,5 +12,13 @@ export const useStyles = makeStyles(theme => ({
         maxWidth: '400px',
         marginBottom: '1rem',
     },
-    cardLink: { color: 'inherit', textDecoration: 'none' },
+    cardLink: {
+        color: 'inherit',
+        textDecoration: 'none',
+        border: 'none',
+        padding: '0',
+        background: 'transparent',
+        fontFamily: theme.typography.fontFamily,
+        pointer: 'cursor',
+    },
 }));
