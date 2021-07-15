@@ -37,7 +37,7 @@ const Project = () => {
     }, []);
 
     return (
-        <div ref={ref} style={{ padding: '1rem' }}>
+        <div ref={ref}>
             <h1 data-loading className={commonStyles.title}>
                 {project?.name}{' '}
                 <IconButton component={Link} to={`/projects/edit/${id}`}>

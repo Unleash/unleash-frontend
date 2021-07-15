@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography, Button } from '@material-ui/core';
 
 import styles from './Project.module.scss';
 import classnames from 'classnames';
@@ -11,6 +11,7 @@ import AccessContext from '../../contexts/AccessContext';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { CREATE_PROJECT } from '../AccessProvider/permissions';
 import { Link } from 'react-router-dom';
+import HeaderTitle from '../common/HeaderTitle';
 
 class ProjectFormComponent extends Component {
     static contextType = AccessContext;
@@ -101,20 +102,28 @@ class ProjectFormComponent extends Component {
         return (
             <PageContent
                 headerContent={
-                    <div>
-                        <span>{submitText} Project</span>
-                        <ConditionallyRender
-                            condition={hasAccess(CREATE_PROJECT) && editMode}
-                            show={
-                                <Link
-                                    to={`/projects/${project.id}/access`}
-                                    style={{ float: 'right' }}
-                                >
-                                    Manage access
-                                </Link>
-                            }
-                        />
-                    </div>
+                    <HeaderTitle
+                        title={`${submitText} Project`}
+                        actions={
+                            <ConditionallyRender
+                                condition={
+                                    hasAccess(CREATE_PROJECT) && editMode
+                                }
+                                show={
+                                    <Button
+                                        color="primary"
+                                        onClick={() =>
+                                            history.push(
+                                                `/projects/${project.id}/access`
+                                            )
+                                        }
+                                    >
+                                        Manage access
+                                    </Button>
+                                }
+                            />
+                        }
+                    />
                 }
             >
                 <Typography
