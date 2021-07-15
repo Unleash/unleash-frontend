@@ -113,7 +113,7 @@ class ProjectFormComponent extends Component {
                                     <Button
                                         color="primary"
                                         onClick={() =>
-                                            history.push(
+                                            this.props.history.push(
                                                 `/projects/${project.id}/access`
                                             )
                                         }

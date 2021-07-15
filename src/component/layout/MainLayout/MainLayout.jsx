@@ -18,10 +18,10 @@ const useStyles = makeStyles(theme => ({
     },
     contentContainer: {
         height: '100%',
-        padding: '4rem 0',
+        padding: '3.25rem 0',
         position: 'relative',
         [theme.breakpoints.down('sm')]: {
-            padding: '4rem 0.75rem',
+            padding: '3.25rem 0.75rem',
         },
     },
 }));
