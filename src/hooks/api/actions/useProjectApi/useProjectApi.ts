@@ -1,5 +1,3 @@
-import { OK } from '../../../../constants/statusCodes';
-import useProjects from '../../getters/useProjects/useProjects';
 import useAPI from '../useApi/useApi';
 
 const useProjectApi = () => {

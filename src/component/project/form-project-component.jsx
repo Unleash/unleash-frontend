@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Typography, Button } from '@material-ui/core';
 
@@ -10,7 +10,6 @@ import PageContent from '../common/PageContent/PageContent';
 import AccessContext from '../../contexts/AccessContext';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { CREATE_PROJECT } from '../AccessProvider/permissions';
-import { Link } from 'react-router-dom';
 import HeaderTitle from '../common/HeaderTitle';
 
 class ProjectFormComponent extends Component {

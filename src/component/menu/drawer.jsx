@@ -1,14 +1,10 @@
 import { Divider, Drawer, List } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
+
 import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 import styles from './drawer.module.scss';
-
-import { baseRoutes as routes } from './routes';
-import { getRoutes } from './routes';
 
 import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
 import NavigationLink from './Header/NavigationLink/NavigationLink';

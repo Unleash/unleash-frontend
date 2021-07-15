@@ -15,7 +15,6 @@ import ContextFields from '../../page/context';
 import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import LogoutFeatures from '../../page/user/logout';
-import ListProjects from '../../page/project';
 import CreateProject from '../../page/project/create';
 import EditProject from '../../page/project/edit';
 import ViewProject from '../../page/project/view';
@@ -52,7 +51,6 @@ import {
     DeviceHub,
     Album,
     ExitToApp,
-    FolderOpen,
     Report,
     Money,
     Person,

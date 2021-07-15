@@ -1,4 +1,3 @@
-import { Paper } from '@material-ui/core';
 import { useStyles } from './ProjectInfo.styles';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';

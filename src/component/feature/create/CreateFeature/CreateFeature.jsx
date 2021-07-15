@@ -18,7 +18,7 @@ import {
 } from '../../../../testIds';
 import { CREATE_FEATURE } from '../../../AccessProvider/permissions';
 import { projectFilterGenerator } from '../../../../utils/project-filter-generator';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useQueryParams from '../../../../hooks/useQueryParams';
 
 const CreateFeature = ({
@@ -37,6 +37,7 @@ const CreateFeature = ({
         if (project) {
             setValue('project', project);
         }
+        /* eslint-disable-next-line */
     }, []);
 
     useEffect(() => {

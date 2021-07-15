@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { mutate } from 'swr';
 import { getProjectFetcher } from '../../../hooks/api/getters/useProject/getProjectFetcher';

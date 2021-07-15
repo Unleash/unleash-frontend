@@ -1,5 +1,5 @@
 import { Card, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 

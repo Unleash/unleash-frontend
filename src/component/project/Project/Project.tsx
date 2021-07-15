@@ -34,6 +34,7 @@ const Project = () => {
                 text: 'Project created',
             });
         }
+        /* eslint-disable-next-line */
     }, []);
 
     return (
