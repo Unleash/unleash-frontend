@@ -63,6 +63,8 @@ const FeatureView = ({
     const { hasAccess } = useContext(AccessContext);
     const { project } = featureToggle || {};
 
+    console.log(toggleFeature);
+
     useEffect(() => {
         scrollToTop();
         fetchTags(featureToggleName);
