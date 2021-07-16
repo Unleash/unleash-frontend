@@ -14,6 +14,8 @@ import EditStrategyModal from './EditStrategyModal/EditStrategyModal';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import CreateStrategy from './AddStrategy/AddStrategy';
 import Dialogue from '../../common/Dialogue/Dialogue';
+import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
+import { Add } from '@material-ui/icons';
 
 const cleanStrategy = strategy => ({
     name: strategy.name,
@@ -110,12 +112,8 @@ const StrategiesList = props => {
         setEditStrategyIndex(undefined);
     };
 
-    const {
-        strategies,
-        configuredStrategies,
-        featureToggleName,
-        editable,
-    } = props;
+    const { strategies, configuredStrategies, featureToggleName, editable } =
+        props;
 
     const resolveStrategyDefinition = strategyName => {
         if (!strategies || strategies.length === 0) {
@@ -170,14 +168,14 @@ const StrategiesList = props => {
                         title="Activation strategies"
                         actions={
                             <>
-                                <Button
-                                    variant="contained"
-                                    disabled={!featureToggleName}
-                                    color="primary"
+                                <ResponsiveButton
                                     onClick={() => setShowCreateStrategy(true)}
+                                    maxWidth="700px"
+                                    tooltip="Add strategy"
+                                    Icon={Add}
                                 >
                                     Add strategy
-                                </Button>
+                                </ResponsiveButton>
                             </>
                         }
                     />
