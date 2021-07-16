@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import cloneDeep from 'lodash.clonedeep';
 import arrayMove from 'array-move';
-import { Button } from '@material-ui/core';
 
 import { Alert } from '@material-ui/lab';
 import HeaderTitle from '../../common/HeaderTitle';
