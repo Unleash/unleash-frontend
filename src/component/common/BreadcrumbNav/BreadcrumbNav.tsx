@@ -11,7 +11,11 @@ const BreadcrumbNav = () => {
         .split('/')
         .filter(item => item)
         .filter(
-            item => item !== 'create' && item !== 'edit' && item !== 'access'
+            item =>
+                item !== 'create' &&
+                item !== 'edit' &&
+                item !== 'access' &&
+                item !== 'view'
         );
 
     return (
