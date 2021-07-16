@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import AccessContext from '../../contexts/AccessContext';
 import { ADMIN } from './permissions';
@@ -14,6 +14,22 @@ interface IPermission {
 }
 
 const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
+    const isAdminHigherOrder = () => {
+        let called = false;
+        let result = false;
+
+        return () => {
+            if (called) return result;
+            const permissions = store.getState().user.get('permissions') || [];
+            result = permissions.some(
+                (p: IPermission) => p.permission === ADMIN
+            );
+            called = true;
+        };
+    };
+
+    const isAdmin = isAdminHigherOrder();
+
     const hasAccess = (permission: string, project: string) => {
         const permissions = store.getState().user.get('permissions') || [];
 
@@ -36,7 +52,7 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
         return result;
     };
 
-    const context = { hasAccess };
+    const context = { hasAccess, isAdmin };
 
     return (
         <AccessContext.Provider value={context}>
