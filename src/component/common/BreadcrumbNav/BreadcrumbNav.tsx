@@ -18,7 +18,8 @@ const BreadcrumbNav = () => {
                 item !== 'view' &&
                 item !== 'variants' &&
                 item !== 'logs' &&
-                item !== 'metrics'
+                item !== 'metrics' &&
+                item !== 'copy'
         );
 
     return (
