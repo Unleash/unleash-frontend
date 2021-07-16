@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import AccessContext from '../../contexts/AccessContext';
 import { ADMIN } from './permissions';
@@ -24,7 +24,10 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
             result = permissions.some(
                 (p: IPermission) => p.permission === ADMIN
             );
-            called = true;
+
+            if (permissions.length > 0) {
+                called = true;
+            }
         };
     };
 

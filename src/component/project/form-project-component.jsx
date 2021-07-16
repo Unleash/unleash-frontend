@@ -87,8 +87,10 @@ class ProjectFormComponent extends Component {
         const valid = await this.validate(project.id);
 
         if (valid) {
+            const { editMode } = this.props;
+            const query = editMode ? 'edited=true' : 'created=true';
             await this.props.submit(project);
-            this.props.history.push(`/projects/${project.id}?created=true`);
+            this.props.history.push(`/projects/${project.id}?${query}`);
         }
     };
 

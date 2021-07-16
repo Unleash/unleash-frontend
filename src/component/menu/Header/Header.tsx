@@ -77,17 +77,6 @@ const Header = () => {
                         }
                     />
 
-                    {/* <ConditionallyRender
-                        condition={!smallScreen}
-                        show={
-                            <Typography
-                                variant="h1"
-                                className={styles.headerTitle}
-                            >
-                                <Route path="/:path" component={Breadcrumb} />
-                            </Typography>
-                        }
-                    /> */}
                     <DrawerMenu
                         title={name}
                         flags={flags}

@@ -1,5 +1,6 @@
-import { Menu } from '@material-ui/core';
+import { Popover, List } from '@material-ui/core';
 import NavigationLink from '../NavigationLink/NavigationLink';
+
 interface INavigationMenuProps {
     options: any[];
     id: string;
@@ -14,7 +15,7 @@ const NavigationMenu = ({
     anchorEl,
 }: INavigationMenuProps) => {
     return (
-        <Menu
+        <Popover
             id={id}
             onClose={handleClose}
             anchorEl={anchorEl}
@@ -22,17 +23,19 @@ const NavigationMenu = ({
             onMouseLeave={handleClose}
             style={{ top: '30px', left: '-90px' }}
         >
-            {options.map(option => {
-                return (
-                    <NavigationLink
-                        key={option.path}
-                        handleClose={handleClose}
-                        path={option.path}
-                        text={option.title}
-                    />
-                );
-            })}
-        </Menu>
+            <List>
+                {options.map(option => {
+                    return (
+                        <NavigationLink
+                            key={option.path}
+                            handleClose={handleClose}
+                            path={option.path}
+                            text={option.title}
+                        />
+                    );
+                })}
+            </List>
+        </Popover>
     );
 };
 

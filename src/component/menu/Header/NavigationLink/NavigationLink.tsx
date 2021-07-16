@@ -1,5 +1,6 @@
-import { MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { ListItem, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { useStyles } from './NavigationLink.styles';
 
 interface INavigationLinkProps {
@@ -12,17 +13,22 @@ const NavigationLink = ({ path, text, handleClose }: INavigationLinkProps) => {
     const styles = useStyles();
 
     return (
-        <Link className={styles.navMenuLink} to={path}>
-            <MenuItem
-                className={styles.menuItem}
-                onClick={() => {
-                    handleClose();
-                }}
+        <ListItem
+            className={styles.menuItem}
+            onClick={() => {
+                handleClose();
+            }}
+        >
+            <Link
+                style={{ textDecoration: 'none' }}
+                component={RouterLink}
+                className={styles.navMenuLink}
+                to={path}
             >
                 <span className={styles.menuItemBox} />
                 {text}
-            </MenuItem>
-        </Link>
+            </Link>
+        </ListItem>
     );
 };
 

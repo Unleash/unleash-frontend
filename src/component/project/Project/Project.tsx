@@ -26,12 +26,14 @@ const Project = () => {
 
     useEffect(() => {
         const created = params.get('created');
+        const edited = params.get('edited');
 
-        if (created) {
+        if (created || edited) {
+            const text = created ? 'Project created' : 'Project updated';
             setToastData({
                 show: true,
                 type: 'success',
-                text: 'Project created',
+                text,
             });
         }
         /* eslint-disable-next-line */

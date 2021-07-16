@@ -5,7 +5,7 @@ import { getProjectFetcher } from '../../../hooks/api/getters/useProject/getProj
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import ProjectCard from '../ProjectCard/ProjectCard';
-import { useStyles } from './ProjectListNew.styles';
+import { useStyles } from './ProjectList.styles';
 import { IProjectCard } from '../../../interfaces/project';
 
 import loadingData from './loadingData';

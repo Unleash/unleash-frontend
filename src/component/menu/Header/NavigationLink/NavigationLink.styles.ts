@@ -5,6 +5,8 @@ export const useStyles = makeStyles(theme => ({
         minWidth: '150px',
         height: '100%',
         width: '100%',
+        margin: '0',
+        padding: '0',
     },
     menuItemBox: {
         width: '12.5px',
@@ -21,5 +23,6 @@ export const useStyles = makeStyles(theme => ({
         color: '#000',
         height: '100%',
         width: '100%',
+        padding: '0.5rem 1rem',
     },
 }));
