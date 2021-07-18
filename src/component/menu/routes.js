@@ -14,7 +14,6 @@ import ApplicationView from '../../page/applications/view';
 import ContextFields from '../../page/context';
 import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
-import ListProjects from '../../page/project';
 import CreateProject from '../../page/project/create';
 import EditProject from '../../page/project/edit';
 import ViewProject from '../../page/project/view';
