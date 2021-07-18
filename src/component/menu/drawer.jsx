@@ -1,7 +1,5 @@
 import React from 'react';
-import { ExitToApp } from '@material-ui/icons';
 import { Divider, Drawer, List } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -13,13 +11,6 @@ import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
 import NavigationLink from './Header/NavigationLink/NavigationLink';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { getBasePath } from '../../utils/format-path';
-
-const filterByFlags = flags => r => {
-    if (r.flag && !flags[r.flag]) {
-        return false;
-    }
-    return true;
-};
 
 function getIcon(IconComponent) {
     if (IconComponent === 'c_github') {
