@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 
 import styles from './drawer.module.scss';
 
@@ -11,16 +12,6 @@ import { ReactComponent as LogoIcon } from '../../assets/icons/logo_wbg.svg';
 import NavigationLink from './Header/NavigationLink/NavigationLink';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { getBasePath } from '../../utils/format-path';
-
-function getIcon(IconComponent) {
-    if (IconComponent === 'c_github') {
-        return <GitHubIcon className={classnames(styles.navigationIcon)} />;
-    } else if (IconComponent === 'library_books') {
-        return <LibraryBooksIcon className={styles.navigationIcon} />;
-    } else {
-        return <IconComponent className={styles.navigationIcon} />;
-    }
-}
 
 export const DrawerMenu = ({
     links = [],
@@ -104,7 +95,7 @@ export const DrawerMenu = ({
                 <div className={styles.iconLinkList}>
                     {renderLinks()}
                     <a className={classnames(styles.navigationLink)} href={`${getBasePath()}/logout`}>
-                        {getIcon('exit_to_app')}
+                        <ExitToApp className={styles.navigationIcon} />
                         Sign out
                     </a>
                 </div>
