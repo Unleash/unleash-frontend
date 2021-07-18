@@ -1,6 +1,5 @@
 import React from 'react';
 import { Divider, Drawer, List } from '@material-ui/core';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
@@ -94,7 +93,7 @@ export const DrawerMenu = ({
                 <Divider />
                 <div className={styles.iconLinkList}>
                     {renderLinks()}
-                    <a className={classnames(styles.navigationLink)} href={`${getBasePath()}/logout`}>
+                    <a className={styles.navigationLink} href={`${getBasePath()}/logout`}>
                         <ExitToApp className={styles.navigationIcon} />
                         Sign out
                     </a>
