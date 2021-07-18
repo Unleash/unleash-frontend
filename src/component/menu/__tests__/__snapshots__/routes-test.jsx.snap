@@ -83,15 +83,5 @@ Array [
     "title": "Admin",
     "type": "protected",
   },
-<<<<<<< HEAD
-  Object {
-    "component": [Function],
-    "layout": "main",
-    "path": "/logout",
-    "title": "Sign out",
-    "type": "unprotected",
-  },
-=======
->>>>>>> afb045a... fix: add logout as an explicit call
 ]
 `;
