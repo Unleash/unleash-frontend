@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {
-    TextField,
     DialogContent,
-    RadioGroup,
-    Radio,
     FormControl,
     FormControlLabel,
+    Radio,
+    RadioGroup,
+    Switch,
+    TextField,
     Typography,
 } from '@material-ui/core';
 
@@ -15,21 +16,18 @@ import { useCommonStyles } from '../../../../../common.styles';
 import ConditionallyRender from '../../../../../component/common/ConditionallyRender';
 import { useStyles } from './AddUserForm.styles';
 import useLoading from '../../../../../hooks/useLoading';
-import {
-    ADD_USER_ERROR,
-    UPDATE_USER_ERROR,
-} from '../../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
+import { ADD_USER_ERROR, UPDATE_USER_ERROR } from '../../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 import { Alert } from '@material-ui/lab';
 
 function AddUserForm({
-    submit,
-    data,
-    error,
-    setData,
-    roles,
-    userLoading,
-    userApiErrors,
-}) {
+                         submit,
+                         data,
+                         error,
+                         setData,
+                         roles,
+                         userLoading,
+                         userApiErrors,
+                     }) {
     const ref = useLoading(userLoading);
     const commonStyles = useCommonStyles();
     const styles = useStyles();
@@ -45,6 +43,13 @@ function AddUserForm({
         setData({
             ...data,
             [e.target.name]: trim(e.target.value),
+        });
+    };
+
+    const toggleBooleanField = e => {
+        setData({
+            ...data,
+            [e.target.name]: !data[e.target.name],
         });
     };
 
@@ -75,7 +80,7 @@ function AddUserForm({
                         show={
                             <Alert
                                 className={styles.errorAlert}
-                                severity="error"
+                                severity='error'
                                 data-loading
                             >
                                 {apiError}
@@ -86,10 +91,10 @@ function AddUserForm({
                         className={classnames(
                             commonStyles.contentSpacingY,
                             commonStyles.flexColumn,
-                            styles.userInfoContainer
+                            styles.userInfoContainer,
                         )}
                     >
-                        <Typography variant="subtitle1" data-loading>
+                        <Typography variant='subtitle1' data-loading>
                             Who is your team member?
                         </Typography>
                         <ConditionallyRender
@@ -102,28 +107,28 @@ function AddUserForm({
                         />
 
                         <TextField
-                            label="Full name"
+                            label='Full name'
                             data-loading
-                            name="name"
+                            name='name'
                             value={data.name || ''}
                             error={error.name !== undefined}
                             helperText={error.name}
-                            type="name"
-                            variant="outlined"
-                            size="small"
+                            type='name'
+                            variant='outlined'
+                            size='small'
                             onChange={updateField}
                         />
                         <TextField
-                            label="Email"
+                            label='Email'
                             data-loading
-                            name="email"
+                            name='email'
                             required
                             value={data.email || ''}
                             error={error.email !== undefined}
                             helperText={error.email}
-                            variant="outlined"
-                            size="small"
-                            type="email"
+                            variant='outlined'
+                            size='small'
+                            type='email'
                             onChange={updateFieldWithTrim}
                         />
                         <br />
@@ -131,14 +136,14 @@ function AddUserForm({
                     </div>
                     <FormControl>
                         <Typography
-                            variant="subtitle1"
+                            variant='subtitle1'
                             className={styles.roleSubtitle}
                             data-loading
                         >
                             What is your team member allowed to do?
                         </Typography>
                         <RadioGroup
-                            name="rootRole"
+                            name='rootRole'
                             value={data.rootRole || ''}
                             onChange={updateNumberField}
                             data-loading
@@ -146,12 +151,12 @@ function AddUserForm({
                             {roles.sort(sortRoles).map(role => (
                                 <FormControlLabel
                                     key={`role-${role.id}`}
-                                    labelPlacement="end"
+                                    labelPlacement='end'
                                     className={styles.roleBox}
                                     label={
                                         <div>
                                             <strong>{role.name}</strong>
-                                            <Typography variant="body2">
+                                            <Typography variant='body2'>
                                                 {role.description}
                                             </Typography>
                                         </div>
@@ -167,6 +172,21 @@ function AddUserForm({
                             ))}
                         </RadioGroup>
                     </FormControl>
+                    <br />
+                    <br />
+                    <div
+                        className={commonStyles.flexRow}
+                    >
+                    <FormControl>
+                        <Typography
+                            variant='subtitle1'
+                            className={styles.roleSubtitle}
+                            data-loading
+                        >Should we send an email to your new team member</Typography>
+                        <Switch name='sendEmail' onChange={toggleBooleanField} checked={data.sendEmail} />
+                        <Typography>{data.sendEmail ? 'Yes' : 'No'}</Typography>
+                    </FormControl>
+                    </div>
                 </DialogContent>
             </form>
         </div>
