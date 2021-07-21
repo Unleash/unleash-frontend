@@ -2,10 +2,14 @@
   "name": "unleash-frontend",
   "description": "unleash your features",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "4.1.0-beta.1",
 =======
   "version": "4.0.6",
 >>>>>>> 0b9edebb (4.0.6)
+=======
+  "version": "4.0.7",
+>>>>>>> 99eaa721 (4.0.7)
   "keywords": [
     "unleash",
     "feature toggle",
