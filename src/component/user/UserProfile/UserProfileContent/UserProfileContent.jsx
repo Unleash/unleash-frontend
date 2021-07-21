@@ -9,12 +9,15 @@ import {
     Select,
     InputLabel,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { useStyles } from './UserProfileContent.styles';
 import { useCommonStyles } from '../../../../common.styles';
 import { Alert } from '@material-ui/lab';
 import EditProfile from '../EditProfile/EditProfile';
 import legacyStyles from '../../user.module.scss';
+import usePermissions from '../../../../hooks/usePermissions';
+import { getBasePath } from '../../../../utils/format-path';
 
 const UserProfileContent = ({
     showProfile,
@@ -24,12 +27,12 @@ const UserProfileContent = ({
     imageUrl,
     currentLocale,
     setCurrentLocale,
-    logoutUser,
 }) => {
     const commonStyles = useCommonStyles();
     const [updatedPassword, setUpdatedPassword] = useState(false);
     const [edititingProfile, setEditingProfile] = useState(false);
     const styles = useStyles();
+    const { isAdmin } = usePermissions();
 
     const setLocale = value => {
         updateSettingLocation('locale', value);
@@ -128,10 +131,31 @@ const UserProfileContent = ({
                                     </FormControl>
                                 </div>
                                 <div className={commonStyles.divider} />
+                                <ConditionallyRender
+                                    condition={isAdmin()}
+                                    show={
+                                        <Link
+                                            to="/admin-invoices"
+                                            className={styles.link}
+                                        >
+                                            Account and billing
+                                        </Link>
+                                    }
+                                />
+                                <a
+                                    className={styles.link}
+                                    href="https://www.getunleash.io/privacy-policy"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    Privacy policy
+                                </a>
+                                <div className={commonStyles.divider} />
+
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={logoutUser}
+                                    href={`${getBasePath()}/logout`}
                                 >
                                     Logout
                                 </Button>
