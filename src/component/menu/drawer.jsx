@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import PaymentsIcon from '@material-ui/icons/Payment';
 
 import styles from './drawer.module.scss';
 
@@ -28,7 +29,10 @@ export const DrawerMenu = ({
                 icon = <GitHubIcon className={styles.navigationIcon} />;
             } else if (link.value === 'Documentation') {
                 icon = <LibraryBooksIcon className={styles.navigationIcon} />;
+            } else if (link.value === 'Invoices') {
+                icon = <PaymentsIcon className={styles.navigationIcon} />;
             }
+            
 
             return (
                 <a
