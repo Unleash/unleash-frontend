@@ -3,6 +3,7 @@
   "description": "unleash your features",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "4.1.0-beta.1",
 =======
   "version": "4.0.6",
@@ -10,6 +11,9 @@
 =======
   "version": "4.0.7",
 >>>>>>> 99eaa721 (4.0.7)
+=======
+  "version": "4.0.8",
+>>>>>>> 090db336 (4.0.8)
   "keywords": [
     "unleash",
     "feature toggle",
