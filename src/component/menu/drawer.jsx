@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 import styles from './drawer.module.scss';
 
@@ -23,6 +24,8 @@ function getIcon(IconComponent) {
         return <GitHubIcon className={classnames(styles.navigationIcon)} />;
     } else if (IconComponent === 'library_books') {
         return <LibraryBooksIcon className={styles.navigationIcon} />;
+    } else if (IconComponent === 'payments') {
+        return <PaymentIcon className={styles.navigationIcon} />;
     } else {
         return <IconComponent className={styles.navigationIcon} />;
     }
