@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "4.1.0-beta.1",
 =======
   "version": "4.0.6",
@@ -14,6 +15,9 @@
 =======
   "version": "4.0.8",
 >>>>>>> 090db336 (4.0.8)
+=======
+  "version": "4.0.10",
+>>>>>>> f8261a36 (4.0.10)
   "keywords": [
     "unleash",
     "feature toggle",
