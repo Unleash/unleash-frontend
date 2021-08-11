@@ -10,7 +10,7 @@ html {
 
 body {
     height: 100%;
-    /* font-family: 'Sen'; */
+    font-family: 'Sen', sans-serif;
 }
 
 .MuiButton-root {
