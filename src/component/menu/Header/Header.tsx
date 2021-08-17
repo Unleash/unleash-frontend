@@ -94,6 +94,7 @@ const Header = () => {
                                     condition={flags?.P}
                                     show={<Link to="/projects">Projects</Link>}
                                 />
+                                <Link to="/features">Feature toggles</Link>
 
                                 <button
                                     className={styles.advancedNavButton}
@@ -101,7 +102,7 @@ const Header = () => {
                                         setAnchorElAdvanced(e.currentTarget)
                                     }
                                 >
-                                    Navigate
+                                    Advanced
                                     <KeyboardArrowDown />
                                 </button>
                                 <NavigationMenu
