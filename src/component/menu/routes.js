@@ -366,7 +366,7 @@ export const routes = [
         hidden: true,
         type: 'protected',
         layout: 'main',
-        menu: {},
+        menu: { adminSettings: true },
     },
     {
         path: '/admin',

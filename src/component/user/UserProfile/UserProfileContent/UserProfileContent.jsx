@@ -131,17 +131,6 @@ const UserProfileContent = ({
                                     </FormControl>
                                 </div>
                                 <div className={commonStyles.divider} />
-                                <ConditionallyRender
-                                    condition={isAdmin()}
-                                    show={
-                                        <Link
-                                            to="/admin-invoices"
-                                            className={styles.link}
-                                        >
-                                            Account and billing
-                                        </Link>
-                                    }
-                                />
                                 <a
                                     className={styles.link}
                                     href="https://www.getunleash.io/privacy-policy"
