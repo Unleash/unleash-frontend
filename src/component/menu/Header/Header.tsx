@@ -110,7 +110,7 @@ const Header = () => {
                                     options={filteredMainRoutes.mainNavRoutes}
                                     anchorEl={anchorElAdvanced}
                                     handleClose={handleCloseAdvanced}
-                                    style={{ top: '30px', left: '-65px' }}
+                                    style={{ top: '30px', left: '-55px' }}
                                 />
                             </div>
                         }
@@ -152,7 +152,7 @@ const Header = () => {
                                         options={routes.adminRoutes}
                                         anchorEl={anchorEl}
                                         handleClose={handleClose}
-                                        style={{ top: '40px', left: '-130px' }}
+                                        style={{ top: '40px', left: '-125px' }}
                                     />
                                 </>
                             }
