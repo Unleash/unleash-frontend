@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from '../../../common.styles';

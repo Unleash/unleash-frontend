@@ -9,14 +9,12 @@ import {
     Select,
     InputLabel,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { useStyles } from './UserProfileContent.styles';
 import { useCommonStyles } from '../../../../common.styles';
 import { Alert } from '@material-ui/lab';
 import EditProfile from '../EditProfile/EditProfile';
 import legacyStyles from '../../user.module.scss';
-import usePermissions from '../../../../hooks/usePermissions';
 import { getBasePath } from '../../../../utils/format-path';
 
 const UserProfileContent = ({
@@ -32,7 +30,6 @@ const UserProfileContent = ({
     const [updatedPassword, setUpdatedPassword] = useState(false);
     const [edititingProfile, setEditingProfile] = useState(false);
     const styles = useStyles();
-    const { isAdmin } = usePermissions();
 
     const setLocale = value => {
         updateSettingLocation('locale', value);
