@@ -9,6 +9,7 @@ import { useStyles } from './PasswordAuth.styles';
 import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
+import { Alert } from '@material-ui/lab';
 
 const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const commonStyles = useCommonStyles();
@@ -57,6 +58,10 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                 }));
                 setPassword('');
                 setUsername('');
+            } else if (error.statusCode === 401) {
+                setErrors({
+                    apiError: 'Invalid password and username combination.',
+                });
             } else {
                 setErrors({
                     apiError: 'Unknown error while trying to authenticate.',
@@ -70,9 +75,15 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
         return (
             <form onSubmit={handleSubmit} action={authDetails.path}>
-                <Typography variant="subtitle2" className={styles.apiError}>
-                    {apiError}
-                </Typography>
+                <ConditionallyRender
+                    condition={apiError}
+                    show={
+                        <Alert severity="error" className={styles.apiError}>
+                            {apiError}
+                        </Alert>
+                    }
+                />
+
                 <div
                     className={classnames(
                         styles.contentContainer,
