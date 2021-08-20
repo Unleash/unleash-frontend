@@ -51,7 +51,7 @@ const FeatureToggleListItem = ({
     const featureUrl =
         toggleFeature === undefined
             ? `/archive/strategies/${name}`
-            : `/features/strategies/${name}`;
+            : `/projects/${feature.project}/toggles/${name}/strategies`;
 
     return (
         <ListItem

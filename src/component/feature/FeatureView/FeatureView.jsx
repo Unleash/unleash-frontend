@@ -112,31 +112,33 @@ const FeatureView = ({
     };
 
     const getTabData = () => {
-        const path = !!isFeatureView ? 'features' : 'archive';
+        const path = !!isFeatureView
+            ? `projects/${project}/toggles`
+            : 'archive';
         return [
             {
                 label: 'Activation',
                 component: getTabComponent('activation'),
                 name: 'strategies',
-                path: `/${path}/strategies/${featureToggleName}`,
+                path: `/${path}/${featureToggleName}/strategies`,
             },
             {
                 label: 'Metrics',
                 component: getTabComponent('metrics'),
                 name: 'metrics',
-                path: `/${path}/metrics/${featureToggleName}`,
+                path: `/${path}/${featureToggleName}/metrics`,
             },
             {
                 label: 'Variants',
                 component: getTabComponent('variants'),
                 name: 'variants',
-                path: `/${path}/variants/${featureToggleName}`,
+                path: `/${path}/${featureToggleName}/variants`,
             },
             {
                 label: 'Log',
                 component: getTabComponent('log'),
                 name: 'logs',
-                path: `/${path}/logs/${featureToggleName}`,
+                path: `/${path}/${featureToggleName}/logs`,
             },
         ];
     };
@@ -153,7 +155,7 @@ const FeatureView = ({
                     show={
                         <Link
                             to={{
-                                pathname: '/features/create',
+                                pathname: `/projects/${project}/toggles`,
                                 query: { name: featureToggleName },
                             }}
                         >
@@ -168,11 +170,11 @@ const FeatureView = ({
 
     const removeToggle = () => {
         removeFeatureToggle(featureToggle.name);
-        history.push('/features');
+        history.push(`/projects/${featureToggle.project}`);
     };
     const reviveToggle = () => {
         revive(featureToggle.name);
-        history.push('/features');
+        history.push(`/projects/${featureToggle.project}`);
     };
     const updateDescription = description => {
         let feature = { ...featureToggle, description };

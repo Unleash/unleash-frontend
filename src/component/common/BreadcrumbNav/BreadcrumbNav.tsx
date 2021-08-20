@@ -21,7 +21,9 @@ const BreadcrumbNav = () => {
                 item !== 'variants' &&
                 item !== 'logs' &&
                 item !== 'metrics' &&
-                item !== 'copy'
+                item !== 'copy' &&
+                item !== 'strategies' &&
+                item !== 'toggles'
         );
 
     return (

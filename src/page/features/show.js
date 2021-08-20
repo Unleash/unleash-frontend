@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ViewFeatureToggle from '../../component/feature/FeatureView';
+import FeatureView from '../../component/feature/FeatureView';
 
 export default class Features extends PureComponent {
     static propTypes = {
@@ -13,6 +13,12 @@ export default class Features extends PureComponent {
             match: { params },
             history,
         } = this.props;
-        return <ViewFeatureToggle featureToggleName={params.name} activeTab={params.activeTab} history={history} />;
+        return (
+            <FeatureView
+                featureToggleName={params.name}
+                activeTab={params.activeTab}
+                history={history}
+            />
+        );
     }
 }

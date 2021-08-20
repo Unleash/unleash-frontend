@@ -41,7 +41,7 @@ const FeatureToggleListNewItem = ({
 
     const onClick = (e: Event) => {
         if (!ref.current?.contains(e.target)) {
-            history.push(`/features/strategies/${name}`);
+            history.push(`/projects/${projectId}/toggles/${name}/strategies`);
         }
     };
 

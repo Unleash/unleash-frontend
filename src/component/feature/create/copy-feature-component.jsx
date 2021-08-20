@@ -96,6 +96,7 @@ class CopyFeatureComponent extends Component {
     };
 
     render() {
+        console.log('THIS IS THE COPY COMPONENT', this.props);
         const { copyToggle } = this.props;
 
         if (!copyToggle) return <span>Toggle not found</span>;

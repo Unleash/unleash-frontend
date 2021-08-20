@@ -80,7 +80,9 @@ class WrapperComponent extends Component {
 
         try {
             await createFeatureToggles(featureToggle).then(() =>
-                history.push(`/features/strategies/${featureToggle.name}`)
+                history.push(
+                    `/projects/${featureToggle.project}/toggles/${featureToggle.name}/strategies`
+                )
             );
 
             if (showPnpsFeedback(user)) {

@@ -89,18 +89,21 @@ function ApplicationView({
                 <hr />
                 <List>
                     {seenToggles.map(
-                        ({ name, description, enabled, notFound }, i) => (
+                        (
+                            { name, description, enabled, notFound, project },
+                            i
+                        ) => (
                             <ConditionallyRender
                                 key={`toggle_conditional_${name}`}
                                 condition={notFound}
                                 show={notFoundListItem({
-                                    createUrl: '/features/create',
+                                    createUrl: `/projects/${project}/toggles`,
                                     name,
                                     permission: CREATE_FEATURE,
                                     i,
                                 })}
                                 elseShow={foundListItem({
-                                    viewUrl: '/features/strategies',
+                                    viewUrl: `/projects/${project}/toggles/${name}/strategies`,
                                     name,
                                     showSwitch: true,
                                     enabled,

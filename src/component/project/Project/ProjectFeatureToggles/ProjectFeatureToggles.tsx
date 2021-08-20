@@ -50,7 +50,7 @@ const ProjectFeatureToggles = ({
                             <ResponsiveButton
                                 onClick={() =>
                                     history.push(
-                                        `/features/create?project=${id}`
+                                        `/projects/${id}/toggles?project=${id}`
                                     )
                                 }
                                 maxWidth="700px"
@@ -79,7 +79,7 @@ const ProjectFeatureToggles = ({
                             No feature toggles added yet.
                         </p>
                         <Link
-                            to={`/features/create?project=${id}`}
+                            to={`/projects/${id}/toggles?project=${id}`}
                             className={styles.link}
                             data-loading
                         >

@@ -51,6 +51,8 @@ const FeatureToggleList = ({
         updateSetting('sort', typeof v === 'string' ? v.trim() : '');
     };
 
+    const createURL = `/projects/${currentProjectId}/toggles`;
+
     const renderFeatures = () => {
         features.forEach(e => {
             e.reviveName = e.name;
@@ -101,7 +103,7 @@ const FeatureToggleList = ({
                             <ListPlaceholder
                                 text="No features available. Get started by adding a
                                 new feature toggle."
-                                link="/features/create"
+                                link={createURL}
                                 linkText="Add your first toggle"
                             />
                         }
@@ -155,7 +157,7 @@ const FeatureToggleList = ({
                                                 <Tooltip title="Create feature toggle">
                                                     <IconButton
                                                         component={Link}
-                                                        to="/features/create"
+                                                        to={createURL}
                                                         data-test="add-feature-btn"
                                                         disabled={
                                                             !hasAccess(
@@ -170,7 +172,7 @@ const FeatureToggleList = ({
                                             }
                                             elseShow={
                                                 <Button
-                                                    to="/features/create"
+                                                    to={createURL}
                                                     data-test="add-feature-btn"
                                                     color="primary"
                                                     variant="contained"
