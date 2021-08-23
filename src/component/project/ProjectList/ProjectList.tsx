@@ -19,6 +19,7 @@ import { CREATE_PROJECT } from '../../AccessProvider/permissions';
 import { Add } from '@material-ui/icons';
 import ApiError from '../../common/ApiError/ApiError';
 import useToast from '../../../hooks/useToast';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 type projectMap = {
     [index: string]: boolean;
@@ -32,6 +33,7 @@ const ProjectListNew = () => {
     const { projects, loading, error, refetch } = useProjects();
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
     const ref = useLoading(loading);
+    const { loading: configLoading, isOss } = useUiConfig();
 
     const handleHover = (projectId: string) => {
         if (fetchedProjects[projectId]) {
@@ -101,6 +103,12 @@ const ProjectListNew = () => {
             );
         });
     };
+
+    if (!configLoading) {
+        if (isOss()) {
+            history.push('projects/default');
+        }
+    }
 
     return (
         <div ref={ref}>
