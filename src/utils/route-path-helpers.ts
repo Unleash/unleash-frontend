@@ -1,14 +1,19 @@
-export const getTogglePath = (project: string, featureToggleName: string) => {
-    return `/projects/${project}/toggles/${featureToggleName}/strategies`;
+export const getTogglePath = (projectId: string, featureToggleName: string) => {
+    return `/projects/${projectId}/toggles/${featureToggleName}/strategies`;
 };
 
 export const getToggleCopyPath = (
-    project: string,
+    projectId: string,
     featureToggleName: string
 ) => {
-    return `/projects/${project}/toggles/${featureToggleName}/strategies/copy`;
+    return `/projects/${projectId}/toggles/${featureToggleName}/strategies/copy`;
 };
 
-export const getCreateTogglePath = (project: string) => {
-    return `/projects/${project}/create-toggle?project=${project}`;
+export const getCreateTogglePath = (projectId: string) => {
+    return `/projects/${projectId}/create-toggle?project=${projectId}`;
+};
+
+export const getProjectEditPath = (projectId: string) => {
+    console.log(projectId);
+    return `/projects/${projectId}/edit`;
 };

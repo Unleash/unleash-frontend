@@ -16,7 +16,6 @@ import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
 import EditProject from '../../page/project/edit';
-import ViewProject from '../../page/project/view';
 import EditProjectAccess from '../../page/project/access';
 import ListTagTypes from '../../page/tag-types';
 import CreateTagType from '../../page/tag-types/create';
@@ -186,19 +185,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/edit/:id',
+        path: '/projects/:id/edit',
         parent: '/projects',
         title: ':id',
         component: EditProject,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/view/:id',
-        parent: '/projects',
-        title: ':id',
-        component: ViewProject,
         type: 'protected',
         layout: 'main',
         menu: {},
