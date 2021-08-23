@@ -28,10 +28,9 @@ const Reporting = ({ projects }) => {
 
     useEffect(() => {
         if (projectId) {
-            setSelectedProject(projectId);
-        } else {
-            setSelectedProject(projects[0].id);
+            return setSelectedProject(projectId);
         }
+        setSelectedProject(projects[0].id);
 
         /* eslint-disable-next-line */
     }, []);

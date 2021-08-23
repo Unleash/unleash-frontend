@@ -221,7 +221,7 @@ exports[`renders correctly with one feature 1`] = `
       <a
         aria-disabled={false}
         className="MuiButtonBase-root MuiButton-root MuiButton-text"
-        href="/features/copy/Another"
+        href="/projects/undefined/toggles/Another/strategies/copy"
         onBlur={[Function]}
         onClick={[Function]}
         onDragLeave={[Function]}
