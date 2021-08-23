@@ -327,7 +327,7 @@ const FeatureView = ({
                             <Button
                                 title="Create new feature toggle by cloning configuration"
                                 component={Link}
-                                to={`/features/copy/${featureToggle.name}`}
+                                to={`/projects/${featureToggle.project}/toggles/${featureToggle.name}/strategies/copy`}
                             >
                                 Clone
                             </Button>
