@@ -47,10 +47,6 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
         setData({ ...data, enabled: !data.enabled });
     };
 
-    const updateAutoCreate = () => {
-        setData({ ...data, autoCreate: !data.autoCreate });
-    };
-
     const setValue = (field, value) => {
         setData({
             ...data,
