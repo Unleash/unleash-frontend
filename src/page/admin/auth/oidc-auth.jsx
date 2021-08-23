@@ -5,6 +5,7 @@ import { Alert } from '@material-ui/lab';
 import PageContent from '../../../component/common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../../component/AccessProvider/permissions';
+import AutoCreateForm from './AutoCreate/AutoCreateForm';
 
 const initialState = {
     enabled: false,
@@ -39,10 +40,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
     }
 
     const updateField = e => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value,
-        });
+        setValue(e.target.name, e.target.value);
     };
 
     const updateEnabled = () => {
@@ -52,6 +50,13 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
     const updateAutoCreate = () => {
         setData({ ...data, autoCreate: !data.autoCreate });
     };
+
+    const setValue = (field, value) => {
+        setData({
+            ...data,
+            [field]: value,
+        });
+    }
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -114,6 +119,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             label="Discover URL"
                             name="discoverUrl"
                             value={data.discoverUrl || ''}
+                            disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -132,6 +138,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             label="Client ID"
                             name="clientId"
                             value={data.clientId || ''}
+                            disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -150,6 +157,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             label="Client Secret"
                             name="secret"
                             value={data.secret || ''}
+                            disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -157,46 +165,9 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Auto-create users</strong>
-                        <p>
-                            Enable automatic creation of new users when signing
-                            in with Open ID connect.
-                        </p>
-                    </Grid>
-                    <Grid item md={6} style={{ padding: '20px' }}>
-                        <Switch
-                            onChange={updateAutoCreate}
-                            name="enabled"
-                            checked={data.autoCreate}
-                        >
-                            Auto-create users
-                        </Switch>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Email domains</strong>
-                        <p>
-                            (Optional) Comma separated list of email domains
-                            that should be allowed to sign in.
-                        </p>
-                    </Grid>
-                    <Grid item md={6}>
-                        <TextField
-                            onChange={updateField}
-                            label="Email domains"
-                            name="emailDomains"
-                            value={data.emailDomains || ''}
-                            placeholder="@company.com, @anotherCompany.com"
-                            style={{ width: '400px' }}
-                            rows={2}
-                            variant="outlined"
-                            size="small"
-                        />
-                    </Grid>
-                </Grid>
+
+                <AutoCreateForm data={data} setValue={setValue} />
+
                 <Grid container spacing={3}>
                     <Grid item md={12}>
                         <Button
