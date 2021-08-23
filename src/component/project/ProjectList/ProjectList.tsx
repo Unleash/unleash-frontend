@@ -28,7 +28,6 @@ const ProjectListNew = () => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
     const { toast, setToastData } = useToast();
-
     const styles = useStyles();
     const { projects, loading, error, refetch } = useProjects();
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});

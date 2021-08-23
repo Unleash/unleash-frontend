@@ -42,6 +42,7 @@ const CopyFeature = props => {
         } else {
             props.fetchFeatureToggles();
         }
+        /* eslint-disable-next-line */
     }, [features.length]);
 
     const setValue = evt => {
@@ -124,7 +125,7 @@ const CopyFeature = props => {
                     <TextField
                         label="Feature toggle name"
                         name="name"
-                        value={newToggleName}
+                        value={newToggleName || ''}
                         onBlur={onValidateName}
                         onChange={setValue}
                         error={nameError !== undefined}

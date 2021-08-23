@@ -21,6 +21,7 @@ import AccessContext from '../../../contexts/AccessContext';
 
 import { useStyles } from './styles';
 import ListPlaceholder from '../../common/ListPlaceholder/ListPlaceholder';
+import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 
 const FeatureToggleList = ({
     fetcher,
@@ -51,7 +52,7 @@ const FeatureToggleList = ({
         updateSetting('sort', typeof v === 'string' ? v.trim() : '');
     };
 
-    const createURL = `/projects/${currentProjectId}/toggles`;
+    const createURL = getCreateTogglePath(currentProjectId);
 
     const renderFeatures = () => {
         features.forEach(e => {

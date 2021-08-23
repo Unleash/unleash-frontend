@@ -8,3 +8,7 @@ export const getToggleCopyPath = (
 ) => {
     return `/projects/${project}/toggles/${featureToggleName}/strategies/copy`;
 };
+
+export const getCreateTogglePath = (project: string) => {
+    return `/projects/${project}/create-toggle?project=${project}`;
+};

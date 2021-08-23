@@ -39,14 +39,15 @@ import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
+import RedirectFeatureViewPage from '../../page/features/redirect';
 
 export const routes = [
     // Features
     {
-        path: '/features/copy/:copyToggle',
+        path: '/features/:activeTab/:name',
         parent: '/features',
-        title: 'Copy',
-        component: CopyFeatureToggle,
+        title: ':name',
+        component: RedirectFeatureViewPage,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -230,7 +231,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/toggles',
+        path: '/projects/:id/create-toggle',
         parent: '/projects',
         title: 'Create',
         component: CreateFeatureToggle,

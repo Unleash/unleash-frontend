@@ -8,6 +8,7 @@ import {
 import CreateFeature from './CreateFeature';
 import { loadNameFromUrl, showPnpsFeedback } from '../../../common/util';
 import { showFeedback } from '../../../../store/feedback/actions';
+import { getTogglePath } from '../../../../utils/route-path-helpers';
 
 const defaultStrategy = {
     name: 'default',
@@ -81,7 +82,7 @@ class WrapperComponent extends Component {
         try {
             await createFeatureToggles(featureToggle).then(() =>
                 history.push(
-                    `/projects/${featureToggle.project}/toggles/${featureToggle.name}/strategies`
+                    getTogglePath(featureToggle.project, featureToggle.name)
                 )
             );
 
@@ -100,7 +101,7 @@ class WrapperComponent extends Component {
 
     onCancel = evt => {
         evt.preventDefault();
-        this.props.history.push('/features');
+        this.props.history.goBack();
     };
 
     render() {

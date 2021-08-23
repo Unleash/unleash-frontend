@@ -4,6 +4,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { useParams } from 'react-router';
 import { Link, useHistory } from 'react-router-dom';
 import { IFeatureToggleListItem } from '../../../../interfaces/featureToggle';
+import { getCreateTogglePath } from '../../../../utils/route-path-helpers';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { PROJECTFILTERING } from '../../../common/flags';
 import HeaderTitle from '../../../common/HeaderTitle';
@@ -49,9 +50,7 @@ const ProjectFeatureToggles = ({
                             />
                             <ResponsiveButton
                                 onClick={() =>
-                                    history.push(
-                                        `/projects/${id}/toggles?project=${id}`
-                                    )
+                                    history.push(getCreateTogglePath(id))
                                 }
                                 maxWidth="700px"
                                 tooltip="New feature toggle"
@@ -79,7 +78,7 @@ const ProjectFeatureToggles = ({
                             No feature toggles added yet.
                         </p>
                         <Link
-                            to={`/projects/${id}/toggles?project=${id}`}
+                            to={getCreateTogglePath(id)}
                             className={styles.link}
                             data-loading
                         >
