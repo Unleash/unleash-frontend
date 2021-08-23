@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Switch, TextField } from '@material-ui/core';
+import { Button, FormControlLabel, Grid, Switch, TextField } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import PageContent from '../../../component/common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../../component/AccessProvider/permissions';
-import AutoCreateForm from './AutoCreate/AutoCreateForm';
+import AutoCreateForm from './AutoCreateForm/AutoCreateForm';
 
 const initialState = {
     enabled: false,
@@ -94,14 +94,15 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                         <p>Enable Open Id Connect Authentication.</p>
                     </Grid>
                     <Grid item md={6}>
-                        <Switch
-                            onChange={updateEnabled}
-                            value={data.enabled}
-                            name="enabled"
-                            checked={data.enabled}
-                        >
-                            {data.enabled ? 'Enabled' : 'Disabled'}
-                        </Switch>
+                        <FormControlLabel
+                            control={ <Switch
+                                onChange={updateEnabled}
+                                value={data.enabled}
+                                name="enabled"
+                                checked={data.enabled}
+                            />}
+                            label={data.enabled ? 'Enabled' : 'Disabled'}
+                        />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>

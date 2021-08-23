@@ -1,19 +1,31 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { FormControl, Grid, MenuItem, Switch, TextField, Select, InputLabel } from '@material-ui/core';
+import React, { ChangeEvent, Fragment } from 'react';
+import { FormControl, Grid, MenuItem, Switch, TextField, Select, InputLabel, FormControlLabel } from '@material-ui/core';
 
-function AutoCreateForm({ data = {}, setValue }) {
+interface Props { 
+    data?: {
+        enabled: boolean;
+        autoCreate: boolean;
+        defaultRootRole?: string;
+        emailDomains?: string;
+
+    };
+    setValue: (name: string, value: string | boolean) => void;
+}
+
+function AutoCreateForm({ data = { enabled: false, autoCreate: false }, setValue }: Props) {
     const updateAutoCreate = () => {
         setValue('autoCreate', !data.autoCreate);
-    };
+    }
 
-    const updateDefaultRootRole = (evt) => {
-        setValue('defaultRootRole', evt.target.value);
-    };
+    const updateDefaultRootRole = (evt: ChangeEvent<{ name?: string; value: unknown }>) => {
+        setValue('defaultRootRole', evt.target.value as string);
+    }
 
-    const updateField = e => {
-        setValue(e.target.name, e.target.value);
-    };
+    const updateField = (e: ChangeEvent<{ name?: string; value: string }>) => {
+        if(e.target.name) {
+            setValue(e.target.name, e.target.value);
+        }
+    }
 
 return (
     <Fragment>
@@ -25,14 +37,16 @@ return (
                 </p>
             </Grid>
             <Grid item md={6} style={{ padding: '20px' }}>
-                <Switch
+
+            <FormControlLabel
+                control={ <Switch
                     onChange={updateAutoCreate}
                     name="enabled"
                     checked={data.autoCreate}
                     disabled={!data.enabled}
-                >
-                    Auto-create users
-                </Switch>
+                />}
+                label="Auto-create users"
+            />
             </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -87,10 +101,4 @@ return (
         </Grid>
     </Fragment>);
 }
-
-AutoCreateForm.propTypes = {
-    data: PropTypes.object,
-    setValue: PropTypes.func.isRequired,
-};
-
 export default AutoCreateForm;
