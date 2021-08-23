@@ -21,10 +21,8 @@ function AutoCreateForm({ data = { enabled: false, autoCreate: false }, setValue
         setValue('defaultRootRole', evt.target.value as string);
     }
 
-    const updateField = (e: ChangeEvent<{ name?: string; value: string }>) => {
-        if(e.target.name) {
-            setValue(e.target.name, e.target.value);
-        }
+    const updateField = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.name, e.target.value);
     }
 
 return (
