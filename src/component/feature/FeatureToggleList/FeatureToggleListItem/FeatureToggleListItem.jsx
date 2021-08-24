@@ -16,6 +16,7 @@ import { UPDATE_FEATURE } from '../../../AccessProvider/permissions';
 import { calc, styles as commonStyles } from '../../../common';
 
 import { useStyles } from './styles';
+import { getTogglePath } from '../../../../utils/route-path-helpers';
 
 const FeatureToggleListItem = ({
     feature,
@@ -51,7 +52,7 @@ const FeatureToggleListItem = ({
     const featureUrl =
         toggleFeature === undefined
             ? `/archive/strategies/${name}`
-            : `/projects/${feature.project}/toggles/${name}/strategies`;
+            : getTogglePath(feature.project, name);
 
     return (
         <ListItem

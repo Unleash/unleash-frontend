@@ -1,12 +1,12 @@
 export const getTogglePath = (projectId: string, featureToggleName: string) => {
-    return `/projects/${projectId}/toggles/${featureToggleName}/strategies`;
+    return `/projects/${projectId}/features/${featureToggleName}/strategies`;
 };
 
 export const getToggleCopyPath = (
     projectId: string,
     featureToggleName: string
 ) => {
-    return `/projects/${projectId}/toggles/${featureToggleName}/strategies/copy`;
+    return `/projects/${projectId}/features/${featureToggleName}/strategies/copy`;
 };
 
 export const getCreateTogglePath = (projectId: string) => {

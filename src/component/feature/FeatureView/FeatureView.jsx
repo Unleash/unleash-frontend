@@ -37,6 +37,7 @@ import ConfirmDialogue from '../../common/Dialogue';
 import { useCommonStyles } from '../../../common.styles';
 import AccessContext from '../../../contexts/AccessContext';
 import { projectFilterGenerator } from '../../../utils/project-filter-generator';
+import { getToggleCopyPath } from '../../../utils/route-path-helpers';
 
 const FeatureView = ({
     activeTab,
@@ -113,7 +114,7 @@ const FeatureView = ({
 
     const getTabData = () => {
         const path = !!isFeatureView
-            ? `projects/${project}/toggles`
+            ? `projects/${project}/features`
             : 'archive';
         return [
             {
@@ -327,7 +328,10 @@ const FeatureView = ({
                             <Button
                                 title="Create new feature toggle by cloning configuration"
                                 component={Link}
-                                to={`/projects/${featureToggle.project}/toggles/${featureToggle.name}/strategies/copy`}
+                                to={getToggleCopyPath(
+                                    featureToggle.project,
+                                    featureToggle.name
+                                )}
                             >
                                 Clone
                             </Button>

@@ -203,8 +203,8 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/toggles/:name/:activeTab/copy',
-        parent: '/projects/:id/toggles/:name/:activeTab',
+        path: '/projects/:id/features/:name/:activeTab/copy',
+        parent: '/projects/:id/features/:name/:activeTab',
         title: 'Copy',
         component: CopyFeatureToggle,
         type: 'protected',
@@ -212,7 +212,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/toggles/:name/:activeTab',
+        path: '/projects/:id/features/:name/:activeTab',
         parent: '/projects',
         title: ':name',
         component: ViewFeatureToggle,
