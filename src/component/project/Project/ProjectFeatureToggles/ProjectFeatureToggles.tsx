@@ -1,8 +1,10 @@
+import { useContext } from 'react';
 import { IconButton } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { useParams } from 'react-router';
 import { Link, useHistory } from 'react-router-dom';
+import AccessContext from '../../../../contexts/AccessContext';
 import { IFeatureToggleListItem } from '../../../../interfaces/featureToggle';
 import { getCreateTogglePath } from '../../../../utils/route-path-helpers';
 import ConditionallyRender from '../../../common/ConditionallyRender';
@@ -12,6 +14,7 @@ import PageContent from '../../../common/PageContent';
 import ResponsiveButton from '../../../common/ResponsiveButton/ResponsiveButton';
 import FeatureToggleListNew from '../../../feature/FeatureToggleListNew/FeatureToggleListNew';
 import { useStyles } from './ProjectFeatureToggles.styles';
+import { CREATE_FEATURE } from '../../../AccessProvider/permissions';
 
 interface IProjectFeatureToggles {
     features: IFeatureToggleListItem[];
@@ -25,6 +28,7 @@ const ProjectFeatureToggles = ({
     const styles = useStyles();
     const { id } = useParams();
     const history = useHistory();
+    const { hasAccess } = useContext(AccessContext);
 
     return (
         <PageContent
@@ -48,16 +52,23 @@ const ProjectFeatureToggles = ({
                                     </IconButton>
                                 }
                             />
-                            <ResponsiveButton
-                                onClick={() =>
-                                    history.push(getCreateTogglePath(id))
+                            <ConditionallyRender
+                                condition={hasAccess(CREATE_FEATURE, id)}
+                                show={
+                                    <ResponsiveButton
+                                        onClick={() =>
+                                            history.push(
+                                                getCreateTogglePath(id)
+                                            )
+                                        }
+                                        maxWidth="700px"
+                                        tooltip="New feature toggle"
+                                        Icon={Add}
+                                    >
+                                        New feature toggle
+                                    </ResponsiveButton>
                                 }
-                                maxWidth="700px"
-                                tooltip="New feature toggle"
-                                Icon={Add}
-                            >
-                                New feature toggle
-                            </ResponsiveButton>
+                            />
                         </>
                     }
                 />
