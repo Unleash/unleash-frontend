@@ -14,6 +14,5 @@ export const getCreateTogglePath = (projectId: string) => {
 };
 
 export const getProjectEditPath = (projectId: string) => {
-    console.log(projectId);
     return `/projects/${projectId}/edit`;
 };
