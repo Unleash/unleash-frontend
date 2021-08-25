@@ -150,6 +150,7 @@ export const DropdownButton = ({
         startIcon={startIcon}
         endIcon={<Icon>{icon}</Icon>}
     >
+        {console.log(style)}
         {label}
     </Button>
 );
