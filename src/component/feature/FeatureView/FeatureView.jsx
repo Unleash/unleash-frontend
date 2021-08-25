@@ -38,6 +38,8 @@ import { useCommonStyles } from '../../../common.styles';
 import AccessContext from '../../../contexts/AccessContext';
 import { projectFilterGenerator } from '../../../utils/project-filter-generator';
 import { getToggleCopyPath } from '../../../utils/route-path-helpers';
+import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import useToast from '../../../hooks/useToast';
 
 const FeatureView = ({
     activeTab,
@@ -63,6 +65,8 @@ const FeatureView = ({
     const commonStyles = useCommonStyles();
     const { hasAccess } = useContext(AccessContext);
     const { project } = featureToggle || {};
+    const { changeFeatureProject } = useFeatureApi();
+    const { toast, setToastData } = useToast();
 
     useEffect(() => {
         scrollToTop();
@@ -201,16 +205,25 @@ const FeatureView = ({
     };
 
     const updateProject = evt => {
-        evt.preventDefault();
-        const project = evt.target.value;
-        let feature = { ...featureToggle, project };
-        if (Array.isArray(feature.strategies)) {
-            feature.strategies.forEach(s => {
-                delete s.id;
-            });
-        }
+        const { project, name } = featureToggle;
+        const newProjectId = evt.target.value;
 
-        editFeatureToggle(feature);
+        changeFeatureProject(project, name, newProjectId)
+            .then(() => {
+                fetchFeatureToggles();
+                setToastData({
+                    show: true,
+                    type: 'success',
+                    text: 'Successfully updated toggle project.',
+                });
+            })
+            .catch(e => {
+                setToastData({
+                    show: true,
+                    type: 'error',
+                    text: e.toString(),
+                });
+            });
     };
 
     const updateStale = stale => {
@@ -380,6 +393,7 @@ const FeatureView = ({
                 }}
                 onClose={() => setDelDialog(false)}
             />
+            {toast}
         </Paper>
     );
 };
