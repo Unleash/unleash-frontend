@@ -33,6 +33,7 @@ const ProjectFeatureToggles = ({
     return (
         <PageContent
             className={styles.container}
+            bodyClass={styles.bodyClass}
             headerContent={
                 <HeaderTitle
                     className={styles.title}
