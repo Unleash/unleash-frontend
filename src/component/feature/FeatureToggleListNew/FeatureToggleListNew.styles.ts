@@ -10,6 +10,8 @@ export const useStyles = makeStyles(theme => ({
     },
     tableCellHeader: {
         paddingBottom: '0.5rem',
+        fontWeight: 'normal',
+        color: theme.palette.grey[600],
     },
     typeHeader: {
         [theme.breakpoints.down('sm')]: {
