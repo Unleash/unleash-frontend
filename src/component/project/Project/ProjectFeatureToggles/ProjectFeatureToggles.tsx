@@ -88,13 +88,18 @@ const ProjectFeatureToggles = ({
                         <p data-loading className={styles.noTogglesFound}>
                             No feature toggles added yet.
                         </p>
-                        <Link
-                            to={getCreateTogglePath(id)}
-                            className={styles.link}
-                            data-loading
-                        >
-                            Add your first toggle
-                        </Link>
+                        <ConditionallyRender
+                            condition={hasAccess(CREATE_FEATURE, id)}
+                            show={
+                                <Link
+                                    to={getCreateTogglePath(id)}
+                                    className={styles.link}
+                                    data-loading
+                                >
+                                    Add your first toggle
+                                </Link>
+                            }
+                        />
                     </>
                 }
             />

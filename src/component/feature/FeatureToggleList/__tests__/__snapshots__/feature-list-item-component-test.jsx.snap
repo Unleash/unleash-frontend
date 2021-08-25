@@ -94,7 +94,13 @@ exports[`renders correctly with one feature 1`] = `
   <span
     className="makeStyles-listItemStrategies-5 hideLt920"
   />
-  <span />
+  <span
+    style={
+      Object {
+        "width": "48px ",
+      }
+    }
+  />
 </li>
 `;
 
@@ -195,6 +201,12 @@ exports[`renders correctly with one feature without permission 1`] = `
   <span
     className="makeStyles-listItemStrategies-5 hideLt920"
   />
-  <span />
+  <span
+    style={
+      Object {
+        "width": "48px ",
+      }
+    }
+  />
 </li>
 `;
