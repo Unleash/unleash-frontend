@@ -39,6 +39,7 @@ import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
 import RedirectFeatureViewPage from '../../page/features/redirect';
+import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 
 export const routes = [
     // Features
@@ -109,7 +110,7 @@ export const routes = [
 
     // Archive
     {
-        path: '/archive/:activeTab/:name',
+        path: '/projects/:id/archived/:name/:activeTab',
         title: ':name',
         parent: '/archive',
         component: ShowArchive,
@@ -198,6 +199,15 @@ export const routes = [
         parent: '/projects',
         title: ':id',
         component: EditProjectAccess,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:id/archived',
+        title: ':name',
+        parent: '/archive',
+        component: RedirectArchive,
         type: 'protected',
         layout: 'main',
         menu: {},

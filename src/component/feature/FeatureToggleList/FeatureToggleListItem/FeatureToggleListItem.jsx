@@ -51,7 +51,7 @@ const FeatureToggleListItem = ({
               ));
     const featureUrl =
         toggleFeature === undefined
-            ? `/archive/strategies/${name}`
+            ? `/projects/${feature.project}/archived/${name}/metrics`
             : getTogglePath(feature.project, name);
 
     return (
@@ -125,7 +125,7 @@ const FeatureToggleListItem = ({
                         <Undo />
                     </IconButton>
                 }
-                elseShow={<span />}
+                elseShow={<span style={{ width: '48px ' }} />}
             />
         </ListItem>
     );

@@ -67,6 +67,7 @@ const FeatureView = ({
     const { project } = featureToggle || {};
     const { changeFeatureProject } = useFeatureApi();
     const { toast, setToastData } = useToast();
+    const archive = !Boolean(isFeatureView);
 
     useEffect(() => {
         scrollToTop();
@@ -119,7 +120,30 @@ const FeatureView = ({
     const getTabData = () => {
         const path = !!isFeatureView
             ? `projects/${project}/features`
-            : 'archive';
+            : `projects/${project}/archived`;
+
+        if (archive) {
+            return [
+                {
+                    label: 'Metrics',
+                    component: getTabComponent('metrics'),
+                    name: 'metrics',
+                    path: `/${path}/${featureToggleName}/metrics`,
+                },
+                {
+                    label: 'Variants',
+                    component: getTabComponent('variants'),
+                    name: 'variants',
+                    path: `/${path}/${featureToggleName}/variants`,
+                },
+                {
+                    label: 'Log',
+                    component: getTabComponent('log'),
+                    name: 'logs',
+                    path: `/${path}/${featureToggleName}/logs`,
+                },
+            ];
+        }
         return [
             {
                 label: 'Activation',
@@ -249,7 +273,13 @@ const FeatureView = ({
                     <Typography variant="h1" className={styles.heading}>
                         {featureToggle.name}
                     </Typography>
-                    <StatusComponent stale={featureToggle.stale} />
+                    <ConditionallyRender
+                        condition={archive}
+                        show={<span>Archived</span>}
+                        elseShow={
+                            <StatusComponent stale={featureToggle.stale} />
+                        }
+                    />
                 </div>
                 <div
                     className={classnames(
@@ -367,7 +397,7 @@ const FeatureView = ({
                     }
                     elseShow={
                         <Button
-                            disabled={!hasAccess(UPDATE_FEATURE, hasAccess)}
+                            disabled={!hasAccess(UPDATE_FEATURE, project)}
                             onClick={reviveToggle}
                             style={{ flexShrink: 0 }}
                         >
