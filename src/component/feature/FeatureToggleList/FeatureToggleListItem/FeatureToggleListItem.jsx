@@ -119,13 +119,18 @@ const FeatureToggleListItem = ({
                 <FeatureToggleListItemChip type={type} />
             </span>
             <ConditionallyRender
-                condition={revive && hasAccess(UPDATE_FEATURE, project)}
+                condition={revive}
                 show={
-                    <IconButton onClick={() => revive(feature.name)}>
-                        <Undo />
-                    </IconButton>
+                    <ConditionallyRender
+                        condition={hasAccess(UPDATE_FEATURE, project)}
+                        show={
+                            <IconButton onClick={() => revive(feature.name)}>
+                                <Undo />
+                            </IconButton>
+                        }
+                        elseShow={<span style={{ width: '48px ' }} />}
+                    />
                 }
-                elseShow={<span style={{ width: '48px ' }} />}
             />
         </ListItem>
     );
