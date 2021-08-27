@@ -98,17 +98,6 @@ const AddStrategy = ({
             />
         ));
 
-    //         <Dialog
-    //     open={showDialog}
-    //     contentLabel="Example Modal"
-    //     style={modalStyles}
-    //     onClose={onCancel}
-    //     onClick={submit}
-    //     primaryButtonText="Save"
-    //     secondaryButtonText="Cancel"
-    //     title={title}
-    // ></Dialog>
-
     return (
         <Dialogue
             open={showCreateStrategy}
