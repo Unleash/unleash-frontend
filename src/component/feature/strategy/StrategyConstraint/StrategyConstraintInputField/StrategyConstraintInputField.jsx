@@ -132,7 +132,7 @@ const StrategyConstraintInputField = ({
                                         {...params}
                                         variant="outlined"
                                         label={'Values'}
-                                        error={error}
+                                        error={Boolean(error)}
                                         helperText={error}
                                         FormHelperTextProps={{
                                             classes: {
@@ -148,7 +148,7 @@ const StrategyConstraintInputField = ({
                         <div className={styles.inputContainer}>
                             <InputListField
                                 name="values"
-                                error={error}
+                                error={Boolean(error)}
                                 onBlur={onBlur}
                                 values={constraint.values}
                                 label="Values (v1, v2, v3)"
