@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip, Typography } from '@material-ui/core';
+import { Button, Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 
 import StrategyConstraintInputField from '../StrategyConstraintInputField';
@@ -80,13 +80,14 @@ const StrategyConstraintInput = ({
                 </tbody>
             </table>
             <small>
-                <a
-                    href="#add-constraint"
+                <Button
                     title="Add constraint"
+                    variant="contained"
+                    color="primary"
                     onClick={addConstraint}
                 >
                     Add constraint
-                </a>
+                </Button>
             </small>
         </div>
     );
