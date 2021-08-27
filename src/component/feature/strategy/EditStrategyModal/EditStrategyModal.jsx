@@ -57,13 +57,35 @@ const EditStrategyModal = ({
         return constraintError[key];
     });
 
+    const save = () => {
+        const { constraints } = strategy;
+        let valid = true;
+
+        constraints.forEach((constraint, index) => {
+            const { values } = constraint;
+
+            if (values.length === 0) {
+                setConstraintError({
+                    ...constraintError,
+                    [`${constraint.contextName}-${index}`]:
+                        'You need to specify at least one value',
+                });
+                valid = false;
+            }
+        });
+
+        if (valid) {
+            saveStrategy();
+        }
+    };
+
     return (
         <Dialogue
             open={!!strategy}
             aria-labelledby="form-dialog-title"
             fullWidth
             onClose={onCancel}
-            onClick={saveStrategy}
+            onClick={save}
             title={`Configure ${getHumanReadbleStrategyName(
                 strategy.name
             )} strategy`}
