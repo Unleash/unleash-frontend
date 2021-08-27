@@ -15,6 +15,7 @@ import GeneralStrategy from './general-strategy';
 import StrategyConstraints from '../StrategyConstraint/StrategyConstraintInput';
 
 import { getHumanReadbleStrategyName } from '../../../../utils/strategy-names';
+import Dialogue from '../../../common/Dialogue';
 
 const EditStrategyModal = ({
     onCancel,
@@ -58,46 +59,36 @@ const EditStrategyModal = ({
     const { parameters } = strategy;
 
     return (
-        <Dialog
+        <Dialogue
             open={!!strategy}
             aria-labelledby="form-dialog-title"
             fullWidth
+            onClose={onCancel}
+            onClick={saveStrategy}
+            title={`Configure ${getHumanReadbleStrategyName(
+                strategy.name
+            )} strategy`}
+            primaryButtonText="Save"
+            secondaryButtonText="Cancel"
             maxWidth="md"
         >
-            <DialogTitle id="form-dialog-title">
-                Configure {getHumanReadbleStrategyName(strategy.name)} strategy
-            </DialogTitle>
-            <DialogContent>
-                <div>
-                    <StrategyConstraints
-                        updateConstraints={updateConstraints}
-                        constraints={strategy.constraints || []}
-                    />
-                </div>
-
-                <br />
-                <br />
-                <Type
-                    parameters={parameters}
-                    updateParameter={updateParameter}
-                    strategyDefinition={strategyDefinition}
-                    editable
-                    context={context}
+            <div>
+                <StrategyConstraints
+                    updateConstraints={updateConstraints}
+                    constraints={strategy.constraints || []}
                 />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onCancel} color="secondary">
-                    Cancel
-                </Button>
-                <Button
-                    onClick={saveStrategy}
-                    color="primary"
-                    variant="contained"
-                >
-                    Save
-                </Button>
-            </DialogActions>
-        </Dialog>
+            </div>
+
+            <br />
+            <br />
+            <Type
+                parameters={parameters}
+                updateParameter={updateParameter}
+                strategyDefinition={strategyDefinition}
+                editable
+                context={context}
+            />
+        </Dialogue>
     );
 };
 

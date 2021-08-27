@@ -21,13 +21,16 @@ const StrategyConstraintInputField = ({
     removeConstraint,
     contextFields,
 }) => {
+    console.log('RENDERING');
     const [error, setError] = useState();
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const onBlur = evt => {
+        console.log('BLURRING');
         evt.preventDefault();
         const values = constraint.values;
         const filtered = values.filter(v => v).map(v => v.trim());
+        console.log(filtered);
         if (filtered.length !== values.length) {
             updateConstraint(filtered, 'values');
         }

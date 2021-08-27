@@ -16,8 +16,10 @@ const Dialogue = ({
     onClick,
     onClose,
     title,
+    style,
     primaryButtonText,
     secondaryButtonText,
+    maxWidth = 'sm',
     fullWidth = false,
 }) => {
     const styles = useStyles();
@@ -28,6 +30,7 @@ const Dialogue = ({
             fullWidth={fullWidth}
             aria-labelledby={'simple-modal-title'}
             aria-describedby={'simple-modal-description'}
+            maxWidth={maxWidth}
         >
             <DialogTitle className={styles.dialogTitle}>{title}</DialogTitle>
             <ConditionallyRender
