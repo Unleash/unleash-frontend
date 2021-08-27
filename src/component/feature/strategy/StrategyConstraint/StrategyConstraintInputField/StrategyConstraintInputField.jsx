@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
@@ -23,6 +24,12 @@ const StrategyConstraintInputField = ({
     constraintError,
     setConstraintError,
 }) => {
+    useEffect(() => {
+        return () => {
+            resetError();
+        };
+    }, []);
+
     const checkError = () => {
         const values = constraint.values;
         const filtered = values.filter(v => v).map(v => v.trim());
