@@ -60,7 +60,7 @@ const EditStrategyModal = ({
     const save = () => {
         const { constraints } = strategy;
         let valid = true;
-        console.log(constraints);
+
         constraints.forEach((constraint, index) => {
             const { values } = constraint;
 

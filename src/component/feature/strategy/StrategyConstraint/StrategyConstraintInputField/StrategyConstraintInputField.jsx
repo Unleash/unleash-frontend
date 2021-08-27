@@ -28,6 +28,7 @@ const StrategyConstraintInputField = ({
         return () => {
             resetError();
         };
+        /*eslint-disable-next-line */
     }, []);
 
     const checkError = () => {
