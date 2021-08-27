@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
-import { BottomNavigation, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import styles from '../../styles.module.scss';
 import ErrorContainer from '../../error/error-container';
@@ -11,7 +11,6 @@ import Footer from '../../menu/Footer/Footer';
 import Proclamation from '../../common/Proclamation/Proclamation';
 import BreadcrumbNav from '../../common/BreadcrumbNav/BreadcrumbNav';
 import { ReactComponent as Texture } from '../../../assets/img/texture.svg';
-import texture from '../../../assets/img/texture.svg';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -47,15 +46,17 @@ const MainLayout = ({ children, location, uiConfig }) => {
                         </div>
                         <ErrorContainer />
                     </Grid>
-                    <div
-                        style={{
-                            position: 'fixed',
-                            right: '0',
-                            bottom: '-10px',
-                            zIndex: '1',
-                        }}
-                    >
-                        <Texture />
+                    <div style={{ overflow: 'hidden' }}>
+                        <div
+                            style={{
+                                position: 'fixed',
+                                right: '0',
+                                bottom: '-4px',
+                                zIndex: '1',
+                            }}
+                        >
+                            <Texture />
+                        </div>
                     </div>
                 </div>
                 <Footer />
