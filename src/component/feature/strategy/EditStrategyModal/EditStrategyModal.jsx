@@ -1,12 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogActions,
-} from '@material-ui/core';
 
 import FlexibleStrategy from './FlexibleStrategy';
 import DefaultStrategy from './default-strategy';
@@ -25,6 +18,8 @@ const EditStrategyModal = ({
     strategyDefinition,
     context,
 }) => {
+    const [constraintError, setConstraintError] = useState({});
+
     const updateParameters = parameters => {
         const updatedStrategy = { ...strategy, parameters };
         updateStrategy(updatedStrategy);
@@ -58,6 +53,10 @@ const EditStrategyModal = ({
 
     const { parameters } = strategy;
 
+    const disabledPrimaryButton = Object.keys(constraintError).some(key => {
+        return constraintError[key];
+    });
+
     return (
         <Dialogue
             open={!!strategy}
@@ -71,11 +70,14 @@ const EditStrategyModal = ({
             primaryButtonText="Save"
             secondaryButtonText="Cancel"
             maxWidth="md"
+            disabledPrimaryButton={disabledPrimaryButton}
         >
             <div>
                 <StrategyConstraints
                     updateConstraints={updateConstraints}
                     constraints={strategy.constraints || []}
+                    constraintError={constraintError}
+                    setConstraintError={setConstraintError}
                 />
             </div>
 

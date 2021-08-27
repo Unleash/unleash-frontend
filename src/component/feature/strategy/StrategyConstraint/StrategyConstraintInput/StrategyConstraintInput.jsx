@@ -12,6 +12,8 @@ const StrategyConstraintInput = ({
     contextNames,
     contextFields,
     enabled,
+    constraintError,
+    setConstraintError,
 }) => {
     const commonStyles = useCommonStyles();
     const addConstraint = evt => {
@@ -71,6 +73,8 @@ const StrategyConstraintInput = ({
                             contextFields={contextFields}
                             updateConstraint={updateConstraint(index)}
                             removeConstraint={removeConstraint(index)}
+                            constraintError={constraintError}
+                            setConstraintError={setConstraintError}
                         />
                     ))}
                 </tbody>

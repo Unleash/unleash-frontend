@@ -18,6 +18,7 @@ const Dialogue = ({
     title,
     style,
     primaryButtonText,
+    disabledPrimaryButton = false,
     secondaryButtonText,
     maxWidth = 'sm',
     fullWidth = false,
@@ -51,6 +52,7 @@ const Dialogue = ({
                             variant="contained"
                             onClick={onClick}
                             autoFocus
+                            disabled={disabledPrimaryButton}
                         >
                             {primaryButtonText || "Yes, I'm sure"}
                         </Button>
