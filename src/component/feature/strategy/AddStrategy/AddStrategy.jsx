@@ -1,13 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogActions,
-    Typography,
-} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import CreateStrategyCard from './AddStrategyCard/AddStrategyCard';
 import { useStyles } from './AddStrategy.styles';
