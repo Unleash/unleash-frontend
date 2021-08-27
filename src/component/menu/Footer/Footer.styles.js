@@ -6,6 +6,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '2rem 4rem',
         width: '100%',
         flexGrow: 1,
+        zIndex: 100,
     },
     list: {
         padding: 0,
