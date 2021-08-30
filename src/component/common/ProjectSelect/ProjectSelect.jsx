@@ -18,6 +18,7 @@ const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
         }
 
         setProject('*');
+        /* eslint-disable-next-line */
     }, []);
 
     const setProject = v => {
