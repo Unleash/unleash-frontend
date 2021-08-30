@@ -78,6 +78,7 @@ export const useCommonStyles = makeStyles(theme => ({
         bottom: '40px',
         transform: 'translateY(400px)',
         zIndex: 300,
+        position: 'relative',
     },
     fadeInBottomEnter: {
         transform: 'translateY(0)',
