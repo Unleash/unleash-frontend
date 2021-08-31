@@ -40,6 +40,7 @@ import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
 import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
+import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 
 export const routes = [
     // Features
@@ -84,6 +85,14 @@ export const routes = [
         path: '/strategies',
         title: 'Strategies',
         component: Strategies,
+        type: 'protected',
+        layout: 'main',
+        menu: { mobile: true, advanced: true },
+    },
+    {
+        path: '/environments',
+        title: 'Environments',
+        component: EnvironmentList,
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
@@ -427,8 +436,7 @@ export const routes = [
 
 export const getRoute = path => routes.find(route => route.path === path);
 
-export const baseRoutes = routes
-    .filter(route => !route.hidden)
+export const baseRoutes = routes.filter(route => !route.hidden);
 
 const computeRoutes = () => {
     const mainNavRoutes = baseRoutes.filter(route => route.menu.advanced);
