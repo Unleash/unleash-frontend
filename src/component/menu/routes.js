@@ -41,6 +41,7 @@ import Project from '../project/Project/Project';
 import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
+import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 
 export const routes = [
     // Features
@@ -88,6 +89,15 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
+    },
+    {
+        path: '/environments/create',
+        title: 'Environments',
+        component: CreateEnvironment,
+        parent: '/environments',
+        type: 'protected',
+        layout: 'main',
+        menu: {},
     },
     {
         path: '/environments',

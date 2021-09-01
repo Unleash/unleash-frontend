@@ -16,12 +16,13 @@ import { IEnvironment } from '../../../interfaces/environments';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DELETE_CONTEXT_FIELD } from '../../AccessProvider/permissions';
 
 const EnvironmentList = () => {
     const { hasAccess } = useContext(AccessContext);
     const { environments } = useEnvironments();
+    const history = useHistory();
 
     const environmentList = () =>
         environments.map((env: IEnvironment) => (
@@ -50,6 +51,10 @@ const EnvironmentList = () => {
             </ListItem>
         ));
 
+    const navigateToCreateEnvironment = () => {
+        history.push('/environments/create');
+    };
+
     return (
         <PageContent
             headerContent={
@@ -58,7 +63,7 @@ const EnvironmentList = () => {
                     actions={
                         <>
                             <ResponsiveButton
-                                onClick={() => {}}
+                                onClick={navigateToCreateEnvironment}
                                 maxWidth="700px"
                                 tooltip="Add environment"
                                 Icon={Add}
