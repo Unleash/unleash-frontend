@@ -1,5 +1,5 @@
 import { Alert } from '@material-ui/lab';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import useEnvironmentApi from '../../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import {
     IEnvironment,
@@ -16,6 +16,8 @@ interface IEnviromentDeleteConfirmProps {
     setSelectedEnv: React.Dispatch<React.SetStateAction<IEnvironment>>;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
     handleDeleteEnvironment: (name: string) => Promise<void>;
+    confirmName: string;
+    setConfirmName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const EnvironmentDeleteConfirm = ({
@@ -24,17 +26,18 @@ const EnvironmentDeleteConfirm = ({
     setSelectedEnv,
     setDeldialogue,
     handleDeleteEnvironment,
+    confirmName,
+    setConfirmName,
 }: IEnviromentDeleteConfirmProps) => {
     const styles = useStyles();
-    const [name, setName] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-        setName(e.currentTarget.value);
+        setConfirmName(e.currentTarget.value);
 
     const handleCancel = () => {
         setSelectedEnv({});
         setDeldialogue(false);
-        setName('');
+        setConfirmName('');
     };
 
     return (
@@ -44,7 +47,7 @@ const EnvironmentDeleteConfirm = ({
             primaryButtonText="Delete environment"
             secondaryButtonText="Cancel"
             onClick={handleDeleteEnvironment}
-            disabledPrimaryButton={env?.name !== name}
+            disabledPrimaryButton={env?.name !== confirmName}
             onClose={handleCancel}
         >
             <Alert severity="error">
@@ -66,7 +69,7 @@ const EnvironmentDeleteConfirm = ({
 
             <Input
                 onChange={handleChange}
-                value={name}
+                value={confirmName}
                 label="Environment name"
                 className={styles.environmentDeleteInput}
             />

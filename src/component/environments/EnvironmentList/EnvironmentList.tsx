@@ -31,6 +31,8 @@ const EnvironmentList = () => {
     const { environments, refetch } = useEnvironments();
     const [selectedEnv, setSelectedEnv] = useState(defaultEnv);
     const [delDialog, setDeldialogue] = useState(false);
+    const [confirmName, setConfirmName] = useState('');
+
     const history = useHistory();
     const { toast, setToastData } = useToast();
     const { deleteEnvironment } = useEnvironmentApi();
@@ -52,6 +54,7 @@ const EnvironmentList = () => {
         } finally {
             setDeldialogue(false);
             setSelectedEnv(defaultEnv);
+            setConfirmName('');
             refetch();
         }
     };
@@ -120,6 +123,8 @@ const EnvironmentList = () => {
                 setDeldialogue={setDeldialogue}
                 open={delDialog}
                 handleDeleteEnvironment={handleDeleteEnvironment}
+                confirmName={confirmName}
+                setConfirmName={setConfirmName}
             />
             {toast}
         </PageContent>
