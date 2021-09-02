@@ -40,7 +40,30 @@ const useEnvironmentApi = () => {
         }
     };
 
-    return { validateEnvName, createEnvironment, errors, loading };
+    const deleteEnvironment = async (name: string) => {
+        const path = `api/admin/environments/${name}`;
+        const req = createRequest(
+            path,
+            { method: 'DELETE' },
+            'deleteEnvironment'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    return {
+        validateEnvName,
+        createEnvironment,
+        errors,
+        loading,
+        deleteEnvironment,
+    };
 };
 
 export default useEnvironmentApi;
