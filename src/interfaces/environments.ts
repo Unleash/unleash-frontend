@@ -6,6 +6,12 @@ export interface IEnvironment {
     sortOrder: number;
 }
 
+export interface IEnvironmentPayload {
+    name: string;
+    displayName: string;
+    type: string;
+}
+
 export interface IEnvironmentResponse {
     environments: IEnvironment[];
 }

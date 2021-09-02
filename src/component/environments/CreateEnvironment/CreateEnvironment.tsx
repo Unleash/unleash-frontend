@@ -2,18 +2,35 @@ import React, { useState } from 'react';
 import {
     FormControl,
     FormControlLabel,
-    FormLabel,
     Radio,
     RadioGroup,
     TextField,
+    Button,
 } from '@material-ui/core';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent';
+
+import { useStyles } from './CreateEnvironment.styles';
+import { useHistory } from 'react-router-dom';
+import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import CreateEnvironmentSuccess from './CreateEnvironmentSuccess/CreateEnvironmentSuccess';
+import useLoading from '../../../hooks/useLoading';
+import useToast from '../../../hooks/useToast';
+
+const NAME_EXISTS_ERROR = 'Error: Environment';
 
 const CreateEnvironment = () => {
     const [type, setType] = useState('development');
     const [envName, setEnvName] = useState('');
     const [envDisplayName, setEnvDisplayName] = useState('');
+    const [nameError, setNameError] = useState('');
+    const [createSuccess, setCreateSucceess] = useState(false);
+    const history = useHistory();
+    const styles = useStyles();
+    const { validateEnvName, createEnvironment, loading } = useEnvironmentApi();
+    const ref = useLoading(loading);
+    const { toast, setToastData } = useToast();
 
     const handleTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
         setType(event.currentTarget.value);
@@ -25,101 +42,191 @@ const CreateEnvironment = () => {
     const handleEnvDisplayName = (e: React.FormEvent<HTMLInputElement>) =>
         setEnvDisplayName(e.currentTarget.value);
 
+    const goBack = () => history.goBack();
+
+    const validateEnvironmentName = async () => {
+        if (envName.length === 0) {
+            setNameError('Environment Id can not be empty.');
+            return false;
+        }
+
+        try {
+            await validateEnvName(envName);
+        } catch (e) {
+            if (e.toString().includes(NAME_EXISTS_ERROR)) {
+                setNameError('Name already exists');
+            }
+            return false;
+        }
+        return true;
+    };
+
+    const clearNameError = () => setNameError('');
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const validName = await validateEnvironmentName();
+
+        if (validName) {
+            const environment = {
+                name: envName,
+                displayName: envDisplayName,
+                type,
+            };
+
+            try {
+                await createEnvironment(environment);
+                setCreateSucceess(true);
+            } catch (e) {
+                setToastData({ show: true, type: 'error', text: e.toString() });
+            }
+        }
+    };
+
     return (
         <PageContent headerContent={<HeaderTitle title="Create environment" />}>
-            <p style={{ marginBottom: '2rem' }}>
-                Environments allow you to manage your product lifecycle from
-                local development through production. Your projects and feature
-                toggles are accessible in all your environments, but they can
-                take different configurations per environment. This means that
-                you can enable a feature toggle in a development or test
-                environment without enabling the feature toggle in the
-                production environment.
-            </p>
+            <ConditionallyRender
+                condition={createSuccess}
+                show={
+                    <CreateEnvironmentSuccess
+                        name={envName}
+                        displayName={envDisplayName}
+                        type={type}
+                    />
+                }
+                elseShow={
+                    <div ref={ref}>
+                        <p className={styles.helperText} data-loading>
+                            Environments allow you to manage your product
+                            lifecycle from local development through production.
+                            Your projects and feature toggles are accessible in
+                            all your environments, but they can take different
+                            configurations per environment. This means that you
+                            can enable a feature toggle in a development or test
+                            environment without enabling the feature toggle in
+                            the production environment.
+                        </p>
 
-            <FormControl component="fieldset">
-                <label style={{ fontWeight: 'bold' }}>Environment Type</label>
+                        <form onSubmit={handleSubmit}>
+                            <FormControl component="fieldset">
+                                <h2 className={styles.formHeader} data-loading>
+                                    Environment Type
+                                </h2>
 
-                <RadioGroup value={type} onChange={handleTypeChange}>
-                     
-                    <FormControlLabel
-                        value="development"
-                        label="Development"
-                        control={<Radio />}
-                    />
-                    <FormControlLabel
-                        value="test"
-                        label="Test"
-                        control={<Radio />}
-                    />
-                    <FormControlLabel
-                        value="preproduction"
-                        label="Pre production"
-                        control={<Radio />}
-                    />
-                    <FormControlLabel
-                        value="production"
-                        label="Production"
-                        control={<Radio />}
-                    />
-                </RadioGroup>
+                                <RadioGroup
+                                    data-loading
+                                    value={type}
+                                    onChange={handleTypeChange}
+                                    className={styles.radioGroup}
+                                >
+                                    <FormControlLabel
+                                        value="development"
+                                        label="Development"
+                                        control={<Radio />}
+                                    />
+                                    <FormControlLabel
+                                        value="test"
+                                        label="Test"
+                                        control={<Radio />}
+                                    />
+                                    <FormControlLabel
+                                        value="preproduction"
+                                        label="Pre production"
+                                        control={<Radio />}
+                                    />
+                                    <FormControlLabel
+                                        value="production"
+                                        label="Production"
+                                        control={<Radio />}
+                                    />
+                                </RadioGroup>
 
-                <h2
-                    style={{
-                        fontWeight: 'bold',
-                        marginBottom: '1rem',
-                        fontSize: '1rem',
-                        marginTop: '2rem',
-                    }}
-                >
-                    Environment Id
-                </h2>
+                                <h2 className={styles.formHeader} data-loading>
+                                    Environment Id and name
+                                </h2>
 
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                    }}
-                >
-                    <p>
-                        Environment id is a unique name for the env that you
-                        will use in your SDK to retrieve correct configurations
-                    </p>
-                    <TextField
-                        size="small"
-                        variant="outlined"
-                        rows={4}
-                        label="Environment Id"
-                        placeholder="A unique name for your environment"
-                        error={''}
-                        helperText={''}
-                        style={{ maxWidth: '400px', marginTop: '1rem' }}
-                        value={envName}
-                        onChange={handleEnvNameChange}
-                    />
-                </div>
+                                <div
+                                    data-loading
+                                    className={
+                                        styles.environmentDetailsContainer
+                                    }
+                                >
+                                    <p>
+                                        Environment id is a unique name for the
+                                        env that you will use in your SDK to
+                                        retrieve correct configurations
+                                    </p>
+                                    <TextField
+                                        size="small"
+                                        variant="outlined"
+                                        rows={4}
+                                        label="Environment Id"
+                                        onFocus={clearNameError}
+                                        placeholder="A unique name for your environment"
+                                        onBlur={validateEnvironmentName}
+                                        error={Boolean(nameError)}
+                                        helperText={nameError}
+                                        style={{
+                                            maxWidth: '400px',
+                                            marginTop: '1rem',
+                                        }}
+                                        value={envName}
+                                        onChange={handleEnvNameChange}
+                                    />
+                                </div>
 
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                    }}
-                >
-                    <p>The display name is the name visible for other users.</p>
-                    <TextField
-                        size="small"
-                        variant="outlined"
-                        rows={4}
-                        label="Display name"
-                        placeholder="Optional name to be displayed in the admin panel"
-                        error={''}
-                        helperText={''}
-                        style={{ maxWidth: '400px', marginTop: '1rem' }}
-                        value={envDisplayName}
-                        onChange={handleEnvDisplayName}
-                    />
-                </div>
-            </FormControl>
+                                <div
+                                    data-loading
+                                    className={
+                                        styles.environmentDetailsContainer
+                                    }
+                                >
+                                    <p>
+                                        The display name is the name visible for
+                                        other users.
+                                    </p>
+                                    <TextField
+                                        size="small"
+                                        variant="outlined"
+                                        rows={4}
+                                        label="Display name"
+                                        placeholder="Optional name to be displayed in the admin panel"
+                                        error={''}
+                                        helperText={''}
+                                        style={{
+                                            maxWidth: '400px',
+                                            marginTop: '1rem',
+                                        }}
+                                        value={envDisplayName}
+                                        onChange={handleEnvDisplayName}
+                                    />
+                                </div>
+                            </FormControl>
+                            <div className={styles.btnContainer}>
+                                <Button
+                                    className={styles.submitButton}
+                                    variant="contained"
+                                    color="primary"
+                                    type="submit"
+                                    data-loading
+                                >
+                                    Submit
+                                </Button>{' '}
+                                <Button
+                                    className={styles.submitButton}
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={goBack}
+                                    data-loading
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                }
+            />
+            {toast}
         </PageContent>
     );
 };
