@@ -21,10 +21,11 @@ const Input = ({
     className,
     value,
     onChange,
+    ...rest
 }: IInputProps) => {
     const styles = useStyles();
     return (
-        <div className={styles.inputContainer}>
+        <div className={styles.inputContainer} data-loading>
             <TextField
                 size="small"
                 variant="outlined"
@@ -41,6 +42,7 @@ const Input = ({
                         root: styles.helperText,
                     },
                 }}
+                {...rest}
             />
         </div>
     );

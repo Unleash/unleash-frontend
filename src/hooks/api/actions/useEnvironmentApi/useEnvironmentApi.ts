@@ -1,4 +1,7 @@
-import { IEnvironmentPayload } from '../../../../interfaces/environments';
+import {
+    IEnvironment,
+    IEnvironmentPayload,
+} from '../../../../interfaces/environments';
 import useAPI from '../useApi/useApi';
 
 const useEnvironmentApi = () => {
@@ -57,12 +60,33 @@ const useEnvironmentApi = () => {
         }
     };
 
+    const updateEnvironment = async (
+        name: string,
+        payload: IEnvironmentPayload
+    ) => {
+        const path = `api/admin/environments/${name}`;
+        const req = createRequest(
+            path,
+            { method: 'PUT', body: JSON.stringify(payload) },
+            'updateEnvironment'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         validateEnvName,
         createEnvironment,
         errors,
         loading,
         deleteEnvironment,
+        updateEnvironment,
     };
 };
 

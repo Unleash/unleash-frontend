@@ -1,6 +1,6 @@
 import HeaderTitle from '../../common/HeaderTitle';
 import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
-import { Add, CloudCircle, Delete } from '@material-ui/icons';
+import { Add, CloudCircle, Delete, Edit } from '@material-ui/icons';
 import PageContent from '../../common/PageContent';
 import {
     IconButton,
@@ -20,14 +20,16 @@ import { DELETE_CONTEXT_FIELD } from '../../AccessProvider/permissions';
 import EnvironmentDeleteConfirm from './EnvironmentDeleteConfirm/EnvironmentDeleteConfirm';
 import useToast from '../../../hooks/useToast';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
+import EnvironmentListItem from './EnvironmentListItem/EnvironmentListItem';
 
 const EnvironmentList = () => {
     const defaultEnv = {
         name: '',
         type: '',
         displayName: '',
+        sortOrder: 0,
+        createdAt: '',
     };
-    const { hasAccess } = useContext(AccessContext);
     const { environments, refetch } = useEnvironments();
     const [selectedEnv, setSelectedEnv] = useState(defaultEnv);
     const [delDialog, setDeldialogue] = useState(false);
@@ -61,35 +63,12 @@ const EnvironmentList = () => {
 
     const environmentList = () =>
         environments.map((env: IEnvironment) => (
-            <ListItem key={env.name}>
-                <ListItemIcon>
-                    <CloudCircle />
-                </ListItemIcon>
-                <ListItemText
-                    primary={
-                        <Link to={`/environments/${env.name}`}>
-                            <strong>{env.name}</strong>
-                        </Link>
-                    }
-                    secondary={env.displayName}
-                />
-                <ConditionallyRender
-                    condition={hasAccess(DELETE_CONTEXT_FIELD)}
-                    show={
-                        <Tooltip title="Delete context field">
-                            <IconButton
-                                aria-label="delete"
-                                onClick={() => {
-                                    setDeldialogue(true);
-                                    setSelectedEnv(env);
-                                }}
-                            >
-                                <Delete />
-                            </IconButton>
-                        </Tooltip>
-                    }
-                />
-            </ListItem>
+            <EnvironmentListItem
+                key={env.name}
+                env={env}
+                setDeldialogue={setDeldialogue}
+                setSelectedEnv={setSelectedEnv}
+            />
         ));
 
     const navigateToCreateEnvironment = () => {

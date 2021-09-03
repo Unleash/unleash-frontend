@@ -37,23 +37,6 @@ const CreateEnvironmentSuccess = ({
                     <div className={styles.stepOneHeader}>
                         <div className={styles.stepBadge}>1</div>
                         <h3 className={styles.subheader}>
-                            Add environment specific activation strategies
-                        </h3>
-
-                        <p className={styles.stepParagraph}>
-                            You can now select this environment when you are
-                            adding new activation strategies on feature toggles.
-                        </p>
-                        <a href="#" target="_blank" rel="noopener noreferrer">
-                            Learn more
-                        </a>
-                    </div>
-                </div>
-
-                <div className={styles.step}>
-                    <div className={styles.stepOneHeader}>
-                        <div className={styles.stepBadge}>2</div>
-                        <h3 className={styles.subheader}>
                             Update SDK version and provide the environment id to
                             the SDK
                         </h3>
@@ -61,6 +44,22 @@ const CreateEnvironmentSuccess = ({
                             By providing the environment id in the SDK the SDK
                             will only retrieve activation strategies for
                             specified environment
+                        </p>
+                        <a href="#" target="_blank" rel="noopener noreferrer">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+                <div className={styles.step}>
+                    <div className={styles.stepOneHeader}>
+                        <div className={styles.stepBadge}>2</div>
+                        <h3 className={styles.subheader}>
+                            Add environment specific activation strategies
+                        </h3>
+
+                        <p className={styles.stepParagraph}>
+                            You can now select this environment when you are
+                            adding new activation strategies on feature toggles.
                         </p>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             Learn more

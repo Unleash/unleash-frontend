@@ -35,8 +35,14 @@ const EnvironmentDeleteConfirm = ({
         setConfirmName(e.currentTarget.value);
 
     const handleCancel = () => {
-        setSelectedEnv({});
         setDeldialogue(false);
+        setSelectedEnv({
+            name: '',
+            type: '',
+            displayName: '',
+            createdAt: '',
+            sortOrder: 0,
+        });
         setConfirmName('');
     };
 
@@ -62,9 +68,8 @@ const EnvironmentDeleteConfirm = ({
             />
 
             <p className={styles.deleteParagraph}>
-                In order to delete this environment, please enter the name of
-                the environment in the textfield below:{' '}
-                <strong>{env?.name}</strong>
+                In order to delete this environment, please enter the id of the
+                environment in the textfield below: <strong>{env?.name}</strong>
             </p>
 
             <Input

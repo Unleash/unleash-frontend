@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-    FormControl,
-    FormControlLabel,
-    Radio,
-    RadioGroup,
-    TextField,
-    Button,
-} from '@material-ui/core';
+import { FormControl, TextField, Button } from '@material-ui/core';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent';
 
@@ -17,6 +10,7 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import CreateEnvironmentSuccess from './CreateEnvironmentSuccess/CreateEnvironmentSuccess';
 import useLoading from '../../../hooks/useLoading';
 import useToast from '../../../hooks/useToast';
+import EnvironmentTypeSelector from '../form/EnvironmentTypeSelector/EnvironmentTypeSelector';
 
 const NAME_EXISTS_ERROR = 'Error: Environment';
 
@@ -109,41 +103,17 @@ const CreateEnvironment = () => {
 
                         <form onSubmit={handleSubmit}>
                             <FormControl component="fieldset">
-                                <h2 className={styles.formHeader} data-loading>
+                                <h3 className={styles.formHeader} data-loading>
                                     Environment Type
-                                </h2>
-
-                                <RadioGroup
-                                    data-loading
-                                    value={type}
+                                </h3>
+                                <EnvironmentTypeSelector
                                     onChange={handleTypeChange}
-                                    className={styles.radioGroup}
-                                >
-                                    <FormControlLabel
-                                        value="development"
-                                        label="Development"
-                                        control={<Radio />}
-                                    />
-                                    <FormControlLabel
-                                        value="test"
-                                        label="Test"
-                                        control={<Radio />}
-                                    />
-                                    <FormControlLabel
-                                        value="preproduction"
-                                        label="Pre production"
-                                        control={<Radio />}
-                                    />
-                                    <FormControlLabel
-                                        value="production"
-                                        label="Production"
-                                        control={<Radio />}
-                                    />
-                                </RadioGroup>
+                                    value={type}
+                                />
 
-                                <h2 className={styles.formHeader} data-loading>
+                                <h3 className={styles.formHeader} data-loading>
                                     Environment Id and name
-                                </h2>
+                                </h3>
 
                                 <div
                                     data-loading
