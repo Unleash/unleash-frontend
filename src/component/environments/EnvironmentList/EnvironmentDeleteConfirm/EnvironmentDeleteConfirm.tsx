@@ -36,13 +36,7 @@ const EnvironmentDeleteConfirm = ({
 
     const handleCancel = () => {
         setDeldialogue(false);
-        setSelectedEnv({
-            name: '',
-            type: '',
-            displayName: '',
-            createdAt: '',
-            sortOrder: 0,
-        });
+
         setConfirmName('');
     };
 
