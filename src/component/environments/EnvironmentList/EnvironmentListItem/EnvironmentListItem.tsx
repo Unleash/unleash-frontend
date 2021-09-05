@@ -42,11 +42,7 @@ const EnvironmentListItem = ({
                 <CloudCircle />
             </ListItemIcon>
             <ListItemText
-                primary={
-                    <Link to={`/environments/${env.name}`}>
-                        <strong>{env.name}</strong>
-                    </Link>
-                }
+                primary={<strong>{env.name}</strong>}
                 secondary={env.displayName}
             />
             <OutsideClickHandler
