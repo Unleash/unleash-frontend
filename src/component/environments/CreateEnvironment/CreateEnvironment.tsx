@@ -103,9 +103,6 @@ const CreateEnvironment = () => {
 
                         <form onSubmit={handleSubmit}>
                             <FormControl component="fieldset">
-                                <h3 className={styles.formHeader} data-loading>
-                                    Environment Type
-                                </h3>
                                 <EnvironmentTypeSelector
                                     onChange={handleTypeChange}
                                     value={type}

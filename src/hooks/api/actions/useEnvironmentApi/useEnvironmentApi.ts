@@ -1,6 +1,6 @@
 import {
-    IEnvironment,
     IEnvironmentPayload,
+    ISortOrderPayload,
 } from '../../../../interfaces/environments';
 import useAPI from '../useApi/useApi';
 
@@ -80,6 +80,23 @@ const useEnvironmentApi = () => {
         }
     };
 
+    const changeSortOrder = async (payload: ISortOrderPayload) => {
+        const path = `api/admin/environments/sort-order`;
+        const req = createRequest(
+            path,
+            { method: 'PUT', body: JSON.stringify(payload) },
+            'changeSortOrder'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         validateEnvName,
         createEnvironment,
@@ -87,6 +104,7 @@ const useEnvironmentApi = () => {
         loading,
         deleteEnvironment,
         updateEnvironment,
+        changeSortOrder,
     };
 };
 

@@ -1,6 +1,6 @@
 import HeaderTitle from '../../common/HeaderTitle';
 import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
-import { Add, CloudCircle, Delete, Edit } from '@material-ui/icons';
+import { Add } from '@material-ui/icons';
 import PageContent from '../../common/PageContent';
 import {
     IconButton,
@@ -10,17 +10,23 @@ import {
     ListItemText,
     Tooltip,
 } from '@material-ui/core';
-import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
-import { IEnvironment } from '../../../interfaces/environments';
+import useEnvironments, {
+    ENVIRONMENT_CACHE_KEY,
+} from '../../../hooks/api/getters/useEnvironments/useEnvironments';
+import {
+    IEnvironment,
+    ISortOrderPayload,
+} from '../../../interfaces/environments';
 import ConditionallyRender from '../../common/ConditionallyRender';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 import { Link, useHistory } from 'react-router-dom';
-import { DELETE_CONTEXT_FIELD } from '../../AccessProvider/permissions';
 import EnvironmentDeleteConfirm from './EnvironmentDeleteConfirm/EnvironmentDeleteConfirm';
 import useToast from '../../../hooks/useToast';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import EnvironmentListItem from './EnvironmentListItem/EnvironmentListItem';
+import { mutate } from 'swr';
+import EditEnvironment from '../EditEnvironment/EditEnvironment';
 
 const EnvironmentList = () => {
     const defaultEnv = {
@@ -31,13 +37,50 @@ const EnvironmentList = () => {
         createdAt: '',
     };
     const { environments, refetch } = useEnvironments();
+    const [editEnvironment, setEditEnvironment] = useState(false);
+
     const [selectedEnv, setSelectedEnv] = useState(defaultEnv);
     const [delDialog, setDeldialogue] = useState(false);
     const [confirmName, setConfirmName] = useState('');
 
     const history = useHistory();
     const { toast, setToastData } = useToast();
-    const { deleteEnvironment } = useEnvironmentApi();
+    const { deleteEnvironment, changeSortOrder } = useEnvironmentApi();
+
+    const moveListItem = async (dragIndex: number, hoverIndex: number) => {
+        const newEnvList = [...environments];
+        if (newEnvList.length === 0) return;
+
+        const item = newEnvList.splice(dragIndex, 1)[0];
+
+        newEnvList.splice(hoverIndex, 0, item);
+
+        mutate(ENVIRONMENT_CACHE_KEY, { environments: newEnvList }, false);
+
+        const sortOrder = newEnvList.reduce(
+            (acc: ISortOrderPayload, env: IEnvironment, index: number) => {
+                acc[env.name] = index + 1;
+                return acc;
+            },
+            {}
+        );
+
+        await sortOrderAPICall(sortOrder);
+
+        mutate(ENVIRONMENT_CACHE_KEY);
+    };
+
+    const sortOrderAPICall = async (sortOrder: ISortOrderPayload) => {
+        try {
+            changeSortOrder(sortOrder);
+        } catch (e) {
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
+        }
+    };
 
     const handleDeleteEnvironment = async () => {
         try {
@@ -62,12 +105,15 @@ const EnvironmentList = () => {
     };
 
     const environmentList = () =>
-        environments.map((env: IEnvironment) => (
+        environments.map((env: IEnvironment, index: number) => (
             <EnvironmentListItem
                 key={env.name}
                 env={env}
+                setEditEnvironment={setEditEnvironment}
                 setDeldialogue={setDeldialogue}
                 setSelectedEnv={setSelectedEnv}
+                index={index}
+                moveListItem={moveListItem}
             />
         ));
 
@@ -104,6 +150,13 @@ const EnvironmentList = () => {
                 handleDeleteEnvironment={handleDeleteEnvironment}
                 confirmName={confirmName}
                 setConfirmName={setConfirmName}
+            />
+
+            <EditEnvironment
+                env={selectedEnv}
+                setEditEnvironment={setEditEnvironment}
+                editEnvironment={editEnvironment}
+                setToastData={setToastData}
             />
             {toast}
         </PageContent>

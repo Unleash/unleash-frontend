@@ -9,6 +9,7 @@ import AnimateOnMount from '../../common/AnimateOnMount/AnimateOnMount';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import useLoading from '../../../hooks/useLoading';
 import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
+import Dialogue from '../../common/Dialogue';
 
 interface IEditEnvironmentProps {
     env: IEnvironment;
@@ -89,67 +90,43 @@ const EditEnvironment = ({
     };
 
     return (
-        <AnimateOnMount
-            mounted={editEnvironment}
-            start={styles.container}
-            enter={styles.fadeInBottomEnter}
-            leave={styles.fadeInBottomLeave}
+        <Dialogue
+            open={editEnvironment}
+            title="Edit environment"
+            onClose={handleCancel}
+            onClick={handleSubmit}
+            primaryButtonText="Save"
+            secondaryButtonText="Cancel"
+            disabledPrimaryButton={isDisabled()}
         >
-            <div ref={ref}>
-                <Paper>
-                    <h2 className={styles.header}>Edit environment</h2>
-                    <div className={styles.body}>
-                        <h3 className={styles.formHeader} data-loading>
-                            Environment Id
-                        </h3>
-                        <h3 className={styles.subheader} data-loading>
-                            <CloudCircle className={styles.icon} /> {env.name}
-                        </h3>
-                        <form onSubmit={handleSubmit}>
-                            <EnvironmentTypeSelector
-                                onChange={handleTypeChange}
-                                value={type}
-                            />
+            <div className={styles.body}>
+                <h3 className={styles.formHeader} data-loading>
+                    Environment Id
+                </h3>
+                <h3 className={styles.subheader} data-loading>
+                    <CloudCircle className={styles.icon} /> {env.name}
+                </h3>
+                <form>
+                    <EnvironmentTypeSelector
+                        onChange={handleTypeChange}
+                        value={type}
+                    />
 
-                            <h3 className={styles.formHeader} data-loading>
-                                Environment display name
-                            </h3>
+                    <h3 className={styles.formHeader} data-loading>
+                        Environment display name
+                    </h3>
 
-                            <Input
-                                label="Display name"
-                                placeholder="Optional name to be displayed in the admin panel"
-                                className={styles.inputField}
-                                value={envDisplayName}
-                                onChange={handleEnvDisplayName}
-                                data-loading
-                            />
-
-                            <div className={styles.buttonGroup}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    disabled={isDisabled()}
-                                    className={styles.editEnvButton}
-                                    data-loading
-                                >
-                                    Save
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={styles.editEnvButton}
-                                    onClick={handleCancel}
-                                    data-loading
-                                >
-                                    Cancel
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
-                </Paper>
+                    <Input
+                        label="Display name"
+                        placeholder="Optional name to be displayed in the admin panel"
+                        className={styles.inputField}
+                        value={envDisplayName}
+                        onChange={handleEnvDisplayName}
+                        data-loading
+                    />
+                </form>
             </div>
-        </AnimateOnMount>
+        </Dialogue>
     );
 };
 

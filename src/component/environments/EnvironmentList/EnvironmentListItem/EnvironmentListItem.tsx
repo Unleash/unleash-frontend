@@ -5,13 +5,21 @@ import {
     Tooltip,
     IconButton,
 } from '@material-ui/core';
-import { CloudCircle, Delete, Edit } from '@material-ui/icons';
+import {
+    ArrowDownward,
+    ArrowUpwardOutlined,
+    CloudCircle,
+    Delete,
+    DoubleArrowOutlined,
+    DragIndicator,
+    Edit,
+} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import { IEnvironment } from '../../../../interfaces/environments';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import AccessContext from '../../../../contexts/AccessContext';
 import {
     DELETE_ENVIRONMENT,
@@ -19,25 +27,96 @@ import {
 } from '../../../AccessProvider/permissions';
 import EditEnvironment from '../../EditEnvironment/EditEnvironment';
 import useToast from '../../../../hooks/useToast';
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
+import { XYCoord } from 'dnd-core';
 
 interface IEnvironmentListItemProps {
     env: IEnvironment;
     setSelectedEnv: React.Dispatch<React.SetStateAction<IEnvironment>>;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
+    setEditEnvironment: React.Dispatch<React.SetStateAction<boolean>>;
+    index: number;
+    moveListItem: any;
+}
+
+interface DragItem {
+    index: number;
+    id: string;
+    type: string;
 }
 
 const EnvironmentListItem = ({
     env,
     setSelectedEnv,
     setDeldialogue,
+    index,
+    moveListItem,
+    setEditEnvironment,
 }: IEnvironmentListItemProps) => {
-    const [editEnvironment, setEditEnvironment] = useState(false);
-    const { toast, setToastData } = useToast();
+    const ref = useRef<HTMLDivElement>(null);
+    const ACCEPT_TYPE = 'LIST_ITEM';
+    const [{ handlerId }, drop] = useDrop({
+        accept: ACCEPT_TYPE,
+        collect(monitor) {
+            return {
+                handlerId: monitor.getHandlerId(),
+            };
+        },
+        hover(item: DragItem, monitor: DropTargetMonitor) {
+            if (!ref.current) {
+                return;
+            }
+            const dragIndex = item.index;
+            const hoverIndex = index;
+
+            if (dragIndex === hoverIndex) {
+                return;
+            }
+
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+            const clientOffset = monitor.getClientOffset();
+
+            const hoverClientY =
+                (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                return;
+            }
+
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                return;
+            }
+
+            moveListItem(dragIndex, hoverIndex);
+            item.index = hoverIndex;
+        },
+    });
+
+    const [{ isDragging }, drag] = useDrag({
+        type: ACCEPT_TYPE,
+        item: () => {
+            return { env, index };
+        },
+        collect: (monitor: any) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+
+    const opacity = isDragging ? 0 : 1;
+    drag(drop(ref));
 
     const { hasAccess } = useContext(AccessContext);
 
     return (
-        <ListItem style={{ position: 'relative' }}>
+        <ListItem
+            style={{ position: 'relative', opacity }}
+            ref={ref}
+            data-handler-id={handlerId}
+        >
             <ListItemIcon>
                 <CloudCircle />
             </ListItemIcon>
@@ -45,32 +124,28 @@ const EnvironmentListItem = ({
                 primary={<strong>{env.name}</strong>}
                 secondary={env.displayName}
             />
-            <OutsideClickHandler
-                onOutsideClick={() => setEditEnvironment(false)}
-            >
-                <ConditionallyRender
-                    condition={hasAccess(UPDATE_ENVIRONMENT)}
-                    show={
-                        <Tooltip title="Update environment">
-                            <IconButton
-                                aria-label="update"
-                                onClick={() => {
-                                    setEditEnvironment(prev => !prev);
-                                }}
-                            >
-                                <Edit />
-                            </IconButton>
-                        </Tooltip>
-                    }
-                />
 
-                <EditEnvironment
-                    env={env}
-                    setEditEnvironment={setEditEnvironment}
-                    editEnvironment={editEnvironment}
-                    setToastData={setToastData}
-                />
-            </OutsideClickHandler>
+            <Tooltip title="Drag to reorder">
+                <IconButton>
+                    <DragIndicator />
+                </IconButton>
+            </Tooltip>
+            <ConditionallyRender
+                condition={hasAccess(UPDATE_ENVIRONMENT)}
+                show={
+                    <Tooltip title="Update environment">
+                        <IconButton
+                            aria-label="update"
+                            onClick={() => {
+                                setSelectedEnv(env);
+                                setEditEnvironment(prev => !prev);
+                            }}
+                        >
+                            <Edit />
+                        </IconButton>
+                    </Tooltip>
+                }
+            />
             <ConditionallyRender
                 condition={hasAccess(DELETE_ENVIRONMENT)}
                 show={
@@ -87,7 +162,6 @@ const EnvironmentListItem = ({
                     </Tooltip>
                 }
             />
-            {toast}
         </ListItem>
     );
 };

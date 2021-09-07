@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { IEnvironmentResponse } from '../../../../interfaces/environments';
 import { formatApiPath } from '../../../../utils/format-path';
 
-const useEnvironments = () => {
-    const KEY = `api/admin/environments`;
+export const ENVIRONMENT_CACHE_KEY = `api/admin/environments`;
 
+const useEnvironments = () => {
     const fetcher = () => {
         const path = formatApiPath(`api/admin/environments`);
         return fetch(path, {
@@ -13,11 +13,14 @@ const useEnvironments = () => {
         }).then(res => res.json());
     };
 
-    const { data, error } = useSWR<IEnvironmentResponse>(KEY, fetcher);
+    const { data, error } = useSWR<IEnvironmentResponse>(
+        ENVIRONMENT_CACHE_KEY,
+        fetcher
+    );
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
-        mutate(KEY);
+        mutate(ENVIRONMENT_CACHE_KEY);
     };
 
     useEffect(() => {
