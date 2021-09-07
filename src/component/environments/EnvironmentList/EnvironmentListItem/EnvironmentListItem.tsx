@@ -5,28 +5,16 @@ import {
     Tooltip,
     IconButton,
 } from '@material-ui/core';
-import {
-    ArrowDownward,
-    ArrowUpwardOutlined,
-    CloudCircle,
-    Delete,
-    DoubleArrowOutlined,
-    DragIndicator,
-    Edit,
-} from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { CloudCircle, Delete, DragIndicator, Edit } from '@material-ui/icons';
 import ConditionallyRender from '../../../common/ConditionallyRender';
-import OutsideClickHandler from 'react-outside-click-handler';
 
 import { IEnvironment } from '../../../../interfaces/environments';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import AccessContext from '../../../../contexts/AccessContext';
 import {
     DELETE_ENVIRONMENT,
     UPDATE_ENVIRONMENT,
 } from '../../../AccessProvider/permissions';
-import EditEnvironment from '../../EditEnvironment/EditEnvironment';
-import useToast from '../../../../hooks/useToast';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 

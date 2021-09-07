@@ -1,10 +1,6 @@
 import { Alert } from '@material-ui/lab';
-import React, { useState } from 'react';
-import useEnvironmentApi from '../../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
-import {
-    IEnvironment,
-    IEnvironmentPayload,
-} from '../../../../interfaces/environments';
+import React from 'react';
+import { IEnvironment } from '../../../../interfaces/environments';
 import Dialogue from '../../../common/Dialogue';
 import Input from '../../../common/Input/Input';
 import CreateEnvironmentSuccessCard from '../../CreateEnvironment/CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
@@ -23,7 +19,6 @@ interface IEnviromentDeleteConfirmProps {
 const EnvironmentDeleteConfirm = ({
     env,
     open,
-    setSelectedEnv,
     setDeldialogue,
     handleDeleteEnvironment,
     confirmName,
@@ -36,7 +31,6 @@ const EnvironmentDeleteConfirm = ({
 
     const handleCancel = () => {
         setDeldialogue(false);
-
         setConfirmName('');
     };
 

@@ -1,11 +1,9 @@
-import { Paper, Button } from '@material-ui/core';
 import { CloudCircle } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import EnvironmentTypeSelector from '../form/EnvironmentTypeSelector/EnvironmentTypeSelector';
 import { useStyles } from './EditEnvironment.styles';
 import { IEnvironment } from '../../../interfaces/environments';
 import Input from '../../common/Input/Input';
-import AnimateOnMount from '../../common/AnimateOnMount/AnimateOnMount';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import useLoading from '../../../hooks/useLoading';
 import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
@@ -99,7 +97,7 @@ const EditEnvironment = ({
             secondaryButtonText="Cancel"
             disabledPrimaryButton={isDisabled()}
         >
-            <div className={styles.body}>
+            <div className={styles.body} ref={ref}>
                 <h3 className={styles.formHeader} data-loading>
                     Environment Id
                 </h3>

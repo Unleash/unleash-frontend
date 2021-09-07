@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import CheckMarkBadge from '../../../common/CheckmarkBadge/CheckMarkBadge';
 import { useStyles } from './CreateEnvironmentSuccess.styles';

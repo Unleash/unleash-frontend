@@ -2,14 +2,7 @@ import HeaderTitle from '../../common/HeaderTitle';
 import ResponsiveButton from '../../common/ResponsiveButton/ResponsiveButton';
 import { Add } from '@material-ui/icons';
 import PageContent from '../../common/PageContent';
-import {
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Tooltip,
-} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import useEnvironments, {
     ENVIRONMENT_CACHE_KEY,
 } from '../../../hooks/api/getters/useEnvironments/useEnvironments';
@@ -17,10 +10,8 @@ import {
     IEnvironment,
     ISortOrderPayload,
 } from '../../../interfaces/environments';
-import ConditionallyRender from '../../common/ConditionallyRender';
-import { useCallback, useContext, useState } from 'react';
-import AccessContext from '../../../contexts/AccessContext';
-import { Link, useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import EnvironmentDeleteConfirm from './EnvironmentDeleteConfirm/EnvironmentDeleteConfirm';
 import useToast from '../../../hooks/useToast';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
