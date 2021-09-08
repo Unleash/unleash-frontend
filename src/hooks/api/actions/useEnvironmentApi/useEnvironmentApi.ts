@@ -97,6 +97,40 @@ const useEnvironmentApi = () => {
         }
     };
 
+    const toggleEnvironmentOn = async (name: string) => {
+        const path = `api/admin/environments/${name}/on`;
+        const req = createRequest(
+            path,
+            { method: 'POST' },
+            'toggleEnvironmentOn'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const toggleEnvironmentOff = async (name: string) => {
+        const path = `api/admin/environments/${name}/off`;
+        const req = createRequest(
+            path,
+            { method: 'POST' },
+            'toggleEnvironmentOff'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         validateEnvName,
         createEnvironment,
@@ -105,6 +139,8 @@ const useEnvironmentApi = () => {
         deleteEnvironment,
         updateEnvironment,
         changeSortOrder,
+        toggleEnvironmentOff,
+        toggleEnvironmentOn,
     };
 };
 
