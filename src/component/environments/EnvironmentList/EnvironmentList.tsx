@@ -27,6 +27,7 @@ const EnvironmentList = () => {
         displayName: '',
         sortOrder: 0,
         createdAt: '',
+        protected: false,
     };
     const { environments, refetch } = useEnvironments();
     const [editEnvironment, setEditEnvironment] = useState(false);
@@ -47,7 +48,7 @@ const EnvironmentList = () => {
 
     const moveListItem = (dragIndex: number, hoverIndex: number) => {
         const newEnvList = [...environments];
-        if (newEnvList.length === 0) return;
+        if (newEnvList.length === 0) return newEnvList;
 
         const item = newEnvList.splice(dragIndex, 1)[0];
 

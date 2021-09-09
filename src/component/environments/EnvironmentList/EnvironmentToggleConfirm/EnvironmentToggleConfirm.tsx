@@ -2,6 +2,7 @@ import { capitalize } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { IEnvironment } from '../../../../interfaces/environments';
+import ConditionallyRender from '../../../common/ConditionallyRender';
 import Dialogue from '../../../common/Dialogue';
 import CreateEnvironmentSuccessCard from '../../CreateEnvironment/CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
 
@@ -18,7 +19,7 @@ const EnvironmentToggleConfirm = ({
     setToggleDialog,
     handleConfirmToggleEnvironment,
 }: IEnvironmentToggleConfirmProps) => {
-    let text = env.enabled ? 'enable' : 'disable';
+    let text = env.enabled ? 'disable' : 'enable';
 
     const handleCancel = () => {
         setToggleDialog(false);
@@ -33,11 +34,24 @@ const EnvironmentToggleConfirm = ({
             onClick={handleConfirmToggleEnvironment}
             onClose={handleCancel}
         >
-            <Alert severity="info">
-                Disabling an environment will not effect any strategies that
-                already exist in that environment, but it will make it
-                unavailable as a selection option for new activation strategies.
-            </Alert>
+            <ConditionallyRender
+                condition={env.enabled}
+                show={
+                    <Alert severity="info">
+                        Disabling an environment will not effect any strategies
+                        that already exist in that environment, but it will make
+                        it unavailable as a selection option for new activation
+                        strategies.
+                    </Alert>
+                }
+                elseShow={
+                    <Alert severity="info">
+                        Enabling an environment will allow you to add new
+                        activation strategies to this environment.
+                    </Alert>
+                }
+            />
+
             <CreateEnvironmentSuccessCard
                 name={env?.name}
                 displayName={env?.displayName}

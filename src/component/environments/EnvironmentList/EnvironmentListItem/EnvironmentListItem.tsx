@@ -32,7 +32,8 @@ interface IEnvironmentListItemProps {
     setEditEnvironment: React.Dispatch<React.SetStateAction<boolean>>;
     setToggleDialog: React.Dispatch<React.SetStateAction<boolean>>;
     index: number;
-    moveListItem: any;
+    moveListItem: (dragIndex: number, hoverIndex: number) => IEnvironment[];
+    moveListItemApi: (dragIndex: number, hoverIndex: number) => Promise<void>;
 }
 
 interface DragItem {
@@ -125,7 +126,12 @@ const EnvironmentListItem = ({
                 <CloudCircle />
             </ListItemIcon>
             <ListItemText
-                primary={<strong>{env.name}</strong>}
+                primary={
+                    <>
+                        <strong>{env.name}</strong>
+                        {!env.enabled ? 'disabled' : ''}
+                    </>
+                }
                 secondary={env.displayName}
             />
 
