@@ -4,14 +4,13 @@ import {
     ListItemText,
     Tooltip,
     IconButton,
-    capitalize,
 } from '@material-ui/core';
 import {
-    Cancel,
     CloudCircle,
     Delete,
     DragIndicator,
     Edit,
+    OfflineBolt,
 } from '@material-ui/icons';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 
@@ -129,7 +128,23 @@ const EnvironmentListItem = ({
                 primary={
                     <>
                         <strong>{env.name}</strong>
-                        {!env.enabled ? 'disabled' : ''}
+                        <ConditionallyRender
+                            condition={!env.enabled}
+                            show={
+                                <span
+                                    style={{
+                                        padding: '0.2rem',
+                                        borderRadius: '5px',
+                                        marginLeft: '0.5rem',
+                                        backgroundColor: '#000',
+                                        color: '#fff',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    disabled
+                                </span>
+                            }
+                        />
                     </>
                 }
                 secondary={env.displayName}
@@ -141,27 +156,29 @@ const EnvironmentListItem = ({
                 </IconButton>
             </Tooltip>
             <ConditionallyRender
-                condition={hasAccess(UPDATE_ENVIRONMENT) && !env.protected}
+                condition={hasAccess(UPDATE_ENVIRONMENT)}
                 show={
                     <Tooltip title={`${tooltipText} environment`}>
                         <IconButton
                             aria-label="disable"
+                            disabled={env.protected}
                             onClick={() => {
                                 setSelectedEnv(env);
                                 setToggleDialog(prev => !prev);
                             }}
                         >
-                            <Cancel />
+                            <OfflineBolt />
                         </IconButton>
                     </Tooltip>
                 }
             />
             <ConditionallyRender
-                condition={hasAccess(UPDATE_ENVIRONMENT) && !env.protected}
+                condition={hasAccess(UPDATE_ENVIRONMENT)}
                 show={
                     <Tooltip title="Update environment">
                         <IconButton
                             aria-label="update"
+                            disabled={env.protected}
                             onClick={() => {
                                 setSelectedEnv(env);
                                 setEditEnvironment(prev => !prev);
@@ -173,11 +190,12 @@ const EnvironmentListItem = ({
                 }
             />
             <ConditionallyRender
-                condition={hasAccess(DELETE_ENVIRONMENT) && !env.protected}
+                condition={hasAccess(DELETE_ENVIRONMENT)}
                 show={
                     <Tooltip title="Delete environment">
                         <IconButton
                             aria-label="delete"
+                            disabled={env.protected}
                             onClick={() => {
                                 setDeldialogue(true);
                                 setSelectedEnv(env);
