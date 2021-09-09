@@ -4,6 +4,7 @@ export interface IEnvironment {
     createdAt: string;
     displayName: string;
     sortOrder: number;
+    enabled: boolean;
 }
 
 export interface IEnvironmentPayload {
@@ -14,4 +15,8 @@ export interface IEnvironmentPayload {
 
 export interface IEnvironmentResponse {
     environments: IEnvironment[];
+}
+
+export interface ISortOrderPayload {
+    [index: string]: number;
 }

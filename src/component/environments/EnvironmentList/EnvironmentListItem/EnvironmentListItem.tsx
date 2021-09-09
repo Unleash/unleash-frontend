@@ -4,8 +4,15 @@ import {
     ListItemText,
     Tooltip,
     IconButton,
+    capitalize,
 } from '@material-ui/core';
-import { CloudCircle, Delete, DragIndicator, Edit } from '@material-ui/icons';
+import {
+    Cancel,
+    CloudCircle,
+    Delete,
+    DragIndicator,
+    Edit,
+} from '@material-ui/icons';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 
 import { IEnvironment } from '../../../../interfaces/environments';
@@ -23,6 +30,7 @@ interface IEnvironmentListItemProps {
     setSelectedEnv: React.Dispatch<React.SetStateAction<IEnvironment>>;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
     setEditEnvironment: React.Dispatch<React.SetStateAction<boolean>>;
+    setToggleDialog: React.Dispatch<React.SetStateAction<boolean>>;
     index: number;
     moveListItem: any;
 }
@@ -39,16 +47,33 @@ const EnvironmentListItem = ({
     setDeldialogue,
     index,
     moveListItem,
+    moveListItemApi,
+    setToggleDialog,
     setEditEnvironment,
 }: IEnvironmentListItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const ACCEPT_TYPE = 'LIST_ITEM';
+    const [{ isDragging }, drag] = useDrag({
+        type: ACCEPT_TYPE,
+        item: () => {
+            return { env, index };
+        },
+        collect: (monitor: any) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+
     const [{ handlerId }, drop] = useDrop({
         accept: ACCEPT_TYPE,
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId(),
             };
+        },
+        drop(item: DragItem, monitor: DropTargetMonitor) {
+            const dragIndex = item.index;
+            const hoverIndex = index;
+            moveListItemApi(dragIndex, hoverIndex);
         },
         hover(item: DragItem, monitor: DropTargetMonitor) {
             if (!ref.current) {
@@ -84,20 +109,11 @@ const EnvironmentListItem = ({
         },
     });
 
-    const [{ isDragging }, drag] = useDrag({
-        type: ACCEPT_TYPE,
-        item: () => {
-            return { env, index };
-        },
-        collect: (monitor: any) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
-
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
     const { hasAccess } = useContext(AccessContext);
+    const tooltipText = env.enabled ? 'Disable' : 'Enable';
 
     return (
         <ListItem
@@ -119,7 +135,23 @@ const EnvironmentListItem = ({
                 </IconButton>
             </Tooltip>
             <ConditionallyRender
-                condition={hasAccess(UPDATE_ENVIRONMENT)}
+                condition={hasAccess(UPDATE_ENVIRONMENT) && !env.protected}
+                show={
+                    <Tooltip title={`${tooltipText} environment`}>
+                        <IconButton
+                            aria-label="disable"
+                            onClick={() => {
+                                setSelectedEnv(env);
+                                setToggleDialog(prev => !prev);
+                            }}
+                        >
+                            <Cancel />
+                        </IconButton>
+                    </Tooltip>
+                }
+            />
+            <ConditionallyRender
+                condition={hasAccess(UPDATE_ENVIRONMENT) && !env.protected}
                 show={
                     <Tooltip title="Update environment">
                         <IconButton
@@ -135,7 +167,7 @@ const EnvironmentListItem = ({
                 }
             />
             <ConditionallyRender
-                condition={hasAccess(DELETE_ENVIRONMENT)}
+                condition={hasAccess(DELETE_ENVIRONMENT) && !env.protected}
                 show={
                     <Tooltip title="Delete environment">
                         <IconButton
