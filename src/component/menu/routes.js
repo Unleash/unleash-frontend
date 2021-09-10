@@ -359,7 +359,7 @@ export const routes = [
         component: Reporting,
         type: 'protected',
         layout: 'main',
-        menu: { mobile: true, advanced: true },
+        menu: { mobile: true },
     },
     // Admin
     {
