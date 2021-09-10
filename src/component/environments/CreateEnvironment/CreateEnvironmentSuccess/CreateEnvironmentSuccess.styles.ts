@@ -35,4 +35,7 @@ export const useStyles = makeStyles(theme => ({
         marginTop: '2.5rem',
         minWidth: '150px',
     },
+    link: {
+        color: theme.palette.primary.main,
+    },
 }));

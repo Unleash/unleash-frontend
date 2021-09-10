@@ -24,4 +24,8 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
     },
+    inputField: {
+        width: '100%',
+        marginTop: '1rem',
+    },
 }));

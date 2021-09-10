@@ -5,6 +5,7 @@ export interface IEnvironment {
     displayName: string;
     sortOrder: number;
     enabled: boolean;
+    protected: boolean;
 }
 
 export interface IEnvironmentPayload {

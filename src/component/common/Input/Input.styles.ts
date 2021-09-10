@@ -6,6 +6,7 @@ export const useStyles = makeStyles(theme => ({
         top: '35px',
     },
     inputContainer: {
+        width: '100%',
         position: 'relative',
     },
 }));

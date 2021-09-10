@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormControl, TextField, Button } from '@material-ui/core';
+import { FormControl, Button } from '@material-ui/core';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent';
 
@@ -11,6 +11,7 @@ import CreateEnvironmentSuccess from './CreateEnvironmentSuccess/CreateEnvironme
 import useLoading from '../../../hooks/useLoading';
 import useToast from '../../../hooks/useToast';
 import EnvironmentTypeSelector from '../form/EnvironmentTypeSelector/EnvironmentTypeSelector';
+import Input from '../../common/Input/Input';
 
 const NAME_EXISTS_ERROR = 'Error: Environment';
 
@@ -30,8 +31,10 @@ const CreateEnvironment = () => {
         setType(event.currentTarget.value);
     };
 
-    const handleEnvNameChange = (e: React.FormEvent<HTMLInputElement>) =>
+    const handleEnvNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         setEnvName(e.currentTarget.value);
+        setEnvDisplayName(e.currentTarget.value);
+    };
 
     const handleEnvDisplayName = (e: React.FormEvent<HTMLInputElement>) =>
         setEnvDisplayName(e.currentTarget.value);
@@ -57,7 +60,7 @@ const CreateEnvironment = () => {
 
     const clearNameError = () => setNameError('');
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const validName = await validateEnvironmentName();
 
@@ -103,11 +106,6 @@ const CreateEnvironment = () => {
 
                         <form onSubmit={handleSubmit}>
                             <FormControl component="fieldset">
-                                <EnvironmentTypeSelector
-                                    onChange={handleTypeChange}
-                                    value={type}
-                                />
-
                                 <h3 className={styles.formHeader} data-loading>
                                     Environment Id and name
                                 </h3>
@@ -119,26 +117,18 @@ const CreateEnvironment = () => {
                                     }
                                 >
                                     <p>
-                                        Environment id is a unique name for the
-                                        env that you will use in your SDK to
-                                        retrieve correct configurations
+                                        Unique env name for SDK configurations.
                                     </p>
-                                    <TextField
-                                        size="small"
-                                        variant="outlined"
-                                        rows={4}
+                                    <Input
                                         label="Environment Id"
                                         onFocus={clearNameError}
                                         placeholder="A unique name for your environment"
                                         onBlur={validateEnvironmentName}
                                         error={Boolean(nameError)}
                                         helperText={nameError}
-                                        style={{
-                                            maxWidth: '400px',
-                                            marginTop: '1rem',
-                                        }}
                                         value={envName}
                                         onChange={handleEnvNameChange}
+                                        className={styles.inputField}
                                     />
                                 </div>
 
@@ -148,26 +138,19 @@ const CreateEnvironment = () => {
                                         styles.environmentDetailsContainer
                                     }
                                 >
-                                    <p>
-                                        The display name is the name visible for
-                                        other users.
-                                    </p>
-                                    <TextField
-                                        size="small"
-                                        variant="outlined"
-                                        rows={4}
+                                    <p>Environment display name.</p>
+                                    <Input
                                         label="Display name"
                                         placeholder="Optional name to be displayed in the admin panel"
-                                        error={''}
-                                        helperText={''}
-                                        style={{
-                                            maxWidth: '400px',
-                                            marginTop: '1rem',
-                                        }}
+                                        className={styles.inputField}
                                         value={envDisplayName}
                                         onChange={handleEnvDisplayName}
                                     />
                                 </div>
+                                <EnvironmentTypeSelector
+                                    onChange={handleTypeChange}
+                                    value={type}
+                                />
                             </FormControl>
                             <div className={styles.btnContainer}>
                                 <Button

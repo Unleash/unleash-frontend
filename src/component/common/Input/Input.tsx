@@ -10,6 +10,8 @@ interface IInputProps {
     className?: string;
     value: string;
     onChange: (e: any) => any;
+    onFocus?: (e: any) => any;
+    onBlur?: (e: any) => any;
 }
 
 const Input = ({

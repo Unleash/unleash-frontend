@@ -27,6 +27,7 @@ const EnvironmentList = () => {
         displayName: '',
         sortOrder: 0,
         createdAt: '',
+        enabled: true,
         protected: false,
     };
     const { environments, refetch } = useEnvironments();

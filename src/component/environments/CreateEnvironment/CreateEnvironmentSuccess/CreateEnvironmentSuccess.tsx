@@ -34,7 +34,7 @@ const CreateEnvironmentSuccess = ({
             <h2 className={styles.subheader}>Next steps</h2>
             <div className={styles.nextSteps}>
                 <div className={styles.step}>
-                    <div className={styles.stepOneHeader}>
+                    <div>
                         <div className={styles.stepBadge}>1</div>
                         <h3 className={styles.subheader}>
                             Update SDK version and provide the environment id to
@@ -45,13 +45,18 @@ const CreateEnvironmentSuccess = ({
                             will only retrieve activation strategies for
                             specified environment
                         </p>
-                        <a href="#" target="_blank" rel="noopener noreferrer">
+                        <a
+                            href="https://docs.getunleash.io/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.link}
+                        >
                             Learn more
                         </a>
                     </div>
                 </div>
                 <div className={styles.step}>
-                    <div className={styles.stepOneHeader}>
+                    <div>
                         <div className={styles.stepBadge}>2</div>
                         <h3 className={styles.subheader}>
                             Add environment specific activation strategies
@@ -61,7 +66,12 @@ const CreateEnvironmentSuccess = ({
                             You can now select this environment when you are
                             adding new activation strategies on feature toggles.
                         </p>
-                        <a href="#" target="_blank" rel="noopener noreferrer">
+                        <a
+                            href="https://docs.getunleash.io/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.link}
+                        >
                             Learn more
                         </a>
                     </div>
