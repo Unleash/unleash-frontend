@@ -42,6 +42,7 @@ import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
+import FeatureView2 from '../feature/FeatureView2/FeatureView2';
 
 export const routes = [
     // Features
@@ -239,6 +240,16 @@ export const routes = [
         component: CopyFeatureToggle,
         type: 'protected',
         layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:projectId/features2/:featureId',
+        parent: '/projects',
+        title: 'FeatureView2',
+        component: FeatureView2,
+        type: 'protected',
+        layout: 'main',
+        flags: E,
         menu: {},
     },
     {
