@@ -1,6 +1,7 @@
 import {
     IEnvironmentPayload,
     ISortOrderPayload,
+    IEnvironmentEditPayload,
 } from '../../../../interfaces/environments';
 import useAPI from '../useApi/useApi';
 
@@ -62,7 +63,7 @@ const useEnvironmentApi = () => {
 
     const updateEnvironment = async (
         name: string,
-        payload: IEnvironmentPayload
+        payload: IEnvironmentEditPayload
     ) => {
         const path = `api/admin/environments/${name}`;
         const req = createRequest(

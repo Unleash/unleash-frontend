@@ -13,6 +13,12 @@ export interface IEnvironmentPayload {
     type: string;
 }
 
+export interface IEnvironmentEditPayload {
+    sortOrder: number;
+    displayName: string;
+    type: string;
+}
+
 export interface IEnvironmentResponse {
     environments: IEnvironment[];
 }

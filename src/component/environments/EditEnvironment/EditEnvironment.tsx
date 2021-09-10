@@ -56,7 +56,7 @@ const EditEnvironment = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const updatedEnv = {
-            ...env,
+            sortOrder: env.sortOrder,
             displayName: envDisplayName,
             type,
         };
