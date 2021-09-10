@@ -125,7 +125,7 @@ const CreateEnvironment = () => {
                                         placeholder="A unique name for your environment"
                                         onBlur={validateEnvironmentName}
                                         error={Boolean(nameError)}
-                                        helperText={nameError}
+                                        errorText={nameError}
                                         value={envName}
                                         onChange={handleEnvNameChange}
                                         className={styles.inputField}
