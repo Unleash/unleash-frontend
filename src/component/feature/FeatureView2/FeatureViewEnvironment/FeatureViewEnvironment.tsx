@@ -3,7 +3,6 @@ import { useStyles } from './FeatureViewEnvironment.styles';
 
 const FeatureViewEnvironment = ({ env }: any) => {
     const styles = useStyles();
-    console.log(env.enabled);
     return (
         <div style={{ width: '100%' }}>
             <div className={styles.environmentContainer}>

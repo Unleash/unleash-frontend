@@ -7,8 +7,6 @@ const FeatureView2 = () => {
     const { projectId, featureId } = useParams();
     const { feature } = useFeature(projectId, featureId);
 
-    console.log(feature);
-
     return (
         <div style={{ display: 'flex', width: '100%' }}>
             <FeatureViewMetaData />

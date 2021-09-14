@@ -204,6 +204,16 @@ Array [
   },
   Object {
     "component": [Function],
+    "flags": "E",
+    "layout": "main",
+    "menu": Object {},
+    "parent": "/projects",
+    "path": "/projects/:projectId/features2/:featureId",
+    "title": "FeatureView2",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "layout": "main",
     "menu": Object {},
     "parent": "/projects",
