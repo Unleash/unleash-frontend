@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { formatApiPath } from '../../../../utils/format-path';
 import { IFeatureToggle } from '../../../../interfaces/featureToggle';
+import { defaultFeature } from './defaultFeature';
 
 const useFeature = (projectId: string, id: string) => {
     const fetcher = () => {
@@ -27,8 +28,15 @@ const useFeature = (projectId: string, id: string) => {
         setLoading(!error && !data);
     }, [data, error]);
 
+    let feature = defaultFeature;
+    if (data) {
+        if (data.environments) {
+            feature = data;
+        }
+    }
+
     return {
-        feature: data || { environments: [] },
+        feature,
         error,
         loading,
         refetch,
