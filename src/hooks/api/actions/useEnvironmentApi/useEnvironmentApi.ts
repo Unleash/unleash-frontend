@@ -65,7 +65,7 @@ const useEnvironmentApi = () => {
         name: string,
         payload: IEnvironmentEditPayload
     ) => {
-        const path = `api/admin/environments/${name}`;
+        const path = `api/admin/environments/update/${name}`;
         const req = createRequest(
             path,
             { method: 'PUT', body: JSON.stringify(payload) },
