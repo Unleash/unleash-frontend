@@ -1,5 +1,4 @@
 import { Switch } from '@material-ui/core';
-import classnames from 'classnames';
 import { useStyles } from './FeatureViewEnvironment.styles';
 
 const FeatureViewEnvironment = ({ env }: any) => {
