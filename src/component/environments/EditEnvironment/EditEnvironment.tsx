@@ -71,7 +71,6 @@ const EditEnvironment = ({
             resetFields();
             refetch();
         } catch (e) {
-            console.log(e);
             setToastData({
                 show: true,
                 type: 'error',
