@@ -69,13 +69,15 @@ const EnvironmentList = () => {
             {}
         );
 
-        await sortOrderAPICall(sortOrder).catch(e => {
+        try {
+            await sortOrderAPICall(sortOrder);
+        } catch (e) {
             setToastData({
                 show: true,
                 type: 'error',
                 text: e.toString(),
             });
-        });
+        }
 
         mutate(ENVIRONMENT_CACHE_KEY);
     };
