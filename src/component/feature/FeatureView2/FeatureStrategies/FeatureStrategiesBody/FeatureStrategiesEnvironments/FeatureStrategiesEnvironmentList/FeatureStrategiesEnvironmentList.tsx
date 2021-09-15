@@ -5,9 +5,7 @@ import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { useEffect, useState } from 'react';
 import { resolveDefaultParamValue } from '../../../../../strategy/AddStrategy/utils';
 import { useParams } from 'react-router-dom';
-import useStrategies, {
-    STRATEGIES_CACHE_KEY,
-} from '../../../../../../../hooks/api/getters/useStrategies/useStrategies';
+import useStrategies from '../../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { mutate } from 'swr';
 import useFeature from '../../../../../../../hooks/api/getters/useFeature/useFeature';
 
@@ -27,32 +25,28 @@ const FeatureStrategiesEnvironmentList = ({
     const { strategies: selectableStrategies } = useStrategies();
     const { projectId, featureId } = useParams();
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
-    console.log(env, feature);
-    const environment = feature.environments.find(
-        environment => environment.name === env
-    );
-    const addNewStrategy = (strategy: IStrategy) => {
-        //const newStrategies = [...strategies, strategy];
-        // const environment = feature.environments.find(
-        //     environment => environment.name === env
-        // );
 
-        // const newEnvironment = {
-        //     ...environment,
-        //     strategies: [...environment?.strategies, strategy],
-        // };
+    const addNewStrategy = async (strategy: IStrategy) => {
+        // Consider a deepclone tool or write a utility function
+        let envs = [...feature.environments];
+        envs = envs.map(env => {
+            const newEnv = { ...env };
+            newEnv.strategies = [...newEnv.strategies];
+            return newEnv;
+        });
 
-        // const newFeature = {
-        //     ...feature,
-        //     environments: [
-        //         ...feature.environments.filter(
-        //             environment => environment.name !== env
-        //         ),
-        //         newEnvironment,
-        //     ],
-        // };
+        const newFeature = {
+            ...feature,
+            environments: envs,
+        };
 
-        mutate(FEATURE_CACHE_KEY, { feature: newFeature }, false);
+        const environment = newFeature.environments.find(
+            environment => environment.name === env
+        );
+
+        environment?.strategies.push(strategy);
+
+        mutate(FEATURE_CACHE_KEY, { ...newFeature }, false);
     };
 
     const selectStrategy = (name: string) => {
@@ -80,6 +74,7 @@ const FeatureStrategiesEnvironmentList = ({
         drop(item: IFeatureDragItem, monitor: DropTargetMonitor) {
             //  const dragIndex = item.index;
             //  const hoverIndex = index;
+
             const strategy = selectStrategy(item.name);
 
             if (!strategy) return;

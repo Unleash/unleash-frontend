@@ -17,7 +17,10 @@ const useFeature = (projectId: string, id: string) => {
 
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
 
-    const { data, error } = useSWR<IFeatureToggle>(FEATURE_CACHE_KEY, fetcher);
+    const { data, error, mutate } = useSWR<IFeatureToggle>(
+        FEATURE_CACHE_KEY,
+        fetcher
+    );
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
@@ -27,16 +30,9 @@ const useFeature = (projectId: string, id: string) => {
     useEffect(() => {
         setLoading(!error && !data);
     }, [data, error]);
-
-    let feature = defaultFeature;
-    if (data) {
-        if (data.environments) {
-            feature = data;
-        }
-    }
-
+    console.log('DATA', data);
     return {
-        feature,
+        feature: data || defaultFeature,
         error,
         loading,
         refetch,

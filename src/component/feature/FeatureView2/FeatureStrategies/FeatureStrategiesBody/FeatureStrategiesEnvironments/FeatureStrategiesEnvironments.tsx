@@ -12,10 +12,9 @@ const FeatureStrategiesEnvironments = () => {
     const { a11yProps, activeTab, setActiveTab } = useTabs(1);
 
     const { feature } = useFeature(projectId, featureId);
-    const { environments } = feature;
 
     const renderTabs = () => {
-        return environments.map((env, index) => {
+        return feature?.environments?.map((env, index) => {
             return (
                 <Tab
                     key={`${env.name}_${index}`}
@@ -29,7 +28,7 @@ const FeatureStrategiesEnvironments = () => {
     };
 
     const renderTabPanels = () => {
-        return environments.map((env, index) => {
+        return feature.environments?.map((env, index) => {
             return (
                 <TabPanel
                     key={`tab_panel_${index}`}
