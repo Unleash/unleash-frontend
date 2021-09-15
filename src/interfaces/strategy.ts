@@ -3,6 +3,10 @@ export interface IStrategy {
     id: string;
     name: string;
     parameters: IParameter;
+    deprecated: boolean;
+    editable: boolean;
+    displayName: string;
+    description: string;
 }
 
 export interface IConstraint {
