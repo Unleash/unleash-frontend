@@ -6,9 +6,12 @@ export const useStyles = makeStyles(theme => ({
         maxWidth: '280px',
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '3px',
-
         margin: '0.5rem 0',
         display: 'flex',
+        '&:active': {
+            backgroundColor: theme.palette.primary.main,
+            color: '#fff',
+        },
     },
     leftSection: {
         display: 'flex',
@@ -23,6 +26,7 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         boxShadow: '1px 1px 2px rgb(135 135 135 / 40%)',
+        backgroundColor: '#fff',
     },
     icon: {
         fill: theme.palette.primary.main,
@@ -30,5 +34,8 @@ export const useStyles = makeStyles(theme => ({
     description: {
         marginTop: '0.5rem',
         fontSize: theme.fontSizes.smallerBody,
+    },
+    isDragging: {
+        backgroundColor: theme.palette.primary.main,
     },
 }));

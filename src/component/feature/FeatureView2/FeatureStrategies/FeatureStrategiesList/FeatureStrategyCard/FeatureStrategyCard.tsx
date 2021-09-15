@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import { useDrag } from 'react-dnd';
 import {
     getFeatureStrategyIcon,
     getHumanReadbleStrategyName,
@@ -9,17 +11,31 @@ interface IFeatureStrategyCardProps {
     description: string;
 }
 
+export const FEATURE_STRATEGIES_DRAG_TYPE = 'FEATURE_STRATEGIES_DRAG_TYPE';
+
 const FeatureStrategyCard = ({
     name,
     description,
 }: IFeatureStrategyCardProps) => {
     const styles = useStyles();
 
+    const [{ isDragging }, drag] = useDrag({
+        type: FEATURE_STRATEGIES_DRAG_TYPE,
+        item: () => {
+            return { name };
+        },
+        collect: (monitor: any) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+
     const readableName = getHumanReadbleStrategyName(name);
     const Icon = getFeatureStrategyIcon(name);
 
+    const classes = classNames(styles.featureStrategyCard);
+
     return (
-        <div className={styles.featureStrategyCard}>
+        <div className={classes} ref={drag}>
             <div className={styles.leftSection}>
                 <div className={styles.iconContainer}>
                     {<Icon className={styles.icon} />}

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 import { IStrategy } from '../../../../interfaces/strategy';
 
-const REQUEST_KEY = 'api/admin/strategies';
+export const STRATEGIES_CACHE_KEY = 'api/admin/strategies';
 
 const useStrategies = () => {
     const fetcher = () => {
@@ -16,13 +16,13 @@ const useStrategies = () => {
     };
 
     const { data, error } = useSWR<{ strategies: IStrategy[] }>(
-        REQUEST_KEY,
+        STRATEGIES_CACHE_KEY,
         fetcher
     );
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
-        mutate(REQUEST_KEY);
+        mutate(STRATEGIES_CACHE_KEY);
     };
 
     useEffect(() => {

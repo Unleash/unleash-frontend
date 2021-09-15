@@ -15,13 +15,13 @@ const useFeature = (projectId: string, id: string) => {
         }).then(res => res.json());
     };
 
-    const KEY = `api/admin/projects/${projectId}/features/${id}`;
+    const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
 
-    const { data, error } = useSWR<IFeatureToggle>(KEY, fetcher);
+    const { data, error } = useSWR<IFeatureToggle>(FEATURE_CACHE_KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
-        mutate(KEY);
+        mutate(FEATURE_CACHE_KEY);
     };
 
     useEffect(() => {
@@ -40,6 +40,7 @@ const useFeature = (projectId: string, id: string) => {
         error,
         loading,
         refetch,
+        FEATURE_CACHE_KEY,
     };
 };
 
