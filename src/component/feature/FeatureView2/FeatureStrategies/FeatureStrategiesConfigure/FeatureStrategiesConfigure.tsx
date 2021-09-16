@@ -1,29 +1,24 @@
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useContext } from 'react';
-import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
-import { getHumanReadbleStrategyName } from '../../../../../../utils/strategy-names';
-import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import FeatureStrategyAccordion from '../FeatureStrategiesEnvironments/FeatureStrategiesEnvironmentList/FeatureStrategyAccordion/FeatureStrategyAccordion';
+import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
+import { getHumanReadbleStrategyName } from '../../../../../utils/strategy-names';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
+import FeatureStrategyAccordion from '../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useStyles } from './FeatureStrategiesConfigure.styles';
 
 const FeatureStrategiesConfigure = () => {
     const styles = useStyles();
-    const { activeEnvironment, setConfigureNewStrategy } = useContext(
-        FeatureStrategiesUIContext
-    );
-    const configurableStrategy =
-        activeEnvironment.strategies[activeEnvironment.strategies.length - 1];
+    const { activeEnvironment, setConfigureNewStrategy, configureNewStrategy } =
+        useContext(FeatureStrategiesUIContext);
 
     const handleCancel = () => setConfigureNewStrategy(false);
-
-    console.log(activeEnvironment);
 
     return (
         <div className={styles.container}>
             <h2 className={styles.header}>
                 Configuring{' '}
-                {getHumanReadbleStrategyName(configurableStrategy.name)} in{' '}
+                {getHumanReadbleStrategyName(configureNewStrategy.name)} in{' '}
                 {activeEnvironment.name}
             </h2>
             <ConditionallyRender
@@ -34,9 +29,16 @@ const FeatureStrategiesConfigure = () => {
                         take effect immediately after you save your changes.
                     </Alert>
                 }
+                elseShow={
+                    <Alert severity="warning">
+                        This environment is currently disabled. The strategy
+                        will not take effect before you enable the environment
+                        on the feature toggle.
+                    </Alert>
+                }
             />
             <FeatureStrategyAccordion
-                strategy={configurableStrategy}
+                strategy={configureNewStrategy}
                 expanded
                 hideActions
             />

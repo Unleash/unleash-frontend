@@ -1,8 +1,8 @@
 import { Paper } from '@material-ui/core';
 import FeatureStrategiesList from './FeatureStrategiesList/FeatureStrategiesList';
 import { useStyles } from './FeatureStrategies.styles';
-import FeatureStrategiesBody from './FeatureStrategiesBody/FeatureStrategiesBody';
 import FeatureStrategiesUIProvider from './FeatureStrategiesUIProvider';
+import FeatureStrategiesEnvironments from './FeatureStrategiesEnvironments/FeatureStrategiesEnvironments';
 
 const FeatureStrategies = () => {
     const styles = useStyles();
@@ -10,7 +10,7 @@ const FeatureStrategies = () => {
         <Paper className={styles.container}>
             <FeatureStrategiesUIProvider>
                 <FeatureStrategiesList />
-                <FeatureStrategiesBody />
+                <FeatureStrategiesEnvironments />
             </FeatureStrategiesUIProvider>
         </Paper>
     );

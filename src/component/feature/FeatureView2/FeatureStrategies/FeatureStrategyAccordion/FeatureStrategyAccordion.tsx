@@ -1,4 +1,4 @@
-import { IStrategy } from '../../../../../../../../interfaces/strategy';
+import { IStrategy } from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
 import {
@@ -11,10 +11,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
     getFeatureStrategyIcon,
     getHumanReadbleStrategyName,
-} from '../../../../../../../../utils/strategy-names';
+} from '../../../../../utils/strategy-names';
 import { useStyles } from './FeatureStrategyAccordion.styles';
-import ConditionallyRender from '../../../../../../../common/ConditionallyRender';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { Delete, FileCopy } from '@material-ui/icons';
+import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
@@ -35,7 +36,7 @@ const FeatureStrategyAccordion = ({
 
     return (
         <div className={styles.container}>
-            <Accordion className={styles.accordion} expanded={expanded}>
+            <Accordion className={styles.accordion} defaultExpanded={expanded}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="strategy-content"
@@ -85,11 +86,7 @@ const FeatureStrategyAccordion = ({
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
-                    </p>
+                    <FeatureStrategyAccordionBody strategy={strategy} />
                 </AccordionDetails>
             </Accordion>
         </div>

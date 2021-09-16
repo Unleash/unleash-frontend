@@ -1,19 +1,24 @@
 import { useParams } from 'react-router-dom';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
 import { Tabs, Tab } from '@material-ui/core';
-import TabPanel from '../../../../../common/TabNav/TabPanel';
-import useTabs from '../../../../../../hooks/useTabs';
+import TabPanel from '../../../../common/TabNav/TabPanel';
+import useTabs from '../../../../../hooks/useTabs';
 import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
 import { useContext, useEffect } from 'react';
-import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
+import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
+import FeatureStrategiesConfigure from '../FeatureStrategiesConfigure/FeatureStrategiesConfigure';
 
 const FeatureStrategiesEnvironments = () => {
     const startingTabId = 1;
     const { projectId, featureId } = useParams();
+
     const styles = useStyles();
     const { a11yProps, activeTab, setActiveTab } = useTabs(startingTabId);
-    const { setActiveEnvironment } = useContext(FeatureStrategiesUIContext);
+    const { setActiveEnvironment, configureNewStrategy } = useContext(
+        FeatureStrategiesUIContext
+    );
     const { feature } = useFeature(projectId, featureId, false);
 
     useEffect(() => {
@@ -52,7 +57,7 @@ const FeatureStrategiesEnvironments = () => {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.tabContainer}>
                 <Tabs
                     value={activeTab}
@@ -68,7 +73,13 @@ const FeatureStrategiesEnvironments = () => {
                 </Tabs>
             </div>
 
-            <div className={styles.bodyContent}>{renderTabPanels()}</div>
+            <div className={styles.bodyContent}>
+                {renderTabPanels()}
+                <ConditionallyRender
+                    condition={configureNewStrategy}
+                    show={<FeatureStrategiesConfigure />}
+                />
+            </div>
         </div>
     );
 };
