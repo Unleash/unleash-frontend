@@ -2,12 +2,16 @@ import { IStrategy } from '../../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import FeatureStrategyAccordion from './FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { resolveDefaultParamValue } from '../../../../../strategy/AddStrategy/utils';
 import { useParams } from 'react-router-dom';
 import useStrategies from '../../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { mutate } from 'swr';
 import useFeature from '../../../../../../../hooks/api/getters/useFeature/useFeature';
+import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
+import classnames from 'classnames';
+import { GetApp } from '@material-ui/icons';
+import FeatureStrategiesUIContext from '../../../../../../../contexts/FeatureStrategiesUIContext';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -22,8 +26,10 @@ const FeatureStrategiesEnvironmentList = ({
     strategies,
     env,
 }: IFeatureStrategiesEnvironmentListProps) => {
+    const styles = useStyles();
     const { strategies: selectableStrategies } = useStrategies();
     const { projectId, featureId } = useParams();
+    const { setConfigureNewStrategy } = useContext(FeatureStrategiesUIContext);
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
 
     const addNewStrategy = async (strategy: IStrategy) => {
@@ -64,11 +70,11 @@ const FeatureStrategiesEnvironmentList = ({
         return selectedStrategy;
     };
 
-    const [{ handlerId }, drop] = useDrop({
+    const [{ isOver }, drop] = useDrop({
         accept: FEATURE_STRATEGIES_DRAG_TYPE,
         collect(monitor) {
             return {
-                handlerId: monitor.getHandlerId(),
+                isOver: monitor.isOver(),
             };
         },
         drop(item: IFeatureDragItem, monitor: DropTargetMonitor) {
@@ -79,6 +85,7 @@ const FeatureStrategiesEnvironmentList = ({
 
             if (!strategy) return;
             addNewStrategy(strategy);
+            setConfigureNewStrategy(true);
         },
     });
 
@@ -88,7 +95,27 @@ const FeatureStrategiesEnvironmentList = ({
         });
     };
 
-    return <div ref={drop}>{renderStrategies()}</div>;
+    const classes = classnames(styles.container, {
+        [styles.isOver]: isOver,
+    });
+
+    const dropboxClasses = classnames(styles.dropbox, {
+        [styles.dropboxActive]: isOver,
+    });
+
+    const iconClasses = classnames(styles.dropIcon, {
+        [styles.dropIconActive]: isOver,
+    });
+
+    return (
+        <div className={classes} ref={drop}>
+            {renderStrategies()}
+            <div className={dropboxClasses}>
+                <p>Drag and drop strategies from the left side menu</p>
+                <GetApp className={iconClasses} />
+            </div>
+        </div>
+    );
 };
 
 export default FeatureStrategiesEnvironmentList;

@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    tabContainer: {},
+    tabContainer: {
+        margin: '2rem 2rem 0rem 2rem',
+    },
     tabNavigation: {
         backgroundColor: 'transparent',
         textTransform: 'none',
@@ -12,8 +14,5 @@ export const useStyles = makeStyles(theme => ({
     tabButton: {
         textTransform: 'none',
         width: 'auto',
-    },
-    bodyContent: {
-        marginTop: '2rem',
     },
 }));

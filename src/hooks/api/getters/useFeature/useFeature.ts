@@ -5,7 +5,7 @@ import { formatApiPath } from '../../../../utils/format-path';
 import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 import { defaultFeature } from './defaultFeature';
 
-const useFeature = (projectId: string, id: string) => {
+const useFeature = (projectId: string, id: string, revalidate = true) => {
     const fetcher = () => {
         const path = formatApiPath(
             `api/admin/projects/${projectId}/features/${id}`
@@ -17,10 +17,12 @@ const useFeature = (projectId: string, id: string) => {
 
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
 
-    const { data, error, mutate } = useSWR<IFeatureToggle>(
-        FEATURE_CACHE_KEY,
-        fetcher
-    );
+    const { data, error } = useSWR<IFeatureToggle>(FEATURE_CACHE_KEY, fetcher, {
+        revalidateOnFocus: revalidate,
+        revalidateOnReconnect: revalidate,
+        revalidateIfStale: revalidate,
+    });
+
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {

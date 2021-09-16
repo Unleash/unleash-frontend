@@ -18,10 +18,14 @@ import { Delete, FileCopy } from '@material-ui/icons';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
+    hideActions?: boolean;
+    expanded?: boolean;
 }
 
 const FeatureStrategyAccordion = ({
     strategy,
+    expanded = false,
+    hideActions = false,
 }: IFeatureStrategyAccordionProps) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
@@ -31,7 +35,7 @@ const FeatureStrategyAccordion = ({
 
     return (
         <div className={styles.container}>
-            <Accordion className={styles.accordion}>
+            <Accordion className={styles.accordion} expanded={expanded}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="strategy-content"
@@ -50,30 +54,34 @@ const FeatureStrategyAccordion = ({
                                 </p>
                             }
                         />
+                        <ConditionallyRender
+                            condition={!hideActions}
+                            show={
+                                <div className={styles.accordionActions}>
+                                    <Tooltip title="Delete strategy">
+                                        <IconButton
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                console.log('DELETING');
+                                            }}
+                                        >
+                                            <Delete />
+                                        </IconButton>
+                                    </Tooltip>
 
-                        <div className={styles.accordionActions}>
-                            <Tooltip title="Delete strategy">
-                                <IconButton
-                                    onClick={e => {
-                                        e.stopPropagation();
-                                        console.log('DELETING');
-                                    }}
-                                >
-                                    <Delete />
-                                </IconButton>
-                            </Tooltip>
-
-                            <Tooltip title="Copy strategy">
-                                <IconButton
-                                    onClick={e => {
-                                        e.stopPropagation();
-                                        console.log('COPYING');
-                                    }}
-                                >
-                                    <FileCopy />
-                                </IconButton>
-                            </Tooltip>
-                        </div>
+                                    <Tooltip title="Copy strategy">
+                                        <IconButton
+                                            onClick={e => {
+                                                e.stopPropagation();
+                                                console.log('COPYING');
+                                            }}
+                                        >
+                                            <FileCopy />
+                                        </IconButton>
+                                    </Tooltip>
+                                </div>
+                            }
+                        />
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>

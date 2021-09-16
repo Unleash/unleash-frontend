@@ -5,13 +5,20 @@ import { Tabs, Tab } from '@material-ui/core';
 import TabPanel from '../../../../../common/TabNav/TabPanel';
 import useTabs from '../../../../../../hooks/useTabs';
 import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
+import { useContext, useEffect } from 'react';
+import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 
 const FeatureStrategiesEnvironments = () => {
+    const startingTabId = 1;
     const { projectId, featureId } = useParams();
     const styles = useStyles();
-    const { a11yProps, activeTab, setActiveTab } = useTabs(1);
+    const { a11yProps, activeTab, setActiveTab } = useTabs(startingTabId);
+    const { setActiveEnvironment } = useContext(FeatureStrategiesUIContext);
+    const { feature } = useFeature(projectId, featureId, false);
 
-    const { feature } = useFeature(projectId, featureId);
+    useEffect(() => {
+        setActiveEnvironment(feature?.environments[activeTab]);
+    }, [feature]);
 
     const renderTabs = () => {
         return feature?.environments?.map((env, index) => {
@@ -51,6 +58,7 @@ const FeatureStrategiesEnvironments = () => {
                     value={activeTab}
                     onChange={(_, tabId) => {
                         setActiveTab(tabId);
+                        setActiveEnvironment(feature?.environments[tabId]);
                     }}
                     indicatorColor="primary"
                     textColor="primary"

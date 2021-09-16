@@ -3,6 +3,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import LanguageIcon from '@material-ui/icons/Language';
 import { ReactComponent as GradualRolloutIcon } from '../assets/icons/gradual.svg';
 import MapIcon from '@material-ui/icons/Map';
+import { DonutLarge } from '@material-ui/icons';
 
 const nameMapping = {
     applicationHostname: {
@@ -61,7 +62,7 @@ export const getFeatureStrategyIcon = strategyName => {
         case 'remoteAddress':
             return LanguageIcon;
         case 'flexibleRollout':
-            return GradualRolloutIcon;
+            return DonutLarge;
         case 'userWithId':
             return PeopleIcon;
         case 'applicationHostname':

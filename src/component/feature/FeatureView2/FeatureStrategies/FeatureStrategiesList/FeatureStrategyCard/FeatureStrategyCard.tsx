@@ -1,14 +1,17 @@
+import { IconButton } from '@material-ui/core';
 import classNames from 'classnames';
 import { useDrag } from 'react-dnd';
 import {
     getFeatureStrategyIcon,
     getHumanReadbleStrategyName,
 } from '../../../../../../utils/strategy-names';
+import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyCard.styles';
 
 interface IFeatureStrategyCardProps {
     name: string;
     description: string;
+    configureNewStrategy: boolean;
 }
 
 export const FEATURE_STRATEGIES_DRAG_TYPE = 'FEATURE_STRATEGIES_DRAG_TYPE';
@@ -16,6 +19,7 @@ export const FEATURE_STRATEGIES_DRAG_TYPE = 'FEATURE_STRATEGIES_DRAG_TYPE';
 const FeatureStrategyCard = ({
     name,
     description,
+    configureNewStrategy,
 }: IFeatureStrategyCardProps) => {
     const styles = useStyles();
 
@@ -35,17 +39,29 @@ const FeatureStrategyCard = ({
     const classes = classNames(styles.featureStrategyCard);
 
     return (
-        <div className={classes} ref={drag}>
-            <div className={styles.leftSection}>
-                <div className={styles.iconContainer}>
-                    {<Icon className={styles.icon} />}
-                </div>
-            </div>
-            <div className={styles.rightSection}>
-                <p>{readableName}</p>
-                <p className={styles.description}>{description}</p>
-            </div>
-        </div>
+        <>
+            <ConditionallyRender
+                condition={!configureNewStrategy}
+                show={
+                    <div className={classes} ref={drag}>
+                        <div className={styles.leftSection}>
+                            <div className={styles.iconContainer}>
+                                {<Icon className={styles.icon} />}
+                            </div>
+                        </div>
+                        <div className={styles.rightSection}>
+                            <p>{readableName}</p>
+                            <p className={styles.description}>{description}</p>
+                        </div>
+                    </div>
+                }
+                elseShow={
+                    <IconButton disabled>
+                        <Icon />
+                    </IconButton>
+                }
+            />
+        </>
     );
 };
 
