@@ -37,7 +37,7 @@ const FeatureStrategyCard = ({
     const Icon = getFeatureStrategyIcon(name);
 
     const classes = classNames(styles.featureStrategyCard);
-
+    console.log(configureNewStrategy);
     return (
         <>
             <ConditionallyRender

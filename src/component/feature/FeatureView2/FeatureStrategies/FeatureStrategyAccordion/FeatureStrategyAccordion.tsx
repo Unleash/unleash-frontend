@@ -6,6 +6,7 @@ import {
     AccordionDetails,
     IconButton,
     Tooltip,
+    debounce,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
@@ -16,23 +17,37 @@ import { useStyles } from './FeatureStrategyAccordion.styles';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { Delete, FileCopy } from '@material-ui/icons';
 import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';
+import { useContext, useEffect, useState } from 'react';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
     hideActions?: boolean;
     expanded?: boolean;
+    setStrategyParams: () => any;
+    index?: number;
 }
 
 const FeatureStrategyAccordion = ({
     strategy,
     expanded = false,
     hideActions = false,
+    setStrategyParams,
 }: IFeatureStrategyAccordionProps) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
     const Icon = getFeatureStrategyIcon(strategy.name);
+    const [parameters, setParameters] = useState(strategy.parameters);
 
-    const { parameters } = strategy;
+    const debouncedStrategyParams = debounce(setStrategyParams, 250);
+
+    useEffect(() => {
+        setStrategyParams(parameters);
+    }, []);
+
+    const updateParameters = (field: string, value: any) => {
+        setParameters(prev => ({ ...prev, [field]: value }));
+        debouncedStrategyParams(parameters);
+    };
 
     return (
         <div className={styles.container}>
@@ -86,7 +101,10 @@ const FeatureStrategyAccordion = ({
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <FeatureStrategyAccordionBody strategy={strategy} />
+                    <FeatureStrategyAccordionBody
+                        strategy={{ ...strategy, parameters }}
+                        updateParameters={updateParameters}
+                    />
                 </AccordionDetails>
             </Accordion>
         </div>

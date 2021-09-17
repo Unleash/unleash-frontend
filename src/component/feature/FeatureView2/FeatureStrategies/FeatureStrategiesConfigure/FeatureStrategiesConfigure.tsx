@@ -1,18 +1,23 @@
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import { getHumanReadbleStrategyName } from '../../../../../utils/strategy-names';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategyAccordion from '../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useStyles } from './FeatureStrategiesConfigure.styles';
+import cloneDeep from 'lodash.clonedeep';
+import FeatureStrategiesExecution from '../FeatureStrategiesExecution/FeatureStrategiesExecution';
 
 const FeatureStrategiesConfigure = () => {
     const styles = useStyles();
     const { activeEnvironment, setConfigureNewStrategy, configureNewStrategy } =
         useContext(FeatureStrategiesUIContext);
+    const [strategyParams, setStrategyParams] = useState({});
 
-    const handleCancel = () => setConfigureNewStrategy(false);
+    const handleCancel = () => setConfigureNewStrategy(null);
+
+    console.log(strategyParams);
 
     return (
         <div className={styles.container}>
@@ -37,11 +42,20 @@ const FeatureStrategiesConfigure = () => {
                     </Alert>
                 }
             />
-            <FeatureStrategyAccordion
-                strategy={configureNewStrategy}
-                expanded
-                hideActions
-            />
+
+            <div className={styles.configureContainer}>
+                <div className={styles.accordionContainer}>
+                    <FeatureStrategyAccordion
+                        strategy={configureNewStrategy}
+                        expanded
+                        hideActions
+                        setStrategyParams={setStrategyParams}
+                    />
+                </div>
+                <div className={styles.executionContainer}>
+                    <FeatureStrategiesExecution {...strategyParams} />
+                </div>
+            </div>
 
             <div className={styles.buttonContainer}>
                 <Button

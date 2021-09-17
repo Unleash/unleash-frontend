@@ -5,6 +5,8 @@ export const useStyles = makeStyles(theme => ({
         margin: '1rem 0',
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
+        transition: 'transform 0.3s ease',
+        transitionDelay: '0.1s',
     },
     accordion: {
         boxShadow: 'none',

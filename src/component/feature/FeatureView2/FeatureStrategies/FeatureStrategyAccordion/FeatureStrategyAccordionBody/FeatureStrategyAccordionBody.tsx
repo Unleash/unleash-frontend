@@ -1,18 +1,22 @@
-import { useContext } from 'react';
-import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import DefaultStrategy from '../../../../strategy/EditStrategyModal/default-strategy';
 import FlexibleStrategy from '../../../../strategy/EditStrategyModal/FlexibleStrategy';
 import UserWithIdStrategy from '../../../../strategy/EditStrategyModal/user-with-id-strategy';
 import GeneralStrategy from '../../../../strategy/EditStrategyModal/general-strategy';
 import { IStrategy } from '../../../../../../interfaces/strategy';
+import cloneDeep from 'lodash.clonedeep';
+import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IStrategy;
+    setStrategyParams: () => any;
 }
 
 const FeatureStrategyAccordionBody = ({
     strategy,
+    updateParameters,
 }: IFeatureStrategyAccordionBodyProps) => {
+    const { context } = useUnleashContext();
+
     const resolveInputType = () => {
         switch (strategy?.name) {
             case 'default':
@@ -32,7 +36,13 @@ const FeatureStrategyAccordionBody = ({
 
     return (
         <div>
-            <Type parameters={parameters} updateParameter={() => {}} />
+            <Type
+                parameters={parameters}
+                updateParameter={updateParameters}
+                strategyDefinition={{ ...cloneDeep(strategy) }}
+                context={context}
+                editable
+            />
         </div>
     );
 };

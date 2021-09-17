@@ -9,6 +9,7 @@ import { useContext, useEffect } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategiesConfigure from '../FeatureStrategiesConfigure/FeatureStrategiesConfigure';
+import classNames from 'classnames';
 
 const FeatureStrategiesEnvironments = () => {
     const startingTabId = 1;
@@ -56,8 +57,12 @@ const FeatureStrategiesEnvironments = () => {
         });
     };
 
+    const classes = classNames(styles.container, {
+        [styles.fullWidth]: configureNewStrategy,
+    });
+
     return (
-        <div className={styles.container}>
+        <div className={classes}>
             <div className={styles.tabContainer}>
                 <Tabs
                     value={activeTab}

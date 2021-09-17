@@ -4,6 +4,10 @@ export const useStyles = makeStyles(theme => ({
     container: {
         width: '70%',
     },
+    fullWidth: {
+        width: '90%',
+    },
+
     tabContainer: {
         margin: '2rem 2rem 0rem 2rem',
     },

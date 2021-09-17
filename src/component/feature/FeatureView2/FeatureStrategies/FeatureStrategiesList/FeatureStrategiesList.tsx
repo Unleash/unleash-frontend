@@ -12,8 +12,6 @@ const FeatureStrategiesList = () => {
 
     const { strategies } = useStrategies();
 
-    console.log('CONFIGURING NEW STRATEGY', configureNewStrategy);
-
     const renderStrategies = () => {
         return strategies
             .filter((strategy: IStrategy) => !strategy.deprecated)

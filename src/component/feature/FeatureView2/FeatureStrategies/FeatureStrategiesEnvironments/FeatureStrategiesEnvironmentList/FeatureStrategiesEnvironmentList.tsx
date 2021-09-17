@@ -2,7 +2,7 @@ import { IStrategy } from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
 import { useParams } from 'react-router-dom';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
@@ -14,6 +14,7 @@ import { GetApp } from '@material-ui/icons';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import cloneDeep from 'lodash.clonedeep';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
+import AnimateOnMount from '../../../../../common/AnimateOnMount/AnimateOnMount';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -34,6 +35,9 @@ const FeatureStrategiesEnvironmentList = ({
     const { setConfigureNewStrategy, configureNewStrategy } = useContext(
         FeatureStrategiesUIContext
     );
+
+    const [strategyParams, setStrategyParams] = useState({});
+
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
 
     const addNewStrategy = async (strategy: IStrategy) => {
@@ -54,15 +58,13 @@ const FeatureStrategiesEnvironmentList = ({
         const selectedStrategy = selectableStrategies.find(
             strategy => strategy.name === name
         );
+        const parameters = {};
 
         selectedStrategy?.parameters.forEach(({ name }) => {
-            selectedStrategy.parameters[name] = resolveDefaultParamValue(
-                name,
-                featureId
-            );
+            parameters[name] = resolveDefaultParamValue(name, featureId);
         });
 
-        return selectedStrategy;
+        return { name, parameters, constraints: [] };
     };
 
     const [{ isOver }, drop] = useDrop({
@@ -77,7 +79,6 @@ const FeatureStrategiesEnvironmentList = ({
             //  const hoverIndex = index;
 
             const strategy = selectStrategy(item.name);
-
             if (!strategy) return;
             //addNewStrategy(strategy);
             setConfigureNewStrategy(strategy);
@@ -85,8 +86,14 @@ const FeatureStrategiesEnvironmentList = ({
     });
 
     const renderStrategies = () => {
-        return strategies.map(strategy => {
-            return <FeatureStrategyAccordion strategy={strategy} />;
+        return strategies.map((strategy, index) => {
+            return (
+                <FeatureStrategyAccordion
+                    strategy={strategy}
+                    setStrategyParams={() => {}}
+                    index={index}
+                />
+            );
         });
     };
 
@@ -103,18 +110,18 @@ const FeatureStrategiesEnvironmentList = ({
     });
 
     return (
-        <div className={classes} ref={drop}>
-            {renderStrategies()}
-            <ConditionallyRender
-                condition={!configureNewStrategy}
-                show={
+        <ConditionallyRender
+            condition={!configureNewStrategy}
+            show={
+                <div className={classes} ref={drop}>
+                    {renderStrategies()}
                     <div className={dropboxClasses}>
                         <p>Drag and drop strategies from the left side menu</p>
                         <GetApp className={iconClasses} />
                     </div>
-                }
-            />
-        </div>
+                </div>
+            }
+        />
     );
 };
 
