@@ -8,7 +8,7 @@ import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList
 import { useContext, useEffect } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
-import FeatureStrategiesConfigure from '../FeatureStrategiesConfigure/FeatureStrategiesConfigure';
+import FeatureStrategiesConfigure from './FeatureStrategiesConfigure/FeatureStrategiesConfigure';
 import classNames from 'classnames';
 
 const FeatureStrategiesEnvironments = () => {
@@ -30,6 +30,7 @@ const FeatureStrategiesEnvironments = () => {
         return feature?.environments?.map((env, index) => {
             return (
                 <Tab
+                    disabled={configureNewStrategy}
                     key={`${env.name}_${index}`}
                     label={env.name}
                     {...a11yProps(index)}
@@ -60,6 +61,8 @@ const FeatureStrategiesEnvironments = () => {
     const classes = classNames(styles.container, {
         [styles.fullWidth]: configureNewStrategy,
     });
+
+    console.log(configureNewStrategy);
 
     return (
         <div className={classes}>

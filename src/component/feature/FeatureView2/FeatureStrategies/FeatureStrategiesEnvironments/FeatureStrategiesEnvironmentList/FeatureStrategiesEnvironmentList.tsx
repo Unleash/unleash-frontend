@@ -15,6 +15,11 @@ import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrate
 import cloneDeep from 'lodash.clonedeep';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import AnimateOnMount from '../../../../../common/AnimateOnMount/AnimateOnMount';
+import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
+import useToast from '../../../../../../hooks/useToast';
+import Dialogue from '../../../../../common/Dialogue';
+import { Alert } from '@material-ui/lab';
+import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -32,26 +37,39 @@ const FeatureStrategiesEnvironmentList = ({
     const styles = useStyles();
     const { strategies: selectableStrategies } = useStrategies();
     const { projectId, featureId } = useParams();
-    const { setConfigureNewStrategy, configureNewStrategy } = useContext(
-        FeatureStrategiesUIContext
-    );
+    const { setConfigureNewStrategy, configureNewStrategy, activeEnvironment } =
+        useContext(FeatureStrategiesUIContext);
+    const { deleteStrategyFromFeature } = useFeatureStrategyApi();
+    const { toast, setToastData } = useToast();
+    const [delDialog, setDelDialog] = useState({ strategyId: '', show: false });
 
     const [strategyParams, setStrategyParams] = useState({});
 
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
 
-    const addNewStrategy = async (strategy: IStrategy) => {
-        // Consider a deepclone tool or write a utility function
-        // use cloneDeep to avoid mutating the original object
-        const newFeature = cloneDeep(feature);
-
-        const environment = newFeature.environments.find(
-            environment => environment.name === env
-        );
-
-        environment?.strategies.push(strategy);
-
-        // mutate(FEATURE_CACHE_KEY, { ...newFeature }, false);
+    const deleteStrategy = async (strategyId: string) => {
+        try {
+            const environmentId = activeEnvironment.name;
+            await deleteStrategyFromFeature(
+                projectId,
+                featureId,
+                environmentId,
+                strategyId
+            );
+            mutate(FEATURE_CACHE_KEY);
+            setDelDialog({ strategyId: '', show: false });
+            setToastData({
+                show: true,
+                type: 'success',
+                text: `Successfully deleted strategy from ${featureId}`,
+            });
+        } catch (e) {
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
+        }
     };
 
     const selectStrategy = (name: string) => {
@@ -87,13 +105,30 @@ const FeatureStrategiesEnvironmentList = ({
 
     const renderStrategies = () => {
         return strategies.map((strategy, index) => {
-            return (
-                <FeatureStrategyAccordion
-                    strategy={strategy}
-                    setStrategyParams={() => {}}
-                    index={index}
-                />
-            );
+            if (index !== strategies.length - 1) {
+                return (
+                    <>
+                        <FeatureStrategyAccordion
+                            strategy={strategy}
+                            setStrategyParams={() => {}}
+                            index={index}
+                            key={strategy.id}
+                            setDelDialog={setDelDialog}
+                        />
+                        <FeatureStrategiesSeparator text="OR" />
+                    </>
+                );
+            } else {
+                return (
+                    <FeatureStrategyAccordion
+                        strategy={strategy}
+                        setStrategyParams={() => {}}
+                        index={index}
+                        key={strategy.id}
+                        setDelDialog={setDelDialog}
+                    />
+                );
+            }
         });
     };
 
@@ -119,6 +154,22 @@ const FeatureStrategiesEnvironmentList = ({
                         <p>Drag and drop strategies from the left side menu</p>
                         <GetApp className={iconClasses} />
                     </div>
+                    {toast}
+                    <Dialogue
+                        title="Are you sure you want to delete this strategy?"
+                        open={delDialog.show}
+                        primaryButtonText="Delete strategy"
+                        secondaryButtonText="Cancel"
+                        onClick={() => deleteStrategy(delDialog.strategyId)}
+                        onClose={() =>
+                            setDelDialog({ show: false, strategyId: '' })
+                        }
+                    >
+                        <Alert severity="error">
+                            Deleting the strategy will affect which users
+                            receive access to the feature.
+                        </Alert>
+                    </Dialogue>
                 </div>
             }
         />

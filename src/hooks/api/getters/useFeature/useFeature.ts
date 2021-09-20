@@ -32,7 +32,7 @@ const useFeature = (projectId: string, id: string, revalidate = true) => {
     useEffect(() => {
         setLoading(!error && !data);
     }, [data, error]);
-    console.log('DATA', data);
+
     return {
         feature: data || defaultFeature,
         error,

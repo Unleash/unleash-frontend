@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        margin: '1rem 0',
+        margin: '0.5rem 0',
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
         transition: 'transform 0.3s ease',

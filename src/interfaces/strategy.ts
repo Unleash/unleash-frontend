@@ -21,3 +21,9 @@ export interface IParameter {
     stickiness?: string;
     [index: string]: any;
 }
+
+export interface IStrategyPayload {
+    name: string;
+    constraints: IConstraint[];
+    parameters: IParameter;
+}

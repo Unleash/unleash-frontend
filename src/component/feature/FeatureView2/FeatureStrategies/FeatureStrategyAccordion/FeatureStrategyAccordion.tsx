@@ -17,7 +17,7 @@ import { useStyles } from './FeatureStrategyAccordion.styles';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { Delete, FileCopy } from '@material-ui/icons';
 import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';
-import { useContext, useEffect, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
@@ -25,6 +25,9 @@ interface IFeatureStrategyAccordionProps {
     expanded?: boolean;
     setStrategyParams: () => any;
     index?: number;
+    setDelDialog: React.Dispatch<
+        SetStateAction<{ strategyId: string; show: boolean }>
+    >;
 }
 
 const FeatureStrategyAccordion = ({
@@ -32,6 +35,7 @@ const FeatureStrategyAccordion = ({
     expanded = false,
     hideActions = false,
     setStrategyParams,
+    setDelDialog,
 }: IFeatureStrategyAccordionProps) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
@@ -46,7 +50,12 @@ const FeatureStrategyAccordion = ({
 
     const updateParameters = (field: string, value: any) => {
         setParameters(prev => ({ ...prev, [field]: value }));
-        debouncedStrategyParams(parameters);
+
+        if (field === 'rollout') {
+            debouncedStrategyParams(parameters);
+        } else {
+            setStrategyParams(parameters);
+        }
     };
 
     return (
@@ -78,7 +87,10 @@ const FeatureStrategyAccordion = ({
                                         <IconButton
                                             onClick={e => {
                                                 e.stopPropagation();
-                                                console.log('DELETING');
+                                                setDelDialog({
+                                                    strategyId: strategy.id,
+                                                    show: true,
+                                                });
                                             }}
                                         >
                                             <Delete />
@@ -89,7 +101,6 @@ const FeatureStrategyAccordion = ({
                                         <IconButton
                                             onClick={e => {
                                                 e.stopPropagation();
-                                                console.log('COPYING');
                                             }}
                                         >
                                             <FileCopy />
