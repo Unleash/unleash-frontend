@@ -22,4 +22,7 @@ export const useStyles = makeStyles(theme => ({
     executionContainer: {
         width: '32%',
     },
+    envWarning: {
+        marginBottom: '1rem',
+    },
 }));

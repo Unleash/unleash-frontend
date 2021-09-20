@@ -1,5 +1,6 @@
 import { IconButton } from '@material-ui/core';
 import classNames from 'classnames';
+import { useContext } from 'react';
 import { useDrag } from 'react-dnd';
 import {
     getFeatureStrategyIcon,
@@ -37,7 +38,7 @@ const FeatureStrategyCard = ({
     const Icon = getFeatureStrategyIcon(name);
 
     const classes = classNames(styles.featureStrategyCard);
-    console.log(configureNewStrategy);
+
     return (
         <>
             <ConditionallyRender

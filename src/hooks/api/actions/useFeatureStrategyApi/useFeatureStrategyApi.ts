@@ -25,7 +25,7 @@ const useFeatureStrategyApi = () => {
         );
 
         try {
-            const res = await makeRequest(req.caller, req.id, false);
+            const res = await makeRequest(req.caller, req.id);
 
             return res;
         } catch (e) {
@@ -47,7 +47,30 @@ const useFeatureStrategyApi = () => {
         );
 
         try {
-            const res = await makeRequest(req.caller, req.id, false);
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const updateStrategyOnFeature = async (
+        projectId: string,
+        featureId: string,
+        environmentId: string,
+        strategyId: string,
+        payload: IStrategyPayload
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/strategies/${strategyId}`;
+        const req = createRequest(
+            path,
+            { method: 'PUT', body: JSON.stringify(payload)  },
+            'updateStrategyOnFeature'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
 
             return res;
         } catch (e) {
@@ -57,6 +80,7 @@ const useFeatureStrategyApi = () => {
 
     return {
         addStrategyToFeature,
+        updateStrategyOnFeature,
         deleteStrategyFromFeature,
         loading,
         errors,

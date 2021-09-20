@@ -7,8 +7,18 @@ export const useStyles = makeStyles(theme => ({
     fullWidth: {
         width: '90%',
     },
+    environmentsHeader: {
+        padding: '2rem 2rem 1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    header: {
+        fontSize: theme.fontSizes.mainHeader,
+        fontWeight: 'normal',
+    },
     tabContainer: {
-        margin: '2rem 2rem 0rem 2rem',
+        margin: '0rem 2rem 2rem 2rem',
     },
     tabNavigation: {
         backgroundColor: 'transparent',

@@ -18,7 +18,7 @@ const FeatureStrategiesSeparator = ({
                 maxWidth: '50px',
                 fontSize: theme.fontSizes.smallerBody,
                 textAlign: 'center',
-                marginLeft: '1rem',
+                margin: '0.5rem 0rem 0.5rem 1rem',
             }}
         >
             {text}

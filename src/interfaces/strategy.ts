@@ -23,7 +23,9 @@ export interface IParameter {
 }
 
 export interface IStrategyPayload {
-    name: string;
+    name?: string;
     constraints: IConstraint[];
     parameters: IParameter;
 }
+
+

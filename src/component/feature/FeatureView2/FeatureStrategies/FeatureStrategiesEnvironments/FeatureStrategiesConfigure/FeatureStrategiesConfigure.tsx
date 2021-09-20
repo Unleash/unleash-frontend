@@ -18,13 +18,20 @@ const FeatureStrategiesConfigure = () => {
     const { projectId, featureId } = useParams();
 
     const styles = useStyles();
-    const { activeEnvironment, setConfigureNewStrategy, configureNewStrategy } =
-        useContext(FeatureStrategiesUIContext);
+    const {
+        activeEnvironment,
+        setConfigureNewStrategy,
+        configureNewStrategy,
+        setExpandedSidebar,
+    } = useContext(FeatureStrategiesUIContext);
     const [strategyParams, setStrategyParams] = useState({});
     const { addStrategyToFeature } = useFeatureStrategyApi();
     const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
 
-    const handleCancel = () => setConfigureNewStrategy(null);
+    const handleCancel = () => {
+        setConfigureNewStrategy(null);
+        setExpandedSidebar(true);
+    };
 
     const handleSubmit = async () => {
         const strategyPayload = {
@@ -41,7 +48,8 @@ const FeatureStrategiesConfigure = () => {
             );
 
             mutate(FEATURE_CACHE_KEY);
-            setConfigureNewStrategy(false);
+            setConfigureNewStrategy(null);
+            setExpandedSidebar(false);
         } catch {}
     };
 
@@ -55,13 +63,13 @@ const FeatureStrategiesConfigure = () => {
             <ConditionallyRender
                 condition={activeEnvironment.enabled}
                 show={
-                    <Alert severity="warning">
+                    <Alert severity="warning" className={styles.envWarning}>
                         This environment is currently enabled. The strategy will
                         take effect immediately after you save your changes.
                     </Alert>
                 }
                 elseShow={
-                    <Alert severity="warning">
+                    <Alert severity="warning" className={styles.envWarning}>
                         This environment is currently disabled. The strategy
                         will not take effect before you enable the environment
                         on the feature toggle.

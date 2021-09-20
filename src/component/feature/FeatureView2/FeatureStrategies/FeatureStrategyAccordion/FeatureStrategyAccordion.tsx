@@ -1,4 +1,4 @@
-import { IStrategy } from '../../../../../interfaces/strategy';
+import { IParameter, IStrategy } from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
 import {
@@ -23,11 +23,13 @@ interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
     hideActions?: boolean;
     expanded?: boolean;
-    setStrategyParams: () => any;
+    setStrategyParams: (paremeters: IParameter, strategyId?: string) => any;
     index?: number;
     setDelDialog: React.Dispatch<
         SetStateAction<{ strategyId: string; show: boolean }>
     >;
+    edit?: boolean;
+    dirty?: boolean;
 }
 
 const FeatureStrategyAccordion = ({
@@ -36,6 +38,8 @@ const FeatureStrategyAccordion = ({
     hideActions = false,
     setStrategyParams,
     setDelDialog,
+    edit = false,
+    dirty = false,
 }: IFeatureStrategyAccordionProps) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
@@ -45,16 +49,19 @@ const FeatureStrategyAccordion = ({
     const debouncedStrategyParams = debounce(setStrategyParams, 250);
 
     useEffect(() => {
-        setStrategyParams(parameters);
+        setStrategyParams(parameters, strategy.id);
     }, []);
 
     const updateParameters = (field: string, value: any) => {
         setParameters(prev => ({ ...prev, [field]: value }));
 
         if (field === 'rollout') {
-            debouncedStrategyParams(parameters);
+            debouncedStrategyParams(
+                { ...parameters, [field]: value },
+                strategy.id
+            );
         } else {
-            setStrategyParams(parameters);
+            setStrategyParams({ ...parameters, [field]: value }, strategy.id);
         }
     };
 
@@ -66,6 +73,14 @@ const FeatureStrategyAccordion = ({
                     aria-controls="strategy-content"
                     id={strategy.name}
                 >
+                    <ConditionallyRender
+                        condition={dirty}
+                        show={
+                            <div className={styles.unsaved}>
+                                Unsaved changes
+                            </div>
+                        }
+                    />
                     <div className={styles.accordionSummary}>
                         <p className={styles.accordionHeader}>
                             <Icon className={styles.icon} /> {strategyName}

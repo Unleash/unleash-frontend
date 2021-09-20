@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab, Button } from '@material-ui/core';
 import TabPanel from '../../../../common/TabNav/TabPanel';
 import useTabs from '../../../../../hooks/useTabs';
 import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
@@ -17,9 +17,12 @@ const FeatureStrategiesEnvironments = () => {
 
     const styles = useStyles();
     const { a11yProps, activeTab, setActiveTab } = useTabs(startingTabId);
-    const { setActiveEnvironment, configureNewStrategy } = useContext(
-        FeatureStrategiesUIContext
-    );
+    const {
+        setActiveEnvironment,
+        configureNewStrategy,
+        expandedSidebar,
+        setExpandedSidebar,
+    } = useContext(FeatureStrategiesUIContext);
     const { feature } = useFeature(projectId, featureId, false);
 
     useEffect(() => {
@@ -59,13 +62,21 @@ const FeatureStrategiesEnvironments = () => {
     };
 
     const classes = classNames(styles.container, {
-        [styles.fullWidth]: configureNewStrategy,
+        [styles.fullWidth]: !expandedSidebar,
     });
-
-    console.log(configureNewStrategy);
 
     return (
         <div className={classes}>
+            <div className={styles.environmentsHeader}>
+                <h2 className={styles.header}>Environments</h2>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setExpandedSidebar(prev => !prev)}
+                >
+                    {expandedSidebar ? 'Hide sidebar' : 'Add new strategy'}
+                </Button>
+            </div>
             <div className={styles.tabContainer}>
                 <Tabs
                     value={activeTab}

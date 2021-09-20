@@ -7,7 +7,7 @@ import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategie
 import classnames from 'classnames';
 
 const FeatureStrategiesList = () => {
-    const { configureNewStrategy } = useContext(FeatureStrategiesUIContext);
+    const { expandedSidebar } = useContext(FeatureStrategiesUIContext);
     const styles = useStyles();
 
     const { strategies } = useStrategies();
@@ -17,7 +17,7 @@ const FeatureStrategiesList = () => {
             .filter((strategy: IStrategy) => !strategy.deprecated)
             .map((strategy: IStrategy) => (
                 <FeatureStrategyCard
-                    configureNewStrategy={configureNewStrategy}
+                    configureNewStrategy={!expandedSidebar}
                     name={strategy.name}
                     description={strategy.description}
                 />
@@ -25,7 +25,7 @@ const FeatureStrategiesList = () => {
     };
 
     const classes = classnames(styles.sidebar, {
-        [styles.sidebarSmall]: configureNewStrategy,
+        [styles.sidebarSmall]: !expandedSidebar,
     });
 
     return <section className={classes}>{renderStrategies()}</section>;

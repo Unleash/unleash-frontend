@@ -10,6 +10,9 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.light,
         opacity: '0.75',
     },
+    strategiesContainer: {
+        maxWidth: '70%',
+    },
     dropbox: {
         textAlign: 'center',
         fontSize: theme.fontSizes.smallBody,
@@ -17,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
         border: `2px dotted ${theme.palette.primary.light}`,
         borderRadius: '3px',
         transition: 'background-color 0.4s ease',
+        marginTop: '1rem',
     },
     dropboxActive: {
         border: `2px dotted #fff`,
