@@ -11,9 +11,10 @@ interface IFeatureStrategyAccordionBodyProps {
     setStrategyParams: () => any;
 }
 
-const FeatureStrategyAccordionBody = ({
+const FeatureStrategyAccordionBody: React.FC = ({
     strategy,
     updateParameters,
+    children,
 }: IFeatureStrategyAccordionBodyProps) => {
     const { context } = useUnleashContext();
 
@@ -43,6 +44,7 @@ const FeatureStrategyAccordionBody = ({
                 context={context}
                 editable
             />
+            {children}
         </div>
     );
 };

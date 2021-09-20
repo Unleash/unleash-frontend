@@ -65,7 +65,7 @@ const useFeatureStrategyApi = () => {
         const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/strategies/${strategyId}`;
         const req = createRequest(
             path,
-            { method: 'PUT', body: JSON.stringify(payload)  },
+            { method: 'PUT', body: JSON.stringify(payload) },
             'updateStrategyOnFeature'
         );
 

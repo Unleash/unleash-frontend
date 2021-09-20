@@ -1,8 +1,12 @@
-import { IParameter, IStrategy, IStrategyPayload } from '../../../../../../interfaces/strategy';
+import {
+    IParameter,
+    IStrategy,
+    IStrategyPayload,
+} from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
 import { useParams } from 'react-router-dom';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
@@ -12,9 +16,7 @@ import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
 import { GetApp } from '@material-ui/icons';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
-import cloneDeep from 'lodash.clonedeep';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import AnimateOnMount from '../../../../../common/AnimateOnMount/AnimateOnMount';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 import useToast from '../../../../../../hooks/useToast';
 import Dialogue from '../../../../../common/Dialogue';
@@ -43,7 +45,9 @@ const FeatureStrategiesEnvironmentList = ({
         activeEnvironment,
         setExpandedSidebar,
     } = useContext(FeatureStrategiesUIContext);
-    const { deleteStrategyFromFeature, updateStrategyOnFeature } = useFeatureStrategyApi();
+
+    const { deleteStrategyFromFeature, updateStrategyOnFeature } =
+        useFeatureStrategyApi();
     const { toast, setToastData } = useToast();
     const [delDialog, setDelDialog] = useState({ strategyId: '', show: false });
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
@@ -67,10 +71,37 @@ const FeatureStrategiesEnvironmentList = ({
         setOriginalParams(parameterMap);
     };
 
-    const updateStrategy = (strategyId: string) => {
-        const updateStrategyPayload: IStrategyPayload = { constraints: [], parameters: strategyParams[strategyId] } 
-        updateStrategyOnFeature(projectId, featureId, activeEnvironment.id, strategyId, updateStrategyPayload)
-    }
+    const updateStrategy = async (strategyId: string) => {
+        const updateStrategyPayload: IStrategyPayload = {
+            constraints: [],
+            parameters: strategyParams[strategyId],
+        };
+        try {
+            await updateStrategyOnFeature(
+                projectId,
+                featureId,
+                activeEnvironment.id,
+                strategyId,
+                updateStrategyPayload
+            );
+            mutate(FEATURE_CACHE_KEY);
+            setToastData({
+                show: true,
+                type: 'success',
+                text: `Successfully updated strategy`,
+            });
+            setOriginalParams(prevParams => ({
+                ...prevParams,
+                [strategyId]: updateStrategyPayload.parameters,
+            }));
+        } catch (e) {
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
+        }
+    };
 
     const deleteStrategy = async (strategyId: string) => {
         try {
@@ -165,18 +196,18 @@ const FeatureStrategiesEnvironmentList = ({
             const dirty = isDirty(strategy.id);
             if (index !== strategies.length - 1) {
                 return (
-                    <>
+                    <Fragment key={strategy.id}>
                         <FeatureStrategyAccordion
                             strategy={strategy}
                             setStrategyParams={onSetStrategyParams}
                             index={index}
-                            key={strategy.id}
                             setDelDialog={setDelDialog}
                             edit
                             dirty={dirty}
+                            updateStrategy={updateStrategy}
                         />
                         <FeatureStrategiesSeparator text="OR" />
-                    </>
+                    </Fragment>
                 );
             } else {
                 return (
@@ -188,6 +219,7 @@ const FeatureStrategiesEnvironmentList = ({
                         setDelDialog={setDelDialog}
                         edit
                         dirty={dirty}
+                        updateStrategy={updateStrategy}
                     />
                 );
             }

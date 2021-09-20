@@ -7,6 +7,7 @@ import {
     IconButton,
     Tooltip,
     debounce,
+    Button,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
@@ -30,6 +31,7 @@ interface IFeatureStrategyAccordionProps {
     >;
     edit?: boolean;
     dirty?: boolean;
+    updateStrategy?: (strategyId: string) => void;
 }
 
 const FeatureStrategyAccordion = ({
@@ -40,6 +42,7 @@ const FeatureStrategyAccordion = ({
     setDelDialog,
     edit = false,
     dirty = false,
+    updateStrategy,
 }: IFeatureStrategyAccordionProps) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
@@ -130,7 +133,25 @@ const FeatureStrategyAccordion = ({
                     <FeatureStrategyAccordionBody
                         strategy={{ ...strategy, parameters }}
                         updateParameters={updateParameters}
-                    />
+                    >
+                        <ConditionallyRender
+                            condition={dirty && updateStrategy}
+                            show={
+                                <div>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() =>
+                                            updateStrategy(strategy.id)
+                                        }
+                                        style={{ marginTop: '1rem' }}
+                                    >
+                                        Save changes
+                                    </Button>
+                                </div>
+                            }
+                        />{' '}
+                    </FeatureStrategyAccordionBody>
                 </AccordionDetails>
             </Accordion>
         </div>
