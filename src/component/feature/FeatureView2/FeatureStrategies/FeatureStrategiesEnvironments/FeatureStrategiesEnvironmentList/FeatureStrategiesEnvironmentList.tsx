@@ -22,6 +22,7 @@ import useToast from '../../../../../../hooks/useToast';
 import Dialogue from '../../../../../common/Dialogue';
 import { Alert } from '@material-ui/lab';
 import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
+import FeatureStrategiesEnvironmentListItem from './FeatureStrategiesEnvironmentListItem/FeatureStrategiesEnvironmentListItem';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -46,62 +47,12 @@ const FeatureStrategiesEnvironmentList = ({
         setExpandedSidebar,
     } = useContext(FeatureStrategiesUIContext);
 
-    const { deleteStrategyFromFeature, updateStrategyOnFeature } =
-        useFeatureStrategyApi();
+    const { deleteStrategyFromFeature } = useFeatureStrategyApi();
     const { toast, setToastData } = useToast();
     const [delDialog, setDelDialog] = useState({ strategyId: '', show: false });
     const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
 
     const { expandedSidebar } = useContext(FeatureStrategiesUIContext);
-    const [strategyParams, setStrategyParams] = useState<IParameter>({});
-    const [originalParams, setOriginalParams] = useState<IParameter>({});
-
-    useEffect(() => {
-        setInitialStrategyParams();
-        /* eslint-disable-next-line */
-    }, [strategies.length]);
-
-    const setInitialStrategyParams = () => {
-        const parameterMap = strategies.reduce((acc, strategy) => {
-            acc[strategy.id] = { ...strategy.parameters };
-            return acc;
-        }, {} as { [key: string]: IParameter });
-
-        setStrategyParams(parameterMap);
-        setOriginalParams(parameterMap);
-    };
-
-    const updateStrategy = async (strategyId: string) => {
-        const updateStrategyPayload: IStrategyPayload = {
-            constraints: [],
-            parameters: strategyParams[strategyId],
-        };
-        try {
-            await updateStrategyOnFeature(
-                projectId,
-                featureId,
-                activeEnvironment.id,
-                strategyId,
-                updateStrategyPayload
-            );
-            mutate(FEATURE_CACHE_KEY);
-            setToastData({
-                show: true,
-                type: 'success',
-                text: `Successfully updated strategy`,
-            });
-            setOriginalParams(prevParams => ({
-                ...prevParams,
-                [strategyId]: updateStrategyPayload.parameters,
-            }));
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
-        }
-    };
 
     const deleteStrategy = async (strategyId: string) => {
         try {
@@ -126,30 +77,6 @@ const FeatureStrategiesEnvironmentList = ({
                 text: e.toString(),
             });
         }
-    };
-
-    const isDirty = (strategyId: string) => {
-        let dirty = false;
-        const initialParams = originalParams[strategyId];
-        const currentParams = strategyParams[strategyId];
-
-        if (!initialParams || !currentParams) return dirty;
-
-        const keys = Object.keys(currentParams);
-
-        keys.forEach(key => {
-            const old = initialParams[key];
-            const current = currentParams[key];
-            if (key === 'rollout') {
-                console.log(old, current);
-            }
-
-            if (old !== current) {
-                dirty = true;
-            }
-        });
-
-        return dirty;
     };
 
     const onSetStrategyParams = (
@@ -193,33 +120,26 @@ const FeatureStrategiesEnvironmentList = ({
 
     const renderStrategies = () => {
         return strategies.map((strategy, index) => {
-            const dirty = isDirty(strategy.id);
             if (index !== strategies.length - 1) {
                 return (
                     <Fragment key={strategy.id}>
-                        <FeatureStrategyAccordion
+                        <FeatureStrategiesEnvironmentListItem
                             strategy={strategy}
-                            setStrategyParams={onSetStrategyParams}
                             index={index}
                             setDelDialog={setDelDialog}
-                            edit
-                            dirty={dirty}
-                            updateStrategy={updateStrategy}
+                            setToastData={setToastData}
                         />
                         <FeatureStrategiesSeparator text="OR" />
                     </Fragment>
                 );
             } else {
                 return (
-                    <FeatureStrategyAccordion
+                    <FeatureStrategiesEnvironmentListItem
                         strategy={strategy}
-                        setStrategyParams={onSetStrategyParams}
                         index={index}
                         key={strategy.id}
                         setDelDialog={setDelDialog}
-                        edit
-                        dirty={dirty}
-                        updateStrategy={updateStrategy}
+                        setToastData={setToastData}
                     />
                 );
             }

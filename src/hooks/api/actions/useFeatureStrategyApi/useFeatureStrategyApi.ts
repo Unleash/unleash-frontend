@@ -1,8 +1,3 @@
-import {
-    IEnvironmentPayload,
-    ISortOrderPayload,
-    IEnvironmentEditPayload,
-} from '../../../../interfaces/environments';
 import { IStrategyPayload } from '../../../../interfaces/strategy';
 import useAPI from '../useApi/useApi';
 
