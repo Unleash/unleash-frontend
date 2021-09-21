@@ -18,7 +18,14 @@ import { useStyles } from './FeatureStrategyAccordion.styles';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { Delete, FileCopy } from '@material-ui/icons';
 import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';
-import { SetStateAction, useContext, useEffect, useState } from 'react';
+import {
+    memo,
+    SetStateAction,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
@@ -34,128 +41,153 @@ interface IFeatureStrategyAccordionProps {
     updateStrategy?: (strategyId: string) => void;
 }
 
-const FeatureStrategyAccordion = ({
-    strategy,
-    expanded = false,
-    hideActions = false,
-    setStrategyParams,
-    setDelDialog,
-    edit = false,
-    dirty = false,
-    updateStrategy,
-}: IFeatureStrategyAccordionProps) => {
-    const styles = useStyles();
-    const strategyName = getHumanReadbleStrategyName(strategy.name);
-    const Icon = getFeatureStrategyIcon(strategy.name);
-    const [parameters, setParameters] = useState(strategy.parameters);
+const equalProps = (prevProps, nextProps) => {
+    const keys = Object.keys(nextProps?.parameters || []);
+    let equal = true;
 
-    const debouncedStrategyParams = debounce(setStrategyParams, 250);
-
-    useEffect(() => {
-        setStrategyParams(parameters, strategy.id);
-    }, []);
-
-    const updateParameters = (field: string, value: any) => {
-        setParameters(prev => ({ ...prev, [field]: value }));
-
-        if (field === 'rollout') {
-            debouncedStrategyParams(
-                { ...parameters, [field]: value },
-                strategy.id
-            );
-        } else {
-            setStrategyParams({ ...parameters, [field]: value }, strategy.id);
+    keys.forEach(key => {
+        if (prevProps.parameters[key] !== nextProps.parameters[key]) {
+            equal = false;
         }
-    };
+    });
+    if (nextProps.dirty !== prevProps.dirty) {
+        return false;
+    }
 
-    return (
-        <div className={styles.container}>
-            <Accordion className={styles.accordion} defaultExpanded={expanded}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="strategy-content"
-                    id={strategy.name}
+    return equal;
+};
+
+const FeatureStrategyAccordion = memo(
+    ({
+        strategy,
+        expanded = false,
+        hideActions = false,
+        setStrategyParams,
+        setDelDialog,
+        edit = false,
+        dirty = false,
+        updateStrategy,
+    }: IFeatureStrategyAccordionProps) => {
+        const styles = useStyles();
+        const strategyName = getHumanReadbleStrategyName(strategy.name);
+        const Icon = getFeatureStrategyIcon(strategy.name);
+        const [parameters, setParameters] = useState(strategy.parameters);
+
+        const debouncedStrategyParams = debounce(setStrategyParams, 250);
+
+        useEffect(() => {
+            setStrategyParams(parameters, strategy.id);
+        }, []);
+
+        const updateParameters = (field: string, value: any) => {
+            setParameters(prev => ({ ...prev, [field]: value }));
+
+            if (field === 'rollout') {
+                debouncedStrategyParams(
+                    { ...parameters, [field]: value },
+                    strategy.id
+                );
+            } else {
+                setStrategyParams(
+                    { ...parameters, [field]: value },
+                    strategy.id
+                );
+            }
+        };
+
+        return (
+            <div className={styles.container}>
+                <Accordion
+                    className={styles.accordion}
+                    defaultExpanded={expanded}
                 >
-                    <ConditionallyRender
-                        condition={dirty}
-                        show={
-                            <div className={styles.unsaved}>
-                                Unsaved changes
-                            </div>
-                        }
-                    />
-                    <div className={styles.accordionSummary}>
-                        <p className={styles.accordionHeader}>
-                            <Icon className={styles.icon} /> {strategyName}
-                        </p>
-
-                        <ConditionallyRender
-                            condition={Boolean(parameters?.rollout)}
-                            show={
-                                <p className={styles.rollout}>
-                                    Rolling out to {parameters?.rollout}%
-                                </p>
-                            }
-                        />
-                        <ConditionallyRender
-                            condition={!hideActions}
-                            show={
-                                <div className={styles.accordionActions}>
-                                    <Tooltip title="Delete strategy">
-                                        <IconButton
-                                            onClick={e => {
-                                                e.stopPropagation();
-                                                setDelDialog({
-                                                    strategyId: strategy.id,
-                                                    show: true,
-                                                });
-                                            }}
-                                        >
-                                            <Delete />
-                                        </IconButton>
-                                    </Tooltip>
-
-                                    <Tooltip title="Copy strategy">
-                                        <IconButton
-                                            onClick={e => {
-                                                e.stopPropagation();
-                                            }}
-                                        >
-                                            <FileCopy />
-                                        </IconButton>
-                                    </Tooltip>
-                                </div>
-                            }
-                        />
-                    </div>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <FeatureStrategyAccordionBody
-                        strategy={{ ...strategy, parameters }}
-                        updateParameters={updateParameters}
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="strategy-content"
+                        id={strategy.name}
                     >
                         <ConditionallyRender
-                            condition={dirty && updateStrategy}
+                            condition={dirty}
                             show={
-                                <div>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() =>
-                                            updateStrategy(strategy.id)
-                                        }
-                                        style={{ marginTop: '1rem' }}
-                                    >
-                                        Save changes
-                                    </Button>
+                                <div className={styles.unsaved}>
+                                    Unsaved changes
                                 </div>
                             }
-                        />{' '}
-                    </FeatureStrategyAccordionBody>
-                </AccordionDetails>
-            </Accordion>
-        </div>
-    );
-};
+                        />
+                        <div className={styles.accordionSummary}>
+                            <p className={styles.accordionHeader}>
+                                <Icon className={styles.icon} /> {strategyName}
+                            </p>
+
+                            <ConditionallyRender
+                                condition={Boolean(parameters?.rollout)}
+                                show={
+                                    <p className={styles.rollout}>
+                                        Rolling out to {parameters?.rollout}%
+                                    </p>
+                                }
+                            />
+                            <ConditionallyRender
+                                condition={!hideActions}
+                                show={
+                                    <div className={styles.accordionActions}>
+                                        <Tooltip title="Delete strategy">
+                                            <IconButton
+                                                onClick={e => {
+                                                    e.stopPropagation();
+                                                    setDelDialog({
+                                                        strategyId: strategy.id,
+                                                        show: true,
+                                                    });
+                                                }}
+                                            >
+                                                <Delete />
+                                            </IconButton>
+                                        </Tooltip>
+
+                                        <Tooltip title="Copy strategy">
+                                            <IconButton
+                                                onClick={e => {
+                                                    e.stopPropagation();
+                                                }}
+                                            >
+                                                <FileCopy />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </div>
+                                }
+                            />
+                        </div>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <FeatureStrategyAccordionBody
+                            strategy={{ ...strategy, parameters }}
+                            updateParameters={updateParameters}
+                        >
+                            <ConditionallyRender
+                                condition={dirty && updateStrategy}
+                                show={
+                                    <div>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() =>
+                                                updateStrategy(strategy.id)
+                                            }
+                                            style={{ marginTop: '1rem' }}
+                                        >
+                                            Save changes
+                                        </Button>
+                                    </div>
+                                }
+                            />{' '}
+                        </FeatureStrategyAccordionBody>
+                    </AccordionDetails>
+                </Accordion>
+            </div>
+        );
+    },
+    equalProps
+);
 
 export default FeatureStrategyAccordion;
