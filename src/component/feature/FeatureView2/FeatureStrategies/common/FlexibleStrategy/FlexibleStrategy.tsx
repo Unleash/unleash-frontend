@@ -2,8 +2,10 @@ import { TextField, Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 
 import { IParameter } from '../../../../../../interfaces/strategy';
-import InputPercentage from '../../../../strategy/EditStrategyModal/input-percentage';
+import RolloutSlider from '../RolloutSlider/RolloutSlider';
 import Select from '../../../../../common/select';
+import React from 'react';
+import Input from '../../../../../common/Input/Input';
 
 const builtInStickinessOptions = [
     { key: 'default', label: 'default' },
@@ -23,8 +25,16 @@ const FlexibleStrategy = ({
     parameters,
     context,
 }: IFlexibleStrategyProps) => {
-    const onUpdate = (field: string) => (_, newValue) => {
-        updateParameter(field, newValue);
+    const onUpdate =
+        (field: string) => (e: React.ChangeEvent, newValue: number) => {
+            updateParameter(field, newValue);
+        };
+
+    const updateRollout = (
+        e: React.ChangeEvent<{}>,
+        value: number | number[]
+    ) => {
+        updateParameter('rollout', value);
     };
 
     const resolveStickiness = () =>
@@ -45,10 +55,10 @@ const FlexibleStrategy = ({
 
     return (
         <div>
-            <InputPercentage
+            <RolloutSlider
                 name="Rollout"
                 value={1 * rollout}
-                onChange={onUpdate('rollout')}
+                onChange={updateRollout}
             />
             <br />
             <div>
@@ -100,11 +110,9 @@ const FlexibleStrategy = ({
                         />
                     </Typography>
                 </Tooltip>
-                <TextField
+                <Input
                     label="groupId"
-                    size="small"
-                    variant="outlined"
-                    value={groupId}
+                    value={groupId || ''}
                     onChange={e => onUpdate('groupId')(e, e.target.value)}
                 />
             </div>

@@ -5,17 +5,26 @@ import {
     Tooltip,
     TextField,
 } from '@material-ui/core';
-import strategyInputProps from './strategy-input-props';
-import StrategyInputPercentage from './input-percentage';
-import StrategyInputList from './input-list';
-import styles from '../strategy.module.scss';
 
-export default function GeneralStrategyInput({
+import StrategyInputList from '../StrategyInputList/StrategyInputList';
+import RolloutSlider from '../RolloutSlider/RolloutSlider';
+import { IParameter, IStrategy } from '../../../../../../interfaces/strategy';
+import { useStyles } from './GeneralStrategy.styles';
+
+interface IGeneralStrategyProps {
+    parameters: IParameter;
+    strategyDefinition: IStrategy;
+    updateParameter: () => void;
+    editable: boolean;
+}
+
+const GeneralStrategy = ({
     parameters,
     strategyDefinition,
     updateParameter,
     editable,
-}) {
+}: IGeneralStrategyProps) => {
+    const styles = useStyles();
     const onChangeTextField = (field, evt) => {
         const { value } = evt.currentTarget;
 
@@ -32,7 +41,7 @@ export default function GeneralStrategyInput({
         const value = currentValue === 'true' ? 'false' : 'true';
         updateParameter(key, value);
     };
-    console.log(strategyDefinition);
+
     if (
         strategyDefinition.parameters &&
         strategyDefinition.parameters.length > 0
@@ -51,7 +60,7 @@ export default function GeneralStrategyInput({
                     return (
                         <div key={name}>
                             <br />
-                            <StrategyInputPercentage
+                            <RolloutSlider
                                 name={name}
                                 onChange={onChangePercentage.bind(this, name)}
                                 value={1 * value}
@@ -150,6 +159,6 @@ export default function GeneralStrategyInput({
         );
     }
     return null;
-}
+};
 
-GeneralStrategyInput.propTypes = strategyInputProps;
+export default GeneralStrategy;

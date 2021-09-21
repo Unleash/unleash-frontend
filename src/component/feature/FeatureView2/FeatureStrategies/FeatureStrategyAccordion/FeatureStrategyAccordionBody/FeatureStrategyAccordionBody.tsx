@@ -1,20 +1,23 @@
 import DefaultStrategy from '../../../../strategy/EditStrategyModal/default-strategy';
 import FlexibleStrategy from '../../common/FlexibleStrategy/FlexibleStrategy';
 import UserWithIdStrategy from '../../../../strategy/EditStrategyModal/user-with-id-strategy';
-import GeneralStrategy from '../../../../strategy/EditStrategyModal/general-strategy';
 import { IStrategy } from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
+import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
+import GeneralStrategy from '../../common/GeneralStrategy/GeneralStrategy';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IStrategy;
     setStrategyParams: () => any;
+    updateParameters: () => any;
 }
 
 const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps> =
     ({ strategy, updateParameters, children }) => {
+        const { strategies } = useStrategies();
+
         const { context } = useUnleashContext();
-        console.log(context);
 
         const resolveInputType = () => {
             switch (strategy?.name) {
@@ -29,7 +32,16 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
             }
         };
 
+        const resolveStrategyDefinition = () => {
+            const definition = strategies.find(
+                definition => definition.name === strategy.name
+            );
+
+            return definition;
+        };
+
         const Type = resolveInputType();
+        const definition = resolveStrategyDefinition();
 
         const { parameters } = strategy;
 
@@ -38,7 +50,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                 <Type
                     parameters={parameters}
                     updateParameter={updateParameters}
-                    strategyDefinition={{ ...cloneDeep(strategy) }}
+                    strategyDefinition={definition}
                     context={context}
                     editable
                 />

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
     featureStrategyCard: {
         padding: '1rem',
-        maxWidth: '280px',
+        maxWidth: '290px',
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '3px',
         margin: '0.5rem 0',
@@ -12,6 +12,12 @@ export const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.primary.main,
             color: '#fff',
         },
+    },
+    title: {
+        maxWidth: '150px',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
     },
     leftSection: {
         display: 'flex',

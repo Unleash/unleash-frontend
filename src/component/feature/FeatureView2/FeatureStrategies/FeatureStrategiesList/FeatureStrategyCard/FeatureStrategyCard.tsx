@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import classNames from 'classnames';
 import { useContext } from 'react';
 import { useDrag } from 'react-dnd';
@@ -51,7 +51,9 @@ const FeatureStrategyCard = ({
                             </div>
                         </div>
                         <div className={styles.rightSection}>
-                            <p>{readableName}</p>
+                            <Tooltip title={readableName}>
+                                <p className={styles.title}>{readableName}</p>
+                            </Tooltip>
                             <p className={styles.description}>{description}</p>
                         </div>
                     </div>

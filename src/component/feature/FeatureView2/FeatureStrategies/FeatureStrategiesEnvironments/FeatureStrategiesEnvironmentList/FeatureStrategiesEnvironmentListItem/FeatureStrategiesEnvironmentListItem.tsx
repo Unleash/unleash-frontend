@@ -76,7 +76,7 @@ const FeatureStrategiesEnvironmentListItem = ({
                 strategyId,
                 updateStrategyPayload
             );
-            mutate(FEATURE_CACHE_KEY);
+            //mutate(FEATURE_CACHE_KEY);
             setToastData({
                 show: true,
                 type: 'success',
