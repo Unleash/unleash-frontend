@@ -63,6 +63,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         activeEnvironment,
         setExpandedSidebar,
         expandedSidebar,
+        setFeatureCache,
+        featureCache,
+        resetParams,
+        setResetParams,
     } = useContext(FeatureStrategiesUIContext);
 
     const { toast, setToastData } = useToast();
@@ -76,9 +80,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const activeEnvironmentsRef = useRef(null);
 
     useEffect(() => {
-        setInitialStrategyParams();
-        /* eslint-disable-next-line */
-    }, [strategies.length]);
+        if (resetParams.reset) {
+            setInitialStrategyParams();
+        }
+    }, [resetParams]);
 
     useEffect(() => {
         paramsRef.current = strategyParams;
@@ -110,12 +115,26 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
                 updateStrategyPayload
             );
 
-            mutate(FEATURE_CACHE_KEY);
             setToastData({
                 show: true,
                 type: 'success',
                 text: `Successfully updated strategy`,
             });
+
+            const feature = cloneDeep(featureCache);
+            const environment = feature.environments.find(
+                env => env.name === activeEnvironment.name
+            );
+
+            const strategy = environment.strategies.find(
+                strategy => strategy.id === strategyId
+            );
+
+            strategy.parameters = updateStrategyPayload.parameters;
+            strategy.constraints = updateStrategyPayload.constraints;
+
+            setResetParams({ reset: false });
+            setFeatureCache(feature);
 
             setOriginalParams(prevParams => ({
                 ...prevParams,
@@ -146,7 +165,18 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
                 environmentId,
                 strategyId
             );
-            mutate(FEATURE_CACHE_KEY);
+
+            const feature = cloneDeep(featureCache);
+            const environment = feature.environments.find(
+                env => env.name === environmentId
+            );
+            const strategyIdx = environment.strategies.findIndex(
+                strategy => strategy.id === strategyId
+            );
+
+            environment.strategies.splice(strategyIdx, 1);
+            setFeatureCache(feature);
+
             setDelDialog({ strategyId: '', show: false });
             setToastData({
                 show: true,
@@ -213,8 +243,6 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const discardChanges = (strategyId: string) => {
         const oldParams = cloneDeep(originalParams[strategyId]);
-
-        console.log('DISCARDING', originalParams[strategyId]);
 
         setStrategyParams(prev => ({
             ...prev,

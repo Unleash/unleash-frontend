@@ -32,6 +32,7 @@ import {
 } from 'react';
 
 import cloneDeep from 'lodash.clonedeep';
+import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
@@ -91,12 +92,34 @@ const FeatureStrategyAccordion = memo(
         const [parameters, setParameters] = useState(strategy.parameters);
         const [localStrategyConstraints, setLocalStrategyConstraints] =
             useState(strategy.constraints);
+        const { featureCache, activeEnvironment, resetParams } = useContext(
+            FeatureStrategiesUIContext
+        );
 
         const debouncedStrategyParams = debounce(setStrategyParams, 250);
 
         useEffect(() => {
             setStrategyParams(parameters, strategy.id);
         }, []);
+
+        useEffect(() => {
+            if (!resetParams.reset) {
+                return;
+            }
+
+            const env = featureCache.environments.find(
+                env => env.name === activeEnvironment.name
+            );
+
+            const foundStrategy = env?.strategies.find(
+                strat => strat.id === strategy.id
+            );
+
+            setParameters(cloneDeep(foundStrategy?.parameters) || {});
+            setLocalStrategyConstraints(
+                cloneDeep(foundStrategy?.constraints) || []
+            );
+        }, [featureCache]);
 
         const updateParameters = (field: string, value: any) => {
             setParameters(prev => ({ ...prev, [field]: value }));
@@ -116,7 +139,6 @@ const FeatureStrategyAccordion = memo(
 
         const handleDiscardChanges = () => {
             discardChanges(strategy.id);
-            console.log(originalParams);
             setParameters(originalParams?.parameters);
             setLocalStrategyConstraints([
                 ...cloneDeep(originalParams?.constraints),

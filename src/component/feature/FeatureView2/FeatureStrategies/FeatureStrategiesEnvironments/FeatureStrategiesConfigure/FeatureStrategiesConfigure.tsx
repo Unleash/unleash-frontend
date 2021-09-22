@@ -16,6 +16,7 @@ import { useStyles } from './FeatureStrategiesConfigure.styles';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 import { IToast } from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
+import cloneDeep from 'lodash.clonedeep';
 interface IFeatureStrategiesConfigure {
     setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
 }
@@ -31,6 +32,8 @@ const FeatureStrategiesConfigure = ({
         setConfigureNewStrategy,
         configureNewStrategy,
         setExpandedSidebar,
+        featureCache,
+        setFeatureCache,
     } = useContext(FeatureStrategiesUIContext);
     const [strategyConstraints, setStrategyConstraints] = useState([]);
     const [strategyParams, setStrategyParams] = useState({});
@@ -58,14 +61,22 @@ const FeatureStrategiesConfigure = ({
         };
 
         try {
-            await addStrategyToFeature(
+            const res = await addStrategyToFeature(
                 projectId,
                 featureId,
                 activeEnvironment.name,
                 strategyPayload
             );
+            const strategy = await res.json();
 
-            mutate(FEATURE_CACHE_KEY);
+            const feature = cloneDeep(featureCache);
+            const environment = feature.environments.find(
+                env => env.name === activeEnvironment.name
+            );
+
+            environment.strategies.push(strategy);
+            setFeatureCache(feature);
+
             setConfigureNewStrategy(null);
             setExpandedSidebar(false);
             setToastData({

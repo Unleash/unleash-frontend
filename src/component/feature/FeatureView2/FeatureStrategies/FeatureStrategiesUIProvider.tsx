@@ -1,6 +1,9 @@
 import { FC, useState } from 'react';
 import FeatureStrategiesUIContext from '../../../../contexts/FeatureStrategiesUIContext';
-import { IFeatureEnvironment } from '../../../../interfaces/featureToggle';
+import {
+    IFeatureEnvironment,
+    IFeatureToggle,
+} from '../../../../interfaces/featureToggle';
 import { IStrategyPayload } from '../../../../interfaces/strategy';
 
 const FeatureStrategiesUIProvider: FC = ({ children }) => {
@@ -9,6 +12,10 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
     const [activeEnvironment, setActiveEnvironment] =
         useState<IFeatureEnvironment | null>(null);
     const [expandedSidebar, setExpandedSidebar] = useState(false);
+    const [featureCache, setFeatureCache] = useState<IFeatureToggle | null>(
+        null
+    );
+    const [resetParams, setResetParams] = useState({ reset: false });
 
     const context = {
         configureNewStrategy,
@@ -17,6 +24,10 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
         activeEnvironment,
         expandedSidebar,
         setExpandedSidebar,
+        featureCache,
+        setFeatureCache,
+        resetParams,
+        setResetParams,
     };
 
     return (
