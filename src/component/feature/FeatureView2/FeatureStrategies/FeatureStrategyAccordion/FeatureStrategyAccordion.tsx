@@ -65,15 +65,6 @@ const equalProps = (prevProps, nextProps) => {
         }
     });
 
-    const { constraints: prevConstraints } = prevProps.originalParams;
-    const { constraints: currentConstraints } = nextProps.originalParams;
-
-    prevConstraints.forEach((prevConstraint, index) => {
-        if (prevConstraint !== currentConstraints[index]) {
-            equal = false;
-        }
-    });
-
     if (nextProps.dirty !== prevProps.dirty) {
         return false;
     }
