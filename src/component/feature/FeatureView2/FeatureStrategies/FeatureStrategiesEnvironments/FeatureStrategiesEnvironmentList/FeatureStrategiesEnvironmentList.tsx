@@ -24,6 +24,9 @@ import { Alert } from '@material-ui/lab';
 import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 import useFeatureStrategiesEnvironmentList from './useFeatureStrategiesEnvironmentList';
+import useDropboxMarkup from './useDropboxMarkup';
+import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';
+import useProductionGuardMarkup from './useProductionGuardMarkup';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -59,6 +62,43 @@ const FeatureStrategiesEnvironmentList = ({
         featureId,
     } = useFeatureStrategiesEnvironmentList(strategies);
 
+    const [{ isOver }, drop] = useDrop({
+        accept: FEATURE_STRATEGIES_DRAG_TYPE,
+        collect(monitor) {
+            return {
+                isOver: monitor.isOver(),
+            };
+        },
+        drop(item: IFeatureDragItem, monitor: DropTargetMonitor) {
+            //  const dragIndex = item.index;
+            //  const hoverIndex = index;
+
+            const strategy = selectStrategy(item.name);
+            if (!strategy) return;
+            //addNewStrategy(strategy);
+            setConfigureNewStrategy(strategy);
+            setExpandedSidebar(false);
+        },
+    });
+
+    const dropboxMarkup = useDropboxMarkup(isOver, expandedSidebar);
+    const delDialogueMarkup = useDeleteStrategyMarkup({
+        show: delDialog.show,
+        onClick: () => deleteStrategy(delDialog.strategyId),
+        onClose: () => setDelDialog({ show: false, strategyId: '' }),
+    });
+    const productionGuardMarkup = useProductionGuardMarkup({
+        show: productionGuard.show,
+        onClick: () => {
+            updateStrategy(productionGuard.strategyId);
+            setProductionGuard({
+                show: false,
+                strategyId: '',
+            });
+        },
+        onClose: () => setProductionGuard({ show: false, strategyId: '' }),
+    });
+
     const resolveUpdateStrategy = (strategyId: string) => {
         if (activeEnvironmentsRef?.current?.type === 'production') {
             setProductionGuard({ show: true, strategyId });
@@ -80,25 +120,6 @@ const FeatureStrategiesEnvironmentList = ({
 
         return { name, parameters, constraints: [] };
     };
-
-    const [{ isOver }, drop] = useDrop({
-        accept: FEATURE_STRATEGIES_DRAG_TYPE,
-        collect(monitor) {
-            return {
-                isOver: monitor.isOver(),
-            };
-        },
-        drop(item: IFeatureDragItem, monitor: DropTargetMonitor) {
-            //  const dragIndex = item.index;
-            //  const hoverIndex = index;
-
-            const strategy = selectStrategy(item.name);
-            if (!strategy) return;
-            //addNewStrategy(strategy);
-            setConfigureNewStrategy(strategy);
-            setExpandedSidebar(false);
-        },
-    });
 
     const renderStrategies = () => {
         return strategies.map((strategy, index) => {
@@ -138,14 +159,6 @@ const FeatureStrategiesEnvironmentList = ({
         [styles.isOver]: isOver,
     });
 
-    const dropboxClasses = classnames(styles.dropbox, {
-        [styles.dropboxActive]: isOver,
-    });
-
-    const iconClasses = classnames(styles.dropIcon, {
-        [styles.dropIconActive]: isOver,
-    });
-
     const strategiesContainerClasses = classnames({
         [styles.strategiesContainer]: !expandedSidebar,
     });
@@ -158,49 +171,10 @@ const FeatureStrategiesEnvironmentList = ({
                     <div className={strategiesContainerClasses}>
                         {renderStrategies()}
                     </div>
-                    <ConditionallyRender
-                        condition={expandedSidebar}
-                        show={
-                            <div className={dropboxClasses}>
-                                <p>
-                                    Drag and drop strategies from the left side
-                                    menu
-                                </p>
-                                <GetApp className={iconClasses} />
-                            </div>
-                        }
-                    />
-
+                    {dropboxMarkup}
                     {toast}
-                    <Dialogue
-                        title="Are you sure you want to delete this strategy?"
-                        open={delDialog.show}
-                        primaryButtonText="Delete strategy"
-                        secondaryButtonText="Cancel"
-                        onClick={() => deleteStrategy(delDialog.strategyId)}
-                        onClose={() =>
-                            setDelDialog({ show: false, strategyId: '' })
-                        }
-                    >
-                        <Alert severity="error">
-                            Deleting the strategy will affect which users
-                            receive access to the feature.
-                        </Alert>
-                    </Dialogue>
-                    <FeatureStrategiesProductionGuard
-                        primaryButtonText="Update strategy"
-                        show={productionGuard.show}
-                        onClick={() => {
-                            updateStrategy(productionGuard.strategyId);
-                            setProductionGuard({
-                                show: false,
-                                strategyId: '',
-                            });
-                        }}
-                        onClose={() =>
-                            setProductionGuard({ show: false, strategyId: '' })
-                        }
-                    />
+                    {delDialogueMarkup}
+                    {productionGuardMarkup}
                 </div>
             }
         />
