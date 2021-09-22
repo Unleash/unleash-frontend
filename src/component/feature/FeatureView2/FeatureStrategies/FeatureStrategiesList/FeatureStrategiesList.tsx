@@ -17,6 +17,7 @@ const FeatureStrategiesList = () => {
             .filter((strategy: IStrategy) => !strategy.deprecated)
             .map((strategy: IStrategy) => (
                 <FeatureStrategyCard
+                    key={strategy.id}
                     configureNewStrategy={!expandedSidebar}
                     name={strategy.name}
                     description={strategy.description}

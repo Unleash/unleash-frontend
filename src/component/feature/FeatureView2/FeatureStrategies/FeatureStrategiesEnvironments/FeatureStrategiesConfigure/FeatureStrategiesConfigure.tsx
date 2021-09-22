@@ -32,6 +32,7 @@ const FeatureStrategiesConfigure = ({
         configureNewStrategy,
         setExpandedSidebar,
     } = useContext(FeatureStrategiesUIContext);
+    const [strategyConstraints, setStrategyConstraints] = useState([]);
     const [strategyParams, setStrategyParams] = useState({});
     const { addStrategyToFeature } = useFeatureStrategyApi();
     const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
@@ -52,6 +53,7 @@ const FeatureStrategiesConfigure = ({
     const handleSubmit = async () => {
         const strategyPayload = {
             ...configureNewStrategy,
+            constraints: strategyConstraints,
             parameters: strategyParams,
         };
 
@@ -111,6 +113,7 @@ const FeatureStrategiesConfigure = ({
                         expanded
                         hideActions
                         setStrategyParams={setStrategyParams}
+                        setStrategyConstraints={setStrategyConstraints}
                     />
                 </div>
                 <div className={styles.executionContainer}>

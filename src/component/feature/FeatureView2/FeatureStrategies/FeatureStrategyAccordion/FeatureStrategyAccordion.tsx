@@ -1,4 +1,8 @@
-import { IParameter, IStrategy } from '../../../../../interfaces/strategy';
+import {
+    IConstraint,
+    IParameter,
+    IStrategy,
+} from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
 import {
@@ -32,12 +36,14 @@ interface IFeatureStrategyAccordionProps {
     hideActions?: boolean;
     expanded?: boolean;
     setStrategyParams: (paremeters: IParameter, strategyId?: string) => any;
+    setStrategyConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
     index?: number;
     setDelDialog: React.Dispatch<
         SetStateAction<{ strategyId: string; show: boolean }>
     >;
-    edit?: boolean;
     dirty?: boolean;
+    originalParams?: IParameter;
+    discardChanges: () => void;
     updateStrategy?: (strategyId: string) => void;
 }
 
@@ -50,6 +56,13 @@ const equalProps = (prevProps, nextProps) => {
             equal = false;
         }
     });
+
+    keys.forEach(key => {
+        if (prevProps.originalParams[key] !== nextProps.originalParams[key]) {
+            equal = false;
+        }
+    });
+
     if (nextProps.dirty !== prevProps.dirty) {
         return false;
     }
@@ -64,14 +77,18 @@ const FeatureStrategyAccordion = memo(
         hideActions = false,
         setStrategyParams,
         setDelDialog,
-        edit = false,
         dirty = false,
         updateStrategy,
+        discardChanges,
+        originalParams,
+        setStrategyConstraints,
     }: IFeatureStrategyAccordionProps) => {
         const styles = useStyles();
         const strategyName = getHumanReadbleStrategyName(strategy.name);
         const Icon = getFeatureStrategyIcon(strategy.name);
         const [parameters, setParameters] = useState(strategy.parameters);
+        const [localStrategyConstraints, setLocalStrategyConstraints] =
+            useState(strategy.constraints);
 
         const debouncedStrategyParams = debounce(setStrategyParams, 250);
 
@@ -93,6 +110,12 @@ const FeatureStrategyAccordion = memo(
                     strategy.id
                 );
             }
+        };
+
+        const handleDiscardChanges = () => {
+            discardChanges(strategy.id);
+            setParameters(originalParams.parameters);
+            setLocalStrategyConstraints(originalParams.constraints);
         };
 
         return (
@@ -163,20 +186,34 @@ const FeatureStrategyAccordion = memo(
                         <FeatureStrategyAccordionBody
                             strategy={{ ...strategy, parameters }}
                             updateParameters={updateParameters}
+                            constraints={localStrategyConstraints}
+                            setLocalStrategyConstraints={
+                                setLocalStrategyConstraints
+                            }
+                            setStrategyConstraints={setStrategyConstraints}
                         >
                             <ConditionallyRender
                                 condition={dirty && updateStrategy}
                                 show={
-                                    <div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            marginTop: '1rem',
+                                        }}
+                                    >
                                         <Button
                                             variant="contained"
                                             color="primary"
+                                            style={{ marginRight: '1rem' }}
                                             onClick={() =>
                                                 updateStrategy(strategy.id)
                                             }
-                                            style={{ marginTop: '1rem' }}
                                         >
                                             Save changes
+                                        </Button>
+                                        <Button onClick={handleDiscardChanges}>
+                                            Discard changes
                                         </Button>
                                     </div>
                                 }

@@ -6,18 +6,54 @@ import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatur
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useToast from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import { IParameter, IStrategy } from '../../../../../../interfaces/strategy';
+import {
+    IConstraint,
+    IParameter,
+    IStrategy,
+} from '../../../../../../interfaces/strategy';
 
 const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
+    const createStrategyData = () => {
+        const parameterMap = strategies.reduce((acc, strategy) => {
+            acc[strategy.id] = {
+                parameters: { ...strategy.parameters },
+                constraints: [...strategy.constraints],
+            };
+            return acc;
+        }, {} as { [key: string]: IParameter });
+
+        return parameterMap;
+    };
+
+    const createStrategyDataWithDirty = () => {
+        const parameterMapWithDirty = strategies.reduce((acc, strategy) => {
+            acc[strategy.id] = {
+                parameters: { ...strategy.parameters },
+                constraints: [...strategy.constraints],
+                dirty: false,
+            };
+            return acc;
+        }, {} as { [key: string]: IParameter });
+
+        return parameterMapWithDirty;
+    };
+
     const [strategyParams, setStrategyParams] = useState<{
-        [index: string]: { parameters: IParameter; dirty: boolean };
-    }>({});
+        [index: string]: {
+            parameters: IParameter;
+            constraints: IConstraint[];
+            dirty: boolean;
+        };
+    }>(createStrategyDataWithDirty());
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
 
     const { deleteStrategyFromFeature, updateStrategyOnFeature } =
         useFeatureStrategyApi();
-    const [originalParams, setOriginalParams] = useState<IParameter>({});
+    const [originalParams, setOriginalParams] = useState<IParameter>(
+        createStrategyData()
+    );
+
     const {
         setConfigureNewStrategy,
         configureNewStrategy,
@@ -50,29 +86,18 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     }, [activeEnvironment]);
 
     const setInitialStrategyParams = () => {
-        const parameterMap = strategies.reduce((acc, strategy) => {
-            acc[strategy.id] = { ...strategy.parameters };
-            return acc;
-        }, {} as { [key: string]: IParameter });
-
-        const parameterMapWithDirty = strategies.reduce((acc, strategy) => {
-            acc[strategy.id] = {
-                parameters: { ...strategy.parameters },
-                dirty: false,
-            };
-            return acc;
-        }, {} as { [key: string]: IParameter });
-
-        setStrategyParams(parameterMapWithDirty);
-        setOriginalParams(parameterMap);
+        setStrategyParams(createStrategyDataWithDirty());
+        setOriginalParams(createStrategyData());
     };
 
     const updateStrategy = async (strategyId: string) => {
         try {
             const updateStrategyPayload: IStrategyPayload = {
-                constraints: [],
+                constraints: paramsRef?.current[strategyId]?.constraints,
                 parameters: paramsRef?.current[strategyId]?.parameters,
             };
+
+            console.log(updateStrategyPayload);
 
             await updateStrategyOnFeature(
                 projectId,
@@ -91,16 +116,13 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
             setOriginalParams(prevParams => ({
                 ...prevParams,
-                [strategyId]: updateStrategyPayload.parameters,
+                [strategyId]: { ...updateStrategyPayload },
             }));
 
             setStrategyParams(prevParams => {
                 return {
                     ...prevParams,
-                    [strategyId]: {
-                        ...prevParams[strategyId].parameters,
-                        dirty: false,
-                    },
+                    [strategyId]: { ...updateStrategyPayload, dirty: false },
                 };
             });
         } catch (e) {
@@ -111,6 +133,8 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
             });
         }
     };
+
+    console.log(paramsRef.current);
 
     const deleteStrategy = async (strategyId: string) => {
         try {
@@ -139,7 +163,8 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const isDirty = (strategyId: string, parameters: IParameter) => {
         let dirty = false;
-        const initialParams = originalParams[strategyId];
+        console.log(strategyId, parameters);
+        const initialParams = originalParams[strategyId].parameters;
 
         if (!initialParams || !parameters) return dirty;
 
@@ -157,14 +182,45 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         return dirty;
     };
 
-    const onSetStrategyParams = (
-        parameters: IParameter,
-        strategyId: string
-    ) => {
-        const dirty = isDirty(strategyId, parameters);
+    const onSetStrategyParams = (strategyId: string) => {
+        return (parameters: IParameter) => {
+            const dirty = isDirty(strategyId, parameters);
+            setStrategyParams(prev => ({
+                ...prev,
+                [strategyId]: {
+                    ...paramsRef?.current[strategyId],
+                    parameters: { ...parameters },
+                    dirty,
+                },
+            }));
+        };
+    };
+
+    const onSetStrategyConstraints = (strategyId: string) => {
+        return (constraints: IConstraint[]) => {
+            const dirty = true;
+
+            setStrategyParams(prev => ({
+                ...prev,
+                [strategyId]: {
+                    ...paramsRef?.current[strategyId],
+                    constraints: [...constraints],
+                    dirty,
+                },
+            }));
+        };
+    };
+
+    const discardChanges = (strategyId: string) => {
+        const oldParams = originalParams[strategyId];
+
         setStrategyParams(prev => ({
             ...prev,
-            [strategyId]: { parameters: { ...parameters }, dirty },
+            [strategyId]: {
+                constraints: [...oldParams.constraints],
+                parameters: { ...oldParams.parameters },
+                dirty: false,
+            },
         }));
     };
 
@@ -173,6 +229,8 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         activeEnvironmentsRef,
         toast,
         onSetStrategyParams,
+        onSetStrategyConstraints,
+        originalParams,
         deleteStrategy,
         updateStrategy,
         delDialog,
@@ -184,6 +242,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         setExpandedSidebar,
         expandedSidebar,
         featureId,
+        discardChanges,
     };
 };
 

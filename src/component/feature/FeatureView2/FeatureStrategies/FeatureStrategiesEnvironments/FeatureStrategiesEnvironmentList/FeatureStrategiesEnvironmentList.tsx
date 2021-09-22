@@ -10,12 +10,8 @@ import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
 import { useParams } from 'react-router-dom';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
-import { mutate } from 'swr';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
-import { GetApp } from '@material-ui/icons';
-import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 import useToast from '../../../../../../hooks/useToast';
@@ -49,6 +45,7 @@ const FeatureStrategiesEnvironmentList = ({
         activeEnvironmentsRef,
         toast,
         onSetStrategyParams,
+        onSetStrategyConstraints,
         deleteStrategy,
         updateStrategy,
         delDialog,
@@ -56,9 +53,11 @@ const FeatureStrategiesEnvironmentList = ({
         setProductionGuard,
         productionGuard,
         setConfigureNewStrategy,
+        originalParams,
         configureNewStrategy,
         setExpandedSidebar,
         expandedSidebar,
+        discardChanges,
         featureId,
     } = useFeatureStrategiesEnvironmentList(strategies);
 
@@ -128,12 +127,17 @@ const FeatureStrategiesEnvironmentList = ({
                     <Fragment key={strategy.id}>
                         <FeatureStrategyAccordion
                             strategy={strategy}
-                            setStrategyParams={onSetStrategyParams}
+                            setStrategyParams={onSetStrategyParams(strategy.id)}
                             index={index}
+                            originalParams={originalParams[strategy.id]}
                             setDelDialog={setDelDialog}
                             edit
                             dirty={strategyParams[strategy.id]?.dirty}
                             updateStrategy={resolveUpdateStrategy}
+                            discardChanges={discardChanges}
+                            setStrategyConstraints={onSetStrategyConstraints(
+                                strategy.id
+                            )}
                         />
                         <FeatureStrategiesSeparator text="OR" />
                     </Fragment>
@@ -142,13 +146,18 @@ const FeatureStrategiesEnvironmentList = ({
                 return (
                     <FeatureStrategyAccordion
                         strategy={strategy}
-                        setStrategyParams={onSetStrategyParams}
+                        originalParams={originalParams[strategy.id]}
+                        setStrategyParams={onSetStrategyParams(strategy.id)}
                         index={index}
                         key={strategy.id}
                         setDelDialog={setDelDialog}
                         edit
+                        discardChanges={discardChanges}
                         dirty={strategyParams[strategy.id]?.dirty}
                         updateStrategy={resolveUpdateStrategy}
+                        setStrategyConstraints={onSetStrategyConstraints(
+                            strategy.id
+                        )}
                     />
                 );
             }
