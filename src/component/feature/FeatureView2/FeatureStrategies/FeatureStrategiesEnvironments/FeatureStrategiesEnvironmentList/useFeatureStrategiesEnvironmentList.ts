@@ -16,9 +16,10 @@ import cloneDeep from 'lodash.clonedeep';
 const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const createStrategyData = () => {
         const parameterMap = strategies.reduce((acc, strategy) => {
+            const clone = cloneDeep(strategy);
             acc[strategy.id] = {
-                parameters: { ...strategy.parameters },
-                constraints: [...strategy.constraints.map(c => cloneDeep(c))],
+                parameters: { ...clone.parameters },
+                constraints: [...clone.constraints],
             };
             return acc;
         }, {} as { [key: string]: IParameter });
@@ -28,9 +29,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const createStrategyDataWithDirty = () => {
         const parameterMapWithDirty = strategies.reduce((acc, strategy) => {
+            const clone = cloneDeep(strategy);
             acc[strategy.id] = {
-                parameters: { ...strategy.parameters },
-                constraints: [...strategy.constraints.map(c => cloneDeep(c))],
+                parameters: { ...clone.parameters },
+                constraints: [...clone.constraints],
                 dirty: false,
             };
             return acc;
@@ -72,6 +74,8 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const paramsRef = useRef(null);
     const activeEnvironmentsRef = useRef(null);
+
+    console.log(originalParams);
 
     useEffect(() => {
         console.log('SETTING PARAMS');
@@ -116,13 +120,16 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
             setOriginalParams(prevParams => ({
                 ...prevParams,
-                [strategyId]: { ...updateStrategyPayload },
+                [strategyId]: { ...cloneDeep(updateStrategyPayload) },
             }));
 
             setStrategyParams(prevParams => {
                 return {
                     ...prevParams,
-                    [strategyId]: { ...updateStrategyPayload, dirty: false },
+                    [strategyId]: {
+                        ...cloneDeep(updateStrategyPayload),
+                        dirty: false,
+                    },
                 };
             });
         } catch (e) {
@@ -161,7 +168,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const isDirty = (strategyId: string, parameters: IParameter) => {
         let dirty = false;
-        const initialParams = originalParams[strategyId]?.parameters;
+        const initialParams = cloneDeep(originalParams[strategyId]?.parameters);
 
         if (!initialParams || !parameters) return dirty;
 
@@ -186,7 +193,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
                 ...prev,
                 [strategyId]: {
                     ...cloneDeep(paramsRef?.current[strategyId]),
-                    parameters: { ...parameters },
+                    parameters: { ...cloneDeep(parameters) },
                     dirty,
                 },
             }));
@@ -201,7 +208,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
                 ...prev,
                 [strategyId]: {
                     ...cloneDeep(paramsRef?.current[strategyId]),
-                    constraints: [...constraints],
+                    constraints: [...cloneDeep(constraints)],
                     dirty,
                 },
             }));
@@ -209,7 +216,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     };
 
     const discardChanges = (strategyId: string) => {
-        const oldParams = originalParams[strategyId];
+        const oldParams = cloneDeep(originalParams[strategyId]);
 
         console.log('DISCARDING', originalParams[strategyId]);
 

@@ -31,6 +31,8 @@ import {
     useState,
 } from 'react';
 
+import cloneDeep from 'lodash.clonedeep';
+
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
     hideActions?: boolean;
@@ -125,7 +127,9 @@ const FeatureStrategyAccordion = memo(
             discardChanges(strategy.id);
             console.log(originalParams);
             setParameters(originalParams?.parameters);
-            setLocalStrategyConstraints(originalParams?.constraints);
+            setLocalStrategyConstraints([
+                ...cloneDeep(originalParams?.constraints),
+            ]);
         };
 
         return (
