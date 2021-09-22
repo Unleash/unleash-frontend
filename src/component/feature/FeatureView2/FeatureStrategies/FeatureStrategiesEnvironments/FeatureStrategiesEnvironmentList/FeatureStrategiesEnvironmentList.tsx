@@ -6,19 +6,14 @@ import {
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
-import { useParams } from 'react-router-dom';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
-import useToast from '../../../../../../hooks/useToast';
-import Dialogue from '../../../../../common/Dialogue';
-import { Alert } from '@material-ui/lab';
+
 import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
-import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 import useFeatureStrategiesEnvironmentList from './useFeatureStrategiesEnvironmentList';
 import useDropboxMarkup from './useDropboxMarkup';
 import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';

@@ -63,6 +63,15 @@ const equalProps = (prevProps, nextProps) => {
         }
     });
 
+    const { constraints: prevConstraints } = prevProps.originalParams;
+    const { constraints: currentConstraints } = nextProps.originalParams;
+
+    prevConstraints.forEach((prevConstraint, index) => {
+        if (prevConstraint !== currentConstraints[index]) {
+            equal = false;
+        }
+    });
+
     if (nextProps.dirty !== prevProps.dirty) {
         return false;
     }
@@ -114,8 +123,9 @@ const FeatureStrategyAccordion = memo(
 
         const handleDiscardChanges = () => {
             discardChanges(strategy.id);
-            setParameters(originalParams.parameters);
-            setLocalStrategyConstraints(originalParams.constraints);
+            console.log(originalParams);
+            setParameters(originalParams?.parameters);
+            setLocalStrategyConstraints(originalParams?.constraints);
         };
 
         return (

@@ -11,13 +11,14 @@ import {
     IParameter,
     IStrategy,
 } from '../../../../../../interfaces/strategy';
+import cloneDeep from 'lodash.clonedeep';
 
 const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const createStrategyData = () => {
         const parameterMap = strategies.reduce((acc, strategy) => {
             acc[strategy.id] = {
                 parameters: { ...strategy.parameters },
-                constraints: [...strategy.constraints],
+                constraints: [...strategy.constraints.map(c => cloneDeep(c))],
             };
             return acc;
         }, {} as { [key: string]: IParameter });
@@ -29,7 +30,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         const parameterMapWithDirty = strategies.reduce((acc, strategy) => {
             acc[strategy.id] = {
                 parameters: { ...strategy.parameters },
-                constraints: [...strategy.constraints],
+                constraints: [...strategy.constraints.map(c => cloneDeep(c))],
                 dirty: false,
             };
             return acc;
@@ -73,9 +74,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const activeEnvironmentsRef = useRef(null);
 
     useEffect(() => {
+        console.log('SETTING PARAMS');
         setInitialStrategyParams();
         /* eslint-disable-next-line */
-    }, [strategies.length]);
+    }, [strategies]);
 
     useEffect(() => {
         paramsRef.current = strategyParams;
@@ -96,8 +98,6 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
                 constraints: paramsRef?.current[strategyId]?.constraints,
                 parameters: paramsRef?.current[strategyId]?.parameters,
             };
-
-            console.log(updateStrategyPayload);
 
             await updateStrategyOnFeature(
                 projectId,
@@ -134,8 +134,6 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         }
     };
 
-    console.log(paramsRef.current);
-
     const deleteStrategy = async (strategyId: string) => {
         try {
             const environmentId = activeEnvironment.name;
@@ -163,8 +161,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const isDirty = (strategyId: string, parameters: IParameter) => {
         let dirty = false;
-        console.log(strategyId, parameters);
-        const initialParams = originalParams[strategyId].parameters;
+        const initialParams = originalParams[strategyId]?.parameters;
 
         if (!initialParams || !parameters) return dirty;
 
@@ -188,7 +185,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
             setStrategyParams(prev => ({
                 ...prev,
                 [strategyId]: {
-                    ...paramsRef?.current[strategyId],
+                    ...cloneDeep(paramsRef?.current[strategyId]),
                     parameters: { ...parameters },
                     dirty,
                 },
@@ -199,11 +196,11 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const onSetStrategyConstraints = (strategyId: string) => {
         return (constraints: IConstraint[]) => {
             const dirty = true;
-
+            console.log('CONSTRAINTS', constraints);
             setStrategyParams(prev => ({
                 ...prev,
                 [strategyId]: {
-                    ...paramsRef?.current[strategyId],
+                    ...cloneDeep(paramsRef?.current[strategyId]),
                     constraints: [...constraints],
                     dirty,
                 },
@@ -213,6 +210,8 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
     const discardChanges = (strategyId: string) => {
         const oldParams = originalParams[strategyId];
+
+        console.log('DISCARDING', originalParams[strategyId]);
 
         setStrategyParams(prev => ({
             ...prev,
