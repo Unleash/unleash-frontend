@@ -21,7 +21,6 @@ import useProductionGuardMarkup from './useProductionGuardMarkup';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
-    env: string;
 }
 
 interface IFeatureDragItem {
@@ -30,7 +29,6 @@ interface IFeatureDragItem {
 
 const FeatureStrategiesEnvironmentList = ({
     strategies,
-    env,
 }: IFeatureStrategiesEnvironmentListProps) => {
     const styles = useStyles();
     const { strategies: selectableStrategies } = useStrategies();

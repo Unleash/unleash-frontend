@@ -5,7 +5,18 @@ import { formatApiPath } from '../../../../utils/format-path';
 import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 import { defaultFeature } from './defaultFeature';
 
-const useFeature = (projectId: string, id: string, revalidate = true) => {
+interface IUseFeatureOptions {
+    refreshInterval?: number;
+    revalidateOnFocus?: boolean;
+    revalidateOnReconnect?: boolean;
+    revalidateIfStale?: boolean;
+}
+
+const useFeature = (
+    projectId: string,
+    id: string,
+    options: IUseFeatureOptions
+) => {
     const fetcher = () => {
         const path = formatApiPath(
             `api/admin/projects/${projectId}/features/${id}`
@@ -18,9 +29,7 @@ const useFeature = (projectId: string, id: string, revalidate = true) => {
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
 
     const { data, error } = useSWR<IFeatureToggle>(FEATURE_CACHE_KEY, fetcher, {
-        revalidateOnFocus: revalidate,
-        revalidateOnReconnect: revalidate,
-        revalidateIfStale: revalidate,
+        ...options,
     });
 
     const [loading, setLoading] = useState(!error && !data);

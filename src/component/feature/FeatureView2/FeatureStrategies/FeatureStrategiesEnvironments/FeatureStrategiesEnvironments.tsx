@@ -26,7 +26,11 @@ const FeatureStrategiesEnvironments = () => {
         expandedSidebar,
         setExpandedSidebar,
     } = useContext(FeatureStrategiesUIContext);
-    const { feature } = useFeature(projectId, featureId, false);
+    const { feature } = useFeature(projectId, featureId, {
+        revalidateOnFocus: false,
+        revalidateIfStale: false,
+        revalidateOnReconnect: false,
+    });
 
     useEffect(() => {
         setActiveEnvironment(feature?.environments[activeTab]);
@@ -58,7 +62,6 @@ const FeatureStrategiesEnvironments = () => {
                 >
                     <FeatureStrategiesEnvironmentList
                         strategies={env.strategies}
-                        env={env.name}
                     />
                 </TabPanel>
             );
