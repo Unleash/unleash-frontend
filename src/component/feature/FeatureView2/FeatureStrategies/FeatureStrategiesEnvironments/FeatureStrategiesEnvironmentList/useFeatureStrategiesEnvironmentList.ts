@@ -75,13 +75,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const paramsRef = useRef(null);
     const activeEnvironmentsRef = useRef(null);
 
-    console.log(originalParams);
-
     useEffect(() => {
-        console.log('SETTING PARAMS');
         setInitialStrategyParams();
         /* eslint-disable-next-line */
-    }, [strategies]);
+    }, [strategies.length]);
 
     useEffect(() => {
         paramsRef.current = strategyParams;
@@ -99,8 +96,10 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const updateStrategy = async (strategyId: string) => {
         try {
             const updateStrategyPayload: IStrategyPayload = {
-                constraints: paramsRef?.current[strategyId]?.constraints,
-                parameters: paramsRef?.current[strategyId]?.parameters,
+                constraints: cloneDeep(paramsRef?.current)[strategyId]
+                    ?.constraints,
+                parameters: cloneDeep(paramsRef?.current)[strategyId]
+                    ?.parameters,
             };
 
             await updateStrategyOnFeature(
@@ -120,16 +119,13 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
 
             setOriginalParams(prevParams => ({
                 ...prevParams,
-                [strategyId]: { ...cloneDeep(updateStrategyPayload) },
+                [strategyId]: { ...updateStrategyPayload },
             }));
 
             setStrategyParams(prevParams => {
                 return {
                     ...prevParams,
-                    [strategyId]: {
-                        ...cloneDeep(updateStrategyPayload),
-                        dirty: false,
-                    },
+                    [strategyId]: { ...updateStrategyPayload, dirty: false },
                 };
             });
         } catch (e) {
