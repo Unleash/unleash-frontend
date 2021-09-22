@@ -14,7 +14,7 @@ import { mutate } from 'swr';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
-import { CodeSharp, GetApp } from '@material-ui/icons';
+import { GetApp } from '@material-ui/icons';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
@@ -23,6 +23,7 @@ import Dialogue from '../../../../../common/Dialogue';
 import { Alert } from '@material-ui/lab';
 import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
+import useFeatureStrategiesEnvironmentList from './useFeatureStrategiesEnvironmentList';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -39,64 +40,24 @@ const FeatureStrategiesEnvironmentList = ({
 }: IFeatureStrategiesEnvironmentListProps) => {
     const styles = useStyles();
     const { strategies: selectableStrategies } = useStrategies();
-    const { projectId, featureId } = useParams();
+
     const {
+        strategyParams,
+        activeEnvironmentsRef,
+        toast,
+        onSetStrategyParams,
+        deleteStrategy,
+        updateStrategy,
+        delDialog,
+        setDelDialog,
+        setProductionGuard,
+        productionGuard,
         setConfigureNewStrategy,
         configureNewStrategy,
-        activeEnvironment,
         setExpandedSidebar,
         expandedSidebar,
-    } = useContext(FeatureStrategiesUIContext);
-
-    const { deleteStrategyFromFeature, updateStrategyOnFeature } =
-        useFeatureStrategyApi();
-    const { toast, setToastData } = useToast();
-    const [delDialog, setDelDialog] = useState({ strategyId: '', show: false });
-    const [productionGuard, setProductionGuard] = useState({
-        show: false,
-        strategyId: '',
-    });
-    const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
-
-    const [strategyParams, setStrategyParams] = useState<{
-        [index: string]: { parameters: IParameter; dirty: boolean };
-    }>({});
-    const [originalParams, setOriginalParams] = useState<IParameter>({});
-    const paramsRef = useRef(null);
-    const activeEnvironmentsRef = useRef(null);
-
-    useEffect(() => {
-        setInitialStrategyParams();
-        /* eslint-disable-next-line */
-    }, [strategies.length]);
-
-    useEffect(() => {
-        paramsRef.current = strategyParams;
-    }, [strategyParams]);
-
-    useEffect(() => {
-        activeEnvironmentsRef.current = activeEnvironment;
-    }, [activeEnvironment]);
-
-    const setInitialStrategyParams = () => {
-        const parameterMap = strategies.reduce((acc, strategy) => {
-            acc[strategy.id] = { ...strategy.parameters };
-            return acc;
-        }, {} as { [key: string]: IParameter });
-
-        const parameterMapWithDirty = strategies.reduce((acc, strategy) => {
-            acc[strategy.id] = {
-                parameters: { ...strategy.parameters },
-                dirty: false,
-            };
-            return acc;
-        }, {} as { [key: string]: IParameter });
-
-        setStrategyParams(parameterMapWithDirty);
-        setOriginalParams(parameterMap);
-    };
-
-    console.log('REF', activeEnvironment, activeEnvironmentsRef.current);
+        featureId,
+    } = useFeatureStrategiesEnvironmentList(strategies);
 
     const resolveUpdateStrategy = (strategyId: string) => {
         if (activeEnvironmentsRef?.current?.type === 'production') {
@@ -105,107 +66,6 @@ const FeatureStrategiesEnvironmentList = ({
         }
 
         updateStrategy(strategyId);
-    };
-
-    const updateStrategy = async (strategyId: string) => {
-        try {
-            const updateStrategyPayload: IStrategyPayload = {
-                constraints: [],
-                parameters: paramsRef?.current[strategyId]?.parameters,
-            };
-
-            await updateStrategyOnFeature(
-                projectId,
-                featureId,
-                activeEnvironment.id,
-                strategyId,
-                updateStrategyPayload
-            );
-
-            mutate(FEATURE_CACHE_KEY);
-            setToastData({
-                show: true,
-                type: 'success',
-                text: `Successfully updated strategy`,
-            });
-
-            setOriginalParams(prevParams => ({
-                ...prevParams,
-                [strategyId]: updateStrategyPayload.parameters,
-            }));
-
-            setStrategyParams(prevParams => {
-                return {
-                    ...prevParams,
-                    [strategyId]: {
-                        ...prevParams[strategyId].parameters,
-                        dirty: false,
-                    },
-                };
-            });
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
-        }
-    };
-
-    const deleteStrategy = async (strategyId: string) => {
-        try {
-            const environmentId = activeEnvironment.name;
-            await deleteStrategyFromFeature(
-                projectId,
-                featureId,
-                environmentId,
-                strategyId
-            );
-            mutate(FEATURE_CACHE_KEY);
-            setDelDialog({ strategyId: '', show: false });
-            setToastData({
-                show: true,
-                type: 'success',
-                text: `Successfully deleted strategy from ${featureId}`,
-            });
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
-        }
-    };
-
-    const isDirty = (strategyId: string, parameters: IParameter) => {
-        let dirty = false;
-        const initialParams = originalParams[strategyId];
-
-        if (!initialParams || !parameters) return dirty;
-
-        const keys = Object.keys(initialParams);
-
-        keys.forEach(key => {
-            const old = initialParams[key];
-            const current = parameters[key];
-
-            if (old !== current) {
-                dirty = true;
-            }
-        });
-
-        return dirty;
-    };
-
-    const onSetStrategyParams = (
-        parameters: IParameter,
-        strategyId: string
-    ) => {
-        const dirty = isDirty(strategyId, parameters);
-        setStrategyParams(prev => ({
-            ...prev,
-            [strategyId]: { parameters: { ...parameters }, dirty },
-        }));
     };
 
     const selectStrategy = (name: string) => {
