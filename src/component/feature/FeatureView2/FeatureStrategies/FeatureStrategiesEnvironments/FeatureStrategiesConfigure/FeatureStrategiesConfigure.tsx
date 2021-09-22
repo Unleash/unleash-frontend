@@ -34,6 +34,7 @@ const FeatureStrategiesConfigure = ({
         setExpandedSidebar,
         featureCache,
         setFeatureCache,
+        setResetParams,
     } = useContext(FeatureStrategiesUIContext);
     const [strategyConstraints, setStrategyConstraints] = useState([]);
     const [strategyParams, setStrategyParams] = useState({});
@@ -76,6 +77,7 @@ const FeatureStrategiesConfigure = ({
 
             environment.strategies.push(strategy);
             setFeatureCache(feature);
+            setResetParams({ reset: true });
 
             setConfigureNewStrategy(null);
             setExpandedSidebar(false);
