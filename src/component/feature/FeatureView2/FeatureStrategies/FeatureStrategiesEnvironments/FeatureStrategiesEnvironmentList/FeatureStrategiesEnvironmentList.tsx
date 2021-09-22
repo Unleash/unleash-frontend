@@ -14,7 +14,7 @@ import { mutate } from 'swr';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
-import { GetApp } from '@material-ui/icons';
+import { CodeSharp, GetApp } from '@material-ui/icons';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
@@ -22,6 +22,7 @@ import useToast from '../../../../../../hooks/useToast';
 import Dialogue from '../../../../../common/Dialogue';
 import { Alert } from '@material-ui/lab';
 import FeatureStrategiesSeparator from '../FeatureStrategiesSeparator/FeatureStrategiesSeparator';
+import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -44,20 +45,25 @@ const FeatureStrategiesEnvironmentList = ({
         configureNewStrategy,
         activeEnvironment,
         setExpandedSidebar,
+        expandedSidebar,
     } = useContext(FeatureStrategiesUIContext);
 
     const { deleteStrategyFromFeature, updateStrategyOnFeature } =
         useFeatureStrategyApi();
     const { toast, setToastData } = useToast();
     const [delDialog, setDelDialog] = useState({ strategyId: '', show: false });
-    const { FEATURE_CACHE_KEY, feature } = useFeature(projectId, featureId);
+    const [productionGuard, setProductionGuard] = useState({
+        show: false,
+        strategyId: '',
+    });
+    const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
 
-    const { expandedSidebar } = useContext(FeatureStrategiesUIContext);
     const [strategyParams, setStrategyParams] = useState<{
         [index: string]: { parameters: IParameter; dirty: boolean };
     }>({});
     const [originalParams, setOriginalParams] = useState<IParameter>({});
     const paramsRef = useRef(null);
+    const activeEnvironmentsRef = useRef(null);
 
     useEffect(() => {
         setInitialStrategyParams();
@@ -67,6 +73,10 @@ const FeatureStrategiesEnvironmentList = ({
     useEffect(() => {
         paramsRef.current = strategyParams;
     }, [strategyParams]);
+
+    useEffect(() => {
+        activeEnvironmentsRef.current = activeEnvironment;
+    }, [activeEnvironment]);
 
     const setInitialStrategyParams = () => {
         const parameterMap = strategies.reduce((acc, strategy) => {
@@ -86,11 +96,22 @@ const FeatureStrategiesEnvironmentList = ({
         setOriginalParams(parameterMap);
     };
 
+    console.log('REF', activeEnvironment, activeEnvironmentsRef.current);
+
+    const resolveUpdateStrategy = (strategyId: string) => {
+        if (activeEnvironmentsRef?.current?.type === 'production') {
+            setProductionGuard({ show: true, strategyId });
+            return;
+        }
+
+        updateStrategy(strategyId);
+    };
+
     const updateStrategy = async (strategyId: string) => {
         try {
             const updateStrategyPayload: IStrategyPayload = {
                 constraints: [],
-                parameters: paramsRef?.current[strategyId].parameters,
+                parameters: paramsRef?.current[strategyId]?.parameters,
             };
 
             await updateStrategyOnFeature(
@@ -101,14 +122,13 @@ const FeatureStrategiesEnvironmentList = ({
                 updateStrategyPayload
             );
 
-            //mutate(FEATURE_CACHE_KEY);
+            mutate(FEATURE_CACHE_KEY);
             setToastData({
                 show: true,
                 type: 'success',
                 text: `Successfully updated strategy`,
             });
 
-            console.log('SETTING ORIGINAL PARAMS', updateStrategyPayload);
             setOriginalParams(prevParams => ({
                 ...prevParams,
                 [strategyId]: updateStrategyPayload.parameters,
@@ -181,7 +201,6 @@ const FeatureStrategiesEnvironmentList = ({
         parameters: IParameter,
         strategyId: string
     ) => {
-        console.log(parameters, strategyId);
         const dirty = isDirty(strategyId, parameters);
         setStrategyParams(prev => ({
             ...prev,
@@ -221,8 +240,6 @@ const FeatureStrategiesEnvironmentList = ({
         },
     });
 
-    console.log(strategyParams['4212309f-84b0-4d8d-aee5-a445211faee1']);
-
     const renderStrategies = () => {
         return strategies.map((strategy, index) => {
             if (index !== strategies.length - 1) {
@@ -235,7 +252,7 @@ const FeatureStrategiesEnvironmentList = ({
                             setDelDialog={setDelDialog}
                             edit
                             dirty={strategyParams[strategy.id]?.dirty}
-                            updateStrategy={updateStrategy}
+                            updateStrategy={resolveUpdateStrategy}
                         />
                         <FeatureStrategiesSeparator text="OR" />
                     </Fragment>
@@ -250,7 +267,7 @@ const FeatureStrategiesEnvironmentList = ({
                         setDelDialog={setDelDialog}
                         edit
                         dirty={strategyParams[strategy.id]?.dirty}
-                        updateStrategy={updateStrategy}
+                        updateStrategy={resolveUpdateStrategy}
                     />
                 );
             }
@@ -310,6 +327,20 @@ const FeatureStrategiesEnvironmentList = ({
                             receive access to the feature.
                         </Alert>
                     </Dialogue>
+                    <FeatureStrategiesProductionGuard
+                        primaryButtonText="Update strategy"
+                        show={productionGuard.show}
+                        onClick={() => {
+                            updateStrategy(productionGuard.strategyId);
+                            setProductionGuard({
+                                show: false,
+                                strategyId: '',
+                            });
+                        }}
+                        onClose={() =>
+                            setProductionGuard({ show: false, strategyId: '' })
+                        }
+                    />
                 </div>
             }
         />

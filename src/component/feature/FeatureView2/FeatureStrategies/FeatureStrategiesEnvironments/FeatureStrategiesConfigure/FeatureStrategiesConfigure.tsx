@@ -13,9 +13,17 @@ import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatur
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 
 import { useStyles } from './FeatureStrategiesConfigure.styles';
-
-const FeatureStrategiesConfigure = () => {
-    const { projectId, featureId } = useParams();
+import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
+import { IToast } from '../../../../../../hooks/useToast';
+import { IFeatureViewParams } from '../../../../../../interfaces/params';
+interface IFeatureStrategiesConfigure {
+    setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
+}
+const FeatureStrategiesConfigure = ({
+    setToastData,
+}: IFeatureStrategiesConfigure) => {
+    const { projectId, featureId } = useParams<IFeatureViewParams>();
+    const [productionGuard, setProductionGuard] = useState(false);
 
     const styles = useStyles();
     const {
@@ -31,6 +39,14 @@ const FeatureStrategiesConfigure = () => {
     const handleCancel = () => {
         setConfigureNewStrategy(null);
         setExpandedSidebar(true);
+    };
+
+    const resolveSubmit = () => {
+        if (activeEnvironment.type === 'production') {
+            setProductionGuard(true);
+            return;
+        }
+        handleSubmit();
     };
 
     const handleSubmit = async () => {
@@ -50,7 +66,18 @@ const FeatureStrategiesConfigure = () => {
             mutate(FEATURE_CACHE_KEY);
             setConfigureNewStrategy(null);
             setExpandedSidebar(false);
-        } catch {}
+            setToastData({
+                show: true,
+                type: 'success',
+                text: 'Successfully added strategy.',
+            });
+        } catch (e) {
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
+        }
     };
 
     return (
@@ -96,7 +123,7 @@ const FeatureStrategiesConfigure = () => {
                     variant="contained"
                     color="primary"
                     className={styles.btn}
-                    onClick={handleSubmit}
+                    onClick={resolveSubmit}
                 >
                     Save
                 </Button>
@@ -104,6 +131,15 @@ const FeatureStrategiesConfigure = () => {
                     Cancel
                 </Button>
             </div>
+            <FeatureStrategiesProductionGuard
+                primaryButtonText="Save changes"
+                show={productionGuard}
+                onClick={() => {
+                    handleSubmit();
+                    setProductionGuard(false);
+                }}
+                onClose={() => setProductionGuard(false)}
+            />
         </div>
     );
 };

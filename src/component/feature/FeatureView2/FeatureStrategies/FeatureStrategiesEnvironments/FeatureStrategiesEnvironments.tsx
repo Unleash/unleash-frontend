@@ -10,10 +10,13 @@ import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategie
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategiesConfigure from './FeatureStrategiesConfigure/FeatureStrategiesConfigure';
 import classNames from 'classnames';
+import useToast from '../../../../../hooks/useToast';
+import { IFeatureViewParams } from '../../../../../interfaces/params';
 
 const FeatureStrategiesEnvironments = () => {
     const startingTabId = 1;
-    const { projectId, featureId } = useParams();
+    const { projectId, featureId } = useParams<IFeatureViewParams>();
+    const { toast, setToastData } = useToast();
 
     const styles = useStyles();
     const { a11yProps, activeTab, setActiveTab } = useTabs(startingTabId);
@@ -27,6 +30,7 @@ const FeatureStrategiesEnvironments = () => {
 
     useEffect(() => {
         setActiveEnvironment(feature?.environments[activeTab]);
+        /* eslint-disable-next-line */
     }, [feature]);
 
     const renderTabs = () => {
@@ -92,13 +96,18 @@ const FeatureStrategiesEnvironments = () => {
                 </Tabs>
             </div>
 
-            <div className={styles.bodyContent}>
+            <div>
                 {renderTabPanels()}
                 <ConditionallyRender
                     condition={configureNewStrategy}
-                    show={<FeatureStrategiesConfigure />}
+                    show={
+                        <FeatureStrategiesConfigure
+                            setToastData={setToastData}
+                        />
+                    }
                 />
             </div>
+            {toast}
         </div>
     );
 };
