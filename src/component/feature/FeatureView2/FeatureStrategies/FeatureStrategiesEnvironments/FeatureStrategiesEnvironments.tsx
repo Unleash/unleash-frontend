@@ -16,7 +16,7 @@ import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
 
 const FeatureStrategiesEnvironments = () => {
-    const startingTabId = 1;
+    const startingTabId = 0;
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { toast, setToastData } = useToast();
     const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
@@ -181,6 +181,8 @@ const FeatureStrategiesEnvironments = () => {
                     equal = false;
                     return;
                 }
+
+                // Check constraints -> are we guaranteed that constraints will occur in the same order each time?
             });
         });
 
