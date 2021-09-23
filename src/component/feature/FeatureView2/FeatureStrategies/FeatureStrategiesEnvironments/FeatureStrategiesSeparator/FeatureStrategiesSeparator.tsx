@@ -14,7 +14,7 @@ const FeatureStrategiesSeparator = ({
         <div
             style={{
                 color: theme.palette.primary.main,
-                padding: '0.1rem',
+                padding: '0.1rem 0.25rem',
                 border: `1px solid ${theme.palette.primary.main}`,
                 borderRadius: '0.25rem',
                 maxWidth,

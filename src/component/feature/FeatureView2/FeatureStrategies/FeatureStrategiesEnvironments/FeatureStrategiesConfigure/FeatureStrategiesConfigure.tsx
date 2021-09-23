@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
-import FeatureStrategiesExecution from '../../FeatureStrategiesExecution/FeatureStrategiesExecution';
+import FeatureStrategyExecution from '../../FeatureStrategyExecution/FeatureStrategyExecution';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 
 import { useStyles } from './FeatureStrategiesConfigure.styles';
@@ -132,7 +132,10 @@ const FeatureStrategiesConfigure = ({
                     />
                 </div>
                 <div className={styles.executionContainer}>
-                    <FeatureStrategiesExecution {...strategyParams} />
+                    <FeatureStrategyExecution
+                        parameters={strategyParams}
+                        constraints={strategyConstraints}
+                    />
                 </div>
             </div>
 
