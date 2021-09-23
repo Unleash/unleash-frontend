@@ -30,7 +30,6 @@ const FeatureStrategiesEnvironments = () => {
         setExpandedSidebar,
         featureCache,
         setFeatureCache,
-        setResetParams,
     } = useContext(FeatureStrategiesUIContext);
 
     const { feature } = useFeature(projectId, featureId, {
@@ -182,7 +181,7 @@ const FeatureStrategiesEnvironments = () => {
                     return;
                 }
 
-                // Check constraints -> are we guaranteed that constraints will occur in the same order each time?
+                // Check constraints -> are we g    uaranteed that constraints will occur in the same order each time?
             });
         });
 
@@ -215,7 +214,6 @@ const FeatureStrategiesEnvironments = () => {
     const handleRefresh = () => {
         setFeatureCache(cloneDeep(feature));
         setShowRefreshPrompt(false);
-        setResetParams({ reset: true });
     };
 
     const handleCancel = () => {

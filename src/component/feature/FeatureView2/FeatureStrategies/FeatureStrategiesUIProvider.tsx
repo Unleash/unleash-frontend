@@ -16,7 +16,6 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
         null
     );
     const [dirty, setDirty] = useState({});
-    const [resetParams, setResetParams] = useState({ reset: true });
 
     const context = {
         configureNewStrategy,
@@ -27,10 +26,9 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
         setExpandedSidebar,
         featureCache,
         setFeatureCache,
-        resetParams,
+
         setDirty,
         dirty,
-        setResetParams,
     };
 
     return (

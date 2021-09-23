@@ -36,11 +36,8 @@ const FeatureStrategiesEnvironmentList = ({
     const { strategies: selectableStrategies } = useStrategies();
 
     const {
-        strategyParams,
         activeEnvironmentsRef,
         toast,
-        onSetStrategyParams,
-        onSetStrategyConstraints,
         deleteStrategy,
         updateStrategy,
         delDialog,
@@ -48,11 +45,9 @@ const FeatureStrategiesEnvironmentList = ({
         setProductionGuard,
         productionGuard,
         setConfigureNewStrategy,
-        originalParams,
         configureNewStrategy,
         setExpandedSidebar,
         expandedSidebar,
-        discardChanges,
         featureId,
     } = useFeatureStrategiesEnvironmentList(strategies);
 
@@ -122,22 +117,10 @@ const FeatureStrategiesEnvironmentList = ({
                     <Fragment key={strategy.id}>
                         <FeatureStrategyEditable
                             currentStrategy={strategy}
+                            setDelDialog={setDelDialog}
                             updateStrategy={resolveUpdateStrategy}
                         />
-                        {/* <FeatureStrategyAccordion
-                            strategy={strategy}
-                            setStrategyParams={onSetStrategyParams(strategy.id)}
-                            index={index}
-                            originalParams={originalParams[strategy.id]}
-                            setDelDialog={setDelDialog}
-                            edit
-                            dirty={strategyParams[strategy.id]?.dirty}
-                            updateStrategy={resolveUpdateStrategy}
-                            discardChanges={discardChanges}
-                            setStrategyConstraints={onSetStrategyConstraints(
-                                strategy.id
-                            )}
-                        /> */}
+
                         <FeatureStrategiesSeparator text="OR" />
                     </Fragment>
                 );
@@ -145,25 +128,10 @@ const FeatureStrategiesEnvironmentList = ({
                 return (
                     <FeatureStrategyEditable
                         key={strategy.id}
+                        setDelDialog={setDelDialog}
                         currentStrategy={strategy}
                         updateStrategy={resolveUpdateStrategy}
                     />
-
-                    // <FeatureStrategyAccordion
-                    //     strategy={strategy}
-                    //     originalParams={originalParams[strategy.id]}
-                    //     setStrategyParams={onSetStrategyParams(strategy.id)}
-                    //     index={index}
-                    //     key={strategy.id}
-                    //     setDelDialog={setDelDialog}
-                    //     edit
-                    //     discardChanges={discardChanges}
-                    //     dirty={strategyParams[strategy.id]?.dirty}
-                    //     updateStrategy={resolveUpdateStrategy}
-                    //     setStrategyConstraints={onSetStrategyConstraints(
-                    //         strategy.id
-                    //     )}
-                    // />
                 );
             }
         });

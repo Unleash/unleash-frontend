@@ -36,10 +36,14 @@ const FeatureStrategiesConfigure = ({
         setFeatureCache,
         setResetParams,
     } = useContext(FeatureStrategiesUIContext);
-    const [strategyConstraints, setStrategyConstraints] = useState([]);
-    const [strategyParams, setStrategyParams] = useState({});
+
+    const [strategyConstraints, setStrategyConstraints] = useState(
+        configureNewStrategy.constraints
+    );
+    const [strategyParams, setStrategyParams] = useState(
+        configureNewStrategy.parameters
+    );
     const { addStrategyToFeature } = useFeatureStrategyApi();
-    const { FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
 
     const handleCancel = () => {
         setConfigureNewStrategy(null);
@@ -77,7 +81,6 @@ const FeatureStrategiesConfigure = ({
 
             environment.strategies.push(strategy);
             setFeatureCache(feature);
-            setResetParams({ reset: true });
 
             setConfigureNewStrategy(null);
             setExpandedSidebar(false);
@@ -125,6 +128,8 @@ const FeatureStrategiesConfigure = ({
                         strategy={configureNewStrategy}
                         expanded
                         hideActions
+                        parameters={strategyParams}
+                        constraints={strategyConstraints}
                         setStrategyParams={setStrategyParams}
                         setStrategyConstraints={setStrategyConstraints}
                     />

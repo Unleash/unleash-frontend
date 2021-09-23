@@ -11,27 +11,25 @@ import {
 } from '../../../../../../interfaces/strategy';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import cloneDeep from 'lodash.clonedeep';
-import { Button } from '@material-ui/core';
+import { Button, IconButton, Tooltip } from '@material-ui/core';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyEditable.styles';
+import { Delete, FileCopy } from '@material-ui/icons';
 
 interface IFeatureStrategyEditable {
     currentStrategy: IStrategy;
+    setDelDialog?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const FeatureStrategyEditable = ({
     currentStrategy,
     updateStrategy,
+    setDelDialog,
 }: IFeatureStrategyEditable) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const {
-        activeEnvironment,
-        featureCache,
-        resetParams,
-        setResetParams,
-        dirty,
-        setDirty,
-    } = useContext(FeatureStrategiesUIContext);
+    const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
+        FeatureStrategiesUIContext
+    );
     const [strategyCache, setStrategyCache] = useState<IStrategy | null>(null);
     const styles = useStyles();
 
@@ -53,7 +51,7 @@ const FeatureStrategyEditable = ({
         updatedStrategy.parameters = parameters;
         mutate(FEATURE_STRATEGY_CACHE_KEY, { ...updatedStrategy }, false);
 
-        const dirtyParams = isDirtyParams();
+        const dirtyParams = isDirtyParams(parameters);
         setDirty(prev => ({ ...prev, [strategy.id]: dirtyParams }));
     };
 
@@ -69,25 +67,20 @@ const FeatureStrategyEditable = ({
 
         mutate(FEATURE_STRATEGY_CACHE_KEY, { ...currentStrategy }, false);
         setStrategyCache(cloneDeep(currentStrategy));
-        setResetParams({ reset: false });
     }, [featureCache]);
 
-    const isDirtyParams = () => {
-        let dirty = false;
-        const parameters = strategy?.parameters;
+    const isDirtyParams = (parameters: IParameter) => {
         const initialParams = strategyCache?.parameters;
 
-        if (!initialParams || !parameters) return dirty;
+        if (!initialParams || !parameters) return false;
 
         const keys = Object.keys(initialParams);
 
-        keys.forEach(key => {
+        const dirty = keys.some(key => {
             const old = initialParams[key];
             const current = parameters[key];
 
-            if (old !== current) {
-                dirty = true;
-            }
+            return old !== current;
         });
 
         return dirty;
@@ -116,6 +109,33 @@ const FeatureStrategyEditable = ({
             setStrategyParams={setStrategyParams}
             setStrategyConstraints={setStrategyConstraints}
             dirty={dirty[strategy.id]}
+            actions={
+                <>
+                    <Tooltip title="Delete strategy">
+                        <IconButton
+                            onClick={e => {
+                                e.stopPropagation();
+                                setDelDialog({
+                                    strategyId: strategy.id,
+                                    show: true,
+                                });
+                            }}
+                        >
+                            <Delete />
+                        </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Copy strategy">
+                        <IconButton
+                            onClick={e => {
+                                e.stopPropagation();
+                            }}
+                        >
+                            <FileCopy />
+                        </IconButton>
+                    </Tooltip>
+                </>
+            }
         >
             <ConditionallyRender
                 condition={dirty[strategy.id]}
