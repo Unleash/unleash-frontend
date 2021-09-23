@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        padding: '1rem 2rem 2rem 2rem',
         height: '100%',
+        width: '100%',
         transition: 'background-color 0.4s ease',
     },
     isOver: {
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         opacity: '0.75',
     },
     strategiesContainer: {
-        maxWidth: '70%',
+        maxWidth: '627px',
     },
     dropbox: {
         textAlign: 'center',

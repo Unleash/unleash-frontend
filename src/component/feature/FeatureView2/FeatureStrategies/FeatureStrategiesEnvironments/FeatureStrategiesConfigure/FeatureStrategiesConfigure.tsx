@@ -7,13 +7,13 @@ import { useParams } from 'react-router-dom';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
-import FeatureStrategyExecution from '../../FeatureStrategyExecution/FeatureStrategyExecution';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 
 import { useStyles } from './FeatureStrategiesConfigure.styles';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
+import FeatureStrategyCreateExecution from '../../FeatureStrategyCreateExecution/FeatureStrategyCreateExecution';
 
 interface IFeatureStrategiesConfigure {
     setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
@@ -132,7 +132,7 @@ const FeatureStrategiesConfigure = ({
                     />
                 </div>
                 <div className={styles.executionContainer}>
-                    <FeatureStrategyExecution
+                    <FeatureStrategyCreateExecution
                         parameters={strategyParams}
                         constraints={strategyConstraints}
                     />

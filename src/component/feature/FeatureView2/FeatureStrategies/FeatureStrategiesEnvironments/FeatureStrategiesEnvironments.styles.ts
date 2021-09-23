@@ -13,6 +13,16 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    tabContentContainer: {
+        padding: '1rem 2rem 2rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    listContainer: { width: '70%' },
+    listContainerFullWidth: { width: '100%' },
+    containerListView: {
+        display: 'none',
+    },
     header: {
         fontSize: theme.fontSizes.mainHeader,
         fontWeight: 'normal',

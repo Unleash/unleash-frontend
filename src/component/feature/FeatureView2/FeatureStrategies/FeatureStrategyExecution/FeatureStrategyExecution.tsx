@@ -18,6 +18,8 @@ const FeatureStrategyExecution = ({
 }: IFeatureStrategiesExecutionProps) => {
     const styles = useStyles();
 
+    if (!parameters) return null;
+
     const renderConstraints = () => {
         return constraints.map((constraint, index) => {
             if (index !== constraints.length - 1) {
@@ -96,8 +98,7 @@ const FeatureStrategyExecution = ({
     };
 
     return (
-        <div className={styles.container}>
-            <h3 className={styles.header}>Execution plan</h3>
+        <>
             <ConditionallyRender
                 condition={constraints.length > 0}
                 show={
@@ -109,7 +110,7 @@ const FeatureStrategyExecution = ({
                 }
             />
             {renderParameters()}
-        </div>
+        </>
     );
 };
 

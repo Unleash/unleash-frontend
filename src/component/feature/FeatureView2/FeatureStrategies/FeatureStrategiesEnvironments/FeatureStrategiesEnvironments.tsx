@@ -14,6 +14,7 @@ import useToast from '../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
+import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
 
 const FeatureStrategiesEnvironments = () => {
     const startingTabId = 0;
@@ -196,6 +197,14 @@ const FeatureStrategiesEnvironments = () => {
     };
 
     const renderTabPanels = () => {
+        const tabContentClasses = classNames(styles.tabContentContainer, {
+            [styles.containerListView]: configureNewStrategy,
+        });
+
+        const listContainerClasses = classNames(styles.listContainer, {
+            [styles.listContainerFullWidth]: expandedSidebar,
+        });
+
         return featureCache?.environments?.map((env, index) => {
             return (
                 <TabPanel
@@ -203,9 +212,24 @@ const FeatureStrategiesEnvironments = () => {
                     value={activeTab}
                     index={index}
                 >
-                    <FeatureStrategiesEnvironmentList
-                        strategies={env.strategies}
-                    />
+                    <div className={tabContentClasses}>
+                        <div className={listContainerClasses}>
+                            <FeatureStrategiesEnvironmentList
+                                strategies={env.strategies}
+                            />
+                        </div>
+                        <ConditionallyRender
+                            condition={
+                                !expandedSidebar && !configureNewStrategy
+                            }
+                            show={
+                                <FeatureEnvironmentStrategyExecution
+                                    strategies={env.strategies}
+                                    env={env}
+                                />
+                            }
+                        />
+                    </div>
                 </TabPanel>
             );
         });

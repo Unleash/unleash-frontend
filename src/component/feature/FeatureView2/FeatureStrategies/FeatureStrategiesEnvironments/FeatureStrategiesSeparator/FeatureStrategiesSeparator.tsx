@@ -21,6 +21,7 @@ const FeatureStrategiesSeparator = ({
                 fontSize: theme.fontSizes.smallerBody,
                 textAlign: 'center',
                 margin: '0.5rem 0rem 0.5rem 1rem',
+                backgroundColor: '#fff',
             }}
         >
             {text}
