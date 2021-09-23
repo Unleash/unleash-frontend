@@ -1,4 +1,3 @@
-import { GetApp } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import Dialogue from '../../../../../common/Dialogue';
 

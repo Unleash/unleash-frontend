@@ -1,18 +1,11 @@
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { mutate } from 'swr';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useToast from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import {
-    IConstraint,
-    IParameter,
-    IStrategy,
-} from '../../../../../../interfaces/strategy';
+import { IStrategy } from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
-import useFeatureStrategy from '../../../../../../hooks/api/getters/useFeatureStrategy/useFeatureStrategy';
 
 const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();

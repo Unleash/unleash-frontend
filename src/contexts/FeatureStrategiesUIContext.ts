@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IFeatureEnvironment } from '../interfaces/featureToggle';
 import { IStrategyPayload } from '../interfaces/strategy';
 

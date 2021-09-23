@@ -19,6 +19,7 @@ import { Delete, FileCopy } from '@material-ui/icons';
 interface IFeatureStrategyEditable {
     currentStrategy: IStrategy;
     setDelDialog?: React.Dispatch<React.SetStateAction<any>>;
+    updateStrategy: (strategy: IStrategy) => void;
 }
 
 const FeatureStrategyEditable = ({

@@ -1,4 +1,4 @@
-import { TextField, Tooltip, Typography } from '@material-ui/core';
+import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 
 import { IParameter } from '../../../../../../interfaces/strategy';
@@ -49,7 +49,7 @@ const FlexibleStrategy = ({
 
     const stickinessOptions = resolveStickiness();
 
-    const rollout = parameters.rollout;
+    const rollout = parameters.rollout || 100;
     const stickiness = parameters.stickiness;
     const groupId = parameters.groupId;
 

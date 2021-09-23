@@ -11,17 +11,17 @@ import { useEffect } from 'react';
 
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
-    updateConstraints: () => void;
+    updateConstraints: (constraints: IConstraint[]) => void;
     constraintError: string;
     setConstraintError: () => void;
 }
 
-const StrategyConstraints = ({
+const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
     constraints,
     updateConstraints,
     constraintError,
     setConstraintError,
-}: IStrategyConstraintProps) => {
+}) => {
     const { uiConfig } = useUiConfig();
     const { context } = useUnleashContext();
     const commonStyles = useCommonStyles();

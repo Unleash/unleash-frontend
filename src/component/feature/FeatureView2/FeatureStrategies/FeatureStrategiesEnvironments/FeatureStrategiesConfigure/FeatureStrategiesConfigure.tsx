@@ -3,20 +3,18 @@ import { Alert } from '@material-ui/lab';
 import { useContext, useState } from 'react';
 import { getHumanReadbleStrategyName } from '../../../../../../utils/strategy-names';
 import { useParams } from 'react-router-dom';
-import { mutate } from 'swr';
 
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import FeatureStrategiesExecution from '../../FeatureStrategiesExecution/FeatureStrategiesExecution';
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 
 import { useStyles } from './FeatureStrategiesConfigure.styles';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
-import { IToast } from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
+
 interface IFeatureStrategiesConfigure {
     setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
 }
@@ -34,7 +32,6 @@ const FeatureStrategiesConfigure = ({
         setExpandedSidebar,
         featureCache,
         setFeatureCache,
-        setResetParams,
     } = useContext(FeatureStrategiesUIContext);
 
     const [strategyConstraints, setStrategyConstraints] = useState(

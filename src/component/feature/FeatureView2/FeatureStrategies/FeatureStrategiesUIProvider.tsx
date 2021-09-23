@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import FeatureStrategiesUIContext from '../../../../contexts/FeatureStrategiesUIContext';
 import {
     IFeatureEnvironment,
@@ -16,7 +16,6 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
         null
     );
     const [dirty, setDirty] = useState({});
-
     const context = {
         configureNewStrategy,
         setConfigureNewStrategy,

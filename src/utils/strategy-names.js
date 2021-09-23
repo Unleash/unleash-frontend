@@ -1,7 +1,6 @@
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PeopleIcon from '@material-ui/icons/People';
 import LanguageIcon from '@material-ui/icons/Language';
-import { ReactComponent as GradualRolloutIcon } from '../assets/icons/gradual.svg';
 import MapIcon from '@material-ui/icons/Map';
 import { DonutLarge } from '@material-ui/icons';
 

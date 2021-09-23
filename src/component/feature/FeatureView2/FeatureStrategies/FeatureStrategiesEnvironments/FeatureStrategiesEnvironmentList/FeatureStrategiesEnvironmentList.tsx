@@ -1,12 +1,7 @@
-import {
-    IParameter,
-    IStrategy,
-    IStrategyPayload,
-} from '../../../../../../interfaces/strategy';
+import { IParameter, IStrategy } from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
-import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
-import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { Fragment, useEffect } from 'react';
+import { DropTargetMonitor, useDrop } from 'react-dnd';
+import { Fragment } from 'react';
 import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
@@ -18,7 +13,6 @@ import useFeatureStrategiesEnvironmentList from './useFeatureStrategiesEnvironme
 import useDropboxMarkup from './useDropboxMarkup';
 import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';
 import useProductionGuardMarkup from './useProductionGuardMarkup';
-import useFeatureStrategy from '../../../../../../hooks/api/getters/useFeatureStrategy/useFeatureStrategy';
 import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
 
 interface IFeatureStrategiesEnvironmentListProps {

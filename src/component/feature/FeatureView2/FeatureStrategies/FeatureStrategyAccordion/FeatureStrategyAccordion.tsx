@@ -1,28 +1,13 @@
-import {
-    IConstraint,
-    IParameter,
-    IStrategy,
-} from '../../../../../interfaces/strategy';
+import { IConstraint, IParameter, IStrategy } from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
-import {
-    AccordionSummary,
-    AccordionDetails,
-    IconButton,
-    Tooltip,
-    debounce,
-    Button,
-} from '@material-ui/core';
+import { AccordionDetails, AccordionSummary } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {
-    getFeatureStrategyIcon,
-    getHumanReadbleStrategyName,
-} from '../../../../../utils/strategy-names';
+import { getFeatureStrategyIcon, getHumanReadbleStrategyName } from '../../../../../utils/strategy-names';
 import { useStyles } from './FeatureStrategyAccordion.styles';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
-import { Delete, FileCopy } from '@material-ui/icons';
 import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';
-import { SetStateAction } from 'react';
+import React from 'react';
 
 interface IFeatureStrategyAccordionProps {
     strategy: IStrategy;
@@ -35,7 +20,7 @@ interface IFeatureStrategyAccordionProps {
     actions?: JSX.Element | JSX.Element[];
 }
 
-const FeatureStrategyAccordion = ({
+const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     strategy,
     expanded = false,
     setStrategyParams,
@@ -44,7 +29,7 @@ const FeatureStrategyAccordion = ({
     setStrategyConstraints,
     actions,
     children,
-}: IFeatureStrategyAccordionProps) => {
+}) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
     const Icon = getFeatureStrategyIcon(strategy.name);

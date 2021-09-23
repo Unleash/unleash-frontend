@@ -1,6 +1,5 @@
-import React, { ChangeEvent, Component, useState } from 'react';
-import PropTypes from 'prop-types';
-import { TextField, Button, Chip, Typography } from '@material-ui/core';
+import React, { ChangeEvent, useState } from 'react';
+import { Button, Chip, TextField, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 

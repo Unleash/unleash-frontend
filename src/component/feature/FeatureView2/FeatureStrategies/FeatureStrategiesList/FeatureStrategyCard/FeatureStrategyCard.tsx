@@ -1,11 +1,7 @@
 import { IconButton, Tooltip } from '@material-ui/core';
 import classNames from 'classnames';
-import { useContext } from 'react';
 import { useDrag } from 'react-dnd';
-import {
-    getFeatureStrategyIcon,
-    getHumanReadbleStrategyName,
-} from '../../../../../../utils/strategy-names';
+import { getFeatureStrategyIcon, getHumanReadbleStrategyName } from '../../../../../../utils/strategy-names';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyCard.styles';
 
@@ -24,7 +20,8 @@ const FeatureStrategyCard = ({
 }: IFeatureStrategyCardProps) => {
     const styles = useStyles();
 
-    const [{ isDragging }, drag] = useDrag({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ _ , drag] = useDrag({
         type: FEATURE_STRATEGIES_DRAG_TYPE,
         item: () => {
             return { name };

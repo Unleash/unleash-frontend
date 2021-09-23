@@ -18,11 +18,9 @@ import FeatureStrategiesSeparator from '../../FeatureStrategiesEnvironments/Feat
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IStrategy;
     setStrategyParams: () => any;
-    updateParameters: () => any;
+    updateParameters: (field: string, value: any) => any;
+    updateConstraints: (constraints: IConstraint[]) => void;
     constraints: IConstraint[];
-    setLocalStrategyConstraints: React.Dispatch<
-        React.SetStateAction<IConstraint[]>
-    >;
     setStrategyConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
 }
 
@@ -32,7 +30,6 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
         updateParameters,
         children,
         constraints,
-        setLocalStrategyConstraints,
         updateConstraints,
         setStrategyConstraints,
     }) => {
