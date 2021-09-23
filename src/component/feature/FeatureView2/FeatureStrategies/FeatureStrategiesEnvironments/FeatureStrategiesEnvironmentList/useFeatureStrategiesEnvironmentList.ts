@@ -12,6 +12,7 @@ import {
     IStrategy,
 } from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
+import useFeatureStrategy from '../../../../../../hooks/api/getters/useFeatureStrategy/useFeatureStrategy';
 
 const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
     const createStrategyData = () => {
@@ -98,20 +99,18 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         setOriginalParams(createStrategyData());
     };
 
-    const updateStrategy = async (strategyId: string) => {
+    const updateStrategy = async (updatedStrategy: IStrategy) => {
         try {
             const updateStrategyPayload: IStrategyPayload = {
-                constraints: cloneDeep(paramsRef?.current)[strategyId]
-                    ?.constraints,
-                parameters: cloneDeep(paramsRef?.current)[strategyId]
-                    ?.parameters,
+                constraints: updatedStrategy.constraints,
+                parameters: updatedStrategy.parameters,
             };
 
             await updateStrategyOnFeature(
                 projectId,
                 featureId,
                 activeEnvironment.id,
-                strategyId,
+                updatedStrategy.id,
                 updateStrategyPayload
             );
 
@@ -122,31 +121,19 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
             });
 
             const feature = cloneDeep(featureCache);
+            setResetParams({ reset: false });
             const environment = feature.environments.find(
                 env => env.name === activeEnvironment.name
             );
 
             const strategy = environment.strategies.find(
-                strategy => strategy.id === strategyId
+                strategy => strategy.id === updatedStrategy.id
             );
 
             strategy.parameters = updateStrategyPayload.parameters;
             strategy.constraints = updateStrategyPayload.constraints;
 
-            setResetParams({ reset: false });
             setFeatureCache(feature);
-
-            setOriginalParams(prevParams => ({
-                ...prevParams,
-                [strategyId]: { ...updateStrategyPayload },
-            }));
-
-            setStrategyParams(prevParams => {
-                return {
-                    ...prevParams,
-                    [strategyId]: { ...updateStrategyPayload, dirty: false },
-                };
-            });
         } catch (e) {
             setToastData({
                 show: true,

@@ -15,7 +15,8 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
     const [featureCache, setFeatureCache] = useState<IFeatureToggle | null>(
         null
     );
-    const [resetParams, setResetParams] = useState({ reset: false });
+    const [dirty, setDirty] = useState({});
+    const [resetParams, setResetParams] = useState({ reset: true });
 
     const context = {
         configureNewStrategy,
@@ -27,6 +28,8 @@ const FeatureStrategiesUIProvider: FC = ({ children }) => {
         featureCache,
         setFeatureCache,
         resetParams,
+        setDirty,
+        dirty,
         setResetParams,
     };
 

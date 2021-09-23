@@ -18,6 +18,8 @@ import useFeatureStrategiesEnvironmentList from './useFeatureStrategiesEnvironme
 import useDropboxMarkup from './useDropboxMarkup';
 import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';
 import useProductionGuardMarkup from './useProductionGuardMarkup';
+import useFeatureStrategy from '../../../../../../hooks/api/getters/useFeatureStrategy/useFeatureStrategy';
+import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IStrategy[];
@@ -82,22 +84,22 @@ const FeatureStrategiesEnvironmentList = ({
     const productionGuardMarkup = useProductionGuardMarkup({
         show: productionGuard.show,
         onClick: () => {
-            updateStrategy(productionGuard.strategyId);
+            updateStrategy(productionGuard.strategy);
             setProductionGuard({
                 show: false,
-                strategyId: '',
+                strategy: null,
             });
         },
-        onClose: () => setProductionGuard({ show: false, strategyId: '' }),
+        onClose: () => setProductionGuard({ show: false, strategy: null }),
     });
 
-    const resolveUpdateStrategy = (strategyId: string) => {
+    const resolveUpdateStrategy = (strategy: IStrategy) => {
         if (activeEnvironmentsRef?.current?.type === 'production') {
-            setProductionGuard({ show: true, strategyId });
+            setProductionGuard({ show: true, strategy });
             return;
         }
 
-        updateStrategy(strategyId);
+        updateStrategy(strategy);
     };
 
     const selectStrategy = (name: string) => {
@@ -118,7 +120,11 @@ const FeatureStrategiesEnvironmentList = ({
             if (index !== strategies.length - 1) {
                 return (
                     <Fragment key={strategy.id}>
-                        <FeatureStrategyAccordion
+                        <FeatureStrategyEditable
+                            currentStrategy={strategy}
+                            updateStrategy={resolveUpdateStrategy}
+                        />
+                        {/* <FeatureStrategyAccordion
                             strategy={strategy}
                             setStrategyParams={onSetStrategyParams(strategy.id)}
                             index={index}
@@ -131,27 +137,33 @@ const FeatureStrategiesEnvironmentList = ({
                             setStrategyConstraints={onSetStrategyConstraints(
                                 strategy.id
                             )}
-                        />
+                        /> */}
                         <FeatureStrategiesSeparator text="OR" />
                     </Fragment>
                 );
             } else {
                 return (
-                    <FeatureStrategyAccordion
-                        strategy={strategy}
-                        originalParams={originalParams[strategy.id]}
-                        setStrategyParams={onSetStrategyParams(strategy.id)}
-                        index={index}
+                    <FeatureStrategyEditable
                         key={strategy.id}
-                        setDelDialog={setDelDialog}
-                        edit
-                        discardChanges={discardChanges}
-                        dirty={strategyParams[strategy.id]?.dirty}
+                        currentStrategy={strategy}
                         updateStrategy={resolveUpdateStrategy}
-                        setStrategyConstraints={onSetStrategyConstraints(
-                            strategy.id
-                        )}
                     />
+
+                    // <FeatureStrategyAccordion
+                    //     strategy={strategy}
+                    //     originalParams={originalParams[strategy.id]}
+                    //     setStrategyParams={onSetStrategyParams(strategy.id)}
+                    //     index={index}
+                    //     key={strategy.id}
+                    //     setDelDialog={setDelDialog}
+                    //     edit
+                    //     discardChanges={discardChanges}
+                    //     dirty={strategyParams[strategy.id]?.dirty}
+                    //     updateStrategy={resolveUpdateStrategy}
+                    //     setStrategyConstraints={onSetStrategyConstraints(
+                    //         strategy.id
+                    //     )}
+                    // />
                 );
             }
         });

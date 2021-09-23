@@ -33,6 +33,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
         children,
         constraints,
         setLocalStrategyConstraints,
+        updateConstraints,
         setStrategyConstraints,
     }) => {
         const styles = useStyles();
@@ -84,7 +85,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
 
             if (valid) {
                 setShowConstraints(false);
-                setStrategyConstraints(constraints, strategy.id);
+                setStrategyConstraints(constraints);
             }
         };
 
@@ -123,7 +124,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
             const filteredConstraints = constraints.filter(constraint => {
                 return constraint.values.length > 0;
             });
-            setLocalStrategyConstraints(filteredConstraints);
+            updateConstraints(filteredConstraints);
         };
 
         const Type = resolveInputType();
@@ -163,7 +164,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                     maxWidth="md"
                 >
                     <StrategyConstraints
-                        updateConstraints={setLocalStrategyConstraints}
+                        updateConstraints={updateConstraints}
                         constraints={constraints || []}
                         constraintError={constraintError}
                         setConstraintError={setConstraintError}
