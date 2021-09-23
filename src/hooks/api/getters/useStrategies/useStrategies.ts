@@ -1,5 +1,5 @@
 import useSWR, { mutate } from 'swr';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 import { IStrategy } from '../../../../interfaces/strategy';
 

@@ -26,7 +26,7 @@ const FlexibleStrategy = ({
     context,
 }: IFlexibleStrategyProps) => {
     const onUpdate =
-        (field: string) => (e: React.ChangeEvent, newValue: number) => {
+        (field: string) => (e: React.ChangeEvent<{ name?: string; value: unknown }>, newValue: number) => {
             updateParameter(field, newValue);
         };
 
@@ -82,11 +82,12 @@ const FlexibleStrategy = ({
                     </Typography>
                 </Tooltip>
                 <Select
+                    id='stickiness-select'
                     name="stickiness"
                     label="Stickiness"
                     options={stickinessOptions}
                     value={stickiness}
-                    onChange={e => onUpdate('stickiness')(e, e.target.value)}
+                    onChange={e => onUpdate('stickiness')(e, e.target.value as number)}
                 />
                 &nbsp;
                 <br />

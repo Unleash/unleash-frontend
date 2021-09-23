@@ -4,10 +4,10 @@ import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrate
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 import useToast from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import { IStrategy } from '../../../../../../interfaces/strategy';
+import { IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
 
-const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
+const useFeatureStrategiesEnvironmentList = (strategies: IFeatureStrategy[]) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
 
     const { deleteStrategyFromFeature, updateStrategyOnFeature } =
@@ -36,7 +36,7 @@ const useFeatureStrategiesEnvironmentList = (strategies: IStrategy[]) => {
         activeEnvironmentsRef.current = activeEnvironment;
     }, [activeEnvironment]);
 
-    const updateStrategy = async (updatedStrategy: IStrategy) => {
+    const updateStrategy = async (updatedStrategy: IFeatureStrategy) => {
         try {
             const updateStrategyPayload: IStrategyPayload = {
                 constraints: updatedStrategy.constraints,

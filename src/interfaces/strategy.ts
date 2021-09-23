@@ -1,11 +1,15 @@
-export interface IStrategy {
-    constraints: IConstraint[];
+export interface IFeatureStrategy {
     id: string;
     name: string;
+    constraints: IConstraint[];
     parameters: IParameter;
-    deprecated: boolean;
-    editable: boolean;
+}
+
+export interface IStrategy {
+    name: string;
     displayName: string;
+    editable: boolean;
+    deprecated: boolean;
     description: string;
 }
 

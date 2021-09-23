@@ -1,5 +1,5 @@
 import useStrategies from '../../../../../hooks/api/getters/useStrategies/useStrategies';
-import { IStrategy } from '../../../../../interfaces/strategy';
+import { IFeatureStrategy, IStrategy } from '../../../../../interfaces/strategy';
 import FeatureStrategyCard from './FeatureStrategyCard/FeatureStrategyCard';
 import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';
@@ -17,7 +17,7 @@ const FeatureStrategiesList = () => {
             .filter((strategy: IStrategy) => !strategy.deprecated)
             .map((strategy: IStrategy) => (
                 <FeatureStrategyCard
-                    key={strategy.id}
+                    key={strategy.name}
                     configureNewStrategy={!expandedSidebar}
                     name={strategy.name}
                     description={strategy.description}

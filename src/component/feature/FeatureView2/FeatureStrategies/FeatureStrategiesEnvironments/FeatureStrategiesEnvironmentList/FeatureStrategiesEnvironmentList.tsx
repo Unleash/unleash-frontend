@@ -1,4 +1,4 @@
-import { IParameter, IStrategy } from '../../../../../../interfaces/strategy';
+import { IParameter, IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { Fragment } from 'react';
@@ -16,7 +16,7 @@ import useProductionGuardMarkup from './useProductionGuardMarkup';
 import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
 
 interface IFeatureStrategiesEnvironmentListProps {
-    strategies: IStrategy[];
+    strategies: IFeatureStrategy[];
 }
 
 interface IFeatureDragItem {
@@ -82,7 +82,7 @@ const FeatureStrategiesEnvironmentList = ({
         onClose: () => setProductionGuard({ show: false, strategy: null }),
     });
 
-    const resolveUpdateStrategy = (strategy: IStrategy) => {
+    const resolveUpdateStrategy = (strategy: IFeatureStrategy) => {
         if (activeEnvironmentsRef?.current?.type === 'production') {
             setProductionGuard({ show: true, strategy });
             return;

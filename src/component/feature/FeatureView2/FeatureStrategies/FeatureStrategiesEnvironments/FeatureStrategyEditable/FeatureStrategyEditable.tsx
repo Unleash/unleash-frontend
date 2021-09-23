@@ -7,7 +7,7 @@ import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import {
     IConstraint,
     IParameter,
-    IStrategy,
+    IFeatureStrategy,
 } from '../../../../../../interfaces/strategy';
 import FeatureStrategyAccordion from '../../FeatureStrategyAccordion/FeatureStrategyAccordion';
 import cloneDeep from 'lodash.clonedeep';
@@ -17,9 +17,9 @@ import { useStyles } from './FeatureStrategyEditable.styles';
 import { Delete, FileCopy } from '@material-ui/icons';
 
 interface IFeatureStrategyEditable {
-    currentStrategy: IStrategy;
+    currentStrategy: IFeatureStrategy;
     setDelDialog?: React.Dispatch<React.SetStateAction<any>>;
-    updateStrategy: (strategy: IStrategy) => void;
+    updateStrategy: (strategy: IFeatureStrategy) => void;
 }
 
 const FeatureStrategyEditable = ({
@@ -31,7 +31,7 @@ const FeatureStrategyEditable = ({
     const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
         FeatureStrategiesUIContext
     );
-    const [strategyCache, setStrategyCache] = useState<IStrategy | null>(null);
+    const [strategyCache, setStrategyCache] = useState<IFeatureStrategy | null>(null);
     const styles = useStyles();
 
     const { strategy, FEATURE_STRATEGY_CACHE_KEY } = useFeatureStrategy(

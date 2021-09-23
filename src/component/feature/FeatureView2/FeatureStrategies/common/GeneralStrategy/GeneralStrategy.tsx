@@ -8,12 +8,12 @@ import {
 
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
-import { IParameter, IStrategy } from '../../../../../../interfaces/strategy';
+import { IParameter, IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import { useStyles } from './GeneralStrategy.styles';
 
 interface IGeneralStrategyProps {
     parameters: IParameter;
-    strategyDefinition: IStrategy;
+    strategyDefinition: IFeatureStrategy;
     updateParameter: () => void;
     editable: boolean;
 }

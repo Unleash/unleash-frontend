@@ -2,7 +2,7 @@ import useSWR, { mutate } from 'swr';
 import { useState, useEffect } from 'react';
 
 import { formatApiPath } from '../../../../utils/format-path';
-import { IStrategy } from '../../../../interfaces/strategy';
+import { IFeatureStrategy } from '../../../../interfaces/strategy';
 
 interface IUseFeatureOptions {
     refreshInterval?: number;
@@ -30,7 +30,7 @@ const useFeatureStrategy = (
 
     const FEATURE_STRATEGY_CACHE_KEY = strategyId;
 
-    const { data, error } = useSWR<IStrategy>(
+    const { data, error } = useSWR<IFeatureStrategy>(
         FEATURE_STRATEGY_CACHE_KEY,
         fetcher,
         {

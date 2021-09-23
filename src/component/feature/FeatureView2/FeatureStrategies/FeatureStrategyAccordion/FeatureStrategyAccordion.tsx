@@ -1,4 +1,4 @@
-import { IConstraint, IParameter, IStrategy } from '../../../../../interfaces/strategy';
+import { IConstraint, IParameter, IFeatureStrategy } from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
 import { AccordionDetails, AccordionSummary } from '@material-ui/core';
@@ -10,7 +10,7 @@ import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/Feature
 import React from 'react';
 
 interface IFeatureStrategyAccordionProps {
-    strategy: IStrategy;
+    strategy: IFeatureStrategy;
     expanded?: boolean;
     parameters: IParameter;
     constraints: IConstraint[];
@@ -35,7 +35,6 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     const Icon = getFeatureStrategyIcon(strategy.name);
 
     const updateParameters = (field: string, value: any) => {
-        console.log(field, value);
         setStrategyParams({ ...parameters, [field]: value });
     };
 

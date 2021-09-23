@@ -3,30 +3,29 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 
 export interface ISelectOption {
     key: string;
-    value: number | string;
-    title: string;
-    label: string
+    title?: string;
+    label?: string
 }
 export interface ISelectMenuProps {
     name: string;
     id: string;
-    value: string;
-    label: string;
+    value?: string;
+    label?: string;
     options: ISelectOption[];
-    style: object;
+    style?: object;
     onChange?: (
         event: React.ChangeEvent<{ name?: string; value: unknown }>,
         child: React.ReactNode
     ) => void
     disabled?: boolean
-    className: string;
+    className?: string;
     classes?: any;
 }
 
 const SelectMenu: React.FC<ISelectMenuProps> = ({
     name,
-    value,
-    label,
+    value = '',
+    label = '',
     options,
     onChange,
     id,
@@ -37,7 +36,7 @@ const SelectMenu: React.FC<ISelectMenuProps> = ({
 }) => {
     const renderSelectItems = () =>
         options.map(option => (
-            <MenuItem key={option.key} value={option.key} title={option.title}>
+            <MenuItem key={option.key} value={option.key} title={option.title || ''}>
                 {option.label}
             </MenuItem>
         ));
