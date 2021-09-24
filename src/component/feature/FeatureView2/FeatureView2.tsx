@@ -19,9 +19,19 @@ const FeatureView2 = () => {
         return (
             <div style={{ display: 'flex', width: '100%' }}>
                 <FeatureViewMetaData />
-                {feature?.environments.map(env => {
-                    return <FeatureViewEnvironment env={env} key={env.name} />;
-                })}
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                    }}
+                >
+                    {feature?.environments.map(env => {
+                        return (
+                            <FeatureViewEnvironment env={env} key={env.name} />
+                        );
+                    })}
+                </div>
             </div>
         );
     };

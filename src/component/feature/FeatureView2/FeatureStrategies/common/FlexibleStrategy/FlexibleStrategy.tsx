@@ -26,7 +26,11 @@ const FlexibleStrategy = ({
     context,
 }: IFlexibleStrategyProps) => {
     const onUpdate =
-        (field: string) => (e: React.ChangeEvent<{ name?: string; value: unknown }>, newValue: number) => {
+        (field: string) =>
+        (
+            e: React.ChangeEvent<{ name?: string; value: unknown }>,
+            newValue: number
+        ) => {
             updateParameter(field, newValue);
         };
 
@@ -49,7 +53,7 @@ const FlexibleStrategy = ({
 
     const stickinessOptions = resolveStickiness();
 
-    const rollout = parameters.rollout || 100;
+    const rollout = parameters.rollout !== undefined ? parameters.rollout : 100;
     const stickiness = parameters.stickiness;
     const groupId = parameters.groupId;
 
@@ -82,12 +86,14 @@ const FlexibleStrategy = ({
                     </Typography>
                 </Tooltip>
                 <Select
-                    id='stickiness-select'
+                    id="stickiness-select"
                     name="stickiness"
                     label="Stickiness"
                     options={stickinessOptions}
                     value={stickiness}
-                    onChange={e => onUpdate('stickiness')(e, e.target.value as number)}
+                    onChange={e =>
+                        onUpdate('stickiness')(e, e.target.value as number)
+                    }
                 />
                 &nbsp;
                 <br />
