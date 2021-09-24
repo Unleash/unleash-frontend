@@ -1,4 +1,7 @@
-import { IParameter, IFeatureStrategy } from '../../../../../../interfaces/strategy';
+import {
+    IParameter,
+    IFeatureStrategy,
+} from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { Fragment } from 'react';
@@ -74,17 +77,19 @@ const FeatureStrategiesEnvironmentList = ({
         show: productionGuard.show,
         onClick: () => {
             updateStrategy(productionGuard.strategy);
+            productionGuard.callback();
             setProductionGuard({
                 show: false,
                 strategy: null,
             });
         },
-        onClose: () => setProductionGuard({ show: false, strategy: null }),
+        onClose: () =>
+            setProductionGuard({ show: false, strategy: null, callback: null }),
     });
 
-    const resolveUpdateStrategy = (strategy: IFeatureStrategy) => {
+    const resolveUpdateStrategy = (strategy: IFeatureStrategy, callback) => {
         if (activeEnvironmentsRef?.current?.type === 'production') {
-            setProductionGuard({ show: true, strategy });
+            setProductionGuard({ show: true, strategy, callback });
             return;
         }
 

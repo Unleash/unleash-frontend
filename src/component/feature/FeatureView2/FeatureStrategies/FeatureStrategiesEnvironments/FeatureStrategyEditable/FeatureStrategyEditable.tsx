@@ -31,7 +31,9 @@ const FeatureStrategyEditable = ({
     const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
         FeatureStrategiesUIContext
     );
-    const [strategyCache, setStrategyCache] = useState<IFeatureStrategy | null>(null);
+    const [strategyCache, setStrategyCache] = useState<IFeatureStrategy | null>(
+        null
+    );
     const styles = useStyles();
 
     const { strategy, FEATURE_STRATEGY_CACHE_KEY } = useFeatureStrategy(
@@ -57,9 +59,16 @@ const FeatureStrategyEditable = ({
     };
 
     const updateFeatureStrategy = () => {
-        updateStrategy(strategy);
-        setStrategyCache(cloneDeep(strategy));
-        setDirty(prev => ({ ...prev, [strategy.id]: false }));
+        const cleanup = () => {
+            setStrategyCache(cloneDeep(strategy));
+            setDirty(prev => ({ ...prev, [strategy.id]: false }));
+        };
+
+        updateStrategy(strategy, cleanup);
+
+        if (activeEnvironment.type !== 'production') {
+            cleanup();
+        }
     };
 
     useEffect(() => {
@@ -103,63 +112,68 @@ const FeatureStrategyEditable = ({
     const { parameters, constraints } = strategy;
 
     return (
-        <FeatureStrategyAccordion
-            parameters={parameters}
-            constraints={constraints}
-            strategy={strategy}
-            setStrategyParams={setStrategyParams}
-            setStrategyConstraints={setStrategyConstraints}
-            dirty={dirty[strategy.id]}
-            actions={
-                <>
-                    <Tooltip title="Delete strategy">
-                        <IconButton
-                            onClick={e => {
-                                e.stopPropagation();
-                                setDelDialog({
-                                    strategyId: strategy.id,
-                                    show: true,
-                                });
-                            }}
-                        >
-                            <Delete />
-                        </IconButton>
-                    </Tooltip>
-
-                    <Tooltip title="Copy strategy">
-                        <IconButton
-                            onClick={e => {
-                                e.stopPropagation();
-                            }}
-                        >
-                            <FileCopy />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            }
-        >
+        <div className={styles.editableContainer}>
             <ConditionallyRender
                 condition={dirty[strategy.id]}
-                show={
+                show={<div className={styles.unsaved}>Unsaved changes</div>}
+            />
+            <FeatureStrategyAccordion
+                parameters={parameters}
+                constraints={constraints}
+                strategy={strategy}
+                setStrategyParams={setStrategyParams}
+                setStrategyConstraints={setStrategyConstraints}
+                dirty={dirty[strategy.id]}
+                actions={
                     <>
-                        <div className={styles.unsaved}>Unsaved changes</div>
-                        <div className={styles.buttonContainer}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                style={{ marginRight: '1rem' }}
-                                onClick={updateFeatureStrategy}
+                        <Tooltip title="Delete strategy">
+                            <IconButton
+                                onClick={e => {
+                                    e.stopPropagation();
+                                    setDelDialog({
+                                        strategyId: strategy.id,
+                                        show: true,
+                                    });
+                                }}
                             >
-                                Save changes
-                            </Button>
-                            <Button onClick={discardChanges}>
-                                Discard changes
-                            </Button>
-                        </div>
+                                <Delete />
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Copy strategy">
+                            <IconButton
+                                onClick={e => {
+                                    e.stopPropagation();
+                                }}
+                            >
+                                <FileCopy />
+                            </IconButton>
+                        </Tooltip>
                     </>
                 }
-            />
-        </FeatureStrategyAccordion>
+            >
+                <ConditionallyRender
+                    condition={dirty[strategy.id]}
+                    show={
+                        <>
+                            <div className={styles.buttonContainer}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ marginRight: '1rem' }}
+                                    onClick={updateFeatureStrategy}
+                                >
+                                    Save changes
+                                </Button>
+                                <Button onClick={discardChanges}>
+                                    Discard changes
+                                </Button>
+                            </div>
+                        </>
+                    }
+                />
+            </FeatureStrategyAccordion>
+        </div>
     );
 };
 
