@@ -2,7 +2,6 @@ import FeatureStrategiesSeparator from '../../FeatureStrategiesSeparator/Feature
 import { useStyles } from './FeatureEnvironmentStrategyExecutionSeparator.styles';
 
 const FeatureEnvironmentStrategyExecutionSeparator = () => {
-    const theme = useTheme();
     const styles = useStyles();
     return (
         <div className={styles.container}>
