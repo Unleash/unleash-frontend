@@ -22,9 +22,9 @@ export const useStyles = makeStyles(theme => ({
     },
     fadeInStart: {
         opacity: '0',
-        position: 'absolute',
+        position: 'fixed',
         right: '40px',
-        top: '40px',
+        top: '100px',
         transform: 'translateX(-400px)',
         zIndex: 400,
     },

@@ -49,6 +49,8 @@ const FeatureStrategyEditable = ({
         }
     );
 
+    console.log('ACTIVE ENVIRONMENT', activeEnvironment);
+
     const setStrategyParams = (parameters: IParameter) => {
         const updatedStrategy = { ...strategy };
         updatedStrategy.parameters = parameters;

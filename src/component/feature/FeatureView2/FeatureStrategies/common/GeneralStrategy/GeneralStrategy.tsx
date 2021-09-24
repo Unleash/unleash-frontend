@@ -8,7 +8,10 @@ import {
 
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
-import { IParameter, IFeatureStrategy } from '../../../../../../interfaces/strategy';
+import {
+    IParameter,
+    IFeatureStrategy,
+} from '../../../../../../interfaces/strategy';
 import { useStyles } from './GeneralStrategy.styles';
 
 interface IGeneralStrategyProps {
@@ -43,8 +46,8 @@ const GeneralStrategy = ({
     };
 
     if (
-        strategyDefinition.parameters &&
-        strategyDefinition.parameters.length > 0
+        strategyDefinition?.parameters &&
+        strategyDefinition?.parameters.length > 0
     ) {
         return strategyDefinition.parameters.map(
             ({ name, type, description, required }) => {
