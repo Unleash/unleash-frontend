@@ -59,7 +59,7 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
             <ApiError
                 onClick={refetch}
                 // className={styles.apiError}
-                text="Error fetching projects"
+                text="Error fetching api tokens"
             />
         );
     };
