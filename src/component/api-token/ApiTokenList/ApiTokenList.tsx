@@ -38,7 +38,7 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
     const { uiConfig } = useUiConfig();
     const [showDelete, setShowDelete] = useState(false);
     const [delToken, setDeleteToken] = useState<IApiToken>();
-    const { toast, setToastData, hideToast } = useToast();
+    const { toast, setToastData } = useToast();
     const { tokens, loading, refetch, error } = useApiTokens();
     const { deleteToken, createToken } = useApiTokensApi();
     const ref = useLoading(loading);
@@ -72,7 +72,6 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
             show: true,
             text: 'Successfully created API token.',
         });
-        setTimeout(hideToast, 2000);
     }
 
     const onDeleteToken = async () => {
@@ -87,7 +86,6 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
             show: true,
             text: 'Successfully deleted API token.',
         });
-        setTimeout(hideToast, 2000);
     };
 
     const renderProject = (projectId: string) => {

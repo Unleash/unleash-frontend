@@ -4,7 +4,7 @@ export interface IApiTokenCreate {
     username: string;
     type: string;
     project: string;
-    environment: string;
+    environment?: string;
 }
 
 const useApiTokensApi = () => {

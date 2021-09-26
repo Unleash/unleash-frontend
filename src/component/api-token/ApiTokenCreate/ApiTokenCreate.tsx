@@ -1,6 +1,6 @@
 import { TextField, } from '@material-ui/core';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styles as commonStyles } from '../../../component/common';
 import { IApiTokenCreate } from '../../../hooks/api/actions/useApiTokensApi/useApiTokensApi';
 import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
@@ -9,7 +9,6 @@ import Dialogue from '../../common/Dialogue';
 import MySelect from '../../common/select';
 import { useStyles } from './styles';
 
-const GLOBAL = ':global:';
 const ALL = '*';
 const TYPE_ADMIN = 'ADMIN';
 const TYPE_CLIENT = 'CLIENT';
@@ -28,8 +27,7 @@ interface IDataError {
 const INITIAL_DATA: IApiTokenCreate = {
     username: '',
     type: TYPE_CLIENT,
-    project: ALL,
-    environment: ALL
+    project: ALL
 }
 
 const ApiTokenCreate = ({
@@ -42,6 +40,12 @@ const ApiTokenCreate = ({
     const [error, setError] = useState<IDataError>({});
     const { projects } = useProjects();
     const { environments } = useEnvironments();
+
+    useEffect(() => {
+        if(environments && data.type === TYPE_CLIENT && !data.environment) {
+            setData({...data, environment: environments[0].name})
+        }
+    }, [data, environments]);
 
     const clear = () => {
         setData({...INITIAL_DATA});
@@ -86,7 +90,7 @@ const ApiTokenCreate = ({
             setData({...data, type: value, environment: ALL, project: ALL})
 
         } else {
-            setData({...data, type: value})
+            setData({...data, type: value, environment: environments[0].name})
         }
         
     }
@@ -106,16 +110,19 @@ const ApiTokenCreate = ({
         setData({...data, environment: value})
     }
 
-    const selectableProjects = [{id: '*', name: 'ALL'}, ...(projects || [])].map(i => ({
+    const selectableProjects = [{id: '*', name: 'ALL'}, ...projects].map(i => ({
         key: i.id,
         label: i.name,
         title: i.name,
     }));
-    const selectableEnvs = [{key: '*', label: 'ALL'}, ...(environments || []).filter( i => i.name !== GLOBAL).map(i => ({
+    
+    const selectableEnvs = data.type === TYPE_ADMIN ? [{key: '*', label: 'ALL'}] : environments.map(i => ({
         key: i.name,
         label: i.name,
         title: i.name,
-    }))];
+    }));
+
+
     const selectableTypes = [
         {key: 'CLIENT', label: 'Client', title: 'Client SDK token'},
         {key: 'ADMIN', label: 'Admin', title: 'Admin API token'}
@@ -172,6 +179,7 @@ const ApiTokenCreate = ({
                         disabled={data.type === TYPE_ADMIN}
                         options={selectableEnvs}
                         value={data.environment}
+                        required
                         onChange={setEnvironment}
                         label="Environment"
                         id='api_key_environment'

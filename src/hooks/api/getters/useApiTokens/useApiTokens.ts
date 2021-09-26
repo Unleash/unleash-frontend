@@ -11,11 +11,13 @@ const useApiTokens = () => {
         return res.json();
     };
 
-    const { data, error } = useSWR(`api/admin/api-tokens`, fetcher);
+    const KEY = `api/admin/api-tokens`;
+
+    const { data, error } = useSWR(KEY, fetcher);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetch = () => {
-        mutate(`api/admin/api-tokens`);
+        mutate(KEY);
     };
 
     useEffect(() => {
