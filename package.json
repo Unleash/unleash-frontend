@@ -112,6 +112,5 @@
       "no-useless-computed-key": "off",
       "import/no-anonymous-default-export": "off"
     }
-  },
-  "dependencies": {}
+  }
 }
