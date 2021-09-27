@@ -1,6 +1,8 @@
-import DefaultStrategy from '../../../../strategy/EditStrategyModal/default-strategy';
 import FlexibleStrategy from '../../common/FlexibleStrategy/FlexibleStrategy';
-import { IConstraint, IFeatureStrategy } from '../../../../../../interfaces/strategy';
+import {
+    IConstraint,
+    IFeatureStrategy,
+} from '../../../../../../interfaces/strategy';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import GeneralStrategy from '../../common/GeneralStrategy/GeneralStrategy';
@@ -14,6 +16,7 @@ import { Button } from '@material-ui/core';
 import { useStyles } from './FeatureStrategyAccordionBody.styles';
 import Dialogue from '../../../../../common/Dialogue';
 import FeatureStrategiesSeparator from '../../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
+import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IFeatureStrategy;

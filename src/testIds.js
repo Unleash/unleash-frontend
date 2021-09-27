@@ -1,7 +1,18 @@
 export const REPORTING_SELECT_ID = 'REPORTING_SELECT_ID';
 
+/* NAVIGATION */
+export const NAVIGATE_TO_CREATE_FEATURE = 'NAVIGATE_TO_CREATE_FEATURE';
+
 /* CREATE FEATURE */
 export const CF_NAME_ID = 'CF_NAME_ID';
 export const CF_TYPE_ID = 'CF_TYPE_ID';
 export const CF_DESC_ID = 'CF_DESC_ID';
 export const CF_CREATE_BTN_ID = 'CF_CREATE_BTN_ID';
+
+/* LOGIN */
+export const LOGIN_EMAIL_ID = 'LOGIN_EMAIL_ID';
+export const LOGIN_BUTTON = 'LOGIN_BUTTON';
+export const LOGIN_PASSWORD_ID = 'LOGIN_PASSWORD_ID';
+
+/* STRATEGY */
+export const ADD_NEW_STRATEGY_ID = 'ADD_NEW_STRATEGY_ID';

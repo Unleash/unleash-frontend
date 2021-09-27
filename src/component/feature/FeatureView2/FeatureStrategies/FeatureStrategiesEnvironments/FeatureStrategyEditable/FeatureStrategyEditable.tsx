@@ -14,7 +14,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { Button, IconButton, Tooltip } from '@material-ui/core';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyEditable.styles';
-import { Delete, FileCopy } from '@material-ui/icons';
+import { Delete } from '@material-ui/icons';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 
 interface IFeatureStrategyEditable {

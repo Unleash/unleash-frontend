@@ -15,6 +15,7 @@ import { IFeatureViewParams } from '../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
 import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
+import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
 
 const FeatureStrategiesEnvironments = () => {
     const startingTabId = 0;
@@ -62,6 +63,7 @@ const FeatureStrategiesEnvironments = () => {
     }, [feature]);
 
     useEffect(() => {
+        if (!feature?.environments?.length > 0) return;
         setActiveEnvironment(feature?.environments[activeTab]);
         /* eslint-disable-next-line */
     }, [feature]);
@@ -260,6 +262,7 @@ const FeatureStrategiesEnvironments = () => {
                         <Button
                             variant="contained"
                             color="primary"
+                            data-test={ADD_NEW_STRATEGY_ID}
                             onClick={() => setExpandedSidebar(prev => !prev)}
                         >
                             Add new strategy
