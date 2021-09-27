@@ -22,7 +22,7 @@ const useDeleteStrategyMarkup = ({
             onClose={onClose}
         >
             <Alert severity="error">
-                Deleting the strategy will affect which users receive access to
+                Deleting the strategy will change which users receive access to
                 the feature.
             </Alert>
         </Dialogue>
