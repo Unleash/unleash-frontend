@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     },
     iconButton: {
         position: 'absolute',
-        bottom: '50%',
+        top: '500px',
         right: '-25px',
         backgroundColor: theme.palette.grey[300],
     },

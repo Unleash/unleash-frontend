@@ -141,16 +141,6 @@ const FeatureStrategyEditable = ({
                                 <Delete />
                             </IconButton>
                         </Tooltip>
-
-                        <Tooltip title="Copy strategy">
-                            <IconButton
-                                onClick={e => {
-                                    e.stopPropagation();
-                                }}
-                            >
-                                <FileCopy />
-                            </IconButton>
-                        </Tooltip>
                     </>
                 }
             >
