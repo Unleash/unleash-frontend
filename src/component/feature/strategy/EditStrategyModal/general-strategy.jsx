@@ -32,7 +32,6 @@ export default function GeneralStrategyInput({
         const value = currentValue === 'true' ? 'false' : 'true';
         updateParameter(key, value);
     };
-    console.log(strategyDefinition);
     if (
         strategyDefinition.parameters &&
         strategyDefinition.parameters.length > 0
