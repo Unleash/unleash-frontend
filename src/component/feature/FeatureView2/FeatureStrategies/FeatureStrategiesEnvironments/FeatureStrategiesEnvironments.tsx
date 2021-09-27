@@ -254,13 +254,18 @@ const FeatureStrategiesEnvironments = () => {
                     refresh={handleRefresh}
                     cancel={handleCancel}
                 />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => setExpandedSidebar(prev => !prev)}
-                >
-                    {expandedSidebar ? 'Hide sidebar' : 'Add new strategy'}
-                </Button>
+                <ConditionallyRender
+                    condition={!expandedSidebar}
+                    show={
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => setExpandedSidebar(prev => !prev)}
+                        >
+                            Add new strategy
+                        </Button>
+                    }
+                />
             </div>
             <div className={styles.tabContainer}>
                 <Tabs

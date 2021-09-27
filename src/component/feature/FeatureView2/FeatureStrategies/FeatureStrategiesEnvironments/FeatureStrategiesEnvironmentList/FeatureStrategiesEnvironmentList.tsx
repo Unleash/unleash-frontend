@@ -1,11 +1,7 @@
-import {
-    IParameter,
-    IFeatureStrategy,
-} from '../../../../../../interfaces/strategy';
+import { IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { Fragment } from 'react';
-import { resolveDefaultParamValue } from '../../../../strategy/AddStrategy/utils';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import classnames from 'classnames';
@@ -18,6 +14,7 @@ import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';
 import useProductionGuardMarkup from './useProductionGuardMarkup';
 import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
+import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IFeatureStrategy[];
@@ -57,12 +54,12 @@ const FeatureStrategiesEnvironmentList = ({
             };
         },
         drop(item: IFeatureDragItem, monitor: DropTargetMonitor) {
-            //  const dragIndex = item.index;
-            //  const hoverIndex = index;
-
-            const strategy = selectStrategy(item.name);
+            const strategy = getStrategyObject(
+                selectableStrategies,
+                item.name,
+                featureId
+            );
             if (!strategy) return;
-            //addNewStrategy(strategy);
             setConfigureNewStrategy(strategy);
             setExpandedSidebar(false);
         },
@@ -95,19 +92,6 @@ const FeatureStrategiesEnvironmentList = ({
         }
 
         updateStrategy(strategy);
-    };
-
-    const selectStrategy = (name: string) => {
-        const selectedStrategy = selectableStrategies.find(
-            strategy => strategy.name === name
-        );
-        const parameters = {} as IParameter;
-
-        selectedStrategy?.parameters.forEach(({ name }: IParameter) => {
-            parameters[name] = resolveDefaultParamValue(name, featureId);
-        });
-
-        return { name, parameters, constraints: [] };
     };
 
     const renderStrategies = () => {
