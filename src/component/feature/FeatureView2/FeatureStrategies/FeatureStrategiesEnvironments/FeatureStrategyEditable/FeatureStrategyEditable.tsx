@@ -15,6 +15,7 @@ import { Button, IconButton, Tooltip } from '@material-ui/core';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyEditable.styles';
 import { Delete, FileCopy } from '@material-ui/icons';
+import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 
 interface IFeatureStrategyEditable {
     currentStrategy: IFeatureStrategy;
@@ -66,7 +67,7 @@ const FeatureStrategyEditable = ({
 
         updateStrategy(strategy, cleanup);
 
-        if (activeEnvironment.type !== 'production') {
+        if (activeEnvironment.type !== PRODUCTION) {
             cleanup();
         }
     };

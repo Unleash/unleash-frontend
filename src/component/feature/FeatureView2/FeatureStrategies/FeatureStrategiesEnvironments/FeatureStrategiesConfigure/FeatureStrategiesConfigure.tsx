@@ -14,6 +14,7 @@ import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuar
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategyCreateExecution from '../../FeatureStrategyCreateExecution/FeatureStrategyCreateExecution';
+import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 
 interface IFeatureStrategiesConfigure {
     setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
@@ -48,7 +49,7 @@ const FeatureStrategiesConfigure = ({
     };
 
     const resolveSubmit = () => {
-        if (activeEnvironment.type === 'production') {
+        if (activeEnvironment.type === PRODUCTION) {
             setProductionGuard(true);
             return;
         }

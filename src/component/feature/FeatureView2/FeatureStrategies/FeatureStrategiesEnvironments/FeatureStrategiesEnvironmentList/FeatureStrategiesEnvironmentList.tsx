@@ -17,6 +17,7 @@ import useDropboxMarkup from './useDropboxMarkup';
 import useDeleteStrategyMarkup from './useDeleteStrategyMarkup';
 import useProductionGuardMarkup from './useProductionGuardMarkup';
 import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
+import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IFeatureStrategy[];
@@ -88,7 +89,7 @@ const FeatureStrategiesEnvironmentList = ({
     });
 
     const resolveUpdateStrategy = (strategy: IFeatureStrategy, callback) => {
-        if (activeEnvironmentsRef?.current?.type === 'production') {
+        if (activeEnvironmentsRef?.current?.type === PRODUCTION) {
             setProductionGuard({ show: true, strategy, callback });
             return;
         }
