@@ -42,7 +42,6 @@ const FeatureStrategyExecution = ({
     };
 
     const renderParameters = () => {
-        console.log(parameters);
         return Object.keys(parameters).map((key, index) => {
             switch (key) {
                 case 'rollout':
