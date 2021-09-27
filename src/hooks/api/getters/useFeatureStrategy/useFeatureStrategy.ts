@@ -49,7 +49,14 @@ const useFeatureStrategy = (
     }, [data, error]);
 
     return {
-        strategy: data || {},
+        strategy:
+            data ||
+            ({
+                constraints: [],
+                parameters: {},
+                id: '',
+                name: '',
+            } as IFeatureStrategy),
         error,
         loading,
         refetch,
