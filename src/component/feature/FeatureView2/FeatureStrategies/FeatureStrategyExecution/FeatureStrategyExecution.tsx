@@ -42,9 +42,11 @@ const FeatureStrategyExecution = ({
     };
 
     const renderParameters = () => {
+        console.log(parameters);
         return Object.keys(parameters).map((key, index) => {
             switch (key) {
                 case 'rollout':
+                case 'Rollout':
                     return (
                         <Fragment key={key}>
                             <p className={styles.text}>
@@ -59,6 +61,7 @@ const FeatureStrategyExecution = ({
                         </Fragment>
                     );
                 case 'userIds':
+                case 'UserIds':
                     const users = parameters[key]
                         .split(',')
                         .filter((userId: string) => userId);
@@ -70,6 +73,7 @@ const FeatureStrategyExecution = ({
                         />
                     );
                 case 'hostNames':
+                case 'HostNames':
                     const hosts = parameters[key]
                         .split(',')
                         .filter((hosts: string) => hosts);

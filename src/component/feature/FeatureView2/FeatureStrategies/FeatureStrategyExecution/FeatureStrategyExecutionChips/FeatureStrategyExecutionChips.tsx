@@ -1,5 +1,4 @@
 import { Chip } from '@material-ui/core';
-import { Fragment } from 'react';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyExecutionChips.styles';
 

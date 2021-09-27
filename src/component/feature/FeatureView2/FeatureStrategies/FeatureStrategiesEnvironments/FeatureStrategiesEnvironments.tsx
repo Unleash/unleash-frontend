@@ -58,6 +58,7 @@ const FeatureStrategiesEnvironments = () => {
         if (!equal) {
             setShowRefreshPrompt(true);
         }
+        /*eslint-disable-next-line */
     }, [feature]);
 
     useEffect(() => {

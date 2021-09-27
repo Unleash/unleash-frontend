@@ -30,6 +30,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
         if (constraints.length === 0) {
             addConstraint();
         }
+        /* eslint-disable-next-line */
     }, []);
 
     const contextFields = context;

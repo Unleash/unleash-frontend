@@ -1,5 +1,5 @@
 import useStrategies from '../../../../../hooks/api/getters/useStrategies/useStrategies';
-import { IFeatureStrategy, IStrategy } from '../../../../../interfaces/strategy';
+import { IStrategy } from '../../../../../interfaces/strategy';
 import FeatureStrategyCard from './FeatureStrategyCard/FeatureStrategyCard';
 import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';

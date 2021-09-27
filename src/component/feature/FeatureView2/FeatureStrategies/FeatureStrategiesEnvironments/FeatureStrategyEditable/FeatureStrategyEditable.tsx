@@ -49,8 +49,6 @@ const FeatureStrategyEditable = ({
         }
     );
 
-    console.log('ACTIVE ENVIRONMENT', activeEnvironment);
-
     const setStrategyParams = (parameters: IParameter) => {
         const updatedStrategy = { ...strategy };
         updatedStrategy.parameters = parameters;
@@ -79,6 +77,7 @@ const FeatureStrategyEditable = ({
 
         mutate(FEATURE_STRATEGY_CACHE_KEY, { ...currentStrategy }, false);
         setStrategyCache(cloneDeep(currentStrategy));
+        /* eslint-disable-next-line */
     }, [featureCache]);
 
     const isDirtyParams = (parameters: IParameter) => {
