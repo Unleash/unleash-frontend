@@ -16,5 +16,6 @@ jobs:
         uses: actions/checkout@v1
       - name: Run Cypress
         uses: cypress-io/github-action@v2
+        with: AUTH_TOKEN=${{ secrets.UNLEASH_TOKEN }}
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
