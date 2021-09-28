@@ -27,16 +27,16 @@ jobs:
     - run: yarn
     - run: yarn run test
   e2e:
-    name: Capture Vercel preview URL
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: UnlyEd/github-action-await-vercel@v1.1.0
-        id: await-vercel
+      - run: sleep 30
+      - name: vercel-preview-url
+        uses: zentered/vercel-preview-url@v1.0.0
+        id: vercel_preview_url
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          deployment-url: unleash-frontend.vercel.app
-          timeout: 10 # Wait for 10 seconds before failing
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+      - name: Get URL
+        run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
       - name: Display deployment status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
       - name: Cypress run with env
