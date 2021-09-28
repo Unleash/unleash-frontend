@@ -35,7 +35,7 @@ jobs:
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       with:
-        vercel_team_id: "unleash-team"
+        vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
     - name: Get URL
       run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
     - name: Display deployment status
