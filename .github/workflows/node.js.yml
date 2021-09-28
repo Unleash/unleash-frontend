@@ -29,7 +29,6 @@ jobs:
   e2e:
     name: Capture Vercel preview URL
     runs-on: ubuntu-18.04
-    :
     steps:
       - uses: UnlyEd/github-action-await-vercel@v1.1.0
         id: await-vercel
