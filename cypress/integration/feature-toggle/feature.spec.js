@@ -17,6 +17,35 @@ let strategyId = '';
 let defaultEnv = ':global:';
 
 describe('example to-do app', () => {
+    before(() => {
+        featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
+        enterprise = Boolean(Cypress.env('ENTERPRISE'));
+    });
+
+    after(() => {
+        const authToken = Cypress.env('AUTH_TOKEN');
+
+        cy.request({
+            method: 'DELETE',
+            url: `${
+                Cypress.config().baseUrl
+            }/api/admin/features/${featureToggleName}`,
+            headers: {
+                Authorization: authToken,
+            },
+        });
+
+        cy.request({
+            method: 'DELETE',
+            url: `${
+                Cypress.config().baseUrl
+            }/api/admin/archive/${featureToggleName}`,
+            headers: {
+                Authorization: authToken,
+            },
+        });
+    });
+
     beforeEach(() => {
         // Cypress starts out with a blank slate for each test
         // so we must tell it to visit our website with the `cy.visit()` command.
@@ -37,11 +66,9 @@ describe('example to-do app', () => {
             cy.get('[data-test=LOGIN_EMAIL_ID]').type('test@unleash-e2e.com');
             cy.get('[data-test=LOGIN_BUTTON]').click();
         }
-
-        featureToggleName = `unleash-e2e-2`;
     });
 
-    it.skip('Creates a feature toggle', () => {
+    it('Creates a feature toggle', () => {
         cy.get('[data-test=NAVIGATE_TO_CREATE_FEATURE').click();
 
         cy.intercept('POST', '/api/admin/features').as('createFeature');
@@ -101,7 +128,7 @@ describe('example to-do app', () => {
     it('can update a strategy in the default environment', () => {
         cy.wait(500);
         cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
-        cy.get('[data-test=STRATEGY_ACCORDION_ID-flexibleRollout-1').click();
+        cy.get('[data-test=STRATEGY_ACCORDION_ID-flexibleRollout').click();
 
         cy.get('[data-test=ROLLOUT_SLIDER_ID')
             .first()
@@ -163,5 +190,51 @@ describe('example to-do app', () => {
         cy.get('[data-test=DELETE_STRATEGY_ID-flexibleRollout]').click();
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@deleteStrategy');
+    });
+
+    it('Can add a userid  strategy to the default environment', () => {
+        cy.wait(500);
+        cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
+        cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
+        cy.get('[data-test=ADD_NEW_STRATEGY_CARD_BUTTON_ID-2').click();
+
+        if (enterprise) {
+            cy.get('[data-test=ADD_CONSTRAINT_ID]').click();
+            cy.get('[data-test=CONSTRAINT_AUTOCOMPLETE_ID]')
+                .type('{downArrow}'.repeat(1))
+                .type('{enter}');
+            cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        }
+
+        cy.get('[data-test=STRATEGY_INPUT_LIST]')
+            .type('user1')
+            .type('{enter}')
+            .type('user2')
+            .type('{enter}');
+        cy.get('[data-test=ADD_TO_STRATEGY_INPUT_LIST]').click();
+
+        cy.intercept(
+            'POST',
+            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies`,
+            req => {
+                expect(req.body.name).to.equal('userWithId');
+
+                expect(req.body.parameters.userIds.length).to.equal(11);
+
+                if (enterprise) {
+                    expect(req.body.constraints.length).to.equal(1);
+                } else {
+                    expect(req.body.constraints.length).to.equal(0);
+                }
+
+                req.continue(res => {
+                    strategyId = res.body.id;
+                });
+            }
+        ).as('addStrategyToFeature');
+
+        cy.get('[data-test=ADD_NEW_STRATEGY_SAVE_ID]').first().click();
+        cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        cy.wait('@addStrategyToFeature');
     });
 });

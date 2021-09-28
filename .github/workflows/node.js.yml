@@ -26,3 +26,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn
     - run: yarn run test
+  capture_vercel_preview_url:
+    name: Capture Vercel preview URL
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: aaimio/vercel-preview-url-action@v1
+        id: vercel_preview_url
+  cypress-run-e2e:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cypress run with env
+        uses: cypress-io/github-action@v2
+        with:
+          env: AUTH_TOKEN=${{ secrets.UNLEASH_TOKEN }}
+          config: baseUrl=${{ steps.vercel_preview_url.outputs.vercel_preview_url }}
+    
+  
+

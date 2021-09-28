@@ -130,9 +130,7 @@ const FeatureStrategyEditable = ({
             <FeatureStrategyAccordion
                 parameters={parameters}
                 constraints={constraints}
-                data-test={`${STRATEGY_ACCORDION_ID}-${strategy.name}-${
-                    index + 1
-                }`}
+                data-test={`${STRATEGY_ACCORDION_ID}-${strategy.name}`}
                 strategy={strategy}
                 setStrategyParams={setStrategyParams}
                 setStrategyConstraints={setStrategyConstraints}

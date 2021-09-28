@@ -93,8 +93,8 @@ const FeatureStrategiesEnvironments = () => {
             equal = false;
         }
 
-        feature.environments.forEach(env => {
-            const cachedEnv = featureCache.environments.find(
+        feature?.environments?.forEach(env => {
+            const cachedEnv = featureCache?.environments?.find(
                 cacheEnv => cacheEnv.name === env.name
             );
 
@@ -102,8 +102,13 @@ const FeatureStrategiesEnvironments = () => {
                 equal = false;
                 return;
             }
+            // If displayName is different
+            if (env?.displayName !== cachedEnv?.displayName) {
+                equal = false;
+                return;
+            }
             // If the type of environments are different
-            if (env.type !== cachedEnv.type) {
+            if (env?.type !== cachedEnv?.type) {
                 equal = false;
                 return;
             }
@@ -111,8 +116,8 @@ const FeatureStrategiesEnvironments = () => {
 
         if (!equal) return equal;
 
-        feature.environments.forEach(env => {
-            const cachedEnv = featureCache.environments.find(
+        feature?.environments?.forEach(env => {
+            const cachedEnv = featureCache?.environments?.find(
                 cachedEnv => cachedEnv.name === env.name
             );
 
@@ -123,8 +128,8 @@ const FeatureStrategiesEnvironments = () => {
                 return;
             }
 
-            env.strategies.forEach(strategy => {
-                const cachedStrategy = cachedEnv.strategies.find(
+            env?.strategies?.forEach(strategy => {
+                const cachedStrategy = cachedEnv?.strategies?.find(
                     cachedStrategy => cachedStrategy.id === strategy.id
                 );
                 // Check stickiness
