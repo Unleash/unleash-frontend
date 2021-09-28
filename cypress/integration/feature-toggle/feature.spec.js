@@ -20,6 +20,11 @@ describe('example to-do app', () => {
     before(() => {
         featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
         enterprise = Boolean(Cypress.env('ENTERPRISE'));
+
+        const env = Cypress.env('DEFAULT_ENV');
+        if (env) {
+            defaultEnv = env;
+        }
     });
 
     after(() => {
