@@ -12,9 +12,9 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
-      - name: Checkout 🛎
+      - name: Checkout
         uses: actions/checkout@v1
-      - name: Run Cypress 🌲
+      - name: Run Cypress
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}

@@ -17,7 +17,6 @@ import { useStyles } from './FeatureStrategyEditable.styles';
 import { Delete } from '@material-ui/icons';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 import {
-    DELETE_STRATAEGY_ID,
     DELETE_STRATEGY_ID,
     STRATEGY_ACCORDION_ID,
     UPDATE_STRATEGY_BUTTON_ID,
