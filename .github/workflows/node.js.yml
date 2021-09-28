@@ -25,26 +25,26 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn
     - run: yarn run test
-  e2e:
-    runs-on: ubuntu-latest
-    steps:
-    - run: sleep 30
-    - name: vercel-preview-url
-      uses: zentered/vercel-preview-url@v1.0.0
-      id: vercel_preview_url
-      env:
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      with:
-        vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
-    - name: Get URL
-      run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
-    - name: Display deployment status
-      run: "echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
-    - name: Cypress run with env
-      uses: cypress-io/github-action@v2
-      with:
-        env: AUTH_TOKEN=${{ secrets.UNLEASH_TOKEN }}
-        config: baseUrl=${{ steps.await-vercel.outputs.deploymentDetails.url }}
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: sleep 30
+  #   - name: vercel-preview-url
+  #     uses: zentered/vercel-preview-url@v1.0.0
+  #     id: vercel_preview_url
+  #     env:
+  #       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  #     with:
+  #       vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+  #   - name: Get URL
+  #     run: echo "https://${{ steps.vercel_preview_url.outputs.preview_url }}"
+  #   - name: Display deployment status
+  #     run: "echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
+  #   - name: Cypress run with env
+  #     uses: cypress-io/github-action@v2
+  #     with:
+  #       env: AUTH_TOKEN=${{ secrets.UNLEASH_TOKEN }}
+  #       config: baseUrl=${{ steps.await-vercel.outputs.deploymentDetails.url }}
   
 
 
