@@ -103,6 +103,7 @@ const FeatureStrategiesEnvironmentList = ({
                             currentStrategy={strategy}
                             setDelDialog={setDelDialog}
                             updateStrategy={resolveUpdateStrategy}
+                            index={index}
                         />
 
                         <FeatureStrategiesSeparator text="OR" />
@@ -115,6 +116,7 @@ const FeatureStrategiesEnvironmentList = ({
                         setDelDialog={setDelDialog}
                         currentStrategy={strategy}
                         updateStrategy={resolveUpdateStrategy}
+                        index={index}
                     />
                 );
             }

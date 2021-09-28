@@ -13,6 +13,8 @@
 
 let featureToggleName = '';
 let enterprise = false;
+let strategyId = '';
+let defaultEnv = ':global:';
 
 describe('example to-do app', () => {
     beforeEach(() => {
@@ -36,7 +38,7 @@ describe('example to-do app', () => {
             cy.get('[data-test=LOGIN_BUTTON]').click();
         }
 
-        featureToggleName = `unleash-e2e`;
+        featureToggleName = `unleash-e2e-2`;
     });
 
     it.skip('Creates a feature toggle', () => {
@@ -71,7 +73,7 @@ describe('example to-do app', () => {
 
         cy.intercept(
             'POST',
-            `/api/admin/projects/default/features/${featureToggleName}/environments/:global:/strategies`,
+            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies`,
             req => {
                 expect(req.body.name).to.equal('flexibleRollout');
 
@@ -84,12 +86,82 @@ describe('example to-do app', () => {
                 } else {
                     expect(req.body.constraints.length).to.equal(0);
                 }
-            }
-        );
 
-        cy.get('[data-test=ADD_NEW_STRATEGY_SAVE_ID]').click();
+                req.continue(res => {
+                    strategyId = res.body.id;
+                });
+            }
+        ).as('addStrategyToFeature');
+
+        cy.get('[data-test=ADD_NEW_STRATEGY_SAVE_ID]').first().click();
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        cy.wait('@addStrategyToFeature');
     });
 
-    it('can update a strategy in the default environment', () => {});
+    it('can update a strategy in the default environment', () => {
+        cy.wait(500);
+        cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
+        cy.get('[data-test=STRATEGY_ACCORDION_ID-flexibleRollout-1').click();
+
+        cy.get('[data-test=ROLLOUT_SLIDER_ID')
+            .first()
+            .click()
+            .type('{rightArrow}'.repeat(10));
+
+        cy.get('[data-test=FLEXIBLE_STRATEGY_STICKINESS_ID]')
+            .first()
+            .click()
+            .get('[data-test=SELECT_ITEM_ID-sessionId')
+            .first()
+            .click();
+
+        let newGroupId = 'new-group-id';
+        cy.get('[data-test=FLEXIBLE_STRATEGY_GROUP_ID]')
+            .first()
+            .clear()
+            .type('new-group-id');
+
+        cy.intercept(
+            'PUT',
+            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies/${strategyId}`,
+            req => {
+                expect(req.body.parameters.groupId).to.equal(newGroupId);
+                expect(req.body.parameters.stickiness).to.equal('sessionId');
+                expect(req.body.parameters.rollout).to.equal(60);
+
+                if (enterprise) {
+                    expect(req.body.constraints.length).to.equal(1);
+                } else {
+                    expect(req.body.constraints.length).to.equal(0);
+                }
+
+                req.continue(res => {
+                    expect(res.statusCode).to.equal(200);
+                });
+            }
+        ).as('updateStrategy');
+
+        cy.get('[data-test=UPDATE_STRATEGY_BUTTON_ID]').first().click();
+        cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        cy.wait('@updateStrategy');
+    });
+
+    it('can delete a strategy in the default environment', () => {
+        cy.wait(500);
+        cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
+
+        cy.intercept(
+            'DELETE',
+            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies/${strategyId}`,
+            req => {
+                req.continue(res => {
+                    expect(res.statusCode).to.equal(200);
+                });
+            }
+        ).as('deleteStrategy');
+
+        cy.get('[data-test=DELETE_STRATEGY_ID-flexibleRollout]').click();
+        cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        cy.wait('@deleteStrategy');
+    });
 });

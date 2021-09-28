@@ -36,6 +36,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     setStrategyConstraints,
     actions,
     children,
+    ...rest
 }) => {
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
@@ -50,7 +51,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} {...rest}>
             <Accordion className={styles.accordion} defaultExpanded={expanded}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}

@@ -16,17 +16,25 @@ import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyEditable.styles';
 import { Delete } from '@material-ui/icons';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
+import {
+    DELETE_STRATAEGY_ID,
+    DELETE_STRATEGY_ID,
+    STRATEGY_ACCORDION_ID,
+    UPDATE_STRATEGY_BUTTON_ID,
+} from '../../../../../../testIds';
 
 interface IFeatureStrategyEditable {
     currentStrategy: IFeatureStrategy;
     setDelDialog?: React.Dispatch<React.SetStateAction<any>>;
     updateStrategy: (strategy: IFeatureStrategy) => void;
+    index?: number;
 }
 
 const FeatureStrategyEditable = ({
     currentStrategy,
     updateStrategy,
     setDelDialog,
+    index,
 }: IFeatureStrategyEditable) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
@@ -122,6 +130,9 @@ const FeatureStrategyEditable = ({
             <FeatureStrategyAccordion
                 parameters={parameters}
                 constraints={constraints}
+                data-test={`${STRATEGY_ACCORDION_ID}-${strategy.name}-${
+                    index + 1
+                }`}
                 strategy={strategy}
                 setStrategyParams={setStrategyParams}
                 setStrategyConstraints={setStrategyConstraints}
@@ -130,6 +141,7 @@ const FeatureStrategyEditable = ({
                     <>
                         <Tooltip title="Delete strategy">
                             <IconButton
+                                data-test={`${DELETE_STRATEGY_ID}-${strategy.name}`}
                                 onClick={e => {
                                     e.stopPropagation();
                                     setDelDialog({
@@ -154,6 +166,7 @@ const FeatureStrategyEditable = ({
                                     color="primary"
                                     style={{ marginRight: '1rem' }}
                                     onClick={updateFeatureStrategy}
+                                    data-test={UPDATE_STRATEGY_BUTTON_ID}
                                 >
                                     Save changes
                                 </Button>
