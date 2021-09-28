@@ -1,9 +1,16 @@
-import { IConstraint, IParameter, IFeatureStrategy } from '../../../../../interfaces/strategy';
+import {
+    IConstraint,
+    IParameter,
+    IFeatureStrategy,
+} from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
 import { AccordionDetails, AccordionSummary } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getFeatureStrategyIcon, getHumanReadbleStrategyName } from '../../../../../utils/strategy-names';
+import {
+    getFeatureStrategyIcon,
+    getHumanReadbleStrategyName,
+} from '../../../../../utils/strategy-names';
 import { useStyles } from './FeatureStrategyAccordion.styles';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategyAccordionBody from './FeatureStrategyAccordionBody/FeatureStrategyAccordionBody';

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
+import { ADD_NEW_STRATEGY_CARD_BUTTON_ID } from '../../../../../../testIds';
 import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
 import {
     getFeatureStrategyIcon,
@@ -19,6 +20,7 @@ interface IFeatureStrategyCardProps {
     name: string;
     description: string;
     configureNewStrategy: boolean;
+    index?: number;
 }
 
 export const FEATURE_STRATEGIES_DRAG_TYPE = 'FEATURE_STRATEGIES_DRAG_TYPE';
@@ -27,6 +29,7 @@ const FeatureStrategyCard = ({
     name,
     description,
     configureNewStrategy,
+    index,
 }: IFeatureStrategyCardProps) => {
     const { featureId } = useParams<IFeatureViewParams>();
     const { strategies } = useStrategies();
@@ -75,6 +78,9 @@ const FeatureStrategyCard = ({
                             <IconButton
                                 className={styles.addButton}
                                 onClick={handleClick}
+                                data-test={`${ADD_NEW_STRATEGY_CARD_BUTTON_ID}-${
+                                    index + 1
+                                }`}
                             >
                                 <Add />
                             </IconButton>

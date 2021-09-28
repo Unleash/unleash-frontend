@@ -17,6 +17,7 @@ import { useStyles } from './FeatureStrategyAccordionBody.styles';
 import Dialogue from '../../../../../common/Dialogue';
 import FeatureStrategiesSeparator from '../../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
+import { ADD_CONSTRAINT_ID } from '../../../../../../testIds';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IFeatureStrategy;
@@ -146,6 +147,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                             <Button
                                 className={styles.addConstraintBtn}
                                 onClick={toggleConstraints}
+                                data-test={ADD_CONSTRAINT_ID}
                             >
                                 + Add constraint
                             </Button>

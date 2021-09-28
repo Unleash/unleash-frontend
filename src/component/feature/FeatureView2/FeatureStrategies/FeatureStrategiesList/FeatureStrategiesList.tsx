@@ -24,12 +24,13 @@ const FeatureStrategiesList = () => {
                 (strategy: IStrategy) =>
                     !strategy.deprecated && strategy.name !== DEFAULT_STRATEGY
             )
-            .map((strategy: IStrategy) => (
+            .map((strategy: IStrategy, index: number) => (
                 <FeatureStrategyCard
                     key={strategy.name}
                     configureNewStrategy={!expandedSidebar}
                     name={strategy.name}
                     description={strategy.description}
+                    index={index}
                 />
             ));
     };

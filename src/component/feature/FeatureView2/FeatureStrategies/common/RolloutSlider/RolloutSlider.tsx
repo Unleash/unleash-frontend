@@ -1,5 +1,6 @@
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Slider, Typography } from '@material-ui/core';
+import { ROLLOUT_SLIDER_ID } from '../../../../../../testIds';
 
 const StyledSlider = withStyles({
     root: {
@@ -99,6 +100,7 @@ const RolloutSlider = ({
                 getAriaValueText={valuetext}
                 aria-labelledby="discrete-slider-always"
                 step={1}
+                data-test={ROLLOUT_SLIDER_ID}
                 marks={marks}
                 onChange={onChange}
                 valueLabelDisplay="on"

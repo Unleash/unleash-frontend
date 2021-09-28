@@ -15,6 +15,7 @@ import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategyCreateExecution from '../../FeatureStrategyCreateExecution/FeatureStrategyCreateExecution';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
+import { ADD_NEW_STRATEGY_SAVE_ID } from '../../../../../../testIds';
 
 interface IFeatureStrategiesConfigure {
     setToastData: React.Dispatch<React.SetStateAction<IToastType>>;
@@ -146,6 +147,7 @@ const FeatureStrategiesConfigure = ({
                     color="primary"
                     className={styles.btn}
                     onClick={resolveSubmit}
+                    data-test={ADD_NEW_STRATEGY_SAVE_ID}
                 >
                     Save
                 </Button>
