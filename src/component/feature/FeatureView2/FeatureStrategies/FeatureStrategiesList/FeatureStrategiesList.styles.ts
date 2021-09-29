@@ -30,6 +30,9 @@ export const useStyles = makeStyles(theme => ({
         top: '300px',
         right: '-25px',
         backgroundColor: theme.palette.grey[300],
+        [theme.breakpoints.down(700)]: {
+            right: '-10px',
+        },
     },
     icon: {
         transition: 'transform 0.4s ease',
