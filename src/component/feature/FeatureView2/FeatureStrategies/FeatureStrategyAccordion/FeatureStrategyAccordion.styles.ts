@@ -43,4 +43,7 @@ export const useStyles = makeStyles(theme => ({
         fontSize: theme.fontSizes.smallBody,
         marginLeft: '0.5rem',
     },
+    accordionDetails: {
+        width: '100%',
+    },
 }));

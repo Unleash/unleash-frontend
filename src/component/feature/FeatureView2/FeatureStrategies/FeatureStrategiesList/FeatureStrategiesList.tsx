@@ -5,10 +5,12 @@ import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import classnames from 'classnames';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton, useMediaQuery } from '@material-ui/core';
 import { DoubleArrow } from '@material-ui/icons';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
 
 const FeatureStrategiesList = () => {
+    const smallScreen = useMediaQuery('(max-width:700px)');
     const { expandedSidebar, setExpandedSidebar } = useContext(
         FeatureStrategiesUIContext
     );
@@ -49,6 +51,15 @@ const FeatureStrategiesList = () => {
 
     return (
         <section className={classes}>
+            <ConditionallyRender
+                condition={smallScreen && expandedSidebar}
+                show={
+                    <div className={styles.mobileNavContainer}>
+                        <p>Select strategy</p>
+                        <Button onClick={toggleSidebar}>Back</Button>
+                    </div>
+                }
+            />
             <IconButton className={styles.iconButton} onClick={toggleSidebar}>
                 <DoubleArrow className={iconClasses} />
             </IconButton>

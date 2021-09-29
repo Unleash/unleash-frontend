@@ -44,7 +44,6 @@ import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
-import FeatureStrategies from '../feature/FeatureView2/FeatureStrategies/FeatureStrategies';
 
 export const routes = [
     // Features

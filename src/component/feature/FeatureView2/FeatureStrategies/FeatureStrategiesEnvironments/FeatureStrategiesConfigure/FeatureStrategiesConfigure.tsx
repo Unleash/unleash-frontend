@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, useMediaQuery } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useContext, useState } from 'react';
 import { getHumanReadbleStrategyName } from '../../../../../../utils/strategy-names';
@@ -23,6 +23,8 @@ interface IFeatureStrategiesConfigure {
 const FeatureStrategiesConfigure = ({
     setToastData,
 }: IFeatureStrategiesConfigure) => {
+    const smallScreen = useMediaQuery('(max-width:900px)');
+
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const [productionGuard, setProductionGuard] = useState(false);
 
@@ -133,12 +135,18 @@ const FeatureStrategiesConfigure = ({
                         setStrategyConstraints={setStrategyConstraints}
                     />
                 </div>
-                <div className={styles.executionContainer}>
-                    <FeatureStrategyCreateExecution
-                        parameters={strategyParams}
-                        constraints={strategyConstraints}
-                    />
-                </div>
+
+                <ConditionallyRender
+                    condition={!smallScreen}
+                    show={
+                        <div className={styles.executionContainer}>
+                            <FeatureStrategyCreateExecution
+                                parameters={strategyParams}
+                                constraints={strategyConstraints}
+                            />
+                        </div>
+                    }
+                />
             </div>
 
             <div className={styles.buttonContainer}>

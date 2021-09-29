@@ -33,7 +33,7 @@ const StyledSlider = withStyles({
 
 const useStyles = makeStyles(theme => ({
     slider: {
-        width: 450,
+        width: '100%',
         maxWidth: '100%',
     },
     margin: {

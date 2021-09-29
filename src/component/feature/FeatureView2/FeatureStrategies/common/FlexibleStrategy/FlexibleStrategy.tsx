@@ -68,6 +68,7 @@ const FlexibleStrategy = ({
                 value={1 * rollout}
                 onChange={updateRollout}
             />
+
             <br />
             <div>
                 <Tooltip title="Stickiness defines what parameter should be used to ensure that your users get consistency in features. By default unleash will use the first value present in the context in the order of userId, sessionId and random.">

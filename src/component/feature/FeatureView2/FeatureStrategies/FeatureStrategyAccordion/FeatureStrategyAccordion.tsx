@@ -5,7 +5,11 @@ import {
 } from '../../../../../interfaces/strategy';
 
 import Accordion from '@material-ui/core/Accordion';
-import { AccordionDetails, AccordionSummary } from '@material-ui/core';
+import {
+    AccordionDetails,
+    AccordionSummary,
+    useMediaQuery,
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
     getFeatureStrategyIcon,
@@ -38,6 +42,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     children,
     ...rest
 }) => {
+    const smallScreen = useMediaQuery('(max-width:500px)');
     const styles = useStyles();
     const strategyName = getHumanReadbleStrategyName(strategy.name);
     const Icon = getFeatureStrategyIcon(strategy.name);
@@ -64,7 +69,9 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                         </p>
 
                         <ConditionallyRender
-                            condition={Boolean(parameters?.rollout)}
+                            condition={
+                                Boolean(parameters?.rollout) && !smallScreen
+                            }
                             show={
                                 <p className={styles.rollout}>
                                     Rolling out to {parameters?.rollout}%
@@ -75,7 +82,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                         <div className={styles.accordionActions}>{actions}</div>
                     </div>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails className={styles.accordionDetails}>
                     <FeatureStrategyAccordionBody
                         strategy={{ ...strategy, parameters }}
                         updateParameters={updateParameters}

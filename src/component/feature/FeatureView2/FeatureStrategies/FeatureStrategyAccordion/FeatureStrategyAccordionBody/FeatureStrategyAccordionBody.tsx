@@ -135,7 +135,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
         const ON = uiConfig.flags[C];
 
         return (
-            <div>
+            <div className={styles.accordionContainer}>
                 <ConditionallyRender
                     condition={ON}
                     show={

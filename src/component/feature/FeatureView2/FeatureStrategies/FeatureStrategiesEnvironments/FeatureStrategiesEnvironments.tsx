@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
-import { Tabs, Tab, Button } from '@material-ui/core';
+import { Tabs, Tab, Button, useMediaQuery } from '@material-ui/core';
 import TabPanel from '../../../../common/TabNav/TabPanel';
 import useTabs from '../../../../../hooks/useTabs';
 import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
@@ -16,8 +16,13 @@ import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
 import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
 import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
+import NoItems from '../../../../common/NoItems/NoItems';
+import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
+import { Add } from '@material-ui/icons';
 
 const FeatureStrategiesEnvironments = () => {
+    const smallScreen = useMediaQuery('(max-width:700px)');
+
     const startingTabId = 0;
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { toast, setToastData } = useToast();
@@ -216,19 +221,76 @@ const FeatureStrategiesEnvironments = () => {
                     index={index}
                 >
                     <div className={tabContentClasses}>
-                        <div className={listContainerClasses}>
-                            <FeatureStrategiesEnvironmentList
-                                strategies={env.strategies}
-                            />
-                        </div>
                         <ConditionallyRender
                             condition={
-                                !expandedSidebar && !configureNewStrategy
+                                env.strategies.length > 0 || expandedSidebar
                             }
                             show={
-                                <FeatureEnvironmentStrategyExecution
-                                    strategies={env.strategies}
-                                    env={env}
+                                <>
+                                    <div className={listContainerClasses}>
+                                        <FeatureStrategiesEnvironmentList
+                                            strategies={env.strategies}
+                                        />
+                                    </div>
+                                    <ConditionallyRender
+                                        condition={
+                                            !expandedSidebar &&
+                                            !configureNewStrategy &&
+                                            !smallScreen
+                                        }
+                                        show={
+                                            <FeatureEnvironmentStrategyExecution
+                                                strategies={env.strategies}
+                                                env={env}
+                                            />
+                                        }
+                                    />
+                                </>
+                            }
+                            elseShow={
+                                <ConditionallyRender
+                                    condition={!expandedSidebar}
+                                    show={
+                                        <NoItems>
+                                            <p
+                                                className={
+                                                    styles.noItemsParagraph
+                                                }
+                                            >
+                                                No strategies added in the{' '}
+                                                {env.name} environment
+                                            </p>
+
+                                            <p
+                                                className={
+                                                    styles.noItemsParagraph
+                                                }
+                                            >
+                                                Strategies added in this
+                                                environment will only be
+                                                executed if the SDK is using an
+                                                API key configured for this
+                                                environment.
+                                                <a
+                                                    className={styles.link}
+                                                    href="https://docs.getunleash.ai"
+                                                >
+                                                    Read more here
+                                                </a>
+                                            </p>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() =>
+                                                    setExpandedSidebar(
+                                                        prev => !prev
+                                                    )
+                                                }
+                                            >
+                                                Add your first strategy
+                                            </Button>
+                                        </NoItems>
+                                    }
                                 />
                             }
                         />
@@ -253,55 +315,66 @@ const FeatureStrategiesEnvironments = () => {
 
     return (
         <div className={classes}>
-            <div className={styles.environmentsHeader}>
-                <h2 className={styles.header}>Environments</h2>
+            <ConditionallyRender
+                condition={(!expandedSidebar && smallScreen) || !smallScreen}
+                show={
+                    <>
+                        <div className={styles.environmentsHeader}>
+                            <h2 className={styles.header}>Environments</h2>
 
-                <FeatureStrategiesRefresh
-                    show={showRefreshPrompt}
-                    refresh={handleRefresh}
-                    cancel={handleCancel}
-                />
-                <ConditionallyRender
-                    condition={!expandedSidebar}
-                    show={
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            data-test={ADD_NEW_STRATEGY_ID}
-                            onClick={() => setExpandedSidebar(prev => !prev)}
-                        >
-                            Add new strategy
-                        </Button>
-                    }
-                />
-            </div>
-            <div className={styles.tabContainer}>
-                <Tabs
-                    value={activeTabIdx}
-                    onChange={(_, tabId) => {
-                        setActiveTab(tabId);
-                        setActiveEnvironment(featureCache?.environments[tabId]);
-                    }}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    className={styles.tabNavigation}
-                >
-                    {renderTabs()}
-                </Tabs>
-            </div>
+                            <FeatureStrategiesRefresh
+                                show={showRefreshPrompt}
+                                refresh={handleRefresh}
+                                cancel={handleCancel}
+                            />
+                            <ConditionallyRender
+                                condition={!expandedSidebar}
+                                show={
+                                    <ResponsiveButton
+                                        data-test={ADD_NEW_STRATEGY_ID}
+                                        onClick={() =>
+                                            setExpandedSidebar(prev => !prev)
+                                        }
+                                        Icon={Add}
+                                        maxWidth="700px"
+                                    >
+                                        Add new strategy
+                                    </ResponsiveButton>
+                                }
+                            />
+                        </div>
+                        <div className={styles.tabContainer}>
+                            <Tabs
+                                value={activeTabIdx}
+                                onChange={(_, tabId) => {
+                                    setActiveTab(tabId);
+                                    setActiveEnvironment(
+                                        featureCache?.environments[tabId]
+                                    );
+                                }}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                className={styles.tabNavigation}
+                            >
+                                {renderTabs()}
+                            </Tabs>
+                        </div>
 
-            <div>
-                {renderTabPanels()}
-                <ConditionallyRender
-                    condition={configureNewStrategy}
-                    show={
-                        <FeatureStrategiesConfigure
-                            setToastData={setToastData}
-                        />
-                    }
-                />
-            </div>
-            {toast}
+                        <div>
+                            {renderTabPanels()}
+                            <ConditionallyRender
+                                condition={configureNewStrategy}
+                                show={
+                                    <FeatureStrategiesConfigure
+                                        setToastData={setToastData}
+                                    />
+                                }
+                            />
+                        </div>
+                        {toast}
+                    </>
+                }
+            />
         </div>
     );
 };

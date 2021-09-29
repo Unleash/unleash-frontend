@@ -161,13 +161,16 @@ const FeatureStrategyEditable = ({
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    style={{ marginRight: '1rem' }}
+                                    className={styles.editButton}
                                     onClick={updateFeatureStrategy}
                                     data-test={UPDATE_STRATEGY_BUTTON_ID}
                                 >
                                     Save changes
                                 </Button>
-                                <Button onClick={discardChanges}>
+                                <Button
+                                    onClick={discardChanges}
+                                    className={styles.editButton}
+                                >
                                     Discard changes
                                 </Button>
                             </div>
