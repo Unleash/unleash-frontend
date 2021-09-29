@@ -23,15 +23,15 @@ export interface ProjectEnvironment {
     enabled: boolean;
 }
 
-const ProjectListNew = () => {
+const ProjectEnvironmentList = () => {
     const { id } = useParams<{id: string}>();
     const { hasAccess } = useContext(AccessContext);
 
     // api state
     const { toast } = useToast();
     const { uiConfig } = useUiConfig();
-    const { environments, loading, error } = useEnvironments();
-    const { project, refetch } = useProject(id);
+    const { environments, loading, error, refetch: refetchEnvs } = useEnvironments();
+    const { project, refetch: refetchProject } = useProject(id);
     const { removeEnvironmentFromProject, addEnvironmentToProject } = useProjectApi();
     
     // local state
@@ -40,6 +40,10 @@ const ProjectListNew = () => {
     const ref = useLoading(loading);
     const styles = useStyles();
 
+    const refetch = () => {
+        refetchEnvs();
+        refetchProject();
+    }
 
     const renderError = () => {
         return (
@@ -53,9 +57,7 @@ const ProjectListNew = () => {
 
     const toggleEnv = async (env: ProjectEnvironment) => {
         if(env.enabled) {
-            // await removeEnvironmentFromProject(id, env.name);
             setSelectedEnv(env);
-
         } else {
             await addEnvironmentToProject(id, env.name);
         }
@@ -138,4 +140,4 @@ const ProjectListNew = () => {
     );
 };
 
-export default ProjectListNew;
+export default ProjectEnvironmentList;
