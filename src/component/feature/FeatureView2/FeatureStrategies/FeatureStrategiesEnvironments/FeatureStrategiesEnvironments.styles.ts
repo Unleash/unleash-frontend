@@ -33,6 +33,9 @@ export const useStyles = makeStyles(theme => ({
             padding: '1.5rem',
         },
     },
+    listContainerWithoutSidebar: {
+        width: '100%',
+    },
     listContainer: {
         width: '70%',
         [theme.breakpoints.down(700)]: {

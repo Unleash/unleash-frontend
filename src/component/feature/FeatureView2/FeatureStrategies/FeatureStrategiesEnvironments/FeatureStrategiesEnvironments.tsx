@@ -19,9 +19,12 @@ import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
 import NoItems from '../../../../common/NoItems/NoItems';
 import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
 import { Add } from '@material-ui/icons';
+import AccessContext from '../../../../../contexts/AccessContext';
+import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
 
 const FeatureStrategiesEnvironments = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
+    const { hasAccess } = useContext(AccessContext);
 
     const startingTabId = 0;
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -211,6 +214,7 @@ const FeatureStrategiesEnvironments = () => {
 
         const listContainerClasses = classNames(styles.listContainer, {
             [styles.listContainerFullWidth]: expandedSidebar,
+            [styles.listContainerWithoutSidebar]: !hasAccess(UPDATE_FEATURE),
         });
 
         return featureCache?.environments?.map((env, index) => {
@@ -278,17 +282,24 @@ const FeatureStrategiesEnvironments = () => {
                                                     Read more here
                                                 </a>
                                             </p>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() =>
-                                                    setExpandedSidebar(
-                                                        prev => !prev
-                                                    )
+                                            <ConditionallyRender
+                                                condition={hasAccess(
+                                                    UPDATE_FEATURE
+                                                )}
+                                                show={
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        onClick={() =>
+                                                            setExpandedSidebar(
+                                                                prev => !prev
+                                                            )
+                                                        }
+                                                    >
+                                                        Add your first strategy
+                                                    </Button>
                                                 }
-                                            >
-                                                Add your first strategy
-                                            </Button>
+                                            />
                                         </NoItems>
                                     }
                                 />
@@ -328,7 +339,10 @@ const FeatureStrategiesEnvironments = () => {
                                 cancel={handleCancel}
                             />
                             <ConditionallyRender
-                                condition={!expandedSidebar}
+                                condition={
+                                    !expandedSidebar &&
+                                    hasAccess(UPDATE_FEATURE)
+                                }
                                 show={
                                     <ResponsiveButton
                                         data-test={ADD_NEW_STRATEGY_ID}

@@ -21,6 +21,8 @@ import {
     STRATEGY_ACCORDION_ID,
     UPDATE_STRATEGY_BUTTON_ID,
 } from '../../../../../../testIds';
+import AccessContext from '../../../../../../contexts/AccessContext';
+import { UPDATE_FEATURE } from '../../../../../AccessProvider/permissions';
 
 interface IFeatureStrategyEditable {
     currentStrategy: IFeatureStrategy;
@@ -35,6 +37,8 @@ const FeatureStrategyEditable = ({
     setDelDialog,
     index,
 }: IFeatureStrategyEditable) => {
+    const { hasAccess } = useContext(AccessContext);
+
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
         FeatureStrategiesUIContext
@@ -135,22 +139,25 @@ const FeatureStrategyEditable = ({
                 setStrategyConstraints={setStrategyConstraints}
                 dirty={dirty[strategy.id]}
                 actions={
-                    <>
-                        <Tooltip title="Delete strategy">
-                            <IconButton
-                                data-test={`${DELETE_STRATEGY_ID}-${strategy.name}`}
-                                onClick={e => {
-                                    e.stopPropagation();
-                                    setDelDialog({
-                                        strategyId: strategy.id,
-                                        show: true,
-                                    });
-                                }}
-                            >
-                                <Delete />
-                            </IconButton>
-                        </Tooltip>
-                    </>
+                    <ConditionallyRender
+                        condition={hasAccess(UPDATE_FEATURE)}
+                        show={
+                            <Tooltip title="Delete strategy">
+                                <IconButton
+                                    data-test={`${DELETE_STRATEGY_ID}-${strategy.name}`}
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        setDelDialog({
+                                            strategyId: strategy.id,
+                                            show: true,
+                                        });
+                                    }}
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </Tooltip>
+                        }
+                    />
                 }
             >
                 <ConditionallyRender
