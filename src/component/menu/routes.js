@@ -254,17 +254,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features2/:featureId/strategies',
-        parent: '/projects',
-        title: 'FeatureView2',
-        component: FeatureStrategies,
-        type: 'protected',
-        layout: 'main',
-        flags: E,
-        menu: {},
-    },
-    {
-        path: '/projects/:projectId/features2/:featureId',
+        path: '/projects/:projectId/features2/:featureId/:activeTab',
         parent: '/projects',
         title: 'FeatureView2',
         component: FeatureView2,

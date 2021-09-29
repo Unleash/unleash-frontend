@@ -24,7 +24,7 @@ const FeatureStrategiesEnvironments = () => {
     const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
 
     const styles = useStyles();
-    const { a11yProps, activeTab, setActiveTab } = useTabs(startingTabId);
+    const { a11yProps, activeTabIdx, setActiveTab } = useTabs(startingTabId);
     const {
         setActiveEnvironment,
         configureNewStrategy,
@@ -64,7 +64,7 @@ const FeatureStrategiesEnvironments = () => {
 
     useEffect(() => {
         if (!feature?.environments?.length > 0) return;
-        setActiveEnvironment(feature?.environments[activeTab]);
+        setActiveEnvironment(feature?.environments[activeTabIdx]);
         /* eslint-disable-next-line */
     }, [feature]);
 
@@ -212,7 +212,7 @@ const FeatureStrategiesEnvironments = () => {
             return (
                 <TabPanel
                     key={`tab_panel_${index}`}
-                    value={activeTab}
+                    value={activeTabIdx}
                     index={index}
                 >
                     <div className={tabContentClasses}>
@@ -277,7 +277,7 @@ const FeatureStrategiesEnvironments = () => {
             </div>
             <div className={styles.tabContainer}>
                 <Tabs
-                    value={activeTab}
+                    value={activeTabIdx}
                     onChange={(_, tabId) => {
                         setActiveTab(tabId);
                         setActiveEnvironment(featureCache?.environments[tabId]);
