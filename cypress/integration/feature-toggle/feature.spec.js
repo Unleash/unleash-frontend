@@ -16,7 +16,7 @@ let enterprise = false;
 let strategyId = '';
 let defaultEnv = ':global:';
 
-describe('example to-do app', () => {
+describe('feature toggle', () => {
     before(() => {
         featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
         enterprise = Boolean(Cypress.env('ENTERPRISE'));
