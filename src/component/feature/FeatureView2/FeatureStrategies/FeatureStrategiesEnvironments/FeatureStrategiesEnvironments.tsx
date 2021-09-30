@@ -21,6 +21,7 @@ import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButt
 import { Add } from '@material-ui/icons';
 import AccessContext from '../../../../../contexts/AccessContext';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
+import useQueryParams from '../../../../../hooks/useQueryParams';
 
 const FeatureStrategiesEnvironments = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
@@ -32,6 +33,10 @@ const FeatureStrategiesEnvironments = () => {
     const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
 
     const styles = useStyles();
+    const query = useQueryParams();
+    const addStrategy = query.get('addStrategy');
+    const environmentTab = query.get('environment');
+
     const { a11yProps, activeTabIdx, setActiveTab } = useTabs(startingTabId);
     const {
         setActiveEnvironment,
@@ -48,6 +53,21 @@ const FeatureStrategiesEnvironments = () => {
         revalidateOnReconnect: false,
         refreshInterval: 5000,
     });
+
+    useEffect(() => {
+        if (addStrategy) {
+            setExpandedSidebar(true);
+        }
+
+        if (environmentTab) {
+            const index = feature.environments.findIndex(
+                env => env.name === environmentTab
+            );
+            console.log(environmentTab, index);
+            if (!index) return;
+            setActiveTab(index);
+        }
+    }, [feature.environments]);
 
     useEffect(() => {
         if (!feature) return;

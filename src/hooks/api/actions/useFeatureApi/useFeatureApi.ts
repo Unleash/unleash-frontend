@@ -5,12 +5,54 @@ const useFeatureApi = () => {
         propagateErrors: true,
     });
 
+    const toggleFeatureEnvironmentOn = async (
+        projectId: string,
+        featureId: string,
+        environmentId: string
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/on`;
+        const req = createRequest(
+            path,
+            { method: 'POST' },
+            'toggleFeatureEnvironmentOn'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const toggleFeatureEnvironmentOff = async (
+        projectId: string,
+        featureId: string,
+        environmentId: string
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/off`;
+        const req = createRequest(
+            path,
+            { method: 'POST' },
+            'toggleFeatureEnvironmentOff'
+        );
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     const changeFeatureProject = async (
         projectId: string,
-        featureName: string,
+        featureId: string,
         newProjectId: string
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureName}/changeProject`;
+        const path = `api/admin/projects/${projectId}/features/${featureId}/changeProject`;
         const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify({ newProjectId }),
@@ -25,7 +67,12 @@ const useFeatureApi = () => {
         }
     };
 
-    return { changeFeatureProject, errors };
+    return {
+        changeFeatureProject,
+        errors,
+        toggleFeatureEnvironmentOn,
+        toggleFeatureEnvironmentOff,
+    };
 };
 
 export default useFeatureApi;
