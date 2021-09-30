@@ -28,7 +28,7 @@ const ProjectEnvironmentList = () => {
     const { hasAccess } = useContext(AccessContext);
 
     // api state
-    const { toast } = useToast();
+    const { toast, setToastData } = useToast();
     const { uiConfig } = useUiConfig();
     const { environments, loading, error, refetch: refetchEnvs } = useEnvironments();
     const { project, refetch: refetchProject } = useProject(id);
@@ -55,20 +55,35 @@ const ProjectEnvironmentList = () => {
         );
     };
 
+    const errorMsg = (enable: boolean): string => {
+        return `Got an API error when trying to ${enable ? 'enable' : 'disable'} the environment.`
+    }
+
     const toggleEnv = async (env: ProjectEnvironment) => {
         if(env.enabled) {
             setSelectedEnv(env);
         } else {
-            await addEnvironmentToProject(id, env.name);
+            try {
+                await addEnvironmentToProject(id, env.name);
+                setToastData({ text: 'Environment successfully enabled.', type: 'success', show: true});
+            } catch (error) {
+                setToastData({text: errorMsg(true), type: 'error', show: true});
+            }
         }
         refetch();
     }
 
     const handleDisableEnvironment = async () => {
         if(selectedEnv && confirmName===selectedEnv.name) {
-            await removeEnvironmentFromProject(id, selectedEnv.name);
-            setSelectedEnv(undefined);
-            setConfirmName('');
+            try {
+                await removeEnvironmentFromProject(id, selectedEnv.name);
+                setSelectedEnv(undefined);
+                setConfirmName('');
+                setToastData({ text: 'Environment successfully disabled.', type: 'success', show: true});
+            } catch (e) {
+                setToastData({ text: errorMsg(false), type: 'error', show: true});
+            }
+            
             refetch();
         } 
     }
