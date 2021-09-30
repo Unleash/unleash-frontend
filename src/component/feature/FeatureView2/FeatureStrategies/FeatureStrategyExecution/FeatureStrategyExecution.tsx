@@ -165,7 +165,7 @@ const FeatureStrategyExecution = ({
                     );
                 case 'boolean':
                     return (
-                        <Fragment>
+                        <Fragment key={param.name}>
                             <p className={styles.text} key={param.name}>
                                 {param.name} must be{' '}
                                 {strategy.parameters[param.name]}

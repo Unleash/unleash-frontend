@@ -81,7 +81,7 @@ const FeatureView2 = () => {
     const renderTabContent = () => {
         return tabData.map((tab, index) => {
             return (
-                <TabPanel value={activeTabIdx} index={index}>
+                <TabPanel value={activeTabIdx} index={index} key={tab.path}>
                     {tab.component}
                 </TabPanel>
             );
