@@ -64,9 +64,8 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                     id={strategy.name}
                 >
                     <div className={styles.accordionSummary}>
-                        <p className={styles.accordionHeader}>
-                            <Icon className={styles.icon} /> {strategyName}
-                        </p>
+                        <Icon className={styles.icon} />
+                        <p className={styles.accordionHeader}>{strategyName}</p>
 
                         <ConditionallyRender
                             condition={

@@ -27,9 +27,14 @@ export const useStyles = makeStyles(theme => ({
         width: '100%',
     },
     accordionHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        maxWidth: '200px',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        [theme.breakpoints.down(700)]: {
+            maxWidth: '100px',
+            fontSize: theme.fontSizes.smallBody,
+        },
     },
     accordionActions: {
         marginLeft: 'auto',

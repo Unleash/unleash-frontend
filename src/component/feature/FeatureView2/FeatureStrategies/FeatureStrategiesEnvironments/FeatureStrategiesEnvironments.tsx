@@ -339,10 +339,7 @@ const FeatureStrategiesEnvironments = () => {
                                 cancel={handleCancel}
                             />
                             <ConditionallyRender
-                                condition={
-                                    !expandedSidebar &&
-                                    hasAccess(UPDATE_FEATURE)
-                                }
+                                condition={!expandedSidebar}
                                 show={
                                     <ResponsiveButton
                                         data-test={ADD_NEW_STRATEGY_ID}
@@ -351,6 +348,7 @@ const FeatureStrategiesEnvironments = () => {
                                         }
                                         Icon={Add}
                                         maxWidth="700px"
+                                        disabled={!hasAccess(UPDATE_FEATURE)}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>

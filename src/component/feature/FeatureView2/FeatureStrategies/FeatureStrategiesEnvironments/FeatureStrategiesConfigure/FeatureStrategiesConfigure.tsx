@@ -143,6 +143,7 @@ const FeatureStrategiesConfigure = ({
                             <FeatureStrategyCreateExecution
                                 parameters={strategyParams}
                                 constraints={strategyConstraints}
+                                configureNewStrategy={configureNewStrategy}
                             />
                         </div>
                     }
