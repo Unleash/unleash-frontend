@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
 import { Tabs, Tab, Button, useMediaQuery } from '@material-ui/core';
@@ -26,6 +26,7 @@ import useQueryParams from '../../../../../hooks/useQueryParams';
 const FeatureStrategiesEnvironments = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
+    const history = useHistory();
 
     const startingTabId = 0;
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -60,14 +61,21 @@ const FeatureStrategiesEnvironments = () => {
         }
 
         if (environmentTab) {
+            const env = feature.environments.find(
+                env => env.name === environmentTab
+            );
             const index = feature.environments.findIndex(
                 env => env.name === environmentTab
             );
-            console.log(environmentTab, index);
-            if (!index) return;
+            if (!index || !env) return;
+            console.log(env, index);
+            setActiveEnvironment(env);
             setActiveTab(index);
+            return;
         }
-    }, [feature.environments]);
+
+        setActiveEnvironment(feature?.environments[activeTabIdx]);
+    }, [feature]);
 
     useEffect(() => {
         if (!feature) return;
@@ -88,12 +96,6 @@ const FeatureStrategiesEnvironments = () => {
             setShowRefreshPrompt(true);
         }
         /*eslint-disable-next-line */
-    }, [feature]);
-
-    useEffect(() => {
-        if (!feature?.environments?.length > 0) return;
-        setActiveEnvironment(feature?.environments[activeTabIdx]);
-        /* eslint-disable-next-line */
     }, [feature]);
 
     const renderTabs = () => {
@@ -382,6 +384,9 @@ const FeatureStrategiesEnvironments = () => {
                                     setActiveTab(tabId);
                                     setActiveEnvironment(
                                         featureCache?.environments[tabId]
+                                    );
+                                    history.push(
+                                        `/projects/${projectId}/features2/${featureId}/strategies`
                                     );
                                 }}
                                 indicatorColor="primary"

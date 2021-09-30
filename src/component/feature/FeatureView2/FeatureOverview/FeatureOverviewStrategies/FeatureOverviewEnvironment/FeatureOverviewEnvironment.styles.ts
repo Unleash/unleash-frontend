@@ -64,6 +64,10 @@ export const useStyles = makeStyles(theme => ({
     toggleText: {
         fontSize: theme.fontSizes.smallBody,
     },
+    toggleLink: {
+        color: theme.palette.primary.main,
+        fontSize: theme.fontSizes.smallBody,
+    },
     headerDisabledEnv: {
         border: 'none',
     },

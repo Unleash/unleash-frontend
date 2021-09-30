@@ -6,7 +6,7 @@ import FeatureOverviewStrategyCard from './FeatureOverviewStrategyCard/FeatureOv
 import classNames from 'classnames';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import useToast from '../../../../../../hooks/useToast';
 
@@ -121,15 +121,35 @@ const FeatureOverviewEnvironment = ({
                     <p className={styles.environmentTitle}>{env.name}</p>
                 </div>
                 <div className={styles.environmentStatus}>
-                    <Switch
-                        value={env.enabled}
-                        checked={env.enabled}
-                        onChange={toggleEnvironment}
-                    />{' '}
-                    <span className={styles.toggleText}>
-                        This environment is{' '}
-                        {env.enabled ? 'enabled' : 'disabled'}
-                    </span>
+                    <ConditionallyRender
+                        condition={env.strategies.length > 0}
+                        show={
+                            <>
+                                <Switch
+                                    value={env.enabled}
+                                    checked={env.enabled}
+                                    onChange={toggleEnvironment}
+                                />{' '}
+                                <span className={styles.toggleText}>
+                                    This environment is{' '}
+                                    {env.enabled ? 'enabled' : 'disabled'}
+                                </span>
+                            </>
+                        }
+                        elseShow={
+                            <>
+                                <p className={styles.toggleText}>
+                                    No strategies configured for environment.
+                                </p>
+                                <Link
+                                    to={`/projects/${projectId}/features2/${featureId}/strategies?addStrategy=true&environment=${env.name}`}
+                                    className={styles.toggleLink}
+                                >
+                                    Configure strategies for {env.name}
+                                </Link>
+                            </>
+                        }
+                    />
                 </div>
             </div>
 
