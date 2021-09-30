@@ -32,7 +32,7 @@
     "test": "react-scripts test",
     "prepare": "yarn run build",
     "e2e": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true",
-    "e2e:enterprise": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true,ENTERPRISE=true,AUTH_TOKEN=*:*.b812b2d8d61379f8be4e2fbe8ddb4cdfbbf7f56add81afef83f6d436"
+    "e2e:enterprise": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true,ENTERPRISE=true,AUTH_TOKEN=$AUTH_TOKEN"
   },
   "devDependencies": {
     "@material-ui/core": "4.11.3",
