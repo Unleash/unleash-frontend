@@ -15,9 +15,6 @@ import ContextFields from '../../page/context';
 import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
-import EditProject from '../../page/project/edit';
-import EditProjectAccess from '../../page/project/access';
-import EditProjectEnvironment from '../../page/project/environment';
 import ListTagTypes from '../../page/tag-types';
 import CreateTagType from '../../page/tag-types/create';
 import EditTagType from '../../page/tag-types/edit';
@@ -208,33 +205,6 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/edit',
-        parent: '/projects',
-        title: ':id',
-        component: EditProject,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:id/access',
-        parent: '/projects',
-        title: ':id',
-        component: EditProjectAccess,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:id/environments',
-        parent: '/projects',
-        title: 'Environments',
-        component: EditProjectEnvironment,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
         path: '/projects/:id/archived',
         title: ':name',
         parent: '/archive',
@@ -276,6 +246,16 @@ export const routes = [
         parent: '/projects',
         title: 'Create',
         component: CreateFeatureToggle,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:id/:activeTab',
+        parent: '/projects',
+        title: ':id',
+        component: Project,
+        flag: P,
         type: 'protected',
         layout: 'main',
         menu: {},
