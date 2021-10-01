@@ -28,7 +28,6 @@ import AdminApi from '../../page/admin/api';
 import AdminUsers from '../../page/admin/users';
 import AdminInvoice from '../../page/admin/invoice';
 import AdminAuth from '../../page/admin/auth';
-import Reporting from '../../page/reporting';
 import Login from '../user/Login';
 import { P, C, E } from '../common/flags';
 import NewUser from '../user/NewUser';
@@ -353,14 +352,6 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
-    },
-    {
-        path: '/reporting',
-        title: 'Reporting',
-        component: Reporting,
-        type: 'protected',
-        layout: 'main',
-        menu: { mobile: true },
     },
     // Admin
     {

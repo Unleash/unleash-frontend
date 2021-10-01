@@ -315,16 +315,6 @@ Array [
     "component": [Function],
     "layout": "main",
     "menu": Object {
-      "mobile": true,
-    },
-    "path": "/reporting",
-    "title": "Reporting",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
-    "layout": "main",
-    "menu": Object {
       "advanced": true,
       "mobile": true,
     },
