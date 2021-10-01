@@ -38,6 +38,9 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
+    environmentBadgeParagraph: {
+        fontSize: theme.fontSizes.smallBody,
+    },
     iconContainer: {
         padding: '0.25rem',
         borderRadius: '50%',

@@ -9,7 +9,6 @@ import { useStyles } from './FeatureOverviewStrategies.styles';
 const FeatureOverviewStrategies = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    console.log(projectId, featureId);
     const { feature, refetch } = useFeature(projectId, featureId);
 
     if (!feature) return null;
@@ -32,7 +31,7 @@ const FeatureOverviewStrategies = () => {
         <div className={styles.container}>
             <div className={styles.headerContainer}>
                 <div className={styles.headerInnerContainer}>
-                    <p>Toggle Strategies</p>
+                    <h3 className={styles.headerTitle}>Toggle Strategies</h3>
                     <div className={styles.actions}>
                         <ResponsiveButton
                             maxWidth="700px"

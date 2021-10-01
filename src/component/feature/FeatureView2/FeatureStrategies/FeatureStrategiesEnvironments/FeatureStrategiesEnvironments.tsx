@@ -67,7 +67,7 @@ const FeatureStrategiesEnvironments = () => {
             const index = feature.environments.findIndex(
                 env => env.name === environmentTab
             );
-            if (!index || !env) return;
+            if (index < 0 || !env) return;
             console.log(env, index);
             setActiveEnvironment(env);
             setActiveTab(index);

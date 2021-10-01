@@ -1,12 +1,13 @@
 import { Tabs, Tab } from '@material-ui/core';
-import { useEffect } from 'react';
 import { Route, useHistory, useParams } from 'react-router-dom';
 import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
 import useTabs from '../../../hooks/useTabs';
 import { IFeatureViewParams } from '../../../interfaces/params';
-import TabPanel from '../../common/TabNav/TabPanel';
+import FeatureLog from './FeatureLog/FeatureLog';
+import FeatureMetrics from './FeatureMetrics/FeatureMetrics';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
+import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { useStyles } from './FeatureView2.styles';
 
 const FeatureView2 = () => {
@@ -21,16 +22,25 @@ const FeatureView2 = () => {
     const tabData = [
         {
             title: 'Overview',
-            component: <FeatureOverview />,
             path: `${basePath}/overview`,
             name: 'overview',
         },
         {
             title: 'Strategies',
-            component: <FeatureStrategies />,
             path: `${basePath}/strategies`,
             name: 'strategies',
         },
+        {
+            title: 'Metrics',
+            path: `${basePath}/metrics`,
+            name: 'Metrics',
+        },
+        {
+            title: 'Event log',
+            path: `${basePath}/logs`,
+            name: 'Event log',
+        },
+        { title: 'Variants', path: `${basePath}/variants`, name: 'Variants' },
     ];
 
     const renderTabs = () => {
@@ -49,7 +59,7 @@ const FeatureView2 = () => {
             );
         });
     };
-    console.log(history.location.pathname);
+
     return (
         <>
             <div className={styles.header}>
@@ -75,6 +85,18 @@ const FeatureView2 = () => {
             <Route
                 path={`/projects/:projectId/features2/:featureId/strategies`}
                 component={FeatureStrategies}
+            />
+            <Route
+                path={`/projects/:projectId/features2/:featureId/metrics`}
+                component={FeatureMetrics}
+            />
+            <Route
+                path={`/projects/:projectId/features2/:featureId/logs`}
+                component={FeatureLog}
+            />
+            <Route
+                path={`/projects/:projectId/features2/:featureId/variants`}
+                component={FeatureVariants}
             />
         </>
     );

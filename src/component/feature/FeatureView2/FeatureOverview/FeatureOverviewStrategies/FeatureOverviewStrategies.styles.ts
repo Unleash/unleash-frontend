@@ -9,6 +9,11 @@ export const useStyles = makeStyles(theme => ({
     headerContainer: {
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
     },
+    headerTitle: {
+        fontSize: theme.fontSizes.subHeader,
+        fontWeight: 'normal',
+        margin: 0,
+    },
     headerInnerContainer: {
         padding: '1.5rem 2rem',
         display: 'flex',
