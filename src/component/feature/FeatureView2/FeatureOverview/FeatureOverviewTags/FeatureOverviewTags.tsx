@@ -25,6 +25,7 @@ const FeatureOverviewTags = () => {
             await deleteTag(featureId, type, value);
             refetch();
         } catch (e) {
+            // TODO: Handle error
             console.log(e);
         }
     };

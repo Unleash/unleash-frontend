@@ -68,7 +68,6 @@ const FeatureStrategiesEnvironments = () => {
                 env => env.name === environmentTab
             );
             if (index < 0 || !env) return;
-            console.log(env, index);
             setActiveEnvironment(env);
             setActiveTab(index);
             return;
@@ -386,9 +385,7 @@ const FeatureStrategiesEnvironments = () => {
                                     setActiveEnvironment(
                                         featureCache?.environments[tabId]
                                     );
-                                    history.push(
-                                        `/projects/${projectId}/features2/${featureId}/strategies`
-                                    );
+                                    history.replace(history.location.pathname);
                                 }}
                                 indicatorColor="primary"
                                 textColor="primary"

@@ -71,7 +71,7 @@ const useFeatureStrategiesEnvironmentList = (
 
             strategy.parameters = updateStrategyPayload.parameters;
             strategy.constraints = updateStrategyPayload.constraints;
-            history.push(history.location.pathname);
+            history.replace(history.location.pathname);
             setFeatureCache(feature);
         } catch (e) {
             setToastData({
@@ -109,7 +109,7 @@ const useFeatureStrategiesEnvironmentList = (
                 type: 'success',
                 text: `Successfully deleted strategy from ${featureId}`,
             });
-            history.push(history.location.pathname);
+            history.replace(history.location.pathname);
         } catch (e) {
             setToastData({
                 show: true,

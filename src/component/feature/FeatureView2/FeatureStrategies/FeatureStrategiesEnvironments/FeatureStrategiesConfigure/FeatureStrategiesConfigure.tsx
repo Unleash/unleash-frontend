@@ -91,7 +91,7 @@ const FeatureStrategiesConfigure = ({
                 type: 'success',
                 text: 'Successfully added strategy.',
             });
-            history.push(history.location.pathname);
+            history.replace(history.location.pathname);
         } catch (e) {
             setToastData({
                 show: true,
