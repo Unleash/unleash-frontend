@@ -5,7 +5,14 @@ const URI = formatApiPath('api/admin/features');
 
 function validateToggle(featureToggle) {
     return new Promise((resolve, reject) => {
-        resolve(featureToggle);
+        if (
+            !featureToggle.strategies ||
+            featureToggle.strategies.length === 0
+        ) {
+            reject(new Error('You must add at least one activation strategy'));
+        } else {
+            resolve(featureToggle);
+        }
     });
 }
 
