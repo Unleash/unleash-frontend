@@ -91,10 +91,7 @@ const Header = () => {
                         condition={!smallScreen}
                         show={
                             <div className={styles.links}>
-                                <ConditionallyRender
-                                    condition={flags?.P}
-                                    show={<Link to="/projects">Projects</Link>}
-                                />
+                                <Link to="/projects">Projects</Link>
                                 <Link to="/features">Feature toggles</Link>
 
                                 <button
