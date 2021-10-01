@@ -35,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '0.4rem 1rem',
         minWidth: '150px',
         color: '#fff',
-        display: 'flex',
+
         alignItems: 'center',
     },
     environmentBadgeParagraph: {

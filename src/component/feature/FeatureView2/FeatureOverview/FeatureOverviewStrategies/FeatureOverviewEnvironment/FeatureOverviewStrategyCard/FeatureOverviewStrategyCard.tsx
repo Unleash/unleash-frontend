@@ -1,4 +1,4 @@
-import { Icon, useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 import { IFeatureStrategy } from '../../../../../../../interfaces/strategy';
 import {
     getFeatureStrategyIcon,

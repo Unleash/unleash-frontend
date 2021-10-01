@@ -1,4 +1,4 @@
-import { Cloud, HistoryOutlined } from '@material-ui/icons';
+import { Cloud } from '@material-ui/icons';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { Switch } from '@material-ui/core';
 import { useStyles } from './FeatureOverviewEnvironment.styles';

@@ -1,18 +1,17 @@
 import { capitalize, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
 import { useParams } from 'react-router-dom';
-import { useCommonStyles } from '../../../../../common.styles';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { getFeatureTypeIcons } from '../../../../../utils/get-feature-type-icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureViewMetadata.styles';
 
 import { Edit } from '@material-ui/icons';
+import { IFeatureViewParams } from '../../../../../interfaces/params';
 
 const FeatureViewMetaData = () => {
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
-    const { projectId, featureId } = useParams();
+    const { projectId, featureId } = useParams<IFeatureViewParams>();
 
     const { feature } = useFeature(projectId, featureId);
 

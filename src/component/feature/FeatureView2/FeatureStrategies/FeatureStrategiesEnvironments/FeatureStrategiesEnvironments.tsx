@@ -75,6 +75,7 @@ const FeatureStrategiesEnvironments = () => {
         }
 
         setActiveEnvironment(feature?.environments[activeTabIdx]);
+        /*eslint-disable-next-line */
     }, [feature]);
 
     useEffect(() => {
