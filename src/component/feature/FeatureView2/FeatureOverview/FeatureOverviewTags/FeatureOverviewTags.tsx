@@ -1,5 +1,5 @@
-import { Chip } from '@material-ui/core';
-import { Label } from '@material-ui/icons';
+import { Chip, IconButton } from '@material-ui/core';
+import { Add, Label } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 import useTags from '../../../../../hooks/api/getters/useTags/useTags';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
@@ -11,22 +11,49 @@ import webhookIcon from '../../../../../assets/icons/webhooks.svg';
 import { formatAssetPath } from '../../../../../utils/format-path';
 import useTagTypes from '../../../../../hooks/api/getters/useTagTypes/useTagTypes';
 import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import AddTagDialogContainer from '../../../add-tag-dialog-container';
+import AddTagDialog from './AddTagDialog/AddTagDialog';
+import { useState } from 'react';
+import Dialogue from '../../../../common/Dialogue';
+import { ITag } from '../../../../../interfaces/tags';
+import useToast from '../../../../../hooks/useToast';
+import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
+import { useContext } from 'react';
+import AccessContext from '../../../../../contexts/AccessContext';
 
 const FeatureOverviewTags = () => {
+    const { hasAccess } = useContext(AccessContext);
+    const [openTagDialog, setOpenTagDialog] = useState(false);
+    const [showDelDialog, setShowDelDialog] = useState(false);
+    const [selectedTag, setSelectedTag] = useState<ITag>({
+        value: '',
+        type: '',
+    });
     const styles = useStyles();
     const { featureId } = useParams<IFeatureViewParams>();
     const { tags, refetch } = useTags(featureId);
     const { tagTypes } = useTagTypes();
-    const { deleteTag } = useFeatureApi();
+    const { deleteTagFromFeature } = useFeatureApi();
+    const { toast, setToastData } = useToast();
 
-    const handleDelete = async (type: string, value: string) => {
+    const handleDelete = async () => {
         try {
-            await deleteTag(featureId, type, value);
+            await deleteTagFromFeature(
+                featureId,
+                selectedTag.type,
+                selectedTag.value
+            );
             refetch();
+            setToastData({
+                type: 'success',
+                show: true,
+                text: 'Successfully deleted tag',
+            });
         } catch (e) {
-            // TODO: Handle error
-            console.log(e);
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
         }
     };
 
@@ -72,10 +99,13 @@ const FeatureOverviewTags = () => {
     const renderTag = t => (
         <Chip
             icon={tagIcon(t.type)}
-            style={{ marginRight: '3px', fontSize: '0.8em' }}
+            className={styles.tagChip}
             label={t.value}
             key={`${t.type}:${t.value}`}
-            onDelete={() => handleDelete(t.type, t.value)}
+            onDelete={() => {
+                setShowDelDialog(true);
+                setSelectedTag({ type: t.type, value: t.value });
+            }}
         />
     );
 
@@ -83,17 +113,34 @@ const FeatureOverviewTags = () => {
         <div className={styles.container}>
             <div className={styles.tagheaderContainer}>
                 <div className={styles.tagHeader}>
-                    <Label className={styles.tag} />
                     <h4 className={styles.tagHeaderText}>Tags</h4>
                 </div>
 
-                <AddTagDialogContainer featureToggleName={featureId} />
-                {/* <IconButton>
+                <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
+                <IconButton
+                    onClick={() => setOpenTagDialog(true)}
+                    disabled={!hasAccess(UPDATE_FEATURE)}
+                >
                     <Add />
-                </IconButton> */}
+                </IconButton>
             </div>
 
+            <Dialogue
+                open={showDelDialog}
+                onClose={() => {
+                    setShowDelDialog(false);
+                    setSelectedTag({ type: '', value: '' });
+                }}
+                onClick={() => {
+                    setShowDelDialog(false);
+                    handleDelete();
+                    setSelectedTag({ type: '', value: '' });
+                }}
+                title="Are you sure you want to delete this tag?"
+            />
+
             <div className={styles.tagContent}>{tags.map(renderTag)}</div>
+            {toast}
         </div>
     );
 };

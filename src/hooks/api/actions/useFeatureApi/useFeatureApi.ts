@@ -68,7 +68,7 @@ const useFeatureApi = () => {
         }
     };
 
-    const addTag = async (featureId: string, tag: ITag) => {
+    const addTagToFeature = async (featureId: string, tag: ITag) => {
         // TODO: Change this path to the new API when moved.
         const path = `api/admin/features/${featureId}/tags`;
         const req = createRequest(path, {
@@ -85,7 +85,7 @@ const useFeatureApi = () => {
         }
     };
 
-    const deleteTag = async (
+    const deleteTagFromFeature = async (
         featureId: string,
         type: string,
         value: string
@@ -110,8 +110,8 @@ const useFeatureApi = () => {
         errors,
         toggleFeatureEnvironmentOn,
         toggleFeatureEnvironmentOff,
-        addTag,
-        deleteTag,
+        addTagToFeature,
+        deleteTagFromFeature,
     };
 };
 

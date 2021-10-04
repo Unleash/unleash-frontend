@@ -23,7 +23,7 @@ jest.mock('../update-strategies-container', () => ({
 }));
 jest.mock('../../feature-type-select-container', () => 'FeatureTypeSelect');
 jest.mock('../../../common/ProjectSelect', () => 'ProjectSelect');
-jest.mock('../../tag-type-select-container', () => 'TagTypeSelect');
+jest.mock('../../tag-type-select-container', () => 'TagSelect');
 jest.mock('../../feature-tag-component', () => 'FeatureTagComponent');
 jest.mock('../../add-tag-dialog-container', () => 'AddTagDialog');
 

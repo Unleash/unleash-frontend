@@ -37,4 +37,9 @@ export const useStyles = makeStyles(theme => ({
     tagContent: {
         padding: '1.5rem',
     },
+    tagChip: {
+        marginRight: '0.25rem',
+        marginTop: '0.5rem',
+        fontSize: theme.fontSizes.smallBody,
+    },
 }));
