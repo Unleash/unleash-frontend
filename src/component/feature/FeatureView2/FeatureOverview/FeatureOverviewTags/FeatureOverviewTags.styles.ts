@@ -15,7 +15,7 @@ export const useStyles = makeStyles(theme => ({
     tagheaderContainer: {
         display: 'flex',
         alignItems: 'center',
-        padding: '1.5rem',
+        padding: '0.5rem 1rem',
         justifyContent: 'space-between',
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
     },

@@ -105,6 +105,24 @@ const useFeatureApi = () => {
         }
     };
 
+    const archiveFeatureToggle = async (
+        projectId: string,
+        featureId: string
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureId}`;
+        const req = createRequest(path, {
+            method: 'DELETE',
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         changeFeatureProject,
         errors,
@@ -112,6 +130,7 @@ const useFeatureApi = () => {
         toggleFeatureEnvironmentOff,
         addTagToFeature,
         deleteTagFromFeature,
+        archiveFeatureToggle,
     };
 };
 
