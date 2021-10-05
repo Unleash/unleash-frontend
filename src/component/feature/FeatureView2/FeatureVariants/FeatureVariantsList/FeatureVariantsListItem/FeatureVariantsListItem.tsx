@@ -52,10 +52,10 @@ const FeatureVariantListItem = ({
                 show={
                     <TableCell className={styles.actions}>
                         <div className={styles.actionsContainer}>
-                            <IconButton onClick={editVariant}>
+                            <IconButton onClick={() => editVariant(variant.name)}>
                                 <Edit />
                             </IconButton>
-                            <IconButton onClick={removeVariant}>
+                            <IconButton onClick={() => removeVariant(variant.name)}>
                                 <Delete />
                             </IconButton>
                         </div>

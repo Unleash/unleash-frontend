@@ -2,22 +2,13 @@ import classnames from 'classnames';
 import * as jsonpatch from 'fast-json-patch';
 
 import styles from './variants.module.scss';
-import {
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Button,
-    Typography,
-} from '@material-ui/core';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 import AddVariant from './AddFeatureVariant/AddFeatureVariant';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
-import { useContext } from 'react';
 import AccessContext from '../../../../../contexts/AccessContext';
 import FeatureVariantListItem from './FeatureVariantsListItem/FeatureVariantsListItem';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
@@ -34,7 +25,8 @@ const FeatureOverviewVariants = () => {
     const { hasAccess } = useContext(AccessContext);
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, refetch } = useFeature(projectId, featureId);
-    const [variants, setVariants] = useState([]);
+    const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [editing, setEditing] = useState(false);
     const { context } = useUnleashContext();
     const { toast, setToastData } = useToast();
     const { patchFeatureToggle } = useFeatureApi();
@@ -46,7 +38,7 @@ const FeatureOverviewVariants = () => {
         if (feature) {
             setClonedVariants(feature.variants);
         }
-    }, [feature.variants.length]);
+    }, [feature.variants]);
 
     useEffect(() => {
         const options = [
@@ -68,8 +60,9 @@ const FeatureOverviewVariants = () => {
     };
 
     const handleCloseAddVariant = () => {
-        setEditVariant({});
         setShowAddVariant(false);
+        setEditing(false);
+        setEditVariant({});
     };
 
     const renderVariants = () => {
@@ -78,8 +71,15 @@ const FeatureOverviewVariants = () => {
                 <FeatureVariantListItem
                     key={variant.name}
                     variant={variant}
-                    editVariant={() => {}}
-                    removeVariant={() => {}}
+                    editVariant={(name: string) => {
+                        const v = { ...variants.find(v => v.name === name) };
+                        setEditVariant(v);
+                        setEditing(true);
+                        setShowAddVariant(true);
+                    }}
+                    removeVariant={async (name: string) => {
+                        await removeVariant(name);
+                    }}
                     editable={editable}
                 />
             );
@@ -106,7 +106,7 @@ const FeatureOverviewVariants = () => {
         return (
             <section style={{ paddingTop: '16px' }}>
                 <GeneralSelect
-                    label="Stickiness"
+                    label='Stickiness'
                     options={options}
                     value={value}
                     onChange={onChange}
@@ -120,9 +120,9 @@ const FeatureOverviewVariants = () => {
                     you want to be used in order to ensure consistent traffic
                     allocation across variants.{' '}
                     <a
-                        href="https://docs.getunleash.io/advanced/toggle_variants"
-                        target="_blank"
-                        rel="noreferrer"
+                        href='https://docs.getunleash.io/advanced/toggle_variants'
+                        target='_blank'
+                        rel='noreferrer'
                     >
                         Read more
                     </a>
@@ -157,27 +157,11 @@ const FeatureOverviewVariants = () => {
         }
     };
 
-    const saveVariant = async (variant: IFeatureVariant) => {
-        let stickiness = 'default';
-        if (variants.length > 0) {
-            stickiness = variants[0].stickiness || 'default';
-        }
-        variant.stickiness = stickiness;
-
-        const newVariants = updateWeight([...variants, variant], 1000);
-
-        const patch = createPatch(newVariants);
-
-        if (patch.length === 0) return;
-
+    const removeVariant = async (name: string) => {
+        console.log(`Removing variant ${name}`);
+        let updatedVariants = variants.filter(v => v.name !== name);
         try {
-            await patchFeatureToggle(projectId, featureId, patch);
-            refetch();
-            setToastData({
-                show: true,
-                type: 'success',
-                text: 'Successfully added a variant',
-            });
+            await updateVariants(updatedVariants, 'Successfully removed variant');
         } catch (e) {
             setToastData({
                 show: true,
@@ -185,6 +169,37 @@ const FeatureOverviewVariants = () => {
                 text: e.toString(),
             });
         }
+    };
+    const updateVariant = async (variant: IFeatureVariant) => {
+        const updatedVariants = cloneDeep(variants);
+        const variantIdxToUpdate = updatedVariants.findIndex((v: IFeatureVariant) => v.name === variant.name);
+        updatedVariants[variantIdxToUpdate] = variant;
+        await updateVariants(updatedVariants, 'Successfully updated variant');
+    };
+
+    const saveNewVariant = async (variant: IFeatureVariant) => {
+        let stickiness = 'default';
+        if (variants.length > 0) {
+            stickiness = variants[0].stickiness || 'default';
+        }
+        variant.stickiness = stickiness;
+
+        await updateVariants([...variants, variant], 'Successfully added a variant');
+    };
+
+    const updateVariants = async (variants: IFeatureVariant[], successText: string) => {
+        const newVariants = updateWeight(variants, 1000);
+
+        const patch = createPatch(newVariants);
+
+        if (patch.length === 0) return;
+        await patchFeatureToggle(projectId, featureId, patch);
+        refetch();
+        setToastData({
+            show: true,
+            type: 'success',
+            text: successText,
+        });
     };
 
     const validateName = (name: string) => {
@@ -204,7 +219,7 @@ const FeatureOverviewVariants = () => {
 
     return (
         <section style={{ padding: '16px' }}>
-            <Typography variant="body1">
+            <Typography variant='body1'>
                 Variants allows you to return a variant object if the feature
                 toggle is considered enabled for the current request. When using
                 variants you should use the{' '}
@@ -237,25 +252,36 @@ const FeatureOverviewVariants = () => {
                 show={
                     <div>
                         <Button
-                            title="Add variant"
-                            onClick={() => setShowAddVariant(true)}
-                            variant="contained"
-                            color="primary"
+                            title='Add variant'
+                            onClick={() => {
+                                setEditing(false);
+                                setEditVariant({});
+                                setShowAddVariant(true);
+                            }}
+                            variant='contained'
+                            color='primary'
                             className={styles.addVariantButton}
                         >
                             Add variant
                         </Button>
-                        {renderStickiness(variants)}
+                        {renderStickiness()}
                     </div>
                 }
             />
             <AddVariant
                 showDialog={showAddVariant}
                 closeDialog={handleCloseAddVariant}
-                save={saveVariant}
+                save={async (variantToSave: IFeatureVariant) => {
+                    if (!editing) {
+                        return saveNewVariant(variantToSave);
+                    } else {
+                        return updateVariant(variantToSave);
+                    }
+                }}
+                editing={editing}
                 validateName={validateName}
                 editVariant={editVariant}
-                title={'Add variant'}
+                title={editing ? 'Edit variant' : 'Add variant'}
             />
             {toast}
         </section>

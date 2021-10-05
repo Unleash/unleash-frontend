@@ -36,6 +36,7 @@ const AddVariant = ({
     validateName,
     editVariant,
     title,
+    editing,
 }) => {
     const [data, setData] = useState({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
@@ -207,6 +208,7 @@ const AddVariant = ({
                     required
                     size="small"
                     type="name"
+                    disabled={editing}
                     onChange={setVariantValue}
                 />
                 <br />
@@ -240,7 +242,7 @@ const AddVariant = ({
                                 control={
                                     <Switch
                                         name="weightType"
-                                        value={isFixWeight}
+                                        checked={isFixWeight}
                                         onChange={setVariantWeightType}
                                     />
                                 }
