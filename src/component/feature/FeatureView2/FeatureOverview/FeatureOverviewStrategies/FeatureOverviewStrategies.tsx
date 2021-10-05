@@ -2,6 +2,7 @@ import { Add } from '@material-ui/icons';
 import { Link, useParams } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
+import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
 import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
 import FeatureOverviewEnvironment from './FeatureOverviewEnvironment/FeatureOverviewEnvironment';
 import { useStyles } from './FeatureOverviewStrategies.styles';
@@ -35,7 +36,9 @@ const FeatureOverviewStrategies = () => {
                     <div className={styles.actions}>
                         <ResponsiveButton
                             maxWidth="700px"
+                            permission={UPDATE_FEATURE}
                             Icon={Add}
+                            tooltip="Add new strategy"
                             className={styles.addStrategyButton}
                             component={Link}
                             to={`/projects/${projectId}/features2/${featureId}/strategies?addStrategy=true`}

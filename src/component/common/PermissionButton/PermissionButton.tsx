@@ -1,21 +1,25 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import { Lock } from '@material-ui/icons';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
+import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps extends OverridableComponent<any> {
     permission: string;
     Icon: React.ElementType;
     tooltip: string;
     onClick?: (e: any) => void;
+    disabled?: boolean;
 }
 
-const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
+const PermissionButton: React.FC<IPermissionIconButtonProps> = ({
     permission,
     Icon,
-    tooltip,
+    tooltip = 'Click to perform action',
     onClick,
     children,
+    disabled,
     ...rest
 }) => {
     const { hasAccess } = useContext(AccessContext);
@@ -28,12 +32,22 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
     return (
         <Tooltip title={tooltipText} arrow>
             <span>
-                <IconButton onClick={onClick} disabled={!access} {...rest}>
+                <Button
+                    onClick={onClick}
+                    disabled={disabled || !access}
+                    {...rest}
+                    endIcon={
+                        <ConditionallyRender
+                            condition={!access}
+                            show={<Lock />}
+                        />
+                    }
+                >
                     {children}
-                </IconButton>
+                </Button>
             </span>
         </Tooltip>
     );
 };
 
-export default PermissionIconButton;
+export default PermissionButton;

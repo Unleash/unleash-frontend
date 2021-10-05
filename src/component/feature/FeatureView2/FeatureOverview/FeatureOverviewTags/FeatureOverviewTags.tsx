@@ -17,11 +17,9 @@ import Dialogue from '../../../../common/Dialogue';
 import { ITag } from '../../../../../interfaces/tags';
 import useToast from '../../../../../hooks/useToast';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
-import { useContext } from 'react';
-import AccessContext from '../../../../../contexts/AccessContext';
+import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 
 const FeatureOverviewTags = () => {
-    const { hasAccess } = useContext(AccessContext);
     const [openTagDialog, setOpenTagDialog] = useState(false);
     const [showDelDialog, setShowDelDialog] = useState(false);
     const [selectedTag, setSelectedTag] = useState<ITag>({
@@ -117,12 +115,13 @@ const FeatureOverviewTags = () => {
                 </div>
 
                 <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
-                <IconButton
+                <PermissionIconButton
                     onClick={() => setOpenTagDialog(true)}
-                    disabled={!hasAccess(UPDATE_FEATURE)}
+                    permission={UPDATE_FEATURE}
+                    tooltip="Add tag"
                 >
                     <Add />
-                </IconButton>
+                </PermissionIconButton>
             </div>
 
             <Dialogue

@@ -123,6 +123,26 @@ const useFeatureApi = () => {
         }
     };
 
+    const patchFeatureToggle = async (
+        projectId: string,
+        featureId: string,
+        patchPayload: any
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureId}`;
+        const req = createRequest(path, {
+            method: 'PATCH',
+            body: JSON.stringify(patchPayload),
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         changeFeatureProject,
         errors,
@@ -131,6 +151,7 @@ const useFeatureApi = () => {
         addTagToFeature,
         deleteTagFromFeature,
         archiveFeatureToggle,
+        patchFeatureToggle,
     };
 };
 

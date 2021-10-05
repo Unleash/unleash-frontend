@@ -54,7 +54,7 @@ const FeatureView2 = () => {
     const tabData = [
         {
             title: 'Overview',
-            path: `${basePath}`,
+            path: `${basePath}/overview`,
             name: 'overview',
         },
         {
@@ -128,9 +128,8 @@ const FeatureView2 = () => {
                 </div>
             </div>
             <Route
-                path={`/projects/:projectId/features2/:featureId`}
+                path={`/projects/:projectId/features2/:featureId/overview`}
                 component={FeatureOverview}
-                exact
             />
             <Route
                 path={`/projects/:projectId/features2/:featureId/strategies`}
