@@ -1,5 +1,10 @@
 import { List, ListItem } from '@material-ui/core';
-import { Check, Error, Cloud } from '@material-ui/icons';
+import {
+    Check,
+    Error,
+    Cloud,
+    CollectionsBookmarkRounded,
+} from '@material-ui/icons';
 import { useState, useEffect } from 'react';
 import useProject from '../../../../../../hooks/api/getters/useProject/useProject';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
@@ -18,9 +23,11 @@ const FeatureSettingsProjectConfirm = ({
     const [incompatibleEnvs, setIncompatibleEnvs] = useState([]);
     const styles = useStyles();
 
+    console.log(projectId, incompatibleEnvs);
+
     useEffect(() => {
         calculateCompatability();
-    }, [projectId]);
+    }, [projectId, project.name]);
 
     const calculateCompatability = () => {
         const featureEnvWithStrategies = feature.environments
