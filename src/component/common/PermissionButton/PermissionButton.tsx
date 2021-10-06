@@ -7,7 +7,6 @@ import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps extends OverridableComponent<any> {
     permission: string;
-    Icon: React.ElementType;
     tooltip: string;
     onClick?: (e: any) => void;
     disabled?: boolean;
@@ -15,7 +14,6 @@ interface IPermissionIconButtonProps extends OverridableComponent<any> {
 
 const PermissionButton: React.FC<IPermissionIconButtonProps> = ({
     permission,
-    Icon,
     tooltip = 'Click to perform action',
     onClick,
     children,
@@ -35,6 +33,8 @@ const PermissionButton: React.FC<IPermissionIconButtonProps> = ({
                 <Button
                     onClick={onClick}
                     disabled={disabled || !access}
+                    variant="contained"
+                    color="primary"
                     {...rest}
                     endIcon={
                         <ConditionallyRender

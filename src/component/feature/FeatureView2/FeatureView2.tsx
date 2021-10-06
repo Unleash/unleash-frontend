@@ -16,6 +16,7 @@ import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { useStyles } from './FeatureView2.styles';
+import FeatureSettings from './FeatureSettings/FeatureSettings';
 
 const FeatureView2 = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -73,6 +74,7 @@ const FeatureView2 = () => {
             name: 'Event log',
         },
         { title: 'Variants', path: `${basePath}/variants`, name: 'Variants' },
+        { title: 'Settings', path: `${basePath}/settings`, name: 'Settings' },
     ];
 
     const renderTabs = () => {
@@ -146,6 +148,10 @@ const FeatureView2 = () => {
             <Route
                 path={`/projects/:projectId/features2/:featureId/variants`}
                 component={FeatureVariants}
+            />
+            <Route
+                path={`/projects/:projectId/features2/:featureId/settings`}
+                component={FeatureSettings}
             />
             <Dialogue
                 onClick={() => archiveToggle()}
