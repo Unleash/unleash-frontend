@@ -9,21 +9,21 @@ import { weightTypes } from '../../../../variant/enums';
 interface IFeatureVariantListItem {
     variant: IFeatureVariant;
     editVariant: any;
-    removeVariant: any;
+    setDelDialog: any;
     editable: boolean;
 }
 
 const FeatureVariantListItem = ({
     variant,
     editVariant,
-    removeVariant,
+    setDelDialog,
     editable,
 }: IFeatureVariantListItem) => {
     const { FIX } = weightTypes;
 
     return (
         <TableRow>
-            <TableCell onClick={editVariant}>{variant.name}</TableCell>
+            <TableCell onClick={editVariant} data-test={'VARIANT_NAME'}>{variant.name}</TableCell>
             <TableCell className={styles.chipContainer}>
                 <ConditionallyRender
                     condition={variant.payload}
@@ -43,8 +43,8 @@ const FeatureVariantListItem = ({
                     }
                 />
             </TableCell>
-            <TableCell>{variant.weight / 10.0} %</TableCell>
-            <TableCell>
+            <TableCell data-test={'VARIANT_WEIGHT'}>{variant.weight / 10.0} %</TableCell>
+            <TableCell data-test={'VARIANT_WEIGHT_TYPE'}>
                 {variant.weightType === FIX ? 'Fix' : 'Variable'}
             </TableCell>
             <ConditionallyRender
@@ -52,10 +52,13 @@ const FeatureVariantListItem = ({
                 show={
                     <TableCell className={styles.actions}>
                         <div className={styles.actionsContainer}>
-                            <IconButton onClick={() => editVariant(variant.name)}>
+                            <IconButton data-test={'VARIANT_EDIT_BUTTON'} onClick={() => editVariant(variant.name)}>
                                 <Edit />
                             </IconButton>
-                            <IconButton onClick={() => removeVariant(variant.name)}>
+                            <IconButton data-test={`VARIANT_DELETE_BUTTON_${variant.name}`} onClick={e => {
+                                e.stopPropagation();
+                                setDelDialog({show: true, name: variant.name });
+                            }}>
                                 <Delete />
                             </IconButton>
                         </div>
@@ -64,6 +67,7 @@ const FeatureVariantListItem = ({
                 elseShow={<TableCell className={styles.actions} />}
             />
         </TableRow>
+
     );
 };
 

@@ -20,6 +20,7 @@ import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFea
 import useToast from '../../../../../hooks/useToast';
 import { updateWeight } from '../../../../common/util';
 import cloneDeep from 'lodash.clonedeep';
+import useDeleteVariantMarkup from './FeatureVariantsListItem/useDeleteVariantMarkup';
 
 const FeatureOverviewVariants = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -33,6 +34,7 @@ const FeatureOverviewVariants = () => {
     const [editVariant, setEditVariant] = useState({});
     const [showAddVariant, setShowAddVariant] = useState(false);
     const [stickinessOptions, setStickinessOptions] = useState([]);
+    const [delDialog, setDelDialog] = useState({ name: '', show: false });
 
     useEffect(() => {
         if (feature) {
@@ -54,18 +56,13 @@ const FeatureOverviewVariants = () => {
     const setClonedVariants = clonedVariants =>
         setVariants(cloneDeep(clonedVariants));
 
-    const handleOpenAddVariant = () => {
-        setEditVariant({});
-        setShowAddVariant(true);
-    };
-
     const handleCloseAddVariant = () => {
         setShowAddVariant(false);
         setEditing(false);
         setEditVariant({});
     };
 
-    const renderVariants = () => {
+    const   renderVariants = () => {
         return variants.map(variant => {
             return (
                 <FeatureVariantListItem
@@ -77,9 +74,7 @@ const FeatureOverviewVariants = () => {
                         setEditing(true);
                         setShowAddVariant(true);
                     }}
-                    removeVariant={async (name: string) => {
-                        await removeVariant(name);
-                    }}
+                    setDelDialog={setDelDialog}
                     editable={editable}
                 />
             );
@@ -179,7 +174,7 @@ const FeatureOverviewVariants = () => {
 
     const saveNewVariant = async (variant: IFeatureVariant) => {
         let stickiness = 'default';
-        if (variants.length > 0) {
+        if (variants?.length > 0) {
             stickiness = variants[0].stickiness || 'default';
         }
         variant.stickiness = stickiness;
@@ -207,6 +202,20 @@ const FeatureOverviewVariants = () => {
             return { name: 'Name is required' };
         }
     };
+    const delDialogueMarkup = useDeleteVariantMarkup({
+        show: delDialog.show,
+        onClick: (e) => {
+            removeVariant(delDialog.name)
+            setDelDialog({ name: '', show: false });
+            setToastData({
+                show: true,
+                type: 'success',
+                text: `Successfully deleted variant`,
+            });
+        },
+        onClose: () => setDelDialog({ show: false, name: '' }),
+    });
+
 
     const createPatch = (newVariants: IFeatureVariant[]) => {
         const patch = jsonpatch
@@ -228,7 +237,7 @@ const FeatureOverviewVariants = () => {
             </Typography>
 
             <ConditionallyRender
-                condition={variants.length > 0}
+                condition={variants?.length > 0}
                 show={
                     <Table className={styles.variantTable}>
                         <TableHead>
@@ -261,6 +270,7 @@ const FeatureOverviewVariants = () => {
                             variant='contained'
                             color='primary'
                             className={styles.addVariantButton}
+                            data-test={'ADD_VARIANT_BUTTON'}
                         >
                             Add variant
                         </Button>
@@ -283,7 +293,9 @@ const FeatureOverviewVariants = () => {
                 editVariant={editVariant}
                 title={editing ? 'Edit variant' : 'Add variant'}
             />
+
             {toast}
+            {delDialogueMarkup}
         </section>
     );
 };

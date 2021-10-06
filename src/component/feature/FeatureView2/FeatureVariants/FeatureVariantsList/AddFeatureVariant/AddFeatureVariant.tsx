@@ -183,7 +183,7 @@ const AddVariant = ({
     return (
         <Dialogue
             open={showDialog}
-            contentLabel="Example Modal"
+            contentLabel="Add variant modal"
             style={modalStyles}
             onClose={onCancel}
             onClick={submit}
@@ -210,6 +210,7 @@ const AddVariant = ({
                     type="name"
                     disabled={editing}
                     onChange={setVariantValue}
+                    data-test={'VARIANT_NAME_INPUT'}
                 />
                 <br />
                 <Grid container>
@@ -221,6 +222,7 @@ const AddVariant = ({
                             variant="outlined"
                             size="small"
                             placeholder=""
+                            data-test={'VARIANT_WEIGHT_INPUT'}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="start">
@@ -243,6 +245,7 @@ const AddVariant = ({
                                     <Switch
                                         name="weightType"
                                         checked={isFixWeight}
+                                        data-test={'VARIANT_WEIGHT_TYPE'}
                                         onChange={setVariantWeightType}
                                     />
                                 }
@@ -276,6 +279,7 @@ const AddVariant = ({
                             options={payloadOptions}
                             onChange={onPayload}
                             style={{ minWidth: '100px', width: '100%' }}
+                            data-test={'VARIANT_PAYLOAD_TYPE'}
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
@@ -288,6 +292,7 @@ const AddVariant = ({
                             onChange={onPayload}
                             variant="outlined"
                             size="small"
+                            data-test={'VARIANT_PAYLOAD_VALUE'}
                         />
                     </Grid>
                 </Grid>

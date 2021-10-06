@@ -1,4 +1,4 @@
-import { Chip, IconButton } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import { Add, Label } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 import useTags from '../../../../../hooks/api/getters/useTags/useTags';
