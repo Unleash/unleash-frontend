@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import cloneDeep from 'lodash.clonedeep';
-import arrayMove from 'array-move';
+import { arrayMoveImmutable } from 'array-move';
 
 import { Alert } from '@material-ui/lab';
 import HeaderTitle from '../../common/HeaderTitle';
@@ -79,7 +79,7 @@ const StrategiesList = props => {
     const moveStrategy = async (index, toIndex) => {
         if (!editStrategyIndex) {
             // console.log(`move strategy from ${index} to ${toIndex}`);
-            const strategies = arrayMove(editableStrategies, index, toIndex);
+            const strategies = arrayMoveImmutable(editableStrategies, index, toIndex);
             await props.saveStrategies(strategies);
             updateEditableStrategies(strategies);
         }
