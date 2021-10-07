@@ -62,9 +62,9 @@ describe('feature toggle', () => {
         cy.visit('/');
 
         if (passwordAuth) {
-            cy.get('[data-test="LOGIN_EMAIL_ID"]').type('admin');
+            cy.get('[data-test="LOGIN_EMAIL_ID"]').type('test@test.com');
 
-            cy.get('[data-test="LOGIN_PASSWORD_ID"]').type('unleash4all');
+            cy.get('[data-test="LOGIN_PASSWORD_ID"]').type('qY70$NDcJNXA');
 
             cy.get("[data-test='LOGIN_BUTTON']").click();
         } else {
@@ -95,13 +95,13 @@ describe('feature toggle', () => {
             .click()
             .type('{leftarrow}'.repeat(20));
 
-        // if (enterprise) {
-        //     cy.get('[data-test=ADD_CONSTRAINT_ID]').click();
-        //     cy.get('[data-test=CONSTRAINT_AUTOCOMPLETE_ID]')
-        //         .type('{downArrow}'.repeat(1))
-        //         .type('{enter}');
-        //     cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
-        // }
+        if (enterprise) {
+            cy.get('[data-test=ADD_CONSTRAINT_ID]').click();
+            cy.get('[data-test=CONSTRAINT_AUTOCOMPLETE_ID]')
+                .type('{downArrow}'.repeat(1))
+                .type('{enter}');
+            cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+        }
 
         cy.intercept(
             'POST',
