@@ -50,7 +50,7 @@
     "@types/react-dom": "17.0.9",
     "@types/react-router-dom": "5.3.1",
     "@welldone-software/why-did-you-render": "6.2.1",
-    "array-move": "3.0.1",
+    "array-move": "4.0.0",
     "classnames": "2.3.1",
     "craco": "0.0.3",
     "css-loader": "6.3.0",
