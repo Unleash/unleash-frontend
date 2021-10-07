@@ -5,11 +5,16 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         borderRadius: '10px',
         backgroundColor: '#fff',
-        padding: '1rem 2rem 2rem 2rem',
+        padding: '2rem 2rem 2rem 2rem',
         marginBottom: '1rem',
         flexDirection: 'column',
         width: '50%',
-        marginRight: '1rem',
+        position: 'relative',
+    },
+    [theme.breakpoints.down(1000)]: {
+        container: {
+            width: '100%',
+        },
     },
     headerContainer: {
         display: 'flex',
@@ -26,17 +31,46 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         align: 'items',
         marginTop: '1rem',
+        height: '100%',
     },
     trueCountContainer: {
         marginBottom: '0.5rem',
+        display: 'flex',
+        alignItems: 'center',
     },
     trueCount: {
-        width: '15px',
-        height: '15px',
+        width: '10px',
+        height: '10px',
         borderRadius: '50%',
+        marginRight: '0.75rem',
         backgroundColor: theme.palette.primary.main,
+    },
+    falseCount: {
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        marginRight: '0.75rem',
+        backgroundColor: theme.palette.grey[300],
     },
     paragraph: {
         fontSize: theme.fontSizes.smallBody,
+    },
+    textContainer: {
+        marginRight: '1rem',
+        maxWidth: '150px',
+    },
+    primaryMetric: {
+        width: '100%',
+    },
+    icon: {
+        fill: theme.palette.grey[300],
+        height: '75px',
+        width: '75px',
+    },
+    chartContainer: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 }));

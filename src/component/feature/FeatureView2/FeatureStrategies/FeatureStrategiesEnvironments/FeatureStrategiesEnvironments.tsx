@@ -42,6 +42,7 @@ const FeatureStrategiesEnvironments = () => {
     const {
         setActiveEnvironment,
         configureNewStrategy,
+        setConfigureNewStrategy,
         expandedSidebar,
         setExpandedSidebar,
         featureCache,
@@ -312,11 +313,11 @@ const FeatureStrategiesEnvironments = () => {
                                                     <Button
                                                         variant="contained"
                                                         color="primary"
-                                                        onClick={() =>
+                                                        onClick={() => {
                                                             setExpandedSidebar(
                                                                 prev => !prev
-                                                            )
-                                                        }
+                                                            );
+                                                        }}
                                                     >
                                                         Add your first strategy
                                                     </Button>

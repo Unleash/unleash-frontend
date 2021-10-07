@@ -18,13 +18,7 @@ const FeatureOverviewStrategies = () => {
 
     const renderEnvironments = () => {
         return environments?.map(env => {
-            return (
-                <FeatureOverviewEnvironment
-                    env={env}
-                    key={env.name}
-                    refetch={refetch}
-                />
-            );
+            return <FeatureOverviewEnvironment env={env} key={env.name} />;
         });
     };
 

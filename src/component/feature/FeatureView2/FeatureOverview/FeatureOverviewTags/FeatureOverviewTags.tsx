@@ -18,6 +18,7 @@ import { ITag } from '../../../../../interfaces/tags';
 import useToast from '../../../../../hooks/useToast';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
 
 const FeatureOverviewTags = () => {
     const [openTagDialog, setOpenTagDialog] = useState(false);
@@ -138,7 +139,13 @@ const FeatureOverviewTags = () => {
                 title="Are you sure you want to delete this tag?"
             />
 
-            <div className={styles.tagContent}>{tags.map(renderTag)}</div>
+            <div className={styles.tagContent}>
+                <ConditionallyRender
+                    condition={tags.length > 0}
+                    show={tags.map(renderTag)}
+                    elseShow={<p>No tags to display</p>}
+                />
+            </div>
             {toast}
         </div>
     );

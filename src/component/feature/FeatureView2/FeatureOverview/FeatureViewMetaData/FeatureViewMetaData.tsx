@@ -1,6 +1,7 @@
 import { capitalize, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { getFeatureTypeIcons } from '../../../../../utils/get-feature-type-icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
@@ -30,7 +31,7 @@ const FeatureViewMetaData = () => {
             <div className={styles.body}>
                 <span className={styles.bodyItem}>Project: {project}</span>
                 <ConditionallyRender
-                    condition
+                    condition={description}
                     show={
                         <span className={styles.bodyItem}>
                             <div>Description:</div>
@@ -44,10 +45,15 @@ const FeatureViewMetaData = () => {
                     }
                     elseShow={
                         <span>
-                            No description.{' '}
-                            <IconButton>
-                                <Edit />
-                            </IconButton>
+                            <div className={styles.descriptionContainer}>
+                                No description.{' '}
+                                <IconButton
+                                    component={Link}
+                                    to={`/projects/${projectId}/features2/${featureId}/settings`}
+                                >
+                                    <Edit />
+                                </IconButton>
+                            </div>
                         </span>
                     }
                 />

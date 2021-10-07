@@ -12,6 +12,12 @@ export const useStyles = makeStyles(theme => ({
         marginRight: '1rem',
         marginTop: '1rem',
     },
+    [theme.breakpoints.down(800)]: {
+        container: {
+            width: '100%',
+            maxWidth: 'none',
+        },
+    },
     tagheaderContainer: {
         display: 'flex',
         alignItems: 'center',
