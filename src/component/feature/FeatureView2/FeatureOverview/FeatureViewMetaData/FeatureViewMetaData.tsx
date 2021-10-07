@@ -37,7 +37,10 @@ const FeatureViewMetaData = () => {
                             <div>Description:</div>
                             <div className={styles.descriptionContainer}>
                                 <p>{description}</p>
-                                <IconButton>
+                                <IconButton
+                                    component={Link}
+                                    to={`/projects/${projectId}/features2/${featureId}/settings`}
+                                >
                                     <Edit />
                                 </IconButton>
                             </div>
