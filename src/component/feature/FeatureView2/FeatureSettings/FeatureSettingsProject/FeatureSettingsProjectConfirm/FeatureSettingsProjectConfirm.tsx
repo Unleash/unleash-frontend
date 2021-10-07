@@ -7,10 +7,21 @@ import {
 } from '@material-ui/icons';
 import { useState, useEffect } from 'react';
 import useProject from '../../../../../../hooks/api/getters/useProject/useProject';
-import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
+import {
+    IFeatureEnvironment,
+    IFeatureToggle,
+} from '../../../../../../interfaces/featureToggle';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import Dialogue from '../../../../../common/Dialogue';
 import { useStyles } from './FeatureSettingsProjectConfirm.styles';
+
+interface IFeatureSettingsProjectConfirm {
+    projectId: string;
+    open: boolean;
+    onClose: () => void;
+    onClick: (args: any) => void;
+    feature: IFeatureToggle;
+}
 
 const FeatureSettingsProjectConfirm = ({
     projectId,
@@ -18,15 +29,14 @@ const FeatureSettingsProjectConfirm = ({
     onClose,
     onClick,
     feature,
-}) => {
+}: IFeatureSettingsProjectConfirm) => {
     const { project } = useProject(projectId);
     const [incompatibleEnvs, setIncompatibleEnvs] = useState([]);
     const styles = useStyles();
 
-    console.log(projectId, incompatibleEnvs);
-
     useEffect(() => {
         calculateCompatability();
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [projectId, project.name]);
 
     const calculateCompatability = () => {
@@ -93,10 +103,7 @@ const FeatureSettingsProjectConfirm = ({
                             <List>
                                 {incompatibleEnvs.map(env => {
                                     return (
-                                        <ListItem
-                                            key={env}
-                                            className={styles.listItem}
-                                        >
+                                        <ListItem key={env}>
                                             <Cloud className={styles.cloud} />
                                             {env}
                                         </ListItem>
@@ -105,8 +112,9 @@ const FeatureSettingsProjectConfirm = ({
                             </List>
                             <p className={styles.paragraph}>
                                 You may still move the feature toggle, but the
-                                strategies will not run while these environments
-                                are inactive in the target project.
+                                strategies in these environment will not run
+                                while these environments are inactive in the
+                                target project.
                             </p>
                         </div>
                     </div>

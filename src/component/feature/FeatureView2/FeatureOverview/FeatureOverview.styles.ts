@@ -7,4 +7,7 @@ export const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         width: '100%',
     },
+    trafficContainer: {
+        display: 'flex',
+    },
 }));
