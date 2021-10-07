@@ -18,6 +18,7 @@ export const useStyles = makeStyles(theme => ({
     headerInfo: {
         marginRight: '1rem',
     },
+
     icon: {
         fill: '#fff',
         height: '14px',
@@ -87,6 +88,8 @@ export const useStyles = makeStyles(theme => ({
     },
     toggleText: {
         fontSize: theme.fontSizes.smallBody,
+        wordBreak: 'break-all',
+        maxWidth: '300px',
     },
     toggleLink: {
         color: theme.palette.primary.main,

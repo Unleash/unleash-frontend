@@ -27,7 +27,7 @@ const FeatureViewEnvironment: FC<IFeatureViewEnvironmentProps> = ({
     const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
         useFeatureApi();
     const styles = useStyles();
-    const { refetch } = useFeature(projectId, featureId);
+    const { refetch, feature } = useFeature(projectId, featureId);
     const { toast, setToastData } = useToast();
 
     if (!env) return null;
@@ -90,6 +90,9 @@ const FeatureViewEnvironment: FC<IFeatureViewEnvironmentProps> = ({
     );
 
     const containerClasses = classNames(styles.container, className);
+    const currentEnv = feature?.environments?.find(
+        featureEnv => featureEnv.name === env.name
+    );
 
     return (
         <div className={containerClasses}>
@@ -138,10 +141,12 @@ const FeatureViewEnvironment: FC<IFeatureViewEnvironmentProps> = ({
                     />
                 </div>
             </div>
+
             <ConditionallyRender
-                condition={env.strategies.length > 0}
+                condition={currentEnv.strategies.length > 0}
                 show={<div className={styles.body}>{children}</div>}
             />
+
             {toast}
         </div>
     );
