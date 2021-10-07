@@ -35,6 +35,7 @@ const FeatureSettingsProject = () => {
             return;
         }
         setDirty(false);
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [project]);
 
     const updateProject = async () => {

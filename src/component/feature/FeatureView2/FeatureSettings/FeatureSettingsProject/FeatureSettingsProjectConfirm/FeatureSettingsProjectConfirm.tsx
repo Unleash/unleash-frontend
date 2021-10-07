@@ -1,10 +1,5 @@
 import { List, ListItem } from '@material-ui/core';
-import {
-    Check,
-    Error,
-    Cloud,
-    CollectionsBookmarkRounded,
-} from '@material-ui/icons';
+import { Check, Error, Cloud } from '@material-ui/icons';
 import { useState, useEffect } from 'react';
 import useProject from '../../../../../../hooks/api/getters/useProject/useProject';
 import {

@@ -65,6 +65,7 @@ const FeatureOverviewMetrics = () => {
 
         setFeatureMetrics(featureMetricList);
         /* Update on useSWR metrics change */
+        /* eslint-disable-next-line */
     }, []);
 
     const renderFeatureMetrics = () => {

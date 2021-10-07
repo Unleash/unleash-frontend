@@ -1,14 +1,8 @@
-import { Cloud } from '@material-ui/icons';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
-import { Switch, Tooltip } from '@material-ui/core';
 import { useStyles } from './FeatureOverviewEnvironment.styles';
 import FeatureOverviewStrategyCard from './FeatureOverviewStrategyCard/FeatureOverviewStrategyCard';
-import classNames from 'classnames';
-import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import useToast from '../../../../../../hooks/useToast';
 import FeatureViewEnvironment from '../../../FeatureViewEnvironment/FeatureViewEnvironment';
 
 interface IFeatureOverviewEnvironmentProps {

@@ -1,6 +1,6 @@
 import { capitalize, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { getFeatureTypeIcons } from '../../../../../utils/get-feature-type-icons';

@@ -2,7 +2,15 @@ import classnames from 'classnames';
 import * as jsonpatch from 'fast-json-patch';
 
 import styles from './variants.module.scss';
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
+import {
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Typography,
+} from '@material-ui/core';
 import AddVariant from './AddFeatureVariant/AddFeatureVariant';
 
 import { useContext, useEffect, useState } from 'react';
@@ -40,6 +48,7 @@ const FeatureOverviewVariants = () => {
         if (feature) {
             setClonedVariants(feature.variants);
         }
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
 
     useEffect(() => {
@@ -62,7 +71,7 @@ const FeatureOverviewVariants = () => {
         setEditVariant({});
     };
 
-    const   renderVariants = () => {
+    const renderVariants = () => {
         return variants.map(variant => {
             return (
                 <FeatureVariantListItem
@@ -101,7 +110,7 @@ const FeatureOverviewVariants = () => {
         return (
             <section style={{ paddingTop: '16px' }}>
                 <GeneralSelect
-                    label='Stickiness'
+                    label="Stickiness"
                     options={options}
                     value={value}
                     onChange={onChange}
@@ -115,9 +124,9 @@ const FeatureOverviewVariants = () => {
                     you want to be used in order to ensure consistent traffic
                     allocation across variants.{' '}
                     <a
-                        href='https://docs.getunleash.io/advanced/toggle_variants'
-                        target='_blank'
-                        rel='noreferrer'
+                        href="https://docs.getunleash.io/advanced/toggle_variants"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         Read more
                     </a>
@@ -156,7 +165,10 @@ const FeatureOverviewVariants = () => {
         console.log(`Removing variant ${name}`);
         let updatedVariants = variants.filter(v => v.name !== name);
         try {
-            await updateVariants(updatedVariants, 'Successfully removed variant');
+            await updateVariants(
+                updatedVariants,
+                'Successfully removed variant'
+            );
         } catch (e) {
             setToastData({
                 show: true,
@@ -167,7 +179,9 @@ const FeatureOverviewVariants = () => {
     };
     const updateVariant = async (variant: IFeatureVariant) => {
         const updatedVariants = cloneDeep(variants);
-        const variantIdxToUpdate = updatedVariants.findIndex((v: IFeatureVariant) => v.name === variant.name);
+        const variantIdxToUpdate = updatedVariants.findIndex(
+            (v: IFeatureVariant) => v.name === variant.name
+        );
         updatedVariants[variantIdxToUpdate] = variant;
         await updateVariants(updatedVariants, 'Successfully updated variant');
     };
@@ -179,10 +193,16 @@ const FeatureOverviewVariants = () => {
         }
         variant.stickiness = stickiness;
 
-        await updateVariants([...variants, variant], 'Successfully added a variant');
+        await updateVariants(
+            [...variants, variant],
+            'Successfully added a variant'
+        );
     };
 
-    const updateVariants = async (variants: IFeatureVariant[], successText: string) => {
+    const updateVariants = async (
+        variants: IFeatureVariant[],
+        successText: string
+    ) => {
         const newVariants = updateWeight(variants, 1000);
 
         const patch = createPatch(newVariants);
@@ -204,8 +224,8 @@ const FeatureOverviewVariants = () => {
     };
     const delDialogueMarkup = useDeleteVariantMarkup({
         show: delDialog.show,
-        onClick: (e) => {
-            removeVariant(delDialog.name)
+        onClick: e => {
+            removeVariant(delDialog.name);
             setDelDialog({ name: '', show: false });
             setToastData({
                 show: true,
@@ -215,7 +235,6 @@ const FeatureOverviewVariants = () => {
         },
         onClose: () => setDelDialog({ show: false, name: '' }),
     });
-
 
     const createPatch = (newVariants: IFeatureVariant[]) => {
         const patch = jsonpatch
@@ -228,7 +247,7 @@ const FeatureOverviewVariants = () => {
 
     return (
         <section style={{ padding: '16px' }}>
-            <Typography variant='body1'>
+            <Typography variant="body1">
                 Variants allows you to return a variant object if the feature
                 toggle is considered enabled for the current request. When using
                 variants you should use the{' '}
@@ -261,14 +280,14 @@ const FeatureOverviewVariants = () => {
                 show={
                     <div>
                         <Button
-                            title='Add variant'
+                            title="Add variant"
                             onClick={() => {
                                 setEditing(false);
                                 setEditVariant({});
                                 setShowAddVariant(true);
                             }}
-                            variant='contained'
-                            color='primary'
+                            variant="contained"
+                            color="primary"
                             className={styles.addVariantButton}
                             data-test={'ADD_VARIANT_BUTTON'}
                         >

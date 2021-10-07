@@ -1,22 +1,8 @@
-import { useParams } from 'react-router';
-import { useContext } from 'react';
-import AccessContext from '../../../../contexts/AccessContext';
-import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useUser from '../../../../hooks/api/getters/useUser/useUser';
-import useToast from '../../../../hooks/useToast';
-import { IFeatureViewParams } from '../../../../interfaces/params';
-import { projectFilterGenerator } from '../../../../utils/project-filter-generator';
-import {
-    CREATE_FEATURE,
-    UPDATE_FEATURE,
-} from '../../../AccessProvider/permissions';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PageContent from '../../../common/PageContent';
 import { useStyles } from './FeatureSettings.styles';
-import FeatureProjectSelect from './FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
-import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
+
 import { List, ListItem } from '@material-ui/core';
-import * as jsonpatch from 'fast-json-patch';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import FeatureSettingsMetadata from './FeatureSettingsMetadata/FeatureSettingsMetadata';
 import FeatureSettingsProject from './FeatureSettingsProject/FeatureSettingsProject';

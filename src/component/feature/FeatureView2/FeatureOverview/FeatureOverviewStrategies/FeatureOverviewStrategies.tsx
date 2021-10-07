@@ -10,7 +10,7 @@ import { useStyles } from './FeatureOverviewStrategies.styles';
 const FeatureOverviewStrategies = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { feature, refetch } = useFeature(projectId, featureId);
+    const { feature } = useFeature(projectId, featureId);
 
     if (!feature) return null;
 

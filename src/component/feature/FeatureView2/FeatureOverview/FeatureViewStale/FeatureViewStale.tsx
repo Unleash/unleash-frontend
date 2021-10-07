@@ -8,7 +8,6 @@ import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
 import { Check, Close } from '@material-ui/icons';
 import { useState } from 'react';
 import StaleDialog from './StaleDialog/StaleDialog';
-import ConditionallyRender from '../../../../common/ConditionallyRender';
 
 const FeatureViewStale = () => {
     const styles = useStyles();
@@ -16,34 +15,36 @@ const FeatureViewStale = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
 
-    const FlipStateButton = () => feature.stale ? <Close /> : <Check />;
+    const FlipStateButton = () => (feature.stale ? <Close /> : <Check />);
 
     return (
         <div className={classnames(styles.container)}>
             <div className={styles.staleHeaderContainer}>
                 <div className={styles.staleHeader}>
-                    <h3 className={styles.header}>
-                        Status
-                    </h3>
+                    <h3 className={styles.header}>Status</h3>
                 </div>
             </div>
             <div className={styles.body}>
-                <span className={styles.bodyItem}>Feature is {feature.stale ? 'stale' : 'active'}</span>
+                <span className={styles.bodyItem}>
+                    Feature is {feature.stale ? 'stale' : 'active'}
+                </span>
                 <div className={styles.staleButton}>
                     <PermissionIconButton
                         onClick={() => setOpenStaleDialog(true)}
                         permission={UPDATE_FEATURE}
-                        tooltip='Flip status'
+                        tooltip="Flip status"
                     >
                         <FlipStateButton />
                     </PermissionIconButton>
                 </div>
-
             </div>
-            <StaleDialog stale={feature.stale} open={openStaleDialog} setOpen={setOpenStaleDialog} />
+            <StaleDialog
+                stale={feature.stale}
+                open={openStaleDialog}
+                setOpen={setOpenStaleDialog}
+            />
         </div>
     );
 };
 
 export default FeatureViewStale;
-;

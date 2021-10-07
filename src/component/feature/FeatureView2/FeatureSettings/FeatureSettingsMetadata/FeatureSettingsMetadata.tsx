@@ -34,6 +34,7 @@ const FeatureSettingsMetadata = () => {
             return;
         }
         setDirty(false);
+        /* eslint-disable-next-line */
     }, [description, type]);
 
     const createPatch = () => {

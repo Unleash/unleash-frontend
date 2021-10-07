@@ -42,7 +42,6 @@ const FeatureStrategiesEnvironments = () => {
     const {
         setActiveEnvironment,
         configureNewStrategy,
-        setConfigureNewStrategy,
         expandedSidebar,
         setExpandedSidebar,
         featureCache,
