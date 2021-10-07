@@ -2,6 +2,7 @@ import FeatureViewMetaData from './FeatureViewMetaData/FeatureViewMetaData';
 import FeatureOverviewStrategies from './FeatureOverviewStrategies/FeatureOverviewStrategies';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
 import FeatureEnvironmentMetrics from './FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
+import FeatureViewStale from './FeatureViewStale/FeatureViewStale';
 
 import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router';
@@ -45,6 +46,7 @@ const FeatureOverview = () => {
         <div className={styles.container}>
             <div>
                 <FeatureViewMetaData />
+                <FeatureViewStale />
                 <FeatureOverviewTags />
             </div>
             <div className={styles.mainContent}>
