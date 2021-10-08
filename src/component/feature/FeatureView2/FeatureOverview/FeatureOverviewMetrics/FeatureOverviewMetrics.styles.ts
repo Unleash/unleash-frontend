@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     firstContainer: {
-        width: '47.5%',
+        width: 'calc(50% - 1rem)',
         marginRight: '1rem',
     },
     [theme.breakpoints.down(1000)]: {
