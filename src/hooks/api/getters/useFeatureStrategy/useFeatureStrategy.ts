@@ -26,7 +26,7 @@ const useFeatureStrategy = (
         );
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses(`Strategies for ${featureId}`)).then(res => res.json());
     };
 
     const FEATURE_STRATEGY_CACHE_KEY = strategyId;

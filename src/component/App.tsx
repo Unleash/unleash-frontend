@@ -98,13 +98,13 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                         {renderStandaloneRoutes()}
                         <Route path='/404' component={NotFound} />
                         <Redirect to='/404' />
-                        {toast}
                     </Switch>
                     <Feedback
                         feedbackId='pnps'
                         openUrl='http://feedback.unleash.run'
                     />
                 </LayoutPicker>
+                {toast}
             </div>
         </SWRConfig>
     );

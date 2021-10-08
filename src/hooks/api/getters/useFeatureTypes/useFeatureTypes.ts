@@ -9,7 +9,7 @@ const useFeatureTypes = () => {
         const path = formatApiPath(`api/admin/feature-types`);
         const res = await fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses);
+        }).then(handleErrorResponses('Feature types'));
         return res.json();
     };
 

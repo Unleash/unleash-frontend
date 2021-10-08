@@ -10,7 +10,7 @@ const useUser = () => {
         const path = formatApiPath(`api/admin/user`);
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('User info')).then(res => res.json());
     };
 
     const { data, error } = useSWR(KEY, fetcher);

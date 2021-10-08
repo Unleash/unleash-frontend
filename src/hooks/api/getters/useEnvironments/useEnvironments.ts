@@ -11,7 +11,7 @@ const useEnvironments = () => {
         const path = formatApiPath(`api/admin/environments`);
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Environments')).then(res => res.json());
     };
 
     const { data, error } = useSWR<IEnvironmentResponse>(

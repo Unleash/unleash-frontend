@@ -10,7 +10,7 @@ const useProjects = () => {
         const path = formatApiPath(`api/admin/projects`);
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Projects')).then(res => res.json());
     };
 
     const KEY = `api/admin/projects`;

@@ -8,7 +8,7 @@ const useUnleashContext = (revalidate = true) => {
         const path = formatApiPath(`api/admin/context`);
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Context variables')).then(res => res.json());
     };
 
     const CONTEXT_CACHE_KEY = 'api/admin/context';

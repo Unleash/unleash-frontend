@@ -13,7 +13,7 @@ const useHealthReport = (id: string) => {
         const path = formatApiPath(`api/admin/projects/${id}/health-report`);
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Health report')).then(res => res.json());
     };
 
     const [sort] = useSort();

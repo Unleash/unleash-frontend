@@ -8,7 +8,7 @@ const useApiTokens = () => {
         const path = formatApiPath(`api/admin/api-tokens`);
         const res = await fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses);
+        }).then(handleErrorResponses('Api tokens'));
         return res.json();
     };
 

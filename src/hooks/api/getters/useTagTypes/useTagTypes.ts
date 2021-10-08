@@ -9,7 +9,7 @@ const useTagTypes = () => {
         const path = formatApiPath(`api/admin/tag-types`);
         const res = await fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses);
+        }).then(handleErrorResponses('Tag types'));
         return res.json();
     };
 

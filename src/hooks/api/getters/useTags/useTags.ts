@@ -9,7 +9,7 @@ const useTags = (featureId: string) => {
         const path = formatApiPath(`api/admin/features/${featureId}/tags`);
         const res = await fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses);
+        }).then(handleErrorResponses('Tags'));
         return res.json();
     };
 

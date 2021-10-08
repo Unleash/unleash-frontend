@@ -14,7 +14,7 @@ const useUiConfig = () => {
         return fetch(path, {
             method: 'GET',
             credentials: 'include',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('configuration')).then(res => res.json());
     };
 
     const { data, error } = useSWR<IUiConfig>(REQUEST_KEY, fetcher);

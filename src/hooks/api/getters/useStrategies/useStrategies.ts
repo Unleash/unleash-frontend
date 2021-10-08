@@ -13,7 +13,7 @@ const useStrategies = () => {
         return fetch(path, {
             method: 'GET',
             credentials: 'include',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Strategies')).then(res => res.json());
     };
 
     const { data, error } = useSWR<{ strategies: IStrategy[] }>(

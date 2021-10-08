@@ -1,8 +1,14 @@
-const handleErrorResponses = async (res: Response) => {
+const handleErrorResponses = (target: string) => async (res: Response) => {
     if (!res.ok) {
-        const error = new Error('An error occurred while handling request');
+        console.log(res.status);
+        const error = new Error(`An error occurred while trying to get ${target}`);
         // @ts-ignore
-        error.info = await res.json();
+        try {
+            error.info = await res.json();
+        } catch (e) {
+            // Try to resolve body, but don't rethrow res.json is not a function
+            error.info = {};
+        }
         // @ts-ignore
         error.status = res.status;
         // @ts-ignore

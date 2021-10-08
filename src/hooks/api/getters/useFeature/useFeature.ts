@@ -24,7 +24,7 @@ const useFeature = (
         );
         return fetch(path, {
             method: 'GET',
-        }).then(handleErrorResponses).then(res => res.json());
+        }).then(handleErrorResponses('Feature toggle data')).then(res => res.json());
     };
 
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;

@@ -8,7 +8,7 @@ const getFetcher = (token: string) => () => {
     const path = formatApiPath(`auth/reset/validate?token=${token}`);
     return fetch(path, {
         method: 'GET',
-    }).then(handleErrorResponses).then(res => res.json());
+    }).then(handleErrorResponses('Password reset')).then(res => res.json());
 };
 
 const INVALID_TOKEN_ERROR = 'InvalidTokenError';
