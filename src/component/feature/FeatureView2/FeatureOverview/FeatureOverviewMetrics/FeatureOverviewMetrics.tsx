@@ -5,6 +5,7 @@ import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { IEnvironmentMetrics } from '../../../../../interfaces/environments';
 import FeatureEnvironmentMetrics from '../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
 import { useStyles } from './FeatureOverviewMetrics.styles';
+import useClientMetrics from '../../../../../hooks/api/getters/useClientMetrics/useClientMetrics';
 
 const data = {
     version: 1,
@@ -36,13 +37,14 @@ const FeatureOverviewMetrics = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
+    const { toggleMetricsSummary } = useClientMetrics(featureId);
     const [featureMetrics, setFeatureMetrics] = useState<IEnvironmentMetrics[]>(
         []
     );
 
     useEffect(() => {
         const featureMetricList = feature?.environments.map(env => {
-            const metrics = data.lastHourUsage.find(
+            const metrics = toggleMetricsSummary?.lastHourUsage.find(
                 metric => metric.environment === env.name
             );
 
