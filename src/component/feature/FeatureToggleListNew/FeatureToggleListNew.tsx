@@ -11,7 +11,10 @@ import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleLi
 import usePagination from '../../../hooks/usePagination';
 
 import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
-import { IFeatureToggle, IFeatureToggleListItem } from '../../../interfaces/featureToggle';
+import {
+    IFeatureToggle,
+    IFeatureToggleListItem,
+} from '../../../interfaces/featureToggle';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
@@ -26,7 +29,7 @@ const FeatureToggleListNew = ({
 }: IFeatureToggleListNewProps) => {
     const styles = useStyles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(features, 9);
+        usePagination(features, 50);
 
     const getEnvironments = () => {
         if (features.length > 0) {

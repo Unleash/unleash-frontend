@@ -14,6 +14,11 @@ export const useStyles = makeStyles(theme => ({
             marginBottom: '1rem',
         },
     },
+    percentageContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '1rem 0',
+    },
     projectIcon: {
         margin: '2rem 0',
         [theme.breakpoints.down('sm')]: {
