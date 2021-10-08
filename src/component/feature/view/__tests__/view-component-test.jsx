@@ -29,6 +29,7 @@ jest.mock('../../../common/ProjectSelect', () => 'ProjectSelect');
 jest.mock('../../../common/TagSelect/TagSelect', () => 'TagSelect');
 jest.mock('../../feature-tag-component', () => 'FeatureTagComponent');
 jest.mock('../../add-tag-dialog-container', () => 'AddTagDialog');
+jest.spyOn(console, 'error').mockImplementation();
 
 test('renders correctly with one feature', () => {
     const feature = {
