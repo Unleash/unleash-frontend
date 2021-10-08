@@ -17,7 +17,7 @@ const FeatureTypeSelect = ({
         title: t.description,
     }));
 
-    if (!options.find(o => o.key === value)) {
+    if (!options.some(o => o.key === value)) {
         options.push({ key: value, label: value });
     }
 
