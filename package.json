@@ -82,7 +82,8 @@
     "sass": "1.42.1",
     "swr": "1.0.1",
     "typescript": "4.4.3",
-    "web-vitals": "2.1.1"
+    "web-vitals": "2.1.1",
+    "fast-json-patch": "^3.1.0"
   },
   "jest": {
     "moduleNameMapper": {
@@ -115,8 +116,5 @@
       "no-useless-computed-key": "off",
       "import/no-anonymous-default-export": "off"
     }
-  },
-  "dependencies": {
-    "fast-json-patch": "^3.1.0"
   }
 }
