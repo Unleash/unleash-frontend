@@ -2,7 +2,7 @@ import { ITag } from '../../../../interfaces/tags';
 import useAPI from '../useApi/useApi';
 
 const useFeatureApi = () => {
-    const { makeRequest, createRequest, errors } = useAPI({
+    const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
 
@@ -173,6 +173,7 @@ const useFeatureApi = () => {
         archiveFeatureToggle,
         patchFeatureToggle,
         cloneFeatureToggle
+        loading,
     };
 };
 

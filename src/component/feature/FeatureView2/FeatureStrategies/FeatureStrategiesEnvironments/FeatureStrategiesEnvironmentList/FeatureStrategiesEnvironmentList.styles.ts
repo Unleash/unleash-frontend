@@ -36,5 +36,6 @@ export const useStyles = makeStyles(theme => ({
     },
     environmentList: {
         marginTop: 0,
+        marginBottom: 0,
     },
 }));
