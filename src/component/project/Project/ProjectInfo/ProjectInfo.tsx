@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import classnames from 'classnames';
 
-import { ReactComponent as ProjectIcon } from '../../../../assets/icons/projectIcon.svg';
 import { useCommonStyles } from '../../../../common.styles';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from '../../../common/PercentageCircle/PercentageCircle';
