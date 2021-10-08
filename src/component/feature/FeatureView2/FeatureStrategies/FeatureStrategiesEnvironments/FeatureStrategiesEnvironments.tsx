@@ -370,7 +370,7 @@ const FeatureStrategiesEnvironments = () => {
                                         }
                                         Icon={Add}
                                         maxWidth="700px"
-                                        disabled={!hasAccess(UPDATE_FEATURE)}
+                                        permission={UPDATE_FEATURE}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>
