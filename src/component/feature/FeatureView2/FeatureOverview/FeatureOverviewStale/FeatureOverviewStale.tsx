@@ -4,7 +4,6 @@ import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
-import { Check, Close } from '@material-ui/icons';
 import { useState } from 'react';
 import StaleDialog from './StaleDialog/StaleDialog';
 import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
