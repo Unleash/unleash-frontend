@@ -22,7 +22,7 @@ const useDeleteVariantMarkup = ({
             onClose={onClose}
         >
             <Alert severity="error">
-                Deleting the variant will change which variants users receive.
+                Deleting this variant will change which variant users receive.
             </Alert>
         </Dialogue>
     );
