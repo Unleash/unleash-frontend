@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { getFeatureTypeIcons } from '../../../../../utils/get-feature-type-icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
-import { useStyles } from './FeatureViewMetadata.styles';
+import { useStyles } from './FeatureOverviewMetadata.styles';
 
 import { Edit } from '@material-ui/icons';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 
-const FeatureViewMetaData = () => {
+const FeatureOverviewMetaData = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
 
@@ -65,4 +65,4 @@ const FeatureViewMetaData = () => {
     );
 };
 
-export default FeatureViewMetaData;
+export default FeatureOverviewMetaData;

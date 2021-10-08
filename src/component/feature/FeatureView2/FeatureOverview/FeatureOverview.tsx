@@ -1,7 +1,7 @@
-import FeatureViewMetaData from './FeatureViewMetaData/FeatureViewMetaData';
+import FeatureOverviewMetaData from './FeatureOverviewMetaData/FeatureOverviewMetaData';
 import FeatureOverviewStrategies from './FeatureOverviewStrategies/FeatureOverviewStrategies';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
-import FeatureViewStale from './FeatureViewStale/FeatureViewStale';
+import FeatureViewStale from './FeatureOverviewStale/FeatureOverviewStale';
 
 import { useStyles } from './FeatureOverview.styles';
 import FeatureOverviewMetrics from './FeatureOverviewMetrics/FeatureOverviewMetrics';
@@ -12,7 +12,7 @@ const FeatureOverview = () => {
     return (
         <div className={styles.container}>
             <div>
-                <FeatureViewMetaData />
+                <FeatureOverviewMetaData />
                 <FeatureViewStale />
                 <FeatureOverviewTags />
             </div>

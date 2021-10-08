@@ -1,4 +1,4 @@
-import { useStyles } from './FeatureViewStale.styles';
+import { useStyles } from './FeatureOverviewStale.styles';
 import classnames from 'classnames';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { Check, Close } from '@material-ui/icons';
 import { useState } from 'react';
 import StaleDialog from './StaleDialog/StaleDialog';
 
-const FeatureViewStale = () => {
+const FeatureOverviewStale = () => {
     const styles = useStyles();
     const [openStaleDialog, setOpenStaleDialog] = useState(false);
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -47,4 +47,4 @@ const FeatureViewStale = () => {
     );
 };
 
-export default FeatureViewStale;
+export default FeatureOverviewStale;
