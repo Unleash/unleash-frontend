@@ -3,11 +3,12 @@ import classnames from 'classnames';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
-import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
 import { Check, Close } from '@material-ui/icons';
 import { useState } from 'react';
 import StaleDialog from './StaleDialog/StaleDialog';
+import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
+import classNames from 'classnames';
 
 const FeatureOverviewStale = () => {
     const styles = useStyles();
@@ -15,7 +16,12 @@ const FeatureOverviewStale = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
 
-    const FlipStateButton = () => (feature.stale ? <Close /> : <Check />);
+    const flipStateButtonText = () =>
+        feature.stale ? 'Set to active' : 'Set to stale';
+
+    const statusClasses = classNames(styles.status, {
+        [styles.statusStale]: feature.stale,
+    });
 
     return (
         <div className={classnames(styles.container)}>
@@ -27,15 +33,17 @@ const FeatureOverviewStale = () => {
             <div className={styles.body}>
                 <span className={styles.bodyItem}>
                     Feature is {feature.stale ? 'stale' : 'active'}
+                    <div className={statusClasses} />
                 </span>
                 <div className={styles.staleButton}>
-                    <PermissionIconButton
+                    <PermissionButton
                         onClick={() => setOpenStaleDialog(true)}
                         permission={UPDATE_FEATURE}
                         tooltip="Flip status"
+                        variant="text"
                     >
-                        <FlipStateButton />
-                    </PermissionIconButton>
+                        {flipStateButtonText()}
+                    </PermissionButton>
                 </div>
             </div>
             <StaleDialog
