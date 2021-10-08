@@ -27,15 +27,17 @@ const FeatureOverviewStale = () => {
         <div className={classnames(styles.container)}>
             <div className={styles.staleHeaderContainer}>
                 <div className={styles.staleHeader}>
-                    <h3 className={styles.header}>Status</h3>
+                    <h3 className={styles.header} data-loading>
+                        Status
+                    </h3>
                 </div>
             </div>
             <div className={styles.body}>
-                <span className={styles.bodyItem}>
+                <span className={styles.bodyItem} data-loading>
                     Feature is {feature.stale ? 'stale' : 'active'}
                     <div className={statusClasses} />
                 </span>
-                <div className={styles.staleButton}>
+                <div className={styles.staleButton} data-loading>
                     <PermissionButton
                         onClick={() => setOpenStaleDialog(true)}
                         permission={UPDATE_FEATURE}

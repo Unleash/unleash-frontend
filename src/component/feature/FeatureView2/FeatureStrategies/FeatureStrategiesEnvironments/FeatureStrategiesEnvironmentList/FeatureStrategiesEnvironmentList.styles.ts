@@ -10,9 +10,6 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.light,
         opacity: '0.75',
     },
-    strategiesContainer: {
-        maxWidth: '627px',
-    },
     dropbox: {
         textAlign: 'center',
         fontSize: theme.fontSizes.smallBody,
