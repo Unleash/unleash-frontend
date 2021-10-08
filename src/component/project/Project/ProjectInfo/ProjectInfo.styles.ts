@@ -40,7 +40,7 @@ export const useStyles = makeStyles(theme => ({
     infoSection: {
         margin: '0',
         textAlign: 'center',
-        marginBottom: '1.5rem',
+        marginBottom: '1rem',
         backgroundColor: '#fff',
         borderRadius: '10px',
         width: '100%',
