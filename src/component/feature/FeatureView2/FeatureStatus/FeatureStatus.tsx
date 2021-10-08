@@ -59,7 +59,7 @@ const FeatureStatus = ({ lastSeenAt }: FeatureStatusProps) => {
             <Tooltip title={props.toolTip} arrow placement="left">
                 <div
                     className={styles.container}
-                    style={{ background: props.color, fontSize: '0.8rem' }}
+                    style={{ background: props.color, fontSize: '0.9rem' }}
                 >
                     {props.children}
                 </div>
