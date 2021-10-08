@@ -121,7 +121,7 @@ const FeatureOverviewVariants = () => {
                     style={{ display: 'block', marginTop: '0.5rem' }}
                 >
                     By overriding the stickiness you can control which parameter
-                    you want to be used in order to ensure consistent traffic
+                    is used to ensure consistent traffic
                     allocation across variants.{' '}
                     <a
                         href="https://docs.getunleash.io/advanced/toggle_variants"
