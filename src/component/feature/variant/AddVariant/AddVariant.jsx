@@ -81,6 +81,7 @@ const AddVariant = ({
 
     const setVariantWeightType = e => {
         const { checked, name } = e.target;
+        console.log(e.target.checked, e.target.name)
         const weightType = checked ? weightTypes.FIX : weightTypes.VARIABLE;
         setData({
             ...data,
@@ -239,7 +240,7 @@ const AddVariant = ({
                                 control={
                                     <Switch
                                         name="weightType"
-                                        value={isFixWeight}
+                                        checked={isFixWeight}
                                         onChange={setVariantWeightType}
                                     />
                                 }
