@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import PercentageCircle from '../../../../common/PercentageCircle/PercentageCircle';
 import { useStyles } from './FeatureEnvironmentMetrics.styles';
-import { IEnvironmentMetrics } from '../../../../../interfaces/environments';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import { useMediaQuery } from '@material-ui/core';
+import { IFeatureEnvironmentMetrics } from '../../../../../interfaces/featureToggle';
+
 interface IFeatureEnvironmentProps {
     className?: string;
     primaryMetric?: boolean;
-    metric: IEnvironmentMetrics;
+    metric: IFeatureEnvironmentMetrics;
 }
 
 const FeatureEnvironmentMetrics = ({
@@ -52,7 +53,7 @@ const FeatureEnvironmentMetrics = ({
             <div className={containerClasses}>
                 <div className={styles.headerContainer}>
                     <h2 data-loading className={styles.title}>
-                        Traffic in {metric.name}
+                        Traffic in {metric.environment}
                     </h2>
                 </div>
 
@@ -75,7 +76,7 @@ const FeatureEnvironmentMetrics = ({
         <div className={containerClasses}>
             <div className={styles.headerContainer}>
                 <h2 data-loading className={styles.title}>
-                    Traffic in {metric.name}
+                    Traffic in {metric.environment}
                 </h2>
             </div>
 
