@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Typography } from '@material-ui/core';
 
@@ -11,182 +11,176 @@ import AccessContext from '../../contexts/AccessContext';
 import ConditionallyRender from '../common/ConditionallyRender';
 import { CREATE_PROJECT } from '../AccessProvider/permissions';
 import HeaderTitle from '../common/HeaderTitle';
+import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
+import { Alert } from '@material-ui/lab';
 
-class ProjectFormComponent extends Component {
-    static contextType = AccessContext;
+const ProjectFormComponent = (props) => {
+    const { editMode } = props;
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            project: props.project,
-            errors: {},
-            currentLegalValue: '',
-            dirty: false,
-        };
-    }
+    const { hasAccess } = useContext(AccessContext);
+    const [project, setProject ] = useState(props.project || {});
+    const [errors, setErrors ] = useState({});
+    const { isOss } = useUiConfig();
 
-    static getDerivedStateFromProps(props, state) {
-        if (!state.project.id && props.project.id) {
-            return { project: props.project };
-        } else {
-            return null;
+
+    useEffect(() => {
+        if(!project.id && props.project.id) {
+            setProject(project);
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.project]);
 
-    setValue = (field, value) => {
-        const { project } = this.state;
-        project[field] = value;
-        this.setState({ project, dirty: true });
+    if(isOss()) {
+        return (
+            <PageContent>
+                <Alert severity="error">
+                    Creating and updating projects requires a paid version of Unleash. 
+                    Check out <a href="https://www.getunleash.io" target="_blank" rel="noreferrer">getunleash.io</a> 
+                    to find out more.
+                </Alert>
+            </PageContent>
+        );
+    }
+    const setValue = (field, value) => {
+        const p = {...project}
+        p[field] = value;
+        setProject(p)
     };
 
-    validateId = async id => {
-        const { errors } = this.state;
-        const { validateId, editMode } = this.props;
+    const validateId = async id => {
         if (editMode) return true;
 
+        const e = {...errors};
         try {
-            await validateId(id);
-            errors.id = undefined;
+            await props.validateId(id);
+            e.id = undefined;
         } catch (err) {
-            errors.id = err.message;
+            e.id = err.message;
         }
 
-        this.setState({ errors });
-        if (errors.id) return false;
+        setErrors(e)
+        if (e.id) return false;
         return true;
     };
 
-    validateName = () => {
-        const { project } = this.state;
+    const validateName = () => {
         if (project.name.length === 0) {
-            this.setState(prev => ({
-                errors: { ...prev.errors, name: 'Name can not be empty.' },
-            }));
+            setErrors({...errors, name: 'Name can not be empty.' })
             return false;
         }
         return true;
     };
 
-    validate = async id => {
-        const validId = await this.validateId(id);
-        const validName = this.validateName();
+    const validate = async id => {
+        const validId = await validateId(id);
+        const validName = validateName();
 
         return validId && validName;
     };
 
-    onCancel = evt => {
-        const { project } = this.state;
+    const onCancel = evt => {
         evt.preventDefault();
-
-        const { editMode } = this.props;
 
         if (editMode) {
-            this.props.history.push(`/projects/${project.id}`);
+            props.history.push(`/projects/${project.id}`);
             return;
         }
-        this.props.history.goBack();
+        props.history.push(`/projects/`);
     };
 
-    onSubmit = async evt => {
+    const onSubmit = async evt => {
         evt.preventDefault();
-        const { project } = this.state;
 
-        const valid = await this.validate(project.id);
+        const valid = await validate(project.id);
 
         if (valid) {
-            const { editMode } = this.props;
             const query = editMode ? 'edited=true' : 'created=true';
-            await this.props.submit(project);
-            this.props.history.push(`/projects/${project.id}?${query}`);
+            await props.submit(project);
+            props.history.push(`/projects/${project.id}?${query}`);
         }
     };
 
-    render() {
-        const { project, errors } = this.state;
-        const { hasAccess } = this.context;
-        const { editMode } = this.props;
-        const submitText = editMode ? 'Update' : 'Create';
+    const submitText = editMode ? 'Update' : 'Create';
 
-        return (
-            <PageContent
-                headerContent={
-                    <HeaderTitle
-                        title={`${submitText} Project`}
-                    />
-                }
+    return (
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title={`${submitText} Project`}
+                />
+            }
+        >
+            <Typography
+                variant="subtitle1"
+                style={{ marginBottom: '0.5rem' }}
             >
-                <Typography
-                    variant="subtitle1"
-                    style={{ marginBottom: '0.5rem' }}
-                >
-                    Projects allows you to group feature toggles together in the
-                    management UI.
-                </Typography>
-                <form
-                    onSubmit={this.onSubmit}
-                    className={classnames(
-                        commonStyles.contentSpacing,
-                        styles.formContainer
-                    )}
-                >
-                    <TextField
-                        label="Project Id"
-                        name="id"
-                        placeholder="A-unique-key"
-                        value={project.id}
-                        error={!!errors.id}
-                        helperText={errors.id}
-                        disabled={editMode}
-                        variant="outlined"
-                        size="small"
-                        onBlur={v => this.validateId(v.target.value)}
-                        onChange={v =>
-                            this.setValue('id', trim(v.target.value))
-                        }
-                    />
-                    <br />
-                    <TextField
-                        label="Name"
-                        name="name"
-                        placeholder="Project name"
-                        value={project.name}
-                        error={!!errors.name}
-                        variant="outlined"
-                        size="small"
-                        helperText={errors.name}
-                        onChange={v => this.setValue('name', v.target.value)}
-                    />
-                    <TextField
-                        className={commonStyles.fullwidth}
-                        placeholder="A short description"
-                        rowsMax={2}
-                        label="Description"
-                        error={!!errors.description}
-                        helperText={errors.description}
-                        variant="outlined"
-                        size="small"
-                        multiline
-                        value={project.description}
-                        onChange={v =>
-                            this.setValue('description', v.target.value)
-                        }
-                    />
+                Projects allows you to group feature toggles together in the
+                management UI.
+            </Typography>
+            <form
+                onSubmit={onSubmit}
+                className={classnames(
+                    commonStyles.contentSpacing,
+                    styles.formContainer
+                )}
+            >
+                <TextField
+                    label="Project Id"
+                    name="id"
+                    placeholder="A-unique-key"
+                    value={project.id}
+                    error={!!errors.id}
+                    helperText={errors.id}
+                    disabled={editMode}
+                    variant="outlined"
+                    size="small"
+                    onBlur={v => validateId(v.target.value)}
+                    onChange={v =>
+                        setValue('id', trim(v.target.value))
+                    }
+                />
+                <br />
+                <TextField
+                    label="Name"
+                    name="name"
+                    placeholder="Project name"
+                    value={project.name}
+                    error={!!errors.name}
+                    variant="outlined"
+                    size="small"
+                    helperText={errors.name}
+                    onChange={v => setValue('name', v.target.value)}
+                />
+                <TextField
+                    className={commonStyles.fullwidth}
+                    placeholder="A short description"
+                    rowsMax={2}
+                    label="Description"
+                    error={!!errors.description}
+                    helperText={errors.description}
+                    variant="outlined"
+                    size="small"
+                    multiline
+                    value={project.description}
+                    onChange={v =>
+                        setValue('description', v.target.value)
+                    }
+                />
 
-                    <ConditionallyRender
-                        condition={hasAccess(CREATE_PROJECT)}
-                        show={
-                            <div className={styles.formButtons}>
-                                <FormButtons
-                                    submitText={submitText}
-                                    onCancel={this.onCancel}
-                                />
-                            </div>
-                        }
-                    />
-                </form>
-            </PageContent>
-        );
-    }
+                <ConditionallyRender
+                    condition={hasAccess(CREATE_PROJECT)}
+                    show={
+                        <div className={styles.formButtons}>
+                            <FormButtons
+                                submitText={submitText}
+                                onCancel={onCancel}
+                            />
+                        </div>
+                    }
+                />
+            </form>
+        </PageContent>
+    );
 }
 
 ProjectFormComponent.propTypes = {
