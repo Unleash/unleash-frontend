@@ -12,7 +12,6 @@ import { formatAssetPath } from '../../../../../utils/format-path';
 import useTagTypes from '../../../../../hooks/api/getters/useTagTypes/useTagTypes';
 import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import AddTagDialog from './AddTagDialog/AddTagDialog';
-import { useState } from 'react';
 import Dialogue from '../../../../common/Dialogue';
 import { ITag } from '../../../../../interfaces/tags';
 import useToast from '../../../../../hooks/useToast';
@@ -96,6 +95,13 @@ const FeatureOverviewTags = () => {
     };
 
     const renderTag = t => (
+        <PermissionIconButton
+            onClick={() => setOpenTagDialog(true)}
+            permission={DELETE_TAG}
+            tooltip="Delete Tag"
+            data-loading
+            style={{ backgroundColor: 'transparent' }}
+        >    
         <Chip
             icon={tagIcon(t.type)}
             className={styles.tagChip}
@@ -107,6 +113,7 @@ const FeatureOverviewTags = () => {
                 setSelectedTag({ type: t.type, value: t.value });
             }}
         />
+        </PermissionIconButton>
     );
 
     return (
