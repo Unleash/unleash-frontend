@@ -9,6 +9,7 @@ import { Button, IconButton, useMediaQuery } from '@material-ui/core';
 import { DoubleArrow } from '@material-ui/icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 
+
 const FeatureStrategiesList = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { expandedSidebar, setExpandedSidebar } = useContext(
@@ -60,8 +61,8 @@ const FeatureStrategiesList = () => {
                     </div>
                 }
             />
-            <IconButton className={styles.iconButton} onClick={toggleSidebar}>
-                <DoubleArrow className={iconClasses} />
+            <IconButton className={styles.iconButton} onClick={toggleSidebar}>             
+                    <DoubleArrow className={iconClasses} />
             </IconButton>
             {renderStrategies()}
         </section>
