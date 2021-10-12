@@ -14,6 +14,7 @@ import HeaderTitle from '../common/HeaderTitle';
 import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
 import { Alert } from '@material-ui/lab';
 import { FormEvent } from 'react-router/node_modules/@types/react';
+import useLoading from '../../hooks/useLoading';
 
 interface ProjectFormComponentProps {
     editMode: boolean;
@@ -29,7 +30,8 @@ const ProjectFormComponent = (props: ProjectFormComponentProps) => {
     const { hasAccess } = useContext(AccessContext);
     const [project, setProject ] = useState(props.project || {});
     const [errors, setErrors ] = useState<any>({});
-    const { isOss } = useUiConfig();
+    const { isOss, loading } = useUiConfig();
+    const ref = useLoading(loading);
 
 
     useEffect(() => {
@@ -39,17 +41,6 @@ const ProjectFormComponent = (props: ProjectFormComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.project]);
 
-    if(isOss()) {
-        return (
-            <PageContent headerContent="">
-                <Alert severity="error">
-                    Creating and updating projects requires a paid version of Unleash. 
-                    Check out <a href="https://www.getunleash.io" target="_blank" rel="noreferrer">getunleash.io</a> 
-                    to find out more.
-                </Alert>
-            </PageContent>
-        );
-    }
     const setValue = (field: string, value: string) => {
         const p = {...project}
         p[field] = value;
@@ -113,81 +104,94 @@ const ProjectFormComponent = (props: ProjectFormComponentProps) => {
 
     return (
         <PageContent
+            ref={ref}
             headerContent={
                 <HeaderTitle
                     title={`${submitText} Project`}
                 />
             }
         >
-            <Typography
-                variant="subtitle1"
-                style={{ marginBottom: '0.5rem' }}
-            >
-                Projects allows you to group feature toggles together in the
-                management UI.
-            </Typography>
-            <form
-                onSubmit={onSubmit}
-                className={classnames(
-                    commonStyles.contentSpacing,
-                    styles.formContainer
-                )}
-            >
-                <TextField
-                    label="Project Id"
-                    name="id"
-                    placeholder="A-unique-key"
-                    value={project.id}
-                    error={!!errors.id}
-                    helperText={errors.id}
-                    disabled={editMode}
-                    variant="outlined"
-                    size="small"
-                    onBlur={v => validateId(v.target.value)}
-                    onChange={v =>
-                        setValue('id', trim(v.target.value))
-                    }
-                />
-                <br />
-                <TextField
-                    label="Name"
-                    name="name"
-                    placeholder="Project name"
-                    value={project.name}
-                    error={!!errors.name}
-                    variant="outlined"
-                    size="small"
-                    helperText={errors.name}
-                    onChange={v => setValue('name', v.target.value)}
-                />
-                <TextField
-                    className={commonStyles.fullwidth}
-                    placeholder="A short description"
-                    rowsMax={2}
-                    label="Description"
-                    error={!!errors.description}
-                    helperText={errors.description}
-                    variant="outlined"
-                    size="small"
-                    multiline
-                    value={project.description}
-                    onChange={v =>
-                        setValue('description', v.target.value)
-                    }
-                />
+            
+            <ConditionallyRender condition={isOss()} show={
+                <Alert data-loading severity="error">
+                    Creating and updating projects requires a paid version of Unleash. 
+                    Check out <a href="https://www.getunleash.io" target="_blank" rel="noreferrer">getunleash.io</a> 
+                    to find out more.
+                </Alert>
+            } elseShow={
+                <>
+                <Typography
+                    variant="subtitle1"
+                    style={{ marginBottom: '0.5rem' }}
+                >
+                    Projects allows you to group feature toggles together in the
+                    management UI.
+                </Typography>
+                <form
+                    data-loading
+                    onSubmit={onSubmit}
+                    className={classnames(
+                        commonStyles.contentSpacing,
+                        styles.formContainer
+                    )}
+                >
+                    <TextField
+                        label="Project Id"
+                        name="id"
+                        placeholder="A-unique-key"
+                        value={project.id}
+                        error={!!errors.id}
+                        helperText={errors.id}
+                        disabled={editMode}
+                        variant="outlined"
+                        size="small"
+                        onBlur={v => validateId(v.target.value)}
+                        onChange={v =>
+                            setValue('id', trim(v.target.value))
+                        }
+                    />
+                    <br />
+                    <TextField
+                        label="Name"
+                        name="name"
+                        placeholder="Project name"
+                        value={project.name}
+                        error={!!errors.name}
+                        variant="outlined"
+                        size="small"
+                        helperText={errors.name}
+                        onChange={v => setValue('name', v.target.value)}
+                    />
+                    <TextField
+                        className={commonStyles.fullwidth}
+                        placeholder="A short description"
+                        rowsMax={2}
+                        label="Description"
+                        error={!!errors.description}
+                        helperText={errors.description}
+                        variant="outlined"
+                        size="small"
+                        multiline
+                        value={project.description}
+                        onChange={v =>
+                            setValue('description', v.target.value)
+                        }
+                    />
 
-                <ConditionallyRender
-                    condition={hasAccess(CREATE_PROJECT)}
-                    show={
-                        <div className={styles.formButtons}>
-                            <FormButtons
-                                submitText={submitText}
-                                onCancel={onCancel}
-                            />
-                        </div>
-                    }
-                />
-            </form>
+                    <ConditionallyRender
+                        condition={hasAccess(CREATE_PROJECT)}
+                        show={
+                            <div className={styles.formButtons}>
+                                <FormButtons
+                                    submitText={submitText}
+                                    onCancel={onCancel}
+                                />
+                            </div>
+                        }
+                    />
+                </form>
+                </>
+            } />
         </PageContent>
     );
 }
