@@ -13,13 +13,22 @@ import { CREATE_PROJECT } from '../AccessProvider/permissions';
 import HeaderTitle from '../common/HeaderTitle';
 import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
 import { Alert } from '@material-ui/lab';
+import { FormEvent } from 'react-router/node_modules/@types/react';
 
-const ProjectFormComponent = (props) => {
+interface ProjectFormComponentProps {
+    editMode: boolean;
+    project: any;
+    validateId: (id: string) => Promise<void>;
+    history: any;
+    submit: (project: any) => Promise<void>;
+}
+
+const ProjectFormComponent = (props: ProjectFormComponentProps) => {
     const { editMode } = props;
 
     const { hasAccess } = useContext(AccessContext);
     const [project, setProject ] = useState(props.project || {});
-    const [errors, setErrors ] = useState({});
+    const [errors, setErrors ] = useState<any>({});
     const { isOss } = useUiConfig();
 
 
@@ -32,7 +41,7 @@ const ProjectFormComponent = (props) => {
 
     if(isOss()) {
         return (
-            <PageContent>
+            <PageContent headerContent="">
                 <Alert severity="error">
                     Creating and updating projects requires a paid version of Unleash. 
                     Check out <a href="https://www.getunleash.io" target="_blank" rel="noreferrer">getunleash.io</a> 
@@ -41,20 +50,20 @@ const ProjectFormComponent = (props) => {
             </PageContent>
         );
     }
-    const setValue = (field, value) => {
+    const setValue = (field: string, value: string) => {
         const p = {...project}
         p[field] = value;
         setProject(p)
     };
 
-    const validateId = async id => {
+    const validateId = async (id: string) => {
         if (editMode) return true;
 
         const e = {...errors};
         try {
             await props.validateId(id);
             e.id = undefined;
-        } catch (err) {
+        } catch (err: any) {
             e.id = err.message;
         }
 
@@ -71,14 +80,14 @@ const ProjectFormComponent = (props) => {
         return true;
     };
 
-    const validate = async id => {
+    const validate = async (id: string) => {
         const validId = await validateId(id);
         const validName = validateName();
 
         return validId && validName;
     };
 
-    const onCancel = evt => {
+    const onCancel = (evt: Event) => {
         evt.preventDefault();
 
         if (editMode) {
@@ -88,7 +97,7 @@ const ProjectFormComponent = (props) => {
         props.history.push(`/projects/`);
     };
 
-    const onSubmit = async evt => {
+    const onSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
 
         const valid = await validate(project.id);
