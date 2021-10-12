@@ -5,13 +5,11 @@ import FeatureEnvironmentMetrics from '../FeatureEnvironmentMetrics/FeatureEnvir
 import { useStyles } from './FeatureOverviewMetrics.styles';
 import useFeatureMetrics from '../../../../../hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 
-const emptyMetric = (name:string) => ({ environment: name, yes: 0, no: 0, timestamp: '' });
-
 const FeatureOverviewMetrics = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
-    const { metrics, loading } = useFeatureMetrics(projectId, featureId);
+    const { metrics } = useFeatureMetrics(projectId, featureId);
 
     const featureMetrics = feature?.environments.map(env => {
         const metric = metrics.lastHourUsage.find(
@@ -19,7 +17,12 @@ const FeatureOverviewMetrics = () => {
         );
 
         if (!metric) {
-            return emptyMetric(env.name);
+            return {
+                environment: env.name,
+                yes: 0,
+                no: 0,
+                timestamp: ''
+            };
         }
 
         return metric;
@@ -27,9 +30,6 @@ const FeatureOverviewMetrics = () => {
 
 
     const renderFeatureMetrics = () => {
-        if (loading) {
-            return <FeatureEnvironmentMetrics metric={emptyMetric('loading')} data-loading />
-        }
         if (featureMetrics.length === 0) {
             return null;
         }
