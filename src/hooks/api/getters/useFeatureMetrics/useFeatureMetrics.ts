@@ -11,12 +11,19 @@ interface IUseFeatureMetricsOptions {
     revalidateOnMount?: boolean;
 }
 
+const emptyMetrics = { lastHourUsage: [], seenApplications: [] };
+
 const useFeatureMetrics = (projectId: string, featureId: string, options: IUseFeatureMetricsOptions = {}) => {
-    const fetcher = () => {
+    const fetcher = async () => {
         const path = formatApiPath(`api/admin/client-metrics/features/${featureId}`);
-        return fetch(path, {
+        const res = await fetch(path, {
             method: 'GET'
-        }).then(res => res.json());
+        });
+        if (res.ok) {
+            return res.json();
+        } else {
+            return emptyMetrics;
+        }
     };
 
     const FEATURE_METRICS_CACHE_KEY = `${projectId}_${featureId}_metrics`;
@@ -39,7 +46,7 @@ const useFeatureMetrics = (projectId: string, featureId: string, options: IUseFe
     }, [data, error]);
 
     return {
-        metrics: data || { lastHourUsage: [], seenApplications: [] },
+        metrics: data || emptyMetrics,
         error,
         loading,
         refetch,
