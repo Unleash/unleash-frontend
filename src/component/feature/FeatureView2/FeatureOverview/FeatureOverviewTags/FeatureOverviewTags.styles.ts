@@ -41,7 +41,7 @@ export const useStyles = makeStyles(theme => ({
         margin: 0,
     },
     tagContent: {
-        paddingBottom: '1rem',
+        padding: '1rem',
     },
     tagChip: {
         marginRight: '0.25rem',

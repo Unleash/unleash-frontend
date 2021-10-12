@@ -1,3 +1,4 @@
+import { useState, useContext } from 'react'; 
 import { Chip } from '@material-ui/core';
 import { Add, Label } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
@@ -15,9 +16,10 @@ import AddTagDialog from './AddTagDialog/AddTagDialog';
 import Dialogue from '../../../../common/Dialogue';
 import { ITag } from '../../../../../interfaces/tags';
 import useToast from '../../../../../hooks/useToast';
-import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
+import { UPDATE_FEATURE, DELETE_TAG } from '../../../../AccessProvider/permissions';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
+import AccessContext from '../../../../../contexts/AccessContext';
 
 const FeatureOverviewTags = () => {
     const [openTagDialog, setOpenTagDialog] = useState(false);
@@ -32,6 +34,8 @@ const FeatureOverviewTags = () => {
     const { tagTypes } = useTagTypes();
     const { deleteTagFromFeature } = useFeatureApi();
     const { toast, setToastData } = useToast();
+    const { hasAccess } = useContext(AccessContext);
+    const canDeleteTag = hasAccess(DELETE_TAG);
 
     const handleDelete = async () => {
         try {
@@ -95,25 +99,17 @@ const FeatureOverviewTags = () => {
     };
 
     const renderTag = t => (
-        <PermissionIconButton
-            onClick={() => setOpenTagDialog(true)}
-            permission={DELETE_TAG}
-            tooltip="Delete Tag"
-            data-loading
-            style={{ backgroundColor: 'transparent' }}
-        >    
         <Chip
             icon={tagIcon(t.type)}
             className={styles.tagChip}
             data-loading
             label={t.value}
             key={`${t.type}:${t.value}`}
-            onDelete={() => {
+            onDelete={canDeleteTag ? () => {
                 setShowDelDialog(true);
                 setSelectedTag({ type: t.type, value: t.value });
-            }}
+            }: undefined}
         />
-        </PermissionIconButton>
     );
 
     return (
@@ -124,7 +120,6 @@ const FeatureOverviewTags = () => {
                         Tags
                     </h4>
                 </div>
-
                 <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
                 <PermissionIconButton
                     onClick={() => setOpenTagDialog(true)}
