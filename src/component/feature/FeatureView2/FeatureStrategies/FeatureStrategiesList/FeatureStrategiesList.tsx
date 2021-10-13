@@ -5,9 +5,11 @@ import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import classnames from 'classnames';
-import { Button, IconButton, useMediaQuery } from '@material-ui/core';
+import { Button, IconButton, Tooltip, useMediaQuery } from '@material-ui/core';
 import { DoubleArrow } from '@material-ui/icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
+import { UPDATE_FEATURE } from '../../../../AccessProvider/permissions';
+import AccessContext from '../../../../../contexts/AccessContext';
 
 
 const FeatureStrategiesList = () => {
@@ -15,6 +17,8 @@ const FeatureStrategiesList = () => {
     const { expandedSidebar, setExpandedSidebar } = useContext(
         FeatureStrategiesUIContext
     );
+    const { hasAccess } = useContext(AccessContext);
+
     const styles = useStyles();
 
     const { strategies } = useStrategies();
@@ -61,9 +65,17 @@ const FeatureStrategiesList = () => {
                     </div>
                 }
             />
-            <IconButton className={styles.iconButton} onClick={toggleSidebar}>             
-                    <DoubleArrow className={iconClasses} />
-            </IconButton>
+            <Tooltip title="This is a test" arrow>
+                <span>
+                    <IconButton
+                        className={styles.iconButton}
+                        onClick={toggleSidebar}
+                        disabled={!hasAccess(UPDATE_FEATURE)}
+                    >
+                        <DoubleArrow className={iconClasses} />
+                    </IconButton>
+                </span>
+            </Tooltip>
             {renderStrategies()}
         </section>
     );
