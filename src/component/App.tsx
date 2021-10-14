@@ -77,11 +77,19 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
     return (
         <SWRConfig value={{
             onError: (error) => {
-                setToastData({
-                    show: true,
-                    type: 'error',
-                    text: error.message,
-                });
+                if (!isUnauthorized()) {
+                    if (error.status === 401) {
+                        // If we've been in an authorized state,
+                        // but cookie has been deleted (server or client side,
+                        // perform a window reload to reload app
+                        window.location.reload();
+                    }
+                    setToastData({
+                        show: true,
+                        type: 'error',
+                        text: error.message,
+                    });
+                }
             },
         }}>
             <div className={styles.container}>

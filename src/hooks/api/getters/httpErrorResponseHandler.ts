@@ -1,12 +1,12 @@
 const handleErrorResponses = (target: string) => async (res: Response) => {
     if (!res.ok) {
-        console.log(res.status);
         const error = new Error(`An error occurred while trying to get ${target}`);
-        // @ts-ignore
+        // Try to resolve body, but don't rethrow res.json is not a function
         try {
+            // @ts-ignore
             error.info = await res.json();
         } catch (e) {
-            // Try to resolve body, but don't rethrow res.json is not a function
+            // @ts-ignore
             error.info = {};
         }
         // @ts-ignore
