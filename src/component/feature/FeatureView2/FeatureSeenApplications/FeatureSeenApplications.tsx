@@ -1,7 +1,7 @@
 import useFeatureMetrics from '../../../../hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 import { Link, useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../interfaces/params';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Grid, List, ListItem, ListItemText } from '@material-ui/core';
 import React from 'react';
 import { useStyles } from './FeatureSeenApplications.styles';
 
@@ -29,12 +29,12 @@ const FeatureSeenApplications: React.FC = () => {
     }
 
     return (
-        <div>
-            <List className={styles.applicationList}>
+        <Grid sm={12}>
+            <List>
                 <ListItemText primary={'Seen in applications:'} />
                 {seenApplications}
             </List>
-        </div>
+        </Grid>
     );
 }
 
