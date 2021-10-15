@@ -82,7 +82,7 @@ const FeatureToggleListNew = ({
         usePagination(sortedFeatures, 50);
 
     const updateSort = (field: string) => {
-        let newSortOpt = {...sortOpt};
+        let newSortOpt;
         if(field === sortOpt.field) {
             newSortOpt = {...sortOpt, direction: (sortOpt.direction + 1) % 2};
         }
