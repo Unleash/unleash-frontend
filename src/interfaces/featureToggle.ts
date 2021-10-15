@@ -14,8 +14,8 @@ export interface IEnvironments {
 export interface IFeatureToggle {
     stale: boolean;
     archived: boolean;
-    createdAt: string;
-    lastSeenAt: Date;
+    createdAt: Date;
+    lastSeenAt?: Date;
     description: string;
     environments: IFeatureEnvironment[];
     name: string;
@@ -25,6 +25,7 @@ export interface IFeatureToggle {
 }
 
 export interface IFeatureEnvironment {
+    type: string;
     name: string;
     enabled: boolean;
     strategies: IFeatureStrategy[];
@@ -60,5 +61,5 @@ export interface IFeatureMetrics {
     version: number;
     maturity: string;
     lastHourUsage: IFeatureEnvironmentMetrics[],
-    seenApplication: string[]
+    seenApplications: string[]
 }
