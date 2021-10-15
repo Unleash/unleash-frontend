@@ -53,7 +53,7 @@ const FeatureStrategiesList = () => {
     const iconClasses = classnames(styles.icon, {
         [styles.expandedIcon]: expandedSidebar,
     });
-
+    
     return (
         <section className={classes}>
             <ConditionallyRender
@@ -65,8 +65,8 @@ const FeatureStrategiesList = () => {
                     </div>
                 }
             />
-            <Tooltip title="This is a test" arrow>
-                <span>
+            <Tooltip title={hasAccess(UPDATE_FEATURE) ? 'Click to open.' : 'You don\'t have access to perform this operation'} arrow>
+                <span className={styles.iconButtonWrapper}>
                     <IconButton
                         className={styles.iconButton}
                         onClick={toggleSidebar}
