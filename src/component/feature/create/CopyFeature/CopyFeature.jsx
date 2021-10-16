@@ -70,7 +70,7 @@ const CopyFeature = props => {
                 { name: newToggleName, replaceGroupId }
             );
             props.history.push(
-                getTogglePath(projectId, newToggleName)
+                getTogglePath(projectId, newToggleName, true)
             )
         } catch (e) {
             setApiError(e);
