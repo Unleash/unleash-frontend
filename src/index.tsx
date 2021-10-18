@@ -15,7 +15,6 @@ import { StylesProvider } from '@material-ui/core/styles';
 
 import mainTheme from './themes/main-theme';
 import store from './store';
-import MetricsPoller from './metrics-poller';
 import App from './component/AppContainer';
 import ScrollToTop from './component/scroll-to-top';
 import { writeWarning } from './security-logger';
@@ -38,8 +37,6 @@ const unleashStore = createStore(
     store,
     composeEnhancers(applyMiddleware(thunkMiddleware))
 );
-const metricsPoller = new MetricsPoller(unleashStore);
-metricsPoller.start();
 
 ReactDOM.render(
     <Provider store={unleashStore}>
