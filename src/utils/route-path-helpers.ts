@@ -9,8 +9,8 @@ export const getToggleCopyPath = (
     return `/projects/${projectId}/features/${featureToggleName}/strategies/copy`;
 };
 
-export const getCreateTogglePath = (projectId: string, newpath: boolean = false) => {
-    return newpath ? `/projects/${projectId}/create-toggle2` : `/projects/${projectId}/create-toggle?project=${projectId}`;
+export const getCreateTogglePath = (projectId: string, featureName?: string, newpath: boolean = false) => {
+    return newpath ? `/projects/${projectId}/create-toggle2?name=${featureName}` : `/projects/${projectId}/create-toggle?name=${featureName}`;
 };
 
 export const getProjectEditPath = (projectId: string) => {

@@ -21,11 +21,6 @@ import { FormButtons } from '../../common';
 import useQueryParams from '../../../hooks/useQueryParams';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
-interface Errors {
-    name?: string;
-    description?: string;
-}
-
 const FeatureCreate = () => {
     const styles = useStyles();
     const commonStyles = useCommonStyles();
@@ -41,15 +36,15 @@ const FeatureCreate = () => {
         project: projectId,
         archived: false,
     });
-    const [errors, setErrors] = useState<Errors>({});
+    const [nameError, setNameError] = useState('');
     const { uiConfig } = useUiConfig();
 
     const params = useQueryParams();
-    const project = params.get('project');
+    const featureName = params.get('name');
 
     useEffect(() => {
-        if (project) {
-            setValue('project', project);
+        if (featureName) {
+            setValue('name', featureName);
         }
         /* eslint-disable-next-line */
     }, []);
@@ -68,25 +63,20 @@ const FeatureCreate = () => {
 
     const validateName = async (featureToggleName: string) => {
         if (featureToggleName.length > 0) {
-            const e = { ...errors };
             try {
                 await validateFeatureToggleName(featureToggleName);
-                e.name = undefined;
             } catch (err: any) {
-                e.name =
-                    err && err.message ? err.message : 'Could not check name';
+                setNameError(
+                    err && err.message ? err.message : 'Could not check name'
+                );
             }
-
-            setErrors(e);
         }
     };
 
     const onSubmit = async (evt: FormEventHandler) => {
         evt.preventDefault();
 
-        const errorList = Object.values(errors).filter(i => i);
-
-        if (errorList.length > 0) {
+        if (nameError) {
             return;
         }
 
@@ -99,7 +89,7 @@ const FeatureCreate = () => {
             // Trigger
         } catch (e: any) {
             if (e.toString().includes('not allowed to be empty')) {
-                setErrors({ name: 'Name is not allowed to be empty' });
+                setNameError('Name is not allowed to be empty');
             }
         }
     };
@@ -128,8 +118,8 @@ const FeatureCreate = () => {
                             'data-test': CF_NAME_ID,
                         }}
                         value={toggle.name}
-                        error={errors.name !== undefined}
-                        helperText={errors.name}
+                        error={nameError !== ''}
+                        helperText={nameError}
                         onBlur={v => validateName(v.target.value)}
                         onChange={v => setValue('name', trim(v.target.value))}
                     />
@@ -155,8 +145,6 @@ const FeatureCreate = () => {
                         rows={4}
                         label="Description"
                         placeholder="A short description of the feature toggle"
-                        error={errors.description !== undefined}
-                        helperText={errors.description}
                         value={toggle.description}
                         inputProps={{
                             'data-test': CF_DESC_ID,

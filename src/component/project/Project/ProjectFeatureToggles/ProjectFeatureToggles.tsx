@@ -55,24 +55,23 @@ const ProjectFeatureToggles = ({
                                     </IconButton>
                                 }
                             />
-
-                            <ResponsiveButton
-                                onClick={() =>
-                                    history.push(
-                                        getCreateTogglePath(
-                                            id,
-                                            uiConfig.flags.E
-                                        )
-                                    )
+                            <ConditionallyRender
+                                condition={hasAccess(CREATE_FEATURE, id)}
+                                show={
+                                    <ResponsiveButton
+                                        onClick={() =>
+                                            history.push(
+                                                getCreateTogglePath(id, undefined, uiConfig.flags.E)
+                                            )
+                                        }
+                                        maxWidth="700px"
+                                        tooltip="New feature toggle"
+                                        Icon={Add}
+                                    >
+                                        New feature toggle
+                                    </ResponsiveButton>
                                 }
-                                maxWidth="700px"
-                                tooltip="New feature toggle"
-                                Icon={Add}
-                                projectId={id}
-                                permission={CREATE_FEATURE}
-                            >
-                                New feature toggle
-                            </ResponsiveButton>
+                            />
                         </>
                     }
                 />
