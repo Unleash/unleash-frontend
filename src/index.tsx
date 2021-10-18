@@ -18,7 +18,7 @@ import store from './store';
 import App from './component/AppContainer';
 import ScrollToTop from './component/scroll-to-top';
 import { writeWarning } from './security-logger';
-import AccessProvider from './component/AccessProvider/AccessProvider';
+import AccessProvider from './component/providers/AccessProvider/AccessProvider';
 import { getBasePath } from './utils/format-path';
 
 let composeEnhancers;

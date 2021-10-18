@@ -1,27 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SimpleAuth from './SimpleAuth/SimpleAuth';
-import AuthenticationCustomComponent from './authentication-custom-component';
-import PasswordAuth from './PasswordAuth/PasswordAuth';
-import HostedAuth from './HostedAuth/HostedAuth';
-import DemoAuth from './DemoAuth';
+import SimpleAuth from '../SimpleAuth/SimpleAuth';
+import AuthenticationCustomComponent from '../authentication-custom-component';
+import PasswordAuth from '../PasswordAuth/PasswordAuth';
+import HostedAuth from '../HostedAuth/HostedAuth';
+import DemoAuth from '../DemoAuth';
 
 import {
     SIMPLE_TYPE,
     DEMO_TYPE,
     PASSWORD_TYPE,
     HOSTED_TYPE,
-} from '../../constants/authTypes';
-import SecondaryLoginActions from './common/SecondaryLoginActions/SecondaryLoginActions';
-import useUser from '../../hooks/api/getters/useUser/useUser';
+} from '../../../constants/authTypes';
+import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
+import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { IUser } from '../../../interfaces/user';
+import { useHistory } from 'react-router';
 
-const AuthComponent = ({
+interface IAuthenticationProps {
+    insecureLogin: (path: string, user: IUser) => void;
+    passwordLogin: (path: string, user: IUser) => void;
+    demoLogin: (path: string, user: IUser) => void;
+    history: any;
+}
+
+const Authentication = ({
     insecureLogin,
     passwordLogin,
     demoLogin,
-    history,
-}) => {
+}: IAuthenticationProps) => {
     const { authDetails } = useUser();
+    const history = useHistory();
 
     if (!authDetails) return null;
 
@@ -70,4 +77,4 @@ const AuthComponent = ({
     return <>{content}</>;
 };
 
-export default AuthComponent;
+export default Authentication;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps, useHistory } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
@@ -13,9 +13,8 @@ import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
-import { mutate, SWRConfig, useSWRConfig } from 'swr';
 import useToast from '../hooks/useToast';
-import { USER_CACHE_KEY } from '../hooks/api/getters/useUser/useUser';
+import SWRProvider from './providers/SWRProvider/SWRProvider';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -24,9 +23,6 @@ interface IAppProps extends RouteComponentProps {
 }
 
 const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
-    const history = useHistory();
-    const { cache } = useSWRConfig();
-
     const { toast, setToastData } = useToast();
     useEffect(() => {
         fetchUiBootstrap();
@@ -78,53 +74,12 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
         );
     };
 
-    const handleFetchError = error => {
-        if (error.status === 401) {
-            console.log(error);
-            cache.clear();
-            const path = location.pathname;
-
-            mutate(USER_CACHE_KEY, { ...error.info }, false);
-            if (path === '/login') {
-                return;
-            }
-
-            history.push('/login');
-            return;
-        }
-
-        if (!isUnauthorized()) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: error.message,
-            });
-        }
-    };
-
     return (
-        <SWRConfig
-            value={{
-                onErrorRetry: (
-                    error,
-                    _key,
-                    _config,
-                    revalidate,
-                    { retryCount }
-                ) => {
-                    // Never retry on 404.
-                    if (error.status === 404) {
-                        return error;
-                    }
-                    // Never retry on 401
-                    if (error.status === 401) {
-                        return error;
-                    }
-                    setTimeout(() => revalidate({ retryCount }), 5000);
-                },
-                onError: handleFetchError,
-            }}
+        <SWRProvider
+            setToastData={setToastData}
+            isUnauthorized={isUnauthorized}
         >
+            {' '}
             <div className={styles.container}>
                 <LayoutPicker location={location}>
                     <Switch>
@@ -147,7 +102,7 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                 </LayoutPicker>
                 {toast}
             </div>
-        </SWRConfig>
+        </SWRProvider>
     );
 };
 // Set state to any for now, to avoid typing up entire state object while converting to tsx.

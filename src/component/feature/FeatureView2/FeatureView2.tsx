@@ -7,7 +7,7 @@ import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
 import useTabs from '../../../hooks/useTabs';
 import useToast from '../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../interfaces/params';
-import { UPDATE_FEATURE } from '../../AccessProvider/permissions';
+import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 import Dialogue from '../../common/Dialogue';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
@@ -103,8 +103,8 @@ const FeatureView2 = () => {
         return (
             <div>
                 <p>
-                    The feature <strong>{featureId.substring(0,30)}</strong> does not exist. Do
-                    you want to &nbsp;
+                    The feature <strong>{featureId.substring(0, 30)}</strong>{' '}
+                    does not exist. Do you want to &nbsp;
                     <Link to={getCreateTogglePath(projectId)}>create it</Link>
                     &nbsp;?
                 </p>

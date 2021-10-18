@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import AuthenticationContainer from '../authentication-container';
+import AuthenticationContainer from '../Authentication';
 import ConditionallyRender from '../../common/ConditionallyRender';
 
 import { useStyles } from './Login.styles';
@@ -13,16 +13,11 @@ import { useHistory } from 'react-router';
 
 const Login = () => {
     const styles = useStyles();
-    const { permissions, authDetails, refetch } = useUser();
+    const { permissions, authDetails } = useUser();
     const query = useQueryParams();
     const history = useHistory();
 
     useEffect(() => {
-        refetch();
-    }, []);
-
-    useEffect(() => {
-        console.log(permissions);
         if (permissions?.length > 0) {
             history.push('features');
         }
