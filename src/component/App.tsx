@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, useHistory } from 'react-router';
 
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
@@ -13,8 +13,9 @@ import IAuthStatus from '../interfaces/user';
 import { useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
-import { SWRConfig } from 'swr';
+import { mutate, SWRConfig, useSWRConfig } from 'swr';
 import useToast from '../hooks/useToast';
+import { USER_CACHE_KEY } from '../hooks/api/getters/useUser/useUser';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -23,6 +24,9 @@ interface IAppProps extends RouteComponentProps {
 }
 
 const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
+    const history = useHistory();
+    const { cache } = useSWRConfig();
+
     const { toast, setToastData } = useToast();
     useEffect(() => {
         fetchUiBootstrap();
@@ -74,6 +78,29 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
         );
     };
 
+    const handleFetchError = error => {
+        if (error.status === 401) {
+            console.log(error);
+            cache.clear();
+            const path = location.pathname;
+
+            mutate(USER_CACHE_KEY, { ...error.info }, false);
+            if (path === '/login') {
+                return;
+            }
+            history.push('/login');
+            return;
+        }
+
+        if (!isUnauthorized()) {
+            setToastData({
+                show: true,
+                type: 'error',
+                text: error.message,
+            });
+        }
+    };
+
     return (
         <SWRConfig
             value={{
@@ -90,15 +117,7 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                     }
                     setTimeout(() => revalidate({ retryCount }), 5000);
                 },
-                onError: error => {
-                    if (!isUnauthorized()) {
-                        setToastData({
-                            show: true,
-                            type: 'error',
-                            text: error.message,
-                        });
-                    }
-                },
+                onError: handleFetchError,
             }}
         >
             <div className={styles.container}>
@@ -106,19 +125,19 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                     <Switch>
                         <ProtectedRoute
                             exact
-                            path='/'
+                            path="/"
                             unauthorized={isUnauthorized()}
                             component={Redirect}
                             renderProps={{ to: '/features' }}
                         />
                         {renderMainLayoutRoutes()}
                         {renderStandaloneRoutes()}
-                        <Route path='/404' component={NotFound} />
-                        <Redirect to='/404' />
+                        <Route path="/404" component={NotFound} />
+                        <Redirect to="/404" />
                     </Switch>
                     <Feedback
-                        feedbackId='pnps'
-                        openUrl='http://feedback.unleash.run'
+                        feedbackId="pnps"
+                        openUrl="http://feedback.unleash.run"
                     />
                 </LayoutPicker>
                 {toast}

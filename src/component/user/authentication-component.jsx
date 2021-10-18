@@ -13,67 +13,61 @@ import {
     HOSTED_TYPE,
 } from '../../constants/authTypes';
 import SecondaryLoginActions from './common/SecondaryLoginActions/SecondaryLoginActions';
+import useUser from '../../hooks/api/getters/useUser/useUser';
 
-class AuthComponent extends React.Component {
-    static propTypes = {
-        user: PropTypes.object.isRequired,
-        demoLogin: PropTypes.func.isRequired,
-        insecureLogin: PropTypes.func.isRequired,
-        passwordLogin: PropTypes.func.isRequired,
-        history: PropTypes.object.isRequired,
-    };
+const AuthComponent = ({
+    insecureLogin,
+    passwordLogin,
+    demoLogin,
+    history,
+}) => {
+    const { authDetails } = useUser();
 
-    render() {
-        const authDetails = this.props.user.authDetails;
+    if (!authDetails) return null;
 
-        if (!authDetails) return null;
-
-        let content;
-        if (authDetails.type === PASSWORD_TYPE) {
-            content = (
-                <>
-                    <PasswordAuth
-                        passwordLogin={this.props.passwordLogin}
-                        authDetails={authDetails}
-                        history={this.props.history}
-                    />
-                    <SecondaryLoginActions />
-                </>
-            );
-        } else if (authDetails.type === SIMPLE_TYPE) {
-            content = (
-                <SimpleAuth
-                    insecureLogin={this.props.insecureLogin}
+    let content;
+    if (authDetails.type === PASSWORD_TYPE) {
+        content = (
+            <>
+                <PasswordAuth
+                    passwordLogin={passwordLogin}
                     authDetails={authDetails}
-                    history={this.props.history}
+                    history={history}
                 />
-            );
-        } else if (authDetails.type === DEMO_TYPE) {
-            content = (
-                <DemoAuth
-                    demoLogin={this.props.demoLogin}
+                <SecondaryLoginActions />
+            </>
+        );
+    } else if (authDetails.type === SIMPLE_TYPE) {
+        content = (
+            <SimpleAuth
+                insecureLogin={insecureLogin}
+                authDetails={authDetails}
+                history={history}
+            />
+        );
+    } else if (authDetails.type === DEMO_TYPE) {
+        content = (
+            <DemoAuth
+                demoLogin={demoLogin}
+                authDetails={authDetails}
+                history={history}
+            />
+        );
+    } else if (authDetails.type === HOSTED_TYPE) {
+        content = (
+            <>
+                <HostedAuth
+                    passwordLogin={passwordLogin}
                     authDetails={authDetails}
-                    history={this.props.history}
+                    history={history}
                 />
-            );
-        } else if (authDetails.type === HOSTED_TYPE) {
-            content = (
-                <>
-                    <HostedAuth
-                        passwordLogin={this.props.passwordLogin}
-                        authDetails={authDetails}
-                        history={this.props.history}
-                    />
-                    <SecondaryLoginActions />
-                </>
-            );
-        } else {
-            content = (
-                <AuthenticationCustomComponent authDetails={authDetails} />
-            );
-        }
-        return <>{content}</>;
+                <SecondaryLoginActions />
+            </>
+        );
+    } else {
+        content = <AuthenticationCustomComponent authDetails={authDetails} />;
     }
-}
+    return <>{content}</>;
+};
 
 export default AuthComponent;
