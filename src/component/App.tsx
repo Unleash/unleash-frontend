@@ -88,6 +88,7 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
             if (path === '/login') {
                 return;
             }
+
             history.push('/login');
             return;
         }
@@ -113,6 +114,10 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                 ) => {
                     // Never retry on 404.
                     if (error.status === 404) {
+                        return error;
+                    }
+                    // Never retry on 401
+                    if (error.status === 401) {
                         return error;
                     }
                     setTimeout(() => revalidate({ retryCount }), 5000);
