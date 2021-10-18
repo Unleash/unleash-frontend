@@ -18,6 +18,8 @@ import { IFeatureToggleDTO } from '../../../interfaces/featureToggle';
 import { FormEventHandler } from 'react-router/node_modules/@types/react';
 import { useCommonStyles } from '../../../common.styles';
 import { FormButtons } from '../../common';
+import useQueryParams from '../../../hooks/useQueryParams';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 interface Errors {
     name?: string;
@@ -40,6 +42,17 @@ const FeatureCreate = () => {
         archived: false,
     });
     const [errors, setErrors] = useState<Errors>({});
+    const { uiConfig } = useUiConfig();
+
+    const params = useQueryParams();
+    const project = params.get('project');
+
+    useEffect(() => {
+        if (project) {
+            setValue('project', project);
+        }
+        /* eslint-disable-next-line */
+    }, []);
 
     useEffect(() => {
         window.onbeforeunload = () =>
@@ -54,15 +67,18 @@ const FeatureCreate = () => {
     const onCancel = () => history.push(`/projects/${projectId}`);
 
     const validateName = async (featureToggleName: string) => {
-        const e = { ...errors };
-        try {
-            await validateFeatureToggleName(featureToggleName);
-            e.name = undefined;
-        } catch (err: any) {
-            e.name = err && err.message ? err.message : 'Could not check name';
-        }
+        if (featureToggleName.length > 0) {
+            const e = { ...errors };
+            try {
+                await validateFeatureToggleName(featureToggleName);
+                e.name = undefined;
+            } catch (err: any) {
+                e.name =
+                    err && err.message ? err.message : 'Could not check name';
+            }
 
-        setErrors(e);
+            setErrors(e);
+        }
     };
 
     const onSubmit = async (evt: FormEventHandler) => {
@@ -76,7 +92,9 @@ const FeatureCreate = () => {
 
         try {
             await createFeatureToggle(projectId, toggle).then(() =>
-                history.push(getTogglePath(toggle.project, toggle.name, true))
+                history.push(
+                    getTogglePath(toggle.project, toggle.name, uiConfig.flags.E)
+                )
             );
             // Trigger
         } catch (e: any) {
