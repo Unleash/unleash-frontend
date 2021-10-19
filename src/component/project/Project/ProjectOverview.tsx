@@ -12,8 +12,6 @@ const ProjectOverview = ({ projectId }: ProjectOverviewProps) => {
     const { members, features, health } = project;
     const styles = useStyles();
 
-    console.log(project);
-
     return (
         <div>
             <div className={styles.containerStyles}>
