@@ -9,7 +9,7 @@ import { trim } from '../common/util';
 import PageContent from '../common/PageContent/PageContent';
 import AccessContext from '../../contexts/AccessContext';
 import ConditionallyRender from '../common/ConditionallyRender';
-import { CREATE_PROJECT } from '../AccessProvider/permissions';
+import { CREATE_PROJECT } from '../providers/AccessProvider/permissions';
 import HeaderTitle from '../common/HeaderTitle';
 import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
 import { Alert } from '@material-ui/lab';
