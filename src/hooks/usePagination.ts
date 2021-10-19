@@ -6,6 +6,7 @@ const usePagination = (data: any[], limit: number) => {
     const [pageIndex, setPageIndex] = useState(0);
 
     useEffect(() => {
+        console.log('RUNNING', data);
         const result = paginate(data, limit);
         setPaginatedData(result);
     }, [data, limit]);
