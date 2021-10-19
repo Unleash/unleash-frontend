@@ -83,6 +83,7 @@ const FeatureToggleListNew = ({
     
     useEffect(() => {
         setSortedFeatures(sortList([...features], sortOpt))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [features])
 
     const updateSort = (field: string) => {
