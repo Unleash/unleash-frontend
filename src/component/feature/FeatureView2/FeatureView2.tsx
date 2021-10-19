@@ -20,10 +20,12 @@ import FeatureSettings from './FeatureSettings/FeatureSettings';
 import useLoading from '../../../hooks/useLoading';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
+import { useSWRConfig } from 'swr';
 
 const FeatureView2 = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, loading, error } = useFeature(projectId, featureId);
+    const { mutate } = useSWRConfig();
     const { a11yProps } = useTabs(0);
     const { archiveFeatureToggle } = useFeatureApi();
     const { toast, setToastData } = useToast();
@@ -43,6 +45,7 @@ const FeatureView2 = () => {
                 show: true,
             });
             setShowDelDialog(false);
+            mutate(`/api/admin/projects/${projectId}`);
             history.push(`/projects/${projectId}`);
         } catch (e) {
             setToastData({
