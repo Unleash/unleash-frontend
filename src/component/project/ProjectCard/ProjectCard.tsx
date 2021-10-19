@@ -12,6 +12,8 @@ import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectAp
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@material-ui/icons';
 import { getProjectEditPath } from '../../../utils/route-path-helpers';
+import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_PROJECT } from '../../../store/project/actions';
 interface IProjectCardProps {
     name: string;
     featureCount: number;
@@ -56,13 +58,14 @@ const ProjectCard = ({
                 <ConditionallyRender
                     condition={true}
                     show={
-                        <IconButton
+                        <PermissionIconButton
+                            permission={UPDATE_PROJECT}
                             className={styles.actionsBtn}
                             data-loading
                             onClick={handleClick}
                         >
                             <MoreVertIcon />
-                        </IconButton>
+                        </PermissionIconButton>
                     }
                 />
                 <Menu
