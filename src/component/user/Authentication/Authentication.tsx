@@ -14,6 +14,9 @@ import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLogi
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { IUser } from '../../../interfaces/user';
 import { useHistory } from 'react-router';
+import useQueryParams from '../../../hooks/useQueryParams';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import { Alert } from '@material-ui/lab';
 
 interface IAuthenticationProps {
     insecureLogin: (path: string, user: IUser) => void;
@@ -29,6 +32,9 @@ const Authentication = ({
 }: IAuthenticationProps) => {
     const { authDetails } = useUser();
     const history = useHistory();
+    const params = useQueryParams();
+
+    const error = params.get('errorMsg');
 
     if (!authDetails) return null;
 
@@ -41,7 +47,10 @@ const Authentication = ({
                     authDetails={authDetails}
                     history={history}
                 />
-                <SecondaryLoginActions />
+                <ConditionallyRender
+                    condition={!authDetails.disableDefault}
+                    show={<SecondaryLoginActions />}
+                />
             </>
         );
     } else if (authDetails.type === SIMPLE_TYPE) {
@@ -68,13 +77,26 @@ const Authentication = ({
                     authDetails={authDetails}
                     history={history}
                 />
-                <SecondaryLoginActions />
+                <ConditionallyRender
+                    condition={!authDetails.disableDefault}
+                    show={<SecondaryLoginActions />}
+                />
             </>
         );
     } else {
         content = <AuthenticationCustomComponent authDetails={authDetails} />;
     }
-    return <>{content}</>;
+    return (
+        <>
+            <div style={{ maxWidth: '350px' }}>
+                <ConditionallyRender
+                    condition={Boolean(error)}
+                    show={<Alert severity="error">{error}</Alert>}
+                />
+            </div>
+            {content}
+        </>
+    );
 };
 
 export default Authentication;
