@@ -18,7 +18,6 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
 
     const handleFetchError = error => {
         if (error.status === 401) {
-            console.log(error);
             cache.clear();
             const path = location.pathname;
 
@@ -51,7 +50,7 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
                     { retryCount }
                 ) => {
                     // Never retry on 404 or 401.
-                    if (error.status === 404 || error.status === 401) {
+                    if (error.status < 499) {
                         return error;
                     }
 
