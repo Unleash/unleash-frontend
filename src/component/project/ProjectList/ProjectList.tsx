@@ -33,7 +33,7 @@ function resolveCreateButtonData(isOss: boolean, hasAccess: boolean) {
         };
     } else if (!hasAccess) {
         return {
-            title: 'You do not have permissions create new projects',
+            title: 'You do not have permission to create new projects',
             disabled: true,
         };
     } else {
