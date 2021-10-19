@@ -106,7 +106,7 @@ const ProjectFormComponent = (props: ProjectFormComponentProps) => {
             <PageContent
                 headerContent={
                     <HeaderTitle
-                        title={`${submitText} ${project?.name} project`}
+                        title={`${submitText} ${props.project?.name} project`}
                     />
                 }
             >
