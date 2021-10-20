@@ -23,6 +23,7 @@ import ProjectSelect from '../project-select-container';
 import { projectFilterGenerator } from '../../../utils/project-filter-generator';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { CREATE_FEATURE } from '../../AccessProvider/permissions';
+import { trim } from '../../common/util';
 
 const FeatureCreate = () => {
     const styles = useStyles();
