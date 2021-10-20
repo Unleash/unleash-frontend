@@ -22,7 +22,7 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
 
     const access = hasAccess(permission);
     const tooltipText = access
-        ? tooltip
+        ? tooltip || ''
         : "You don't have access to perform this operation";
 
     return (

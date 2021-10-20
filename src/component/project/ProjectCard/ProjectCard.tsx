@@ -4,7 +4,6 @@ import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
-import ConditionallyRender from '../../common/ConditionallyRender';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Dialogue from '../../common/Dialogue';
@@ -55,19 +54,16 @@ const ProjectCard = ({
         <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header} data-loading>
                 <h2 className={styles.title}>{name}</h2>
-                <ConditionallyRender
-                    condition={true}
-                    show={
-                        <PermissionIconButton
-                            permission={UPDATE_PROJECT}
-                            className={styles.actionsBtn}
-                            data-loading
-                            onClick={handleClick}
-                        >
-                            <MoreVertIcon />
-                        </PermissionIconButton>
-                    }
-                />
+
+                <PermissionIconButton
+                    permission={UPDATE_PROJECT}
+                    className={styles.actionsBtn}
+                    data-loading
+                    onClick={handleClick}
+                >
+                    <MoreVertIcon />
+                </PermissionIconButton>
+
                 <Menu
                     id="project-card-menu"
                     open={Boolean(anchorEl)}
