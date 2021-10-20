@@ -30,12 +30,12 @@ const CreateFeature = ({
     user,
 }) => {
     const params = useQueryParams();
-    const featureName = params.get('name');
+    const project = params.get('project');
     const history = useHistory();
 
     useEffect(() => {
-        if (featureName) {
-            setValue('name', featureName);
+        if (project) {
+            setValue('project', project);
         }
         /* eslint-disable-next-line */
     }, []);
@@ -87,10 +87,8 @@ const CreateFeature = ({
                 </div>
                 <section className={styles.formContainer}>
                     <ProjectSelect
-                        value={input.project}
-                        onChange={v => {
-                            setValue('project', v.target.value);
-                        }}
+                        value={project || input.project}
+                        onChange={v => setValue('project', v.target.value)}
                         filter={projectFilterGenerator(user, CREATE_FEATURE)}
                     />
                 </section>

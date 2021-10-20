@@ -4,7 +4,7 @@ import { useStyles } from './FeatureCreate.styles';
 import { IFeatureViewParams } from '../../../interfaces/params';
 import PageContent from '../../common/PageContent';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import { CardActions, TextField } from '@material-ui/core';
+import { CardActions } from '@material-ui/core';
 import FeatureTypeSelect from '../FeatureView2/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
 import {
     CF_CREATE_BTN_ID,
@@ -20,6 +20,7 @@ import { useCommonStyles } from '../../../common.styles';
 import { FormButtons } from '../../common';
 import useQueryParams from '../../../hooks/useQueryParams';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import Input from '../../common/Input/Input';
 
 const FeatureCreate = () => {
     const styles = useStyles();
@@ -40,11 +41,11 @@ const FeatureCreate = () => {
     const { uiConfig } = useUiConfig();
 
     const params = useQueryParams();
-    const featureName = params.get('name');
+    const project = params.get('project');
 
     useEffect(() => {
-        if (featureName) {
-            setValue('name', featureName);
+        if (project) {
+            setValue('name', project);
         }
         /* eslint-disable-next-line */
     }, []);
@@ -65,7 +66,7 @@ const FeatureCreate = () => {
         if (featureToggleName.length > 0) {
             try {
                 await validateFeatureToggleName(featureToggleName);
-            } catch (err: any) {
+            } catch (err: Error) {
                 setNameError(
                     err && err.message ? err.message : 'Could not check name'
                 );
@@ -87,8 +88,8 @@ const FeatureCreate = () => {
                 )
             );
             // Trigger
-        } catch (e: any) {
-            if (e.toString().includes('not allowed to be empty')) {
+        } catch (err: Error) {
+            if (err.toString().includes('not allowed to be empty')) {
                 setNameError('Name is not allowed to be empty');
             }
         }
@@ -106,9 +107,7 @@ const FeatureCreate = () => {
             <form onSubmit={onSubmit}>
                 <input type="hidden" name="project" value={projectId} />
                 <div className={styles.formContainer}>
-                    <TextField
-                        size="small"
-                        variant="outlined"
+                    <Input
                         label="Name"
                         required
                         placeholder="Unique-name"
@@ -118,10 +117,13 @@ const FeatureCreate = () => {
                             'data-test': CF_NAME_ID,
                         }}
                         value={toggle.name}
-                        error={nameError !== ''}
+                        error={Boolean(nameError)}
                         helperText={nameError}
                         onBlur={v => validateName(v.target.value)}
-                        onChange={v => setValue('name', trim(v.target.value))}
+                        onChange={v => {
+                            setValue('name', trim(v.target.value));
+                            setNameError('');
+                        }}
                     />
                 </div>
                 <div className={styles.formContainer}>
@@ -137,9 +139,7 @@ const FeatureCreate = () => {
                     />
                 </div>
                 <section className={styles.formContainer}>
-                    <TextField
-                        size="small"
-                        variant="outlined"
+                    <Input
                         className={commonStyles.fullWidth}
                         multiline
                         rows={4}

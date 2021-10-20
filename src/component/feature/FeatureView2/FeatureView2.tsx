@@ -113,8 +113,8 @@ const FeatureView2 = () => {
                     <Link
                         to={getCreateTogglePath(
                             projectId,
-                            featureId,
-                            uiConfig.flags.E
+                            uiConfig.flags.E,
+                            {name: featureId}
                         )}
                     >
                         create it

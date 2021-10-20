@@ -61,7 +61,7 @@ const ProjectFeatureToggles = ({
                                     <ResponsiveButton
                                         onClick={() =>
                                             history.push(
-                                                getCreateTogglePath(id, undefined, uiConfig.flags.E)
+                                                getCreateTogglePath(id, uiConfig.flags.E)
                                             )
                                         }
                                         maxWidth="700px"

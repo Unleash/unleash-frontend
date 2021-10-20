@@ -9,8 +9,26 @@ export const getToggleCopyPath = (
     return `/projects/${projectId}/features/${featureToggleName}/strategies/copy`;
 };
 
-export const getCreateTogglePath = (projectId: string, featureName?: string, newpath: boolean = false) => {
-    return newpath ? `/projects/${projectId}/create-toggle2?name=${featureName}` : `/projects/${projectId}/create-toggle?name=${featureName}`;
+export const getCreateTogglePath = (
+    projectId: string,
+    newPath: boolean = false,
+    query?: Object
+) => {
+    const path = newPath
+        ? `/projects/${projectId}/create-toggle2`
+        : `/projects/${projectId}/create-toggle`;
+
+    let queryString;
+    if (query) {
+        queryString = Object.keys(query).reduce((acc, curr) => {
+            acc += `${curr}=${query[curr]}`;
+            return acc;
+        }, '');
+    }
+    if (queryString) {
+        return `${path}?${queryString}`;
+    }
+    return path;
 };
 
 export const getProjectEditPath = (projectId: string) => {
