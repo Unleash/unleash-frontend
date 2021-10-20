@@ -57,6 +57,7 @@ const ProjectCard = ({
 
                 <PermissionIconButton
                     permission={UPDATE_PROJECT}
+                    projectId={id}
                     className={styles.actionsBtn}
                     data-loading
                     onClick={handleClick}

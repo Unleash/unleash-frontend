@@ -286,6 +286,7 @@ const FeatureOverviewVariants = () => {
                     className={styles.addVariantButton}
                     data-test={'ADD_VARIANT_BUTTON'}
                     permission={UPDATE_FEATURE}
+                    projectId={projectId}
                 >
                     Add variant
                 </PermissionButton>

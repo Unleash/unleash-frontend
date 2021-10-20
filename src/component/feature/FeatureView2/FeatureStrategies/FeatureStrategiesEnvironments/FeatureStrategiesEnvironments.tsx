@@ -377,6 +377,7 @@ const FeatureStrategiesEnvironments = () => {
                                         }
                                         Icon={Add}
                                         maxWidth="700px"
+                                        projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                     >
                                         Add new strategy

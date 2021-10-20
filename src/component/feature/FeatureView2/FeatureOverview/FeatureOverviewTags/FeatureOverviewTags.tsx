@@ -131,6 +131,7 @@ const FeatureOverviewTags = () => {
                 <PermissionIconButton
                     onClick={() => setOpenTagDialog(true)}
                     permission={UPDATE_FEATURE}
+                    projectId={projectId}
                     tooltip="Add tag"
                     data-loading
                 >
