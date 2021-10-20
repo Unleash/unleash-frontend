@@ -2,9 +2,7 @@ import { Button, Tooltip } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { Lock } from '@material-ui/icons';
 import { useContext } from 'react';
-import { useParams } from 'react-router';
 import AccessContext from '../../../contexts/AccessContext';
-import { IFeatureViewParams } from '../../../interfaces/params';
 import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps extends OverridableComponent<any> {

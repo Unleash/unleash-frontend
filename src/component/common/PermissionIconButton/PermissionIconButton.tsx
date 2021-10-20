@@ -1,9 +1,7 @@
 import { IconButton, Tooltip } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { useContext } from 'react';
-import { useParams } from 'react-router';
 import AccessContext from '../../../contexts/AccessContext';
-import { IFeatureViewParams } from '../../../interfaces/params';
 
 interface IPermissionIconButtonProps extends OverridableComponent<any> {
     permission: string;
