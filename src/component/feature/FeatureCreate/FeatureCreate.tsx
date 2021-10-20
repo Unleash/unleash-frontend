@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useStyles } from './FeatureCreate.styles';
 import { IFeatureViewParams } from '../../../interfaces/params';
@@ -15,12 +15,15 @@ import {
 import { loadNameFromUrl, trim } from '../../common/util';
 import { getTogglePath } from '../../../utils/route-path-helpers';
 import { IFeatureToggleDTO } from '../../../interfaces/featureToggle';
-import { FormEventHandler } from 'react-router/node_modules/@types/react';
 import { useCommonStyles } from '../../../common.styles';
 import { FormButtons } from '../../common';
 import useQueryParams from '../../../hooks/useQueryParams';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import Input from '../../common/Input/Input';
+import ProjectSelect from '../project-select-container';
+import { projectFilterGenerator } from '../../../utils/project-filter-generator';
+import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { CREATE_FEATURE } from '../../AccessProvider/permissions';
 
 const FeatureCreate = () => {
     const styles = useStyles();
@@ -49,6 +52,7 @@ const FeatureCreate = () => {
         }
         /* eslint-disable-next-line */
     }, []);
+    const { permissions } = useUser();
 
     useEffect(() => {
         window.onbeforeunload = () =>
@@ -66,7 +70,7 @@ const FeatureCreate = () => {
         if (featureToggleName.length > 0) {
             try {
                 await validateFeatureToggleName(featureToggleName);
-            } catch (err: Error) {
+            } catch (err: any) {
                 setNameError(
                     err && err.message ? err.message : 'Could not check name'
                 );
@@ -74,23 +78,29 @@ const FeatureCreate = () => {
         }
     };
 
-    const onSubmit = async (evt: FormEventHandler) => {
+    const onSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+
+        await validateName(toggle.name);
+
+        if(!toggle.name) {
+            setNameError('Name is not allowed to be empty');
+            return;
+        }
 
         if (nameError) {
             return;
         }
 
         try {
-            await createFeatureToggle(projectId, toggle).then(() =>
-                history.push(
-                    getTogglePath(toggle.project, toggle.name, uiConfig.flags.E)
-                )
-            );
+            await createFeatureToggle(toggle.project, toggle)
+            history.push(getTogglePath(toggle.project, toggle.name, uiConfig.flags.E));
             // Trigger
-        } catch (err: Error) {
-            if (err.toString().includes('not allowed to be empty')) {
-                setNameError('Name is not allowed to be empty');
+        } catch (err) {
+            if(err instanceof Error) {
+                if (err.toString().includes('not allowed to be empty')) {
+                    setNameError('Name is not allowed to be empty');
+                }
             }
         }
     };
@@ -109,7 +119,6 @@ const FeatureCreate = () => {
                 <div className={styles.formContainer}>
                     <Input
                         label="Name"
-                        required
                         placeholder="Unique-name"
                         className={styles.nameInput}
                         name="name"
@@ -126,7 +135,7 @@ const FeatureCreate = () => {
                         }}
                     />
                 </div>
-                <div className={styles.formContainer}>
+                <section className={styles.formContainer}>
                     <FeatureTypeSelect
                         value={toggle.type}
                         onChange={v => setValue('type', v.target.value)}
@@ -137,7 +146,14 @@ const FeatureCreate = () => {
                             'data-test': CF_TYPE_ID,
                         }}
                     />
-                </div>
+                </section>
+                <section className={styles.formContainer}>
+                    <ProjectSelect
+                        value={toggle.project}
+                        onChange={v => setValue('project', v.target.value)}
+                        filter={projectFilterGenerator({ permissions }, CREATE_FEATURE)}
+                    />
+                </section>
                 <section className={styles.formContainer}>
                     <Input
                         className={commonStyles.fullWidth}
