@@ -12,7 +12,6 @@ import {
     CF_NAME_ID,
     CF_TYPE_ID,
 } from '../../../testIds';
-import { loadNameFromUrl, trim } from '../../common/util';
 import { getTogglePath } from '../../../utils/route-path-helpers';
 import { IFeatureToggleDTO } from '../../../interfaces/featureToggle';
 import { useCommonStyles } from '../../../common.styles';
@@ -29,10 +28,11 @@ const FeatureCreate = () => {
     const styles = useStyles();
     const commonStyles = useCommonStyles();
     const { projectId } = useParams<IFeatureViewParams>();
+    const params = useQueryParams();
     const { createFeatureToggle, validateFeatureToggleName } = useFeatureApi();
     const history = useHistory();
     const [toggle, setToggle] = useState<IFeatureToggleDTO>({
-        name: loadNameFromUrl(),
+        name: params.get('name') || '',
         description: '',
         type: 'release',
         stale: false,
@@ -40,18 +40,9 @@ const FeatureCreate = () => {
         project: projectId,
         archived: false,
     });
+
     const [nameError, setNameError] = useState('');
     const { uiConfig } = useUiConfig();
-
-    const params = useQueryParams();
-    const project = params.get('project');
-
-    useEffect(() => {
-        if (project) {
-            setValue('name', project);
-        }
-        /* eslint-disable-next-line */
-    }, []);
     const { permissions } = useUser();
 
     useEffect(() => {
