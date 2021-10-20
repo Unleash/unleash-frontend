@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { Switch, TableCell, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
 
@@ -14,6 +14,8 @@ import FeatureType from '../../FeatureView2/FeatureType/FeatureType';
 import classNames from 'classnames';
 import CreatedAt from './CreatedAt';
 import useProject from '../../../../hooks/api/getters/useProject/useProject';
+import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
+import AccessContext from '../../../../contexts/AccessContext';
 
 interface IFeatureToggleListNewItemProps {
     name: string;
@@ -32,6 +34,7 @@ const FeatureToggleListNewItem = ({
     projectId,
     createdAt,
 }: IFeatureToggleListNewItemProps) => {
+    const { hasAccess } = useContext(AccessContext);
     const { toast, setToastData } = useToast();
     const { toggleFeatureByEnvironment } = useToggleFeatureByEnv(
         projectId,
@@ -126,6 +129,9 @@ const FeatureToggleListNewItem = ({
                             <span data-loading style={{ display: 'block' }}>
                                 <Switch
                                     checked={env.enabled}
+                                    disabled={
+                                        !hasAccess(UPDATE_FEATURE, projectId)
+                                    }
                                     ref={ref}
                                     onClick={handleToggle.bind(this, env)}
                                 />

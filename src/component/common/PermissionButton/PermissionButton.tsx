@@ -2,7 +2,9 @@ import { Button, Tooltip } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { Lock } from '@material-ui/icons';
 import { useContext } from 'react';
+import { useParams } from 'react-router';
 import AccessContext from '../../../contexts/AccessContext';
+import { IFeatureViewParams } from '../../../interfaces/params';
 import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps extends OverridableComponent<any> {
@@ -21,8 +23,11 @@ const PermissionButton: React.FC<IPermissionIconButtonProps> = ({
     ...rest
 }) => {
     const { hasAccess } = useContext(AccessContext);
+    const { projectId } = useParams<IFeatureViewParams>();
 
-    const access = hasAccess(permission);
+    const access = projectId
+        ? hasAccess(permission, projectId)
+        : hasAccess(permission);
     const tooltipText = access
         ? tooltip
         : "You don't have access to perform this operation";
