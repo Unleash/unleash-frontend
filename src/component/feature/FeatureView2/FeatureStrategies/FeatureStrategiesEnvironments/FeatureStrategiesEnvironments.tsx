@@ -1,7 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
-import { Tabs, Tab, Button, useMediaQuery } from '@material-ui/core';
+import { Tabs, Tab, useMediaQuery } from '@material-ui/core';
 import TabPanel from '../../../../common/TabNav/TabPanel';
 import useTabs from '../../../../../hooks/useTabs';
 import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';

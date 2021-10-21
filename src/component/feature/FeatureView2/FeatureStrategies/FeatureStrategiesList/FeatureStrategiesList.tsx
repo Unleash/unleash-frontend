@@ -5,11 +5,10 @@ import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import classnames from 'classnames';
-import { Button, IconButton, Tooltip, useMediaQuery } from '@material-ui/core';
+import { Button, useMediaQuery } from '@material-ui/core';
 import { DoubleArrow } from '@material-ui/icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
-import AccessContext from '../../../../../contexts/AccessContext';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
@@ -19,7 +18,6 @@ const FeatureStrategiesList = () => {
     const { expandedSidebar, setExpandedSidebar } = useContext(
         FeatureStrategiesUIContext
     );
-    const { hasAccess } = useContext(AccessContext);
     const { projectId } = useParams<IFeatureViewParams>();
 
     const styles = useStyles();
