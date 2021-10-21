@@ -117,5 +117,8 @@
       "no-useless-computed-key": "off",
       "import/no-anonymous-default-export": "off"
     }
+  },
+  "dependencies": {
+    "copy-to-clipboard": "^3.3.1"
   }
 }
