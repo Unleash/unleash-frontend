@@ -10,6 +10,9 @@ import { DoubleArrow } from '@material-ui/icons';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
 import AccessContext from '../../../../../contexts/AccessContext';
+import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
+import { useParams } from 'react-router';
+import { IFeatureViewParams } from '../../../../../interfaces/params';
 
 const FeatureStrategiesList = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
@@ -17,6 +20,7 @@ const FeatureStrategiesList = () => {
         FeatureStrategiesUIContext
     );
     const { hasAccess } = useContext(AccessContext);
+    const { projectId } = useParams<IFeatureViewParams>();
 
     const styles = useStyles();
 
@@ -64,24 +68,18 @@ const FeatureStrategiesList = () => {
                     </div>
                 }
             />
-            <Tooltip
-                title={
-                    hasAccess(UPDATE_FEATURE)
-                        ? 'Click to open.'
-                        : "You don't have access to perform this operation"
-                }
-                arrow
-            >
-                <span className={styles.iconButtonWrapper}>
-                    <IconButton
-                        className={styles.iconButton}
-                        onClick={toggleSidebar}
-                        disabled={!hasAccess(UPDATE_FEATURE)}
-                    >
-                        <DoubleArrow className={iconClasses} />
-                    </IconButton>
-                </span>
-            </Tooltip>
+
+            <span className={styles.iconButtonWrapper}>
+                <PermissionIconButton
+                    className={styles.iconButton}
+                    onClick={toggleSidebar}
+                    permission={UPDATE_FEATURE}
+                    projectId={projectId}
+                >
+                    <DoubleArrow className={iconClasses} />
+                </PermissionIconButton>
+            </span>
+
             {renderStrategies()}
         </section>
     );
