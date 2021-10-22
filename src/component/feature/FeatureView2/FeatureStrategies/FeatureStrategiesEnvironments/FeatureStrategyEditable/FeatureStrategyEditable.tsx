@@ -90,7 +90,6 @@ const FeatureStrategyEditable = ({
     useEffect(() => {
         const dirtyStrategy = dirty[strategy.id];
         if (dirtyStrategy) return;
-
         mutate(FEATURE_STRATEGY_CACHE_KEY, { ...currentStrategy }, false);
         setStrategyCache(cloneDeep(currentStrategy));
         /* eslint-disable-next-line */
@@ -120,7 +119,8 @@ const FeatureStrategyEditable = ({
 
     const setStrategyConstraints = (constraints: IConstraint[]) => {
         const updatedStrategy = cloneDeep(strategy);
-        updatedStrategy.constraints = [...constraints];
+
+        updatedStrategy.constraints = [...cloneDeep(constraints)];
         setDirty(prev => ({ ...prev, [strategy.id]: true }));
         mutate(FEATURE_STRATEGY_CACHE_KEY, { ...updatedStrategy }, false);
     };
@@ -136,7 +136,7 @@ const FeatureStrategyEditable = ({
             />
             <FeatureStrategyAccordion
                 parameters={parameters}
-                constraints={constraints}
+                constraints={cloneDeep(constraints)}
                 data-test={`${STRATEGY_ACCORDION_ID}-${strategy.name}`}
                 strategy={strategy}
                 setStrategyParams={setStrategyParams}
