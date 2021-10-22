@@ -45,8 +45,8 @@ const FeatureStrategyEditable = ({
     const { activeEnvironment, featureCache, dirty, setDirty } = useContext(
         FeatureStrategiesUIContext
     );
-    const [strategyCache, setStrategyCache] = useState<IFeatureStrategy | null>(
-        null
+    const [strategyCache, setStrategyCache] = useState<IFeatureStrategy>(
+        cloneDeep(currentStrategy)
     );
     const styles = useStyles();
 
