@@ -187,6 +187,8 @@ const FeatureStrategyEditable = ({
                                     onClick={discardChanges}
                                     className={styles.editButton}
                                     disabled={loading}
+                                    color="tertiary"
+                                    variant="text"
                                     permission={UPDATE_FEATURE}
                                     projectId={projectId}
                                 >
