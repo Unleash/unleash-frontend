@@ -183,13 +183,15 @@ const FeatureStrategyEditable = ({
                                 >
                                     Save changes
                                 </PermissionButton>
-                                <Button
+                                <PermissionButton
                                     onClick={discardChanges}
                                     className={styles.editButton}
                                     disabled={loading}
+                                    permission={UPDATE_FEATURE}
+                                    projectId={projectId}
                                 >
                                     Discard changes
-                                </Button>
+                                </PermissionButton>
                             </div>
                         </>
                     }
