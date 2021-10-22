@@ -114,15 +114,15 @@ const FeatureStrategyEditable = ({
     };
 
     const discardChanges = () => {
-        mutate(FEATURE_STRATEGY_CACHE_KEY, { ...strategyCache }, false);
         setDirty(prev => ({ ...prev, [strategy.id]: false }));
+        mutate(FEATURE_STRATEGY_CACHE_KEY, { ...strategyCache }, false);
     };
 
     const setStrategyConstraints = (constraints: IConstraint[]) => {
-        const updatedStrategy = { ...strategy };
-        updatedStrategy.constraints = constraints;
-        mutate(FEATURE_STRATEGY_CACHE_KEY, { ...updatedStrategy }, false);
+        const updatedStrategy = cloneDeep(strategy);
+        updatedStrategy.constraints = [...constraints];
         setDirty(prev => ({ ...prev, [strategy.id]: true }));
+        mutate(FEATURE_STRATEGY_CACHE_KEY, { ...updatedStrategy }, false);
     };
 
     if (!strategy.id) return null;
