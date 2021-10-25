@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
     FormControl,
@@ -52,7 +52,7 @@ const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
-    const [weightValue, setWeightValue] = useState('');
+    const [weightValue, setWeightValue] = useState(0);
 
     const clear = () => {
         if (editVariant) {
@@ -85,9 +85,9 @@ const AddVariant = ({
             setClonedVariants(feature.variants);
         }
         if (feature.variants.length === 0) {
-            setWeightValue('100');
+            setWeightValue(100);
         } else {
-            setWeightValue('');
+            setWeightValue(0);
         }
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
