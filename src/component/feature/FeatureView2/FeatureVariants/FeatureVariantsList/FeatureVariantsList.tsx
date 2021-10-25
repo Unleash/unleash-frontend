@@ -162,7 +162,6 @@ const FeatureOverviewVariants = () => {
     };
 
     const removeVariant = async (name: string) => {
-        console.log(`Removing variant ${name}`);
         let updatedVariants = variants.filter(v => v.name !== name);
         try {
             await updateVariants(
@@ -204,7 +203,6 @@ const FeatureOverviewVariants = () => {
         successText: string
     ) => {
         const newVariants = updateWeight(variants, 1000);
-
         const patch = createPatch(newVariants);
 
         if (patch.length === 0) return;

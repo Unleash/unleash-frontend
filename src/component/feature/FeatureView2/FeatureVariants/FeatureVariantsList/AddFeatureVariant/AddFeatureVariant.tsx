@@ -21,6 +21,11 @@ import Dialogue from '../../../../../common/Dialogue';
 import { trim, modalStyles } from '../../../../../common/util';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
+import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import { useParams } from 'react-router-dom';
+import { IFeatureViewParams } from '../../../../../../interfaces/params';
+import { IFeatureVariant } from '../../../../../../interfaces/featureToggle';
+import cloneDeep from 'lodash.clonedeep';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -44,6 +49,10 @@ const AddVariant = ({
     const [overrides, setOverrides] = useState([]);
     const [error, setError] = useState({});
     const commonStyles = useCommonStyles();
+    const { projectId, featureId } = useParams<IFeatureViewParams>();
+    const { feature } = useFeature(projectId, featureId);
+    const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [weightValue, setWeightValue] = useState('');
 
     const clear = () => {
         if (editVariant) {
@@ -68,6 +77,20 @@ const AddVariant = ({
         }
         setError({});
     };
+    const setClonedVariants = clonedVariants =>
+        setVariants(cloneDeep(clonedVariants));
+
+    useEffect(() => {
+        if (feature) {
+            setClonedVariants(feature.variants);
+        }
+        if (feature.variants.length === 0) {
+            setWeightValue('100');
+        } else {
+            setWeightValue('');
+        }
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    }, [feature.variants]);
 
     useEffect(() => {
         clear();
@@ -232,29 +255,36 @@ const AddVariant = ({
                                 ),
                             }}
                             style={{ marginRight: '0.8rem' }}
-                            value={data.weight || ''}
+                            value={weightValue}
                             error={Boolean(error.weight)}
                             type="number"
                             disabled={!isFixWeight}
                             onChange={setVariantValue}
                         />
                     </Grid>
-                    <Grid item md={6}>
-                        <FormControl>
-                            <FormControlLabel
-                                control={
-                                    <PermissionSwitch
-                                        permission={UPDATE_FEATURE}
-                                        name="weightType"
-                                        checked={isFixWeight}
-                                        data-test={'VARIANT_WEIGHT_TYPE'}
-                                        onChange={setVariantWeightType}
+                    <ConditionallyRender
+                        condition={variants.length > 0}
+                        show={
+                            <Grid item md={6}>
+                                <FormControl>
+                                    <FormControlLabel
+                                        control={
+                                            <PermissionSwitch
+                                                permission={UPDATE_FEATURE}
+                                                name="weightType"
+                                                checked={isFixWeight}
+                                                data-test={
+                                                    'VARIANT_WEIGHT_TYPE'
+                                                }
+                                                onChange={setVariantWeightType}
+                                            />
+                                        }
+                                        label="Custom percentage"
                                     />
-                                }
-                                label="Custom percentage"
-                            />
-                        </FormControl>
-                    </Grid>
+                                </FormControl>
+                            </Grid>
+                        }
+                    />
                 </Grid>
                 <p style={{ marginBottom: '1rem' }}>
                     <strong>Payload </strong>
