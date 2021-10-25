@@ -114,6 +114,10 @@ const FeatureSettingsProjectConfirm = ({
                             </List>
                         </div>
                     </div>
+                    <p className={styles.paragraph}>
+                        In order to move this feature toggle, make sure you
+                        enable the required environments in the target project.
+                    </p>
                 </Dialogue>
             }
         />
