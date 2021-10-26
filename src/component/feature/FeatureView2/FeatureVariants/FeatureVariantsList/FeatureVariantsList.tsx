@@ -206,20 +206,35 @@ const FeatureOverviewVariants = () => {
         const patch = createPatch(newVariants);
 
         if (patch.length === 0) return;
-        await patchFeatureToggle(projectId, featureId, patch);
-        refetch();
-        setToastData({
-            show: true,
-            type: 'success',
-            text: successText,
-        });
+        await patchFeatureToggle(projectId, featureId, patch)
+            .then(() => {
+                refetch();
+                setToastData({
+                    show: true,
+                    type: 'success',
+                    text: successText,
+                });
+            })
+            .catch(e => {
+                throw e;
+            });
     };
 
     const validateName = (name: string) => {
         if (!name) {
             return { name: 'Name is required' };
         }
+        if (variants.find(obj => obj.name === name)) {
+            return { name: 'Name already exist' };
+        }
     };
+
+    const validateWeight = (weight: number) => {
+        if (weight > 100 || weight < 0) {
+            return { weight: 'weight must be between 0 and 100' };
+        }
+    };
+
     const delDialogueMarkup = useDeleteVariantMarkup({
         show: delDialog.show,
         onClick: e => {
@@ -303,6 +318,7 @@ const FeatureOverviewVariants = () => {
                 }}
                 editing={editing}
                 validateName={validateName}
+                validateWeight={validateWeight}
                 editVariant={editVariant}
                 title={editing ? 'Edit variant' : 'Add variant'}
             />

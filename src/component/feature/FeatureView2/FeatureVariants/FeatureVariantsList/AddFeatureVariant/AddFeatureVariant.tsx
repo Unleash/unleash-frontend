@@ -40,6 +40,7 @@ const AddVariant = ({
     closeDialog,
     save,
     validateName,
+    validateWeight,
     editVariant,
     title,
     editing,
@@ -52,7 +53,7 @@ const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
-    const [weightValue, setWeightValue] = useState(0);
+    const [weightValue, setWeightValue] = useState(null);
 
     const clear = () => {
         if (editVariant) {
@@ -76,6 +77,7 @@ const AddVariant = ({
             setOverrides([]);
         }
         setError({});
+        setWeightValue(null);
     };
     const setClonedVariants = clonedVariants =>
         setVariants(cloneDeep(clonedVariants));
@@ -87,7 +89,7 @@ const AddVariant = ({
         if (feature.variants.length === 0) {
             setWeightValue(100);
         } else {
-            setWeightValue(0);
+            setWeightValue(null);
         }
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
@@ -118,9 +120,11 @@ const AddVariant = ({
         setError({});
         e.preventDefault();
 
-        const validationError = validateName(data.name);
-        if (validationError) {
-            setError(validationError);
+        const validationNameError = validateName(data.name);
+        const validationWeightError = validateWeight(weightValue);
+
+        if (validationNameError || validationWeightError) {
+            setError(validationNameError || validationWeightError);
             return;
         }
 
@@ -142,10 +146,15 @@ const AddVariant = ({
             clear();
             closeDialog();
         } catch (error) {
-            if (error.message.includes('duplicate value')) {
+            if (error?.body?.details[0]?.message?.includes('duplicate value')) {
                 setError({ name: 'A variant with that name already exists.' });
+            } else if (
+                error?.body?.details[0]?.message?.includes('must be a number')
+            ) {
+                setError({ weight: 'Weight must be a number' });
             } else {
-                const msg = error.message || 'Could not add variant';
+                const msg =
+                    error?.body?.details[0]?.message || 'Could not add variant';
                 setError({ general: msg });
             }
         }
@@ -257,9 +266,13 @@ const AddVariant = ({
                             style={{ marginRight: '0.8rem' }}
                             value={weightValue}
                             error={Boolean(error.weight)}
+                            helperText={error.weight}
                             type="number"
                             disabled={!isFixWeight}
-                            onChange={setVariantValue}
+                            onChange={e => {
+                                setWeightValue(parseInt(e.target.value));
+                                setVariantValue(e);
+                            }}
                         />
                     </Grid>
                     <ConditionallyRender
@@ -369,6 +382,7 @@ AddVariant.propTypes = {
     closeDialog: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     validateName: PropTypes.func.isRequired,
+    validateWeight: PropTypes.func.isRequired,
     editVariant: PropTypes.object,
     title: PropTypes.string,
     uiConfig: PropTypes.object,
