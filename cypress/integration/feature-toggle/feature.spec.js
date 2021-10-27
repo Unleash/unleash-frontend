@@ -294,8 +294,7 @@ describe('feature toggle', () => {
                     },
                 },
             ]
-        )
-
+        );
         const variantName = 'my-new-variant';
         cy.wait(500);
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
