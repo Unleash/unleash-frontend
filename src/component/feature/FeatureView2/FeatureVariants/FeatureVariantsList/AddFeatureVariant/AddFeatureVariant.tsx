@@ -137,7 +137,6 @@ const AddVariant = ({
             ) {
                 setError({ weight: 'Weight must be a number' });
             } else {
-                console.log(error);
                 const msg =
                     error?.body?.details[0]?.message || 'Could not add variant';
                 setError({ general: msg });
@@ -197,8 +196,6 @@ const AddVariant = ({
     };
 
     const isFixWeight = data.weightType === weightTypes.FIX;
-
-    console.log(data.weightType);
 
     return (
         <Dialogue

@@ -277,26 +277,7 @@ describe('feature toggle', () => {
     });
     it('Can set weight to fixed value for one of the variants', () => {
         cy.wait(500);
-        cy.request(
-            'PATCH',
-            `/api/admin/projects/default/features/${featureToggleName}`,
-            [
-                {
-                    op: 'add',
-                    path: '/variants/0',
-                    value: {
-                        name: 'request-name',
-                        weight: 850,
-                        weightType: 'variable',
-                        stickiness: 'default',
-                        payload: { type: 'string', value: 'request-name' },
-                        overrides: [],
-                    },
-                },
-            ]
-        );
-        const variantName = 'my-new-variant';
-        cy.wait(500);
+
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
         cy.get('[data-test=VARIANT_EDIT_BUTTON]').first().click();
         cy.get('[data-test=VARIANT_NAME_INPUT]')
@@ -311,23 +292,20 @@ describe('feature toggle', () => {
         cy.intercept(
             'PATCH',
             `/api/admin/projects/default/features/${featureToggleName}`,
-            req => {                
+            req => {
+                expect(req.body[0].op).to.equal('replace');
+                expect(req.body[0].path).to.match(/weight/);
+                expect(req.body[0].value).to.equal(850);
                 expect(req.body[1].op).to.equal('replace');
                 expect(req.body[1].path).to.match(/weight/);
-                expect(req.body[1].value).to.equal(475);
-                expect(req.body[2].op).to.equal('replace');
-                expect(req.body[2].path).to.match(/weightType/);
-                expect(req.body[2].value).to.equal('fix');
-                expect(req.body[3].op).to.equal('replace');
-                expect(req.body[3].path).to.match(/weight/);
-                expect(req.body[3].value).to.equal(50);
+                expect(req.body[1].value).to.equal(150);
             }
         ).as('variantupdate');
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@variantupdate');
         cy.get('[data-test=VARIANT_WEIGHT]')
             .first()
-            .should('have.text', '5 %');
+            .should('have.text', '15 %');
     });
 
     it(`can delete variant`, () => {
