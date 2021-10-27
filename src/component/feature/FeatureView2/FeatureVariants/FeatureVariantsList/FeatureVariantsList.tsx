@@ -230,7 +230,7 @@ const FeatureOverviewVariants = () => {
     };
 
     const validateWeight = (weight: number) => {
-        const weightValue = parseInt(weight)
+        const weightValue = parseInt(weight);
         if (weightValue > 100 || weightValue < 0) {
             return { weight: 'weight must be between 0 and 100' };
         }
@@ -294,7 +294,11 @@ const FeatureOverviewVariants = () => {
                 <PermissionButton
                     onClick={() => {
                         setEditing(false);
-                        setEditVariant({});
+                        if (variants.length === 0) {
+                            setEditVariant({ weight: 1000 });
+                        } else {
+                            setEditVariant({ weightType: 'variable' });
+                        }
                         setShowAddVariant(true);
                     }}
                     className={styles.addVariantButton}

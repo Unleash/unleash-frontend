@@ -39,8 +39,6 @@ const AddVariant = ({
     showDialog,
     closeDialog,
     save,
-    validateName,
-    validateWeight,
     editVariant,
     title,
     editing,
@@ -52,8 +50,7 @@ const AddVariant = ({
     const commonStyles = useCommonStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
-    const [variants, setVariants] = useState<IFeatureVariant[]>([]);    
-    const [weightValue, setWeightValue] = useState(null);
+    const [variants, setVariants] = useState<IFeatureVariant[]>([]);
 
     const clear = () => {
         if (editVariant) {
@@ -86,11 +83,6 @@ const AddVariant = ({
         if (feature) {
             setClonedVariants(feature.variants);
         }
-        if (feature.variants.length === 0) {
-            setWeightValue(100);
-        } else {
-            setWeightValue(null);
-        }
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
 
@@ -120,14 +112,6 @@ const AddVariant = ({
         setError({});
         e.preventDefault();
 
-        const validationNameError = validateName(data.name);
-        const validationWeightError = validateWeight(data.weight);
-
-        if (validationNameError || validationWeightError) {
-            setError(validationNameError || validationWeightError);
-            return;
-        }
-
         try {
             const variant = {
                 name: data.name,
@@ -153,6 +137,7 @@ const AddVariant = ({
             ) {
                 setError({ weight: 'Weight must be a number' });
             } else {
+                console.log(error);
                 const msg =
                     error?.body?.details[0]?.message || 'Could not add variant';
                 setError({ general: msg });
@@ -171,7 +156,6 @@ const AddVariant = ({
     const onCancel = e => {
         e.preventDefault();
         clear();
-        setWeightValue(null)
         closeDialog();
     };
 
@@ -214,6 +198,8 @@ const AddVariant = ({
 
     const isFixWeight = data.weightType === weightTypes.FIX;
 
+    console.log(data.weightType);
+
     return (
         <Dialogue
             open={showDialog}
@@ -248,38 +234,14 @@ const AddVariant = ({
                 />
                 <br />
                 <Grid container>
-                    <Grid item md={4}>
-                        <TextField
-                            id="weight"
-                            label="Weight"
-                            name="weight"
-                            variant="outlined"
-                            size="small"
-                            placeholder=""
-                            data-test={'VARIANT_WEIGHT_INPUT'}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="start">
-                                        %
-                                    </InputAdornment>
-                                ),
-                            }}
-                            style={{ marginRight: '0.8rem' }}
-                            value={weightValue}
-                            error={Boolean(error.weight)}
-                            helperText={error.weight}
-                            type="number"
-                            disabled={!isFixWeight}
-                            onChange={e => {
-                                setWeightValue(e.target.value);
-                                setVariantValue(e);
-                            }}
-                        />
-                    </Grid>
                     <ConditionallyRender
                         condition={variants.length > 0}
                         show={
-                            <Grid item md={6}>
+                            <Grid
+                                item
+                                md={12}
+                                style={{ marginBottom: '0.5rem' }}
+                            >
                                 <FormControl>
                                     <FormControlLabel
                                         control={
@@ -296,6 +258,39 @@ const AddVariant = ({
                                         label="Custom percentage"
                                     />
                                 </FormControl>
+                            </Grid>
+                        }
+                    />
+
+                    <ConditionallyRender
+                        condition={data.weightType === weightTypes.FIX}
+                        show={
+                            <Grid item md={4}>
+                                <TextField
+                                    id="weight"
+                                    label="Weight"
+                                    name="weight"
+                                    variant="outlined"
+                                    size="small"
+                                    placeholder=""
+                                    data-test={'VARIANT_WEIGHT_INPUT'}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="start">
+                                                %
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    style={{ marginRight: '0.8rem' }}
+                                    value={data.weight}
+                                    error={Boolean(error.weight)}
+                                    helperText={error.weight}
+                                    type="number"
+                                    disabled={!isFixWeight}
+                                    onChange={e => {
+                                        setVariantValue(e);
+                                    }}
+                                />
                             </Grid>
                         }
                     />
