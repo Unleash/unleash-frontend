@@ -297,8 +297,11 @@ describe('feature toggle', () => {
                 expect(req.body[0].path).to.match(/weight/);
                 expect(req.body[0].value).to.equal(850);
                 expect(req.body[1].op).to.equal('replace');
-                expect(req.body[1].path).to.match(/weight/);
-                expect(req.body[1].value).to.equal(150);
+                expect(req.body[1].path).to.match(/weightType/);
+                expect(req.body[1].value).to.equal('fix');
+                expect(req.body[2].op).to.equal('replace');
+                expect(req.body[2].path).to.match(/weight/);
+                expect(req.body[2].value).to.equal(150);
             }
         ).as('variantupdate');
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
