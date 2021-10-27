@@ -230,7 +230,8 @@ const FeatureOverviewVariants = () => {
     };
 
     const validateWeight = (weight: number) => {
-        if (weight > 100 || weight < 0) {
+        const weightValue = parseInt(weight)
+        if (weightValue > 100 || weightValue < 0) {
             return { weight: 'weight must be between 0 and 100' };
         }
     };

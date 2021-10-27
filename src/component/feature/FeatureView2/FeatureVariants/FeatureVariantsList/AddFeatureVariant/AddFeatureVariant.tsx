@@ -52,7 +52,7 @@ const AddVariant = ({
     const commonStyles = useCommonStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
-    const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [variants, setVariants] = useState<IFeatureVariant[]>([]);    
     const [weightValue, setWeightValue] = useState(null);
 
     const clear = () => {
@@ -77,8 +77,8 @@ const AddVariant = ({
             setOverrides([]);
         }
         setError({});
-        setWeightValue(null);
     };
+
     const setClonedVariants = clonedVariants =>
         setVariants(cloneDeep(clonedVariants));
 
@@ -121,7 +121,7 @@ const AddVariant = ({
         e.preventDefault();
 
         const validationNameError = validateName(data.name);
-        const validationWeightError = validateWeight(weightValue);
+        const validationWeightError = validateWeight(data.weight);
 
         if (validationNameError || validationWeightError) {
             setError(validationNameError || validationWeightError);
@@ -171,6 +171,7 @@ const AddVariant = ({
     const onCancel = e => {
         e.preventDefault();
         clear();
+        setWeightValue(null)
         closeDialog();
     };
 
@@ -270,7 +271,7 @@ const AddVariant = ({
                             type="number"
                             disabled={!isFixWeight}
                             onChange={e => {
-                                setWeightValue(parseInt(e.target.value));
+                                setWeightValue(e.target.value);
                                 setVariantValue(e);
                             }}
                         />
