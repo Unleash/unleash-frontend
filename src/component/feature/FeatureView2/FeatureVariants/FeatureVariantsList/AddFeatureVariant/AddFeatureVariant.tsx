@@ -40,6 +40,7 @@ const AddVariant = ({
     closeDialog,
     save,
     editVariant,
+    validateName,
     title,
     editing,
 }) => {
@@ -62,6 +63,8 @@ const AddVariant = ({
             });
             if (editVariant.payload) {
                 setPayload(editVariant.payload);
+            } else {
+                setPayload(EMPTY_PAYLOAD);
             }
             if (editVariant.overrides) {
                 setOverrides(editVariant.overrides);
@@ -111,6 +114,12 @@ const AddVariant = ({
     const submit = async e => {
         setError({});
         e.preventDefault();
+
+        const validationError = validateName(data.name);
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
 
         try {
             const variant = {

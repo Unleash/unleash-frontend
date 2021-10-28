@@ -224,9 +224,6 @@ const FeatureOverviewVariants = () => {
         if (!name) {
             return { name: 'Name is required' };
         }
-        if (variants.find(obj => obj.name === name)) {
-            return { name: 'Name already exist' };
-        }
     };
 
     const validateWeight = (weight: number) => {
