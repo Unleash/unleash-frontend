@@ -30,15 +30,18 @@ export const useStyles = makeStyles(theme => ({
         top: '300px',
         right: '-25px',
     },
-    iconButton: {
-        backgroundColor: `${theme.palette.grey[300]}!important`,
+    iconButton: {        
         [theme.breakpoints.down(700)]: {
             right: '-10px',
         },
+        background: `conic-gradient(rgb(255, 255, 255), 50%, rgb(196, 196, 196) 50%)`,
+        color: '#fff',
     },
     icon: {
         transition: 'transform 0.4s ease',
         transitionDelay: '0.4s',
+        position: 'relative',
+        left: '-7px'
     },
     expandedIcon: {
         transform: 'rotate(180deg)',

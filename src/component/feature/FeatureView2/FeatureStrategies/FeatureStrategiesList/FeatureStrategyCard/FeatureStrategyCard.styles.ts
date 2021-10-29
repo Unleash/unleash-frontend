@@ -43,6 +43,12 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         fill: theme.palette.primary.main,
     },
+    disabledButton: {
+        color: '#585858 !important',
+        backgroundColor: '#fff',
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+        marginBottom: '15px',
+    },
     description: {
         marginTop: '0.5rem',
         fontSize: theme.fontSizes.smallerBody,
