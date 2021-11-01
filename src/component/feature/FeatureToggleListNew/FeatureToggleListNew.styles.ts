@@ -41,6 +41,10 @@ export const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+    link:{
+        textDecoration: 'none',
+        color: 'inherit'
+    },
     envName: {
         display: 'inline-block',
         width: '90px',
