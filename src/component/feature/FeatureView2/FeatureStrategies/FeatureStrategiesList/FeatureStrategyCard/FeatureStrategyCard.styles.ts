@@ -47,9 +47,7 @@ export const useStyles = makeStyles(theme => ({
         '&:disabled': {
             color: '#000',
             opacity: 0.4,
-            backgroundColor: '#fff',
-            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-            marginBottom: '15px',
+            marginBottom: '5px',
         },
     },
     description: {
