@@ -11,31 +11,37 @@ export const useStyles = makeStyles(theme => ({
     },
     container: {
         backgroundColor: theme.palette.primary.main,
+        position: 'relative',
         height: '70vh',
         width: '50vw',
-        padding: 10,
+        padding: '2rem 1.5rem',
+        borderRadius: '5px',
         color: '#fff',
         overflow: 'auto',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     closeButton: {
         display: 'inline-flex',
         justifyContent: 'flex-end',
-        color: '#fff'
+        color: '#fff',
+        position: 'absolute',
+        right: '20px',
+        top: '15px',
     },
     controllers: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-end',
-      height: 'inherit',
-      marginBottom: 5,
-  },
-  circles: {
-    display: 'inline-flex',
-    justifyContent: 'center',
-    marginBottom: 9,
-},
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        height: 'inherit',
+        marginBottom: 5,
+    },
+    circles: {
+        display: 'inline-flex',
+        justifyContent: 'center',
+        marginBottom: 9,
+        position: 'relative',
+    },
     buttonsContainer: {
         display: 'flex',
         justifyContent: 'center',
@@ -49,7 +55,7 @@ export const useStyles = makeStyles(theme => ({
         color: '#000',
         backgroundColor: '#fff',
     },
-  //   icon:{
-  //     // transform: 'translateX(212px)'
-  //   }
+    //   icon:{
+    //     // transform: 'translateX(212px)'
+    //   }
 }));

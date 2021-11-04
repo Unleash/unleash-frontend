@@ -74,14 +74,25 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
             />
         );
     };
-    const ChildComp: React.FC = () => <h2>This is a child component</h2>
-    const ChildComp2: React.FC = () => <h2>This is a child component 2</h2>
-    const ChildComp3: React.FC = () => <h2>This is a child component 3</h2>
-
-
+    const ChildComp: React.FC = () => (
+        <h2>
+            <div>lorem ipsum </div>This is a child component
+        </h2>
+    );
+    const ChildComp2: React.FC = () => <h2>This is a child component 2</h2>;
+    const ChildComp3: React.FC = () => <h2>This is a child component 3</h2>;
+    const ChildComp4: React.FC = () => <h2>This is a child component 3</h2>;
 
     return (
-        <Splash components={[<ChildComp />, <ChildComp2 />, <ChildComp3 />]}/>
+        <Splash
+            components={[
+                <ChildComp />,
+                <ChildComp2 />,
+                <ChildComp3 />,
+                <ChildComp4 />,
+                <ChildComp3 />,
+            ]}
+        />
         // <SWRProvider
         //     setToastData={setToastData}
         //     isUnauthorized={isUnauthorized}
