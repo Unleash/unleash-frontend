@@ -21,11 +21,6 @@ import PermissionSwitch from '../../common/PermissionSwitch/PermissionSwitch';
 import { IProjectEnvironment } from '../../../interfaces/environments';
 import { getEnabledEnvs } from './helpers';
 
-export interface ProjectEnvironment {
-    name: string;
-    enabled: boolean;
-}
-
 interface ProjectEnvironmentListProps {
     projectId: string;
 }
@@ -46,7 +41,7 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         useProjectApi();
 
     // local state
-    const [selectedEnv, setSelectedEnv] = useState<ProjectEnvironment>();
+    const [selectedEnv, setSelectedEnv] = useState<IProjectEnvironment>();
     const [confirmName, setConfirmName] = useState('');
     const ref = useLoading(loading);
     const styles = useStyles();
