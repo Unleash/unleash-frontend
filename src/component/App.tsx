@@ -15,7 +15,7 @@ import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
 import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
-import Splash from './splash/Splash';
+import Splash from './common/Splash/Splash';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
