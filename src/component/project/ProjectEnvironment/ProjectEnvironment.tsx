@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 import PermissionSwitch from '../../common/PermissionSwitch/PermissionSwitch';
 import { IProjectEnvironment } from '../../../interfaces/environments';
+import { getEnabledEnvs } from './helpers';
 
 export interface ProjectEnvironment {
     name: string;
@@ -80,18 +81,9 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         } the environment.`;
     };
 
-    const getEnabledEnvs = () => {
-        return envs.reduce((enabledEnvs, currentEnv) => {
-            if (currentEnv.enabled) {
-                return enabledEnvs + 1;
-            }
-            return enabledEnvs;
-        }, 0);
-    };
-
     const toggleEnv = async (env: ProjectEnvironment) => {
         if (env.enabled) {
-            const enabledEnvs = getEnabledEnvs();
+            const enabledEnvs = getEnabledEnvs(envs);
 
             if (enabledEnvs > 1) {
                 setSelectedEnv(env);
