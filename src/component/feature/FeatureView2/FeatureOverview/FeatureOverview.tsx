@@ -5,6 +5,7 @@ import FeatureViewStale from './FeatureOverviewStale/FeatureOverviewStale';
 
 import { useStyles } from './FeatureOverview.styles';
 import FeatureOverviewMetrics from './FeatureOverviewMetrics/FeatureOverviewMetrics';
+import FeatureOverviewEnvironments from './FeatureOverviewEnvironments/FeatureOverviewEnvironments';
 
 const FeatureOverview = () => {
     const styles = useStyles();
@@ -17,10 +18,11 @@ const FeatureOverview = () => {
                 <FeatureOverviewTags />
             </div>
             <div className={styles.mainContent}>
-                <div className={styles.trafficContainer}>
+                <FeatureOverviewEnvironments />
+                {/* <div className={styles.trafficContainer}>
                     <FeatureOverviewMetrics data-loading />
                 </div>
-                <FeatureOverviewStrategies data-loading />
+                <FeatureOverviewStrategies data-loading /> */}
             </div>
         </div>
     );
