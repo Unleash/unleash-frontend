@@ -10,30 +10,17 @@ import { useState } from 'react';
 interface ISplashProps {
     components: React.ReactNode[];
 }
-const circles = [];
-const arraymove = (
-    arr: React.ReactNode[],
-    fromIndex: number,
-    toIndex: number
-) => {
-    let element = arr[fromIndex];
-    arr.splice(fromIndex, 1);
-    arr.splice(toIndex, 0, element);
-};
 
 const Splash: React.FC<ISplashProps> = props => {
     const styles = useStyles();
     const { components } = props;
     const [counter, setCounter] = useState(0);
-    const [x, setX] = useState(0);
 
     const onNext = () => {
-        arraymove(circles, counter, counter + 1);
         setCounter(counter + 1);
     };
 
     const onBack = () => {
-        arraymove(circles, counter, counter - 1);
         setCounter(counter - 1);
     };
 
