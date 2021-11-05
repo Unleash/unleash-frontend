@@ -16,6 +16,7 @@ import Feedback from './common/Feedback';
 import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
 import Splash from './common/Splash/Splash';
+import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -74,25 +75,9 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
             />
         );
     };
-    const ChildComp: React.FC = () => (
-        <h2>
-            <div>lorem ipsum </div>This is a child component
-        </h2>
-    );
-    const ChildComp2: React.FC = () => <h2>This is a child component 2</h2>;
-    const ChildComp3: React.FC = () => <h2>This is a child component 3</h2>;
-    const ChildComp4: React.FC = () => <h2>This is a child component 3</h2>;
 
     return (
-        <Splash
-            components={[
-                <ChildComp />,
-                <ChildComp2 />,
-                <ChildComp3 />,
-                <ChildComp4 />,
-                <ChildComp3 />,
-            ]}
-        />
+        <EnvironmentSplash/>
         // <SWRProvider
         //     setToastData={setToastData}
         //     isUnauthorized={isUnauthorized}

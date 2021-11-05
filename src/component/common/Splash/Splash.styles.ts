@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Height } from '@material-ui/icons';
 
 export const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -12,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
     container: {
         backgroundColor: theme.palette.primary.main,
         position: 'relative',
-        height: '70vh',
+        height: '85vh',
         width: '50vw',
         padding: '2rem 1.5rem',
         borderRadius: '5px',
@@ -26,8 +25,8 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'flex-end',
         color: '#fff',
         position: 'absolute',
-        right: '20px',
-        top: '15px',
+        right: '0px',
+        top: '10px',
     },
     controllers: {
         display: 'flex',
@@ -49,13 +48,16 @@ export const useStyles = makeStyles(theme => ({
     button: {
         textDecoration: 'none',
         color: '#fff',
+        '&:hover':{
+            backgroundColor: 'inherit'
+        }
     },
     nextButton: {
         textDecoration: 'none',
-        color: '#000',
+        color: theme.palette.primary.light,
         backgroundColor: '#fff',
+        '&:hover':{
+            backgroundColor: 'white',
+        }
     },
-    //   icon:{
-    //     // transform: 'translateX(212px)'
-    //   }
 }));

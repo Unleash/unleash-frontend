@@ -6,6 +6,8 @@ import {
     CloseOutlined,
 } from '@material-ui/icons';
 import { useState } from 'react';
+import ConditionallyRender from '../ConditionallyRender';
+import { useHistory } from 'react-router';
 
 interface ISplashProps {
     components: React.ReactNode[];
@@ -13,15 +15,22 @@ interface ISplashProps {
 
 const Splash: React.FC<ISplashProps> = props => {
     const styles = useStyles();
+    const history = useHistory();
     const { components } = props;
     const [counter, setCounter] = useState(0);
 
     const onNext = () => {
+        if (counter === components.length - 1) {
+            return history.push('/test');
+        }
         setCounter(counter + 1);
     };
 
     const onBack = () => {
         setCounter(counter - 1);
+    };
+    const onClose = () => {
+        history.push('/features');
     };
 
     const calculatePosition = () => {
@@ -58,7 +67,7 @@ const Splash: React.FC<ISplashProps> = props => {
         <div className={styles.mainContainer}>
             <div className={styles.container}>
                 <div className={styles.closeButton}>
-                    <Button className={styles.button}>
+                    <Button className={styles.button} onClick={onClose}>
                         <CloseOutlined />
                     </Button>
                 </div>
@@ -68,19 +77,23 @@ const Splash: React.FC<ISplashProps> = props => {
                         <div className={styles.circles}>{renderCircles()}</div>
                     </div>
                     <div className={styles.buttonsContainer}>
-                        <Button
-                            className={styles.button}
-                            disabled={counter === 0}
-                            onClick={onBack}
-                        >
-                            Back
-                        </Button>
-                        <Button
-                            className={styles.nextButton}
-                            disabled={counter === components.length - 1}
-                            onClick={onNext}
-                        >
-                            Next
+                        <ConditionallyRender
+                            condition={counter > 0}
+                            show={
+                                <Button
+                                    className={styles.button}
+                                    disabled={counter === 0}
+                                    onClick={onBack}
+                                >
+                                    Back
+                                </Button>
+                            }
+                        />
+
+                        <Button className={styles.nextButton} onClick={onNext}>
+                            {counter === components.length - 1
+                                ? 'Done'
+                                : 'Next'}
                         </Button>
                     </div>
                 </div>
