@@ -5,6 +5,7 @@ import PieChartIcon from '@material-ui/icons/PieChart';
 import { useMediaQuery } from '@material-ui/core';
 import { IFeatureEnvironmentMetrics } from '../../../../../interfaces/featureToggle';
 import { parseISO } from 'date-fns';
+import { calculatePercentage } from '../../../../../utils/calculate-percentage';
 
 interface IFeatureEnvironmentProps {
     className?: string;
@@ -29,14 +30,7 @@ const FeatureEnvironmentMetrics = ({
         hour = `since ${metricTime.getHours()}:00`;
     }
 
-    const calculatePercentage = () => {
-        const total = metric.yes + metric.no;
-        if (total === 0) {
-            return 0;
-        }
-
-        return Math.round((metric.yes / total) * 100);
-    };
+    const total = metric.yes + metric.no;
 
     let primaryStyles = {};
 
@@ -112,7 +106,7 @@ const FeatureEnvironmentMetrics = ({
                 </div>
                 <div className={styles.chartContainer} data-loading>
                     <PercentageCircle
-                        percentage={calculatePercentage()}
+                        percentage={calculatePercentage(total, metric.yes)}
                         styles={{
                             height: '60px',
                             width: '60px',
