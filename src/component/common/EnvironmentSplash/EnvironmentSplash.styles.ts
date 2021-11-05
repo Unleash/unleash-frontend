@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
     title:{
         textAlign: 'center',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        lineHeight: '1.3'
     },
     topDescription:{
         padding: '0px 40px',
@@ -14,16 +15,17 @@ export const useStyles = makeStyles(theme => ({
         padding: '0px 40px',
         fontSize: '17px',
         marginTop: '5px',
-
     },
     icon:{
         fontSize: '150px',
         display: 'block',
         margin: 'auto',
     },
-    img:{
-        maxWidth: '100%',
-        mawHeight: '100%',
-        textAlign: 'center'
-    }
+    logo:{
+        width: '80%',
+        height: '60%',
+        display: 'block',
+        margin: 'auto',
+        marginTop: '25px',
+    },
 }));

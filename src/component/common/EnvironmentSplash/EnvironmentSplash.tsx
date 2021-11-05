@@ -2,7 +2,7 @@ import Splash from '../Splash/Splash';
 import EnvironmentSplashPage from './EnvironmentSplashPage/EnvironmentSplashPage';
 import { VpnKey, CloudCircle } from '@material-ui/icons';
 import { useStyles } from './EnvironmentSplash.styles';
-import splashImg from '../../../assets/img/env-splash-2.png';
+import { ReactComponent as Logo } from '../../../assets/img/group996.svg';
 import { formatAssetPath } from '../../../utils/format-path';
 
 const EnvironmentSplash = () => {
@@ -13,7 +13,7 @@ const EnvironmentSplash = () => {
                 <EnvironmentSplashPage
                     title={
                         <h2 className={styles.title}>
-                            Environments are coming to Unleash!
+                            🎉{' '}Environments are coming to Unleash!{' '}🎉
                         </h2>
                     }
                     topDescription={
@@ -32,11 +32,14 @@ const EnvironmentSplash = () => {
                             By default you will get access three environments:
                             default, development and production. All of your
                             current configurations will live in the default
-                            environment and <b>nothing will change until you make a
-                            conscious decision to change.</b>
+                            environment and{' '}
+                            <b>
+                                nothing will change until you make a conscious
+                                decision to change.
+                            </b>
                         </p>
                     }
-                    image={<CloudCircle className={styles.icon}/>}
+                    image={<CloudCircle className={styles.icon} />}
                 />,
                 <EnvironmentSplashPage
                     title={
@@ -53,11 +56,9 @@ const EnvironmentSplash = () => {
                             feature toggle.
                         </p>
                     }
-                    image={<img
-                        alt="Generic Webhook logo"
-                        className={styles.img}
-                        src={formatAssetPath(splashImg)}
-                    />}
+                    image={
+                        <Logo className={styles.logo}/>
+                    }
                 />,
                 <EnvironmentSplashPage
                     title={
@@ -74,6 +75,9 @@ const EnvironmentSplash = () => {
                             every feature toggle who lives in that project will
                             have access to those environments.
                         </p>
+                    }
+                    image={
+                        <Logo className={styles.logo}/>
                     }
                 />,
                 <EnvironmentSplashPage

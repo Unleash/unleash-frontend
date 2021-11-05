@@ -12,8 +12,8 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.main,
         position: 'relative',
         height: '85vh',
-        width: '50vw',
-        padding: '2rem 1.5rem',
+        width: '51vw',
+        padding: '1.5rem 2rem',
         borderRadius: '5px',
         color: '#fff',
         overflow: 'auto',
@@ -38,7 +38,8 @@ export const useStyles = makeStyles(theme => ({
     circles: {
         display: 'inline-flex',
         justifyContent: 'center',
-        marginBottom: 9,
+        marginTop: 20,
+        marginBottom: 15,
         position: 'relative',
     },
     buttonsContainer: {
@@ -47,6 +48,7 @@ export const useStyles = makeStyles(theme => ({
     },
     button: {
         textDecoration: 'none',
+        width: '100px',
         color: '#fff',
         '&:hover':{
             backgroundColor: 'inherit'
@@ -54,10 +56,11 @@ export const useStyles = makeStyles(theme => ({
     },
     nextButton: {
         textDecoration: 'none',
+        width: '100px',
         color: theme.palette.primary.light,
         backgroundColor: '#fff',
         '&:hover':{
-            backgroundColor: 'white',
+            backgroundColor: '#fff',
         }
     },
 }));

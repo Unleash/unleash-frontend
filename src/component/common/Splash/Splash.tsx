@@ -92,7 +92,7 @@ const Splash: React.FC<ISplashProps> = props => {
 
                         <Button className={styles.nextButton} onClick={onNext}>
                             {counter === components.length - 1
-                                ? 'Done'
+                                ? 'Finish'
                                 : 'Next'}
                         </Button>
                     </div>
