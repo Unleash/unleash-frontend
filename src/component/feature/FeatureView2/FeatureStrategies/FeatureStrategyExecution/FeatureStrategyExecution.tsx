@@ -16,12 +16,14 @@ interface IFeatureStrategiesExecutionProps {
     parameters: IParameter;
     constraints?: IConstraint[];
     strategy: IFeatureStrategy;
+    percentageFill?: string;
 }
 
 const FeatureStrategyExecution = ({
     parameters,
     constraints = [],
     strategy,
+    percentageFill = '#fff',
 }: IFeatureStrategiesExecutionProps) => {
     const styles = useStyles();
     const { strategies } = useStrategies();
@@ -72,7 +74,7 @@ const FeatureStrategyExecution = ({
 
                             <PercentageCircle
                                 percentage={parameters[key]}
-                                secondaryPieColor={'#fff'}
+                                secondaryPieColor={percentageFill}
                             />
                         </Fragment>
                     );
@@ -159,6 +161,7 @@ const FeatureStrategyExecution = ({
 
                             <PercentageCircle
                                 percentage={strategy.parameters[param.name]}
+                                secondaryPieColor={percentageFill}
                             />
                             <ConditionallyRender
                                 condition={notLastItem}
