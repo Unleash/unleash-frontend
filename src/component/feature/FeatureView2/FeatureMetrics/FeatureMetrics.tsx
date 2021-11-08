@@ -9,13 +9,6 @@ import PageContent from '../../../common/PageContent';
 import { useStyles } from './FeatureMetrics.styles';
 import { getFeatureMetrics } from '../../../../utils/get-feature-metrics';
 
-const emptyMetric = (environment: string) => ({
-    yes: 0,
-    no: 0,
-    environment,
-    timestamp: '',
-});
-
 const FeatureMetrics = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);

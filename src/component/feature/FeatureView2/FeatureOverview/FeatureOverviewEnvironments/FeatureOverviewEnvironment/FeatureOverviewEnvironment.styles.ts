@@ -89,4 +89,9 @@ export const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         marginTop: '1rem',
     },
+    linkContainer: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginBottom: '1rem',
+    },
 }));

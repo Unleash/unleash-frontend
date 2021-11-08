@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { Cloud, ExpandMore } from '@material-ui/icons';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from '../../../../../../hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
@@ -70,11 +71,18 @@ const FeatureOverviewEnvironment = ({
                     <div className={styles.accordionContainer}>
                         <div className={styles.accordionBody}>
                             <div className={styles.accordionBodyInnerContainer}>
+                                <div className={styles.linkContainer}>
+                                    <Link
+                                        to={`/projects/${projectId}/features2/${featureId}/strategies?environment=${env.name}`}
+                                    >
+                                        Edit strategies
+                                    </Link>
+                                </div>
                                 <div className={styles.resultInfo}>
                                     {getOverviewText()}
                                 </div>
                                 <FeatureOverviewEnvironmentStrategies
-                                    strategies={featureEnvironment.strategies}
+                                    strategies={featureEnvironment?.strategies}
                                     environmentName={env.name}
                                 />
                             </div>
@@ -89,7 +97,7 @@ const FeatureOverviewEnvironment = ({
                                 <div className={styles.percentageContainer}>
                                     {calculatePercentage(
                                         totalTraffic,
-                                        environmentMetric.yes
+                                        environmentMetric?.yes
                                     )}
                                     %
                                 </div>

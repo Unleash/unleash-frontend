@@ -1,10 +1,8 @@
 import FeatureOverviewMetaData from './FeatureOverviewMetaData/FeatureOverviewMetaData';
-import FeatureOverviewStrategies from './FeatureOverviewStrategies/FeatureOverviewStrategies';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
 import FeatureViewStale from './FeatureOverviewStale/FeatureOverviewStale';
 
 import { useStyles } from './FeatureOverview.styles';
-import FeatureOverviewMetrics from './FeatureOverviewMetrics/FeatureOverviewMetrics';
 import FeatureOverviewEnvironments from './FeatureOverviewEnvironments/FeatureOverviewEnvironments';
 
 const FeatureOverview = () => {

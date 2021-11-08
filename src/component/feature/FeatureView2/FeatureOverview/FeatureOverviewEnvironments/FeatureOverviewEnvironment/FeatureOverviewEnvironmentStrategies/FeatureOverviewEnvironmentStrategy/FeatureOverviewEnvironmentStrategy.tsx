@@ -1,10 +1,14 @@
-import { IconButton } from '@material-ui/core';
 import { Settings } from '@material-ui/icons';
 import { useTheme } from '@material-ui/styles';
 import { Link, useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../../../interfaces/params';
 import { IFeatureStrategy } from '../../../../../../../../interfaces/strategy';
-import { getFeatureStrategyIcon } from '../../../../../../../../utils/strategy-names';
+import {
+    getFeatureStrategyIcon,
+    getHumanReadbleStrategyName,
+} from '../../../../../../../../utils/strategy-names';
+import PermissionIconButton from '../../../../../../../common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_FEATURE } from '../../../../../../../providers/AccessProvider/permissions';
 import FeatureStrategyExecution from '../../../../../FeatureStrategies/FeatureStrategyExecution/FeatureStrategyExecution';
 import { useStyles } from './FeatureOverviewEnvironmentStrategy.styles';
 
@@ -29,14 +33,16 @@ const FeatureOverviewEnvironmentStrategy = ({
         <div className={styles.container}>
             <div className={styles.header}>
                 <Icon className={styles.icon} />
-                {strategy.name}
+                {getHumanReadbleStrategyName(strategy.name)}
                 <div className={styles.editStrategy}>
-                    <IconButton
+                    <PermissionIconButton
+                        permission={UPDATE_FEATURE}
+                        projectId={projectId}
                         component={Link}
                         to={`/projects/${projectId}/features2/${featureId}/strategies?environment=${environmentName}`}
                     >
                         <Settings />
-                    </IconButton>
+                    </PermissionIconButton>
                 </div>
             </div>
 
