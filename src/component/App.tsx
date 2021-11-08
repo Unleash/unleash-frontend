@@ -15,8 +15,6 @@ import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
 import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
-import Splash from './common/Splash/Splash';
-import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -77,35 +75,34 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
     };
 
     return (
-        <EnvironmentSplash/>
-        // <SWRProvider
-        //     setToastData={setToastData}
-        //     isUnauthorized={isUnauthorized}
-        // >
-        //     {' '}
-        //     <div className={styles.container}>
-        //         <LayoutPicker location={location}>
-        //             <Switch>
-        //                 <ProtectedRoute
-        //                     exact
-        //                     path="/"
-        //                     unauthorized={isUnauthorized()}
-        //                     component={Redirect}
-        //                     renderProps={{ to: '/features' }}
-        //                 />
-        //                 {renderMainLayoutRoutes()}
-        //                 {renderStandaloneRoutes()}
-        //                 <Route path="/404" component={NotFound} />
-        //                 <Redirect to="/404" />
-        //             </Switch>
-        //             <Feedback
-        //                 feedbackId="pnps"
-        //                 openUrl="http://feedback.unleash.run"
-        //             />
-        //         </LayoutPicker>
-        //         {toast}
-        //     </div>
-        // </SWRProvider>
+        <SWRProvider
+            setToastData={setToastData}
+            isUnauthorized={isUnauthorized}
+        >
+            {' '}
+            <div className={styles.container}>
+                <LayoutPicker location={location}>
+                    <Switch>
+                        <ProtectedRoute
+                            exact
+                            path="/"
+                            unauthorized={isUnauthorized()}
+                            component={Redirect}
+                            renderProps={{ to: '/features' }}
+                        />
+                        {renderMainLayoutRoutes()}
+                        {renderStandaloneRoutes()}
+                        <Route path="/404" component={NotFound} />
+                        <Redirect to="/404" />
+                    </Switch>
+                    <Feedback
+                        feedbackId="pnps"
+                        openUrl="http://feedback.unleash.run"
+                    />
+                </LayoutPicker>
+                {toast}
+            </div>
+        </SWRProvider>
     );
 };
 // Set state to any for now, to avoid typing up entire state object while converting to tsx.
