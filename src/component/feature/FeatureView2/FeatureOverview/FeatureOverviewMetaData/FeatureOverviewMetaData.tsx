@@ -11,10 +11,13 @@ import { Edit } from '@material-ui/icons';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
+import useTags from '../../../../../hooks/api/getters/useTags/useTags';
+import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
 
 const FeatureOverviewMetaData = () => {
     const styles = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
+    const { tags } = useTags(featureId);
 
     const { feature } = useFeature(projectId, featureId);
 
@@ -65,6 +68,10 @@ const FeatureOverviewMetaData = () => {
                             </div>
                         </span>
                     }
+                />
+                <ConditionallyRender
+                    condition={tags.length > 0}
+                    show={<FeatureOverviewTags />}
                 />
             </div>
         </div>

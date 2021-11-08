@@ -1,28 +1,33 @@
 import { useHistory, useParams } from 'react-router-dom';
-import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
-import { useStyles } from './FeatureStrategiesEnvironments.styles';
-import { Tabs, Tab, useMediaQuery } from '@material-ui/core';
-import TabPanel from '../../../../common/TabNav/TabPanel';
-import useTabs from '../../../../../hooks/useTabs';
-import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
 import { useContext, useEffect, useState } from 'react';
+import { Tabs, Tab, useMediaQuery } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
+import classNames from 'classnames';
+import cloneDeep from 'lodash.clonedeep';
+
+import { IFeatureViewParams } from '../../../../../interfaces/params';
+import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
+import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
+
+import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
+import useToast from '../../../../../hooks/useToast';
+import useTabs from '../../../../../hooks/useTabs';
+import useQueryParams from '../../../../../hooks/useQueryParams';
+
+import TabPanel from '../../../../common/TabNav/TabPanel';
+import FeatureStrategiesEnvironmentList from './FeatureStrategiesEnvironmentList/FeatureStrategiesEnvironmentList';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategiesConfigure from './FeatureStrategiesConfigure/FeatureStrategiesConfigure';
-import classNames from 'classnames';
-import useToast from '../../../../../hooks/useToast';
-import { IFeatureViewParams } from '../../../../../interfaces/params';
-import cloneDeep from 'lodash.clonedeep';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
 import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
-import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
 import NoItems from '../../../../common/NoItems/NoItems';
 import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
-import { Add } from '@material-ui/icons';
-import AccessContext from '../../../../../contexts/AccessContext';
-import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
-import useQueryParams from '../../../../../hooks/useQueryParams';
 import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
+import AccessContext from '../../../../../contexts/AccessContext';
+
+import { useStyles } from './FeatureStrategiesEnvironments.styles';
+import EnvironmentIcon from '../../../../common/EnvironmentIcon/EnvironmentIcon';
 
 const FeatureStrategiesEnvironments = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
@@ -109,6 +114,7 @@ const FeatureStrategiesEnvironments = () => {
                     disabled={!!configureNewStrategy}
                     key={`${env.name}_${index}`}
                     label={env.name}
+                    icon={<EnvironmentIcon enabled={env.enabled} />}
                     {...a11yProps(index)}
                     onClick={() => setActiveTab(index)}
                     className={styles.tabButton}
@@ -228,13 +234,6 @@ const FeatureStrategiesEnvironments = () => {
         });
 
         return equal;
-
-        // If the parameter values are different
-        // If the constraint length is different
-        // If the constraint operators are different
-        // If the constraint values are different
-        // If the stickiness is different
-        // If the groupId is different
     };
 
     const renderTabPanels = () => {
@@ -365,8 +364,6 @@ const FeatureStrategiesEnvironments = () => {
                 show={
                     <>
                         <div className={styles.environmentsHeader}>
-                            <h2 className={styles.header}>Environments</h2>
-
                             <FeatureStrategiesRefresh
                                 show={showRefreshPrompt}
                                 refresh={handleRefresh}
@@ -376,6 +373,7 @@ const FeatureStrategiesEnvironments = () => {
                                 condition={!expandedSidebar}
                                 show={
                                     <ResponsiveButton
+                                        className={styles.addStrategyButton}
                                         data-test={ADD_NEW_STRATEGY_ID}
                                         onClick={() =>
                                             setExpandedSidebar(prev => !prev)

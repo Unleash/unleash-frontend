@@ -2,37 +2,30 @@ import { useState, useContext } from 'react';
 import { Chip } from '@material-ui/core';
 import { Add, Label } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
-import useTags from '../../../../../hooks/api/getters/useTags/useTags';
-import { IFeatureViewParams } from '../../../../../interfaces/params';
+import useTags from '../../../../../../hooks/api/getters/useTags/useTags';
+import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { useStyles } from './FeatureOverviewTags.styles';
-
-import slackIcon from '../../../../../assets/icons/slack.svg';
-import jiraIcon from '../../../../../assets/icons/jira.svg';
-import webhookIcon from '../../../../../assets/icons/webhooks.svg';
-import { formatAssetPath } from '../../../../../utils/format-path';
-import useTagTypes from '../../../../../hooks/api/getters/useTagTypes/useTagTypes';
-import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import AddTagDialog from './AddTagDialog/AddTagDialog';
-import Dialogue from '../../../../common/Dialogue';
-import { ITag } from '../../../../../interfaces/tags';
-import useToast from '../../../../../hooks/useToast';
-import {
-    UPDATE_FEATURE,
-    DELETE_TAG,
-} from '../../../../providers/AccessProvider/permissions';
-import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
-import ConditionallyRender from '../../../../common/ConditionallyRender';
-import AccessContext from '../../../../../contexts/AccessContext';
+import slackIcon from '../../../../../../assets/icons/slack.svg';
+import jiraIcon from '../../../../../../assets/icons/jira.svg';
+import webhookIcon from '../../../../../../assets/icons/webhooks.svg';
+import { formatAssetPath } from '../../../../../../utils/format-path';
+import useTagTypes from '../../../../../../hooks/api/getters/useTagTypes/useTagTypes';
+import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import Dialogue from '../../../../../common/Dialogue';
+import { ITag } from '../../../../../../interfaces/tags';
+import useToast from '../../../../../../hooks/useToast';
+import { DELETE_TAG } from '../../../../../providers/AccessProvider/permissions';
+import ConditionallyRender from '../../../../../common/ConditionallyRender';
+import AccessContext from '../../../../../../contexts/AccessContext';
 
 const FeatureOverviewTags = () => {
-    const [openTagDialog, setOpenTagDialog] = useState(false);
     const [showDelDialog, setShowDelDialog] = useState(false);
     const [selectedTag, setSelectedTag] = useState<ITag>({
         value: '',
         type: '',
     });
     const styles = useStyles();
-    const { featureId, projectId } = useParams<IFeatureViewParams>();
+    const { featureId } = useParams<IFeatureViewParams>();
     const { tags, refetch } = useTags(featureId);
     const { tagTypes } = useTagTypes();
     const { deleteTagFromFeature } = useFeatureApi();
@@ -121,24 +114,6 @@ const FeatureOverviewTags = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.tagheaderContainer}>
-                <div className={styles.tagHeader}>
-                    <h4 className={styles.tagHeaderText} data-loading>
-                        Tags
-                    </h4>
-                </div>
-                <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
-                <PermissionIconButton
-                    onClick={() => setOpenTagDialog(true)}
-                    permission={UPDATE_FEATURE}
-                    projectId={projectId}
-                    tooltip="Add tag"
-                    data-loading
-                >
-                    <Add />
-                </PermissionIconButton>
-            </div>
-
             <Dialogue
                 open={showDelDialog}
                 onClose={() => {

@@ -22,7 +22,7 @@ const FeatureOverviewEnvironmentMetrics = ({
                 <div className={styles.info}>
                     <p className={styles.percentage}>{percentage}%</p>
                     <p className={styles.infoParagraph}>
-                        No one has received this feature yet.
+                        No one has received this in the last hour.
                     </p>
                 </div>
                 <PieChart

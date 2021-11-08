@@ -17,6 +17,7 @@ import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
 import FeatureViewEnvironment from '../../../FeatureViewEnvironment/FeatureViewEnvironment';
 
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
+import FeatureOverviewEnvSwitch from '../../../FeatureOverview/FeatureOverviewEnvSwitches/FeatureOverviewEnvSwitch/FeatureOverviewEnvSwitch';
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IFeatureStrategy[];
 }
@@ -34,6 +35,7 @@ const FeatureStrategiesEnvironmentList = ({
     const {
         activeEnvironmentsRef,
         toast,
+        setToastData,
         deleteStrategy,
         updateStrategy,
         delDialog,
@@ -46,6 +48,7 @@ const FeatureStrategiesEnvironmentList = ({
         expandedSidebar,
         featureId,
         activeEnvironment,
+        updateFeatureEnvironmentCache,
     } = useFeatureStrategiesEnvironmentList(strategies);
 
     const [{ isOver }, drop] = useDrop({
@@ -138,19 +141,20 @@ const FeatureStrategiesEnvironmentList = ({
             condition={!configureNewStrategy}
             show={
                 <div className={classes} ref={drop}>
-                    <FeatureViewEnvironment
-                        env={activeEnvironment}
-                        className={styles.environmentList}
-                    >
-                        <div className={strategiesContainerClasses}>
-                            <ConditionallyRender
-                                condition={
-                                    activeEnvironment.strategies.length > 0
-                                }
-                                show={renderStrategies()}
-                            />
-                        </div>
-                    </FeatureViewEnvironment>
+                    <div className={styles.headerContainer}>
+                        <FeatureOverviewEnvSwitch
+                            env={activeEnvironment}
+                            setToastData={setToastData}
+                            callback={updateFeatureEnvironmentCache}
+                        />
+                    </div>
+                    <div className={strategiesContainerClasses}>
+                        <ConditionallyRender
+                            condition={activeEnvironment.strategies.length > 0}
+                            show={renderStrategies()}
+                        />
+                    </div>
+
                     {dropboxMarkup}
                     {toast}
                     {delDialogueMarkup}

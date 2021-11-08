@@ -1,9 +1,8 @@
 import FeatureOverviewMetaData from './FeatureOverviewMetaData/FeatureOverviewMetaData';
-import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
-import FeatureViewStale from './FeatureOverviewStale/FeatureOverviewStale';
 
 import { useStyles } from './FeatureOverview.styles';
 import FeatureOverviewEnvironments from './FeatureOverviewEnvironments/FeatureOverviewEnvironments';
+import FeatureOverviewEnvSwitches from './FeatureOverviewEnvSwitches/FeatureOverviewEnvSwitches';
 
 const FeatureOverview = () => {
     const styles = useStyles();
@@ -12,8 +11,7 @@ const FeatureOverview = () => {
         <div className={styles.container}>
             <div>
                 <FeatureOverviewMetaData />
-                <FeatureViewStale />
-                <FeatureOverviewTags />
+                <FeatureOverviewEnvSwitches />
             </div>
             <div className={styles.mainContent}>
                 <FeatureOverviewEnvironments />

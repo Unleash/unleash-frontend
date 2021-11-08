@@ -20,7 +20,7 @@ export const useStyles = makeStyles(theme => ({
     environmentsHeader: {
         padding: '2rem 2rem 1rem 2rem',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         [theme.breakpoints.down(700)]: {
             padding: '1.5rem',
@@ -54,6 +54,7 @@ export const useStyles = makeStyles(theme => ({
     tabContainer: {
         margin: '0rem 2rem 2rem 2rem',
     },
+    addStrategyButton: { marginLeft: 'auto' },
     tabNavigation: {
         backgroundColor: 'transparent',
         textTransform: 'none',

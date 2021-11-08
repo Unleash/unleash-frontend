@@ -1,6 +1,6 @@
 import { Tab, Tabs } from '@material-ui/core';
 import { useState } from 'react';
-import { Archive, FileCopy } from '@material-ui/icons';
+import { WatchLater, Archive, FileCopy, Label } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
@@ -22,15 +22,20 @@ import useLoading from '../../../hooks/useLoading';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
+import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 
 const FeatureView2 = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, loading, error } = useFeature(projectId, featureId);
     const { refetch: projectRefetch } = useProject(projectId);
+    const [openTagDialog, setOpenTagDialog] = useState(false);
     const { a11yProps } = useTabs(0);
     const { archiveFeatureToggle } = useFeatureApi();
     const { toast, setToastData } = useToast();
     const [showDelDialog, setShowDelDialog] = useState(false);
+    const [openStaleDialog, setOpenStaleDialog] = useState(false);
+
     const styles = useStyles();
     const history = useHistory();
     const ref = useLoading(loading);
@@ -111,11 +116,9 @@ const FeatureView2 = () => {
                     The feature <strong>{featureId.substring(0, 30)}</strong>{' '}
                     does not exist. Do you want to &nbsp;
                     <Link
-                        to={getCreateTogglePath(
-                            projectId,
-                            uiConfig.flags.E,
-                            {name: featureId}
-                        )}
+                        to={getCreateTogglePath(projectId, uiConfig.flags.E, {
+                            name: featureId,
+                        })}
                     >
                         create it
                     </Link>
@@ -136,7 +139,7 @@ const FeatureView2 = () => {
                                 className={styles.featureViewHeader}
                                 data-loading
                             >
-                                {feature.name}
+                                {feature.name} {feature.stale ? 'Stale' : null}
                             </h2>
                             <div className={styles.actions}>
                                 <PermissionIconButton
@@ -157,6 +160,22 @@ const FeatureView2 = () => {
                                     onClick={() => setShowDelDialog(true)}
                                 >
                                     <Archive />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    onClick={() => setOpenStaleDialog(true)}
+                                    permission={UPDATE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Toggle stale status"
+                                >
+                                    <WatchLater />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    onClick={() => setOpenTagDialog(true)}
+                                    permission={UPDATE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Add tag"
+                                >
+                                    <Label />
                                 </PermissionIconButton>
                             </div>
                         </div>
@@ -207,6 +226,16 @@ const FeatureView2 = () => {
                     >
                         Are you sure you want to archive this feature toggle?
                     </Dialogue>
+                    <StaleDialog
+                        stale={feature.stale}
+                        open={openStaleDialog}
+                        setOpen={setOpenStaleDialog}
+                    />
+                    <AddTagDialog
+                        open={openTagDialog}
+                        setOpen={setOpenTagDialog}
+                    />
+
                     {toast}
                 </div>
             }

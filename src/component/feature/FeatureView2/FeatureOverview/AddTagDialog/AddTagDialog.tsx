@@ -1,16 +1,16 @@
 import { DialogContentText } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { useState } from 'react';
-import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import Dialogue from '../../../../../common/Dialogue';
-import Input from '../../../../../common/Input/Input';
+import { IFeatureViewParams } from '../../../../../interfaces/params';
+import Dialogue from '../../../../common/Dialogue';
+import Input from '../../../../common/Input/Input';
 import { SyntheticEvent } from 'react-router/node_modules/@types/react';
 import { useStyles } from './AddTagDialog.styles';
-import { trim } from '../../../../../common/util';
-import TagSelect from '../../../../../common/TagSelect/TagSelect';
-import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useTags from '../../../../../../hooks/api/getters/useTags/useTags';
-import useToast from '../../../../../../hooks/useToast';
+import { trim } from '../../../../common/util';
+import TagSelect from '../../../../common/TagSelect/TagSelect';
+import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import useTags from '../../../../../hooks/api/getters/useTags/useTags';
+import useToast from '../../../../../hooks/useToast';
 
 interface IAddTagDialogProps {
     open: boolean;

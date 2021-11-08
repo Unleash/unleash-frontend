@@ -1,10 +1,10 @@
-import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useParams } from 'react-router-dom';
-import { IFeatureViewParams } from '../../../../../../interfaces/params';
+import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { DialogContentText } from '@material-ui/core';
-import ConditionallyRender from '../../../../../common/ConditionallyRender/ConditionallyRender';
-import Dialogue from '../../../../../common/Dialogue';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
+import Dialogue from '../../../../common/Dialogue';
+import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 
 interface IStaleDialogProps {
     open: boolean;

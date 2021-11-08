@@ -12,6 +12,7 @@ import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle'
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { calculatePercentage } from '../../../../../../utils/calculate-percentage';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
+import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
 import FeatureEnvironmentMetrics from '../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
@@ -56,9 +57,7 @@ const FeatureOverviewEnvironment = ({
                     expandIcon={<ExpandMore />}
                 >
                     <div className={styles.headerTitle}>
-                        <div className={styles.iconContainer}>
-                            <Cloud className={styles.icon} />
-                        </div>
+                        <EnvironmentIcon enabled={env.enabled} />
                         Toggle execution for {env.name}
                     </div>
 
