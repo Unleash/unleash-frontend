@@ -72,7 +72,7 @@ const FeatureOverviewEnvSwitch = ({
         }
         await handleToggleEnvironmentOn();
     };
-    console.log(env.enabled);
+
     return (
         <div>
             <PermissionSwitch
