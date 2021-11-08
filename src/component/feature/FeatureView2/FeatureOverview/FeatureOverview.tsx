@@ -15,10 +15,6 @@ const FeatureOverview = () => {
             </div>
             <div className={styles.mainContent}>
                 <FeatureOverviewEnvironments />
-                {/* <div className={styles.trafficContainer}>
-                    <FeatureOverviewMetrics data-loading />
-                </div>
-                <FeatureOverviewStrategies data-loading /> */}
             </div>
         </div>
     );
