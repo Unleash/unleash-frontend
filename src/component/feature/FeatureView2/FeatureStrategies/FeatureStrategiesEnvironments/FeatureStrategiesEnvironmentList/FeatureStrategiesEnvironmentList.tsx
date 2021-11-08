@@ -14,7 +14,6 @@ import useProductionGuardMarkup from './useProductionGuardMarkup';
 import FeatureStrategyEditable from '../FeatureStrategyEditable/FeatureStrategyEditable';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
-import FeatureViewEnvironment from '../../../FeatureViewEnvironment/FeatureViewEnvironment';
 
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import FeatureOverviewEnvSwitch from '../../../FeatureOverview/FeatureOverviewEnvSwitches/FeatureOverviewEnvSwitch/FeatureOverviewEnvSwitch';

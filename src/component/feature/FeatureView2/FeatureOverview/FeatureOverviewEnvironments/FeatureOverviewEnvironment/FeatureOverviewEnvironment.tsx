@@ -3,7 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
-import { Cloud, ExpandMore } from '@material-ui/icons';
+import { ExpandMore } from '@material-ui/icons';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';

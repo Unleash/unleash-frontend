@@ -10,54 +10,9 @@ import { useStyles } from './FeatureOverviewEnvSwitches.styles';
 const FeatureOverviewEnvSwitches = () => {
     const styles = useStyles();
     const { featureId, projectId } = useParams<IFeatureViewParams>();
-    const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
-        useFeatureApi();
-    const { refetch, feature } = useFeature(projectId, featureId);
+    useFeatureApi();
+    const { feature } = useFeature(projectId, featureId);
     const { toast, setToastData } = useToast();
-
-    const handleToggleEnvironmentOn = async () => {
-        try {
-            await toggleFeatureEnvironmentOn(projectId, featureId, env.name);
-            setToastData({
-                type: 'success',
-                show: true,
-                text: 'Successfully turned environment on.',
-            });
-            refetch();
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
-        }
-    };
-
-    const handleToggleEnvironmentOff = async () => {
-        try {
-            await toggleFeatureEnvironmentOff(projectId, featureId, env.name);
-            setToastData({
-                type: 'success',
-                show: true,
-                text: 'Successfully turned environment off.',
-            });
-            refetch();
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
-        }
-    };
-
-    const toggleEnvironment = async (e: React.ChangeEvent) => {
-        if (env.enabled) {
-            await handleToggleEnvironmentOff();
-            return;
-        }
-        await handleToggleEnvironmentOn();
-    };
 
     const renderEnvironmentSwitches = () => {
         return feature?.environments.map(env => {
