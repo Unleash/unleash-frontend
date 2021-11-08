@@ -2,9 +2,13 @@ import EventDiff from './EventDiff/EventDiff';
 
 import { useStyles } from './EventCard.styles';
 import ConditionallyRender from '../../../common/ConditionallyRender';
+import { Link } from 'react-router-dom';
+import { getTogglePath } from '../../../../utils/route-path-helpers';
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const EventCard = ({ entry, timeFormatted }) => {
     const styles = useStyles();
+    const { uiConfig } = useUiConfig();
 
     return (
         <div>
@@ -20,13 +24,36 @@ const EventCard = ({ entry, timeFormatted }) => {
                 <ConditionallyRender condition={entry.project} show={
                     <>
                         <dt className={styles.eventLogHeader}>Project: </dt>
-                        <dd>{entry.project}</dd>
+                        <dd>
+                            <Link
+                                to={{
+                                    pathname: `/projects/${entry.project}`,
+                                }}
+                                className={styles.link}
+                            >
+                                {entry.project}
+                            </Link>
+                        </dd>
                     </>
                 } />
                 <ConditionallyRender condition={entry.featureName} show={
                     <>
                         <dt className={styles.eventLogHeader}>Feature: </dt>
-                        <dd>{entry.featureName}</dd>
+                        <dd>
+                            <Link
+                                to={getTogglePath(entry.project, entry.featureName, uiConfig.flags.E)}
+                                className={styles.link}
+                            >
+                                {entry.featureName}
+                            </Link>
+                        </dd>
+                    </>
+                } />
+                <ConditionallyRender condition={entry.environment} show={
+                    <>
+                        <dt className={styles.eventLogHeader}>Environment: </dt>
+                        <dd>{entry.environment}
+                        </dd>
                     </>
                 } />
             </dl>
