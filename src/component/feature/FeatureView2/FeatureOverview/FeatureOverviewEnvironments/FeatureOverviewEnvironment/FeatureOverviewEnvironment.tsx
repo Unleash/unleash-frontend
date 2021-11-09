@@ -12,7 +12,10 @@ import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle'
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { calculatePercentage } from '../../../../../../utils/calculate-percentage';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
+import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
+import NoItemsStrategies from '../../../../../common/NoItems/NoItemsStrategies/NoItemsStrategies';
+import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
 import FeatureEnvironmentMetrics from '../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
@@ -58,7 +61,8 @@ const FeatureOverviewEnvironment = ({
                 >
                     <div className={styles.headerTitle}>
                         <EnvironmentIcon enabled={env.enabled} />
-                        Toggle execution for {env.name}
+                        Toggle execution for&nbsp;
+                        <StringTruncator text={env.name} maxWidth="120" />
                     </div>
 
                     <FeatureOverviewEnvironmentMetrics
@@ -70,19 +74,35 @@ const FeatureOverviewEnvironment = ({
                     <div className={styles.accordionContainer}>
                         <div className={styles.accordionBody}>
                             <div className={styles.accordionBodyInnerContainer}>
-                                <div className={styles.linkContainer}>
-                                    <Link
-                                        to={`/projects/${projectId}/features2/${featureId}/strategies?environment=${env.name}`}
-                                    >
-                                        Edit strategies
-                                    </Link>
-                                </div>
+                                <div className={styles.linkContainer}></div>
                                 <div className={styles.resultInfo}>
                                     {getOverviewText()}
                                 </div>
-                                <FeatureOverviewEnvironmentStrategies
-                                    strategies={featureEnvironment?.strategies}
-                                    environmentName={env.name}
+
+                                <ConditionallyRender
+                                    condition={env.strategies.length > 0}
+                                    show={
+                                        <>
+                                            <Link
+                                                to={`/projects/${projectId}/features2/${featureId}/strategies?environment=${env.name}`}
+                                            >
+                                                Edit strategies
+                                            </Link>
+                                            <FeatureOverviewEnvironmentStrategies
+                                                strategies={
+                                                    featureEnvironment?.strategies
+                                                }
+                                                environmentName={env.name}
+                                            />
+                                        </>
+                                    }
+                                    elseShow={
+                                        <NoItemsStrategies
+                                            envName={env.name}
+                                            onClick={() => console.log('Hello')}
+                                            projectId={projectId}
+                                        />
+                                    }
                                 />
                             </div>
                         </div>

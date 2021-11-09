@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     sidebar: {
-        width: '30%',
+        width: '100%',
         padding: '2rem',
         borderRight: `1px solid ${theme.palette.grey[300]}`,
         transition: 'width 0.3s ease',
@@ -17,14 +17,6 @@ export const useStyles = makeStyles(theme => ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-        },
-    },
-    sidebarSmall: {
-        width: '10%',
-        [theme.breakpoints.down(700)]: {
-            width: '15%',
-            paddingRight: '45px',
-            paddingLeft: '40px',
         },
     },
     iconButtonWrapper: {

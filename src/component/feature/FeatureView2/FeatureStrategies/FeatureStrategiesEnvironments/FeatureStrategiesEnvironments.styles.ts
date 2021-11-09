@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        width: '70%',
+        width: '100%',
         [theme.breakpoints.down(900)]: {
             width: '50%',
         },
@@ -11,16 +11,13 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     fullWidth: {
-        width: '90%',
-        [theme.breakpoints.down(700)]: {
-            width: '85%',
-        },
+        width: '100%',
     },
-
     environmentsHeader: {
-        padding: '2rem 2rem 1rem 2rem',
         display: 'flex',
+        paddingTop: '1rem',
         justifyContent: 'flex-end',
+        position: 'relative',
         alignItems: 'center',
         [theme.breakpoints.down(700)]: {
             padding: '1.5rem',
@@ -38,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
         width: '100%',
     },
     listContainer: {
-        width: '70%',
+        width: '100%',
         [theme.breakpoints.down(700)]: {
             width: '100%',
         },
@@ -53,6 +50,8 @@ export const useStyles = makeStyles(theme => ({
     },
     tabContainer: {
         margin: '0rem 2rem 2rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
     },
     addStrategyButton: { marginLeft: 'auto' },
     tabNavigation: {
@@ -65,12 +64,5 @@ export const useStyles = makeStyles(theme => ({
     tabButton: {
         textTransform: 'none',
         width: 'auto',
-    },
-    noItemsParagraph: {
-        margin: '1rem 0',
-    },
-    link: {
-        display: 'block',
-        margin: '1rem 0 0 0',
     },
 }));

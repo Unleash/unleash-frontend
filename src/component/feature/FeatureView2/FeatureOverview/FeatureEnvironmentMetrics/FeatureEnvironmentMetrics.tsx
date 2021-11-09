@@ -6,6 +6,7 @@ import { useMediaQuery } from '@material-ui/core';
 import { IFeatureEnvironmentMetrics } from '../../../../../interfaces/featureToggle';
 import { parseISO } from 'date-fns';
 import { calculatePercentage } from '../../../../../utils/calculate-percentage';
+import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
 
 interface IFeatureEnvironmentProps {
     className?: string;
@@ -53,7 +54,12 @@ const FeatureEnvironmentMetrics = ({
             <div className={containerClasses}>
                 <div className={styles.headerContainer}>
                     <h2 data-loading className={styles.title}>
-                        Traffic in {metric.environment} {hour}
+                        Traffic in&nbsp;
+                        <StringTruncator
+                            text={metric.environment}
+                            maxWidth="200"
+                        />{' '}
+                        {hour}
                     </h2>
                 </div>
 
@@ -80,7 +86,9 @@ const FeatureEnvironmentMetrics = ({
         <div className={containerClasses}>
             <div className={styles.headerContainer}>
                 <h2 data-loading className={styles.title}>
-                    Traffic in {metric.environment} {hour}
+                    Traffic in&nbsp;
+                    <StringTruncator text={metric.environment} maxWidth="150" />
+                    {hour}
                 </h2>
             </div>
 

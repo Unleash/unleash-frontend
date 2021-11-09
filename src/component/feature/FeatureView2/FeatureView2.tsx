@@ -24,6 +24,7 @@ import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
+import StatusChip from '../../common/StatusChip/StatusChip';
 
 const FeatureView2 = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -135,12 +136,16 @@ const FeatureView2 = () => {
                 <div ref={ref}>
                     <div className={styles.header}>
                         <div className={styles.innerContainer}>
-                            <h2
-                                className={styles.featureViewHeader}
-                                data-loading
-                            >
-                                {feature.name} {feature.stale ? 'Stale' : null}
-                            </h2>
+                            <div className={styles.toggleInfoContainer}>
+                                <h2
+                                    className={styles.featureViewHeader}
+                                    data-loading
+                                >
+                                    {feature.name}{' '}
+                                </h2>
+                                <StatusChip stale={feature?.stale} />
+                            </div>
+
                             <div className={styles.actions}>
                                 <PermissionIconButton
                                     permission={UPDATE_FEATURE}

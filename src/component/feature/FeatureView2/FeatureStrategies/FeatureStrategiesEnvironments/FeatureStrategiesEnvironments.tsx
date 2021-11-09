@@ -21,13 +21,12 @@ import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategiesConfigure from './FeatureStrategiesConfigure/FeatureStrategiesConfigure';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
 import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
-import NoItems from '../../../../common/NoItems/NoItems';
 import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
-import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
 import AccessContext from '../../../../../contexts/AccessContext';
 
 import { useStyles } from './FeatureStrategiesEnvironments.styles';
 import EnvironmentIcon from '../../../../common/EnvironmentIcon/EnvironmentIcon';
+import NoItemsStrategies from '../../../../common/NoItems/NoItemsStrategies/NoItemsStrategies';
 
 const FeatureStrategiesEnvironments = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
@@ -284,56 +283,15 @@ const FeatureStrategiesEnvironments = () => {
                                 <ConditionallyRender
                                     condition={!expandedSidebar}
                                     show={
-                                        <NoItems>
-                                            <p
-                                                className={
-                                                    styles.noItemsParagraph
-                                                }
-                                            >
-                                                No strategies added in the{' '}
-                                                {env.name} environment
-                                            </p>
-
-                                            <p
-                                                className={
-                                                    styles.noItemsParagraph
-                                                }
-                                            >
-                                                Strategies added in this
-                                                environment will only be
-                                                executed if the SDK is using an
-                                                API key configured for this
-                                                environment.
-                                                <a
-                                                    className={styles.link}
-                                                    href="https://docs.getunleash.io/user_guide/environments"
-                                                >
-                                                    Read more here
-                                                </a>
-                                            </p>
-                                            <ConditionallyRender
-                                                condition={hasAccess(
-                                                    UPDATE_FEATURE
-                                                )}
-                                                show={
-                                                    <PermissionButton
-                                                        variant="contained"
-                                                        permission={
-                                                            UPDATE_FEATURE
-                                                        }
-                                                        projectId={projectId}
-                                                        color="primary"
-                                                        onClick={() => {
-                                                            setExpandedSidebar(
-                                                                prev => !prev
-                                                            );
-                                                        }}
-                                                    >
-                                                        Add your first strategy
-                                                    </PermissionButton>
-                                                }
-                                            />
-                                        </NoItems>
+                                        <NoItemsStrategies
+                                            envName={env.name}
+                                            onClick={() =>
+                                                setExpandedSidebar(
+                                                    prev => !prev
+                                                )
+                                            }
+                                            projectId={projectId}
+                                        />
                                     }
                                 />
                             }
@@ -382,29 +340,41 @@ const FeatureStrategiesEnvironments = () => {
                                         maxWidth="700px"
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
+                                        style={{
+                                            position: 'absolute',
+                                            right: '25px',
+                                            top: '25px',
+                                        }}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>
                                 }
                             />
                         </div>
-                        <div className={styles.tabContainer}>
-                            <Tabs
-                                value={activeTabIdx}
-                                onChange={(_, tabId) => {
-                                    setActiveTab(tabId);
-                                    setActiveEnvironment(
-                                        feature?.environments[tabId]
-                                    );
-                                    history.replace(history.location.pathname);
-                                }}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                className={styles.tabNavigation}
-                            >
-                                {renderTabs()}
-                            </Tabs>
-                        </div>
+                        <ConditionallyRender
+                            condition={!expandedSidebar}
+                            show={
+                                <div className={styles.tabContainer}>
+                                    <Tabs
+                                        value={activeTabIdx}
+                                        onChange={(_, tabId) => {
+                                            setActiveTab(tabId);
+                                            setActiveEnvironment(
+                                                feature?.environments[tabId]
+                                            );
+                                            history.replace(
+                                                history.location.pathname
+                                            );
+                                        }}
+                                        indicatorColor="primary"
+                                        textColor="primary"
+                                        className={styles.tabNavigation}
+                                    >
+                                        {renderTabs()}
+                                    </Tabs>
+                                </div>
+                            }
+                        />
 
                         <div>
                             {renderTabPanels()}

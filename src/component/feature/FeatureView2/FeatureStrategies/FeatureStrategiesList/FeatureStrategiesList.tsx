@@ -56,30 +56,35 @@ const FeatureStrategiesList = () => {
     });
 
     return (
-        <section className={classes}>
-            <ConditionallyRender
-                condition={smallScreen && expandedSidebar}
-                show={
-                    <div className={styles.mobileNavContainer}>
-                        <p>Select strategy</p>
-                        <Button onClick={toggleSidebar}>Back</Button>
-                    </div>
-                }
-            />
+        <ConditionallyRender
+            condition={expandedSidebar}
+            show={
+                <section className={classes}>
+                    <ConditionallyRender
+                        condition={smallScreen && expandedSidebar}
+                        show={
+                            <div className={styles.mobileNavContainer}>
+                                <p>Select strategy</p>
+                                <Button onClick={toggleSidebar}>Back</Button>
+                            </div>
+                        }
+                    />
 
-            <span className={styles.iconButtonWrapper}>
-                <PermissionIconButton
-                    className={styles.iconButton}
-                    onClick={toggleSidebar}
-                    permission={UPDATE_FEATURE}
-                    projectId={projectId}
-                >
-                    <NavigateNext className={iconClasses} />
-                </PermissionIconButton>
-            </span>
+                    <span className={styles.iconButtonWrapper}>
+                        <PermissionIconButton
+                            className={styles.iconButton}
+                            onClick={toggleSidebar}
+                            permission={UPDATE_FEATURE}
+                            projectId={projectId}
+                        >
+                            <NavigateNext className={iconClasses} />
+                        </PermissionIconButton>
+                    </span>
 
-            {renderStrategies()}
-        </section>
+                    {renderStrategies()}
+                </section>
+            }
+        />
     );
 };
 

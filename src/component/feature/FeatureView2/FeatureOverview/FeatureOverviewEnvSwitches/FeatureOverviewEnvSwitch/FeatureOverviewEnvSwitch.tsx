@@ -5,6 +5,7 @@ import { TSetToastData } from '../../../../../../hooks/useToast';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
+import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
 import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
 
 interface IFeatureOverviewEnvSwitchProps {
@@ -74,7 +75,7 @@ const FeatureOverviewEnvSwitch = ({
     };
 
     return (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
             <PermissionSwitch
                 permission={UPDATE_FEATURE}
                 projectId={projectId}
@@ -82,7 +83,8 @@ const FeatureOverviewEnvSwitch = ({
                 onChange={toggleEnvironment}
                 tooltip={''}
             />
-            {env.name} is {env.enabled ? 'enabled' : 'disabled'}
+            <StringTruncator text={env.name} maxWidth="120" />
+            is {env.enabled ? 'enabled' : 'disabled'}
         </div>
     );
 };

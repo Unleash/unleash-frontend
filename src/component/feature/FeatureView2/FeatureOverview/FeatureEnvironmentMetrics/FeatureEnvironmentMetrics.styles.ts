@@ -26,6 +26,8 @@ export const useStyles = makeStyles(theme => ({
         fontSize: theme.fontSizes.subHeader,
         fontWeight: 'normal',
         margin: 0,
+        display: 'flex',
+        alignItems: 'center',
     },
     bodyContainer: {
         display: 'flex',

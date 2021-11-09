@@ -22,7 +22,7 @@ const FeatureOverviewEnvironmentMetrics = ({
                 <div className={styles.info}>
                     <p className={styles.percentage}>{percentage}%</p>
                     <p className={styles.infoParagraph}>
-                        No one has received this in the last hour.
+                        No one has received this feature in the last hour.
                     </p>
                 </div>
                 <PieChart
@@ -39,7 +39,8 @@ const FeatureOverviewEnvironmentMetrics = ({
             <div className={styles.info}>
                 <p className={styles.percentage}>{percentage}%</p>
                 <p className={styles.infoParagraph}>
-                    {environmentMetric.yes} users have received the feature.
+                    {environmentMetric.yes} users have received the feature in
+                    the last hour.
                 </p>
             </div>
             <PercentageCircle percentage={percentage} data-loading />

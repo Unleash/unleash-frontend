@@ -18,6 +18,7 @@ const FeatureOverviewEnvSwitches = () => {
         return feature?.environments.map(env => {
             return (
                 <FeatureOverviewEnvSwitch
+                    key={env.name}
                     env={env}
                     setToastData={setToastData}
                 />
