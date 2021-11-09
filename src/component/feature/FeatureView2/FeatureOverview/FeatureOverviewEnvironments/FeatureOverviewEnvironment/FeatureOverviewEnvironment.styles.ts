@@ -94,4 +94,17 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'flex-end',
         marginBottom: '1rem',
     },
+    disabledInfo: {
+        maxWidth: '300px',
+        marginRight: '1.5rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    disabledIcon: {
+        height: '50px',
+        width: '50px',
+        fill: theme.palette.grey[400],
+        marginBottom: '1rem',
+    },
 }));

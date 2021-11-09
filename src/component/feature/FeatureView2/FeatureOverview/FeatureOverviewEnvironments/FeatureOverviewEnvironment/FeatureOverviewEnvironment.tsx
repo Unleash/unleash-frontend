@@ -3,7 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { ExpandMore, Warning } from '@material-ui/icons';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
@@ -19,6 +19,8 @@ import StringTruncator from '../../../../../common/StringTruncator/StringTruncat
 import FeatureEnvironmentMetrics from '../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
+import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';
+import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 import FeatureOverviewEnvironmentStrategies from './FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
 
@@ -50,8 +52,6 @@ const FeatureOverviewEnvironment = ({
         return `This environment is disabled, which means that none of your strategies are executing`;
     };
 
-    const totalTraffic = environmentMetric.yes + environmentMetric.no;
-
     return (
         <div className={styles.featureOverviewEnvironment}>
             <Accordion style={{ boxShadow: 'none' }}>
@@ -72,60 +72,14 @@ const FeatureOverviewEnvironment = ({
 
                 <AccordionDetails>
                     <div className={styles.accordionContainer}>
-                        <div className={styles.accordionBody}>
-                            <div className={styles.accordionBodyInnerContainer}>
-                                <div className={styles.linkContainer}></div>
-                                <div className={styles.resultInfo}>
-                                    {getOverviewText()}
-                                </div>
-
-                                <ConditionallyRender
-                                    condition={env.strategies.length > 0}
-                                    show={
-                                        <>
-                                            <Link
-                                                to={`/projects/${projectId}/features2/${featureId}/strategies?environment=${env.name}`}
-                                            >
-                                                Edit strategies
-                                            </Link>
-                                            <FeatureOverviewEnvironmentStrategies
-                                                strategies={
-                                                    featureEnvironment?.strategies
-                                                }
-                                                environmentName={env.name}
-                                            />
-                                        </>
-                                    }
-                                    elseShow={
-                                        <NoItemsStrategies
-                                            envName={env.name}
-                                            onClick={() => console.log('Hello')}
-                                            projectId={projectId}
-                                        />
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.accordionBodyFooter}>
-                            <div className={styles.resultInfo}>Result</div>
-                            <FeatureEnvironmentMetrics
-                                metric={environmentMetric}
-                            />
-                            <div className={styles.requestContainer}>
-                                Total requests {totalTraffic}
-                                <div className={styles.percentageContainer}>
-                                    {calculatePercentage(
-                                        totalTraffic,
-                                        environmentMetric?.yes
-                                    )}
-                                    %
-                                </div>
-                                <p className={styles.requestText}>
-                                    Received enabled for this feature in this
-                                    environment in the last hour.
-                                </p>
-                            </div>
-                        </div>
+                        <FeatureOverviewEnvironmentBody
+                            featureEnvironment={featureEnvironment}
+                            getOverviewText={getOverviewText}
+                        />
+                        <FeatureOverviewEnvironmentFooter
+                            env={env}
+                            environmentMetric={environmentMetric}
+                        />
                     </div>
                 </AccordionDetails>
             </Accordion>

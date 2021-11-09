@@ -1,0 +1,55 @@
+import { Warning } from '@material-ui/icons';
+import { IEnvironmentMetrics } from '../../../../../../../interfaces/environments';
+import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
+import { calculatePercentage } from '../../../../../../../utils/calculate-percentage';
+import ConditionallyRender from '../../../../../../common/ConditionallyRender';
+import FeatureEnvironmentMetrics from '../../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
+
+import { useStyles } from '../FeatureOverviewEnvironment.styles';
+
+interface IFeatureOverviewEnvironmentFooterProps {
+    env: IFeatureEnvironment;
+    environmentMetric: IEnvironmentMetrics;
+}
+
+const FeatureOverviewEnvironmentFooter = ({
+    env,
+    environmentMetric,
+}: IFeatureOverviewEnvironmentFooterProps) => {
+    const styles = useStyles();
+    const totalTraffic = environmentMetric.yes + environmentMetric.no;
+
+    return (
+        <div className={styles.accordionBodyFooter}>
+            <div className={styles.resultInfo}>Result</div>
+            <ConditionallyRender
+                condition={env.enabled}
+                show={<FeatureEnvironmentMetrics metric={environmentMetric} />}
+                elseShow={
+                    <div className={styles.disabledInfo}>
+                        <Warning className={styles.disabledIcon} />
+                        <p>
+                            As long as the environment is disabled, all requests
+                            made for this feature toggle will return false. Add
+                            a strategy and turn on the environment to enable it
+                            for your users.
+                        </p>
+                    </div>
+                }
+            />
+
+            <div className={styles.requestContainer}>
+                Total requests {totalTraffic}
+                <div className={styles.percentageContainer}>
+                    {calculatePercentage(totalTraffic, environmentMetric?.yes)}%
+                </div>
+                <p className={styles.requestText}>
+                    Received enabled for this feature in this environment in the
+                    last hour.
+                </p>
+            </div>
+        </div>
+    );
+};
+
+export default FeatureOverviewEnvironmentFooter;
