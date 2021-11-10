@@ -19,14 +19,15 @@ const StatusChip = ({ stale, showActive = true }: IStatusChip) => {
     const value = stale ? 'Stale' : 'Active';
 
     return (
-        <Chip
-            color="primary"
-            variant="outlined"
-            className={styles.chip}
-            style={{ marginLeft: '8px' }}
-            title={title}
-            label={value}
-        />
+        <div data-loading style={{ marginLeft: '8px' }}>
+            <Chip
+                color="primary"
+                variant="outlined"
+                className={styles.chip}
+                title={title}
+                label={value}
+            />
+        </div>
     );
 };
 

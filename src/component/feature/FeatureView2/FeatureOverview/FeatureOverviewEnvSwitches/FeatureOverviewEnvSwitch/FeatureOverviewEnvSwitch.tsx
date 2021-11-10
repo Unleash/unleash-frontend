@@ -84,7 +84,7 @@ const FeatureOverviewEnvSwitch = ({
                 tooltip={''}
             />
             <StringTruncator text={env.name} maxWidth="120" />
-            is {env.enabled ? 'enabled' : 'disabled'}
+            <span data-loading>is {env.enabled ? 'enabled' : 'disabled'}</span>
         </div>
     );
 };

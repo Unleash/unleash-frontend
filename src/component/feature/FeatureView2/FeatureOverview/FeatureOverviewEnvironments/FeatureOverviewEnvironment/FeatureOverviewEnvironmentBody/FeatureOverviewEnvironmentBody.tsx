@@ -9,7 +9,7 @@ import { IFeatureEnvironment } from '../../../../../../../interfaces/featureTogg
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;
-    featureEnvironment: IFeatureEnvironment;
+    featureEnvironment?: IFeatureEnvironment;
 }
 
 const FeatureOverviewEnvironmentBody = ({
@@ -21,6 +21,8 @@ const FeatureOverviewEnvironmentBody = ({
     const history = useHistory();
     const strategiesLink = `/projects/${projectId}/features2/${featureId}/strategies?environment=${featureEnvironment?.name}`;
 
+    if (!featureEnvironment) return null;
+
     return (
         <div className={styles.accordionBody}>
             <div className={styles.accordionBodyInnerContainer}>
@@ -31,7 +33,6 @@ const FeatureOverviewEnvironmentBody = ({
                     show={
                         <>
                             <div className={styles.linkContainer}>
-                                {' '}
                                 <Link to={strategiesLink}>Edit strategies</Link>
                             </div>
                             <FeatureOverviewEnvironmentStrategies

@@ -171,6 +171,7 @@ const FeatureView2 = () => {
                                     permission={UPDATE_FEATURE}
                                     projectId={projectId}
                                     tooltip="Toggle stale status"
+                                    data-loading
                                 >
                                     <WatchLater />
                                 </PermissionIconButton>
@@ -179,6 +180,7 @@ const FeatureView2 = () => {
                                     permission={UPDATE_FEATURE}
                                     projectId={projectId}
                                     tooltip="Add tag"
+                                    data-loading
                                 >
                                     <Label />
                                 </PermissionIconButton>

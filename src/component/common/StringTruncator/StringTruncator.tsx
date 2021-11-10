@@ -9,6 +9,7 @@ const StringTruncator = ({ text, maxWidth }: IStringTruncatorProps) => {
     return (
         <Tooltip title={text} arrow>
             <span
+                data-loading
                 style={{
                     width: `${maxWidth}px`,
                     textOverflow: 'ellipsis',

@@ -3,26 +3,20 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
-import { ExpandMore, Warning } from '@material-ui/icons';
+import { ExpandMore } from '@material-ui/icons';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from '../../../../../../hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import { calculatePercentage } from '../../../../../../utils/calculate-percentage';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
-import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
-import NoItemsStrategies from '../../../../../common/NoItems/NoItemsStrategies/NoItemsStrategies';
 import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
-import FeatureEnvironmentMetrics from '../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
 import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
-import FeatureOverviewEnvironmentStrategies from './FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
 
 interface IFeatureOverviewEnvironmentProps {
     env: IFeatureEnvironment;
@@ -59,7 +53,7 @@ const FeatureOverviewEnvironment = ({
                     className={styles.accordionHeader}
                     expandIcon={<ExpandMore />}
                 >
-                    <div className={styles.headerTitle}>
+                    <div className={styles.headerTitle} data-loading>
                         <EnvironmentIcon enabled={env.enabled} />
                         Toggle execution for&nbsp;
                         <StringTruncator text={env.name} maxWidth="120" />

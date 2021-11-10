@@ -30,11 +30,15 @@ const PermissionSwitch: React.FC<IPermissionSwitchProps> = ({
 
     return (
         <Tooltip title={tooltipText} arrow>
-            <span>
-                <Switch onChange={onChange} disabled={disabled || !access} {...rest} />
+            <span data-loading>
+                <Switch
+                    onChange={onChange}
+                    disabled={disabled || !access}
+                    {...rest}
+                />
             </span>
         </Tooltip>
-    )
-}
+    );
+};
 
 export default PermissionSwitch;

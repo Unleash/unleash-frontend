@@ -11,7 +11,7 @@ import StringTruncator from '../../../../common/StringTruncator/StringTruncator'
 interface IFeatureEnvironmentProps {
     className?: string;
     primaryMetric?: boolean;
-    metric: IFeatureEnvironmentMetrics;
+    metric?: IFeatureEnvironmentMetrics;
 }
 
 const FeatureEnvironmentMetrics = ({
@@ -21,6 +21,8 @@ const FeatureEnvironmentMetrics = ({
 }: IFeatureEnvironmentProps) => {
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:1000px)`);
+
+    if (!metric) return null;
 
     const containerClasses = classNames(styles.container, className, {
         [styles.primaryMetric]: primaryMetric,

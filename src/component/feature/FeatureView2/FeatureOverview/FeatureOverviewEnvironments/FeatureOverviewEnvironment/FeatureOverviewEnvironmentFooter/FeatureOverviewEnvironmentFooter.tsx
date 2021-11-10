@@ -1,6 +1,8 @@
 import { Warning } from '@material-ui/icons';
-import { IEnvironmentMetrics } from '../../../../../../../interfaces/environments';
-import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
+import {
+    IFeatureEnvironment,
+    IFeatureEnvironmentMetrics,
+} from '../../../../../../../interfaces/featureToggle';
 import { calculatePercentage } from '../../../../../../../utils/calculate-percentage';
 import ConditionallyRender from '../../../../../../common/ConditionallyRender';
 import FeatureEnvironmentMetrics from '../../../FeatureEnvironmentMetrics/FeatureEnvironmentMetrics';
@@ -9,7 +11,7 @@ import { useStyles } from '../FeatureOverviewEnvironment.styles';
 
 interface IFeatureOverviewEnvironmentFooterProps {
     env: IFeatureEnvironment;
-    environmentMetric: IEnvironmentMetrics;
+    environmentMetric?: IFeatureEnvironmentMetrics;
 }
 
 const FeatureOverviewEnvironmentFooter = ({
@@ -17,6 +19,8 @@ const FeatureOverviewEnvironmentFooter = ({
     environmentMetric,
 }: IFeatureOverviewEnvironmentFooterProps) => {
     const styles = useStyles();
+
+    if (!environmentMetric) return null;
     const totalTraffic = environmentMetric.yes + environmentMetric.no;
 
     return (

@@ -5,7 +5,7 @@ import PercentageCircle from '../../../../../../common/PercentageCircle/Percenta
 import { useStyles } from './FeatureOverviewEnvironmentMetrics.styles';
 
 interface IFeatureOverviewEnvironmentMetrics {
-    environmentMetric: IFeatureEnvironmentMetrics;
+    environmentMetric?: IFeatureEnvironmentMetrics;
 }
 
 const FeatureOverviewEnvironmentMetrics = ({
@@ -16,12 +16,17 @@ const FeatureOverviewEnvironmentMetrics = ({
     const total = environmentMetric.yes + environmentMetric.no;
     const percentage = calculatePercentage(total, environmentMetric.yes);
 
-    if (environmentMetric.yes === 0 && environmentMetric.no === 0) {
+    if (
+        !environmentMetric ||
+        (environmentMetric.yes === 0 && environmentMetric.no === 0)
+    ) {
         return (
             <div className={styles.container}>
                 <div className={styles.info}>
-                    <p className={styles.percentage}>{percentage}%</p>
-                    <p className={styles.infoParagraph}>
+                    <p className={styles.percentage} data-loading>
+                        {percentage}%
+                    </p>
+                    <p className={styles.infoParagraph} data-loading>
                         No one has received this feature in the last hour.
                     </p>
                 </div>

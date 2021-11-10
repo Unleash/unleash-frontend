@@ -32,7 +32,7 @@ const FeatureOverviewEnvSwitches = () => {
                 arrow
                 title="Environments can be switched off for a single toggle. Resulting in all calls towards the toggle to return false."
             >
-                <h3 className={styles.header}>Toggle environments</h3>
+                <h3 className={styles.header} data-loading>Toggle environments</h3>
             </Tooltip>
             {renderEnvironmentSwitches()}
             {toast}
