@@ -4,12 +4,8 @@ import FeatureStrategyCard from './FeatureStrategyCard/FeatureStrategyCard';
 import { useStyles } from './FeatureStrategiesList.styles';
 import { useContext } from 'react';
 import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategiesUIContext';
-import classnames from 'classnames';
 import { Button, useMediaQuery } from '@material-ui/core';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
-
-import { useParams } from 'react-router';
-import { IFeatureViewParams } from '../../../../../interfaces/params';
 
 const FeatureStrategiesList = () => {
     const smallScreen = useMediaQuery('(max-width:700px)');
