@@ -4,6 +4,7 @@ export const useStyles = makeStyles(theme => ({
     container: {
         height: '100%',
         width: '100%',
+        position: 'relative',
         transition: 'background-color 0.4s ease',
     },
     isOver: {
@@ -37,5 +38,9 @@ export const useStyles = makeStyles(theme => ({
     environmentList: {
         marginTop: 0,
         marginBottom: 0,
+    },
+    headerContainer: {
+        position: 'absolute',
+        top: '-50px',
     },
 }));

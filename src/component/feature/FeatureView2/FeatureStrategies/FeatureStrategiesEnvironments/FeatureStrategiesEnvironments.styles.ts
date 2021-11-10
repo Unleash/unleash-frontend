@@ -24,6 +24,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     tabContentContainer: {
+        marginTop: '4rem',
         padding: '1rem 2rem 2rem 2rem',
         display: 'flex',
         justifyContent: 'space-between',
