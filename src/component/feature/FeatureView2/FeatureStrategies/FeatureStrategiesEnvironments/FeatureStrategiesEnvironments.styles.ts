@@ -27,6 +27,7 @@ export const useStyles = makeStyles(theme => ({
         marginTop: '4rem',
         padding: '1rem 2rem 2rem 2rem',
         display: 'flex',
+        position: 'relative',
         justifyContent: 'space-between',
         [theme.breakpoints.down(700)]: {
             padding: '1.5rem',

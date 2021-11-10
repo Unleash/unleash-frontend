@@ -17,6 +17,7 @@ import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
 
 import { useStyles } from './FeatureStrategiesEnvironmentList.styles';
 import FeatureOverviewEnvSwitch from '../../../FeatureOverview/FeatureOverviewEnvSwitches/FeatureOverviewEnvSwitch/FeatureOverviewEnvSwitch';
+
 interface IFeatureStrategiesEnvironmentListProps {
     strategies: IFeatureStrategy[];
 }

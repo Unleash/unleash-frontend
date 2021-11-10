@@ -42,5 +42,8 @@ export const useStyles = makeStyles(theme => ({
     headerContainer: {
         position: 'absolute',
         top: '-50px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
     },
 }));

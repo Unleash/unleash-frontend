@@ -344,11 +344,6 @@ const FeatureStrategiesEnvironments = () => {
                                         maxWidth="700px"
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
-                                        style={{
-                                            position: 'absolute',
-                                            top: '110px',
-                                            right: '40px',
-                                        }}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>
