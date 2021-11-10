@@ -54,9 +54,16 @@ const FeatureOverviewEnvironment = ({
                     expandIcon={<ExpandMore />}
                 >
                     <div className={styles.headerTitle} data-loading>
-                        <EnvironmentIcon enabled={env.enabled} />
+                        <EnvironmentIcon
+                            enabled={env.enabled}
+                            className={styles.headerIcon}
+                        />
                         Toggle execution for&nbsp;
-                        <StringTruncator text={env.name} maxWidth="120" />
+                        <StringTruncator
+                            text={env.name}
+                            className={styles.truncator}
+                            maxWidth="120"
+                        />
                     </div>
 
                     <FeatureOverviewEnvironmentMetrics

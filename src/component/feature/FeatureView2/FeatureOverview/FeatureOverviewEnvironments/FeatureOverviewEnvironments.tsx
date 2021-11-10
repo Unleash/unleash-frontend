@@ -18,7 +18,7 @@ const FeatureOverviewEnvironments = () => {
         });
     };
 
-    return <div>{renderEnvironments()}</div>;
+    return <>{renderEnvironments()}</>;
 };
 
 export default FeatureOverviewEnvironments;

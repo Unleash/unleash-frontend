@@ -39,4 +39,9 @@ export const useStyles = makeStyles(theme => ({
     statusContainer: {
         marginLeft: '0.5rem',
     },
+    [theme.breakpoints.down(500)]: {
+        innerContainer: {
+            flexDirection: 'column',
+        },
+    },
 }));

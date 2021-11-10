@@ -1,4 +1,4 @@
-import { Tab, Tabs } from '@material-ui/core';
+import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
 import { useState } from 'react';
 import { WatchLater, Archive, FileCopy, Label } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
@@ -36,6 +36,7 @@ const FeatureView2 = () => {
     const { toast, setToastData } = useToast();
     const [showDelDialog, setShowDelDialog] = useState(false);
     const [openStaleDialog, setOpenStaleDialog] = useState(false);
+    const smallScreen = useMediaQuery(`(max-width:${500}px)`);
 
     const styles = useStyles();
     const history = useHistory();
@@ -143,7 +144,10 @@ const FeatureView2 = () => {
                                 >
                                     {feature.name}{' '}
                                 </h2>
-                                <StatusChip stale={feature?.stale} />
+                                <ConditionallyRender
+                                    condition={!smallScreen}
+                                    show={<StatusChip stale={feature?.stale} />}
+                                />
                             </div>
 
                             <div className={styles.actions}>

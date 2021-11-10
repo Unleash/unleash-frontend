@@ -3,9 +3,10 @@ import { Cloud } from '@material-ui/icons';
 
 interface IEnvironmentIcon {
     enabled: boolean;
+    className?: string;
 }
 
-const EnvironmentIcon = ({ enabled }: IEnvironmentIcon) => {
+const EnvironmentIcon = ({ enabled, className }: IEnvironmentIcon) => {
     const theme = useTheme();
 
     const container = {
@@ -29,7 +30,7 @@ const EnvironmentIcon = ({ enabled }: IEnvironmentIcon) => {
     };
 
     return (
-        <div style={container}>
+        <div style={container} className={className}>
             <Cloud style={icon} />
         </div>
     );

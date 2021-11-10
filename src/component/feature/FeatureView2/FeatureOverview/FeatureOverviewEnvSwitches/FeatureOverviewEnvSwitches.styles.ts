@@ -12,17 +12,19 @@ export const useStyles = makeStyles(theme => ({
         marginRight: '1rem',
         marginTop: '1rem',
     },
-    [theme.breakpoints.down(800)]: {
-        container: {
-            width: '100%',
-            maxWidth: 'none',
-            marginBottom: '1rem',
-        },
-    },
+
     header: {
         fontSize: theme.fontSizes.subHeader,
         fontWeight: 'normal',
         margin: 0,
         marginBottom: '0.5rem',
+    },
+    [theme.breakpoints.down(1000)]: {
+        container: {
+            marginBottom: '1rem',
+            width: '100%',
+            maxWidth: 'none',
+            minWidth: 'auto',
+        },
     },
 }));

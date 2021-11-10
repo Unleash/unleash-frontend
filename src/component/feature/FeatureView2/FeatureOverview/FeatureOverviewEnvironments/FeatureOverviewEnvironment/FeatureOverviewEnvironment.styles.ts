@@ -15,13 +15,9 @@ export const useStyles = makeStyles(theme => ({
         padding: '1rem 2rem',
     },
     accordionBody: {
-        borderTop: `1px solid ${theme.palette.grey[300]}`,
-        borderBottom: `1px solid ${theme.palette.grey[300]}`,
         width: '100%',
         position: 'relative',
-    },
-    accordionBodyInnerContainer: {
-        padding: '3rem 1rem',
+        paddingBottom: '1rem',
     },
     headerTitle: {
         display: 'flex',
@@ -43,21 +39,27 @@ export const useStyles = makeStyles(theme => ({
         height: '17px',
     },
     resultInfo: {
-        backgroundColor: '#fff',
-        padding: '0.3rem',
-        borderRadius: '5px',
-        width: '300px',
+        display: 'flex',
+        alignItems: 'center',
+        margin: '1rem 0',
+    },
+    leftWing: {
+        height: '2px',
+        backgroundColor: theme.palette.grey[300],
+        width: '90%',
+    },
+    separatorText: {
         fontSize: theme.fontSizes.smallBody,
-        textAlign: 'center',
-        position: 'absolute',
-        top: '-15px',
-        right: 0,
-        left: 0,
-        margin: '0 auto',
+        padding: '0 1rem',
+    },
+    rightWing: {
+        height: '2px',
+        backgroundColor: theme.palette.grey[300],
+        width: '90%',
     },
     accordionBodyFooter: {
         position: 'relative',
-        padding: '2rem 1rem',
+        padding: '1rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -106,5 +108,33 @@ export const useStyles = makeStyles(theme => ({
         width: '50px',
         fill: theme.palette.grey[400],
         marginBottom: '1rem',
+    },
+    [theme.breakpoints.down(750)]: {
+        accordionBodyFooter: {
+            flexDirection: 'column',
+        },
+        requestContainer: {
+            marginTop: '1rem',
+        },
+    },
+    [theme.breakpoints.down(560)]: {
+        headerTitle: {
+            flexDirection: 'column',
+        },
+        headerIcon: {
+            marginBottom: '0.5rem',
+        },
+        truncator: {
+            textAlign: 'center',
+        },
+    },
+    [theme.breakpoints.down(400)]: {
+        accordionHeader: {
+            padding: '0.5rem 1rem',
+        },
+
+        accordionBodyInnerContainer: {
+            padding: '0.5rem',
+        },
     },
 }));

@@ -26,7 +26,13 @@ const FeatureOverviewEnvironmentBody = ({
     return (
         <div className={styles.accordionBody}>
             <div className={styles.accordionBodyInnerContainer}>
-                <div className={styles.resultInfo}>{getOverviewText()}</div>
+                <div className={styles.resultInfo}>
+                    <div className={styles.leftWing} />
+                    <div className={styles.separatorText}>
+                        {getOverviewText()}
+                    </div>
+                    <div className={styles.rightWing} />
+                </div>
 
                 <ConditionallyRender
                     condition={featureEnvironment?.strategies.length > 0}

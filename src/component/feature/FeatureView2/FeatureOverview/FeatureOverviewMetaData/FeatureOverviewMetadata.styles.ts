@@ -11,12 +11,6 @@ export const useStyles = makeStyles(theme => ({
         minWidth: '350px',
         marginRight: '1rem',
     },
-    [theme.breakpoints.down(800)]: {
-        container: {
-            width: '100%',
-            maxWidth: 'none',
-        },
-    },
     metaDataHeader: {
         display: 'flex',
         alignItems: 'center',
@@ -45,5 +39,12 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         color: theme.palette.grey[600],
+    },
+    [theme.breakpoints.down(1000)]: {
+        container: {
+            width: '100%',
+            maxWidth: 'none',
+            minWidth: 'auto',
+        },
     },
 }));

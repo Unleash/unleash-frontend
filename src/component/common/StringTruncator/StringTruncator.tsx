@@ -3,13 +3,20 @@ import { Tooltip } from '@material-ui/core';
 interface IStringTruncatorProps {
     text: string;
     maxWidth: string;
+    className?: string;
 }
 
-const StringTruncator = ({ text, maxWidth }: IStringTruncatorProps) => {
+const StringTruncator = ({
+    text,
+    maxWidth,
+    className,
+    ...rest
+}: IStringTruncatorProps) => {
     return (
         <Tooltip title={text} arrow>
             <span
                 data-loading
+                className={className}
                 style={{
                     width: `${maxWidth}px`,
                     textOverflow: 'ellipsis',
@@ -17,6 +24,7 @@ const StringTruncator = ({ text, maxWidth }: IStringTruncatorProps) => {
                     whiteSpace: 'nowrap',
                     display: 'inline-block',
                 }}
+                {...rest}
             >
                 {text}
             </span>

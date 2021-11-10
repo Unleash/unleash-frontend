@@ -26,4 +26,14 @@ export const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         fontSize: theme.fontSizes.subHeader,
     },
+    [theme.breakpoints.down(700)]: {
+        infoParagraph: {
+            display: 'none',
+        },
+    },
+    [theme.breakpoints.down(500)]: {
+        icon: {
+            display: 'none',
+        },
+    },
 }));

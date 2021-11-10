@@ -59,6 +59,7 @@ const FeatureEnvironmentMetrics = ({
                         Traffic in&nbsp;
                         <StringTruncator
                             text={metric.environment}
+                            className={styles.truncator}
                             maxWidth="200"
                         />{' '}
                         {hour}
@@ -89,7 +90,11 @@ const FeatureEnvironmentMetrics = ({
             <div className={styles.headerContainer}>
                 <h2 data-loading className={styles.title}>
                     Traffic in&nbsp;
-                    <StringTruncator text={metric.environment} maxWidth="150" />
+                    <StringTruncator
+                        text={metric.environment}
+                        maxWidth="150"
+                        className={styles.truncator}
+                    />
                     {hour}
                 </h2>
             </div>
