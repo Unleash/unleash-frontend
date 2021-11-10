@@ -31,6 +31,7 @@ const useUser = (options: SWRConfiguration = {}) => {
         user: data?.user || {},
         permissions: (data?.permissions || []) as IPermission[],
         feedback: data?.feedback || [],
+        splash: data?.splash || {},
         authDetails: data || {},
         error,
         loading,

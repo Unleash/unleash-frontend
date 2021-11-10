@@ -3,6 +3,7 @@ export interface IAuthStatus {
     showDialog: boolean;
     profile?: IUser;
     permissions: IPermission[];
+    splash: object;
 }
 
 export interface IPermission {

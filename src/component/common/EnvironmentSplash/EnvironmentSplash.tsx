@@ -3,7 +3,6 @@ import EnvironmentSplashPage from './EnvironmentSplashPage/EnvironmentSplashPage
 import { VpnKey, CloudCircle } from '@material-ui/icons';
 import { useStyles } from './EnvironmentSplash.styles';
 import { ReactComponent as Logo } from '../../../assets/img/group996.svg';
-import { formatAssetPath } from '../../../utils/format-path';
 
 const EnvironmentSplash = () => {
     const styles = useStyles();

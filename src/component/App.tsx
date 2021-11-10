@@ -15,6 +15,8 @@ import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
 import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
+import ConditionallyRender from './common/ConditionallyRender';
+import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -102,6 +104,10 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                 </LayoutPicker>
                 {toast}
             </div>
+            {/* <ConditionallyRender
+                condition={!user.splash?.environments}
+                show={<EnvironmentSplash />}
+            /> */}
         </SWRProvider>
     );
 };
