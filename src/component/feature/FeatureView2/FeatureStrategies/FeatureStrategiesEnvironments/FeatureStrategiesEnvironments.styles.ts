@@ -23,9 +23,13 @@ export const useStyles = makeStyles(theme => ({
             padding: '1.5rem',
         },
     },
-    tabContentContainer: {
-        marginTop: '4rem',
+    outerTabContentContainer: {
+        marginTop: '2rem',
         padding: '1rem 2rem 2rem 2rem',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    tabContentContainer: {
         display: 'flex',
         position: 'relative',
         justifyContent: 'space-between',
@@ -56,8 +60,12 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
+    strategyButtonContainer: { marginLeft: 'auto', marginBottom: '1rem' },
     selectStrategy: {
         marginTop: '0',
+    },
+    configureStrategy: {
+        display: 'none',
     },
     addStrategyButton: { marginLeft: 'auto' },
     tabNavigation: {

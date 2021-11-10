@@ -239,8 +239,16 @@ const FeatureStrategiesEnvironments = () => {
     const renderTabPanels = () => {
         const tabContentClasses = classNames(styles.tabContentContainer, {
             [styles.containerListView]: configureNewStrategy,
-            [styles.selectStrategy]: expandedSidebar,
         });
+
+        const outerTabContentClasses = classNames(
+            styles.outerTabContentContainer,
+            {
+                [styles.selectStrategy]:
+                    expandedSidebar || configureNewStrategy,
+                [styles.configureStrategy]: configureNewStrategy,
+            }
+        );
 
         const listContainerClasses = classNames(styles.listContainer, {
             [styles.listContainerFullWidth]: expandedSidebar,
@@ -254,50 +262,74 @@ const FeatureStrategiesEnvironments = () => {
                     value={activeTabIdx}
                     index={index}
                 >
-                    <div className={tabContentClasses}>
-                        <ConditionallyRender
-                            condition={
-                                env.strategies.length > 0 || expandedSidebar
-                            }
-                            show={
-                                <>
-                                    <div className={listContainerClasses}>
-                                        <FeatureStrategiesEnvironmentList
-                                            strategies={env.strategies}
-                                        />
-                                    </div>
-                                    <ConditionallyRender
-                                        condition={
-                                            !expandedSidebar &&
-                                            !configureNewStrategy &&
-                                            !smallScreen
+                    <div className={outerTabContentClasses}>
+                        <div className={styles.strategyButtonContainer}>
+                            <ConditionallyRender
+                                condition={
+                                    !expandedSidebar && !configureNewStrategy
+                                }
+                                show={
+                                    <ResponsiveButton
+                                        className={styles.addStrategyButton}
+                                        data-test={ADD_NEW_STRATEGY_ID}
+                                        onClick={() =>
+                                            setExpandedSidebar(prev => !prev)
                                         }
-                                        show={
-                                            <FeatureEnvironmentStrategyExecution
+                                        Icon={Add}
+                                        maxWidth="700px"
+                                        projectId={projectId}
+                                        permission={UPDATE_FEATURE}
+                                    >
+                                        Add new strategy
+                                    </ResponsiveButton>
+                                }
+                            />
+                        </div>
+                        <div className={tabContentClasses}>
+                            <ConditionallyRender
+                                condition={
+                                    env.strategies.length > 0 || expandedSidebar
+                                }
+                                show={
+                                    <>
+                                        <div className={listContainerClasses}>
+                                            <FeatureStrategiesEnvironmentList
                                                 strategies={env.strategies}
-                                                env={env}
+                                            />
+                                        </div>
+                                        <ConditionallyRender
+                                            condition={
+                                                !expandedSidebar &&
+                                                !configureNewStrategy &&
+                                                !smallScreen
+                                            }
+                                            show={
+                                                <FeatureEnvironmentStrategyExecution
+                                                    strategies={env.strategies}
+                                                    env={env}
+                                                />
+                                            }
+                                        />
+                                    </>
+                                }
+                                elseShow={
+                                    <ConditionallyRender
+                                        condition={!expandedSidebar}
+                                        show={
+                                            <NoItemsStrategies
+                                                envName={env.name}
+                                                onClick={() =>
+                                                    setExpandedSidebar(
+                                                        prev => !prev
+                                                    )
+                                                }
+                                                projectId={projectId}
                                             />
                                         }
                                     />
-                                </>
-                            }
-                            elseShow={
-                                <ConditionallyRender
-                                    condition={!expandedSidebar}
-                                    show={
-                                        <NoItemsStrategies
-                                            envName={env.name}
-                                            onClick={() =>
-                                                setExpandedSidebar(
-                                                    prev => !prev
-                                                )
-                                            }
-                                            projectId={projectId}
-                                        />
-                                    }
-                                />
-                            }
-                        />
+                                }
+                            />
+                        </div>
                     </div>
                 </TabPanel>
             );
@@ -328,26 +360,6 @@ const FeatureStrategiesEnvironments = () => {
                                 show={showRefreshPrompt}
                                 refresh={handleRefresh}
                                 cancel={handleCancel}
-                            />
-                            <ConditionallyRender
-                                condition={
-                                    !expandedSidebar && !configureNewStrategy
-                                }
-                                show={
-                                    <ResponsiveButton
-                                        className={styles.addStrategyButton}
-                                        data-test={ADD_NEW_STRATEGY_ID}
-                                        onClick={() =>
-                                            setExpandedSidebar(prev => !prev)
-                                        }
-                                        Icon={Add}
-                                        maxWidth="700px"
-                                        projectId={projectId}
-                                        permission={UPDATE_FEATURE}
-                                    >
-                                        Add new strategy
-                                    </ResponsiveButton>
-                                }
                             />
                         </div>
                         <ConditionallyRender
