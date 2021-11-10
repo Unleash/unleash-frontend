@@ -69,7 +69,11 @@ const FeatureStrategiesEnvironmentList = ({
         },
     });
 
-    const dropboxMarkup = useDropboxMarkup(isOver, expandedSidebar);
+    const dropboxMarkup = useDropboxMarkup(
+        isOver,
+        expandedSidebar,
+        setExpandedSidebar
+    );
     const delDialogueMarkup = useDeleteStrategyMarkup({
         show: delDialog.show,
         onClick: () => deleteStrategy(delDialog.strategyId),
@@ -140,19 +144,32 @@ const FeatureStrategiesEnvironmentList = ({
             condition={!configureNewStrategy}
             show={
                 <div className={classes} ref={drop}>
-                    <div className={styles.headerContainer}>
-                        <FeatureOverviewEnvSwitch
-                            env={activeEnvironment}
-                            setToastData={setToastData}
-                            callback={updateFeatureEnvironmentCache}
-                        />
-                    </div>
-                    <div className={strategiesContainerClasses}>
-                        <ConditionallyRender
-                            condition={activeEnvironment.strategies.length > 0}
-                            show={renderStrategies()}
-                        />
-                    </div>
+                    <ConditionallyRender
+                        condition={!expandedSidebar}
+                        show={
+                            <div className={styles.headerContainer}>
+                                <FeatureOverviewEnvSwitch
+                                    env={activeEnvironment}
+                                    setToastData={setToastData}
+                                    callback={updateFeatureEnvironmentCache}
+                                />
+                            </div>
+                        }
+                    />
+
+                    <ConditionallyRender
+                        condition={!expandedSidebar}
+                        show={
+                            <div className={strategiesContainerClasses}>
+                                <ConditionallyRender
+                                    condition={
+                                        activeEnvironment.strategies.length > 0
+                                    }
+                                    show={renderStrategies()}
+                                />
+                            </div>
+                        }
+                    />
 
                     {dropboxMarkup}
                     {toast}

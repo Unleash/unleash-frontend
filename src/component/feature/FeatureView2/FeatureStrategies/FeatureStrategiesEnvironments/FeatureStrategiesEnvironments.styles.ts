@@ -44,6 +44,7 @@ export const useStyles = makeStyles(theme => ({
     listContainerFullWidth: { width: '100%' },
     containerListView: {
         display: 'none',
+        marginTop: 'none',
     },
     header: {
         fontSize: theme.fontSizes.mainHeader,
@@ -53,6 +54,9 @@ export const useStyles = makeStyles(theme => ({
         margin: '0rem 2rem 2rem 2rem',
         display: 'flex',
         alignItems: 'center',
+    },
+    selectStrategy: {
+        marginTop: '0',
     },
     addStrategyButton: { marginLeft: 'auto' },
     tabNavigation: {

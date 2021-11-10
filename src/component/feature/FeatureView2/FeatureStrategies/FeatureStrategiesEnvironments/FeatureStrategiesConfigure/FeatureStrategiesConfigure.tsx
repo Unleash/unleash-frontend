@@ -13,7 +13,6 @@ import { useStyles } from './FeatureStrategiesConfigure.styles';
 import FeatureStrategiesProductionGuard from '../FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import cloneDeep from 'lodash.clonedeep';
-import FeatureStrategyCreateExecution from '../../FeatureStrategyCreateExecution/FeatureStrategyCreateExecution';
 import { PRODUCTION } from '../../../../../../constants/environmentTypes';
 import { ADD_NEW_STRATEGY_SAVE_ID } from '../../../../../../testIds';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
@@ -110,11 +109,6 @@ const FeatureStrategiesConfigure = ({
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.header}>
-                Configuring{' '}
-                {getHumanReadbleStrategyName(configureNewStrategy.name)} in{' '}
-                {activeEnvironment.name}
-            </h2>
             <ConditionallyRender
                 condition={activeEnvironment.enabled}
                 show={
@@ -144,19 +138,6 @@ const FeatureStrategiesConfigure = ({
                         setStrategyConstraints={setStrategyConstraints}
                     />
                 </div>
-
-                <ConditionallyRender
-                    condition={!smallScreen}
-                    show={
-                        <div className={styles.executionContainer}>
-                            <FeatureStrategyCreateExecution
-                                parameters={strategyParams}
-                                constraints={strategyConstraints}
-                                configureNewStrategy={configureNewStrategy}
-                            />
-                        </div>
-                    }
-                />
             </div>
 
             <div className={styles.buttonContainer}>

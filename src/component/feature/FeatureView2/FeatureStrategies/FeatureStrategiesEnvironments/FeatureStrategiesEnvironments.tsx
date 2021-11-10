@@ -63,6 +63,7 @@ const FeatureStrategiesEnvironments = () => {
     useEffect(() => {
         if (addStrategy) {
             setExpandedSidebar(true);
+            history.replace(history.location.pathname);
         }
         if (!feature) return;
 
@@ -238,6 +239,7 @@ const FeatureStrategiesEnvironments = () => {
     const renderTabPanels = () => {
         const tabContentClasses = classNames(styles.tabContentContainer, {
             [styles.containerListView]: configureNewStrategy,
+            [styles.selectStrategy]: expandedSidebar,
         });
 
         const listContainerClasses = classNames(styles.listContainer, {
@@ -328,7 +330,9 @@ const FeatureStrategiesEnvironments = () => {
                                 cancel={handleCancel}
                             />
                             <ConditionallyRender
-                                condition={!expandedSidebar}
+                                condition={
+                                    !expandedSidebar && !configureNewStrategy
+                                }
                                 show={
                                     <ResponsiveButton
                                         className={styles.addStrategyButton}
@@ -340,6 +344,11 @@ const FeatureStrategiesEnvironments = () => {
                                         maxWidth="700px"
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '110px',
+                                            right: '40px',
+                                        }}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>
@@ -347,7 +356,9 @@ const FeatureStrategiesEnvironments = () => {
                             />
                         </div>
                         <ConditionallyRender
-                            condition={!expandedSidebar}
+                            condition={
+                                !expandedSidebar && !configureNewStrategy
+                            }
                             show={
                                 <div className={styles.tabContainer}>
                                     <Tabs
