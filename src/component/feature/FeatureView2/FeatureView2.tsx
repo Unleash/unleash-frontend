@@ -84,13 +84,13 @@ const FeatureView2 = () => {
             path: `${basePath}/metrics`,
             name: 'Metrics',
         },
+        { title: 'Variants', path: `${basePath}/variants`, name: 'Variants' },
+        { title: 'Settings', path: `${basePath}/settings`, name: 'Settings' },
         {
             title: 'Event log',
             path: `${basePath}/logs`,
             name: 'Event log',
         },
-        { title: 'Variants', path: `${basePath}/variants`, name: 'Variants' },
-        { title: 'Settings', path: `${basePath}/settings`, name: 'Settings' },
     ];
 
     const renderTabs = () => {

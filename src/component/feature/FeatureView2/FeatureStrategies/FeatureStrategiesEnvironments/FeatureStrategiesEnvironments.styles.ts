@@ -24,8 +24,8 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     outerTabContentContainer: {
-        marginTop: '2rem',
-        padding: '1rem 2rem 2rem 2rem',
+        marginTop: '1rem',
+        padding: '0rem 2rem 2rem 2rem',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -60,7 +60,10 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
-    strategyButtonContainer: { marginLeft: 'auto', marginBottom: '1rem' },
+    strategyButtonContainer: {
+        marginLeft: 'auto',
+        marginBottom: '2rem',
+    },
     selectStrategy: {
         marginTop: '0',
     },

@@ -11,6 +11,7 @@ import { useStyles } from './FeatureStrategyExecution.styles';
 import FeatureStrategyExecutionConstraint from './FeatureStrategyExecutionConstraint/FeatureStrategyExecutionConstraint';
 import FeatureStrategyExecutionChips from './FeatureStrategyExecutionChips/FeatureStrategyExecutionChips';
 import useStrategies from '../../../../../hooks/api/getters/useStrategies/useStrategies';
+import Constraint from '../../../../common/Constraint/Constraint';
 
 interface IFeatureStrategiesExecutionProps {
     parameters: IParameter;
@@ -23,7 +24,6 @@ const FeatureStrategyExecution = ({
     parameters,
     constraints = [],
     strategy,
-    percentageFill = '#fff',
 }: IFeatureStrategiesExecutionProps) => {
     const styles = useStyles();
     const { strategies } = useStrategies();
@@ -39,15 +39,14 @@ const FeatureStrategyExecution = ({
             if (index !== constraints.length - 1) {
                 return (
                     <Fragment key={`${constraint.contextName}-${index}`}>
-                        <FeatureStrategyExecutionConstraint
-                            constraint={constraint}
-                        />
+                        <Constraint constraint={constraint} />
+
                         <FeatureStrategiesSeparator text="AND" />
                     </Fragment>
                 );
             }
             return (
-                <FeatureStrategyExecutionConstraint
+                <Constraint
                     constraint={constraint}
                     key={`${constraint.contextName}-${index}`}
                 />
@@ -72,10 +71,7 @@ const FeatureStrategyExecution = ({
                                 is included.
                             </p>
 
-                            <PercentageCircle
-                                percentage={parameters[key]}
-                                secondaryPieColor={percentageFill}
-                            />
+                            <PercentageCircle percentage={parameters[key]} />
                         </Fragment>
                     );
                 case 'userIds':
@@ -161,7 +157,6 @@ const FeatureStrategyExecution = ({
 
                             <PercentageCircle
                                 percentage={strategy.parameters[param.name]}
-                                secondaryPieColor={percentageFill}
                             />
                             <ConditionallyRender
                                 condition={notLastItem}

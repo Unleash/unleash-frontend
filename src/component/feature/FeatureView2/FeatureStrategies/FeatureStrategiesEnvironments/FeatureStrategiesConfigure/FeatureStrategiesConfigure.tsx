@@ -111,15 +111,9 @@ const FeatureStrategiesConfigure = ({
                 condition={activeEnvironment.enabled}
                 show={
                     <Alert severity="warning" className={styles.envWarning}>
-                        This environment is currently enabled. The strategy will
-                        take effect immediately after you save your changes.
-                    </Alert>
-                }
-                elseShow={
-                    <Alert severity="warning" className={styles.envWarning}>
-                        This environment is currently disabled. The strategy
-                        will not take effect before you enable the environment
-                        on the feature toggle.
+                        This toggle is currently enabled in this environment.
+                        The strategy will take effect immediately after you save
+                        your changes.
                     </Alert>
                 }
             />

@@ -12,12 +12,14 @@ interface IFeatureOverviewEnvSwitchProps {
     env: IFeatureEnvironment;
     setToastData: TSetToastData;
     callback?: () => void;
+    text?: string;
 }
 
 const FeatureOverviewEnvSwitch = ({
     env,
     setToastData,
     callback,
+    text,
 }: IFeatureOverviewEnvSwitchProps) => {
     const { featureId, projectId } = useParams<IFeatureViewParams>();
     const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
@@ -74,6 +76,17 @@ const FeatureOverviewEnvSwitch = ({
         await handleToggleEnvironmentOn();
     };
 
+    let content = text ? (
+        text
+    ) : (
+        <>
+            {' '}
+            <span data-loading>{env.enabled ? 'enabled' : 'disabled'} in</span>
+            &nbsp;
+            <StringTruncator text={env.name} maxWidth="120" />
+        </>
+    );
+
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <PermissionSwitch
@@ -83,9 +96,7 @@ const FeatureOverviewEnvSwitch = ({
                 onChange={toggleEnvironment}
                 tooltip={''}
             />
-            <StringTruncator text={env.name} maxWidth="120" />
-            &nbsp;
-            <span data-loading>is {env.enabled ? 'enabled' : 'disabled'}</span>
+            {content}
         </div>
     );
 };
