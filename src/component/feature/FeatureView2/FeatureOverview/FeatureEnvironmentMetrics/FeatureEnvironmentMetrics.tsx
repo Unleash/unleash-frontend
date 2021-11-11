@@ -61,7 +61,8 @@ const FeatureEnvironmentMetrics = ({
                             text={metric.environment}
                             className={styles.truncator}
                             maxWidth="200"
-                        />{' '}
+                        />
+                        &nbsp;
                         {hour}
                     </h2>
                 </div>
@@ -95,6 +96,7 @@ const FeatureEnvironmentMetrics = ({
                         maxWidth="150"
                         className={styles.truncator}
                     />
+                    &nbsp;
                     {hour}
                 </h2>
             </div>

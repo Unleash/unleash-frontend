@@ -18,7 +18,7 @@ const StringTruncator = ({
                 data-loading
                 className={className}
                 style={{
-                    width: `${maxWidth}px`,
+                    maxWidth: `${maxWidth}px`,
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
