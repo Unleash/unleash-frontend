@@ -1,4 +1,5 @@
 import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
+import ConditionallyRender from '../../ConditionallyRender';
 import PermissionButton from '../../PermissionButton/PermissionButton';
 import NoItems from '../NoItems';
 
@@ -7,7 +8,7 @@ import { useStyles } from './NoItemsStrategies.styles';
 interface INoItemsStrategiesProps {
     envName: string;
     projectId: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 const NoItemsStrategies = ({
@@ -34,15 +35,20 @@ const NoItemsStrategies = ({
                 </a>
             </p>
 
-            <PermissionButton
-                variant="contained"
-                permission={UPDATE_FEATURE}
-                projectId={projectId}
-                color="primary"
-                onClick={onClick}
-            >
-                Add your first strategy
-            </PermissionButton>
+            <ConditionallyRender
+                condition={Boolean(onClick)}
+                show={
+                    <PermissionButton
+                        variant="contained"
+                        permission={UPDATE_FEATURE}
+                        projectId={projectId}
+                        color="primary"
+                        onClick={onClick}
+                    >
+                        Add your first strategy
+                    </PermissionButton>
+                }
+            />
         </NoItems>
     );
 };
