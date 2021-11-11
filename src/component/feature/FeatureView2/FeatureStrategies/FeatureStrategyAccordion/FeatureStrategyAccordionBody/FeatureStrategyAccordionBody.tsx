@@ -15,7 +15,6 @@ import { C } from '../../../../../common/flags';
 import { Button } from '@material-ui/core';
 import { useStyles } from './FeatureStrategyAccordionBody.styles';
 import Dialogue from '../../../../../common/Dialogue';
-import FeatureStrategiesSeparator from '../../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
 import { ADD_CONSTRAINT_ID } from '../../../../../../testIds';
 import AccessContext from '../../../../../../contexts/AccessContext';

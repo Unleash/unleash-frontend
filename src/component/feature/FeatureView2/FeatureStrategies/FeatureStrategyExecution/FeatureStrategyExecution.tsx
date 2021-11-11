@@ -8,7 +8,6 @@ import ConditionallyRender from '../../../../common/ConditionallyRender';
 import PercentageCircle from '../../../../common/PercentageCircle/PercentageCircle';
 import FeatureStrategiesSeparator from '../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import { useStyles } from './FeatureStrategyExecution.styles';
-import FeatureStrategyExecutionConstraint from './FeatureStrategyExecutionConstraint/FeatureStrategyExecutionConstraint';
 import FeatureStrategyExecutionChips from './FeatureStrategyExecutionChips/FeatureStrategyExecutionChips';
 import useStrategies from '../../../../../hooks/api/getters/useStrategies/useStrategies';
 import Constraint from '../../../../common/Constraint/Constraint';
