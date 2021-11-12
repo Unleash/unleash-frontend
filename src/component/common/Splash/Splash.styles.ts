@@ -1,14 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    mainContainer: {
+    splashMainContainer: {
         backgroundColor: theme.palette.primary.light,
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 500,
     },
-    container: {
+    splashContainer: {
         backgroundColor: theme.palette.primary.main,
         position: 'relative',
         height: '85vh',
@@ -35,6 +41,10 @@ export const useStyles = makeStyles(theme => ({
         height: 'inherit',
         marginBottom: 5,
     },
+    circlesContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
     circles: {
         display: 'inline-flex',
         justifyContent: 'center',
@@ -50,17 +60,17 @@ export const useStyles = makeStyles(theme => ({
         textDecoration: 'none',
         width: '100px',
         color: '#fff',
-        '&:hover':{
-            backgroundColor: 'inherit'
-        }
+        '&:hover': {
+            backgroundColor: 'inherit',
+        },
     },
     nextButton: {
         textDecoration: 'none',
         width: '100px',
         color: theme.palette.primary.light,
         backgroundColor: '#fff',
-        '&:hover':{
+        '&:hover': {
             backgroundColor: '#fff',
-        }
+        },
     },
 }));

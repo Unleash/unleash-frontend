@@ -3,16 +3,25 @@ import EnvironmentSplashPage from './EnvironmentSplashPage/EnvironmentSplashPage
 import { VpnKey, CloudCircle } from '@material-ui/icons';
 import { useStyles } from './EnvironmentSplash.styles';
 import { ReactComponent as Logo } from '../../../assets/img/group996.svg';
+import { useEffect } from 'react';
+import useSplashApi from '../../../hooks/api/actions/useSplashApi/useSplashApi';
 
 const EnvironmentSplash = () => {
     const styles = useStyles();
+    const { setSplashSeen } = useSplashApi();
+
+    useEffect(() => {
+        setSplashSeen('environments');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Splash
             components={[
                 <EnvironmentSplashPage
                     title={
                         <h2 className={styles.title}>
-                            🎉{' '}Environments are coming to Unleash!{' '}🎉
+                            Environments are coming to Unleash!
                         </h2>
                     }
                     topDescription={
@@ -55,9 +64,7 @@ const EnvironmentSplash = () => {
                             feature toggle.
                         </p>
                     }
-                    image={
-                        <Logo className={styles.logo}/>
-                    }
+                    image={<Logo className={styles.logo} />}
                 />,
                 <EnvironmentSplashPage
                     title={
@@ -75,9 +82,7 @@ const EnvironmentSplash = () => {
                             have access to those environments.
                         </p>
                     }
-                    image={
-                        <Logo className={styles.logo}/>
-                    }
+                    image={<Logo className={styles.logo} />}
                 />,
                 <EnvironmentSplashPage
                     title={
@@ -104,7 +109,7 @@ const EnvironmentSplash = () => {
                             for that environment.
                         </p>
                     }
-                    image={<VpnKey className={styles.icon}/>}
+                    image={<VpnKey className={styles.icon} />}
                 />,
             ]}
         />

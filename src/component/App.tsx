@@ -17,15 +17,18 @@ import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
 import ConditionallyRender from './common/ConditionallyRender';
 import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
+import Loader from './common/Loader/Loader';
+import useUser from '../hooks/api/getters/useUser/useUser';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
     feedback: any;
 }
-
-const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
+const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     const { toast, setToastData } = useToast();
+    // because we need the userId when the component load.
+    const { splash, user: userFromUseUser } = useUser();
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
@@ -81,33 +84,38 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
             setToastData={setToastData}
             isUnauthorized={isUnauthorized}
         >
-            {' '}
-            <div className={styles.container}>
-                <LayoutPicker location={location}>
-                    <Switch>
-                        <ProtectedRoute
-                            exact
-                            path="/"
-                            unauthorized={isUnauthorized()}
-                            component={Redirect}
-                            renderProps={{ to: '/features' }}
-                        />
-                        {renderMainLayoutRoutes()}
-                        {renderStandaloneRoutes()}
-                        <Route path="/404" component={NotFound} />
-                        <Redirect to="/404" />
-                    </Switch>
-                    <Feedback
-                        feedbackId="pnps"
-                        openUrl="http://feedback.unleash.run"
-                    />
-                </LayoutPicker>
-                {toast}
-            </div>
-            {/* <ConditionallyRender
-                condition={!user.splash?.environments}
-                show={<EnvironmentSplash />}
-            /> */}
+            <ConditionallyRender
+                condition={!isUnauthorized() && !userFromUseUser?.id}
+                show={<Loader />}
+                elseShow={
+                    <div className={styles.container}>
+                        <LayoutPicker location={location}>
+                            <ConditionallyRender
+                                condition={!splash && !isUnauthorized()}
+                                show={<EnvironmentSplash />}
+                            />
+                            <Switch>
+                                <ProtectedRoute
+                                    exact
+                                    path="/"
+                                    unauthorized={isUnauthorized()}
+                                    component={Redirect}
+                                    renderProps={{ to: '/features' }}
+                                />
+                                {renderMainLayoutRoutes()}
+                                {renderStandaloneRoutes()}
+                                <Route path="/404" component={NotFound} />
+                                <Redirect to="/404" />
+                            </Switch>
+                            <Feedback
+                                feedbackId="pnps"
+                                openUrl="http://feedback.unleash.run"
+                            />
+                        </LayoutPicker>
+                        {toast}
+                    </div>
+                }
+            />
         </SWRProvider>
     );
 };

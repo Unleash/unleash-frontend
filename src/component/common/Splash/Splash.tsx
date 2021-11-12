@@ -13,15 +13,14 @@ interface ISplashProps {
     components: React.ReactNode[];
 }
 
-const Splash: React.FC<ISplashProps> = props => {
+const Splash: React.FC<ISplashProps> = ({ components }) => {
     const styles = useStyles();
     const history = useHistory();
-    const { components } = props;
     const [counter, setCounter] = useState(0);
 
     const onNext = () => {
         if (counter === components.length - 1) {
-            return history.push('/test');
+            return history.push('/');
         }
         setCounter(counter + 1);
     };
@@ -64,8 +63,8 @@ const Splash: React.FC<ISplashProps> = props => {
     };
 
     return (
-        <div className={styles.mainContainer}>
-            <div className={styles.container}>
+        <div className={styles.splashMainContainer}>
+            <div className={styles.splashContainer}>
                 <div className={styles.closeButton}>
                     <Button className={styles.button} onClick={onClose}>
                         <CloseOutlined />
@@ -73,7 +72,7 @@ const Splash: React.FC<ISplashProps> = props => {
                 </div>
                 {components[counter]}
                 <div className={styles.controllers}>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={styles.circlesContainer}>
                         <div className={styles.circles}>{renderCircles()}</div>
                     </div>
                     <div className={styles.buttonsContainer}>
