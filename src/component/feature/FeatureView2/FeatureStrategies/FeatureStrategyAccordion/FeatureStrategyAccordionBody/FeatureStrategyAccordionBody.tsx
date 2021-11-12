@@ -107,6 +107,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                     <Constraint
                         constraint={constraint}
                         key={`${constraint.contextName}-${index}`}
+                        className={styles.constraintBody}
                     />
                 );
             });
@@ -144,7 +145,7 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                                         onClick={toggleConstraints}
                                         data-test={ADD_CONSTRAINT_ID}
                                     >
-                                        + Add constraint
+                                        + Edit constraints
                                     </Button>
                                 }
                             />

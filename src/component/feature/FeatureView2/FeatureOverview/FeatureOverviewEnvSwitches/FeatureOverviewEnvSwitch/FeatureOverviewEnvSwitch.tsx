@@ -38,7 +38,7 @@ const FeatureOverviewEnvSwitch = ({
             if (callback) {
                 callback();
             }
-        } catch (e) {
+        } catch (e: any) {
             setToastData({
                 show: true,
                 type: 'error',
@@ -59,7 +59,7 @@ const FeatureOverviewEnvSwitch = ({
             if (callback) {
                 callback();
             }
-        } catch (e) {
+        } catch (e: any) {
             setToastData({
                 show: true,
                 type: 'error',

@@ -28,6 +28,9 @@ export const useStyles = makeStyles(theme => ({
         padding: '0rem 2rem 2rem 2rem',
         display: 'flex',
         flexDirection: 'column',
+        [theme.breakpoints.down(700)]: {
+            padding: '0',
+        },
     },
     tabContentContainer: {
         display: 'flex',
