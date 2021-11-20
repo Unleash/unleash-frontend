@@ -120,6 +120,10 @@ const AddVariant = ({
             setError(validationError);
             return;
         }
+        if (payload.type === 'json' && !isJSON(payload.value)) {
+            setError({ payload: 'The payload is not a valid JSON format' });
+            return;
+        }
 
         try {
             const variant = {
@@ -202,6 +206,17 @@ const AddVariant = ({
             ...overrides,
             ...[{ contextName: 'userId', values: [] }],
         ]);
+    };
+
+    const isJSON = jsonString => {
+        try {
+            let parsedString = JSON.parse(jsonString);
+            if (parsedString && typeof parsedString === 'object') {
+                return true;
+            }
+        } catch (e) {}
+
+        return false;
     };
 
     const isFixWeight = data.weightType === weightTypes.FIX;
@@ -331,14 +346,17 @@ const AddVariant = ({
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
                         <TextField
-                            rows={1}
+                            rows={payload.type === 'json' ? 10 : 1}
                             label="Value"
                             name="value"
+                            error={Boolean(error.payload)}
+                            helperText={error.payload}
                             className={commonStyles.fullWidth}
                             value={payload.value}
                             onChange={onPayload}
                             variant="outlined"
                             size="small"
+                            multiline
                             data-test={'VARIANT_PAYLOAD_VALUE'}
                         />
                     </Grid>
