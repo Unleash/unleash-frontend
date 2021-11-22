@@ -65,8 +65,8 @@ const Splash: React.FC<ISplashProps> = ({ components }) => {
     return (
         <div className={styles.splashMainContainer}>
             <div className={styles.splashContainer}>
-                <div className={styles.closeButton}>
-                    <Button className={styles.button} onClick={onClose}>
+                <div className={styles.closeButtonContainer}>
+                    <Button className={styles.closeButton} onClick={onClose}>
                         <CloseOutlined />
                     </Button>
                 </div>

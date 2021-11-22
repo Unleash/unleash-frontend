@@ -3,36 +3,47 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
     splashMainContainer: {
         backgroundColor: theme.palette.primary.light,
-        height: '100vh',
+        height: 'fit-content',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 500,
+        padding: '50px 0',
+        [theme.breakpoints.down('sm')]: {
+            padding: '0',
+        },
     },
     splashContainer: {
         backgroundColor: theme.palette.primary.main,
         position: 'relative',
-        height: '85vh',
-        width: '51vw',
-        padding: '1.5rem 2rem',
+        height: 'fit-content',
+        width: '750px',
+        padding: '2rem 1.5rem',
         borderRadius: '5px',
         color: '#fff',
         overflow: 'auto',
         display: 'flex',
         flexDirection: 'column',
+        overflowX: 'hidden',
+        [theme.breakpoints.down('sm')]: {
+            height: 'fit-content',
+            width: 'fit-content',
+            padding: '2rem 0',
+        },
     },
-    closeButton: {
+    closeButtonContainer: {
         display: 'inline-flex',
         justifyContent: 'flex-end',
         color: '#fff',
         position: 'absolute',
-        right: '0px',
-        top: '10px',
+        right: '-10px',
+        top: '5px',
+    },
+    closeButton:{
+        textDecoration: 'none',
+        color: '#fff',
+        '&:hover': {
+            backgroundColor: 'inherit',
+        },
     },
     controllers: {
         display: 'flex',
@@ -40,6 +51,7 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'flex-end',
         height: 'inherit',
         marginBottom: 5,
+        marginTop: '35px'
     },
     circlesContainer: {
         display: 'flex',

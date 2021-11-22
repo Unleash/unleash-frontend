@@ -89,29 +89,37 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                 show={<Loader />}
                 elseShow={
                     <div className={styles.container}>
-                        <LayoutPicker location={location}>
-                            <ConditionallyRender
-                                condition={!splash && !isUnauthorized()}
-                                show={<EnvironmentSplash />}
-                            />
-                            <Switch>
-                                <ProtectedRoute
-                                    exact
-                                    path="/"
-                                    unauthorized={isUnauthorized()}
-                                    component={Redirect}
-                                    renderProps={{ to: '/features' }}
-                                />
-                                {renderMainLayoutRoutes()}
-                                {renderStandaloneRoutes()}
-                                <Route path="/404" component={NotFound} />
-                                <Redirect to="/404" />
-                            </Switch>
-                            <Feedback
-                                feedbackId="pnps"
-                                openUrl="http://feedback.unleash.run"
-                            />
-                        </LayoutPicker>
+                        <ConditionallyRender
+                            condition={
+                                !splash?.environment && !isUnauthorized()
+                            }
+                            show={<EnvironmentSplash />}
+                            elseShow={
+                                <LayoutPicker location={location}>
+                                    <Switch>
+                                        <ProtectedRoute
+                                            exact
+                                            path="/"
+                                            unauthorized={isUnauthorized()}
+                                            component={Redirect}
+                                            renderProps={{ to: '/features' }}
+                                        />
+                                        {renderMainLayoutRoutes()}
+                                        {renderStandaloneRoutes()}
+                                        <Route
+                                            path="/404"
+                                            component={NotFound}
+                                        />
+                                        <Redirect to="/404" />
+                                    </Switch>
+                                    <Feedback
+                                        feedbackId="pnps"
+                                        openUrl="http://feedback.unleash.run"
+                                    />
+                                </LayoutPicker>
+                            }
+                        />
+
                         {toast}
                     </div>
                 }
