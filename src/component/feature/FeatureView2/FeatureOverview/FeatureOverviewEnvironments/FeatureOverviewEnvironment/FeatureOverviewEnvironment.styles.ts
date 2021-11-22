@@ -123,6 +123,9 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     [theme.breakpoints.down(560)]: {
+        disabledIndicatorPos: {
+            top: '-8px',
+        },
         headerTitle: {
             flexDirection: 'column',
         },
