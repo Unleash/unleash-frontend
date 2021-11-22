@@ -6,7 +6,7 @@ import handleErrorResponses from '../httpErrorResponseHandler';
 
 export const USER_CACHE_KEY = `api/admin/user`;
 
-const useUser = (options: SWRConfiguration = {}) => {
+const useUser = (options: SWRConfiguration = {revalidateOnFocus: false}) => {
     const fetcher = () => {
         const path = formatApiPath(`api/admin/user`);
         return fetch(path, {

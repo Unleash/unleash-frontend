@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
     },
     topDescription: {
         padding: '0px 40px',
-        marginBottom: '5px',
+        marginBottom: '15px',
         fontSize: '17px',
         [theme.breakpoints.down('sm')]: {
             padding: '0 20px',
@@ -34,11 +34,11 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     logo: {
-        width: '80%',
+        width: '70%',
         height: '60%',
         display: 'block',
         margin: 'auto',
-        marginTop: '35px',
+        marginTop: '20px',
     },
     linkList: {
         padding: '30px 25px',

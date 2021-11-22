@@ -7,20 +7,19 @@ import {
 } from '@material-ui/icons';
 import { useState } from 'react';
 import ConditionallyRender from '../ConditionallyRender';
-import { useHistory } from 'react-router';
 
 interface ISplashProps {
     components: React.ReactNode[];
+    onFinish: Function;
 }
 
-const Splash: React.FC<ISplashProps> = ({ components }) => {
+const Splash: React.FC<ISplashProps> = ({ onFinish, components }) => {
     const styles = useStyles();
-    const history = useHistory();
     const [counter, setCounter] = useState(0);
-
+    
     const onNext = () => {
         if (counter === components.length - 1) {
-            return history.push('/');
+            onFinish(false);
         }
         setCounter(counter + 1);
     };
@@ -29,7 +28,7 @@ const Splash: React.FC<ISplashProps> = ({ components }) => {
         setCounter(counter - 1);
     };
     const onClose = () => {
-        history.push('/features');
+        onFinish(false);
     };
 
     const calculatePosition = () => {

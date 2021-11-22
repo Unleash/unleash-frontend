@@ -9,7 +9,7 @@ import useSplashApi from '../../../hooks/api/actions/useSplashApi/useSplashApi';
 import Header from '../../menu/Header/Header';
 import Footer from '../../menu/Footer/Footer';
 
-const EnvironmentSplash = () => {
+const EnvironmentSplash = ({ onFinish }) => {
     const styles = useStyles();
     const { setSplashSeen } = useSplashApi();
 
@@ -22,6 +22,7 @@ const EnvironmentSplash = () => {
         <>
             <Header />
             <Splash
+                onFinish={onFinish}
                 components={[
                     <EnvironmentSplashPage
                         title={
@@ -122,7 +123,7 @@ const EnvironmentSplash = () => {
                             <h2 className={styles.title}>Want to know more?</h2>
                         }
                         topDescription={
-                            <p className={styles.topDescription}>
+                            <div className={styles.topDescription}>
                                 If you’d like some more info on environments,
                                 check out some of the resources below! The
                                 documentation or the video walkthrough is a
@@ -171,7 +172,7 @@ const EnvironmentSplash = () => {
                                         </a>
                                     </li>
                                 </ul>
-                            </p>
+                            </div>
                         }
                         bottomDescription={
                             <p className={styles.bottomDescription}>
