@@ -2,23 +2,27 @@ import { useStyles } from './ProjectInfo.styles';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import classnames from 'classnames';
+import { Edit } from '@material-ui/icons';
 
 import { useCommonStyles } from '../../../../common.styles';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from '../../../common/PercentageCircle/PercentageCircle';
+import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_PROJECT } from '../../../../store/project/actions';
 
 interface IProjectInfoProps {
     id: string;
     memberCount: number;
     featureCount: number;
     health: number;
+    description: string;
 }
 
 const ProjectInfo = ({
     id,
     memberCount,
-    featureCount,
     health,
+    description,
 }: IProjectInfoProps) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
@@ -33,6 +37,25 @@ const ProjectInfo = ({
     return (
         <aside>
             <div className={styles.projectInfo}>
+                <div className={styles.infoSection}>
+                    <div className={styles.descriptionContainer}>
+                        <p data-loading>{description}</p>
+                        <PermissionIconButton
+                            permission={UPDATE_PROJECT}
+                            tooltip={'Edit description'}
+                            projectId={id}
+                            component={Link}
+                            data-loading
+                            to={`/projects/${id}/settings`}
+                        >
+                            <Edit />
+                        </PermissionIconButton>
+                    </div>
+                    <div className={styles.idContainer}>
+                        <p data-loading>projectId: {id}</p>
+                    </div>
+                </div>
+
                 <div className={styles.infoSection}>
                     <div data-loading className={styles.percentageContainer}>
                         <PercentageCircle percentage={health} />
@@ -60,15 +83,6 @@ const ProjectInfo = ({
                             className={styles.arrowIcon}
                         />
                     </Link>
-                </div>
-
-                <div className={styles.infoSection}>
-                    <p className={styles.subtitle} data-loading>
-                        Feature toggles
-                    </p>
-                    <p className={styles.emphazisedText} data-loading>
-                        {featureCount}
-                    </p>
                 </div>
 
                 <div

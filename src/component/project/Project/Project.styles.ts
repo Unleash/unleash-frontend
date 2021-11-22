@@ -8,13 +8,21 @@ export const useStyles = makeStyles(theme => ({
             flexDirection: 'column',
         },
     },
+    projectLogo: {
+        marginRight: '0.5rem',
+        height: '25px',
+    },
     projectToggles: { width: '100%', minHeight: '100%' },
     header: {
         backgroundColor: '#fff',
         borderRadius: '10px',
         marginBottom: '1rem',
     },
-    innerContainer: { padding: '2rem' },
+    innerContainer: {
+        padding: '1rem 2rem',
+        display: 'flex',
+        alignItems: 'center',
+    },
     separator: {
         width: '100%',
         backgroundColor: theme.palette.grey[200],
