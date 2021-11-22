@@ -1,46 +1,21 @@
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Remove from '@material-ui/icons/Remove';
+import { useStyles } from './RolloutIcon.styles';
+import classnames from 'classnames';
 
 interface IRolloutIconProps {
-    fill: string;
     className?: string;
 }
 
-const RolloutIcon = ({ fill, className }: IRolloutIconProps) => {
+const RolloutIcon = ({ className }: IRolloutIconProps) => {
+    const styles = useStyles();
     return (
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                position: 'relative',
-                minWidth: '50px',
-                height: '100%',
-            }}
-        >
+        <div className={styles.container}>
             <Remove
-                style={{
-                    position: 'absolute',
-                    borderRadius: '1px',
-                    height: '50px',
-                    width: '50px',
-                    right: 0,
-                    left: 0,
-                    margin: '0 auto',
-                }}
-                className={className}
+                className={classnames(styles.vertical, styles.pos, className)}
             />
             <FiberManualRecordIcon
-                style={{
-                    width: '15px',
-                    height: '15px',
-                    position: 'absolute',
-                    right: 0,
-                    left: 0,
-                    borderRadius: '1px',
-                    margin: '0 auto',
-                    fill,
-                }}
-                className={className}
+                className={classnames(styles.circle, styles.pos, className)}
             />
         </div>
     );
