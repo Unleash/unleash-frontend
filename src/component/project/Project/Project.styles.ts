@@ -11,6 +11,10 @@ export const useStyles = makeStyles(theme => ({
     projectLogo: {
         marginRight: '0.5rem',
         height: '25px',
+
+        [theme.breakpoints.down(500)]: {
+            display: 'none',
+        },
     },
     projectToggles: { width: '100%', minHeight: '100%' },
     header: {
