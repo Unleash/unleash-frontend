@@ -23,6 +23,7 @@ const Splash: React.FC<ISplashProps> = ({
     const onNext = () => {
         if (counter === components.length - 1) {
             onFinish(false);
+            return;
         }
         setCounter(counter + 1);
     };
