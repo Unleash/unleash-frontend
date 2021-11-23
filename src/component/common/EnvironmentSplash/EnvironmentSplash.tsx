@@ -6,8 +6,6 @@ import { ReactComponent as Logo1 } from '../../../assets/img/splash_env1.svg';
 import { ReactComponent as Logo2 } from '../../../assets/img/splash_env2.svg';
 import { useEffect } from 'react';
 import useSplashApi from '../../../hooks/api/actions/useSplashApi/useSplashApi';
-import Header from '../../menu/Header/Header';
-import Footer from '../../menu/Footer/Footer';
 
 const EnvironmentSplash = ({ onFinish }) => {
     const styles = useStyles();
@@ -20,7 +18,6 @@ const EnvironmentSplash = ({ onFinish }) => {
 
     return (
         <>
-            <Header />
             <Splash
                 onFinish={onFinish}
                 components={[
@@ -191,7 +188,6 @@ const EnvironmentSplash = ({ onFinish }) => {
                     />,
                 ]}
             />
-            <Footer />
         </>
     );
 };

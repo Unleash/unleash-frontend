@@ -29,11 +29,16 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     const { toast, setToastData } = useToast();
     // because we need the userId when the component load.
     const { splash, user: userFromUseUser } = useUser();
-    const [splashLocal, setSplashLocal] = useState(true);
+    const [showSplash, setShowSplash] = useState(false);
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
     }, [user.authDetails?.type]);
+
+    useEffect(() => {
+        setShowSplash(!splash?.environments && !isUnauthorized());
+        /* eslint-disable-next-line */
+    }, [splash]);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
@@ -91,10 +96,10 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                 elseShow={
                     <div className={styles.container}>
                         <ConditionallyRender
-                            condition={
-                                !splash.environments && splashLocal && !isUnauthorized()
+                            condition={showSplash}
+                            show={
+                                <EnvironmentSplash onFinish={setShowSplash} />
                             }
-                            show={<EnvironmentSplash onFinish={setSplashLocal}/>}
                             elseShow={
                                 <LayoutPicker location={location}>
                                     <Switch>

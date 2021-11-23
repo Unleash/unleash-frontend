@@ -13,10 +13,13 @@ interface ISplashProps {
     onFinish: Function;
 }
 
-const Splash: React.FC<ISplashProps> = ({ onFinish, components }) => {
+const Splash: React.FC<ISplashProps> = ({
+    components,
+    onFinish,
+}: ISplashProps) => {
     const styles = useStyles();
     const [counter, setCounter] = useState(0);
-    
+
     const onNext = () => {
         if (counter === components.length - 1) {
             onFinish(false);

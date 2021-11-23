@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
     splashMainContainer: {
         backgroundColor: theme.palette.primary.light,
-        height: 'fit-content',
+        height: '100%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '50px 0',
-        [theme.breakpoints.down('sm')]: {
+        padding: '3rem 0',
+        [theme.breakpoints.down('xs')]: {
             padding: '0',
         },
     },
@@ -24,10 +25,17 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         overflowX: 'hidden',
-        [theme.breakpoints.down('sm')]: {
-            height: 'fit-content',
-            width: 'fit-content',
+        [theme.breakpoints.down('xs')]: {
+            top: '0px',
+            left: '0px',
+            right: '0px',
+            bottom: '0px',
             padding: '2rem 0',
+            zIndex: '500',
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            borderRadius: 0,
         },
     },
     closeButtonContainer: {

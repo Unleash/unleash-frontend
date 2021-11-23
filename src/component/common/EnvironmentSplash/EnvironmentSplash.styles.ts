@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '0px 40px',
         marginBottom: '15px',
         fontSize: '17px',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             padding: '0 20px',
         },
     },
@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => ({
         padding: '0px 20px',
         fontSize: '17px',
         marginTop: '15px',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             padding: '0 20px',
         },
     },
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
         fontSize: '150px',
         display: 'block',
         margin: 'auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             fontSize: '90px',
         },
     },
@@ -39,6 +39,10 @@ export const useStyles = makeStyles(theme => ({
         display: 'block',
         margin: 'auto',
         marginTop: '20px',
+        [theme.breakpoints.down('xs')]: {
+            width: '80%',
+            height: '80%',
+        },
     },
     linkList: {
         padding: '30px 25px',
