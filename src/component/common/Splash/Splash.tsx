@@ -10,7 +10,7 @@ import ConditionallyRender from '../ConditionallyRender';
 
 interface ISplashProps {
     components: React.ReactNode[];
-    onFinish: Function;
+    onFinish: () => void;
 }
 
 const Splash: React.FC<ISplashProps> = ({
