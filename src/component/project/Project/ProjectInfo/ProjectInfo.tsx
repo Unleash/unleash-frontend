@@ -39,7 +39,9 @@ const ProjectInfo = ({
             <div className={styles.projectInfo}>
                 <div className={styles.infoSection}>
                     <div className={styles.descriptionContainer}>
-                        <p data-loading>{description}</p>
+                        <p data-loading className={styles.description}>
+                            {description ? description : 'No description'}
+                        </p>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
                             tooltip={'Edit description'}

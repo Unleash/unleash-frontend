@@ -14,13 +14,17 @@ export const useStyles = makeStyles(theme => ({
             marginBottom: '1rem',
         },
     },
+    description: {
+        textAlign: 'left',
+        marginBottom: '0.5rem',
+    },
     descriptionContainer: {
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'space-between',
     },
     idContainer: {
         display: 'flex',
+        width: '100%',
     },
     percentageContainer: {
         display: 'flex',
