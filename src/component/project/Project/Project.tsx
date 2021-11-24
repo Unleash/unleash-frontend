@@ -5,7 +5,7 @@ import useLoading from '../../../hooks/useLoading';
 import ApiError from '../../common/ApiError/ApiError';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useStyles } from './Project.styles';
-import { IconButton, Tab, Tabs } from '@material-ui/core';
+import { Tab, Tabs } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import useToast from '../../../hooks/useToast';
 import useQueryParams from '../../../hooks/useQueryParams';
@@ -18,6 +18,8 @@ import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
 import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
+import { UPDATE_PROJECT } from '../../../store/project/actions';
+import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 
 const Project = () => {
     const { id, activeTab } = useParams<{ id: string; activeTab: string }>();
@@ -151,9 +153,15 @@ const Project = () => {
                         style={{ margin: 0 }}
                     >
                         Project: {project?.name}{' '}
-                        <IconButton onClick={() => goToTabWithName('settings')}>
+                        <PermissionIconButton
+                            permission={UPDATE_PROJECT}
+                            tooltip={'Edit description'}
+                            projectId={project?.id}
+                            onClick={() => goToTabWithName('settings')}
+                            data-loading
+                        >
                             <Edit />
-                        </IconButton>
+                        </PermissionIconButton>
                     </h2>
                 </div>
                 <ConditionallyRender
