@@ -44,7 +44,9 @@ export const useStyles = makeStyles(theme => ({
         width: '100%',
     },
     listContainer: {
-        width: '100%',
+        width: '50%',
+        border: `1px solid ${theme.palette.grey[300]}`,
+        borderRadius: '5px',
         [theme.breakpoints.down(700)]: {
             width: '100%',
         },
