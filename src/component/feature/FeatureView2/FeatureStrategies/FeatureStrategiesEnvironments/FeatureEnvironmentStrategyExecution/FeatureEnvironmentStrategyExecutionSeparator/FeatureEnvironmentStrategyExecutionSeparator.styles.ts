@@ -7,12 +7,6 @@ export const useStyles = makeStyles(theme => ({
         height: '25px',
         marginTop: '1rem',
     },
-    separatorBorder: {
-        height: '1px',
-        borderBottom: `2px dotted ${theme.palette.primary.main}`,
-        width: '100%',
-        top: '0',
-    },
     textContainer: {
         display: 'flex',
         justifyContent: 'center',

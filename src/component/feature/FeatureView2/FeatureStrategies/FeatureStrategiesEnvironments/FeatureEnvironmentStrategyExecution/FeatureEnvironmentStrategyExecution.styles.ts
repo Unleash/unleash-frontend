@@ -10,11 +10,15 @@ export const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    headerContainer: {
+        width: '100%',
+        backgroundColor: '#efefef',
+    },
     header: {
-        color: theme.palette.primary.main,
-        textAlign: 'center',
-        margin: '0.5rem 0',
-        fontSize: theme.fontSizes.mainHeader,
-        marginTop: '1rem',
+        color: '#000',
+        textAlign: 'left',
+        margin: '1rem 1.2rem',
+        fontSize: theme.fontSizes.bodySize,
+        fontWeight: 'normal',
     },
 }));
