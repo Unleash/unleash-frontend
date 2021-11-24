@@ -41,9 +41,9 @@ const EnvironmentSplash = ({ onFinish }) => {
                         }
                         bottomDescription={
                             <p className={styles.bottomDescription}>
-                                By default you will get access three
+                                By default you will get access to three
                                 environments: <b>default</b>, <b>development</b>{' '}
-                                and<b> producton</b>. All of your current
+                                and<b> production</b>. All of your current
                                 configurations will live in the default
                                 environment and{' '}
                                 <b>
