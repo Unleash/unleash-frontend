@@ -17,7 +17,6 @@ import EditProject from '../edit-project-container';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
-import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
 import { UPDATE_PROJECT } from '../../../store/project/actions';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 
@@ -144,9 +143,6 @@ const Project = () => {
         <div ref={ref}>
             <div className={styles.header}>
                 <div className={styles.innerContainer}>
-                    <span data-loading>
-                        <ProjectIcon className={styles.projectLogo} />
-                    </span>
                     <h2
                         data-loading
                         className={commonStyles.title}
