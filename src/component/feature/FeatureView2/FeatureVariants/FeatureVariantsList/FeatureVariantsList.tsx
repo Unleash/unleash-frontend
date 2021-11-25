@@ -213,7 +213,11 @@ const FeatureOverviewVariants = () => {
                 text: successText,
             });
         } catch (e) {
-            throw e;
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
         }
 
     };
