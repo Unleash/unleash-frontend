@@ -40,7 +40,7 @@ const Dialogue: React.FC<IDialogue> = ({
 }) => {
     const styles = useStyles();
     const handleClick = formId
-        ? (e: any) => {
+        ? (e: React.SyntheticEvent) => {
               e.preventDefault();
               onClick(e);
           }
