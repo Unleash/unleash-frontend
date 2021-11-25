@@ -206,6 +206,8 @@ const AddVariant = ({
 
     const isFixWeight = data.weightType === weightTypes.FIX;
 
+    const formId = 'add-feature-variant-form';
+
     return (
         <Dialogue
             open={showDialog}
@@ -218,8 +220,13 @@ const AddVariant = ({
             title={title}
             fullWidth
             maxWidth="md"
+            formId={formId}
         >
-            <form onSubmit={submit} className={commonStyles.contentSpacingY}>
+            <form
+                id={formId}
+                onSubmit={submit}
+                className={commonStyles.contentSpacingY}
+            >
                 <p style={{ color: 'red' }}>{error.general}</p>
                 <TextField
                     label="Variant name"

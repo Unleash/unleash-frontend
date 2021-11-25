@@ -62,6 +62,7 @@ class AddTagDialogComponent extends Component {
     };
     render() {
         const { tag, errors, openDialog } = this.state;
+        const formId = 'add-tag-dialog-form';
         return (
             <React.Fragment>
                 <Button onClick={this.handleOpenDialog.bind(this)}>
@@ -75,12 +76,13 @@ class AddTagDialogComponent extends Component {
                     title="Add tags to feature toggle"
                     onClick={this.onSubmit}
                     onClose={this.onCancel}
+                    formId={formId}
                 >
                     <>
                         <DialogContentText>
                             Tags allows you to group features together
                         </DialogContentText>
-                        <form onSubmit={this.onSubmit}>
+                        <form id={formId} onSubmit={this.onSubmit}>
                             <section className={styles.dialogueFormContent}>
                                 <TagSelect
                                     name="type"
