@@ -64,7 +64,7 @@ const Dialogue: React.FC<IDialogue> = ({
                             color="primary"
                             variant="contained"
                             onClick={onClick}
-                            autoFocus
+                            autoFocus={!children}
                             disabled={disabledPrimaryButton}
                             data-test={DIALOGUE_CONFIRM_ID}
                         >
