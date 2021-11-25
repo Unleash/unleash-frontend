@@ -48,12 +48,15 @@ const EnvironmentDisableConfirm = ({
                 environment in the textfield below: <strong>{env?.name}</strong>
             </p>
 
-            <Input
-                onChange={handleChange}
-                value={confirmName}
-                label="Environment name"
-                className={styles.environmentDeleteInput}
-            />
+            <form id={formId}>
+                <Input
+                    autoFocus
+                    onChange={handleChange}
+                    value={confirmName}
+                    label="Environment name"
+                    className={styles.environmentDeleteInput}
+                />
+            </form>
         </Dialogue>
     );
 };
