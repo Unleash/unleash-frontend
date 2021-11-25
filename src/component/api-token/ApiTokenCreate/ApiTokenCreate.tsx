@@ -161,6 +161,7 @@ const ApiTokenCreate = ({
                 )}
             >
                 <TextField
+                    autoFocus
                     value={data.username}
                     name="username"
                     onChange={setUsername}

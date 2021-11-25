@@ -194,6 +194,7 @@ const AddVariant = ({
             <form onSubmit={submit} className={commonStyles.contentSpacingY}>
                 <p style={{ color: 'red' }}>{error.general}</p>
                 <TextField
+                    autoFocus
                     label="Variant name"
                     name="name"
                     placeholder=""

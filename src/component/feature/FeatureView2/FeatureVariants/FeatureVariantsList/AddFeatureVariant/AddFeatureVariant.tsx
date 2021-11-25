@@ -223,6 +223,7 @@ const AddVariant = ({
                 <p style={{ color: 'red' }}>{error.general}</p>
                 <TextField
                     label="Variant name"
+                    autoFocus
                     name="name"
                     placeholder=""
                     className={commonStyles.fullWidth}

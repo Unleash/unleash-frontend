@@ -84,6 +84,7 @@ const AddTagDialog = ({ open, setOpen }: IAddTagDialogProps) => {
                     <form onSubmit={onSubmit}>
                         <section className={styles.dialogFormContent}>
                             <TagSelect
+                                autoFocus
                                 name="type"
                                 value={tag.type}
                                 onChange={e => setValue('type', e.target.value)}
