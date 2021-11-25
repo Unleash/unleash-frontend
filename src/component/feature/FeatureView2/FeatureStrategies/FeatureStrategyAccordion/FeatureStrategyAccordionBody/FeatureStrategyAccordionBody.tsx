@@ -106,11 +106,24 @@ const FeatureStrategyAccordionBody: React.FC<IFeatureStrategyAccordionBodyProps>
                 return (
                     <Constraint
                         constraint={constraint}
+                        editCallback={() => {
+                            setShowConstraints(true);
+                        }}
+                        deleteCallback={() => {
+                            removeConstraint(index);
+                        }}
                         key={`${constraint.contextName}-${index}`}
                         className={styles.constraintBody}
                     />
                 );
             });
+        };
+
+        const removeConstraint = (index: number) => {
+            const updatedConstraints = [...constraints];
+            updatedConstraints.splice(index, 1);
+
+            updateConstraints(updatedConstraints);
         };
 
         const closeConstraintDialog = () => {
