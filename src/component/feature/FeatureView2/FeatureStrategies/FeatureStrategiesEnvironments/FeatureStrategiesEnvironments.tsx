@@ -291,26 +291,11 @@ const FeatureStrategiesEnvironments = () => {
                                     env.strategies.length > 0 || expandedSidebar
                                 }
                                 show={
-                                    <>
-                                        <div className={listContainerClasses}>
-                                            <FeatureStrategiesEnvironmentList
-                                                strategies={env.strategies}
-                                            />
-                                        </div>
-                                        <ConditionallyRender
-                                            condition={
-                                                !expandedSidebar &&
-                                                !configureNewStrategy &&
-                                                !smallScreen
-                                            }
-                                            show={
-                                                <FeatureEnvironmentStrategyExecution
-                                                    strategies={env.strategies}
-                                                    env={env}
-                                                />
-                                            }
+                                    <div className={listContainerClasses}>
+                                        <FeatureStrategiesEnvironmentList
+                                            strategies={env.strategies}
                                         />
-                                    </>
+                                    </div>
                                 }
                                 elseShow={
                                     <ConditionallyRender
