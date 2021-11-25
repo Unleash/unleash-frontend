@@ -21,6 +21,11 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 'normal',
         marginBottom: '0.5rem',
     },
+    btnContainer: {
+        position: 'absolute',
+        top: 0,
+        right: 0
+    },
     constraintContainer: {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',

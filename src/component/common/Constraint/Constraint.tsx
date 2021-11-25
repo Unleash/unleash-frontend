@@ -1,13 +1,15 @@
-import { Button } from '@material-ui/core';
+import { Delete, Edit } from '@material-ui/icons';
 import classnames from 'classnames';
-import { useContext } from 'react';
-import AccessContext from '../../../contexts/AccessContext';
 import { IConstraint } from '../../../interfaces/strategy';
 import FeatureStrategiesSeparator from '../../feature/FeatureView2/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
-import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
+import {
+    UPDATE_STRATEGY,
+} from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../ConditionallyRender';
+import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
 import StringTruncator from '../StringTruncator/StringTruncator';
 import { useStyles } from './Constraint.styles';
+
 
 interface IConstraintProps {
     constraint: IConstraint;
@@ -24,24 +26,16 @@ const Constraint = ({
     ...rest
 }: IConstraintProps) => {
     const styles = useStyles();
-    const { hasAccess } = useContext(AccessContext);
+
 
     const classes = classnames(styles.constraint, {
         [styles.column]: constraint.values.length > 2,
     });
 
-    const containerClasses = classnames(
-        styles.constraint,
-        styles.constraintContainer,
-        {
-            [styles.column]: true,
-        }
-    );
-
-    const editable = deleteCallback && editCallback;
+    const editable = !!(deleteCallback && editCallback);
 
     return (
-        <div className={containerClasses + ' ' + className} {...rest}>
+        <div className={classes + ' ' + className} {...rest}>
             <div className={classes + ' ' + className} {...rest}>
                 <StringTruncator text={constraint.contextName} maxWidth="125" />
                 <FeatureStrategiesSeparator
@@ -54,21 +48,24 @@ const Constraint = ({
             </div>
 
             <ConditionallyRender
-                condition={hasAccess(UPDATE_FEATURE) && editable}
+                condition={editable}
                 show={
-                    <div>
-                        <Button
-                            className={styles.constraintBtn}
+                    <div className={styles.btnContainer}>
+                        <PermissionIconButton
                             onClick={editCallback}
+                            permission={UPDATE_STRATEGY}
+                            projectId={'projectId'}
                         >
-                            Edit
-                        </Button>
-                        <Button
-                            className={styles.constraintBtn}
+                            <Edit />
+                        </PermissionIconButton>
+
+                        <PermissionIconButton
                             onClick={deleteCallback}
+                            permission={UPDATE_STRATEGY}
+                            projectId={'projectId'}
                         >
-                            Delete
-                        </Button>
+                            <Delete />
+                        </PermissionIconButton>
                     </div>
                 }
             />
