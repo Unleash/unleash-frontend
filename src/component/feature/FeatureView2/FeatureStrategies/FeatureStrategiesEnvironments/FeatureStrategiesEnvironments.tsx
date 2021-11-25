@@ -20,7 +20,6 @@ import FeatureStrategiesUIContext from '../../../../../contexts/FeatureStrategie
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import FeatureStrategiesConfigure from './FeatureStrategiesConfigure/FeatureStrategiesConfigure';
 import FeatureStrategiesRefresh from './FeatureStrategiesRefresh/FeatureStrategiesRefresh';
-import FeatureEnvironmentStrategyExecution from './FeatureEnvironmentStrategyExecution/FeatureEnvironmentStrategyExecution';
 import ResponsiveButton from '../../../../common/ResponsiveButton/ResponsiveButton';
 import AccessContext from '../../../../../contexts/AccessContext';
 
