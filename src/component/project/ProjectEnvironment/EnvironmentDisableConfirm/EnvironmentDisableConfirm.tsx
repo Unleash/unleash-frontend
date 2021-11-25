@@ -48,7 +48,12 @@ const EnvironmentDisableConfirm = ({
                 environment in the textfield below: <strong>{env?.name}</strong>
             </p>
 
-            <form id={formId}>
+            <form
+                onSubmit={e => {
+                    e.preventDefault();
+                    handleDisableEnvironment();
+                }}
+            >
                 <Input
                     autoFocus
                     onChange={handleChange}
