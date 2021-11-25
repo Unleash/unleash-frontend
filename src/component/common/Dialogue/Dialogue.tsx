@@ -87,7 +87,7 @@ const Dialogue: React.FC<IDialogue> = ({
                     condition={Boolean(onClose)}
                     show={
                         <Button onClick={onClose}>
-                            {secondaryButtonText || 'No take me back'}{' '}
+                            {secondaryButtonText || 'No, take me back'}
                         </Button>
                     }
                 />
