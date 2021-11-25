@@ -7,7 +7,11 @@ import { ReactComponent as Logo2 } from '../../../assets/img/splash_env2.svg';
 import { useEffect } from 'react';
 import useSplashApi from '../../../hooks/api/actions/useSplashApi/useSplashApi';
 
-const EnvironmentSplash = ({ onFinish }) => {
+interface IEnvironmentSplashProps {
+    onFinish: (status: boolean) => void;
+}
+
+const EnvironmentSplash = ({ onFinish }: IEnvironmentSplashProps) => {
     const styles = useStyles();
     const { setSplashSeen } = useSplashApi();
 
@@ -22,6 +26,7 @@ const EnvironmentSplash = ({ onFinish }) => {
                 onFinish={onFinish}
                 components={[
                     <EnvironmentSplashPage
+                        key={1}
                         title={
                             <h2 className={styles.title}>
                                 Environments are coming to Unleash!
@@ -55,6 +60,7 @@ const EnvironmentSplash = ({ onFinish }) => {
                         image={<CloudCircle className={styles.icon} />}
                     />,
                     <EnvironmentSplashPage
+                        key={2}
                         title={
                             <h2 className={styles.title}>
                                 Strategies live in environments
@@ -72,6 +78,7 @@ const EnvironmentSplash = ({ onFinish }) => {
                         image={<Logo1 className={styles.logo} />}
                     />,
                     <EnvironmentSplashPage
+                        key={3}
                         title={
                             <h2 className={styles.title}>
                                 Environments are turned on per project
@@ -91,6 +98,7 @@ const EnvironmentSplash = ({ onFinish }) => {
                         image={<Logo2 className={styles.logo} />}
                     />,
                     <EnvironmentSplashPage
+                        key={4}
                         title={
                             <h2 className={styles.title}>
                                 API Keys control which environment you get the
@@ -116,6 +124,7 @@ const EnvironmentSplash = ({ onFinish }) => {
                         image={<VpnKey className={styles.icon} />}
                     />,
                     <EnvironmentSplashPage
+                        key={5}
                         title={
                             <h2 className={styles.title}>Want to know more?</h2>
                         }

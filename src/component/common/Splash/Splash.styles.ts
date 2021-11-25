@@ -16,15 +16,14 @@ export const useStyles = makeStyles(theme => ({
     splashContainer: {
         backgroundColor: theme.palette.primary.main,
         position: 'relative',
-        height: '635px',
-        width: '750px',
+        minHeight: '650px',
+        width: '600px',
         padding: '2rem 1.5rem',
         borderRadius: '5px',
         color: '#fff',
-        overflow: 'hidden',
         display: 'flex',
-        flexDirection: 'column',
         overflowX: 'hidden',
+        flexDirection: 'column',
         [theme.breakpoints.down('xs')]: {
             top: '0px',
             left: '0px',
@@ -46,8 +45,9 @@ export const useStyles = makeStyles(theme => ({
         right: '-10px',
         top: '5px',
     },
-    closeButton:{
+    closeButton: {
         textDecoration: 'none',
+        right: '10px',
         color: '#fff',
         '&:hover': {
             backgroundColor: 'inherit',
@@ -59,7 +59,7 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'flex-end',
         height: 'inherit',
         marginBottom: 5,
-        marginTop: '35px'
+        marginTop: 'auto',
     },
     circlesContainer: {
         display: 'flex',

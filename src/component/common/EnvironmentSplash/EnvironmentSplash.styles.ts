@@ -2,12 +2,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     splashContainer: {
-        position: 'absolute',
+        position: 'fixed',
     },
     title: {
         textAlign: 'center',
         marginBottom: '20px',
         lineHeight: '1.3',
+        [theme.breakpoints.down('xs')]: {
+            marginTop: '1rem',
+        },
     },
     topDescription: {
         padding: '0px 40px',
@@ -38,10 +41,11 @@ export const useStyles = makeStyles(theme => ({
         height: '60%',
         display: 'block',
         margin: 'auto',
-        marginTop: '20px',
+        marginTop: '2rem',
         [theme.breakpoints.down('xs')]: {
             width: '80%',
             height: '80%',
+            marginTop: '0rem',
         },
     },
     linkList: {

@@ -1,4 +1,5 @@
-import { Button } from '@material-ui/core';
+import { Fragment } from 'react';
+import { Button, IconButton } from '@material-ui/core';
 import { useStyles } from './Splash.styles';
 import {
     FiberManualRecord,
@@ -10,7 +11,7 @@ import ConditionallyRender from '../ConditionallyRender';
 
 interface ISplashProps {
     components: React.ReactNode[];
-    onFinish: () => void;
+    onFinish: (status: boolean) => void;
 }
 
 const Splash: React.FC<ISplashProps> = ({
@@ -44,10 +45,11 @@ const Splash: React.FC<ISplashProps> = ({
     };
 
     const renderCircles = () => {
-        return components.map((components, index) => {
+        return components.map((_, index) => {
             if (index === 0) {
+                // Use index as key because the amount of pages will never dynamically change.
                 return (
-                    <>
+                    <Fragment key={index}>
                         <FiberManualRecordOutlined />
                         <FiberManualRecord
                             style={{
@@ -57,7 +59,7 @@ const Splash: React.FC<ISplashProps> = ({
                                 transform: `translateX(${calculatePosition()}px)`,
                             }}
                         />
-                    </>
+                    </Fragment>
                 );
             }
 
@@ -69,9 +71,12 @@ const Splash: React.FC<ISplashProps> = ({
         <div className={styles.splashMainContainer}>
             <div className={styles.splashContainer}>
                 <div className={styles.closeButtonContainer}>
-                    <Button className={styles.closeButton} onClick={onClose}>
+                    <IconButton
+                        className={styles.closeButton}
+                        onClick={onClose}
+                    >
                         <CloseOutlined />
-                    </Button>
+                    </IconButton>
                 </div>
                 {components[counter]}
                 <div className={styles.controllers}>
