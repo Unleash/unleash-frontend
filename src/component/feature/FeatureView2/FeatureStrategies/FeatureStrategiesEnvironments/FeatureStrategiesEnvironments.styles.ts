@@ -24,10 +24,12 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     outerTabContentContainer: {
-        marginTop: '1rem',
+        margin: '1rem 2rem',
         padding: '0rem 2rem 2rem 2rem',
         display: 'flex',
         flexDirection: 'column',
+        border: `1px solid ${theme.palette.grey[300]}`,
+        borderRadius: '5px',
         [theme.breakpoints.down(700)]: {
             padding: '0',
         },
@@ -45,8 +47,6 @@ export const useStyles = makeStyles(theme => ({
     },
     listContainer: {
         width: '100%',
-        border: `1px solid ${theme.palette.grey[300]}`,
-        borderRadius: '5px',
         [theme.breakpoints.down(700)]: {
             width: '100%',
         },
@@ -75,7 +75,10 @@ export const useStyles = makeStyles(theme => ({
     configureStrategy: {
         display: 'none',
     },
-    addStrategyButton: { marginLeft: 'auto' },
+    addStrategyButton: {
+        marginLeft: 'auto',
+        marginTop: '10px',
+    },
     tabNavigation: {
         backgroundColor: 'transparent',
         textTransform: 'none',

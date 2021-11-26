@@ -39,21 +39,14 @@ export const useStyles = makeStyles(theme => ({
         marginTop: 0,
         marginBottom: 0,
     },
-    strategiesContainer: {
-        padding: '1rem',
-    },
     headerContainer: {
+        position: 'absolute',
+        top: '-65px',
         display: 'flex',
         justifyContent: 'space-between',
         width: '100%',
-        marginBottom: '15px',
-        borderBottom: `1px solid ${theme.palette.grey[300]}`,
         [theme.breakpoints.down(700)]: {
-            position: 'absolute',
-            top: '-120px',
+            top: '-94px',
         },
-    },
-    headerInnerContainer: {
-        padding: '1rem',
     },
 }));
