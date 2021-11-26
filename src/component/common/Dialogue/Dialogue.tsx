@@ -76,7 +76,7 @@ const Dialogue: React.FC<IDialogue> = ({
                             autoFocus={!formId}
                             disabled={disabledPrimaryButton}
                             data-test={DIALOGUE_CONFIRM_ID}
-                            type={formId ? 'submit' : 'button'}
+                            type={formId ? 'submit' : undefined}
                         >
                             {primaryButtonText || "Yes, I'm sure"}
                         </Button>
