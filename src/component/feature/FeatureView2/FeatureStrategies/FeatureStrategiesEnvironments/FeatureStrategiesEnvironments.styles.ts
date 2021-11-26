@@ -71,6 +71,7 @@ export const useStyles = makeStyles(theme => ({
     },
     selectStrategy: {
         marginTop: '0',
+        border: '0',
     },
     configureStrategy: {
         display: 'none',
