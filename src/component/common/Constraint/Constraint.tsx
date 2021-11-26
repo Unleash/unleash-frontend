@@ -1,5 +1,7 @@
 import { Delete, Edit } from '@material-ui/icons';
 import classnames from 'classnames';
+import { useParams } from 'react-router';
+import { IFeatureViewParams } from '../../../interfaces/params';
 import { IConstraint } from '../../../interfaces/strategy';
 import FeatureStrategiesSeparator from '../../feature/FeatureView2/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import { UPDATE_STRATEGY } from '../../providers/AccessProvider/permissions';
@@ -23,6 +25,7 @@ const Constraint = ({
     ...rest
 }: IConstraintProps) => {
     const styles = useStyles();
+    const { projectId } = useParams<IFeatureViewParams>();
 
     const classes = classnames(styles.constraint, {
         [styles.column]: constraint.values.length > 2,
@@ -51,7 +54,7 @@ const Constraint = ({
                             onClick={editCallback}
                             tooltip="Edit strategy"
                             permission={UPDATE_STRATEGY}
-                            projectId={'projectId'}
+                            projectId={projectId}
                         >
                             <Edit />
                         </PermissionIconButton>
@@ -60,7 +63,7 @@ const Constraint = ({
                             onClick={deleteCallback}
                             tooltip="Delete strategy"
                             permission={UPDATE_STRATEGY}
-                            projectId={'projectId'}
+                            projectId={projectId}
                         >
                             <Delete />
                         </PermissionIconButton>
