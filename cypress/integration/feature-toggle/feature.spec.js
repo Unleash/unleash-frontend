@@ -15,6 +15,7 @@ let featureToggleName = '';
 let enterprise = false;
 let strategyId = '';
 let defaultEnv = 'default';
+let defaultTimeout = 500;
 
 describe('feature toggle', () => {
     before(() => {
@@ -87,7 +88,7 @@ describe('feature toggle', () => {
     });
 
     it('Can add a gradual rollout strategy to the default environment', () => {
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
         cy.get('[data-test=ADD_NEW_STRATEGY_CARD_BUTTON_ID-2').click();
@@ -131,7 +132,7 @@ describe('feature toggle', () => {
     });
 
     it('can update a strategy in the default environment', () => {
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
         cy.get('[data-test=STRATEGY_ACCORDION_ID-flexibleRollout').click();
 
@@ -179,7 +180,7 @@ describe('feature toggle', () => {
     });
 
     it('can delete a strategy in the default environment', () => {
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
 
         cy.intercept(
@@ -198,7 +199,7 @@ describe('feature toggle', () => {
     });
 
     it('Can add a userid  strategy to the default environment', () => {
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
         cy.get('[data-test=ADD_NEW_STRATEGY_CARD_BUTTON_ID-3').click();
@@ -246,7 +247,7 @@ describe('feature toggle', () => {
     it('Can add two variant to the feature', () => {
         const variantName = 'my-new-variant';
         const secondVariantName = 'my-second-variant';
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
         cy.intercept(
             'PATCH',
@@ -276,7 +277,7 @@ describe('feature toggle', () => {
         cy.wait('@variantcreation');
     });
     it('Can set weight to fixed value for one of the variants', () => {
-        cy.wait(500);
+        cy.wait(defaultTimeout);
 
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
         cy.get('[data-test=VARIANT_EDIT_BUTTON]').first().click();
@@ -313,7 +314,7 @@ describe('feature toggle', () => {
 
     it(`can delete variant`, () => {
         const variantName = 'to-be-deleted';
-        cy.wait(500);
+        cy.wait(defaultTimeout);
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
         cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);

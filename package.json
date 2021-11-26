@@ -32,8 +32,10 @@
     "start:demo": "UNLEASH_API=http://unleash.herokuapp.com yarn run start",
     "test": "react-scripts test",
     "prepare": "yarn run build",
+    "e2e:heroku": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=false,AUTH_TOKEN=$AUTH_TOKEN",
     "e2e": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true,AUTH_TOKEN=$AUTH_TOKEN",
-    "e2e:enterprise": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true,ENTERPRISE=true,AUTH_TOKEN=$AUTH_TOKEN"
+    "e2e:enterprise": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=true,ENTERPRISE=true,AUTH_TOKEN=$AUTH_TOKEN",
+    "e2e:enterprise:heroku": "yarn run cypress open --config baseUrl='http://localhost:3000' --env PASSWORD_AUTH=false,ENTERPRISE=true,AUTH_TOKEN=$AUTH_TOKEN"
   },
   "devDependencies": {
     "@material-ui/core": "4.12.3",
