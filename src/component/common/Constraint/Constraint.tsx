@@ -2,14 +2,11 @@ import { Delete, Edit } from '@material-ui/icons';
 import classnames from 'classnames';
 import { IConstraint } from '../../../interfaces/strategy';
 import FeatureStrategiesSeparator from '../../feature/FeatureView2/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
-import {
-    UPDATE_STRATEGY,
-} from '../../providers/AccessProvider/permissions';
+import { UPDATE_STRATEGY } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../ConditionallyRender';
 import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
 import StringTruncator from '../StringTruncator/StringTruncator';
 import { useStyles } from './Constraint.styles';
-
 
 interface IConstraintProps {
     constraint: IConstraint;
@@ -26,7 +23,6 @@ const Constraint = ({
     ...rest
 }: IConstraintProps) => {
     const styles = useStyles();
-
 
     const classes = classnames(styles.constraint, {
         [styles.column]: constraint.values.length > 2,
@@ -53,6 +49,7 @@ const Constraint = ({
                     <div className={styles.btnContainer}>
                         <PermissionIconButton
                             onClick={editCallback}
+                            tooltip="Edit strategy"
                             permission={UPDATE_STRATEGY}
                             projectId={'projectId'}
                         >
@@ -61,6 +58,7 @@ const Constraint = ({
 
                         <PermissionIconButton
                             onClick={deleteCallback}
+                            tooltip="Delete strategy"
                             permission={UPDATE_STRATEGY}
                             projectId={'projectId'}
                         >
