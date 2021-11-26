@@ -66,9 +66,9 @@ If you need to test against patches against a local server instance, you'll need
 
 And then run the end to end tests using:
 
-`
+```bash
 yarn e2e
-`
+```
 
 You may also need to test that a feature works against the enterprise version of unleash. Assuming the Heroku instance is still running, this can be done by:
 
