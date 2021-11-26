@@ -38,7 +38,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     useEffect(() => {
         setShowSplash(!splash?.environments && !isUnauthorized());
         /* eslint-disable-next-line */
-    }, [splash]);
+    }, [splash.environments]);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
