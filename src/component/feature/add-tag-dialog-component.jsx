@@ -85,6 +85,7 @@ class AddTagDialogComponent extends Component {
                         <form id={formId} onSubmit={this.onSubmit}>
                             <section className={styles.dialogueFormContent}>
                                 <TagSelect
+                                    autoFocus
                                     name="type"
                                     value={tag.type}
                                     onChange={v =>
