@@ -8,6 +8,7 @@ import {
 } from '@material-ui/icons';
 import { useState } from 'react';
 import ConditionallyRender from '../ConditionallyRender';
+import { CLOSE_SPLASH } from '../../../testIds';
 
 interface ISplashProps {
     components: React.ReactNode[];
@@ -74,6 +75,7 @@ const Splash: React.FC<ISplashProps> = ({
                     <IconButton
                         className={styles.closeButton}
                         onClick={onClose}
+                        data-test={CLOSE_SPLASH}
                     >
                         <CloseOutlined />
                     </IconButton>
