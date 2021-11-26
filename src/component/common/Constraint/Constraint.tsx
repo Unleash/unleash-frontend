@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../interfaces/params';
 import { IConstraint } from '../../../interfaces/strategy';
 import FeatureStrategiesSeparator from '../../feature/FeatureView2/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
-import { UPDATE_STRATEGY } from '../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../ConditionallyRender';
 import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
 import StringTruncator from '../StringTruncator/StringTruncator';
@@ -53,7 +53,7 @@ const Constraint = ({
                         <PermissionIconButton
                             onClick={editCallback}
                             tooltip="Edit strategy"
-                            permission={UPDATE_STRATEGY}
+                            permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >
                             <Edit />
@@ -62,7 +62,7 @@ const Constraint = ({
                         <PermissionIconButton
                             onClick={deleteCallback}
                             tooltip="Delete strategy"
-                            permission={UPDATE_STRATEGY}
+                            permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >
                             <Delete />
