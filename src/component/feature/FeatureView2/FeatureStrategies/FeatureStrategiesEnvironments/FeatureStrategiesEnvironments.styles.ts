@@ -25,7 +25,7 @@ export const useStyles = makeStyles(theme => ({
     },
     outerTabContentContainer: {
         margin: '1rem 2rem',
-        padding: '0rem 2rem 2rem 2rem',
+        paddingBottom: '2rem',
         display: 'flex',
         flexDirection: 'column',
         [theme.breakpoints.down(700)]: {
