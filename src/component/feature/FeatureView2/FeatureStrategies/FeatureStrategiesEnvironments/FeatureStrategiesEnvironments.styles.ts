@@ -28,8 +28,6 @@ export const useStyles = makeStyles(theme => ({
         padding: '0rem 2rem 2rem 2rem',
         display: 'flex',
         flexDirection: 'column',
-        border: `1px solid ${theme.palette.grey[300]}`,
-        borderRadius: '5px',
         [theme.breakpoints.down(700)]: {
             padding: '0',
         },
@@ -71,7 +69,6 @@ export const useStyles = makeStyles(theme => ({
     },
     selectStrategy: {
         marginTop: '0',
-        border: '0',
     },
     configureStrategy: {
         display: 'none',
