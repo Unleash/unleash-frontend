@@ -80,7 +80,7 @@ class AddTagDialogComponent extends Component {
                 >
                     <>
                         <DialogContentText>
-                            Tags allows you to group features together
+                            Tags allow you to group features together
                         </DialogContentText>
                         <form id={formId} onSubmit={this.onSubmit}>
                             <section className={styles.dialogueFormContent}>
