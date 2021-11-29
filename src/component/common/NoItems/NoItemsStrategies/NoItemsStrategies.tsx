@@ -37,6 +37,8 @@ const NoItemsStrategies = ({
                 <a
                     className={styles.link}
                     href="https://docs.getunleash.io/user_guide/environments"
+                    target="_blank"
+                    rel="noreferrer"
                 >
                     Read more here
                 </a>
