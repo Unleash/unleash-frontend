@@ -16,7 +16,7 @@ const EnvironmentSplash = ({ onFinish }: IEnvironmentSplashProps) => {
     const { setSplashSeen } = useSplashApi();
 
     useEffect(() => {
-        setSplashSeen('environments');
+        setSplashSeen('environment');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
