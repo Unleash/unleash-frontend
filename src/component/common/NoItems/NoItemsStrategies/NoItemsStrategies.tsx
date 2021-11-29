@@ -1,6 +1,7 @@
 import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../ConditionallyRender';
 import PermissionButton from '../../PermissionButton/PermissionButton';
+import StringTruncator from '../../StringTruncator/StringTruncator';
 import NoItems from '../NoItems';
 
 import { useStyles } from './NoItemsStrategies.styles';
@@ -21,7 +22,13 @@ const NoItemsStrategies = ({
     return (
         <NoItems>
             <p className={styles.noItemsParagraph}>
-                No strategies added in the {envName} environment
+                No strategies added in the{' '}
+                <StringTruncator
+                    text={envName}
+                    maxWidth={'130'}
+                    className={styles.envName}
+                />{' '}
+                environment
             </p>
 
             <p className={styles.noItemsParagraph}>
