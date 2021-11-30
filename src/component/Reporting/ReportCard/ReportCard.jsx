@@ -1,4 +1,3 @@
-import React from 'react';
 import classnames from 'classnames';
 import { Paper } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -8,12 +7,14 @@ import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 
 import styles from './ReportCard.module.scss';
+import ReactTimeAgo from 'react-timeago';
 
 const ReportCard = ({
     health,
     activeCount,
     staleCount,
     potentiallyStaleCount,
+    lastUpdate,
 }) => {
     const healthLessThan50 = health < 50;
     const healthLessThan75 = health < 75;
@@ -52,7 +53,18 @@ const ReportCard = ({
                     <div className={styles.reportCardHealthInnerContainer}>
                         <ConditionallyRender
                             condition={health > -1}
-                            show={<p className={healthClasses}>{health}%</p>}
+                            show={
+                                <div>
+                                    <p className={healthClasses}>{health}%</p>
+                                    <p className={styles.lastUpdate}>
+                                        Last updated:{' '}
+                                        <ReactTimeAgo
+                                            date={lastUpdate}
+                                            live={false}
+                                        />
+                                    </p>
+                                </div>
+                            }
                         />
                     </div>
                 </div>
