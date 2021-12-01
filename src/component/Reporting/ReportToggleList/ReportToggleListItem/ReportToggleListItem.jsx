@@ -76,6 +76,7 @@ const ReportToggleListItem = ({
 
             return pluralize(result, 'day');
         }
+        return 'N/A';
     };
 
     const formatLastSeenAt = () => {
@@ -119,7 +120,7 @@ const ReportToggleListItem = ({
         history.push(getTogglePath(project, name));
     };
 
-    const statusClasses = classnames(styles.active, {
+    const statusClasses = classnames(styles.active, styles.hideColumnStatus, {
         [styles.stale]: stale,
     });
 
@@ -144,9 +145,11 @@ const ReportToggleListItem = ({
                 }
             />
             <td>{name}</td>
-            <td>{formatLastSeenAt()}</td>
-            <td>{formatCreatedAt()}</td>
-            <td className={styles.expired}>{formatExpiredAt()}</td>
+            <td className={styles.hideColumnLastSeen}>{formatLastSeenAt()}</td>
+            <td className={styles.hideColumn}>{formatCreatedAt()}</td>
+            <td className={`${styles.expired} ${styles.hideColumn}`}>
+                {formatExpiredAt()}
+            </td>
             <td className={statusClasses}>{stale ? 'Stale' : 'Active'}</td>
             <td>{formatReportStatus()}</td>
         </tr>

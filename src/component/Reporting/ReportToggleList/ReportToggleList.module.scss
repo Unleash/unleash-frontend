@@ -71,3 +71,23 @@
     margin: 0;
     padding: 0;
 }
+
+@media only screen and (max-width: 800px) {
+    .hideColumn {
+        display: none;
+    }
+    th {
+        min-width: 120px;
+    }
+}
+@media only screen and (max-width: 550px) {
+    .hideColumnStatus {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .hideColumnLastSeen {
+        display: none;
+    }
+}
