@@ -7,6 +7,7 @@ import { Checkbox } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
+import FeatureStatus from '../../../feature/FeatureView2/FeatureStatus/FeatureStatus';
 
 import {
     pluralize,
@@ -78,17 +79,9 @@ const ReportToggleListItem = ({
     };
 
     const formatLastSeenAt = () => {
-        if (!lastSeenAt) return 'Never';
-
-        const [date, now] = getDates(lastSeenAt);
-        const diff = getDiffInDays(date, now);
-        if (diff === 0) return '1 day';
-
-        if (diff) {
-            return pluralize(diff, 'day');
-        }
-
-        return '1 day';
+        return (
+            <FeatureStatus lastSeenAt={lastSeenAt} tooltipPlacement="bottom" />
+        );
     };
 
     const renderStatus = (icon, text) => (
