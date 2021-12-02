@@ -37,6 +37,7 @@ const PermissionSwitch: React.FC<IPermissionSwitchProps> = ({
                     onChange={onChange}
                     disabled={disabled || !access}
                     checked={checked}
+                    color={'secondary'}
                     {...rest}
                 />
             </span>

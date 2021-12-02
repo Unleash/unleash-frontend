@@ -3,12 +3,14 @@ import { Tooltip } from '@material-ui/core';
 interface IStringTruncatorProps {
     text: string;
     maxWidth: string;
+    color?: string;
     className?: string;
 }
 
 const StringTruncator = ({
     text,
     maxWidth,
+    color,
     className,
     ...rest
 }: IStringTruncatorProps) => {
@@ -23,6 +25,7 @@ const StringTruncator = ({
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
                     display: 'inline-block',
+                    color: color,
                 }}
                 {...rest}
             >

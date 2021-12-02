@@ -51,7 +51,7 @@ const FeatureOverviewMetaData = () => {
                                         component={Link}
                                         to={`/projects/${projectId}/features2/${featureId}/settings`}
                                     >
-                                        <Edit />
+                                        <Edit className={styles.editIcon} />
                                     </PermissionIconButton>
                                 </div>
                             </span>

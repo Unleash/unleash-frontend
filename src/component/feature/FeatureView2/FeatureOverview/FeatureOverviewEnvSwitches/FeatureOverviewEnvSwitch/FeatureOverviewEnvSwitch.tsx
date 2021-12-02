@@ -81,9 +81,9 @@ const FeatureOverviewEnvSwitch = ({
     ) : (
         <>
             {' '}
-            <span data-loading>{env.enabled ? 'enabled' : 'disabled'} in</span>
+            <StringTruncator text={env.name} maxWidth="150" color="#817afe" />
             &nbsp;
-            <StringTruncator text={env.name} maxWidth="120" />
+            <span data-loading>is {env.enabled ? 'enabled' : 'disabled'}</span>
         </>
     );
 
