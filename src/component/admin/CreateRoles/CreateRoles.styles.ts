@@ -1,0 +1,8 @@
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles(theme => ({
+    container: {
+        width: '400px',
+    },
+    input: { width: '100%', marginBottom: '1rem' },
+}));
