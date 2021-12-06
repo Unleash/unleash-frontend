@@ -43,12 +43,6 @@ const CreateRoles = () => {
 
     const { project, environments } = permission;
 
-    const formatPermissions = () => {
-        const project = APIPermissions.project.map(permission => {
-            return { ...permission, checked: false };
-        });
-    };
-
     const renderProjectPermissions = () => {
         return project.map(permission => {
             return (
