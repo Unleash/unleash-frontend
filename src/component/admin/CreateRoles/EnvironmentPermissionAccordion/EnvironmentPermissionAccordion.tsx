@@ -1,8 +1,12 @@
-import { Accordion, AccordionDetails } from '@material-ui/core';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+} from '@material-ui/core';
 
 const EnvironmentPermissionAccordion = ({ environment }) => {
     <Accordion>
-        <AccordionSummary></AccordionSummary>
+        <AccordionSummary>{environment.name}</AccordionSummary>
         <AccordionDetails></AccordionDetails>
     </Accordion>;
 };
