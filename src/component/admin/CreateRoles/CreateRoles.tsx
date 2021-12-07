@@ -1,47 +1,18 @@
 import { useState } from 'react';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
-import Create from '../../common/Create/Create';
+import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import Input from '../../common/Input/Input';
 import { useStyles } from './CreateRoles.styles';
+import useRolePermissions from '../../../hooks/api/getters/useRolePermissions/useRolePermissions';
+import { useEffect } from 'react-router/node_modules/@types/react';
+import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
 
-const APIPermissions = {
-    project: [
-        {
-            permission: 'CREATE_FEATURE',
-            displayName: 'Create feature',
-            id: 'unique-1',
-        },
-        {
-            permission: 'UPDATE_PROJECT',
-            displayName: 'Update project',
-            id: 'unique-2',
-        },
-        {
-            permission: 'UPDATE_FEATURE_METADATA',
-            displayName: 'Update feature toggle metadata',
-            id: 'unique-3',
-        },
-    ],
-    environments: [
-        {
-            environmentName: 'Development',
-            permissions: [
-                {
-                    permission: 'CREATE_FEATURE_STRATEGY',
-                    id: 'unique-1',
-                    displayName: 'Create feature strategy',
-                },
-            ],
-        },
-        { environmentName: 'Production', permissions: [] },
-        { environmentName: 'Default', permissions: [] },
-    ],
-};
+// GET Permission endpoint
 
 const CreateRoles = () => {
-    const [permission, setPermissions] = useState(APIPermissions);
+    const { permissions } = useRolePermissions();
 
-    const { project, environments } = permission;
+    const { project, environments } = permissions;
 
     const renderProjectPermissions = () => {
         return project.map(permission => {
@@ -62,9 +33,21 @@ const CreateRoles = () => {
         });
     };
 
+    const renderEnvironmentPermissions = () => {
+        return environments.map(environment => {
+            console.log(environment);
+            return (
+                <EnvironmentPermissionAccordion
+                    environment={environment}
+                    key={environment.name}
+                />
+            );
+        });
+    };
+
     const styles = useStyles();
     return (
-        <Create
+        <FormTemplate
             title="Create project role"
             description="A project role can be
 customised to limit access
@@ -93,7 +76,11 @@ to resources within a project"
             <div className={styles.checkBoxContainer}>
                 {renderProjectPermissions()}
             </div>
-        </Create>
+            <h3>Environment permissions</h3>
+            <div className={styles.checkBoxContainer}>
+                {renderEnvironmentPermissions()}
+            </div>
+        </FormTemplate>
     );
 };
 
