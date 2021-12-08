@@ -114,6 +114,36 @@ export const useStyles = makeStyles(theme => ({
         fill: theme.palette.grey[400],
         marginBottom: '1rem',
     },
+    strategiesText: {
+        fontSize: '14px',
+        color: theme.palette.secondary.light,
+        [theme.breakpoints.down(560)]: {
+            display: 'none'
+        },
+    },
+    stratigiesInfoContainer: {
+        display: 'flex',
+        top: '25px',
+        position: 'relative',
+        marginLeft: '-260px',
+    },
+    noStratigiesInfoContainer: {
+        top: '20px',
+        position: 'relative',
+        marginLeft: '-305px',
+    },
+    stratigiesIconsContainer: {
+        display: 'flex',
+        position: 'relative',
+        top: '25px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '-190px',
+        [theme.breakpoints.down(560)]: {
+            marginLeft: '250px',
+            top: '-6px',
+        },
+    },
     [theme.breakpoints.down(750)]: {
         accordionBodyFooter: {
             flexDirection: 'column',
@@ -144,5 +174,8 @@ export const useStyles = makeStyles(theme => ({
         accordionBodyInnerContainer: {
             padding: '0.5rem',
         },
+    },
+    strategyIcon: {
+        fill: theme.palette.grey[600],
     },
 }));

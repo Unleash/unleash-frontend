@@ -10,6 +10,7 @@ import useFeatureMetrics from '../../../../../../hooks/api/getters/useFeatureMet
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
+import { getFeatureStrategyIcon } from '../../../../../../utils/strategy-names';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import DisabledIndicator from '../../../../../common/DisabledIndicator/DisabledIndicator';
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
@@ -47,6 +48,12 @@ const FeatureOverviewEnvironment = ({
         }
         return `This environment is disabled, which means that none of your strategies are executing`;
     };
+    const renderStratigiesIcons = () => {
+        let icons = featureEnvironment?.strategies.map(strategy => {
+            return getFeatureStrategyIcon(strategy.name);
+        });
+        return icons;
+    };
 
     return (
         <div className={styles.featureOverviewEnvironment}>
@@ -65,6 +72,36 @@ const FeatureOverviewEnvironment = ({
                             text={env.name}
                             className={styles.truncator}
                             maxWidth="100"
+                        />
+                        <ConditionallyRender
+                            condition={renderStratigiesIcons()?.length !== 0}
+                            show={
+                                <div className={styles.stratigiesInfoContainer}>
+                                    <p className={styles.strategiesText}>
+                                        Strategies defined on this toggle
+                                    </p>
+                                    <div
+                                        className={
+                                            styles.stratigiesIconsContainer
+                                        }
+                                    >
+                                        {renderStratigiesIcons()?.map(Icon => (
+                                            <Icon
+                                                className={styles.strategyIcon}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            }
+                            elseShow={
+                                <div
+                                    className={styles.noStratigiesInfoContainer}
+                                >
+                                    <p className={styles.strategiesText}>
+                                        No strategies defined on this toggle
+                                    </p>
+                                </div>
+                            }
                         />
                         <ConditionallyRender
                             condition={!env.enabled}
