@@ -7,7 +7,6 @@ import {
     ListItem,
     ListItemText,
     ListItemAvatar,
-    Switch,
     Typography,
 } from '@material-ui/core';
 import { Report, Extension, Timeline, FlagRounded } from '@material-ui/icons';
