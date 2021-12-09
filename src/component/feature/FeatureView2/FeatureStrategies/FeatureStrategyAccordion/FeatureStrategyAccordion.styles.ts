@@ -41,8 +41,8 @@ export const useStyles = makeStyles(theme => ({
     },
     icon: {
         marginRight: '0.5rem',
-        fill: theme.palette.primary.main,
-        minWidth: '35px',
+        fill: theme.palette.grey[600],
+        minWidth: '50px',
     },
     rollout: {
         fontSize: theme.fontSizes.smallBody,

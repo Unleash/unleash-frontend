@@ -74,9 +74,17 @@ describe('feature toggle', () => {
     });
 
     it('Creates a feature toggle', () => {
+        if (
+            document.querySelectorAll("[data-test='CLOSE_SPLASH']").length > 0
+        ) {
+            cy.get("[data-test='CLOSE_SPLASH']").click();
+        }
+
         cy.get('[data-test=NAVIGATE_TO_CREATE_FEATURE').click();
 
-        cy.intercept('POST', '/api/admin/features').as('createFeature');
+        cy.intercept('POST', '/api/admin/projects/default/features').as(
+            'createFeature'
+        );
 
         cy.get("[data-test='CF_NAME_ID'").type(featureToggleName);
         cy.get("[data-test='CF_DESC_ID'").type('hellowrdada');
@@ -250,18 +258,18 @@ describe('feature toggle', () => {
         cy.visit(`/projects/default/features2/${featureToggleName}/variants`);
         cy.intercept(
             'PATCH',
-            `/api/admin/projects/default/features/${featureToggleName}`,
+            `/api/admin/projects/default/features/${featureToggleName}/variants`,
             req => {
                 if (req.body.length === 1) {
                     expect(req.body[0].op).to.equal('add');
-                    expect(req.body[0].path).to.match(/variants/);
+                    expect(req.body[0].path).to.match(/\//);
                     expect(req.body[0].value.name).to.equal(variantName);
                 } else if (req.body.length === 2) {
                     expect(req.body[0].op).to.equal('replace');
                     expect(req.body[0].path).to.match(/weight/);
                     expect(req.body[0].value).to.equal(500);
                     expect(req.body[1].op).to.equal('add');
-                    expect(req.body[1].path).to.match(/variants/);
+                    expect(req.body[1].path).to.match(/\//);
                     expect(req.body[1].value.name).to.equal(secondVariantName);
                 }
             }
@@ -291,7 +299,7 @@ describe('feature toggle', () => {
         cy.get('[data-test=VARIANT_WEIGHT_INPUT]').clear().type('15');
         cy.intercept(
             'PATCH',
-            `/api/admin/projects/default/features/${featureToggleName}`,
+            `/api/admin/projects/default/features/${featureToggleName}/variants`,
             req => {
                 expect(req.body[0].op).to.equal('replace');
                 expect(req.body[0].path).to.match(/weight/);
@@ -320,10 +328,10 @@ describe('feature toggle', () => {
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.intercept(
             'PATCH',
-            `/api/admin/projects/default/features/${featureToggleName}`,
+            `/api/admin/projects/default/features/${featureToggleName}/variants`,
             req => {
                 const e = req.body.find(e => e.op === 'remove');
-                expect(e.path).to.match(/variants/);
+                expect(e.path).to.match(/\//);
             }
         ).as('delete');
         cy.get(`[data-test=VARIANT_DELETE_BUTTON_${variantName}]`).click();

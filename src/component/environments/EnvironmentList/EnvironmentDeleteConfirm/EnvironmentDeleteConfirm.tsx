@@ -34,6 +34,8 @@ const EnvironmentDeleteConfirm = ({
         setConfirmName('');
     };
 
+    const formId = 'delete-environment-confirmation-form';
+
     return (
         <Dialogue
             title="Are you sure you want to delete this environment?"
@@ -43,28 +45,29 @@ const EnvironmentDeleteConfirm = ({
             onClick={handleDeleteEnvironment}
             disabledPrimaryButton={env?.name !== confirmName}
             onClose={handleCancel}
+            formId={formId}
         >
             <Alert severity="error">
                 Danger. Deleting this environment will result in removing all
                 strategies that are active in this environment across all
                 feature toggles.
             </Alert>
-            <CreateEnvironmentSuccessCard
-                name={env?.name}
-                type={env?.type}
-            />
+            <CreateEnvironmentSuccessCard name={env?.name} type={env?.type} />
 
             <p className={styles.deleteParagraph}>
                 In order to delete this environment, please enter the id of the
                 environment in the textfield below: <strong>{env?.name}</strong>
             </p>
 
-            <Input
-                onChange={handleChange}
-                value={confirmName}
-                label="Environment name"
-                className={styles.environmentDeleteInput}
-            />
+            <form id={formId}>
+                <Input
+                    autoFocus
+                    onChange={handleChange}
+                    value={confirmName}
+                    label="Environment name"
+                    className={styles.environmentDeleteInput}
+                />
+            </form>
         </Dialogue>
     );
 };

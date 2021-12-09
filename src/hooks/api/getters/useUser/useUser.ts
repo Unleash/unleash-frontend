@@ -5,8 +5,15 @@ import { IPermission } from '../../../../interfaces/user';
 import handleErrorResponses from '../httpErrorResponseHandler';
 
 export const USER_CACHE_KEY = `api/admin/user`;
+const NO_AUTH_USERNAME = 'unknown';
 
-const useUser = (options: SWRConfiguration = {}) => {
+const useUser = (
+    options: SWRConfiguration = {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    }
+) => {
     const fetcher = () => {
         const path = formatApiPath(`api/admin/user`);
         return fetch(path, {
@@ -27,11 +34,20 @@ const useUser = (options: SWRConfiguration = {}) => {
         setLoading(!error && !data);
     }, [data, error]);
 
+    let user = data?.user;
+    // Set a user id if no authentication is on
+    // to cancel the loader.
+
+    if (data && user?.username === NO_AUTH_USERNAME) {
+        user = { ...user, id: 1 };
+    }
+
     return {
-        user: data?.user || {},
+        user: user || {},
         permissions: (data?.permissions || []) as IPermission[],
         feedback: data?.feedback || [],
-        authDetails: data || {},
+        splash: data?.splash || {},
+        authDetails: data || undefined,
         error,
         loading,
         refetch,

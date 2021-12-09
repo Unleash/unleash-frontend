@@ -10,24 +10,49 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 
 import IAuthStatus from '../interfaces/user';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
 import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
+import ConditionallyRender from './common/ConditionallyRender';
+import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
+import Loader from './common/Loader/Loader';
+import useUser from '../hooks/api/getters/useUser/useUser';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
     fetchUiBootstrap: any;
     feedback: any;
 }
-
-const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
+const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     const { toast, setToastData } = useToast();
+    // because we need the userId when the component load.
+    const { splash, user: userFromUseUser, authDetails } = useUser();
+    const [showSplash, setShowSplash] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
     useEffect(() => {
         fetchUiBootstrap();
         /* eslint-disable-next-line */
     }, [user.authDetails?.type]);
+
+    useEffect(() => {
+        // Temporary duality until redux store is removed
+        if (!isUnauthorized() && !userFromUseUser?.id && !authDetails) {
+            setShowLoader(true);
+            return;
+        }
+        setShowLoader(false);
+        /* eslint-disable-next-line */
+    }, [user.authDetails, userFromUseUser.id]);
+
+    useEffect(() => {
+        if (splash?.environment === undefined) return;
+        if (!splash?.environment && !isUnauthorized()) {
+            setShowSplash(true);
+        }
+        /* eslint-disable-next-line */
+    }, [splash.environment]);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
@@ -78,30 +103,48 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
         <SWRProvider
             setToastData={setToastData}
             isUnauthorized={isUnauthorized}
+            setShowLoader={setShowLoader}
         >
-            {' '}
-            <div className={styles.container}>
-                <LayoutPicker location={location}>
-                    <Switch>
-                        <ProtectedRoute
-                            exact
-                            path="/"
-                            unauthorized={isUnauthorized()}
-                            component={Redirect}
-                            renderProps={{ to: '/features' }}
+            <ConditionallyRender
+                condition={showLoader}
+                show={<Loader />}
+                elseShow={
+                    <div className={styles.container}>
+                        <ConditionallyRender
+                            condition={showSplash}
+                            show={
+                                <EnvironmentSplash onFinish={setShowSplash} />
+                            }
+                            elseShow={
+                                <LayoutPicker location={location}>
+                                    <Switch>
+                                        <ProtectedRoute
+                                            exact
+                                            path="/"
+                                            unauthorized={isUnauthorized()}
+                                            component={Redirect}
+                                            renderProps={{ to: '/features' }}
+                                        />
+                                        {renderMainLayoutRoutes()}
+                                        {renderStandaloneRoutes()}
+                                        <Route
+                                            path="/404"
+                                            component={NotFound}
+                                        />
+                                        <Redirect to="/404" />
+                                    </Switch>
+                                    <Feedback
+                                        feedbackId="pnps"
+                                        openUrl="http://feedback.unleash.run"
+                                    />
+                                </LayoutPicker>
+                            }
                         />
-                        {renderMainLayoutRoutes()}
-                        {renderStandaloneRoutes()}
-                        <Route path="/404" component={NotFound} />
-                        <Redirect to="/404" />
-                    </Switch>
-                    <Feedback
-                        feedbackId="pnps"
-                        openUrl="http://feedback.unleash.run"
-                    />
-                </LayoutPicker>
-                {toast}
-            </div>
+
+                        {toast}
+                    </div>
+                }
+            />
         </SWRProvider>
     );
 };
