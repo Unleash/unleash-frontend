@@ -26,6 +26,11 @@ import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/Fea
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 
+interface IStrategyIconObject {
+    count: number;
+    Icon: React.ReactElement;
+    name: string;
+}
 interface IFeatureOverviewEnvironmentProps {
     env: IFeatureEnvironment;
 }
@@ -57,36 +62,27 @@ const FeatureOverviewEnvironment = ({
 
     const strategiesLink = `/projects/${projectId}/features2/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
 
-    const renderStratigiesIcons = () => {
-        let result = [];
-        const counts = {};
-        // we get number of occurence of each strategy
-        featureEnvironment?.strategies.forEach(strategy => {
-            counts[strategy.name] = (counts[strategy.name] || 0) + 1;
-        });
-        // we filter the strategies by name
-        const filterdStrategies = [
-            ...new Map(
-                featureEnvironment?.strategies.map(strategy => [
-                    strategy.name,
-                    strategy,
-                ])
-            ).values(),
-        ];
+    const getStrategyIcons = () => {
+        const strategyObjects = featureEnvironment?.strategies.reduce(
+            (acc, current) => {
+                if (acc[current.name]) {
+                    acc[current.name].count = acc[current.name].count + 1;
+                } else {
+                    acc[current.name] = {
+                        count: 1,
+                        Icon: getFeatureStrategyIcon(current.name),
+                    };
+                }
+                return acc;
+            },
+            {} as { [key: string]: IStrategyIconObject }
+        );
 
-        filterdStrategies.map(strategy => {
-            let obj = {
-                name: String,
-                Icon: React.ElementType,
-                count: Number,
-            };
-            obj.name = strategy.name;
-            obj.Icon = getFeatureStrategyIcon(strategy.name);
-            obj.count = counts[strategy.name];
-            return result.push(obj);
+        return Object.keys(strategyObjects).map(strategyName => {
+            return { ...strategyObjects[strategyName], name: strategyName };
         });
-        return result;
     };
+
     return (
         <div className={styles.featureOverviewEnvironment}>
             <Accordion style={{ boxShadow: 'none' }}>
@@ -94,24 +90,28 @@ const FeatureOverviewEnvironment = ({
                     className={styles.accordionHeader}
                     expandIcon={<ExpandMore />}
                 >
-                    <div className={styles.headerTitle} data-loading>
-                        <EnvironmentIcon
-                            enabled={env.enabled}
-                            className={styles.headerIcon}
-                        />
-                        Feature toggle execution for&nbsp;
-                        <StringTruncator
-                            text={env.name}
-                            className={styles.truncator}
-                            maxWidth="100"
-                        />
+                    <div className={styles.header} data-loading>
+                        <div className={styles.headerTitle}>
+                            <EnvironmentIcon
+                                enabled={env.enabled}
+                                className={styles.headerIcon}
+                            />
+                            Feature toggle execution for&nbsp;
+                            <StringTruncator
+                                text={env.name}
+                                className={styles.truncator}
+                                maxWidth="100"
+                            />
+                        </div>
                         <ConditionallyRender
-                            condition={renderStratigiesIcons()?.length !== 0}
+                            condition={
+                                featureEnvironment?.strategies.length !== 0
+                            }
                             show={
                                 <div
                                     className={styles.stratigiesIconsContainer}
                                 >
-                                    {renderStratigiesIcons()?.map(
+                                    {getStrategyIcons()?.map(
                                         ({ name, Icon, count }) => (
                                             <Badge
                                                 key={name}

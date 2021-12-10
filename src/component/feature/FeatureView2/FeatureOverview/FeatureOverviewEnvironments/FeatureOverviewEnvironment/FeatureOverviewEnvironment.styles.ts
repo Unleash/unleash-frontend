@@ -19,6 +19,13 @@ export const useStyles = makeStyles(theme => ({
         position: 'relative',
         paddingBottom: '1rem',
     },
+    header: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+
+        paddingTop: '1.5rem',
+    },
     headerTitle: {
         display: 'flex',
         alignItems: 'center',
@@ -123,22 +130,15 @@ export const useStyles = makeStyles(theme => ({
     },
     stratigiesInfoContainer: {
         display: 'flex',
-        top: '25px',
-        position: 'relative',
-        marginLeft: '-260px',
     },
     noStratigiesInfoContainer: {
         top: '20px',
         position: 'relative',
-        marginLeft: '-320px',
     },
     stratigiesIconsContainer: {
         display: 'flex',
-        position: 'relative',
-        top: '35px',
+        marginLeft: '1.8rem',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: '-275px',
         [theme.breakpoints.down(560)]: {
             marginLeft: '0px',
             top: '5px',
@@ -176,13 +176,13 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     strategyIconContainer: {
-        margin: '5px'
+        margin: '5px',
     },
     strategyIcon: {
         fill: theme.palette.grey[600],
     },
-    badgeColor:{
+    badgeColor: {
         backgroundColor: '#9d9d9d',
-        color: '#fff'
-    }
+        color: '#fff',
+    },
 }));
