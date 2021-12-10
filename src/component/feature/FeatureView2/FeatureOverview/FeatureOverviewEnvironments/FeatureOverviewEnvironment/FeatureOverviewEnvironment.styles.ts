@@ -114,6 +114,36 @@ export const useStyles = makeStyles(theme => ({
         fill: theme.palette.grey[400],
         marginBottom: '1rem',
     },
+    strategiesText: {
+        fontSize: '14px',
+        color: theme.palette.grey[700],
+        [theme.breakpoints.down(560)]: {
+            display: 'none',
+        },
+    },
+    stratigiesInfoContainer: {
+        display: 'flex',
+        top: '25px',
+        position: 'relative',
+        marginLeft: '-260px',
+    },
+    noStratigiesInfoContainer: {
+        top: '20px',
+        position: 'relative',
+        marginLeft: '-320px',
+    },
+    stratigiesIconsContainer: {
+        display: 'flex',
+        position: 'relative',
+        top: '35px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '-275px',
+        [theme.breakpoints.down(560)]: {
+            marginLeft: '0px',
+            top: '5px',
+        },
+    },
     [theme.breakpoints.down(750)]: {
         accordionBodyFooter: {
             flexDirection: 'column',
@@ -145,4 +175,14 @@ export const useStyles = makeStyles(theme => ({
             padding: '0.5rem',
         },
     },
+    strategyIconContainer: {
+        margin: '5px'
+    },
+    strategyIcon: {
+        fill: theme.palette.grey[600],
+    },
+    badgeColor:{
+        backgroundColor: '#9d9d9d',
+        color: '#fff'
+    }
 }));
