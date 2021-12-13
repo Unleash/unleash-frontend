@@ -19,6 +19,8 @@ const activeNavLinkStyle = {
 };
 
 function AdminMenu({ history }) {
+    const SHOW_PROJECT_ROLES = false;
+
     const { location } = history;
     const { pathname } = location;
     return (
@@ -36,18 +38,21 @@ function AdminMenu({ history }) {
                         </NavLink>
                     }
                 ></Tab>
-                <Tab
-                    value="/admin/roles"
-                    label={
-                        <NavLink
-                            to="/admin/roles"
-                            activeStyle={activeNavLinkStyle}
-                            style={navLinkStyle}
-                        >
-                            <span>PROJECT ROLES</span>
-                        </NavLink>
-                    }
-                ></Tab>
+                {SHOW_PROJECT_ROLES && (
+                    <Tab
+                        value="/admin/roles"
+                        label={
+                            <NavLink
+                                to="/admin/roles"
+                                activeStyle={activeNavLinkStyle}
+                                style={navLinkStyle}
+                            >
+                                <span>PROJECT ROLES</span>
+                            </NavLink>
+                        }
+                    ></Tab>
+                )}
+
                 <Tab
                     value="/admin/api"
                     label={
@@ -68,7 +73,7 @@ function AdminMenu({ history }) {
                             activeStyle={activeNavLinkStyle}
                             style={navLinkStyle}
                         >
-                             Single Sign-On
+                            Single Sign-On
                         </NavLink>
                     }
                 ></Tab>
