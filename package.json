@@ -1,7 +1,7 @@
 {
   "name": "unleash-frontend",
   "description": "unleash your features",
-  "version": "4.3.1",
+  "version": "4.3.0",
   "keywords": [
     "unleash",
     "feature toggle",
@@ -40,7 +40,7 @@
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
-    "@testing-library/jest-dom": "5.16.1",
+    "@testing-library/jest-dom": "5.16.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
     "@types/debounce": "1.2.1",
@@ -89,7 +89,7 @@
     "redux-thunk": "2.4.1",
     "sass": "1.44.0",
     "swr": "1.0.1",
-    "typescript": "4.5.2",
+    "typescript": "4.5.3",
     "web-vitals": "2.1.2"
   },
   "jest": {
