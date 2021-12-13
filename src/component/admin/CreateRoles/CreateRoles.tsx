@@ -1,16 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import Input from '../../common/Input/Input';
 import { useStyles } from './CreateRoles.styles';
-import useRolePermissions from '../../../hooks/api/getters/useRolePermissions/useRolePermissions';
-import { useEffect } from 'react-router/node_modules/@types/react';
 import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
+import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
+import {
+    IPermission,
+    IProjectRolePermissions,
+} from '../../../interfaces/project';
+import cloneDeep from 'lodash.clonedeep';
+
+interface ICheckedPermission {
+    [key: string]: IPermission;
+}
 
 // GET Permission endpoint
 
 const CreateRoles = () => {
-    const { permissions } = useRolePermissions();
+    const styles = useStyles();
+    const [roleName, setRoleName] = useState('');
+    const [roleDesc, setRoleDesc] = useState('');
+    const [checkedPermissions, setCheckedPermissions] =
+        useState<ICheckedPermission>({});
+    const { permissions } = useProjectRolePermissions({
+        revalidateIfStale: false,
+        revalidateOnReconnect: false,
+        revalidateOnFocus: false,
+    });
+
+    const handlePermissionChange = (permission: IPermission) => {
+        const { id } = permission;
+        const checkedPermissionsCopy = cloneDeep(checkedPermissions);
+        if (checkedPermissionsCopy[id]) {
+            delete checkedPermissionsCopy[id];
+        } else {
+            checkedPermissionsCopy[id] = { ...permission };
+        }
+        setCheckedPermissions(checkedPermissionsCopy);
+    };
 
     const { project, environments } = permissions;
 
@@ -21,13 +49,15 @@ const CreateRoles = () => {
                     key={permission.id}
                     control={
                         <Checkbox
-                            checked={true}
-                            onChange={() => {}}
+                            checked={
+                                checkedPermissions[permission.id] ? true : false
+                            }
+                            onChange={() => handlePermissionChange(permission)}
                             name="checkedB"
                             color="primary"
                         />
                     }
-                    label={permission.displayName}
+                    label={permission.displayName || 'Dummy permission'}
                 />
             );
         });
@@ -35,17 +65,19 @@ const CreateRoles = () => {
 
     const renderEnvironmentPermissions = () => {
         return environments.map(environment => {
-            console.log(environment);
             return (
                 <EnvironmentPermissionAccordion
                     environment={environment}
                     key={environment.name}
+                    checkedPermissions={checkedPermissions}
+                    handlePermissionChange={handlePermissionChange}
                 />
             );
         });
     };
 
-    const styles = useStyles();
+    console.log(checkedPermissions);
+
     return (
         <FormTemplate
             title="Create project role"
@@ -58,8 +90,8 @@ to resources within a project"
                 <Input
                     className={styles.input}
                     label="Role name"
-                    value=""
-                    onChange={() => {}}
+                    value={roleName}
+                    onChange={e => setRoleName(e.target.value)}
                 />
                 <TextField
                     className={styles.input}
@@ -67,8 +99,8 @@ to resources within a project"
                     variant="outlined"
                     multiline
                     maxRows={4}
-                    value=""
-                    onChange={() => {}}
+                    value={roleDesc}
+                    onChange={e => setRoleDesc(e.target.value)}
                 />
             </div>
 

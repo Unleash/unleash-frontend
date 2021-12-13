@@ -9,7 +9,11 @@ import { ExpandMore } from '@material-ui/icons';
 import StringTruncator from '../../../common/StringTruncator/StringTruncator';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
 
-const EnvironmentPermissionAccordion = ({ environment }) => {
+const EnvironmentPermissionAccordion = ({
+    environment,
+    handlePermissionChange,
+    checkedPermissions,
+}) => {
     const styles = useStyles();
 
     const renderPermissions = () => {
@@ -19,13 +23,15 @@ const EnvironmentPermissionAccordion = ({ environment }) => {
                     key={permission.id}
                     control={
                         <Checkbox
-                            checked={true}
-                            onChange={() => {}}
+                            checked={
+                                checkedPermissions[permission.id] ? true : false
+                            }
+                            onChange={() => handlePermissionChange(permission)}
                             name="checkedB"
                             color="primary"
                         />
                     }
-                    label={permission.displayName}
+                    label={permission.displayName || 'Dummy permission'}
                 />
             );
         });
@@ -46,7 +52,7 @@ const EnvironmentPermissionAccordion = ({ environment }) => {
                         />
                         &nbsp;
                         <p className={styles.header}>
-                            (0 / {environment?.permissions?.length} permissions)
+                            (4 / {environment?.permissions?.length} permissions)
                         </p>
                     </div>
                 </AccordionSummary>
