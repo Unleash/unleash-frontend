@@ -132,7 +132,7 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
     noStratigiesInfoContainer: {
-        top: '20px',
+        left: '2.3rem',
         position: 'relative',
     },
     stratigiesIconsContainer: {
@@ -154,7 +154,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down(560)]: {
         disabledIndicatorPos: {
-            top: '-8px',
+            top: '13px',
         },
         headerTitle: {
             flexDirection: 'column',

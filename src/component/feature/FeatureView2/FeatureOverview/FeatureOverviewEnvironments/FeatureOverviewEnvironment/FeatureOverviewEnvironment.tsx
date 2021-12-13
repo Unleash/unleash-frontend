@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Badge,
+    Tooltip,
 } from '@material-ui/core';
 import { ExpandMore, Add } from '@material-ui/icons';
 import React from 'react';
@@ -13,7 +14,7 @@ import useFeatureMetrics from '../../../../../../hooks/api/getters/useFeatureMet
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
-import { getFeatureStrategyIcon } from '../../../../../../utils/strategy-names';
+import { getFeatureStrategyIcon, getHumanReadableStrategyName } from '../../../../../../utils/strategy-names';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import DisabledIndicator from '../../../../../common/DisabledIndicator/DisabledIndicator';
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
@@ -124,7 +125,8 @@ const FeatureOverviewEnvironment = ({
                                                     ],
                                                 }}
                                             >
-                                                <div
+                                                <Tooltip title={getHumanReadableStrategyName(name)} arrow>
+                                                    <div
                                                     className={
                                                         styles.strategyIconContainer
                                                     }
@@ -135,6 +137,8 @@ const FeatureOverviewEnvironment = ({
                                                         }
                                                     />
                                                 </div>
+                                                </Tooltip>
+                                                
                                             </Badge>
                                         )
                                     )}
