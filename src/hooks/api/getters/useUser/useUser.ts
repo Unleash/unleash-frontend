@@ -9,7 +9,6 @@ const NO_AUTH_USERNAME = 'unknown';
 
 const useUser = (
     options: SWRConfiguration = {
-        revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
     }
@@ -41,7 +40,6 @@ const useUser = (
     if (data && user?.username === NO_AUTH_USERNAME) {
         user = { ...user, id: 1 };
     }
-
     return {
         user: user || {},
         permissions: (data?.permissions || []) as IPermission[],
