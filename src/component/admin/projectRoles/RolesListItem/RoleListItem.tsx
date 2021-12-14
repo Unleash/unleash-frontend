@@ -1,20 +1,17 @@
 import { useStyles } from './RoleListItem.styles';
-import { TableRow, TableCell, IconButton, Typography } from '@material-ui/core';
+import { TableRow, TableCell, Typography } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
-import AccessContext from '../../../../contexts/AccessContext';
-import { useContext } from 'react';
-import ConditionallyRender from '../../../common/ConditionallyRender';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
 
-interface RoleListItemProps {
+interface IRoleListItemProps {
     key: number;
     name: string;
     description: string;
 }
 
-function RoleListItem({ key, name, description }: RoleListItemProps) {
-    const { hasAccess } = useContext(AccessContext);
+const RoleListItem = ({ key, name, description }: IRoleListItemProps) => {
     const styles = useStyles();
 
     return (
@@ -32,36 +29,33 @@ function RoleListItem({ key, name, description }: RoleListItemProps) {
                     {description}
                 </Typography>
             </TableCell>
-            <ConditionallyRender
-                condition={hasAccess(ADMIN)}
-                show={
-                    <TableCell align="right">
-                        <IconButton
-                            data-loading
-                            aria-label="Edit"
-                            title="Edit"
-                            onClick={() => {
-                                console.log('hi');
-                            }}
-                        >
-                            <Edit />
-                        </IconButton>
-                        <IconButton
-                            data-loading
-                            aria-label="Remove user"
-                            title="Remove user"
-                            onClick={() => {
-                                console.log('hi');
-                            }}
-                        >
-                            <Delete />
-                        </IconButton>
-                    </TableCell>
-                }
-                elseShow={<TableCell />}
-            />
+
+            <TableCell align="right">
+                <PermissionIconButton
+                    data-loading
+                    aria-label="Edit"
+                    tooltip="Edit"
+                    onClick={() => {
+                        console.log('hi');
+                    }}
+                    permission={ADMIN}
+                >
+                    <Edit />
+                </PermissionIconButton>
+                <PermissionIconButton
+                    data-loading
+                    aria-label="Remove user"
+                    tooltip="Remove role"
+                    onClick={() => {
+                        console.log('hi');
+                    }}
+                    permission={ADMIN}
+                >
+                    <Delete />
+                </PermissionIconButton>
+            </TableCell>
         </TableRow>
     );
-}
+};
 
 export default RoleListItem;

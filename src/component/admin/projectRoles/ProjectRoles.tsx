@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import AccessContext from '../../../contexts/AccessContext';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import HeaderTitle from '../../common/HeaderTitle';
@@ -10,9 +11,10 @@ import AdminMenu from '../admin-menu';
 import { useStyles } from './ProjectRoles.styles';
 import RolesList from './RolesList';
 
-function ProjectRoles({ history }) {
+const ProjectRoles = () => {
     const { hasAccess } = useContext(AccessContext);
     const styles = useStyles();
+    const history = useHistory();
 
     return (
         <div>
@@ -56,6 +58,6 @@ function ProjectRoles({ history }) {
             </PageContent>
         </div>
     );
-}
+};
 
 export default ProjectRoles;

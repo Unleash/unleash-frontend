@@ -13,15 +13,14 @@ import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import RoleListItem from './RolesListItem/RoleListItem';
 import useProjectRoles from '../../../hooks/api/getters/useProjectRoles/useProjectRoles';
 
-function RolesList({ location }) {
+const RolesList = () => {
     const { hasAccess } = useContext(AccessContext);
     const { roles } = useProjectRoles();
-    console.log(roles);
-    const { pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(roles, 50);
+    const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
+        usePagination(roles, 10);
 
     const renderRoles = () => {
-        return roles.map(role => {
+        return page.map(role => {
             return (
                 <RoleListItem
                     key={role.id}
@@ -59,6 +58,6 @@ function RolesList({ location }) {
             <br />
         </div>
     );
-}
+};
 
 export default RolesList;
