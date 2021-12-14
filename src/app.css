@@ -69,6 +69,13 @@ button {
     }
 }
 
+/* @keyframes drop {
+    100% {
+        top: 500px;
+        left: 500px;
+    }
+} */
+
 :root {
     /* FONT SIZE */
     --h1-size: 1.25rem;

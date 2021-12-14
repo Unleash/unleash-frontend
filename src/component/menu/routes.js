@@ -428,7 +428,7 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: {},
-        hidden: true,
+        hidden: false,
     },
     {
         path: '/admin',
