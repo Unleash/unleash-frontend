@@ -30,7 +30,7 @@ const RoleListItem = ({ id, name, description }: IRoleListItemProps) => {
     return (
         <TableRow className={styles.tableRow}>
             <TableCell>
-                <SupervisedUserCircleIcon />
+                <SupervisedUserCircleIcon className={styles.icon} />
             </TableCell>
             <TableCell className={styles.leftTableCell}>
                 <Typography variant="body2" data-loading>
