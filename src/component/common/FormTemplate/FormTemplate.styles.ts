@@ -44,6 +44,8 @@ export const useStyles = makeStyles(theme => ({
     },
     formContent: {
         backgroundColor: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
         padding: '2rem',
         width: '65%',
         borderTopRightRadius: '12.5px',
