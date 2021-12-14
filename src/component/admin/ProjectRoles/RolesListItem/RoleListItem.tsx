@@ -4,18 +4,31 @@ import { Edit, Delete } from '@material-ui/icons';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
+import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
+import useProjectRoles from '../../../../hooks/api/getters/useProjectRoles/useProjectRoles';
 
 interface IRoleListItemProps {
-    key: number;
+    id: number;
     name: string;
     description: string;
 }
 
-const RoleListItem = ({ key, name, description }: IRoleListItemProps) => {
+const RoleListItem = ({ id, name, description }: IRoleListItemProps) => {
     const styles = useStyles();
+    const { deleteRole } = useProjectRolesApi();
+    const { refetch } = useProjectRoles();
+
+    const deleteProjectRole = async () => {
+        try {
+            await deleteRole(id);
+            refetch();
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
-        <TableRow key={key} className={styles.tableRow}>
+        <TableRow className={styles.tableRow}>
             <TableCell>
                 <SupervisedUserCircleIcon />
             </TableCell>
@@ -44,11 +57,9 @@ const RoleListItem = ({ key, name, description }: IRoleListItemProps) => {
                 </PermissionIconButton>
                 <PermissionIconButton
                     data-loading
-                    aria-label="Remove user"
+                    aria-label="Remove role"
                     tooltip="Remove role"
-                    onClick={() => {
-                        console.log('hi');
-                    }}
+                    onClick={deleteProjectRole}
                     permission={ADMIN}
                 >
                     <Delete />

@@ -40,22 +40,12 @@ import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
 import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
-<<<<<<< HEAD
-import ProjectRoles from '../admin/ProjectRolesv1/ProjectRoles';
-=======
-import CreateRoles from '../admin/CreateRoles/CreateRoles';
->>>>>>> df34eb03 (feat: create screen)
+import ProjectRoles from '../admin/ProjectRoles/ProjectRoles';
+import CreateRoles from '../admin/CreateProjectRole/CreateProjectRole';
 
 export const routes = [
     // Project
-    {
-        path: '/create-role',
-        title: 'Create',
-        component: CreateRoles,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
+
     {
         path: '/projects/create',
         parent: '/projects',
@@ -385,6 +375,15 @@ export const routes = [
     },
 
     // Admin
+    {
+        path: '/admin/create-project-role',
+        title: 'Create',
+        component: CreateRoles,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+        hidden: true,
+    },
     {
         path: '/admin/api',
         parent: '/admin',
