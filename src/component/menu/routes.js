@@ -41,7 +41,7 @@ import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
 import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
-import ProjectRoles from '../admin/ProjectRoles/ProjectRoles';
+import ProjectRoles from '../admin/ProjectRolesv1/ProjectRoles';
 
 export const routes = [
     // Project
