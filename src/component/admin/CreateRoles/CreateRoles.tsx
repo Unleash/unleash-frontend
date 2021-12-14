@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
+import {
+    Checkbox,
+    FormControlLabel,
+    TextField,
+    Button,
+} from '@material-ui/core';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import Input from '../../common/Input/Input';
 import { useStyles } from './CreateRoles.styles';
@@ -10,12 +15,15 @@ import {
     IProjectRolePermissions,
 } from '../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
+import useProjectRolesApi from '../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { ADMIN } from '../../providers/AccessProvider/permissions';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import Loader from '../../common/Loader/Loader';
 
 interface ICheckedPermission {
     [key: string]: IPermission;
 }
-
-// GET Permission endpoint
 
 const CreateRoles = () => {
     const styles = useStyles();
@@ -28,6 +36,7 @@ const CreateRoles = () => {
         revalidateOnReconnect: false,
         revalidateOnFocus: false,
     });
+    const { createRole, loading } = useProjectRolesApi();
 
     const handlePermissionChange = (permission: IPermission) => {
         const { id } = permission;
@@ -38,6 +47,27 @@ const CreateRoles = () => {
             checkedPermissionsCopy[id] = { ...permission };
         }
         setCheckedPermissions(checkedPermissionsCopy);
+    };
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const payload = getProjectRolePayload();
+        await createRole(payload);
+    };
+
+    const handleCancel = () => {
+        console.log('Route here');
+    };
+
+    const getProjectRolePayload = () => {
+        const permissions = Object.keys(checkedPermissions).map(permission => {
+            return checkedPermissions[permission];
+        });
+        return {
+            name: roleName,
+            description: roleDesc,
+            permissions,
+        };
     };
 
     const { project, environments } = permissions;
@@ -76,23 +106,31 @@ const CreateRoles = () => {
         });
     };
 
-    console.log(checkedPermissions);
-
     return (
         <FormTemplate
+            loading={loading}
             title="Create project role"
             description="A project role can be
 customised to limit access
 to resources within a project"
             documentationLink="https://docs.getunleash.io/"
         >
+            <h3 className={styles.formHeader}>Role information</h3>
+
             <div className={styles.container}>
+                <p className={styles.inputDescription}>
+                    What is your role name?
+                </p>
                 <Input
                     className={styles.input}
                     label="Role name"
                     value={roleName}
                     onChange={e => setRoleName(e.target.value)}
                 />
+
+                <p className={styles.inputDescription}>
+                    What is this role for?
+                </p>
                 <TextField
                     className={styles.input}
                     label="Role description"
@@ -103,14 +141,25 @@ to resources within a project"
                     onChange={e => setRoleDesc(e.target.value)}
                 />
             </div>
-
-            <h3>Project permissions</h3>
+            <h3 className={styles.header}>Project permissions</h3>
             <div className={styles.checkBoxContainer}>
                 {renderProjectPermissions()}
             </div>
-            <h3>Environment permissions</h3>
+            <h3 className={styles.header}>Environment permissions</h3>
             <div className={styles.checkBoxContainer}>
                 {renderEnvironmentPermissions()}
+            </div>
+            <div className={styles.buttonContainer}>
+                <Button onClick={handleCancel} className={styles.cancelButton}>
+                    Cancel
+                </Button>
+                <PermissionButton
+                    onClick={handleSubmit}
+                    permission={ADMIN}
+                    type="submit"
+                >
+                    Create role
+                </PermissionButton>
             </div>
         </FormTemplate>
     );

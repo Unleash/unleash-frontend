@@ -11,6 +11,7 @@ interface IAccessProvider {
 interface IPermission {
     permission: string;
     project: string | null;
+    environment: string | null;
 }
 
 const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
@@ -33,7 +34,11 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
 
     const isAdmin = isAdminHigherOrder();
 
-    const hasAccess = (permission: string, project: string) => {
+    const hasAccess = (
+        permission: string,
+        project: string,
+        environment?: string
+    ) => {
         const permissions = store.getState().user.get('permissions') || [];
 
         const result = permissions.some((p: IPermission) => {
@@ -41,11 +46,27 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
                 return true;
             }
 
-            if (p.permission === permission && p.project === project) {
+            if (
+                p.permission === permission &&
+                p.project === project &&
+                p.environment === environment
+            ) {
                 return true;
             }
 
-            if (p.permission === permission && project === undefined) {
+            if (
+                p.permission === permission &&
+                p.project === project &&
+                p.environment === undefined
+            ) {
+                return true;
+            }
+
+            if (
+                p.permission === permission &&
+                project === undefined &&
+                environment === undefined
+            ) {
                 return true;
             }
 

@@ -3,11 +3,14 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Codebox from '../Codebox/Codebox';
 import { IconButton } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
+import ConditionallyRender from '../ConditionallyRender';
+import Loader from '../Loader/Loader';
 
 interface ICreateProps {
     title: string;
     description: string;
     documentationLink: string;
+    loading?: boolean;
 }
 
 const FormTemplate: React.FC<ICreateProps> = ({
@@ -15,6 +18,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
     description,
     children,
     documentationLink,
+    loading,
 }) => {
     const styles = useStyles();
     return (
@@ -45,7 +49,13 @@ const FormTemplate: React.FC<ICreateProps> = ({
 -H "Authorization: 56907a2fa53c1d16101d509a10b78e36190b0f918d9f122d";'
                 />
             </aside>
-            <div className={styles.formContent}>{children}</div>
+            <div className={styles.formContent}>
+                <ConditionallyRender
+                    condition={loading || false}
+                    show={<Loader />}
+                    elseShow={<>{children}</>}
+                />{' '}
+            </div>
         </section>
     );
 };
