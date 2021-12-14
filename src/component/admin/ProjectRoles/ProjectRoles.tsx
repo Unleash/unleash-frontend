@@ -31,7 +31,11 @@ const ProjectRoles = () => {
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={() => console.log('hi')}
+                                        onClick={() =>
+                                            history.push(
+                                                '/admin/create-project-role'
+                                            )
+                                        }
                                     >
                                         New Project role
                                     </Button>
@@ -48,7 +52,7 @@ const ProjectRoles = () => {
             >
                 <ConditionallyRender
                     condition={hasAccess(ADMIN)}
-                    show={<RolesList location={location} />}
+                    show={<RolesList />}
                     elseShow={
                         <Alert severity="error">
                             You need instance admin to access this section.

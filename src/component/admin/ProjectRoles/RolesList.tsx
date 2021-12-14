@@ -12,6 +12,7 @@ import { ADMIN } from '../../providers/AccessProvider/permissions';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import RoleListItem from './RolesListItem/RoleListItem';
 import useProjectRoles from '../../../hooks/api/getters/useProjectRoles/useProjectRoles';
+import { IProjectRole } from '../../../interfaces/role';
 
 const RolesList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -20,10 +21,10 @@ const RolesList = () => {
         usePagination(roles, 10);
 
     const renderRoles = () => {
-        return page.map(role => {
+        return page.map((role: IProjectRole) => {
             return (
                 <RoleListItem
-                    key={role.id}
+                    id={role.id}
                     name={role.name}
                     description={role.description}
                 />

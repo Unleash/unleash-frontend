@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import Input from '../../common/Input/Input';
-import { useStyles } from './CreateRoles.styles';
+import { useStyles } from './CreateProjectRole.styles';
 import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
 import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 import {
@@ -20,12 +20,14 @@ import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import Loader from '../../common/Loader/Loader';
+import { useHistory } from 'react-router-dom';
 
 interface ICheckedPermission {
     [key: string]: IPermission;
 }
 
 const CreateRoles = () => {
+    const history = useHistory();
     const styles = useStyles();
     const [roleName, setRoleName] = useState('');
     const [roleDesc, setRoleDesc] = useState('');
@@ -52,11 +54,16 @@ const CreateRoles = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         const payload = getProjectRolePayload();
-        await createRole(payload);
+        try {
+            await createRole(payload);
+            history.push('/admin/roles');
+        } catch (e) {
+            console.log('Something went wrong');
+        }
     };
 
     const handleCancel = () => {
-        console.log('Route here');
+        history.push('/admin/roles');
     };
 
     const getProjectRolePayload = () => {

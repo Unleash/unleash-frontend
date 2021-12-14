@@ -28,8 +28,24 @@ const useProjectRolesApi = () => {
         }
     };
 
+    const deleteRole = async (id: number) => {
+        const path = `api/admin/roles/${id}`;
+        const req = createRequest(path, {
+            method: 'DELETE',
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         createRole,
+        deleteRole,
         errors,
         loading,
     };
