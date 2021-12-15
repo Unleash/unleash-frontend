@@ -57,7 +57,7 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
             if (
                 p.permission === permission &&
                 p.project === project &&
-                p.environment === undefined
+                p.environment === null
             ) {
                 return true;
             }
@@ -65,7 +65,7 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
             if (
                 p.permission === permission &&
                 p.project === undefined &&
-                p.environment === undefined
+                p.environment === null
             ) {
                 return true;
             }

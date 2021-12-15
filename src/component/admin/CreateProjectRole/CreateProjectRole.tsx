@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
     Checkbox,
     FormControlLabel,
@@ -10,16 +10,12 @@ import Input from '../../common/Input/Input';
 import { useStyles } from './CreateProjectRole.styles';
 import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
 import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
-import {
-    IPermission,
-    IProjectRolePermissions,
-} from '../../../interfaces/project';
+import { IPermission } from '../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
 import useProjectRolesApi from '../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender';
-import Loader from '../../common/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import CreateConfirm from '../../common/CreateConfirm/CreateConfirm';
 
