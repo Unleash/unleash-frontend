@@ -6,6 +6,10 @@ import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentS
 
 import { useStyles } from '../FeatureOverviewEnvironment.styles';
 import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
+import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvider/permissions';
+import { useContext } from 'react';
+import FeatureStrategiesUIContext from '../../../../../../../contexts/FeatureStrategiesUIContext';
+import AccessContext from '../../../../../../../contexts/AccessContext';
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;
@@ -19,6 +23,7 @@ const FeatureOverviewEnvironmentBody = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const styles = useStyles();
     const history = useHistory();
+    const { hasAccess } = useContext(AccessContext);
     const strategiesLink = `/projects/${projectId}/features2/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
 
     if (!featureEnvironment) return null;
@@ -35,7 +40,14 @@ const FeatureOverviewEnvironmentBody = ({
                 </div>
 
                 <ConditionallyRender
-                    condition={featureEnvironment?.strategies.length > 0}
+                    condition={
+                        featureEnvironment?.strategies.length > 0 &&
+                        hasAccess(
+                            CREATE_FEATURE_STRATEGY,
+                            projectId,
+                            featureEnvironment.name
+                        )
+                    }
                     show={
                         <>
                             <div className={styles.linkContainer}>
