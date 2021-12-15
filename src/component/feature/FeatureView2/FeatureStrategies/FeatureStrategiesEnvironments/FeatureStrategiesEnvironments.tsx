@@ -7,7 +7,11 @@ import cloneDeep from 'lodash.clonedeep';
 
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
-import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
+import {
+    CREATE_FEATURE_STRATEGY,
+    UPDATE_FEATURE,
+    UPDATE_FEATURE_ENVIRONMENT,
+} from '../../../../providers/AccessProvider/permissions';
 
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import useToast from '../../../../../hooks/useToast';
@@ -45,6 +49,7 @@ const FeatureStrategiesEnvironments = () => {
     const { a11yProps, activeTabIdx, setActiveTab } = useTabs(startingTabId);
     const {
         setActiveEnvironment,
+        activeEnvironment,
         configureNewStrategy,
         expandedSidebar,
         setExpandedSidebar,
@@ -276,7 +281,8 @@ const FeatureStrategiesEnvironments = () => {
                                         Icon={Add}
                                         maxWidth="700px"
                                         projectId={projectId}
-                                        permission={UPDATE_FEATURE}
+                                        environmentId={activeEnvironment.name}
+                                        permission={CREATE_FEATURE_STRATEGY}
                                     >
                                         Add new strategy
                                     </ResponsiveButton>

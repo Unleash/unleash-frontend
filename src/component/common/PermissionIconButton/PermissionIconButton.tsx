@@ -9,6 +9,7 @@ interface IPermissionIconButtonProps extends OverridableComponent<any> {
     tooltip: string;
     onClick?: (e: any) => void;
     projectId?: string;
+    environmentId?: string;
 }
 
 const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
@@ -18,13 +19,18 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
     onClick,
     projectId,
     children,
+    environmentId,
     ...rest
 }) => {
     const { hasAccess } = useContext(AccessContext);
-
-    const access = projectId
-        ? hasAccess(permission, projectId)
-        : hasAccess(permission);
+    let access;
+    if (projectId && environmentId) {
+        access = hasAccess(permission, projectId, environmentId);
+    } else if (projectId) {
+        access = hasAccess(permission, projectId);
+    } else {
+        access = hasAccess(permission);
+    }
 
     const tooltipText = access
         ? tooltip || ''

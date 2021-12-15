@@ -6,9 +6,11 @@ import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentS
 
 import { useStyles } from '../FeatureOverviewEnvironment.styles';
 import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
-import { UPDATE_FEATURE } from '../../../../../../providers/AccessProvider/permissions';
 import ResponsiveButton from '../../../../../../common/ResponsiveButton/ResponsiveButton';
 import { Add } from '@material-ui/icons';
+import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvider/permissions';
+import { useContext } from 'react';
+import AccessContext from '../../../../../../../contexts/AccessContext';
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;
@@ -22,6 +24,7 @@ const FeatureOverviewEnvironmentBody = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const styles = useStyles();
     const history = useHistory();
+    const { hasAccess } = useContext(AccessContext);
     const strategiesLink = `/projects/${projectId}/features2/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
 
     if (!featureEnvironment) return null;
@@ -38,7 +41,14 @@ const FeatureOverviewEnvironmentBody = ({
                 </div>
 
                 <ConditionallyRender
-                    condition={featureEnvironment?.strategies.length > 0}
+                    condition={
+                        featureEnvironment?.strategies.length > 0 &&
+                        hasAccess(
+                            CREATE_FEATURE_STRATEGY,
+                            projectId,
+                            featureEnvironment.name
+                        )
+                    }
                     show={
                         <>
                             <div className={styles.linkContainer}>
@@ -46,7 +56,6 @@ const FeatureOverviewEnvironmentBody = ({
                                     Icon={Add}
                                     onClick={() => history.push(strategiesLink)}
                                     maxWidth="700px"
-                                    permission={UPDATE_FEATURE}
                                 >
                                     Add strategy
                                 </ResponsiveButton>

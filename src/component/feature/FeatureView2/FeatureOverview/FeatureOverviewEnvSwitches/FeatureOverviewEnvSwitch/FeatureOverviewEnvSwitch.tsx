@@ -7,7 +7,10 @@ import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle'
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
 import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
-import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
+import {
+    UPDATE_FEATURE,
+    UPDATE_FEATURE_ENVIRONMENT,
+} from '../../../../../providers/AccessProvider/permissions';
 
 interface IFeatureOverviewEnvSwitchProps {
     env: IFeatureEnvironment;
@@ -97,10 +100,11 @@ const FeatureOverviewEnvSwitch = ({
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
             <PermissionSwitch
-                permission={UPDATE_FEATURE}
+                permission={UPDATE_FEATURE_ENVIRONMENT}
                 projectId={projectId}
                 checked={env.enabled}
                 onChange={toggleEnvironment}
+                environmentId={env.name}
                 tooltip={''}
             />
             {content}
