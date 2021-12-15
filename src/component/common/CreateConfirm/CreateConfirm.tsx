@@ -4,17 +4,26 @@ import CheckMarkBadge from '../CheckmarkBadge/CheckMarkBadge';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const CreateConfirm = ({ link, text }) => {
+interface ICreateConfirm {
+    link: string;
+    text: string;
+}
+
+const CreateConfirm = ({ link, text }: ICreateConfirm) => {
     const history = useHistory();
-    let timeout = null;
+
     useEffect(() => {
-        let timeout = setTimeout(() => {
+        let timeout: NodeJS.Timeout | null = null;
+        timeout = setTimeout(() => {
             history.push(link);
         }, 6000);
 
         return () => {
-            clearTimeout(timeout);
+            if (timeout) {
+                clearTimeout(timeout);
+            }
         };
+        /* eslint-disable-next-line */
     }, []);
 
     const styles = useStyles();

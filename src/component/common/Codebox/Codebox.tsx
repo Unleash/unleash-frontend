@@ -1,6 +1,3 @@
-import { IconButton } from '@material-ui/core';
-import { FileCopy } from '@material-ui/icons';
-import copy from 'copy-to-clipboard';
 import { useStyles } from './Codebox.styles';
 
 interface ICodeboxProps {
