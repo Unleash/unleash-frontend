@@ -44,7 +44,11 @@ const ProjectRoleList = () => {
                 text: 'Successfully deleted role.',
             });
         } catch (e) {
-            console.log(e);
+            setToastData({
+                show: true,
+                type: 'error',
+                text: e.toString(),
+            });
         }
         setDelDialog(false);
         setConfirmName('');
