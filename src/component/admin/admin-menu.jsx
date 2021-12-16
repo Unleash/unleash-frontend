@@ -24,7 +24,13 @@ function AdminMenu({ history }) {
     const { location } = history;
     const { pathname } = location;
     return (
-        <Paper style={{ marginBottom: '1rem' }}>
+        <Paper
+            style={{
+                marginBottom: '1rem',
+                borderRadius: '12.5px',
+                boxShadow: 'none',
+            }}
+        >
             <Tabs centered value={pathname}>
                 <Tab
                     value="/admin/users"
