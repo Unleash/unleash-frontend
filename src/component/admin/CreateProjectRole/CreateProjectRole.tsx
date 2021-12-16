@@ -23,7 +23,7 @@ interface ICheckedPermission {
     [key: string]: IPermission;
 }
 
-const CreateRoles = () => {
+const CreateRole = () => {
     const history = useHistory();
     const styles = useStyles();
     const [roleName, setRoleName] = useState('');
@@ -185,4 +185,4 @@ to resources within a project"
     );
 };
 
-export default CreateRoles;
+export default CreateRole;
