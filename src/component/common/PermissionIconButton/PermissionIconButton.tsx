@@ -24,6 +24,7 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
 }) => {
     const { hasAccess } = useContext(AccessContext);
     let access;
+
     if (projectId && environmentId) {
         access = hasAccess(permission, projectId, environmentId);
     } else if (projectId) {

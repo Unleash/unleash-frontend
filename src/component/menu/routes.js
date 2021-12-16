@@ -41,8 +41,9 @@ import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
 import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
-import ProjectRoles from '../admin/ProjectRoles/ProjectRoles';
-import CreateRoles from '../admin/CreateProjectRole/CreateProjectRole';
+import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
+import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
+import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
 
 export const routes = [
     // Project
@@ -388,7 +389,16 @@ export const routes = [
     {
         path: '/admin/create-project-role',
         title: 'Create',
-        component: CreateRoles,
+        component: CreateProjectRole,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+        hidden: true,
+    },
+    {
+        path: '/admin/roles/:id/edit',
+        title: 'Edit',
+        component: EditProjectRole,
         type: 'protected',
         layout: 'main',
         menu: {},

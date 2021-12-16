@@ -2,14 +2,14 @@ import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import AccessContext from '../../../contexts/AccessContext';
-import ConditionallyRender from '../../common/ConditionallyRender';
-import HeaderTitle from '../../common/HeaderTitle';
-import PageContent from '../../common/PageContent';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
-import AdminMenu from '../admin-menu';
+import AccessContext from '../../../../contexts/AccessContext';
+import ConditionallyRender from '../../../common/ConditionallyRender';
+import HeaderTitle from '../../../common/HeaderTitle';
+import PageContent from '../../../common/PageContent';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import AdminMenu from '../../admin-menu';
 import { useStyles } from './ProjectRoles.styles';
-import RolesList from './RolesList';
+import RolesList from './ProjectRoleList/ProjectRoleList';
 
 const ProjectRoles = () => {
     const { hasAccess } = useContext(AccessContext);
