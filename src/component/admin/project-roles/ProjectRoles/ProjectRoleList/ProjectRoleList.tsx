@@ -6,18 +6,18 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import AccessContext from '../../../contexts/AccessContext';
-import usePagination from '../../../hooks/usePagination';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
-import PaginateUI from '../../common/PaginateUI/PaginateUI';
-import RoleListItem from './RolesListItem/RoleListItem';
-import useProjectRoles from '../../../hooks/api/getters/useProjectRoles/useProjectRoles';
-import { IProjectRole } from '../../../interfaces/role';
-import useProjectRolesApi from '../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
-import useToast from '../../../hooks/useToast';
-import ProjectRoleDeleteConfirm from './ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
+import AccessContext from '../../../../../contexts/AccessContext';
+import usePagination from '../../../../../hooks/usePagination';
+import { ADMIN } from '../../../../providers/AccessProvider/permissions';
+import PaginateUI from '../../../../common/PaginateUI/PaginateUI';
+import RoleListItem from './ProjectRoleListItem/ProjectRoleListItem';
+import useProjectRoles from '../../../../../hooks/api/getters/useProjectRoles/useProjectRoles';
+import { IProjectRole } from '../../../../../interfaces/role';
+import useProjectRolesApi from '../../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
+import useToast from '../../../../../hooks/useToast';
+import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
 
-const RolesList = () => {
+const ProjectRoleList = () => {
     const defaultRole = {
         id: 0,
         name: 'ADMIN',
@@ -102,4 +102,4 @@ const RolesList = () => {
     );
 };
 
-export default RolesList;
+export default ProjectRoleList;

@@ -6,8 +6,8 @@ import {
     FormControlLabel,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { IPermission } from '../../../../interfaces/user';
-import StringTruncator from '../../../common/StringTruncator/StringTruncator';
+import { IPermission } from '../../../../../interfaces/user';
+import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
 
 const EnvironmentPermissionAccordion = ({

@@ -1,10 +1,10 @@
-import { useStyles } from './RoleListItem.styles';
+import { useStyles } from './ProjectRoleListItem.styles';
 import { TableRow, TableCell, Typography } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import { ADMIN } from '../../../../../providers/AccessProvider/permissions';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
-import { IProjectRole } from '../../../../interfaces/role';
+import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';
+import { IProjectRole } from '../../../../../../interfaces/role';
 
 interface IRoleListItemProps {
     id: number;
