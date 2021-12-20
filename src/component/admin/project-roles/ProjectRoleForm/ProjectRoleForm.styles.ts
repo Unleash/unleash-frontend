@@ -26,4 +26,13 @@ export const useStyles = makeStyles(theme => ({
     header: {
         fontWeight: 'normal',
     },
+    permissionErrorContainer: {
+        position: 'relative',
+    },
+    errorMessage: {
+        fontSize: theme.fontSizes.smallBody,
+        color: theme.palette.error.main,
+        position: 'absolute',
+        top: '-8px',
+    },
 }));

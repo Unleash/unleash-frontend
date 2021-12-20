@@ -14,11 +14,7 @@ import {
     getFeatureStrategyIcon,
     getHumanReadableStrategyName,
 } from '../../../../../../utils/strategy-names';
-import {
-    CREATE_FEATURE_STRATEGY,
-    CREATE_STRATEGY,
-    UPDATE_FEATURE,
-} from '../../../../../providers/AccessProvider/permissions';
+import { CREATE_FEATURE_STRATEGY } from '../../../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyCard.styles';
 import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';

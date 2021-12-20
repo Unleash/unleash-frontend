@@ -21,7 +21,6 @@ import {
     STRATEGY_ACCORDION_ID,
     UPDATE_STRATEGY_BUTTON_ID,
 } from '../../../../../../testIds';
-import AccessContext from '../../../../../../contexts/AccessContext';
 import {
     DELETE_FEATURE_STRATEGY,
     UPDATE_FEATURE,

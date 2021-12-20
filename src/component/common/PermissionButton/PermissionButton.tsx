@@ -1,13 +1,13 @@
 import { Button, Tooltip } from '@material-ui/core';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { Lock } from '@material-ui/icons';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 import ConditionallyRender from '../ConditionallyRender';
 
-interface IPermissionIconButtonProps extends OverridableComponent<any> {
+interface IPermissionIconButtonProps
+    extends React.HTMLProps<HTMLButtonElement> {
     permission: string;
-    tooltip: string;
+    tooltip?: string;
     onClick?: (e: any) => void;
     disabled?: boolean;
     projectId?: string;

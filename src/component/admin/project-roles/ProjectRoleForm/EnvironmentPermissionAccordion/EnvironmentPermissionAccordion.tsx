@@ -7,24 +7,38 @@ import {
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
-import { IPermission } from '../../../../../interfaces/user';
+import {
+    IPermission,
+    IProjectEnvironmentPermissions,
+} from '../../../../../interfaces/project';
 import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
+
+type PermissionMap = { [key: string]: boolean };
+
+interface IEnvironmentPermissionAccordionProps {
+    environment: IProjectEnvironmentPermissions;
+    handlePermissionChange: (permission: IPermission) => void;
+    checkedPermissions: ICheckedPermission;
+}
 
 const EnvironmentPermissionAccordion = ({
     environment,
     handlePermissionChange,
     checkedPermissions,
-}) => {
-    const [permissionMap, setPermissionMap] = useState({});
+}: IEnvironmentPermissionAccordionProps) => {
+    const [permissionMap, setPermissionMap] = useState<PermissionMap>({});
     const [permissionCount, setPermissionCount] = useState(0);
     const styles = useStyles();
 
     useEffect(() => {
-        const permissionMap = environment?.permissions?.reduce((acc, curr) => {
-            acc[curr.id] = true;
-            return acc;
-        }, {});
+        const permissionMap = environment?.permissions?.reduce(
+            (acc: PermissionMap, curr: IPermission) => {
+                acc[curr.id] = true;
+                return acc;
+            },
+            {}
+        );
 
         setPermissionMap(permissionMap);
         /* eslint-disable-next-line */
@@ -43,7 +57,7 @@ const EnvironmentPermissionAccordion = ({
     }, [checkedPermissions]);
 
     const renderPermissions = () => {
-        return environment.permissions.map((permission: IPermission) => {
+        return environment?.permissions?.map((permission: IPermission) => {
             return (
                 <FormControlLabel
                     classes={{ root: styles.label }}

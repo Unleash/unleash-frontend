@@ -11,7 +11,6 @@ import { Add } from '@material-ui/icons';
 import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvider/permissions';
 import { useContext } from 'react';
 import AccessContext from '../../../../../../../contexts/AccessContext';
-import { env } from 'process';
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;
