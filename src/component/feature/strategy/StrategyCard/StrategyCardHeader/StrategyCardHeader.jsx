@@ -9,7 +9,6 @@ import { ReactComponent as ReorderIcon } from '../../../../../assets/icons/reord
 import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
 import AccessContext from '../../../../../contexts/AccessContext';
 import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
-import { useParams } from 'react-router-dom';
 
 const StrategyCardHeader = ({
     name,

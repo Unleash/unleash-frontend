@@ -1,20 +1,7 @@
 import { useState } from 'react';
-import {
-    Checkbox,
-    FormControlLabel,
-    TextField,
-    Button,
-} from '@material-ui/core';
+
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
-import Input from '../../../common/Input/Input';
-import { useStyles } from './CreateProjectRole.styles';
-import EnvironmentPermissionAccordion from '../ProjectRoleForm/EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
-import useProjectRolePermissions from '../../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
-import { IPermission } from '../../../../interfaces/project';
-import cloneDeep from 'lodash.clonedeep';
 import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { useHistory } from 'react-router-dom';
 import CreateConfirm from '../../../common/CreateConfirm/CreateConfirm';
@@ -30,36 +17,34 @@ const CreateProjectRole = () => {
         setRoleDesc,
         checkedPermissions,
         handlePermissionChange,
+        getProjectRolePayload,
+        validatePermissions,
+        validateName,
+        errors,
+        clearErrors,
     } = useProjectRoleForm();
 
     const [success, setSuccess] = useState(false);
-
     const { createRole, loading } = useProjectRolesApi();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const payload = getProjectRolePayload();
-        try {
-            await createRole(payload);
-            setSuccess(true);
-        } catch (e) {
-            console.log('Something went wrong');
+        clearErrors();
+        const validName = validateName();
+        const validPermissions = validatePermissions();
+        if (validName && validPermissions) {
+            const payload = getProjectRolePayload();
+            try {
+                await createRole(payload);
+                setSuccess(true);
+            } catch (e) {
+                console.log('Something went wrong');
+            }
         }
     };
 
     const handleCancel = () => {
         history.push('/admin/roles');
-    };
-
-    const getProjectRolePayload = () => {
-        const permissions = Object.keys(checkedPermissions).map(permission => {
-            return checkedPermissions[permission];
-        });
-        return {
-            name: roleName,
-            description: roleDesc,
-            permissions,
-        };
     };
 
     return (
@@ -78,6 +63,7 @@ to resources within a project"
                 }
                 elseShow={
                     <ProjectRoleForm
+                        errors={errors}
                         handleSubmit={handleSubmit}
                         handleCancel={handleCancel}
                         roleName={roleName}
@@ -87,6 +73,7 @@ to resources within a project"
                         checkedPermissions={checkedPermissions}
                         handlePermissionChange={handlePermissionChange}
                         submitButtonText="Create"
+                        clearErrors={clearErrors}
                     />
                 }
             />

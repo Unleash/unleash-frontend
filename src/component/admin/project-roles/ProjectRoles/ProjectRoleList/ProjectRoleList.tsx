@@ -12,17 +12,12 @@ import { ADMIN } from '../../../../providers/AccessProvider/permissions';
 import PaginateUI from '../../../../common/PaginateUI/PaginateUI';
 import RoleListItem from './ProjectRoleListItem/ProjectRoleListItem';
 import useProjectRoles from '../../../../../hooks/api/getters/useProjectRoles/useProjectRoles';
-import { IProjectRole } from '../../../../../interfaces/role';
+import IRole, { IProjectRole } from '../../../../../interfaces/role';
 import useProjectRolesApi from '../../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import useToast from '../../../../../hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
 
 const ProjectRoleList = () => {
-    const defaultRole = {
-        id: 0,
-        name: 'ADMIN',
-        description: '',
-    };
     const { hasAccess } = useContext(AccessContext);
     const { roles } = useProjectRoles();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
@@ -30,13 +25,14 @@ const ProjectRoleList = () => {
     const { deleteRole } = useProjectRolesApi();
     const { refetch } = useProjectRoles();
     const { toast, setToastData } = useToast();
-    const [currentRole, setCurrentRole] = useState(defaultRole);
+    const [currentRole, setCurrentRole] = useState<IRole | null>(null);
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
 
     const deleteProjectRole = async () => {
+        if (!currentRole?.id) return;
         try {
-            await deleteRole(currentRole.id);
+            await deleteRole(currentRole?.id);
             refetch();
             setToastData({
                 show: true,
@@ -44,11 +40,7 @@ const ProjectRoleList = () => {
                 text: 'Successfully deleted role.',
             });
         } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+            setToastData({ show: true, type: 'error', text: e.toString() });
         }
         setDelDialog(false);
         setConfirmName('');

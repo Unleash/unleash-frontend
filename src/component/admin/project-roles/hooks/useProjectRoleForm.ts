@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { IPermission } from '../../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
 
-interface ICheckedPermission {
+export interface ICheckedPermission {
     [key: string]: IPermission;
 }
 
@@ -15,6 +15,7 @@ const useProjectRoleForm = (
     const [roleDesc, setRoleDesc] = useState(initialRoleDesc);
     const [checkedPermissions, setCheckedPermissions] =
         useState<ICheckedPermission>(initialCheckedPermissions);
+    const [errors, setErrors] = useState({});
 
     const keys = Object.keys(initialCheckedPermissions);
 
@@ -28,6 +29,7 @@ const useProjectRoleForm = (
 
     useEffect(() => {
         setCheckedPermissions(initialCheckedPermissions);
+        /* eslint-disable-next-line */
     }, [keys.length]);
 
     const handlePermissionChange = (permission: IPermission) => {
@@ -41,6 +43,40 @@ const useProjectRoleForm = (
         setCheckedPermissions(checkedPermissionsCopy);
     };
 
+    const getProjectRolePayload = () => {
+        const permissions = Object.keys(checkedPermissions).map(permission => {
+            return checkedPermissions[permission];
+        });
+        return {
+            name: roleName,
+            description: roleDesc,
+            permissions,
+        };
+    };
+
+    const validateName = () => {
+        if (roleName.length === 0) {
+            setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
+            return false;
+        }
+        return true;
+    };
+
+    const validatePermissions = () => {
+        if (Object.keys(checkedPermissions).length === 0) {
+            setErrors(prev => ({
+                ...prev,
+                permissions: 'You must include at least one permission.',
+            }));
+            return false;
+        }
+        return true;
+    };
+
+    const clearErrors = () => {
+        setErrors({});
+    };
+
     return {
         roleName,
         roleDesc,
@@ -48,6 +84,11 @@ const useProjectRoleForm = (
         setRoleDesc,
         handlePermissionChange,
         checkedPermissions,
+        getProjectRolePayload,
+        validatePermissions,
+        validateName,
+        clearErrors,
+        errors,
     };
 };
 

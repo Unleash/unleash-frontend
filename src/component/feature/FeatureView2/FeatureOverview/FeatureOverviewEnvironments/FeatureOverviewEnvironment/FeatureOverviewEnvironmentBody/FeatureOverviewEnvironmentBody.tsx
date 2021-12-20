@@ -8,9 +8,7 @@ import { useStyles } from '../FeatureOverviewEnvironment.styles';
 import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
 import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvider/permissions';
 import { useContext } from 'react';
-import FeatureStrategiesUIContext from '../../../../../../../contexts/FeatureStrategiesUIContext';
 import AccessContext from '../../../../../../../contexts/AccessContext';
-import { env } from 'process';
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;

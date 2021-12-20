@@ -39,7 +39,7 @@ const ProjectRoleDeleteConfirm = ({
             primaryButtonText="Delete project role"
             secondaryButtonText="Cancel"
             onClick={() => handleDeleteRole(role.id)}
-            disabledPrimaryButton={role.name !== confirmName}
+            disabledPrimaryButton={role?.name !== confirmName}
             onClose={handleCancel}
             formId={formId}
         >
@@ -51,7 +51,7 @@ const ProjectRoleDeleteConfirm = ({
 
             <p className={styles.deleteParagraph}>
                 In order to delete this role, please enter the name of the role
-                in the textfield below: <strong>{role.name}</strong>
+                in the textfield below: <strong>{role?.name}</strong>
             </p>
 
             <form id={formId}>

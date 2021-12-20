@@ -32,6 +32,11 @@ const EditProjectRole = () => {
         setRoleDesc,
         checkedPermissions,
         handlePermissionChange,
+        getProjectRolePayload,
+        validatePermissions,
+        validateName,
+        errors,
+        clearErrors,
     } = useProjectRoleForm(
         role.name,
         role.description,
@@ -45,29 +50,23 @@ const EditProjectRole = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         const payload = getProjectRolePayload();
-        console.log('PAYLOAD', payload);
-        try {
-            await editRole(id, payload);
-            refetch();
-            setSuccess(true);
-        } catch (e) {
-            console.log('Something went wrong');
+
+        const validName = validateName();
+        const validPermissions = validatePermissions();
+
+        if (validName && validPermissions) {
+            try {
+                await editRole(id, payload);
+                refetch();
+                setSuccess(true);
+            } catch (e) {
+                console.log('Something went wrong');
+            }
         }
     };
 
     const handleCancel = () => {
         history.push('/admin/roles');
-    };
-
-    const getProjectRolePayload = () => {
-        const permissions = Object.keys(checkedPermissions).map(permission => {
-            return checkedPermissions[permission];
-        });
-        return {
-            name: roleName,
-            description: roleDesc,
-            permissions,
-        };
     };
 
     return (
@@ -95,6 +94,8 @@ to resources within a project"
                         checkedPermissions={checkedPermissions}
                         handlePermissionChange={handlePermissionChange}
                         submitButtonText="Edit"
+                        errors={errors}
+                        clearErrors={clearErrors}
                     />
                 }
             />

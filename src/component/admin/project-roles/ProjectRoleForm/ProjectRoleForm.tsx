@@ -11,6 +11,24 @@ import {
 import useProjectRolePermissions from '../../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 import { useStyles } from './ProjectRoleForm.styles';
+import ConditionallyRender from '../../../common/ConditionallyRender';
+import React from 'react';
+import { IPermission } from '../../../../interfaces/project';
+import { ICheckedPermission } from '../hooks/useProjectRoleForm';
+
+interface IProjectRoleForm {
+    roleName: string;
+    roleDesc: string;
+    setRoleName: React.Dispatch<React.SetStateAction<string>>;
+    setRoleDesc: React.Dispatch<React.SetStateAction<string>>;
+    checkedPermissions: ICheckedPermission;
+    handlePermissionChange: (permission: IPermission) => void;
+    handleSubmit: (e: any) => void;
+    handleCancel: () => void;
+    errors: { [key: string]: string };
+    submitButtonText: string;
+    clearErrors: () => void;
+}
 
 const ProjectRoleForm = ({
     handleSubmit,
@@ -21,8 +39,10 @@ const ProjectRoleForm = ({
     setRoleDesc,
     checkedPermissions,
     handlePermissionChange,
+    errors,
     submitButtonText,
-}) => {
+    clearErrors,
+}: IProjectRoleForm) => {
     const styles = useStyles();
     const { permissions } = useProjectRolePermissions({
         revalidateIfStale: false,
@@ -80,6 +100,9 @@ const ProjectRoleForm = ({
                     label="Role name"
                     value={roleName}
                     onChange={e => setRoleName(e.target.value)}
+                    error={Boolean(errors.name)}
+                    errorText={errors.name}
+                    onFocus={() => clearErrors()}
                 />
 
                 <p className={styles.inputDescription}>
@@ -95,14 +118,20 @@ const ProjectRoleForm = ({
                     onChange={e => setRoleDesc(e.target.value)}
                 />
             </div>
+            <div className={styles.permissionErrorContainer}>
+                <ConditionallyRender
+                    condition={Boolean(errors.permissions)}
+                    show={
+                        <span className={styles.errorMessage}>
+                            You must select at least one permission for a role.
+                        </span>
+                    }
+                />
+            </div>
             <h3 className={styles.header}>Project permissions</h3>
-            <div className={styles.checkBoxContainer}>
-                {renderProjectPermissions()}
-            </div>
+            <div>{renderProjectPermissions()}</div>
             <h3 className={styles.header}>Environment permissions</h3>
-            <div className={styles.checkBoxContainer}>
-                {renderEnvironmentPermissions()}
-            </div>
+            <div>{renderEnvironmentPermissions()}</div>
             <div className={styles.buttonContainer}>
                 <Button onClick={handleCancel} className={styles.cancelButton}>
                     Cancel

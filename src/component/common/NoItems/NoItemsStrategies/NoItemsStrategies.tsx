@@ -1,7 +1,4 @@
-import {
-    CREATE_FEATURE_STRATEGY,
-    UPDATE_FEATURE,
-} from '../../../providers/AccessProvider/permissions';
+import { CREATE_FEATURE_STRATEGY } from '../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../ConditionallyRender';
 import PermissionButton from '../../PermissionButton/PermissionButton';
 import StringTruncator from '../../StringTruncator/StringTruncator';
