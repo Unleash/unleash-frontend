@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Alert } from '@material-ui/lab';
 
 function AddUserComponent({ roles, addUserToRole }) {
     const [user, setUser] = useState();
@@ -67,96 +68,101 @@ function AddUserComponent({ roles, addUserToRole }) {
     };
 
     return (
-        <Grid container spacing={3} alignItems="flex-end">
-            <Grid item>
-                <Autocomplete
-                    id="add-user-component"
-                    style={{ width: 300 }}
-                    noOptionsText="No users found."
-                    onChange={handleSelectUser}
-                    autoSelect={false}
-                    value={user || ''}
-                    freeSolo
-                    getOptionSelected={() => true}
-                    filterOptions={o => o}
-                    getOptionLabel={option => {
-                        if (option) {
-                            return `${option.name || '(Empty name)'} <${
-                                option.email || option.username
-                            }>`;
-                        } else return '';
-                    }}
-                    options={options}
-                    loading={loading}
-                    renderInput={params => (
-                        <TextField
-                            {...params}
-                            label="User"
-                            variant="outlined"
-                            size="small"
-                            name="search"
-                            onChange={handleQueryUpdate}
-                            InputProps={{
-                                ...params.InputProps,
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Search />
-                                    </InputAdornment>
-                                ),
-                                endAdornment: (
-                                    <React.Fragment>
-                                        {loading ? (
-                                            <CircularProgress
-                                                color="inherit"
-                                                size={20}
-                                            />
-                                        ) : null}
-                                        {params.InputProps.endAdornment}
-                                    </React.Fragment>
-                                ),
-                            }}
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid item>
-                <FormControl
-                    variant="outlined"
-                    size="small"
-                    style={{ minWidth: '125px' }}
-                >
-                    <InputLabel
-                        style={{ backgroundColor: '#fff' }}
-                        id="add-user-select-role-label"
+        <>
+            <Alert severity="info" style={{ marginBottom: '20px' }}>
+                The user must have an Unleash root role before added to the project.
+            </Alert>
+            <Grid container spacing={3} alignItems="flex-end">
+                <Grid item>
+                    <Autocomplete
+                        id="add-user-component"
+                        style={{ width: 300 }}
+                        noOptionsText="No users found."
+                        onChange={handleSelectUser}
+                        autoSelect={false}
+                        value={user || ''}
+                        freeSolo
+                        getOptionSelected={() => true}
+                        filterOptions={o => o}
+                        getOptionLabel={option => {
+                            if (option) {
+                                return `${option.name || '(Empty name)'} <${
+                                    option.email || option.username
+                                }>`;
+                            } else return '';
+                        }}
+                        options={options}
+                        loading={loading}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                label="User"
+                                variant="outlined"
+                                size="small"
+                                name="search"
+                                onChange={handleQueryUpdate}
+                                InputProps={{
+                                    ...params.InputProps,
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Search />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <React.Fragment>
+                                            {loading ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20}
+                                                />
+                                            ) : null}
+                                            {params.InputProps.endAdornment}
+                                        </React.Fragment>
+                                    ),
+                                }}
+                            />
+                        )}
+                    />
+                </Grid>
+                <Grid item>
+                    <FormControl
+                        variant="outlined"
+                        size="small"
+                        style={{ minWidth: '125px' }}
                     >
-                        Role
-                    </InputLabel>
-                    <Select
-                        labelId="add-user-select-role-label"
-                        id="add-user-select-role"
-                        placeholder="Project role"
-                        value={role.id || ''}
-                        onChange={handleRoleChange}
+                        <InputLabel
+                            style={{ backgroundColor: '#fff' }}
+                            id="add-user-select-role-label"
+                        >
+                            Role
+                        </InputLabel>
+                        <Select
+                            labelId="add-user-select-role-label"
+                            id="add-user-select-role"
+                            placeholder="Project role"
+                            value={role.id || ''}
+                            onChange={handleRoleChange}
+                        >
+                            {roles.map(role => (
+                                <MenuItem key={role.id} value={role.id}>
+                                    {role.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        disabled={!user}
+                        onClick={handleSubmit}
                     >
-                        {roles.map(role => (
-                            <MenuItem key={role.id} value={role.id}>
-                                {role.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                        Add user
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid item>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={!user}
-                    onClick={handleSubmit}
-                >
-                    Add user
-                </Button>
-            </Grid>
-        </Grid>
+        </>
     );
 }
 
