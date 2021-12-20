@@ -8,6 +8,9 @@ export const useStyles = makeStyles(theme => ({
         boxShadow: 'none',
         padding: '0',
     },
+    label: {
+        minWidth: '300px',
+    },
     accordionBody: {
         padding: '0',
         flexWrap: 'wrap',

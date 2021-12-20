@@ -10,6 +10,7 @@ import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvi
 import { useContext } from 'react';
 import FeatureStrategiesUIContext from '../../../../../../../contexts/FeatureStrategiesUIContext';
 import AccessContext from '../../../../../../../contexts/AccessContext';
+import { env } from 'process';
 
 interface IFeatureOverviewEnvironmentBodyProps {
     getOverviewText: () => string;
@@ -40,19 +41,23 @@ const FeatureOverviewEnvironmentBody = ({
                 </div>
 
                 <ConditionallyRender
-                    condition={
-                        featureEnvironment?.strategies.length > 0 &&
-                        hasAccess(
-                            CREATE_FEATURE_STRATEGY,
-                            projectId,
-                            featureEnvironment.name
-                        )
-                    }
+                    condition={featureEnvironment?.strategies.length > 0}
                     show={
                         <>
-                            <div className={styles.linkContainer}>
-                                <Link to={strategiesLink}>Edit strategies</Link>
-                            </div>
+                            <ConditionallyRender
+                                condition={hasAccess(
+                                    CREATE_FEATURE_STRATEGY,
+                                    projectId,
+                                    featureEnvironment.name
+                                )}
+                                show={
+                                    <div className={styles.linkContainer}>
+                                        <Link to={strategiesLink}>
+                                            Edit strategies
+                                        </Link>
+                                    </div>
+                                }
+                            />
                             <FeatureOverviewEnvironmentStrategies
                                 strategies={featureEnvironment?.strategies}
                                 environmentName={featureEnvironment.name}

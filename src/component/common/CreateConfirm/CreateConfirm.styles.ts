@@ -23,6 +23,9 @@ export const useStyles = makeStyles(theme => ({
     anim: {
         animation: `$drop 10s 3s`,
     },
+    buttonStyle: {
+        marginTop: '1rem',
+    },
     '@keyframes drop': {
         '0%': {
             opacity: '0%',

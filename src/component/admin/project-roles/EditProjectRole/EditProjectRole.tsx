@@ -5,12 +5,25 @@ import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 
 import ConditionallyRender from '../../../common/ConditionallyRender';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CreateConfirm from '../../../common/CreateConfirm/CreateConfirm';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
+import useProjectRole from '../../../../hooks/api/getters/useProjectRole/useProjectRole';
+import { IPermission } from '../../../../interfaces/project';
 
 const EditProjectRole = () => {
+    const { id } = useParams();
+    const { role } = useProjectRole(id);
+
+    const initialCheckedPermissions = role?.permissions?.reduce(
+        (acc: { [key: string]: IPermission }, curr: IPermission) => {
+            acc[curr.id] = curr;
+            return acc;
+        },
+        {}
+    );
+
     const history = useHistory();
     const {
         roleName,
@@ -19,17 +32,23 @@ const EditProjectRole = () => {
         setRoleDesc,
         checkedPermissions,
         handlePermissionChange,
-    } = useProjectRoleForm();
+    } = useProjectRoleForm(
+        role.name,
+        role.description,
+        initialCheckedPermissions
+    );
 
     const [success, setSuccess] = useState(false);
-
+    const { refetch } = useProjectRole(id);
     const { editRole, loading } = useProjectRolesApi();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        //const payload = getProjectRolePayload();
+        const payload = getProjectRolePayload();
+        console.log('PAYLOAD', payload);
         try {
-            await editRole();
+            await editRole(id, payload);
+            refetch();
             setSuccess(true);
         } catch (e) {
             console.log('Something went wrong');
@@ -75,6 +94,7 @@ to resources within a project"
                         setRoleDesc={setRoleDesc}
                         checkedPermissions={checkedPermissions}
                         handlePermissionChange={handlePermissionChange}
+                        submitButtonText="Edit"
                     />
                 }
             />

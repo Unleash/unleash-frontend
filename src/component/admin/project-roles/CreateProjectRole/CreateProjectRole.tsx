@@ -31,6 +31,7 @@ const CreateProjectRole = () => {
         checkedPermissions,
         handlePermissionChange,
     } = useProjectRoleForm();
+
     const [success, setSuccess] = useState(false);
 
     const { createRole, loading } = useProjectRolesApi();
@@ -85,6 +86,7 @@ to resources within a project"
                         setRoleDesc={setRoleDesc}
                         checkedPermissions={checkedPermissions}
                         handlePermissionChange={handlePermissionChange}
+                        submitButtonText="Create"
                     />
                 }
             />
