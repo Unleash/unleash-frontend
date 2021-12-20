@@ -21,6 +21,7 @@ const ProjectRoleForm = ({
     setRoleDesc,
     checkedPermissions,
     handlePermissionChange,
+    submitButtonText,
 }) => {
     const styles = useStyles();
     const { permissions } = useProjectRolePermissions({
@@ -36,6 +37,7 @@ const ProjectRoleForm = ({
             return (
                 <FormControlLabel
                     key={permission.id}
+                    classes={{ root: styles.label }}
                     control={
                         <Checkbox
                             checked={
@@ -110,7 +112,7 @@ const ProjectRoleForm = ({
                     permission={ADMIN}
                     type="submit"
                 >
-                    Create role
+                    {submitButtonText} role
                 </PermissionButton>
             </div>
         </form>

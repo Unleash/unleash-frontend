@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPermission } from '../../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
 
@@ -13,9 +13,22 @@ const useProjectRoleForm = (
 ) => {
     const [roleName, setRoleName] = useState(initialRoleName);
     const [roleDesc, setRoleDesc] = useState(initialRoleDesc);
-
     const [checkedPermissions, setCheckedPermissions] =
         useState<ICheckedPermission>(initialCheckedPermissions);
+
+    const keys = Object.keys(initialCheckedPermissions);
+
+    useEffect(() => {
+        setRoleName(initialRoleName);
+    }, [initialRoleName]);
+
+    useEffect(() => {
+        setRoleDesc(initialRoleDesc);
+    }, [initialRoleDesc]);
+
+    useEffect(() => {
+        setCheckedPermissions(initialCheckedPermissions);
+    }, [keys.length]);
 
     const handlePermissionChange = (permission: IPermission) => {
         const { id } = permission;

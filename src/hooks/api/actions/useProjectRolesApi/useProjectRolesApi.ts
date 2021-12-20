@@ -28,8 +28,20 @@ const useProjectRolesApi = () => {
         }
     };
 
-    const editRole = async () => {
-        console.log('EDITING A ROLE');
+    const editRole = async (id: string, payload: ICreateRolePayload) => {
+        const path = `api/admin/roles/${id}`;
+        const req = createRequest(path, {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
     };
 
     const deleteRole = async (id: number) => {

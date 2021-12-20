@@ -6,6 +6,7 @@ import {
     FormControlLabel,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
+import { useEffect, useState } from 'react';
 import { IPermission } from '../../../../../interfaces/user';
 import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
@@ -15,12 +16,37 @@ const EnvironmentPermissionAccordion = ({
     handlePermissionChange,
     checkedPermissions,
 }) => {
+    const [permissionMap, setPermissionMap] = useState({});
+    const [permissionCount, setPermissionCount] = useState(0);
     const styles = useStyles();
+
+    useEffect(() => {
+        const permissionMap = environment?.permissions?.reduce((acc, curr) => {
+            acc[curr.id] = true;
+            return acc;
+        }, {});
+
+        setPermissionMap(permissionMap);
+        /* eslint-disable-next-line */
+    }, [environment?.permissions?.length]);
+
+    useEffect(() => {
+        let count = 0;
+        Object.keys(checkedPermissions).forEach(key => {
+            if (permissionMap[key]) {
+                count = count + 1;
+            }
+        });
+
+        setPermissionCount(count);
+        /* eslint-disable-next-line */
+    }, [checkedPermissions]);
 
     const renderPermissions = () => {
         return environment.permissions.map((permission: IPermission) => {
             return (
                 <FormControlLabel
+                    classes={{ root: styles.label }}
                     key={permission.id}
                     control={
                         <Checkbox
@@ -53,7 +79,8 @@ const EnvironmentPermissionAccordion = ({
                         />
                         &nbsp;
                         <p className={styles.header}>
-                            (4 / {environment?.permissions?.length} permissions)
+                            ({permissionCount} /{' '}
+                            {environment?.permissions?.length} permissions)
                         </p>
                     </div>
                 </AccordionSummary>

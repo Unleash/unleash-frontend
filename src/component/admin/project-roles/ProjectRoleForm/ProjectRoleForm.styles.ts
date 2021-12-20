@@ -5,7 +5,9 @@ export const useStyles = makeStyles(theme => ({
         width: '400px',
     },
     input: { width: '100%', marginBottom: '1rem' },
-
+    label: {
+        minWidth: '300px',
+    },
     buttonContainer: {
         marginTop: 'auto',
         display: 'flex',

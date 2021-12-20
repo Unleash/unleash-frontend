@@ -5,6 +5,7 @@ import { ADMIN } from '../../../../../providers/AccessProvider/permissions';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';
 import { IProjectRole } from '../../../../../../interfaces/role';
+import { useHistory } from 'react-router-dom';
 
 interface IRoleListItemProps {
     id: number;
@@ -21,6 +22,7 @@ const RoleListItem = ({
     setCurrentRole,
     setDelDialog,
 }: IRoleListItemProps) => {
+    const history = useHistory();
     const styles = useStyles();
 
     return (
@@ -46,7 +48,7 @@ const RoleListItem = ({
                         aria-label="Edit"
                         tooltip="Edit"
                         onClick={() => {
-                            console.log('hi');
+                            history.push(`/admin/roles/${id}/edit`);
                         }}
                         permission={ADMIN}
                     >

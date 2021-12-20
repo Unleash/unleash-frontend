@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import CheckMarkBadge from '../CheckmarkBadge/CheckMarkBadge';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 interface ICreateConfirm {
     link: string;
@@ -64,6 +65,10 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
         return styledElements;
     };
 
+    const navigateToRoles = () => {
+        history.push('/admin/roles');
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.confettiContainer}>
@@ -76,6 +81,14 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
                         You will be redirected to the previous page in 6
                         seconds.
                     </p>
+                    <Button
+                        type="contained"
+                        color="primary"
+                        onClick={navigateToRoles}
+                        className={styles.buttonStyle}
+                    >
+                        Redirect now
+                    </Button>
                 </div>
             </div>
         </div>
