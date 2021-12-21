@@ -1,9 +1,9 @@
 import { IconButton, Tooltip } from '@material-ui/core';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
-interface IPermissionIconButtonProps extends OverridableComponent<any> {
+interface IPermissionIconButtonProps
+    extends React.HTMLProps<HTMLButtonElement> {
     permission: string;
     Icon?: React.ElementType;
     tooltip: string;

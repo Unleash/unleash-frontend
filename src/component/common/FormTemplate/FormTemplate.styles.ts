@@ -5,8 +5,10 @@ export const useStyles = makeStyles(theme => ({
         minHeight: '80vh',
         width: '100%',
         display: 'flex',
-        maxWidth: '90%',
         margin: '0 auto',
+        [theme.breakpoints.down(900)]: {
+            flexDirection: 'column',
+        },
     },
     sidebar: {
         backgroundColor: theme.palette.primary.light,
@@ -14,10 +16,19 @@ export const useStyles = makeStyles(theme => ({
         width: '35%',
         borderTopLeftRadius: '12.5px',
         borderBottomLeftRadius: '12.5px',
+        [theme.breakpoints.down(900)]: {
+            width: '100%',
+            borderBottomLeftRadius: '0',
+            borderTopRightRadius: '12.5px',
+        },
+        [theme.breakpoints.down(500)]: {
+            padding: '2rem 1rem',
+        },
     },
     title: {
         color: '#fff',
         marginBottom: '1rem',
+        fontWeight: 'normal',
     },
     subtitle: {
         color: '#fff',
@@ -25,6 +36,7 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        fontWeight: 'normal',
     },
     description: {
         color: '#fff',
@@ -50,6 +62,14 @@ export const useStyles = makeStyles(theme => ({
         width: '65%',
         borderTopRightRadius: '12.5px',
         borderBottomRightRadius: '12.5px',
+        [theme.breakpoints.down(900)]: {
+            width: '100%',
+            borderBottomLeftRadius: '12.5px',
+            borderTopRightRadius: '0',
+        },
+        [theme.breakpoints.down(500)]: {
+            padding: '2rem 1rem',
+        },
     },
     icon: { fill: '#fff' },
 }));

@@ -12,6 +12,7 @@ import {
     IProjectEnvironmentPermissions,
 } from '../../../../../interfaces/project';
 import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
+import { ICheckedPermission } from '../../hooks/useProjectRoleForm';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
 
 type PermissionMap = { [key: string]: boolean };
@@ -19,12 +20,14 @@ type PermissionMap = { [key: string]: boolean };
 interface IEnvironmentPermissionAccordionProps {
     environment: IProjectEnvironmentPermissions;
     handlePermissionChange: (permission: IPermission) => void;
+    checkAllEnvironmentPermissions: (envName: string) => void;
     checkedPermissions: ICheckedPermission;
 }
 
 const EnvironmentPermissionAccordion = ({
     environment,
     handlePermissionChange,
+    checkAllEnvironmentPermissions,
     checkedPermissions,
 }: IEnvironmentPermissionAccordionProps) => {
     const [permissionMap, setPermissionMap] = useState<PermissionMap>({});
@@ -57,25 +60,55 @@ const EnvironmentPermissionAccordion = ({
     }, [checkedPermissions]);
 
     const renderPermissions = () => {
-        return environment?.permissions?.map((permission: IPermission) => {
-            return (
-                <FormControlLabel
-                    classes={{ root: styles.label }}
-                    key={permission.id}
-                    control={
-                        <Checkbox
-                            checked={
-                                checkedPermissions[permission.id] ? true : false
-                            }
-                            onChange={() => handlePermissionChange(permission)}
-                            name="checkedB"
-                            color="primary"
-                        />
-                    }
-                    label={permission.displayName || 'Dummy permission'}
-                />
-            );
-        });
+        const envPermissions = environment?.permissions?.map(
+            (permission: IPermission) => {
+                return (
+                    <FormControlLabel
+                        classes={{ root: styles.label }}
+                        key={permission.id}
+                        control={
+                            <Checkbox
+                                checked={
+                                    checkedPermissions[permission.id]
+                                        ? true
+                                        : false
+                                }
+                                onChange={() =>
+                                    handlePermissionChange(permission)
+                                }
+                                color="primary"
+                            />
+                        }
+                        label={permission.displayName || 'Dummy permission'}
+                    />
+                );
+            }
+        );
+
+        envPermissions.push(
+            <FormControlLabel
+                key={`check-all-environment-${environment?.name}`}
+                classes={{ root: styles.label }}
+                control={
+                    <Checkbox
+                        checked={
+                            checkedPermissions[
+                                `check-all-environment-${environment?.name}`
+                            ]
+                                ? true
+                                : false
+                        }
+                        onChange={() =>
+                            checkAllEnvironmentPermissions(environment?.name)
+                        }
+                        color="primary"
+                    />
+                }
+                label={'Check all permissions for this env'}
+            />
+        );
+
+        return envPermissions;
     };
 
     return (
@@ -85,7 +118,7 @@ const EnvironmentPermissionAccordion = ({
                     className={styles.accordionSummary}
                     expandIcon={<ExpandMore className={styles.icon} />}
                 >
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div className={styles.accordionHeader}>
                         <StringTruncator
                             text={environment.name}
                             className={styles.header}

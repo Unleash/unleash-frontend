@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
-import ConditionallyRender from '../../../common/ConditionallyRender';
 import { useHistory } from 'react-router-dom';
-import CreateConfirm from '../../../common/CreateConfirm/CreateConfirm';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
+import UIContext from '../../../../contexts/UIContext';
 
 const CreateProjectRole = () => {
+    /* @ts-ignore */
+    const { setUpdatedResource } = useContext(UIContext);
     const history = useHistory();
     const {
         roleName,
@@ -17,6 +18,8 @@ const CreateProjectRole = () => {
         setRoleDesc,
         checkedPermissions,
         handlePermissionChange,
+        checkAllProjectPermissions,
+        checkAllEnvironmentPermissions,
         getProjectRolePayload,
         validatePermissions,
         validateName,
@@ -24,19 +27,24 @@ const CreateProjectRole = () => {
         clearErrors,
     } = useProjectRoleForm();
 
-    const [success, setSuccess] = useState(false);
     const { createRole, loading } = useProjectRolesApi();
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
         const validName = validateName();
         const validPermissions = validatePermissions();
+
         if (validName && validPermissions) {
             const payload = getProjectRolePayload();
             try {
                 await createRole(payload);
-                setSuccess(true);
+                history.push('/admin/roles');
+                setUpdatedResource({
+                    title: 'Project role created',
+                    text: 'Now you can start assigning your project roles to project members.',
+                    show: true,
+                });
             } catch (e) {
                 console.log('Something went wrong');
             }
@@ -56,26 +64,20 @@ customised to limit access
 to resources within a project"
             documentationLink="https://docs.getunleash.io/"
         >
-            <ConditionallyRender
-                condition={success}
-                show={
-                    <CreateConfirm link="/admin/roles" text={'Role created'} />
-                }
-                elseShow={
-                    <ProjectRoleForm
-                        errors={errors}
-                        handleSubmit={handleSubmit}
-                        handleCancel={handleCancel}
-                        roleName={roleName}
-                        setRoleName={setRoleName}
-                        roleDesc={roleDesc}
-                        setRoleDesc={setRoleDesc}
-                        checkedPermissions={checkedPermissions}
-                        handlePermissionChange={handlePermissionChange}
-                        submitButtonText="Create"
-                        clearErrors={clearErrors}
-                    />
-                }
+            <ProjectRoleForm
+                errors={errors}
+                handleSubmit={handleSubmit}
+                handleCancel={handleCancel}
+                roleName={roleName}
+                setRoleName={setRoleName}
+                roleDesc={roleDesc}
+                setRoleDesc={setRoleDesc}
+                checkedPermissions={checkedPermissions}
+                handlePermissionChange={handlePermissionChange}
+                checkAllProjectPermissions={checkAllProjectPermissions}
+                checkAllEnvironmentPermissions={checkAllEnvironmentPermissions}
+                submitButtonText="Create"
+                clearErrors={clearErrors}
             />
         </FormTemplate>
     );

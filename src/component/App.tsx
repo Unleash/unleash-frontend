@@ -19,6 +19,7 @@ import ConditionallyRender from './common/ConditionallyRender';
 import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
 import Loader from './common/Loader/Loader';
 import useUser from '../hooks/api/getters/useUser/useUser';
+import UpdatedResource from './common/UpdatedResource/UpdatedResource';
 
 interface IAppProps extends RouteComponentProps {
     user: IAuthStatus;
@@ -148,6 +149,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                         />
 
                         {toast}
+                        <UpdatedResource />
                     </div>
                 }
             />
