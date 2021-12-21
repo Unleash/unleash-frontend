@@ -1,31 +1,19 @@
-import { useStyles } from './CreateConfirm.styles';
+import { useStyles } from './ConfirmScreen.styles';
 import classnames from 'classnames';
-import CheckMarkBadge from '../CheckmarkBadge/CheckMarkBadge';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import CheckMarkBadge from '../../CheckmarkBadge/CheckMarkBadge';
+import UIContext from '../../../../contexts/UIContext';
+import ConditionallyRender from '../../ConditionallyRender';
 
-interface ICreateConfirm {
-    link: string;
-    text: string;
+interface IConfirmScreen {
+    title: string;
+    text?: string;
 }
 
-const CreateConfirm = ({ link, text }: ICreateConfirm) => {
-    const history = useHistory();
-
-    // useEffect(() => {
-    //     let timeout: NodeJS.Timeout | null = null;
-    //     timeout = setTimeout(() => {
-    //         history.push(link);
-    //     }, 6000);
-
-    //     return () => {
-    //         if (timeout) {
-    //             clearTimeout(timeout);
-    //         }
-    //     };
-    //     /* eslint-disable-next-line */
-    // }, []);
+const ConfirmScreen = ({ title, text }: IConfirmScreen) => {
+    const { setUpdatedResource } = useContext(UIContext);
 
     const styles = useStyles();
     const confettiColors = ['#d13447', '#ffbf00', '#263672'];
@@ -65,8 +53,8 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
         return styledElements;
     };
 
-    const navigateToRoles = () => {
-        history.push('/admin/roles');
+    const hide = () => {
+        setUpdatedResource(prev => ({ ...prev, show: false }));
     };
 
     return (
@@ -74,20 +62,24 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
             <div className={styles.confettiContainer}>
                 {renderConfetti()}
                 <div className={styles.createdContainer}>
-                    <CheckMarkBadge />
+                    <div className={styles.headerContainer}>
+                        <CheckMarkBadge />
 
-                    <h3>{text}</h3>
-                    <p>
-                        You will be redirected to the previous page in 6
-                        seconds.
-                    </p>
+                        <h3 className={styles.headerStyles}>{title}</h3>
+                    </div>
+
+                    <ConditionallyRender
+                        condition={Boolean(text)}
+                        show={<p className={styles.paragraph}>{text}</p>}
+                    />
+
                     <Button
                         type="contained"
                         color="primary"
-                        onClick={navigateToRoles}
+                        onClick={hide}
                         className={styles.buttonStyle}
                     >
-                        Redirect now
+                        Hide
                     </Button>
                 </div>
             </div>
@@ -95,4 +87,4 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
     );
 };
 
-export default CreateConfirm;
+export default ConfirmScreen;

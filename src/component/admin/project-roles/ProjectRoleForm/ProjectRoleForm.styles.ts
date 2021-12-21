@@ -2,11 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        width: '400px',
+        maxWidth: '400px',
     },
     input: { width: '100%', marginBottom: '1rem' },
     label: {
         minWidth: '300px',
+        [theme.breakpoints.down(600)]: {
+            minWidth: 'auto',
+        },
     },
     buttonContainer: {
         marginTop: 'auto',

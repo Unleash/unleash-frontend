@@ -254,7 +254,7 @@ const FeatureStrategiesEnvironments = () => {
             [styles.listContainerWithoutSidebar]: !hasAccess(
                 CREATE_FEATURE_STRATEGY,
                 projectId,
-                activeEnvironment.name
+                activeEnvironment?.name
             ),
         });
 

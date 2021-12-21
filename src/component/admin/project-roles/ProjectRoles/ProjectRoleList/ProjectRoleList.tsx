@@ -12,7 +12,7 @@ import { ADMIN } from '../../../../providers/AccessProvider/permissions';
 import PaginateUI from '../../../../common/PaginateUI/PaginateUI';
 import RoleListItem from './ProjectRoleListItem/ProjectRoleListItem';
 import useProjectRoles from '../../../../../hooks/api/getters/useProjectRoles/useProjectRoles';
-import IRole, { IProjectRole } from '../../../../../interfaces/role';
+import { IProjectRole } from '../../../../../interfaces/role';
 import useProjectRolesApi from '../../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import useToast from '../../../../../hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
@@ -25,7 +25,7 @@ const ProjectRoleList = () => {
     const { deleteRole } = useProjectRolesApi();
     const { refetch } = useProjectRoles();
     const { toast, setToastData } = useToast();
-    const [currentRole, setCurrentRole] = useState<IRole | null>(null);
+    const [currentRole, setCurrentRole] = useState<IProjectRole | null>(null);
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
 

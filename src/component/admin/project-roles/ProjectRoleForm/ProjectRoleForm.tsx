@@ -23,6 +23,8 @@ interface IProjectRoleForm {
     setRoleDesc: React.Dispatch<React.SetStateAction<string>>;
     checkedPermissions: ICheckedPermission;
     handlePermissionChange: (permission: IPermission) => void;
+    checkAllProjectPermissions: () => void;
+    checkAllEnvironmentPermissions: (envName: string) => void;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -39,6 +41,8 @@ const ProjectRoleForm = ({
     setRoleDesc,
     checkedPermissions,
     handlePermissionChange,
+    checkAllProjectPermissions,
+    checkAllEnvironmentPermissions,
     errors,
     submitButtonText,
     clearErrors,
@@ -53,7 +57,7 @@ const ProjectRoleForm = ({
     const { project, environments } = permissions;
 
     const renderProjectPermissions = () => {
-        return project.map(permission => {
+        const projectPermissions = project.map(permission => {
             return (
                 <FormControlLabel
                     key={permission.id}
@@ -64,7 +68,6 @@ const ProjectRoleForm = ({
                                 checkedPermissions[permission.id] ? true : false
                             }
                             onChange={() => handlePermissionChange(permission)}
-                            name="checkedB"
                             color="primary"
                         />
                     }
@@ -72,6 +75,27 @@ const ProjectRoleForm = ({
                 />
             );
         });
+
+        projectPermissions.push(
+            <FormControlLabel
+                key={'check-all-project'}
+                classes={{ root: styles.label }}
+                control={
+                    <Checkbox
+                        checked={
+                            checkedPermissions['check-all-project']
+                                ? true
+                                : false
+                        }
+                        onChange={() => checkAllProjectPermissions()}
+                        color="primary"
+                    />
+                }
+                label={'Check all project permissions'}
+            />
+        );
+
+        return projectPermissions;
     };
 
     const renderEnvironmentPermissions = () => {
@@ -82,6 +106,9 @@ const ProjectRoleForm = ({
                     key={environment.name}
                     checkedPermissions={checkedPermissions}
                     handlePermissionChange={handlePermissionChange}
+                    checkAllEnvironmentPermissions={
+                        checkAllEnvironmentPermissions
+                    }
                 />
             );
         });
