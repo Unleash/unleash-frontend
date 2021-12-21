@@ -208,9 +208,13 @@ export const useStyles = makeStyles(theme => ({
             color: theme.palette.primary.main,
             fontWeight: 'normal',
         },
+        '&:disabled': {
+            margin: '0px 16px',
+            height: '35px'
+         },
     },
     separtor: {
-        marginLeft: '-15px',
+        marginLeft: '-10px',
         [theme.breakpoints.down(560)]: {
             display: 'none',
         },
