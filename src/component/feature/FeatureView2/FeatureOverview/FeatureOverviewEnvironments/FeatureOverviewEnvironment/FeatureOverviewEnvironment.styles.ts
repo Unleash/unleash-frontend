@@ -124,9 +124,6 @@ export const useStyles = makeStyles(theme => ({
     strategiesText: {
         fontSize: '14px',
         color: theme.palette.grey[700],
-        // [theme.breakpoints.down(560)]: {
-        //     display: 'none',
-        // },
     },
     stratigiesInfoContainer: {
         display: 'flex',
@@ -134,14 +131,14 @@ export const useStyles = makeStyles(theme => ({
     noStratigiesInfoContainer: {
         top: '1px',
         position: 'relative',
-        marginLeft: '8px',
+        left: '5px',
     },
     stratigiesIconsContainer: {
         display: 'flex',
         alignItems: 'center',
         transform: 'scale(0.8)',
-        marginLeft: '-10px',
         top: '2px',
+        left: '-10px',
         position: 'relative',
         [theme.breakpoints.down(560)]: {
             marginLeft: '0px',
