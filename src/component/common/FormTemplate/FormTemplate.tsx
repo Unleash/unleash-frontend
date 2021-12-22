@@ -6,6 +6,8 @@ import { FileCopy } from '@material-ui/icons';
 import ConditionallyRender from '../ConditionallyRender';
 import Loader from '../Loader/Loader';
 import copy from 'copy-to-clipboard';
+import { useContext } from 'react';
+import UIContext from '../../../contexts/UIContext';
 
 interface ICreateProps {
     title: string;
@@ -23,12 +25,28 @@ const FormTemplate: React.FC<ICreateProps> = ({
     loading,
     formatApiCode,
 }) => {
+    // @ts-ignore-next-line
+    const { setToastData } = useContext(UIContext);
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
 
     const copyCommand = () => {
         if (copy(formatApiCode())) {
-            console.log('COPIED!');
+            setToastData({
+                title: 'Successfully copied the command',
+                text: 'The command should now be automatically copied to your clipboard',
+                autoHideDuration: 6000,
+                type: 'success',
+                show: true,
+            });
+        } else {
+            setToastData({
+                title: 'Could not copy the command',
+                text: 'Sorry, but we could not copy the command.',
+                autoHideDuration: 6000,
+                type: 'error',
+                show: true,
+            });
         }
     };
 

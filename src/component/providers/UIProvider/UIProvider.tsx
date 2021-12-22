@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
-import UIContext from '../../../contexts/UIContext';
+import UIContext, { IToastData } from '../../../contexts/UIContext';
 
-const UIProvider = ({ children }) => {
-    const [toastData, setToastData] = useState({
+const UIProvider: React.FC = ({ children }) => {
+    const [toastData, setToastData] = useState<IToastData>({
         title: '',
         text: '',
         components: [],
         show: false,
         persist: false,
+        type: '',
     });
 
     const context = React.useMemo(
