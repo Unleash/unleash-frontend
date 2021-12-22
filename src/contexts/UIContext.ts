@@ -10,8 +10,8 @@ export interface IToastData {
     type: string;
 }
 interface IFeatureStrategiesUIContext {
-    toastData: ToastData;
-    setExpandedSidebar: React.Dispatch<React.SetStateAction<ToastData>>;
+    toastData: IToastData;
+    setToastData: React.Dispatch<React.SetStateAction<IToastData>>;
 }
 
 const UIContext = React.createContext<IFeatureStrategiesUIContext | null>(null);
