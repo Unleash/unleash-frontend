@@ -8,7 +8,7 @@ const Codebox = ({ text }: ICodeboxProps) => {
     const styles = useStyles();
     return (
         <div className={styles.container}>
-            <code className={styles.code}>{text}</code>
+            <pre className={styles.code}>{text}</pre>
         </div>
     );
 };

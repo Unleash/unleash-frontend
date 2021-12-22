@@ -19,7 +19,7 @@ type PermissionMap = { [key: string]: boolean };
 
 interface IEnvironmentPermissionAccordionProps {
     environment: IProjectEnvironmentPermissions;
-    handlePermissionChange: (permission: IPermission) => void;
+    handlePermissionChange: (permission: IPermission, type: string) => void;
     checkAllEnvironmentPermissions: (envName: string) => void;
     checkedPermissions: ICheckedPermission;
 }
@@ -74,7 +74,10 @@ const EnvironmentPermissionAccordion = ({
                                         : false
                                 }
                                 onChange={() =>
-                                    handlePermissionChange(permission)
+                                    handlePermissionChange(
+                                        permission,
+                                        environment.name
+                                    )
                                 }
                                 color="primary"
                             />

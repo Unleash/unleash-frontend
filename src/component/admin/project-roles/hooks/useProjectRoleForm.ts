@@ -26,8 +26,6 @@ const useProjectRoleForm = (
         useState<ICheckedPermission>(initialCheckedPermissions);
     const [errors, setErrors] = useState({});
 
-    const keys = Object.keys(initialCheckedPermissions);
-
     useEffect(() => {
         setRoleName(initialRoleName);
     }, [initialRoleName]);
@@ -44,13 +42,14 @@ const useProjectRoleForm = (
                 )
             );
 
-        setCheckedPermissions(formattedInitialCheckedPermissions);
+        setCheckedPermissions(formattedInitialCheckedPermissions || {});
         /* eslint-disable-next-line */
-    }, [keys.length]);
+    }, [Object.keys(initialCheckedPermissions).length]);
 
     const isAllProjectPermissionsCheckedInitially =
         initialCheckedPermissions => {
             const { project } = permissions;
+            if (!project || project.length === 0) return;
             const isAllChecked = project.every(permission => {
                 return initialCheckedPermissions[permission.id];
             });
@@ -65,7 +64,7 @@ const useProjectRoleForm = (
     const isAllEnvironmentPermissionsCheckedInitially =
         initalCheckedPermissions => {
             const { environments } = permissions;
-
+            if (!environments || environments.length === 0) return;
             environments.forEach(env => {
                 const isAllChecked = env.permissions.every(permission => {
                     return initialCheckedPermissions[permission.id];
@@ -81,11 +80,19 @@ const useProjectRoleForm = (
             return initialCheckedPermissions;
         };
 
-    const handlePermissionChange = (permission: IPermission) => {
+    const handlePermissionChange = (permission: IPermission, type) => {
         const { id } = permission;
         const checkedPermissionsCopy = cloneDeep(checkedPermissions);
         if (checkedPermissionsCopy[id]) {
             delete checkedPermissionsCopy[id];
+
+            if (type === 'project') {
+                delete checkedPermissionsCopy[PROJECT_CHECK_ALL_KEY];
+            } else {
+                delete checkedPermissionsCopy[
+                    `${ENVIRONMENT_CHECK_ALL_KEY}-${type}`
+                ];
+            }
         } else {
             checkedPermissionsCopy[id] = { ...permission };
         }

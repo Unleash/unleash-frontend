@@ -10,9 +10,11 @@ import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import useProjectRole from '../../../../hooks/api/getters/useProjectRole/useProjectRole';
 import { IPermission } from '../../../../interfaces/project';
 import UIContext from '../../../../contexts/UIContext';
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const EditProjectRole = () => {
-    const { setUpdatedResource } = useContext(UIContext);
+    const { uiConfig } = useUiConfig();
+    const { setToastData } = useContext(UIContext);
     const [initialCheckedPermissions, setInitialCheckedPermissions] = useState(
         {}
     );
@@ -53,6 +55,15 @@ const EditProjectRole = () => {
         initialCheckedPermissions
     );
 
+    const formatApiCode = () => {
+        return `curl --location --request PUT '${
+            uiConfig.unleashUrl
+        }/api/admin/roles/${role.id}' \\
+--header 'Authorization: INSERT_API_KEY' \\
+--header 'Content-Type: application/json' \\
+--data-raw '${JSON.stringify(getProjectRolePayload(), undefined, 2)}'`;
+    };
+
     const { refetch } = useProjectRole(id);
     const { editRole, loading } = useProjectRolesApi();
 
@@ -68,10 +79,12 @@ const EditProjectRole = () => {
                 await editRole(id, payload);
                 refetch();
                 history.push('/admin/roles');
-                setUpdatedResource({
+                setToastData({
                     title: 'Project role updated',
                     text: 'Your role changes will automatically be applied to the users with this role.',
                     show: true,
+                    confetti: true,
+                    autoHideDuration: 6000,
                 });
             } catch (e) {
                 console.log('Something went wrong');
@@ -91,6 +104,7 @@ const EditProjectRole = () => {
 customised to limit access
 to resources within a project"
             documentationLink="https://docs.getunleash.io/"
+            formatApiCode={formatApiCode}
         >
             <ProjectRoleForm
                 handleSubmit={handleSubmit}

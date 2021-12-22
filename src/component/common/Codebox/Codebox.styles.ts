@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
         borderRadius: '3px',
         position: 'relative',
     },
-    code: { wordBreak: 'break-all', color: '#fff' },
+    code: { wordBreak: 'break-all', color: '#fff', whiteSpace: 'pre-wrap' },
     icon: {
         fill: '#fff',
     },

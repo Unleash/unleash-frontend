@@ -2,42 +2,54 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        width: '100%',
-        height: '100%',
+        width: '450px',
+        background: '#fff',
+        boxShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+        zIndex: 500,
+        margin: '0 auto',
+        borderRadius: '12.5px',
+        padding: '2rem',
+    },
+    innerContainer: {
+        position: 'relative',
     },
     starting: {
-        opacity: '0',
+        opacity: 0,
     },
     headerContainer: {
         display: 'flex',
         alignItems: 'center',
     },
     confettiContainer: {
-        height: '500px',
         position: 'relative',
-        justifyContent: 'center',
         maxWidth: '600px',
         margin: '0 auto',
         display: 'flex',
     },
-    headerStyles: {
-        fontWeight: 'normal',
+    textContainer: {
         marginLeft: '1rem',
     },
-    paragraph: {
-        margin: '1.5rem 0 0 0',
+    headerStyles: {
+        fontWeight: 'normal',
+        margin: 0,
+        marginBottom: '0.5rem',
     },
     createdContainer: {
         display: 'flex',
-        paddingTop: '2rem',
         alignItems: 'center',
         flexDirection: 'column',
     },
     anim: {
         animation: `$drop 10s 3s`,
     },
+    checkMark: {
+        width: '65px',
+        height: '65px',
+    },
     buttonStyle: {
-        marginTop: '1rem',
+        position: 'absolute',
+        top: '-15px',
+        right: '0',
     },
     '@keyframes drop': {
         '0%': {

@@ -16,6 +16,7 @@ import { IProjectRole } from '../../../../../interfaces/role';
 import useProjectRolesApi from '../../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import useToast from '../../../../../hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
+import UIContext from '../../../../../contexts/UIContext';
 
 const ProjectRoleList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -24,10 +25,11 @@ const ProjectRoleList = () => {
         usePagination(roles, 10);
     const { deleteRole } = useProjectRolesApi();
     const { refetch } = useProjectRoles();
-    const { toast, setToastData } = useToast();
+    const { toast } = useToast();
     const [currentRole, setCurrentRole] = useState<IProjectRole | null>(null);
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
+    const { setToastData } = useContext(UIContext);
 
     const deleteProjectRole = async () => {
         if (!currentRole?.id) return;
@@ -37,7 +39,10 @@ const ProjectRoleList = () => {
             setToastData({
                 show: true,
                 type: 'success',
-                text: 'Successfully deleted role.',
+                title: 'Successfully deleted role',
+                text: 'Your role is now deleted',
+                confetti: false,
+                autoHideDuration: 6000,
             });
         } catch (e) {
             setToastData({ show: true, type: 'error', text: e.toString() });
