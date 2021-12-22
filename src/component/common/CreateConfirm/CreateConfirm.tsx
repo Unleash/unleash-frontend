@@ -1,7 +1,6 @@
 import { useStyles } from './CreateConfirm.styles';
 import classnames from 'classnames';
 import CheckMarkBadge from '../CheckmarkBadge/CheckMarkBadge';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
@@ -82,7 +81,6 @@ const CreateConfirm = ({ link, text }: ICreateConfirm) => {
                         seconds.
                     </p>
                     <Button
-                        type="contained"
                         color="primary"
                         onClick={navigateToRoles}
                         className={styles.buttonStyle}

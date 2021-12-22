@@ -11,7 +11,7 @@ export interface IToastData {
 }
 interface IFeatureStrategiesUIContext {
     toastData: IToastData;
-    setToastData: React.Dispatch<React.SetStateAction<IToastData>>;
+    setToast: React.Dispatch<React.SetStateAction<IToastData>>;
 }
 
 const UIContext = React.createContext<IFeatureStrategiesUIContext | null>(null);

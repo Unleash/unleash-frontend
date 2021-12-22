@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import UIContext, { IToastData } from '../../../contexts/UIContext';
 
 const UIProvider: React.FC = ({ children }) => {
-    const [toastData, setToastData] = useState<IToastData>({
+    const [toastData, setToast] = useState<IToastData>({
         title: '',
         text: '',
         components: [],
@@ -14,7 +14,7 @@ const UIProvider: React.FC = ({ children }) => {
 
     const context = React.useMemo(
         () => ({
-            setToastData,
+            setToast,
             toastData,
         }),
         [toastData]

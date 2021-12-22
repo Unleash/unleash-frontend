@@ -5,12 +5,12 @@ import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi
 import { useHistory } from 'react-router-dom';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
-import UIContext from '../../../../contexts/UIContext';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from '../../../../hooks/useToast';
 
 const CreateProjectRole = () => {
     /* @ts-ignore */
-    const { setToastData } = useContext(UIContext);
+    const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
     const {
@@ -48,17 +48,9 @@ const CreateProjectRole = () => {
                     text: 'Now you can start assigning your project roles to project members.',
                     confetti: true,
                     type: 'success',
-                    show: true,
-                    autoHideDuration: 6000,
                 });
             } catch (e) {
-                setToastData({
-                    title: 'Something went wrong',
-                    text: `We had trouble talking to our API. Here's why: ${e.toString()}`,
-                    type: 'error',
-                    show: true,
-                    autoHideDuration: 6000,
-                });
+                setToastApiError(e.toString());
             }
         }
     };

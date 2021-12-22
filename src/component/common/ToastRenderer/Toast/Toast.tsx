@@ -9,7 +9,7 @@ import Close from '@material-ui/icons/Close';
 
 const Toast = ({ title, text, type, confetti }: IToastData) => {
     // @ts-ignore
-    const { setToastData } = useContext(UIContext);
+    const { setToast } = useContext(UIContext);
 
     const styles = useStyles();
     const confettiColors = ['#d13447', '#ffbf00', '#263672'];
@@ -50,7 +50,7 @@ const Toast = ({ title, text, type, confetti }: IToastData) => {
     };
 
     const hide = () => {
-        setToastData((prev: IToastData) => ({ ...prev, show: false }));
+        setToast((prev: IToastData) => ({ ...prev, show: false }));
     };
 
     return (

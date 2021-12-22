@@ -3,7 +3,6 @@ import { IPermission } from '../../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
 import useProjectRolePermissions from '../../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
-import { BAD_REQUEST } from '../../../../constants/statusCodes';
 
 export interface ICheckedPermission {
     [key: string]: IPermission;

@@ -180,7 +180,6 @@ const FeatureStrategiesEnvironmentList = ({
                     />
 
                     {dropboxMarkup}
-                    {toast}
                     {delDialogueMarkup}
                     {productionGuardMarkup}
                 </div>

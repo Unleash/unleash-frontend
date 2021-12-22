@@ -27,7 +27,6 @@ interface IAppProps extends RouteComponentProps {
     feedback: any;
 }
 const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
-    const { toast, setToastData } = useToast();
     // because we need the userId when the component load.
     const {
         splash,
@@ -35,7 +34,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
         authDetails,
         permissions,
     } = useUser();
-    console.log(permissions);
+
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     useEffect(() => {
@@ -108,7 +107,6 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
 
     return (
         <SWRProvider
-            setToastData={setToastData}
             isUnauthorized={isUnauthorized}
             setShowLoader={setShowLoader}
         >
@@ -148,7 +146,6 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                             }
                         />
 
-                        {toast}
                         <ToastRenderer />
                     </div>
                 }
