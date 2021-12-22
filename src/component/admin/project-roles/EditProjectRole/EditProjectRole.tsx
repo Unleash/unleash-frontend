@@ -87,7 +87,13 @@ const EditProjectRole = () => {
                     autoHideDuration: 6000,
                 });
             } catch (e) {
-                console.log('Something went wrong');
+                setToastData({
+                    title: 'Something went wrong',
+                    text: `We had trouble talking to our API. Here's why: ${e.toString()}`,
+                    type: 'error',
+                    show: true,
+                    autoHideDuration: 6000,
+                });
             }
         }
     };
