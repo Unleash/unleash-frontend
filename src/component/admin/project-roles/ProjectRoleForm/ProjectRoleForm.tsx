@@ -48,6 +48,7 @@ const ProjectRoleForm = ({
     checkAllEnvironmentPermissions,
     errors,
     submitButtonText,
+    validateNameUniqueness,
     clearErrors,
 }: IProjectRoleForm) => {
     const styles = useStyles();
@@ -135,6 +136,7 @@ const ProjectRoleForm = ({
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
+                    onBlur={validateNameUniqueness}
                 />
 
                 <p className={styles.inputDescription}>

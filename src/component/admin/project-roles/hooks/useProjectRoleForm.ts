@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { IPermission } from '../../../../interfaces/project';
 import cloneDeep from 'lodash.clonedeep';
 import useProjectRolePermissions from '../../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
+import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
+import { BAD_REQUEST } from '../../../../constants/statusCodes';
 
 export interface ICheckedPermission {
     [key: string]: IPermission;
@@ -25,6 +27,8 @@ const useProjectRoleForm = (
     const [checkedPermissions, setCheckedPermissions] =
         useState<ICheckedPermission>(initialCheckedPermissions);
     const [errors, setErrors] = useState({});
+
+    const { validateRole } = useProjectRolesApi();
 
     useEffect(() => {
         setRoleName(initialRoleName);
@@ -166,6 +170,22 @@ const useProjectRoleForm = (
             permissions,
         };
     };
+    const NAME_EXISTS_ERROR =
+        'BadRequestError: There already exists a role with the name';
+    const validateNameUniqueness = async () => {
+        const payload = getProjectRolePayload();
+
+        try {
+            await validateRole(payload);
+        } catch (e) {
+            if (e.toString().includes(NAME_EXISTS_ERROR)) {
+                setErrors(prev => ({
+                    ...prev,
+                    name: 'There already exists a role with this role name',
+                }));
+            }
+        }
+    };
 
     const validateName = () => {
         if (roleName.length === 0) {
@@ -203,6 +223,7 @@ const useProjectRoleForm = (
         validatePermissions,
         validateName,
         clearErrors,
+        validateNameUniqueness,
         errors,
     };
 };

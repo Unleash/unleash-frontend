@@ -25,6 +25,7 @@ const CreateProjectRole = () => {
         getProjectRolePayload,
         validatePermissions,
         validateName,
+        validateNameUniqueness,
         errors,
         clearErrors,
     } = useProjectRoleForm();
@@ -99,6 +100,7 @@ to resources within a project"
                 checkAllEnvironmentPermissions={checkAllEnvironmentPermissions}
                 submitButtonText="Create"
                 clearErrors={clearErrors}
+                validateNameUniqueness={validateNameUniqueness}
             />
         </FormTemplate>
     );
