@@ -29,7 +29,7 @@ const FeatureOverviewTags = () => {
     const { tags, refetch } = useTags(featureId);
     const { tagTypes } = useTagTypes();
     const { deleteTagFromFeature } = useFeatureApi();
-    const { toast, setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { hasAccess } = useContext(AccessContext);
     const canDeleteTag = hasAccess(DELETE_TAG);
 
@@ -43,15 +43,11 @@ const FeatureOverviewTags = () => {
             refetch();
             setToastData({
                 type: 'success',
-                show: true,
+                title: 'Tag deleted',
                 text: 'Successfully deleted tag',
             });
         } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+            setToastApiError(e.message);
         }
     };
 
@@ -136,7 +132,6 @@ const FeatureOverviewTags = () => {
                     elseShow={<p data-loading>No tags to display</p>}
                 />
             </div>
-            {toast}
         </div>
     );
 };

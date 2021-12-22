@@ -37,7 +37,7 @@ const FeatureToggleListNewItem = ({
     projectId,
     createdAt,
 }: IFeatureToggleListNewItemProps) => {
-    const { toast, setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { toggleFeatureByEnvironment } = useToggleFeatureByEnv(
         projectId,
         name
@@ -65,8 +65,8 @@ const FeatureToggleListNewItem = ({
         toggleFeatureByEnvironment(env.name, env.enabled)
             .then(() => {
                 setToastData({
-                    show: true,
                     type: 'success',
+                    title: 'Updated toggle status',
                     text: 'Successfully updated toggle status.',
                 });
                 refetch();
@@ -75,11 +75,7 @@ const FeatureToggleListNewItem = ({
                 if (e.message === ENVIRONMENT_STRATEGY_ERROR) {
                     setShowInfoBox(true);
                 } else {
-                    setToastData({
-                        show: true,
-                        type: 'error',
-                        text: e.message,
-                    });
+                    setToastApiError(e.message);
                 }
             });
     };
@@ -162,7 +158,6 @@ const FeatureToggleListNewItem = ({
                     );
                 })}
             </TableRow>
-            {toast}
             <EnvironmentStrategyDialog
                 open={showInfoBox}
                 onClose={closeInfoBox}

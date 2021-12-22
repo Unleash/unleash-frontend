@@ -26,7 +26,7 @@ const FeatureSettingsProject = () => {
     const editable = hasAccess(UPDATE_FEATURE, projectId);
     const { permissions } = useUser();
     const { changeFeatureProject } = useFeatureApi();
-    const { toast, setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
 
     useEffect(() => {
@@ -44,7 +44,8 @@ const FeatureSettingsProject = () => {
             await changeFeatureProject(projectId, featureId, newProject);
             refetch();
             setToastData({
-                show: true,
+                title: 'Updated project',
+                confetti: true,
                 type: 'success',
                 text: 'Successfully updated toggle project.',
             });
@@ -54,11 +55,7 @@ const FeatureSettingsProject = () => {
                 `/projects/${newProject}/features2/${featureId}/settings`
             );
         } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+            setToastApiError(e.message);
         }
     };
 
@@ -91,7 +88,6 @@ const FeatureSettingsProject = () => {
                 onClose={() => setShowConfirmDialog(false)}
                 onClick={updateProject}
             />
-            {toast}
         </>
     );
 };

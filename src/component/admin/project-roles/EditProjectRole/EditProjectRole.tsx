@@ -9,12 +9,12 @@ import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import useProjectRole from '../../../../hooks/api/getters/useProjectRole/useProjectRole';
 import { IPermission } from '../../../../interfaces/project';
-import UIContext from '../../../../contexts/UIContext';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from '../../../../hooks/useToast';
 
 const EditProjectRole = () => {
     const { uiConfig } = useUiConfig();
-    const { setToastData } = useContext(UIContext);
+    const { setToastData, setToastApiError } = useToast();
     const [initialCheckedPermissions, setInitialCheckedPermissions] = useState(
         {}
     );
@@ -82,18 +82,10 @@ const EditProjectRole = () => {
                 setToastData({
                     title: 'Project role updated',
                     text: 'Your role changes will automatically be applied to the users with this role.',
-                    show: true,
                     confetti: true,
-                    autoHideDuration: 6000,
                 });
             } catch (e) {
-                setToastData({
-                    title: 'Something went wrong',
-                    text: `We had trouble talking to our API. Here's why: ${e.toString()}`,
-                    type: 'error',
-                    show: true,
-                    autoHideDuration: 6000,
-                });
+                setToastApiError(e.toString());
             }
         }
     };

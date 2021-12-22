@@ -3,15 +3,15 @@ import { useContext, useEffect } from 'react';
 import { useCommonStyles } from '../../../common.styles';
 import UIContext, { IToastData } from '../../../contexts/UIContext';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
-import ConfirmScreen from './Toast/Toast';
+import Toast from './Toast/Toast';
 
 const ToastRenderer = () => {
     // @ts-ignore-next-line
-    const { toastData, setToastData } = useContext(UIContext);
+    const { toastData, setToast } = useContext(UIContext);
     const styles = useCommonStyles();
 
     const hide = () => {
-        setToastData((prev: IToastData) => ({ ...prev, show: false }));
+        setToast((prev: IToastData) => ({ ...prev, show: false }));
     };
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const ToastRenderer = () => {
                 leave={styles.fadeInBottomLeave}
                 container={styles.fullWidth}
             >
-                <ConfirmScreen {...toastData} />
+                <Toast {...toastData} />
             </AnimateOnMount>
         </Portal>
     );

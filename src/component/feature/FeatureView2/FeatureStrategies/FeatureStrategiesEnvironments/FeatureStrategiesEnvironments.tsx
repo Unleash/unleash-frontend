@@ -10,7 +10,6 @@ import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
 import { CREATE_FEATURE_STRATEGY } from '../../../../providers/AccessProvider/permissions';
 
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
-import useToast from '../../../../../hooks/useToast';
 import useTabs from '../../../../../hooks/useTabs';
 import useQueryParams from '../../../../../hooks/useQueryParams';
 
@@ -34,7 +33,6 @@ const FeatureStrategiesEnvironments = () => {
 
     const startingTabId = 0;
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { toast, setToastData } = useToast();
     const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
 
     const styles = useStyles();
@@ -382,14 +380,9 @@ const FeatureStrategiesEnvironments = () => {
                             {renderTabPanels()}
                             <ConditionallyRender
                                 condition={configureNewStrategy}
-                                show={
-                                    <FeatureStrategiesConfigure
-                                        setToastData={setToastData}
-                                    />
-                                }
+                                show={<FeatureStrategiesConfigure />}
                             />
                         </div>
-                        {toast}
                     </>
                 }
             />
