@@ -19,7 +19,7 @@ const activeNavLinkStyle = {
 };
 
 function AdminMenu({ history }) {
-    const SHOW_PROJECT_ROLES = true;
+    const SHOW_PROJECT_ROLES = false;
 
     const { location } = history;
     const { pathname } = location;
