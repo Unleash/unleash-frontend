@@ -5,12 +5,14 @@ import { IconButton, useMediaQuery } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 import ConditionallyRender from '../ConditionallyRender';
 import Loader from '../Loader/Loader';
+import copy from 'copy-to-clipboard';
 
 interface ICreateProps {
     title: string;
     description: string;
     documentationLink: string;
     loading?: boolean;
+    formatApiCode: () => string;
 }
 
 const FormTemplate: React.FC<ICreateProps> = ({
@@ -19,9 +21,16 @@ const FormTemplate: React.FC<ICreateProps> = ({
     children,
     documentationLink,
     loading,
+    formatApiCode,
 }) => {
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
+
+    const copyCommand = () => {
+        if (copy(formatApiCode())) {
+            console.log('COPIED!');
+        }
+    };
 
     return (
         <section className={styles.container}>
@@ -46,14 +55,14 @@ const FormTemplate: React.FC<ICreateProps> = ({
                         <>
                             <h3 className={styles.subtitle}>
                                 API Command{' '}
-                                <IconButton className={styles.iconButton}>
+                                <IconButton
+                                    className={styles.iconButton}
+                                    onClick={copyCommand}
+                                >
                                     <FileCopy className={styles.icon} />
                                 </IconButton>
                             </h3>
-                            <Codebox
-                                text='curl https://app.unleash-hosted.com/demo/api/client/features \
--H "Authorization: 56907a2fa53c1d16101d509a10b78e36190b0f918d9f122d";'
-                            />
+                            <Codebox text={formatApiCode()} />
                         </>
                     }
                 />

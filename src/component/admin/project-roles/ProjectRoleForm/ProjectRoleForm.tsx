@@ -14,7 +14,10 @@ import { useStyles } from './ProjectRoleForm.styles';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import React from 'react';
 import { IPermission } from '../../../../interfaces/project';
-import { ICheckedPermission } from '../hooks/useProjectRoleForm';
+import {
+    ICheckedPermission,
+    PROJECT_CHECK_ALL_KEY,
+} from '../hooks/useProjectRoleForm';
 
 interface IProjectRoleForm {
     roleName: string;
@@ -22,7 +25,7 @@ interface IProjectRoleForm {
     setRoleName: React.Dispatch<React.SetStateAction<string>>;
     setRoleDesc: React.Dispatch<React.SetStateAction<string>>;
     checkedPermissions: ICheckedPermission;
-    handlePermissionChange: (permission: IPermission) => void;
+    handlePermissionChange: (permission: IPermission, type: string) => void;
     checkAllProjectPermissions: () => void;
     checkAllEnvironmentPermissions: (envName: string) => void;
     handleSubmit: (e: any) => void;
@@ -67,7 +70,9 @@ const ProjectRoleForm = ({
                             checked={
                                 checkedPermissions[permission.id] ? true : false
                             }
-                            onChange={() => handlePermissionChange(permission)}
+                            onChange={() =>
+                                handlePermissionChange(permission, 'project')
+                            }
                             color="primary"
                         />
                     }
@@ -78,12 +83,12 @@ const ProjectRoleForm = ({
 
         projectPermissions.push(
             <FormControlLabel
-                key={'check-all-project'}
+                key={PROJECT_CHECK_ALL_KEY}
                 classes={{ root: styles.label }}
                 control={
                     <Checkbox
                         checked={
-                            checkedPermissions['check-all-project']
+                            checkedPermissions[PROJECT_CHECK_ALL_KEY]
                                 ? true
                                 : false
                         }

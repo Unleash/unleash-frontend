@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import UIContext from '../../../contexts/UIContext';
 
 const UIProvider = ({ children }) => {
-    const [updatedResource, setUpdatedResource] = useState({
+    const [toastData, setToastData] = useState({
         title: '',
         text: '',
         components: [],
@@ -13,10 +13,10 @@ const UIProvider = ({ children }) => {
 
     const context = React.useMemo(
         () => ({
-            setUpdatedResource,
-            updatedResource,
+            setToastData,
+            toastData,
         }),
-        [updatedResource]
+        [toastData]
     );
 
     return <UIContext.Provider value={context}>{children}</UIContext.Provider>;

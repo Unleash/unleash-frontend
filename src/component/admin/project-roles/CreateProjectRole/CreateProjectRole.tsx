@@ -6,10 +6,12 @@ import { useHistory } from 'react-router-dom';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import UIContext from '../../../../contexts/UIContext';
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const CreateProjectRole = () => {
     /* @ts-ignore */
-    const { setUpdatedResource } = useContext(UIContext);
+    const { setToastData } = useContext(UIContext);
+    const { uiConfig } = useUiConfig();
     const history = useHistory();
     const {
         roleName,
@@ -40,15 +42,27 @@ const CreateProjectRole = () => {
             try {
                 await createRole(payload);
                 history.push('/admin/roles');
-                setUpdatedResource({
+                setToastData({
                     title: 'Project role created',
                     text: 'Now you can start assigning your project roles to project members.',
+                    confetti: true,
+                    type: 'success',
                     show: true,
+                    autoHideDuration: 6000,
                 });
             } catch (e) {
                 console.log('Something went wrong');
             }
         }
+    };
+
+    const formatApiCode = () => {
+        return `curl --location --request POST '${
+            uiConfig.unleashUrl
+        }/api/admin/roles' \\
+--header 'Authorization: INSERT_API_KEY' \\
+--header 'Content-Type: application/json' \\
+--data-raw '${JSON.stringify(getProjectRolePayload(), undefined, 2)}'`;
     };
 
     const handleCancel = () => {
@@ -63,6 +77,7 @@ const CreateProjectRole = () => {
 customised to limit access
 to resources within a project"
             documentationLink="https://docs.getunleash.io/"
+            formatApiCode={formatApiCode}
         >
             <ProjectRoleForm
                 errors={errors}
