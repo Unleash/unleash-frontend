@@ -131,13 +131,12 @@ export const useStyles = makeStyles(theme => ({
     noStratigiesInfoContainer: {
         top: '1px',
         position: 'relative',
-        left: '5px',
     },
     stratigiesIconsContainer: {
         display: 'flex',
         alignItems: 'center',
         transform: 'scale(0.8)',
-        top: '2px',
+        top: '3px',
         left: '-10px',
         position: 'relative',
         [theme.breakpoints.down(560)]: {
@@ -215,6 +214,7 @@ export const useStyles = makeStyles(theme => ({
     },
     separtor: {
         marginLeft: '-10px',
+        marginRight: '9px',
         [theme.breakpoints.down(560)]: {
             display: 'none',
         },
