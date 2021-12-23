@@ -1,7 +1,7 @@
 import { USER_CACHE_KEY } from '../../../hooks/api/getters/useUser/useUser';
 import { mutate, SWRConfig, useSWRConfig } from 'swr';
 import { useHistory } from 'react-router';
-import useToast, { IToast } from '../../../hooks/useToast';
+import useToast from '../../../hooks/useToast';
 
 interface ISWRProviderProps {
     setShowLoader: React.Dispatch<React.SetStateAction<boolean>>;

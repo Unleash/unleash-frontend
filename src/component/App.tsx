@@ -13,7 +13,6 @@ import IAuthStatus from '../interfaces/user';
 import { useState, useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
-import useToast from '../hooks/useToast';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
 import ConditionallyRender from './common/ConditionallyRender';
 import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
@@ -28,12 +27,7 @@ interface IAppProps extends RouteComponentProps {
 }
 const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     // because we need the userId when the component load.
-    const {
-        splash,
-        user: userFromUseUser,
-        authDetails,
-        permissions,
-    } = useUser();
+    const { splash, user: userFromUseUser, authDetails } = useUser();
 
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);

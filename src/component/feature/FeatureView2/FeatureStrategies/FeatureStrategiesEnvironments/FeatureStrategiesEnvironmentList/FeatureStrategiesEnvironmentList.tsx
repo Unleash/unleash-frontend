@@ -34,7 +34,6 @@ const FeatureStrategiesEnvironmentList = ({
 
     const {
         activeEnvironmentsRef,
-        toast,
         setToastData,
         deleteStrategy,
         updateStrategy,
