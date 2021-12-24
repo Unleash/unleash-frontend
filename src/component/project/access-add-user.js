@@ -15,8 +15,10 @@ import {
 import { Search } from '@material-ui/icons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Alert } from '@material-ui/lab';
+import { useStyles } from './access-component.style';
 
 function AddUserComponent({ roles, addUserToRole }) {
+    const styles = useStyles();
     const [user, setUser] = useState();
     const [role, setRole] = useState({});
     const [options, setOptions] = useState([]);
@@ -70,7 +72,8 @@ function AddUserComponent({ roles, addUserToRole }) {
     return (
         <>
             <Alert severity="info" style={{ marginBottom: '20px' }}>
-                The user must have an Unleash root role before added to the project.
+                The user must have an Unleash root role before added to the
+                project.
             </Alert>
             <Grid container spacing={3} alignItems="flex-end">
                 <Grid item>
@@ -142,10 +145,26 @@ function AddUserComponent({ roles, addUserToRole }) {
                             placeholder="Project role"
                             value={role.id || ''}
                             onChange={handleRoleChange}
+                            renderValue={roleId => {
+                                return roles.find(role => {
+                                    return role.id === roleId;
+                                }).name;
+                            }}
                         >
                             {roles.map(role => (
-                                <MenuItem key={role.id} value={role.id}>
-                                    {role.name}
+                                <MenuItem
+                                    key={role.id}
+                                    value={role.id}
+                                    classes={{
+                                        root: [styles.menuItem],
+                                    }}
+                                >
+                                    <div>
+                                        <span className={styles.roleName}>
+                                            {role.name}
+                                        </span>
+                                        <p>{role.description}</p>
+                                    </div>
                                 </MenuItem>
                             ))}
                         </Select>
