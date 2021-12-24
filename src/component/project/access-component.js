@@ -10,7 +10,6 @@ import {
     DialogContentText,
     DialogTitle,
     InputLabel,
-    IconButton,
     List,
     ListItem,
     ListItemAvatar,
@@ -28,9 +27,10 @@ import AddUserComponent from './access-add-user';
 import projectApi from '../../store/project/api';
 import PageContent from '../common/PageContent';
 import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
-
-
-function AccessComponent({ projectId, project }) {
+import { useStyles } from './access-component.style';
+import PermissionIconButton from '../common/PermissionIconButton/PermissionIconButton';
+function AccessComponent({ projectId }) {
+    const styles = useStyles();
     const [roles, setRoles] = useState([]);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState();
@@ -40,8 +40,6 @@ function AccessComponent({ projectId, project }) {
         fetchAccess();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [projectId]);
-
-    
 
     const fetchAccess = async () => {
         try {
@@ -57,12 +55,17 @@ function AccessComponent({ projectId, project }) {
 
     if (isOss()) {
         return (
-        <PageContent>
-            <Alert severity="error">
-                Controlling access to projects requires a paid version of Unleash. 
-                Check out <a href="https://www.getunleash.io" target="_blank">getunleash.io</a> to find out more.
-            </Alert>
-        </PageContent>);
+            <PageContent>
+                <Alert severity="error">
+                    Controlling access to projects requires a paid version of
+                    Unleash. Check out{' '}
+                    <a href="https://www.getunleash.io" target="_blank">
+                        getunleash.io
+                    </a>{' '}
+                    to find out more.
+                </Alert>
+            </PageContent>
+        );
     }
 
     const handleRoleChange = (userId, currRoleId) => async evt => {
@@ -105,9 +108,7 @@ function AccessComponent({ projectId, project }) {
     };
 
     return (
-        <PageContent
-            style={{ minHeight: '400px' }}
-        >
+        <PageContent className={styles.pageContent}>
             <AddUserComponent roles={roles} addUserToRole={addUser} />
             <Dialog
                 open={!!error}
@@ -131,15 +132,7 @@ function AccessComponent({ projectId, project }) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <div
-                style={{
-                    height: '1px',
-                    width: '106.65%',
-                    marginLeft: '-2rem',
-                    backgroundColor: '#efefef',
-                    marginTop: '2rem',
-                }}
-            ></div>
+            <div className={styles.divider}></div>
             <List>
                 {users.map(user => {
                     const labelId = `checkbox-list-secondary-label-${user.id}`;
@@ -154,14 +147,11 @@ function AccessComponent({ projectId, project }) {
                                 secondary={user.email || user.username}
                             />
                             <ListItemSecondaryAction
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}
+                                className={styles.actionList}
                             >
                                 <FormControl variant="outlined" size="small">
                                     <InputLabel
-                                        style={{ backgroundColor: '#fff' }}
+                                        className={styles.inputLabel}
                                         for="add-user-select-role-label"
                                     >
                                         Role
@@ -176,6 +166,18 @@ function AccessComponent({ projectId, project }) {
                                             user.id,
                                             user.roleId
                                         )}
+                                        renderValue={roleId => {
+                                            return roles.find(role => {
+                                                return role.id === roleId;
+                                            }).name;
+                                        }}
+                                        MenuProps={{
+                                            anchorOrigin: {
+                                                vertical: 'left',
+                                                horizontal: 'left',
+                                            },
+                                            getContentAnchorEl: null,
+                                        }}
                                     >
                                         <MenuItem value="" disabled>
                                             Choose role
@@ -184,21 +186,28 @@ function AccessComponent({ projectId, project }) {
                                             <MenuItem
                                                 key={`${user.id}:${role.id}`}
                                                 value={role.id}
+                                                classes={{
+                                                    root: [styles.menuItem],
+                                                }}
                                             >
-                                                {role.name}
+                                                <div>
+                                                    <span>{role.name}</span>
+                                                    <p>{role.description}</p>
+                                                </div>
                                             </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
-                                <IconButton
-                                    style={{ marginLeft: '0.5rem' }}
+                                <PermissionIconButton
+                                    className={styles.iconButton}
                                     edge="end"
                                     aria-label="delete"
                                     title="Remove access"
                                     onClick={removeAccess(user.id, user.roleId)}
+                                    disabled={users.length === 1}
                                 >
                                     <Delete />
-                                </IconButton>
+                                </PermissionIconButton>
                             </ListItemSecondaryAction>
                         </ListItem>
                     );
