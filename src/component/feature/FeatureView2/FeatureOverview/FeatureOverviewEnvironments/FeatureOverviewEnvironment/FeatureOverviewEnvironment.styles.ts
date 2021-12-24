@@ -222,6 +222,7 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down(560)]: {
             display: 'none',
         },
+    },
     resultContainer: {
         display: 'flex',
         width: '100%',
