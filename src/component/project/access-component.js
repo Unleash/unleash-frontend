@@ -171,13 +171,6 @@ function AccessComponent({ projectId }) {
                                                 return role.id === roleId;
                                             }).name;
                                         }}
-                                        MenuProps={{
-                                            anchorOrigin: {
-                                                vertical: 'left',
-                                                horizontal: 'left',
-                                            },
-                                            getContentAnchorEl: null,
-                                        }}
                                     >
                                         <MenuItem value="" disabled>
                                             Choose role
@@ -191,7 +184,13 @@ function AccessComponent({ projectId }) {
                                                 }}
                                             >
                                                 <div>
-                                                    <span>{role.name}</span>
+                                                    <span
+                                                        className={
+                                                            styles.roleName
+                                                        }
+                                                    >
+                                                        {role.name}
+                                                    </span>
                                                     <p>{role.description}</p>
                                                 </div>
                                             </MenuItem>
@@ -205,6 +204,7 @@ function AccessComponent({ projectId }) {
                                     title="Remove access"
                                     onClick={removeAccess(user.id, user.roleId)}
                                     disabled={users.length === 1}
+                                    tooltip={users.length === 1 ? 'A project must have at least one owner' : 'Remove acccess'}
                                 >
                                     <Delete />
                                 </PermissionIconButton>
