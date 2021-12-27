@@ -23,6 +23,7 @@ function AddUserComponent({ roles, addUserToRole }) {
     const [role, setRole] = useState({});
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [select, setSelect] = useState(false);
 
     useEffect(() => {
         if (roles.length > 0) {
@@ -42,13 +43,17 @@ function AddUserComponent({ roles, addUserToRole }) {
         } else {
             setOptions([]);
         }
-
         setLoading(false);
     };
 
     const handleQueryUpdate = evt => {
         const q = evt.target.value;
         search(q);
+        if (options.length === 1) {
+            setSelect(true);
+            return;
+        }
+        setSelect(false);
     };
 
     const handleSelectUser = (evt, value) => {
@@ -82,7 +87,7 @@ function AddUserComponent({ roles, addUserToRole }) {
                         style={{ width: 300 }}
                         noOptionsText="No users found."
                         onChange={handleSelectUser}
-                        autoSelect={false}
+                        autoSelect={select}
                         value={user || ''}
                         freeSolo
                         getOptionSelected={() => true}
