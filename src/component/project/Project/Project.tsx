@@ -101,15 +101,6 @@ const Project = () => {
         /* eslint-disable-next-line */
     }, []);
 
-    const goToTabWithName = (name: string) => {
-        const index = tabData.findIndex(t => t.name === name);
-        if (index >= 0) {
-            const tab = tabData[index];
-            history.push(tab.path);
-            setActiveTab(index);
-        }
-    };
-
     const renderTabs = () => {
         return tabData.map((tab, index) => {
             return (
@@ -150,9 +141,9 @@ const Project = () => {
                         Project: {project?.name}{' '}
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
-                            tooltip={'Edit description'}
+                            tooltip="Edit"
                             projectId={project?.id}
-                            onClick={() => goToTabWithName('settings')}
+                            onClick={() => history.push(`/projects/${id}/edit`)}
                             data-loading
                         >
                             <Edit />

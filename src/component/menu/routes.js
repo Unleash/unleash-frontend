@@ -44,6 +44,7 @@ import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
 import CreateProject from '../project/Project/CreateProject/CreateProject';
+import EditProject from '../project/Project/EditProject/EditProject';
 
 export const routes = [
     // Project
@@ -53,6 +54,16 @@ export const routes = [
         parent: '/projects',
         title: 'Create',
         component: CreateProject,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:id/edit',
+        parent: '/projects',
+        title: ':id',
+        component: EditProject,
+        flag: P,
         type: 'protected',
         layout: 'main',
         menu: {},

@@ -53,6 +53,7 @@ const ProjectForm = ({
                     errorText={errors.id}
                     onFocus={() => clearErrors()}
                     onBlur={validateIdUniqueness}
+                    disabled={submitButtonText === 'Edit'}
                 />
 
                 <p className={styles.inputDescription}>

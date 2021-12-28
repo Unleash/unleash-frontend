@@ -27,6 +27,22 @@ const useProjectApi = () => {
         }
     };
 
+    const editProject = async (id: string, payload: ICreatePayload) => {
+        const path = `api/admin/projects/${id}`;
+        const req = createRequest(path, {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     const deleteProject = async (projectId: string) => {
         const path = `api/admin/projects/${projectId}`;
         const req = createRequest(path, { method: 'DELETE' });
@@ -77,6 +93,7 @@ const useProjectApi = () => {
 
     return {
         createProject,
+        editProject,
         deleteProject,
         addEnvironmentToProject,
         removeEnvironmentFromProject,
