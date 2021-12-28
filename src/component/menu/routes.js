@@ -14,7 +14,6 @@ import ApplicationView from '../../page/applications/view';
 import ContextFields from '../../page/context';
 import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
-import CreateProject from '../../page/project/create';
 import ListTagTypes from '../../page/tag-types';
 import CreateTagType from '../../page/tag-types/create';
 import EditTagType from '../../page/tag-types/edit';
@@ -44,6 +43,7 @@ import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
+import CreateProject from '../project/Project/CreateProject/CreateProject';
 
 export const routes = [
     // Project

@@ -6,8 +6,7 @@ import { FileCopy } from '@material-ui/icons';
 import ConditionallyRender from '../ConditionallyRender';
 import Loader from '../Loader/Loader';
 import copy from 'copy-to-clipboard';
-import { useContext } from 'react';
-import UIContext from '../../../contexts/UIContext';
+import useToast from '../../../hooks/useToast';
 
 interface ICreateProps {
     title: string;
@@ -26,7 +25,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
     formatApiCode,
 }) => {
     // @ts-ignore-next-line
-    const { setToastData } = useContext(UIContext);
+    const { setToastData } = useToast();
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
 
@@ -73,10 +72,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
                         <>
                             <h3 className={styles.subtitle}>
                                 API Command{' '}
-                                <IconButton
-                                    className={styles.iconButton}
-                                    onClick={copyCommand}
-                                >
+                                <IconButton onClick={copyCommand}>
                                     <FileCopy className={styles.icon} />
                                 </IconButton>
                             </h3>
