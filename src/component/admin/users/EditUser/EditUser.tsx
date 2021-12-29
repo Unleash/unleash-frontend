@@ -4,16 +4,19 @@ import UserForm from '../UserForm/UserForm';
 import useAddUserForm from '../hooks/useAddUserForm';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
-import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
 import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
+import useUserInfo from '../../../../hooks/api/getters/useUserInfo/useUserInfo';
+import { scrollToTop } from '../../../common/util';
+import { useEffect } from 'react';
 
 const EditUser = () => {
+    useEffect(() => {
+        scrollToTop();
+    }, []);
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const { users } = useUsers();
-    const { id } = useParams();
-    const user = users.find(user => user.id === id);
-
+    const { id } = useParams<{ id: string }>();
+    const { user, refetch } = useUserInfo(id);
     const { updateUser, userLoading: loading } = useAdminUsersApi();
     const history = useHistory();
     const {
@@ -27,10 +30,14 @@ const EditUser = () => {
         setRootRole,
         getAddUserPayload,
         validateName,
-        validateEmail,
         errors,
         clearErrors,
-    } = useAddUserForm(user?.name, user?.email);
+    } = useAddUserForm(
+        user?.name,
+        user?.email,
+        user?.sendEmail,
+        user?.rootRole
+    );
 
     const formatApiCode = () => {
         return `curl --location --request PUT '${
@@ -46,11 +53,10 @@ const EditUser = () => {
         const payload = getAddUserPayload();
 
         const validName = validateName();
-        const validEmail = validateEmail();
 
-        if (validName && validEmail) {
+        if (validName) {
             try {
-                await updateUser(id, payload);
+                await updateUser({ ...payload, id });
                 refetch();
                 history.push('/admin/users');
                 setToastData({

@@ -53,10 +53,6 @@ const useProjectRoleForm = (
             setErrors(prev => ({ ...prev, email: 'Email can not be empty.' }));
             return false;
         }
-        if (!/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/.test(email)) {
-            setErrors(prev => ({ ...prev, email: 'Invalid email format' }));
-            return false;
-        }
         if (users.some(user => user['email'] === email)) {
             setErrors(prev => ({ ...prev, email: 'Email already exists' }));
             return false;
