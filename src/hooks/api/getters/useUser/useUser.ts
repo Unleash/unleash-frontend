@@ -7,7 +7,7 @@ import handleErrorResponses from '../httpErrorResponseHandler';
 export const USER_CACHE_KEY = `api/admin/user`;
 const NO_AUTH_USERNAME = 'unknown';
 
-const useUser = (id: string, options: SWRConfiguration = {}) => {
+const useUser = (options: SWRConfiguration = {}) => {
     const fetcher = () => {
         const path = formatApiPath(`api/admin/user`);
         return fetch(path, {

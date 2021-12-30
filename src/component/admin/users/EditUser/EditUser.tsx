@@ -51,7 +51,6 @@ const EditUser = () => {
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         const payload = getAddUserPayload();
-
         const validName = validateName();
 
         if (validName) {

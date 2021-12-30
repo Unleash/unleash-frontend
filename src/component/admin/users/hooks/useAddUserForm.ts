@@ -45,14 +45,14 @@ const useProjectRoleForm = (
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
             return false;
         }
-        return true;
-    };
-
-    const validateEmail = () => {
         if (email.length === 0) {
             setErrors(prev => ({ ...prev, email: 'Email can not be empty.' }));
             return false;
         }
+        return true;
+    };
+
+    const validateEmail = () => {
         if (users.some(user => user['email'] === email)) {
             setErrors(prev => ({ ...prev, email: 'Email already exists' }));
             return false;
