@@ -27,8 +27,13 @@ interface IAppProps extends RouteComponentProps {
 }
 const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     // because we need the userId when the component load.
-    const { splash, user: userFromUseUser, authDetails } = useUser();
-
+    const {
+        splash,
+        user: userFromUseUser,
+        authDetails,
+        permissions,
+    } = useUser();
+    console.log(permissions);
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     useEffect(() => {
