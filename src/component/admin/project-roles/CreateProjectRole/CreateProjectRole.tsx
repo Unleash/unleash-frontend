@@ -26,6 +26,7 @@ const CreateProjectRole = () => {
         validateNameUniqueness,
         errors,
         clearErrors,
+        getRoleKey,
     } = useProjectRoleForm();
 
     const { createRole, loading } = useProjectRolesApi();
@@ -91,6 +92,7 @@ to resources within a project"
                 submitButtonText="Create"
                 clearErrors={clearErrors}
                 validateNameUniqueness={validateNameUniqueness}
+                getRoleKey={getRoleKey}
             />
         </FormTemplate>
     );

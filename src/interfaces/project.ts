@@ -31,6 +31,7 @@ export interface IPermission {
     id: number;
     name: string;
     displayName: string;
+    environment?: string;
 }
 
 export interface IProjectRolePermissions {

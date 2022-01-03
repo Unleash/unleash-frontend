@@ -33,6 +33,7 @@ interface IProjectRoleForm {
     errors: { [key: string]: string };
     submitButtonText: string;
     clearErrors: () => void;
+    getRoleKey: (permission: { id: number; environment?: string; }) => string;
 }
 
 const ProjectRoleForm = ({
@@ -50,6 +51,7 @@ const ProjectRoleForm = ({
     submitButtonText,
     validateNameUniqueness,
     clearErrors,
+    getRoleKey,
 }: IProjectRoleForm) => {
     const styles = useStyles();
     const { permissions } = useProjectRolePermissions({
@@ -64,12 +66,12 @@ const ProjectRoleForm = ({
         const projectPermissions = project.map(permission => {
             return (
                 <FormControlLabel
-                    key={permission.id}
+                    key={getRoleKey(permission)}
                     classes={{ root: styles.label }}
                     control={
                         <Checkbox
                             checked={
-                                checkedPermissions[permission.id] ? true : false
+                                checkedPermissions[getRoleKey(permission)] ? true : false
                             }
                             onChange={() =>
                                 handlePermissionChange(permission, 'project')
@@ -115,6 +117,7 @@ const ProjectRoleForm = ({
                     checkAllEnvironmentPermissions={
                         checkAllEnvironmentPermissions
                     }
+                    getRoleKey={getRoleKey}
                 />
             );
         });

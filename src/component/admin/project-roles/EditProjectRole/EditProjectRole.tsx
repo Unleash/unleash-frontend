@@ -25,7 +25,7 @@ const EditProjectRole = () => {
     useEffect(() => {
         const initialCheckedPermissions = role?.permissions?.reduce(
             (acc: { [key: string]: IPermission }, curr: IPermission) => {
-                acc[curr.id] = curr;
+                acc[getRoleKey(curr)] = curr;
                 return acc;
             },
             {}
@@ -49,6 +49,7 @@ const EditProjectRole = () => {
         validateName,
         errors,
         clearErrors,
+        getRoleKey,
     } = useProjectRoleForm(
         role.name,
         role.description,
@@ -118,6 +119,7 @@ to resources within a project"
                 submitButtonText="Edit"
                 errors={errors}
                 clearErrors={clearErrors}
+                getRoleKey={getRoleKey}
             />
         </FormTemplate>
     );

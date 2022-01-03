@@ -22,6 +22,7 @@ interface IEnvironmentPermissionAccordionProps {
     handlePermissionChange: (permission: IPermission, type: string) => void;
     checkAllEnvironmentPermissions: (envName: string) => void;
     checkedPermissions: ICheckedPermission;
+    getRoleKey: (permission: { id: number; environment?: string; }) => string;
 }
 
 const EnvironmentPermissionAccordion = ({
@@ -29,6 +30,7 @@ const EnvironmentPermissionAccordion = ({
     handlePermissionChange,
     checkAllEnvironmentPermissions,
     checkedPermissions,
+    getRoleKey,
 }: IEnvironmentPermissionAccordionProps) => {
     const [permissionMap, setPermissionMap] = useState<PermissionMap>({});
     const [permissionCount, setPermissionCount] = useState(0);
@@ -37,7 +39,7 @@ const EnvironmentPermissionAccordion = ({
     useEffect(() => {
         const permissionMap = environment?.permissions?.reduce(
             (acc: PermissionMap, curr: IPermission) => {
-                acc[curr.id] = true;
+                acc[getRoleKey(curr)] = true;
                 return acc;
             },
             {}
@@ -65,11 +67,11 @@ const EnvironmentPermissionAccordion = ({
                 return (
                     <FormControlLabel
                         classes={{ root: styles.label }}
-                        key={permission.id}
+                        key={getRoleKey(permission)}
                         control={
                             <Checkbox
                                 checked={
-                                    checkedPermissions[permission.id]
+                                    checkedPermissions[getRoleKey(permission)]
                                         ? true
                                         : false
                                 }
