@@ -48,15 +48,15 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
 
             if (
                 p.permission === permission &&
-                p.project === project &&
-                p.environment === environment
+                (p.project === project || p.project === '*') &&
+                (p.environment === environment || p.environment === '*')
             ) {
                 return true;
             }
 
             if (
                 p.permission === permission &&
-                p.project === project &&
+                (p.project === project || p.project === '*') &&
                 p.environment === null
             ) {
                 return true;
