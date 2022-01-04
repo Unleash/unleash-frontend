@@ -180,14 +180,10 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     strategyIconContainer: {
-        margin: '5px',
+        marginRight: '5px',
     },
     strategyIcon: {
         fill: theme.palette.grey[600],
-    },
-    badgeColor: {
-        backgroundColor: '#9d9d9d',
-        color: '#fff',
     },
     container: {
         display: 'flex',

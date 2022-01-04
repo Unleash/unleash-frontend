@@ -2,7 +2,6 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Badge,
     Tooltip,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
@@ -127,37 +126,25 @@ const FeatureOverviewEnvironment = ({
                                         }
                                     >
                                         {getStrategyIcons()?.map(
-                                            ({ name, Icon, count }) => (
-                                                <Badge
-                                                    key={name}
-                                                    badgeContent={count}
-                                                    color="secondary"
-                                                    overlap="circular"
-                                                    classes={{
-                                                        colorSecondary: [
-                                                            styles.badgeColor,
-                                                        ],
-                                                    }}
+                                            ({ name, Icon }) => (
+                                                <Tooltip
+                                                    title={getHumanReadableStrategyName(
+                                                        name
+                                                    )}
+                                                    arrow
                                                 >
-                                                    <Tooltip
-                                                        title={getHumanReadableStrategyName(
-                                                            name
-                                                        )}
-                                                        arrow
+                                                    <div
+                                                        className={
+                                                            styles.strategyIconContainer
+                                                        }
                                                     >
-                                                        <div
+                                                        <Icon
                                                             className={
-                                                                styles.strategyIconContainer
+                                                                styles.strategyIcon
                                                             }
-                                                        >
-                                                            <Icon
-                                                                className={
-                                                                    styles.strategyIcon
-                                                                }
-                                                            />
-                                                        </div>
-                                                    </Tooltip>
-                                                </Badge>
+                                                        />
+                                                    </div>
+                                                </Tooltip>
                                             )
                                         )}
                                     </div>
