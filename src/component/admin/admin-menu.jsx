@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Paper, Tabs, Tab } from '@material-ui/core';
+import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const navLinkStyle = {
     display: 'flex',
@@ -19,7 +20,8 @@ const activeNavLinkStyle = {
 };
 
 function AdminMenu({ history }) {
-    const SHOW_PROJECT_ROLES = false;
+    const { uiConfig } = useUiConfig();
+    const { flags } = uiConfig;
 
     const { location } = history;
     const { pathname } = location;
@@ -44,7 +46,7 @@ function AdminMenu({ history }) {
                         </NavLink>
                     }
                 ></Tab>
-                {SHOW_PROJECT_ROLES && (
+                {flags.RE && (
                     <Tab
                         value="/admin/roles"
                         label={

@@ -29,7 +29,7 @@ import AdminUsers from '../admin/users';
 import AdminInvoice from '../admin/invoice';
 import AdminAuth from '../admin/auth';
 import Login from '../user/Login/Login';
-import { P, C, E, EEA } from '../common/flags';
+import { P, C, E, EEA, RE } from '../common/flags';
 import NewUser from '../user/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
@@ -205,6 +205,7 @@ export const routes = [
         component: CreateContextField,
         type: 'protected',
         layout: 'main',
+        flag: C,
         menu: {},
     },
     {
@@ -214,6 +215,7 @@ export const routes = [
         component: EditContextField,
         type: 'protected',
         layout: 'main',
+        flag: C,
         menu: {},
     },
     {
@@ -393,7 +395,7 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: {},
-        hidden: true,
+        flag: RE,
     },
     {
         path: '/admin/roles/:id/edit',
@@ -402,7 +404,7 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: {},
-        hidden: true,
+        flag: RE,
     },
     {
         path: '/admin/api',
@@ -447,8 +449,8 @@ export const routes = [
         component: ProjectRoles,
         type: 'protected',
         layout: 'main',
+        flag: RE,
         menu: {},
-        hidden: false,
     },
     {
         path: '/admin',
