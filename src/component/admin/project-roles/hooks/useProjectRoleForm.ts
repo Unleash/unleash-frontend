@@ -44,7 +44,7 @@ const useProjectRoleForm = (
                     initialCheckedPermissions
                 )
             );
-        console.log("Setting initial?", formattedInitialCheckedPermissions);
+
         setCheckedPermissions(formattedInitialCheckedPermissions || {});
         /* eslint-disable-next-line */
     }, [Object.keys(initialCheckedPermissions).length]);
@@ -65,7 +65,7 @@ const useProjectRoleForm = (
         };
 
     const isAllEnvironmentPermissionsCheckedInitially =
-        initalCheckedPermissions => {
+        initialCheckedPermissions => {
             const { environments } = permissions;
             if (!environments || environments.length === 0) return;
             environments.forEach(env => {
@@ -79,12 +79,19 @@ const useProjectRoleForm = (
                     initialCheckedPermissions[key] = true;
                 }
             });
-            console.log("Env initial", initialCheckedPermissions)
             return initialCheckedPermissions;
         };
 
-    const handlePermissionChange = (permission: IPermission, type) => {
-        const { id } = permission;
+    const getCheckAllKeys = () => {
+        const { environments } = permissions;
+        const envKeys = environments.map(env => {
+            return `${ENVIRONMENT_CHECK_ALL_KEY}-${env.name}`;
+        });
+
+        return [...envKeys, PROJECT_CHECK_ALL_KEY];
+    };
+
+    const handlePermissionChange = (permission: IPermission, type: string) => {
         const checkedPermissionsCopy = cloneDeep(checkedPermissions);
         if (checkedPermissionsCopy[getRoleKey(permission)]) {
             delete checkedPermissionsCopy[getRoleKey(permission)];
@@ -96,7 +103,6 @@ const useProjectRoleForm = (
                 ];
             }
         } else {
-            console.log("Setting", permission)
             checkedPermissionsCopy[getRoleKey(permission)] = { ...permission };
         }
         setCheckedPermissions(checkedPermissionsCopy);
@@ -117,7 +123,9 @@ const useProjectRoleForm = (
                     delete checkedPermissionsCopy[PROJECT_CHECK_ALL_KEY];
                 }
             } else {
-                checkedPermissionsCopy[getRoleKey(permission)] = { ...permission };
+                checkedPermissionsCopy[getRoleKey(permission)] = {
+                    ...permission,
+                };
 
                 if (lastItem) {
                     checkedPermissionsCopy[PROJECT_CHECK_ALL_KEY] = true;
@@ -147,7 +155,9 @@ const useProjectRoleForm = (
                     delete checkedPermissionsCopy[environmentCheckAllKey];
                 }
             } else {
-                checkedPermissionsCopy[getRoleKey(permission)] = { ...permission };
+                checkedPermissionsCopy[getRoleKey(permission)] = {
+                    ...permission,
+                };
 
                 if (lastItem) {
                     checkedPermissionsCopy[environmentCheckAllKey] = true;
@@ -159,9 +169,14 @@ const useProjectRoleForm = (
     };
 
     const getProjectRolePayload = () => {
-        const permissions = Object.keys(checkedPermissions).map(permission => {
-            return checkedPermissions[permission];
-        });
+        const checkAllKeys = getCheckAllKeys();
+        const permissions = Object.keys(checkedPermissions)
+            .filter(key => {
+                return !checkAllKeys.includes(key);
+            })
+            .map(permission => {
+                return checkedPermissions[permission];
+            });
         return {
             name: roleName,
             description: roleDesc,
@@ -208,9 +223,14 @@ const useProjectRoleForm = (
         setErrors({});
     };
 
-    const getRoleKey = (permission: { id: number; environment?: string; }): string => {
-        return permission.environment ? `${permission.id}-${permission.environment}` : `${permission.id}`
-    }
+    const getRoleKey = (permission: {
+        id: number;
+        environment?: string;
+    }): string => {
+        return permission.environment
+            ? `${permission.id}-${permission.environment}`
+            : `${permission.id}`;
+    };
 
     return {
         roleName,
