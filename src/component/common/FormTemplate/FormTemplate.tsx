@@ -14,6 +14,7 @@ interface ICreateProps {
     documentationLink: string;
     loading?: boolean;
     formatApiCode: () => string;
+    sidebarContent?: React.ReactNode;
 }
 
 const FormTemplate: React.FC<ICreateProps> = ({
@@ -23,6 +24,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
     documentationLink,
     loading,
     formatApiCode,
+    sidebarContent,
 }) => {
     // @ts-ignore-next-line
     const { setToastData } = useToast();
@@ -66,6 +68,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
                         Learn more
                     </a>
                 </div>
+                {sidebarContent}
                 <ConditionallyRender
                     condition={!smallScreen}
                     show={

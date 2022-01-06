@@ -46,6 +46,7 @@ import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreatePr
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
 import AddNewUser from '../admin/users/AddNewUser/AddNewUser';
 import EditUser from '../admin/users/EditUser/EditUser';
+import CreateFeature from '../feature/CreateFeature/CreateFeature/CreateFeature';
 
 export const routes = [
     // Project
@@ -101,6 +102,14 @@ export const routes = [
         parent: '/projects',
         title: ':name',
         component: ViewFeatureToggle,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/testing',
+        title: 'Create feature toggle',
+        component: CreateFeature,
         type: 'protected',
         layout: 'main',
         menu: {},
