@@ -32,6 +32,7 @@ const EditProjectRole = () => {
         );
 
         setInitialCheckedPermissions(initialCheckedPermissions);
+        /* eslint-disable-next-line */
     }, [role]);
 
     const history = useHistory();
