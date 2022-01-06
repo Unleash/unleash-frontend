@@ -10,12 +10,14 @@ import AccessContext from '../../../../../contexts/AccessContext';
 import usePagination from '../../../../../hooks/usePagination';
 import { ADMIN } from '../../../../providers/AccessProvider/permissions';
 import PaginateUI from '../../../../common/PaginateUI/PaginateUI';
-import RoleListItem from './ProjectRoleListItem/ProjectRoleListItem';
+import ProjectRoleListItem from './ProjectRoleListItem/ProjectRoleListItem';
 import useProjectRoles from '../../../../../hooks/api/getters/useProjectRoles/useProjectRoles';
 import { IProjectRole } from '../../../../../interfaces/role';
 import useProjectRolesApi from '../../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import useToast from '../../../../../hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
+
+const ROOTROLE = 'root';
 
 const ProjectRoleList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -47,17 +49,19 @@ const ProjectRoleList = () => {
     };
 
     const renderRoles = () => {
-        return page.map((role: IProjectRole) => {
-            return (
-                <RoleListItem
-                    id={role.id}
-                    name={role.name}
-                    description={role.description}
-                    setCurrentRole={setCurrentRole}
-                    setDelDialog={setDelDialog}
-                />
-            );
-        });
+        return page
+            .filter(role => role.type !== ROOTROLE)
+            .map((role: IProjectRole) => {
+                return (
+                    <ProjectRoleListItem
+                        id={role.id}
+                        name={role.name}
+                        description={role.description}
+                        setCurrentRole={setCurrentRole}
+                        setDelDialog={setDelDialog}
+                    />
+                );
+            });
     };
 
     if (!roles) return null;

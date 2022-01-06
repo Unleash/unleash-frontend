@@ -9,7 +9,7 @@ import PageContent from '../../../common/PageContent';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import AdminMenu from '../../admin-menu';
 import { useStyles } from './ProjectRoles.styles';
-import RolesList from './ProjectRoleList/ProjectRoleList';
+import ProjectRoleList from './ProjectRoleList/ProjectRoleList';
 
 const ProjectRoles = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -52,7 +52,7 @@ const ProjectRoles = () => {
             >
                 <ConditionallyRender
                     condition={hasAccess(ADMIN)}
-                    show={<RolesList />}
+                    show={<ProjectRoleList />}
                     elseShow={
                         <Alert severity="error">
                             You need instance admin to access this section.
