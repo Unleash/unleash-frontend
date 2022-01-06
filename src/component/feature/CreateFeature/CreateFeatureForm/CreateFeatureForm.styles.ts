@@ -10,6 +10,13 @@ export const useStyles = makeStyles(theme => ({
         height: '100%',
     },
     input: { width: '100%', marginBottom: '1rem' },
+    selectInput: {
+        marginBottom: '1rem',
+        minWidth: '400px',
+        [theme.breakpoints.down(600)]: {
+            minWidth: '379px',
+        },
+    },
     label: {
         minWidth: '300px',
         [theme.breakpoints.down(600)]: {
@@ -31,7 +38,7 @@ export const useStyles = makeStyles(theme => ({
         //@ts-ignore
         fontSize: theme.fontSizes.smallBody,
         color: theme.palette.grey[600],
-        marginBottom: '1rem' 
+        marginBottom: '1rem',
     },
     formHeader: {
         fontWeight: 'normal',

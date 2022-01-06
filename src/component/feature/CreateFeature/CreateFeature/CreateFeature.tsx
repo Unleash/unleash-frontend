@@ -1,11 +1,10 @@
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CreateFeatureForm from '../CreateFeatureForm/CreateFeatureForm';
 import useCreateFeatureForm from '../hooks/useCreateFeatureForm';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
 import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import { IFeatureViewParams } from '../../../../interfaces/params';
 import {
     FormControl,
     InputLabel,
@@ -23,7 +22,6 @@ const CreateFeature = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
-    const { projectId } = useParams<IFeatureViewParams>();
     const [sdk, setSdk] = useState('java');
 
     const {
@@ -31,6 +29,8 @@ const CreateFeature = () => {
         setType,
         name,
         setName,
+        project,
+        setProject,
         description,
         setDescription,
         getTogglePayload,
@@ -44,20 +44,19 @@ const CreateFeature = () => {
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
-        if (await validateName(name)) {
-            const payload = getTogglePayload();
-            try {
-                await createFeatureToggle('default', payload);
-                history.push('/features');
-                setToastData({
-                    title: 'Toggle created successfully',
-                    text: 'Now you can start assigning your project roles to project members.',
-                    confetti: true,
-                    type: 'success',
-                });
-            } catch (e) {
-                setToastApiError(e.toString());
-            }
+        await validateName(name);
+        const payload = getTogglePayload();
+        try {
+            await createFeatureToggle(project, payload);
+            history.push(`/projects/${project}/features2/${name}`);
+            setToastData({
+                title: 'Toggle created successfully',
+                text: 'Now you can start assigning your project roles to project members.',
+                confetti: true,
+                type: 'success',
+            });
+        } catch (e) {
+            setToastApiError(e.toString());
         }
     };
 
@@ -65,64 +64,88 @@ const CreateFeature = () => {
         java: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-java',
-            code: 'print hi',
+            code: `unleash.isEnabled("${name}")`,
         },
         php: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-php',
-            code: 'print hi',
+            code: `$unleash->isEnabled('${name}'`,
         },
         python: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-python',
-            code: 'print hi',
+            code: `client.is_enabled("${name}")`,
         },
         dotnet: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-dotnet',
-            code: 'print hi',
+            code: `unleash.IsEnabled("${name}")`,
         },
         ruby: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-ruby',
-            code: 'print hi',
+            code: `if UNLEASH.is_enabled? "${name}", @unleash_context
+            puts "AwesomeFeature is enabled"
+          end`,
         },
         node: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-node',
-            code: 'print hi',
+            code: `const isEnabled = unleash.isEnabled('${name}');`,
         },
         go: {
             type: 'backend',
             github: 'https://github.com/Unleash/unleash-client-go',
-            code: 'print hi',
+            code: `unleash.IsEnabled("${name}")`,
         },
         javascript: {
             type: 'frontend',
             github: 'https://github.com/Unleash/unleash-proxy-client-js',
-            code: 'print hi',
+            code: `unleash.on('ready', () => {
+                if (unleash.isEnabled('${name}')) {
+                  console.log('${name} is enabled');
+                } else {
+                  console.log('${name} is disabled');
+                }
+              })`,
         },
         ios: {
             type: 'frontend',
             github: 'https://github.com/Unleash/unleash-proxy-client-swift',
-            code: 'print hi',
+            code: `if unleash.isEnabled(name: ${name}) { 
+                // do something
+            } else {
+               // do something else
+            }`,
         },
         android: {
             type: 'frontend',
             github: 'https://github.com/Unleash/unleash-android-proxy-sdk',
-            code: 'print hi',
+            code: '..',
         },
         react: {
             type: 'frontend',
             github: 'https://github.com/Unleash/proxy-client-react',
-            code: 'print hi',
+            code: `
+            import { useFlag } from '@unleash/proxy-client-react';
+
+            const TestComponent = () => {
+              const enabled = useFlag('${name}');
+            
+              if (enabled) {
+                return <SomeComponent />
+              }
+              return <AnotherComponent />
+            };
+            
+            export default TestComponent;`,
         },
     };
 
     const formatApiCode = () => {
         return `curl --location --request POST '${
             uiConfig.unleashUrl
-        }/api/admin/roles' \\
+        }/api/admin/projects/${project}/features' \\
     --header 'Authorization: INSERT_API_KEY' \\
     --header 'Content-Type: application/json' \\
     --data-raw '${JSON.stringify(getTogglePayload(), undefined, 2)}'`;
@@ -151,7 +174,7 @@ const CreateFeature = () => {
                             label="SDK"
                             inputProps={{
                                 classes: {
-                                    icon: styles.icon,
+                                    icon: styles.iconSelect,
                                     root: styles.root,
                                 },
                             }}
@@ -187,10 +210,14 @@ const CreateFeature = () => {
             <CreateFeatureForm
                 type={type}
                 name={name}
+                project={project}
                 description={description}
                 setType={setType}
                 setName={setName}
+                setProject={setProject}
                 setDescription={setDescription}
+                SDKs={SDKs}
+                sdkSelect={sdk}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}

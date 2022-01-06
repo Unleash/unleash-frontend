@@ -11,13 +11,14 @@ import FeatureTypeSelect from '../../FeatureView2/FeatureSettings/FeatureSetting
 import { CF_DESC_ID, CF_TYPE_ID } from '../../../../testIds';
 import useFeatureTypes from '../../../../hooks/api/getters/useFeatureTypes/useFeatureTypes';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Codebox from '../../../common/Codebox/Codebox';
-import ProjectSelect from '../../../common/ProjectSelect';
 import useUser from '../../../../hooks/api/getters/useUser/useUser';
 import { projectFilterGenerator } from '../../../../utils/project-filter-generator';
 import FeatureProjectSelect from '../../FeatureView2/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
 import AccessContext from '../../../../contexts/AccessContext';
+import ConditionallyRender from '../../../common/ConditionallyRender';
+import { Alert } from '@material-ui/lab';
 
 interface IFeatureToggleForm {
     type: string;
@@ -28,6 +29,8 @@ interface IFeatureToggleForm {
     setName: React.Dispatch<React.SetStateAction<string>>;
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     setProject: React.Dispatch<React.SetStateAction<string>>;
+    SDKs: Object;
+    sdkSelect: string;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -44,6 +47,8 @@ const CreateFeatureForm = ({
     setName,
     setDescription,
     setProject,
+    SDKs,
+    sdkSelect,
     handleSubmit,
     handleCancel,
     errors,
@@ -55,7 +60,6 @@ const CreateFeatureForm = ({
     const { featureTypes } = useFeatureTypes();
     const { permissions } = useUser();
     const editable = hasAccess(UPDATE_FEATURE, project);
-
 
     const renderToggleDescription = () => {
         return featureTypes.find(toggle => toggle.id === type)?.description;
@@ -77,7 +81,7 @@ const CreateFeatureForm = ({
                         'data-test': CF_TYPE_ID,
                     }}
                     IconComponent={KeyboardArrowDownOutlined}
-                    style={{ minWidth: '100%' }}
+                    className={styles.selectInput}
                 />
                 <p className={styles.typeDescription}>
                     {renderToggleDescription()}
@@ -95,11 +99,16 @@ const CreateFeatureForm = ({
                     value={name}
                     onChange={e => setName(e.target.value)}
                 />
-                <p className={styles.inputDescription}>
-                    Which Project
-                </p>
+                <ConditionallyRender
+                    condition={editable}
+                    show={
+                        <p className={styles.inputDescription}>
+                            In which project you want to save this toggle?
+                        </p>
+                    }
+                />
                 <FeatureProjectSelect
-                    value={'default'}
+                    value={project}
                     onChange={e => setProject(e.target.value)}
                     enabled={editable}
                     label="Project"
@@ -108,6 +117,7 @@ const CreateFeatureForm = ({
                         CREATE_FEATURE
                     )}
                     IconComponent={KeyboardArrowDownOutlined}
+                    className={styles.selectInput}
                 />
 
                 <p className={styles.inputDescription}>
@@ -128,18 +138,20 @@ const CreateFeatureForm = ({
                 <p className={styles.inputDescription}>
                     Example usage of this feature toggle
                 </p>
+                <ConditionallyRender condition={SDKs[sdkSelect].type === 'frontend'} show={
+                     <Alert severity="info">
+                         You should set up proxy for this sdk.
+                     </Alert>
+                } />
                 <p className={styles.inputDescription}>
-                    You have selected to use #Golang (feel free to copy the code
-                    - you don't have to)
+                    You have selected to use {sdkSelect} <br/>
+                    (feel free to copy the code - you don't have to)
                 </p>
                 <Codebox
                     color={'#BEBDBD'}
                     bgColor={'#E5E0E0'}
-                    text={`if(unleash.isEnabled("AwesomeFeature")) {
-  //do some magic
-} else {
-  //do old boring stuff
-}`}
+                    text={SDKs[sdkSelect].code}
+                    copyCode={true}
                 />
             </div>
 

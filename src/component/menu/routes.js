@@ -40,7 +40,6 @@ import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
-import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
@@ -107,18 +106,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/testing',
-        title: 'Create feature toggle',
-        component: CreateFeature,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
         path: '/projects/:projectId/create-toggle2',
         parent: '/projects/:id/features',
         title: 'Create feature toggle',
-        component: FeatureCreate,
+        component: CreateFeature,
         type: 'protected',
         layout: 'main',
         menu: {},

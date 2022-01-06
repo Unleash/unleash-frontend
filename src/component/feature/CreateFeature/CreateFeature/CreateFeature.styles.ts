@@ -15,9 +15,14 @@ export const useStyles = makeStyles(theme => ({
         minWidth: '120px',
         backgroundColor: 'transparent',
     },
-    icon: {
+    iconSelect: {
         fill: '#fff',
         marginRight: '0.5rem'
+    },
+    icon: {
+        marginRight: '0.5rem',
+        fill: '#000',
+        fontSize: '1.9rem'
     },
     root: {
         color: '#fff',
@@ -27,5 +32,6 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         marginTop: '0.7rem',
         color: '#fff',
+        textDecoration: 'none'
     },
 }));

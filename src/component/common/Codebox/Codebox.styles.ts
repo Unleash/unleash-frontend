@@ -9,11 +9,11 @@ export const useStyles = makeStyles(theme => ({
     },
     code: { wordBreak: 'break-all', color: '#fff', whiteSpace: 'pre-wrap' },
     icon: {
-        fill: '#fff',
+        fill: '#484848',
     },
     iconButton: {
         position: 'absolute',
-        bottom: '10px',
-        right: '20px',
+        right: 0,
+        bottom: 0,
     },
 }));

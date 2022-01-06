@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import { IFeatureViewParams } from '../../../../interfaces/params';
 
 const useCreateFeatureForm = (
     initialName = '',
@@ -7,9 +9,11 @@ const useCreateFeatureForm = (
     initialProject = 'default',
     initialDescription = ''
 ) => {
+    const { projectId } = useParams<IFeatureViewParams>();
+
     const [type, setType] = useState(initialType);
     const [name, setName] = useState(initialName);
-    const [project, setProject] = useState(initialProject);
+    const [project, setProject] = useState(projectId);
     const [description, setDescription] = useState(initialDescription);
 
     const [errors, setErrors] = useState({});
@@ -24,9 +28,9 @@ const useCreateFeatureForm = (
         setName(initialName);
     }, [initialName]);
 
-    useEffect(() => {
-        setProject(initialProject);
-    }, [initialProject]);
+    // useEffect(() => {
+    //     setProject(initialProject);
+    // }, [initialProject]);
 
     useEffect(() => {
         setDescription(initialDescription);
@@ -70,6 +74,8 @@ const useCreateFeatureForm = (
         setType,
         name,
         setName,
+        project,
+        setProject,
         description,
         setDescription,
         getTogglePayload,
