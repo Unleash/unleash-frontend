@@ -21,7 +21,7 @@ const EditProjectRole = () => {
 
     const { id } = useParams();
     const { role } = useProjectRole(id);
-
+    console.log(role);
     useEffect(() => {
         const initialCheckedPermissions = role?.permissions?.reduce(
             (acc: { [key: string]: IPermission }, curr: IPermission) => {
@@ -33,7 +33,7 @@ const EditProjectRole = () => {
 
         setInitialCheckedPermissions(initialCheckedPermissions);
         /* eslint-disable-next-line */
-    }, [role]);
+    }, [role?.permissions?.length]);
 
     const history = useHistory();
     const {
