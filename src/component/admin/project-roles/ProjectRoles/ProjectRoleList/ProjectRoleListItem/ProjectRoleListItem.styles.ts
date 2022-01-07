@@ -11,6 +11,6 @@ export const useStyles = makeStyles(theme => ({
         maxWidth: '300px',
     },
     icon: {
-        color: theme.palette.grey[500],
+        color: theme.palette.grey[600],
     },
 }));
