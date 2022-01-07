@@ -38,7 +38,8 @@ export const useStyles = makeStyles(theme => ({
         //@ts-ignore
         fontSize: theme.fontSizes.smallBody,
         color: theme.palette.grey[600],
-        marginBottom: '1rem',
+        top: '-13px',
+        position: 'relative',
     },
     formHeader: {
         fontWeight: 'normal',

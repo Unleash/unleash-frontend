@@ -12,17 +12,30 @@ export const useStyles = makeStyles(theme => ({
             borderColor: '#fff',
         },
         color: '#fff',
-        minWidth: '120px',
-        backgroundColor: 'transparent',
+        minWidth: '190px',
+        [theme.breakpoints.down(600)]: {
+            minWidth: '379px',
+        },
+    },
+    customOutline: {
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#fff',
+        },
+        '&:not(.MuiOutlinedInput-notchedOutline):hover::before': {
+            borderColor: '#fff',
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#fff',
+        },
     },
     iconSelect: {
         fill: '#fff',
-        marginRight: '0.5rem'
+        marginRight: '0.5rem',
     },
     icon: {
         marginRight: '0.5rem',
         fill: '#000',
-        fontSize: '1.9rem'
+        fontSize: '1.9rem',
     },
     root: {
         color: '#fff',
@@ -30,8 +43,12 @@ export const useStyles = makeStyles(theme => ({
     link: {
         display: 'flex',
         alignItems: 'center',
-        marginTop: '0.7rem',
+        marginTop: '0.9rem',
         color: '#fff',
-        textDecoration: 'none'
+        textDecoration: 'none',
+    },
+    inputDescription: {
+        marginBottom: '0.5rem',
+        color: '#fff',
     },
 }));

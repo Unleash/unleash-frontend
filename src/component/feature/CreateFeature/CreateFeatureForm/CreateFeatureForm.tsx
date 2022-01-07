@@ -138,21 +138,25 @@ const CreateFeatureForm = ({
                 <p className={styles.inputDescription}>
                     Example usage of this feature toggle
                 </p>
-                <ConditionallyRender condition={SDKs[sdkSelect].type === 'frontend'} show={
-                     <Alert severity="info">
-                         You should set up proxy for this sdk.
-                     </Alert>
-                } />
+                <ConditionallyRender
+                    condition={SDKs[sdkSelect]?.type === 'frontend'}
+                    show={
+                        <Alert severity="info">
+                            You should set up proxy for this sdk.
+                        </Alert>
+                    }
+                />
                 <p className={styles.inputDescription}>
-                    You have selected to use {sdkSelect} <br/>
+                    You have selected to use {sdkSelect} <br />
                     (feel free to copy the code - you don't have to)
                 </p>
                 <Codebox
                     color={'#BEBDBD'}
                     bgColor={'#E5E0E0'}
-                    text={SDKs[sdkSelect].code}
+                    text={SDKs[sdkSelect]?.code}
                     copyCode={true}
                 />
+                <br/>
             </div>
 
             <div className={styles.buttonContainer}>

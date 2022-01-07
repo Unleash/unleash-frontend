@@ -7,7 +7,6 @@ import useToast from '../../../../hooks/useToast';
 import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import {
     FormControl,
-    InputLabel,
     ListSubheader,
     MenuItem,
     Select,
@@ -51,7 +50,7 @@ const CreateFeature = () => {
             history.push(`/projects/${project}/features2/${name}`);
             setToastData({
                 title: 'Toggle created successfully',
-                text: 'Now you can start assigning your project roles to project members.',
+                text: 'Now you can start using your toggle.',
                 confetti: true,
                 type: 'success',
             });
@@ -152,7 +151,7 @@ const CreateFeature = () => {
     };
 
     const handleCancel = () => {
-        history.push('/features');
+        history.goBack();
     };
 
     return (
@@ -165,13 +164,18 @@ const CreateFeature = () => {
             formatApiCode={formatApiCode}
             sidebarContent={
                 <>
-                    <FormControl variant="outlined" size="small">
-                        <InputLabel htmlFor="SDKs">SDKs</InputLabel>
+                    <FormControl
+                        variant="outlined"
+                        size="small"
+                        classes={{ root: styles.customOutline }}
+                    >
+                        <h4 className={styles.inputDescription}>
+                           SDK Usage
+                        </h4>
                         <Select
                             value={sdk}
                             className={styles.select}
                             IconComponent={KeyboardArrowDownOutlined}
-                            label="SDK"
                             inputProps={{
                                 classes: {
                                     icon: styles.iconSelect,
