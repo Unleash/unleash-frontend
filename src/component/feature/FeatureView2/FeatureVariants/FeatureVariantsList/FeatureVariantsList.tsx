@@ -18,7 +18,7 @@ import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import AccessContext from '../../../../../contexts/AccessContext';
 import FeatureVariantListItem from './FeatureVariantsListItem/FeatureVariantsListItem';
-import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE_VARIANTS } from '../../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import useUnleashContext from '../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import GeneralSelect from '../../../../common/GeneralSelect/GeneralSelect';
@@ -61,7 +61,7 @@ const FeatureOverviewVariants = () => {
         setStickinessOptions(options);
     }, [context]);
 
-    const editable = hasAccess(UPDATE_FEATURE, projectId);
+    const editable = hasAccess(UPDATE_FEATURE_VARIANTS, projectId);
 
     const setClonedVariants = clonedVariants =>
         setVariants(cloneDeep(clonedVariants));
@@ -292,12 +292,15 @@ const FeatureOverviewVariants = () => {
                     }}
                     className={styles.addVariantButton}
                     data-test={'ADD_VARIANT_BUTTON'}
-                    permission={UPDATE_FEATURE}
+                    permission={UPDATE_FEATURE_VARIANTS}
                     projectId={projectId}
                 >
                     Add variant
                 </PermissionButton>
-                {renderStickiness()}
+                <ConditionallyRender
+                    condition={editable}
+                    show={renderStickiness()}
+                />
             </div>
 
             <AddVariant
