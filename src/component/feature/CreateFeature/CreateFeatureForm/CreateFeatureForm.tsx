@@ -91,6 +91,7 @@ const CreateFeatureForm = ({
                     What would you like to call your toggle?
                 </p>
                 <Input
+                    disabled={submitButtonText === 'Edit'}
                     className={styles.input}
                     label="Name"
                     error={Boolean(errors.name)}
@@ -103,7 +104,7 @@ const CreateFeatureForm = ({
                     condition={editable}
                     show={
                         <p className={styles.inputDescription}>
-                            In which project you want to save this toggle?
+                            In which project do you want to save the toggle?
                         </p>
                     }
                 />
@@ -156,7 +157,7 @@ const CreateFeatureForm = ({
                     text={SDKs[sdkSelect]?.code}
                     copyCode={true}
                 />
-                <br/>
+                <br />
             </div>
 
             <div className={styles.buttonContainer}>

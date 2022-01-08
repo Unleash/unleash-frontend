@@ -46,6 +46,7 @@ import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectR
 import AddNewUser from '../admin/users/AddNewUser/AddNewUser';
 import EditUser from '../admin/users/EditUser/EditUser';
 import CreateFeature from '../feature/CreateFeature/CreateFeature/CreateFeature';
+import EditFeature from '../feature/CreateFeature/EditFeature/EditFeature';
 
 export const routes = [
     // Project
@@ -84,6 +85,16 @@ export const routes = [
         component: CopyFeatureToggle,
         type: 'protected',
         layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:projectId/features2/:featureId/settings',
+        parent: '/projects',
+        title: 'Edit Feature',
+        component: EditFeature,
+        type: 'protected',
+        layout: 'main',
+        flags: E,
         menu: {},
     },
     {

@@ -12,18 +12,13 @@ const useCreateFeatureForm = (
 ) => {
     const { projectId } = useParams<IFeatureViewParams>();
     const params = useQueryParams();
+    const { validateFeatureToggleName } = useFeatureApi();
     const toggleQueryName = params.get('name');
-    console.log(toggleQueryName)
-
     const [type, setType] = useState(initialType);
-    const [name, setName] = useState(toggleQueryName);
+    const [name, setName] = useState(toggleQueryName || initialName);
     const [project, setProject] = useState(projectId || initialProject);
     const [description, setDescription] = useState(initialDescription);
-    console.log(name)
-
     const [errors, setErrors] = useState({});
-
-    const { validateFeatureToggleName } = useFeatureApi();
 
     useEffect(() => {
         setType(initialType);
