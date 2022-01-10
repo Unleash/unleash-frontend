@@ -26,7 +26,7 @@ const FeatureStrategiesConfigure = () => {
     const { refetch } = useFeature(projectId, featureId);
 
     const [productionGuard, setProductionGuard] = useState(false);
-
+    const dontShow = JSON.parse(localStorage.getItem('hide') || 'false')
     const styles = useStyles();
     const {
         activeEnvironment,
@@ -51,7 +51,7 @@ const FeatureStrategiesConfigure = () => {
     };
 
     const resolveSubmit = () => {
-        if (activeEnvironment.type === PRODUCTION) {
+        if (activeEnvironment.type === PRODUCTION && !dontShow) {
             setProductionGuard(true);
             return;
         }

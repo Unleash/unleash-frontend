@@ -31,6 +31,7 @@ const FeatureStrategiesEnvironmentList = ({
 }: IFeatureStrategiesEnvironmentListProps) => {
     const styles = useStyles();
     const { strategies: selectableStrategies } = useStrategies();
+    const dontShow = JSON.parse(localStorage.getItem('hide') || 'false')
 
     const {
         activeEnvironmentsRef,
@@ -94,7 +95,7 @@ const FeatureStrategiesEnvironmentList = ({
     });
 
     const resolveUpdateStrategy = (strategy: IFeatureStrategy, callback) => {
-        if (activeEnvironmentsRef?.current?.type === PRODUCTION) {
+        if (activeEnvironmentsRef?.current?.type === PRODUCTION && !dontShow) {
             setProductionGuard({ show: true, strategy, callback });
             return;
         }
