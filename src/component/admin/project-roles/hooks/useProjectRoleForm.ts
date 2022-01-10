@@ -37,7 +37,7 @@ const useProjectRoleForm = (
         setRoleDesc(initialRoleDesc);
     }, [initialRoleDesc]);
 
-    useEffect(() => {
+    const handleInitialCheckedPermissions = initialCheckedPermissions => {
         const formattedInitialCheckedPermissions =
             isAllEnvironmentPermissionsCheckedInitially(
                 isAllProjectPermissionsCheckedInitially(
@@ -46,8 +46,7 @@ const useProjectRoleForm = (
             );
 
         setCheckedPermissions(formattedInitialCheckedPermissions || {});
-        /* eslint-disable-next-line */
-    }, [Object.keys(initialCheckedPermissions).length]);
+    };
 
     const isAllProjectPermissionsCheckedInitially =
         initialCheckedPermissions => {
@@ -244,6 +243,7 @@ const useProjectRoleForm = (
         getProjectRolePayload,
         validatePermissions,
         validateName,
+        handleInitialCheckedPermissions,
         clearErrors,
         validateNameUniqueness,
         errors,

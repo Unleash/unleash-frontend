@@ -33,7 +33,9 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
         authDetails,
         permissions,
     } = useUser();
+
     console.log(permissions);
+
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     useEffect(() => {

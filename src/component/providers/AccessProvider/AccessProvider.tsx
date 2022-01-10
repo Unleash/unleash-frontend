@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import AccessContext from '../../../contexts/AccessContext';
+import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { ADMIN } from './permissions';
 
 // TODO: Type up redux store
@@ -10,11 +11,12 @@ interface IAccessProvider {
 
 interface IPermission {
     permission: string;
-    project: string | null;
+    project?: string | null;
     environment: string | null;
 }
 
 const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
+    const { permissions } = useUser();
     const isAdminHigherOrder = () => {
         let called = false;
         let result = false;
@@ -39,8 +41,6 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
         project: string,
         environment?: string
     ) => {
-        const permissions = store.getState().user.get('permissions') || [];
-
         const result = permissions.some((p: IPermission) => {
             if (p.permission === ADMIN) {
                 return true;

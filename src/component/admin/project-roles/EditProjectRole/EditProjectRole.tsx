@@ -15,13 +15,10 @@ import useToast from '../../../../hooks/useToast';
 const EditProjectRole = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const [initialCheckedPermissions, setInitialCheckedPermissions] = useState(
-        {}
-    );
 
     const { id } = useParams();
     const { role } = useProjectRole(id);
-    console.log(role);
+
     useEffect(() => {
         const initialCheckedPermissions = role?.permissions?.reduce(
             (acc: { [key: string]: IPermission }, curr: IPermission) => {
@@ -30,8 +27,7 @@ const EditProjectRole = () => {
             },
             {}
         );
-
-        setInitialCheckedPermissions(initialCheckedPermissions);
+        handleInitialCheckedPermissions(initialCheckedPermissions || {});
         /* eslint-disable-next-line */
     }, [role?.permissions?.length]);
 
@@ -51,11 +47,8 @@ const EditProjectRole = () => {
         errors,
         clearErrors,
         getRoleKey,
-    } = useProjectRoleForm(
-        role.name,
-        role.description,
-        initialCheckedPermissions
-    );
+        handleInitialCheckedPermissions,
+    } = useProjectRoleForm(role.name, role.description);
 
     const formatApiCode = () => {
         return `curl --location --request PUT '${

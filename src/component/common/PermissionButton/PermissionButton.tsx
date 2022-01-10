@@ -2,6 +2,7 @@ import { Button, Tooltip } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
+import useUser from '../../../hooks/api/getters/useUser/useUser';
 import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps
