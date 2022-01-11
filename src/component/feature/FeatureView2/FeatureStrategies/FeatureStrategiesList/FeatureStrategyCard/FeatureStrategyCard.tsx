@@ -18,6 +18,7 @@ import { CREATE_FEATURE_STRATEGY } from '../../../../../providers/AccessProvider
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyCard.styles';
 import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';
+import useFeatureStrategiesEnvironmentList from '../../FeatureStrategiesEnvironments/FeatureStrategiesEnvironmentList/useFeatureStrategiesEnvironmentList';
 
 interface IFeatureStrategyCardProps {
     name: string;
@@ -40,7 +41,6 @@ const FeatureStrategyCard = ({
     const { setConfigureNewStrategy, setExpandedSidebar, activeEnvironment } =
         useContext(FeatureStrategiesUIContext);
     const { hasAccess } = useContext(AccessContext);
-
     const handleClick = () => {
         const strategy = getStrategyObject(strategies, name, featureId);
         if (!strategy) return;
@@ -56,7 +56,7 @@ const FeatureStrategyCard = ({
         canDrag: hasAccess(
             CREATE_FEATURE_STRATEGY,
             projectId,
-            activeEnvironment.name
+            activeEnvironment?.name
         ),
         item: () => {
             return { name };
@@ -91,7 +91,7 @@ const FeatureStrategyCard = ({
                                 }`}
                                 permission={CREATE_FEATURE_STRATEGY}
                                 projectId={projectId}
-                                environmentId={activeEnvironment.name}
+                                environmentId={activeEnvironment?.name}
                             >
                                 <Add />
                             </PermissionIconButton>
