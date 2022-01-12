@@ -1,17 +1,25 @@
 import { Button, TextField } from '@material-ui/core';
+import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React from 'react';
+import useEnvironments from '../../../../hooks/api/getters/useEnvironments/useEnvironments';
+import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import GeneralSelect from '../../../common/GeneralSelect/GeneralSelect';
 import Input from '../../../common/Input/Input';
 import PermissionButton from '../../../common/PermissionButton/PermissionButton';
+import FeatureProjectSelect from '../../../feature/FeatureView2/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import { useStyles } from './CreateApiTokenForm.styles';
 
 interface ICreateApiTokenFormProps {
     username: string;
     type: string;
-    setType: React.Dispatch<React.SetStateAction<string>>;
-    settype: React.Dispatch<React.SetStateAction<string>>;
+    project: string;
+    environment: string;
+    setTokenType: (value: string) => void;
+    setUsername: React.Dispatch<React.SetStateAction<string>>;
+    setProject: React.Dispatch<React.SetStateAction<string>>;
+    setEnvironment: React.Dispatch<React.SetStateAction<string>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -21,106 +29,95 @@ interface ICreateApiTokenFormProps {
 const CreateApiTokenForm = ({
     username,
     type,
-    settype,
-    setType,
+    project,
+    environment,
+    setUsername,
+    setTokenType,
+    setProject,
+    setEnvironment,
     handleSubmit,
     handleCancel,
     errors,
     clearErrors,
     submitButtonText,
 }: ICreateApiTokenFormProps) => {
+    const TYPE_ADMIN = 'ADMIN';
     const styles = useStyles();
+    const { environments } = useEnvironments();
+    const { projects } = useProjects();
+
     const selectableTypes = [
         { key: 'CLIENT', label: 'Client', title: 'Client SDK token' },
         { key: 'ADMIN', label: 'Admin', title: 'Admin API token' },
     ];
+
+    const selectableProjects = [{ id: '*', name: 'ALL' }, ...projects].map(
+        i => ({
+            key: i.id,
+            label: i.name,
+            title: i.name,
+        })
+    );
+    const selectableEnvs =
+        type === TYPE_ADMIN
+            ? [{ key: '*', label: 'ALL' }]
+            : environments.map(i => ({
+                  key: i.name,
+                  label: i.name,
+                  title: i.name,
+              }));
+
     return (
-        <form onSubmit={handleSubmit}>
-            <h3 className={styles.formHeader}>Role information</h3>
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <h3 className={styles.formHeader}>Token information</h3>
 
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
-                    What is your role name?
+                    What is your token username?
                 </p>
                 <Input
                     className={styles.input}
                     value={username}
                     name="username"
-                    onChange={setType}
+                    onChange={e => setUsername(e.target.value)}
                     label="Username"
                     error={errors.username !== undefined}
                     errorText={errors.username}
                 />
-                <GeneralSelect
-                    disabled={false}
-                    options={selectableTypes}
-                    value={type}
-                    onChange={setType}
-                    label="Token Type"
-                    id="api_key_type"
-                    name="type"
-                />
-                {/* 
-                <GeneralSelect
-                    disabled={false}
-                    options={selectableTypes}
-                    value={data.type}
-                    onChange={setType}
-                    label="Token Type"
-                    id="api_key_type"
-                    name="type"
-                    className={undefined}
-                    classes={undefined}
-                />
-                <GeneralSelect
-                    disabled={data.type === TYPE_ADMIN}
-                    options={selectableProjects}
-                    value={data.project}
-                    onChange={setProject}
-                    label="Project"
-                    id="api_key_project"
-                    name="project"
-                    className={undefined}
-                    classes={undefined}
-                />
-                <ConditionallyRender condition={true} show={
-                    <>
-                        <GeneralSelect
-                            disabled={data.type === TYPE_ADMIN}
-                            options={selectableEnvs}
-                            value={data.environment}
-                            required
-                            onChange={setEnvironment}
-                            label="Environment"
-                            id="api_key_environment"
-                            name="environment"
-                            className={undefined}
-                            classes={undefined}
-                        />
-                    </>
-                } /> */}
-
                 <p className={styles.inputDescription}>
-                    What is this role for?
+                    What is your token type?
                 </p>
-                <TextField
-                    className={styles.input}
-                    label="Role description"
-                    variant="outlined"
-                    multiline
-                    maxRows={4}
+                <GeneralSelect
+                    options={selectableTypes}
                     value={type}
-                    onChange={e => settype(e.target.value)}
+                    onChange={e => setTokenType(e.target.value as string)}
+                    label="Token Type"
+                    id="api_key_type"
+                    name="type"
+                    IconComponent={KeyboardArrowDownOutlined}
+                    className={styles.selectInput}
                 />
-            </div>
-            <div className={styles.permissionErrorContainer}>
-                <ConditionallyRender
-                    condition={Boolean(errors.permissions)}
-                    show={
-                        <span className={styles.errorMessage}>
-                            You must select at least one permission for a role.
-                        </span>
-                    }
+                <p className={styles.inputDescription}>Which project?</p>
+                <GeneralSelect
+                    disabled={type === TYPE_ADMIN}
+                    value={project}
+                    options={selectableProjects}
+                    onChange={e => setProject(e.target.value as string)}
+                    label="Project"
+                    IconComponent={KeyboardArrowDownOutlined}
+                    className={styles.selectInput}
+                />
+                <p className={styles.inputDescription}>Which environment?</p>
+                <GeneralSelect
+                    disabled={type === TYPE_ADMIN}
+                    options={selectableEnvs}
+                    value={environment}
+                    onChange={e => setEnvironment(e.target.value as string)}
+                    label="Environment"
+                    id="api_key_environment"
+                    name="environment"
+                    IconComponent={KeyboardArrowDownOutlined}
+                    className={styles.selectInput}
                 />
             </div>
             <div className={styles.buttonContainer}>
@@ -132,7 +129,7 @@ const CreateApiTokenForm = ({
                     permission={ADMIN}
                     type="submit"
                 >
-                    {submitButtonText} role
+                    {submitButtonText} token
                 </PermissionButton>
             </div>
         </form>

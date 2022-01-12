@@ -2,9 +2,10 @@ import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import { useHistory } from 'react-router-dom';
 import CreateApiTokenForm from '../CreateApiTokenForm/CreateApiTokenForm';
-import useProjectRoleForm from '../hooks/useApiToken';
+import useApiTokenForm from '../hooks/useApiTokenForm';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
+import useApiTokensApi from '../../../../hooks/api/actions/useApiTokensApi/useApiTokensApi';
 
 const CreateApiToken = () => {
     /* @ts-ignore */
@@ -12,47 +13,71 @@ const CreateApiToken = () => {
     const { uiConfig } = useUiConfig();
     const history = useHistory();
     const {
-        getProjectRolePayload,
+        getApiTokenPayload,
         username,
-        roleDesc,
+        type,
+        project,
+        environment,
         setUsername,
-        setRoleDesc,
+        setTokenType,
+        setProject,
+        setEnvironment,
+        isValid,
         errors,
         clearErrors,
-    } = useProjectRoleForm();
+    } = useApiTokenForm();
 
-    const { createRole, loading } = useProjectRolesApi();
+    const { createToken, loading } = useApiTokensApi();
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
+        if (!isValid()) {
+            return;
+        }
+        try {
+            await createToken(getApiTokenPayload());
+            history.push('/admin/api');
+            setToastData({
+                type: 'success',
+                title: 'Created token',
+                text: 'Successfully created API token',
+                confetti: true,
+            });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
     };
 
     const formatApiCode = () => {
         return `curl --location --request POST '${
             uiConfig.unleashUrl
-        }/api/admin/roles' \\
+        }/api/admin/api-tokens' \\
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
---data-raw '${JSON.stringify(getProjectRolePayload(), undefined, 2)}'`;
+--data-raw '${JSON.stringify(getApiTokenPayload(), undefined, 2)}'`;
     };
 
     const handleCancel = () => {
-        history.push('/admin/roles');
+        history.goBack();
     };
 
     return (
         <FormTemplate
             loading={loading}
             title="Create Api Token"
-            description="fd"
+            description="In order to connect to Unleash clients will need an API token to grant access. A client SDK will need to token with 'client privileges', which allows them to fetch feature toggle configuration and post usage metrics back."
             documentationLink="https://docs.getunleash.io/user_guide/api-token"
             formatApiCode={formatApiCode}
         >
             <CreateApiTokenForm
                 username={username}
-                roleDesc={roleDesc}
-                setRoleDesc={setRoleDesc}
-                setUsername={setUsername}                
+                type={type}
+                project={project}
+                environment={environment}
+                setEnvironment={setEnvironment}
+                setTokenType={setTokenType}
+                setUsername={setUsername}
+                setProject={setProject}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
     IconButton,
@@ -58,16 +58,7 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
     const { tokens, loading, refetch, error } = useApiTokens();
     const { deleteToken, createToken } = useApiTokensApi();
     const ref = useLoading(loading);
-
-    const [showDialog, setDialog] = useState(false);
-
-    const openDialog = () => {
-        setDialog(true);
-    };
-
-    const closeDialog = () => {
-        setDialog(false);
-    };
+    const history = useHistory();
 
     const renderError = () => {
         return (
@@ -271,7 +262,7 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={openDialog}
+                                        onClick={() => history.push('/admin/api/create-token')}
                                         data-test={CREATE_API_TOKEN_BUTTON}
                                     >
                                         Create API token
@@ -312,11 +303,6 @@ const ApiTokenList = ({ location }: IApiTokenList) => {
                     />
                 </div>
 
-                <ApiTokenCreate
-                    showDialog={showDialog}
-                    createToken={onCreateToken}
-                    closeDialog={closeDialog}
-                />
                 <Dialogue
                     open={showDelete}
                     onClick={onDeleteToken}

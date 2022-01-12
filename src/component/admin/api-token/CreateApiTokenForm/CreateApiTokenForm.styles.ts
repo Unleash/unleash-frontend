@@ -4,7 +4,19 @@ export const useStyles = makeStyles(theme => ({
     container: {
         maxWidth: '400px',
     },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+    },
     input: { width: '100%', marginBottom: '1rem' },
+    selectInput: {
+        marginBottom: '1rem',
+        minWidth: '400px',
+        [theme.breakpoints.down(600)]: {
+            minWidth: '379px',
+        },
+    },
     label: {
         minWidth: '300px',
         [theme.breakpoints.down(600)]: {
