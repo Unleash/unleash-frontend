@@ -83,6 +83,7 @@ const CreateApiTokenForm = ({
                     label="Username"
                     error={errors.username !== undefined}
                     errorText={errors.username}
+                    onFocus={() => clearErrors()}
                 />
                 <p className={styles.inputDescription}>
                     What is your token type?
