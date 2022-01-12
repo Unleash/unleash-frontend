@@ -62,9 +62,7 @@ const useAPI = ({
         if (loadingOn) {
             setLoading(true);
         }
-        if (loading) {
-            return;
-        }
+
         try {
             const res = await apiCaller();
             setLoading(false);
