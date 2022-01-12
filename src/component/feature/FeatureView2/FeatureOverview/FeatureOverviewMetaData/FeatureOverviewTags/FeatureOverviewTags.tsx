@@ -14,7 +14,7 @@ import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/use
 import Dialogue from '../../../../../common/Dialogue';
 import { ITag } from '../../../../../../interfaces/tags';
 import useToast from '../../../../../../hooks/useToast';
-import { DELETE_TAG } from '../../../../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import AccessContext from '../../../../../../contexts/AccessContext';
 
@@ -39,7 +39,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
     const { deleteTagFromFeature } = useFeatureApi();
     const { setToastData, setToastApiError } = useToast();
     const { hasAccess } = useContext(AccessContext);
-    const canDeleteTag = hasAccess(DELETE_TAG, projectId);
+    const canDeleteTag = hasAccess(UPDATE_FEATURE, projectId);
 
     const handleDelete = async () => {
         try {
