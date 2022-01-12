@@ -1,5 +1,4 @@
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
-import useProjectRolesApi from '../../../../hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
 import { useHistory } from 'react-router-dom';
 import CreateApiTokenForm from '../CreateApiTokenForm/CreateApiTokenForm';
 import useApiTokenForm from '../hooks/useApiTokenForm';

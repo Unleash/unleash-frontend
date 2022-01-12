@@ -1,13 +1,11 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React from 'react';
 import useEnvironments from '../../../../hooks/api/getters/useEnvironments/useEnvironments';
 import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
-import ConditionallyRender from '../../../common/ConditionallyRender';
 import GeneralSelect from '../../../common/GeneralSelect/GeneralSelect';
 import Input from '../../../common/Input/Input';
 import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import FeatureProjectSelect from '../../../feature/FeatureView2/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import { useStyles } from './CreateApiTokenForm.styles';
 

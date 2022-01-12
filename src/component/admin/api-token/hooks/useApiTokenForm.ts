@@ -22,6 +22,7 @@ const useApiToken = (
             setProject('*');
             setEnvironment('*')
         }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialtype]);
 
     useEffect(() => {
