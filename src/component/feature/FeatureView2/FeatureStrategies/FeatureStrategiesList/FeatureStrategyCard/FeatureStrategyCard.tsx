@@ -18,7 +18,6 @@ import { CREATE_FEATURE_STRATEGY } from '../../../../../providers/AccessProvider
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import { useStyles } from './FeatureStrategyCard.styles';
 import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';
-import useFeatureStrategiesEnvironmentList from '../../FeatureStrategiesEnvironments/FeatureStrategiesEnvironmentList/useFeatureStrategiesEnvironmentList';
 
 interface IFeatureStrategyCardProps {
     name: string;
