@@ -18,9 +18,8 @@ import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissi
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import AccessContext from '../../../../../../contexts/AccessContext';
 
-interface IFeatureOverviewTagsProps
-    extends React.HTMLProps<HTMLButtonElement> {
-    projectId: string
+interface IFeatureOverviewTagsProps extends React.HTMLProps<HTMLButtonElement> {
+    projectId: string;
 }
 
 const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
@@ -118,7 +117,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
     );
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} {...rest}>
             <Dialogue
                 open={showDelDialog}
                 onClose={() => {
