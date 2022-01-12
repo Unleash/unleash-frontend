@@ -18,7 +18,15 @@ import { DELETE_TAG } from '../../../../../providers/AccessProvider/permissions'
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import AccessContext from '../../../../../../contexts/AccessContext';
 
-const FeatureOverviewTags = () => {
+interface IFeatureOverviewTagsProps
+    extends React.HTMLProps<HTMLButtonElement> {
+    projectId: string
+}
+
+const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
+    projectId,
+    ...rest
+}) => {
     const [showDelDialog, setShowDelDialog] = useState(false);
     const [selectedTag, setSelectedTag] = useState<ITag>({
         value: '',
@@ -31,7 +39,7 @@ const FeatureOverviewTags = () => {
     const { deleteTagFromFeature } = useFeatureApi();
     const { setToastData, setToastApiError } = useToast();
     const { hasAccess } = useContext(AccessContext);
-    const canDeleteTag = hasAccess(DELETE_TAG);
+    const canDeleteTag = hasAccess(DELETE_TAG, projectId);
 
     const handleDelete = async () => {
         try {
