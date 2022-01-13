@@ -1,13 +1,10 @@
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../../interfaces/params';
 import ConditionallyRender from '../../../../../../common/ConditionallyRender';
 import NoItemsStrategies from '../../../../../../common/NoItems/NoItemsStrategies/NoItemsStrategies';
 import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
-
 import { useStyles } from '../FeatureOverviewEnvironment.styles';
 import { IFeatureEnvironment } from '../../../../../../../interfaces/featureToggle';
-import ResponsiveButton from '../../../../../../common/ResponsiveButton/ResponsiveButton';
-import { Add } from '@material-ui/icons';
 import { CREATE_FEATURE_STRATEGY } from '../../../../../../providers/AccessProvider/permissions';
 import { useContext } from 'react';
 import AccessContext from '../../../../../../../contexts/AccessContext';
