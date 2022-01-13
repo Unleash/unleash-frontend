@@ -38,12 +38,12 @@ import Project from '../project/Project/Project';
 import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import FeatureView2 from '../feature/FeatureView2/FeatureView2';
 import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
+import CreateEnvironment from '../environments2/CreateEnvironment/CreateEnvironment';
 
 export const routes = [
     // Project
