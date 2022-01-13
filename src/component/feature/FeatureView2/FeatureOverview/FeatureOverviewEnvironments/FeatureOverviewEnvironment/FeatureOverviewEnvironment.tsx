@@ -22,7 +22,10 @@ import DisabledIndicator from '../../../../../common/DisabledIndicator/DisabledI
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
 import PermissionButton from '../../../../../common/PermissionButton/PermissionButton';
 import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
-import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
+import {
+    CREATE_FEATURE_STRATEGY,
+    UPDATE_FEATURE,
+} from '../../../../../providers/AccessProvider/permissions';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
 import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';
@@ -108,7 +111,9 @@ const FeatureOverviewEnvironment = ({
                         </div>
                         <div className={styles.container}>
                             <PermissionButton
-                                permission={UPDATE_FEATURE}
+                                permission={CREATE_FEATURE_STRATEGY}
+                                projectId={projectId}
+                                environmentId={env.name}
                                 onClick={() => history.push(strategiesLink)}
                                 className={styles.addStrategyButton}
                             >
