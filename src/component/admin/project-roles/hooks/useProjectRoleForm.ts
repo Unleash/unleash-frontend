@@ -37,49 +37,57 @@ const useProjectRoleForm = (
         setRoleDesc(initialRoleDesc);
     }, [initialRoleDesc]);
 
-    const handleInitialCheckedPermissions = initialCheckedPermissions => {
+    const handleInitialCheckedPermissions = (
+        initialCheckedPermissions: ICheckedPermission
+    ) => {
         const formattedInitialCheckedPermissions =
-            isAllEnvironmentPermissionsCheckedInitially(
-                isAllProjectPermissionsCheckedInitially(
-                    initialCheckedPermissions
-                )
+            isAllEnvironmentPermissionsChecked(
+                isAllProjectPermissionsChecked(initialCheckedPermissions)
             );
 
         setCheckedPermissions(formattedInitialCheckedPermissions || {});
     };
 
-    const isAllProjectPermissionsCheckedInitially =
-        initialCheckedPermissions => {
-            const { project } = permissions;
-            if (!project || project.length === 0) return;
-            const isAllChecked = project.every(permission => {
-                return initialCheckedPermissions[getRoleKey(permission)];
-            });
+    const isAllProjectPermissionsChecked = (
+        initialCheckedPermissions: ICheckedPermission
+    ) => {
+        const { project } = permissions;
+        if (!project || project.length === 0) return;
+        const isAllChecked = project.every((permission: IPermission) => {
+            return initialCheckedPermissions[getRoleKey(permission)];
+        });
+
+        if (isAllChecked) {
+            initialCheckedPermissions[PROJECT_CHECK_ALL_KEY] = true;
+        } else {
+            delete initialCheckedPermissions[PROJECT_CHECK_ALL_KEY];
+        }
+
+        return initialCheckedPermissions;
+    };
+
+    const isAllEnvironmentPermissionsChecked = (
+        initialCheckedPermissions: ICheckedPermission
+    ) => {
+        const { environments } = permissions;
+        if (!environments || environments.length === 0) return;
+        environments.forEach(env => {
+            const isAllChecked = env.permissions.every(
+                (permission: IPermission) => {
+                    return initialCheckedPermissions[getRoleKey(permission)];
+                }
+            );
+
+            const key = `${ENVIRONMENT_CHECK_ALL_KEY}-${env.name}`;
 
             if (isAllChecked) {
-                initialCheckedPermissions[PROJECT_CHECK_ALL_KEY] = true;
+                initialCheckedPermissions[key] = true;
+            } else {
+                delete initialCheckedPermissions[key];
             }
-
-            return initialCheckedPermissions;
-        };
-
-    const isAllEnvironmentPermissionsCheckedInitially =
-        initialCheckedPermissions => {
-            const { environments } = permissions;
-            if (!environments || environments.length === 0) return;
-            environments.forEach(env => {
-                const isAllChecked = env.permissions.every(permission => {
-                    return initialCheckedPermissions[getRoleKey(permission)];
-                });
-
-                const key = `${ENVIRONMENT_CHECK_ALL_KEY}-${env.name}`;
-
-                if (isAllChecked) {
-                    initialCheckedPermissions[key] = true;
-                }
-            });
-            return initialCheckedPermissions;
-        };
+        });
+        return initialCheckedPermissions;
+    };
 
     const getCheckAllKeys = () => {
         const { environments } = permissions;
@@ -91,19 +99,24 @@ const useProjectRoleForm = (
     };
 
     const handlePermissionChange = (permission: IPermission, type: string) => {
-        const checkedPermissionsCopy = cloneDeep(checkedPermissions);
+        let checkedPermissionsCopy = cloneDeep(checkedPermissions);
+
         if (checkedPermissionsCopy[getRoleKey(permission)]) {
             delete checkedPermissionsCopy[getRoleKey(permission)];
-            if (type === 'project') {
-                delete checkedPermissionsCopy[PROJECT_CHECK_ALL_KEY];
-            } else {
-                delete checkedPermissionsCopy[
-                    `${ENVIRONMENT_CHECK_ALL_KEY}-${type}`
-                ];
-            }
         } else {
             checkedPermissionsCopy[getRoleKey(permission)] = { ...permission };
         }
+
+        if (type === 'project') {
+            checkedPermissionsCopy = isAllProjectPermissionsChecked(
+                checkedPermissionsCopy
+            );
+        } else {
+            checkedPermissionsCopy = isAllEnvironmentPermissionsChecked(
+                checkedPermissionsCopy
+            );
+        }
+
         setCheckedPermissions(checkedPermissionsCopy);
     };
 
@@ -111,7 +124,7 @@ const useProjectRoleForm = (
         const { project } = permissions;
         const checkedPermissionsCopy = cloneDeep(checkedPermissions);
         const checkedAll = checkedPermissionsCopy[PROJECT_CHECK_ALL_KEY];
-        project.forEach((permission, index) => {
+        project.forEach((permission: IPermission, index: number) => {
             const lastItem = project.length - 1 === index;
             if (checkedAll) {
                 if (checkedPermissionsCopy[getRoleKey(permission)]) {
@@ -143,7 +156,7 @@ const useProjectRoleForm = (
         if (!env) return;
         const checkedAll = checkedPermissionsCopy[environmentCheckAllKey];
 
-        env.permissions.forEach((permission, index) => {
+        env.permissions.forEach((permission: IPermission, index: number) => {
             const lastItem = env.permissions.length - 1 === index;
             if (checkedAll) {
                 if (checkedPermissionsCopy[getRoleKey(permission)]) {
