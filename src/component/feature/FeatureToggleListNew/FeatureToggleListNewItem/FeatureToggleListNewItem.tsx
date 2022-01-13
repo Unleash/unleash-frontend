@@ -14,7 +14,7 @@ import FeatureType from '../../FeatureView2/FeatureType/FeatureType';
 import classNames from 'classnames';
 import CreatedAt from './CreatedAt';
 import useProject from '../../../../hooks/api/getters/useProject/useProject';
-import { UPDATE_FEATURE_STRATEGY } from '../../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE_ENVIRONMENT } from '../../../providers/AccessProvider/permissions';
 import PermissionSwitch from '../../../common/PermissionSwitch/PermissionSwitch';
 import { Link } from 'react-router-dom';
 import { ENVIRONMENT_STRATEGY_ERROR } from '../../../../constants/apiErrors';
@@ -147,7 +147,7 @@ const FeatureToggleListNewItem = ({
                                     checked={env.enabled}
                                     environmentId={env.name}
                                     projectId={projectId}
-                                    permission={UPDATE_FEATURE_STRATEGY}
+                                    permission={UPDATE_FEATURE_ENVIRONMENT}
                                     ref={ref}
                                     onClick={() => {
                                         handleToggle(env);

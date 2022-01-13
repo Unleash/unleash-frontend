@@ -9,6 +9,7 @@ import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { projectFilterGenerator } from '../../../../../utils/project-filter-generator';
 import {
     CREATE_FEATURE,
+    MOVE_FEATURE_TOGGLE,
     UPDATE_FEATURE,
 } from '../../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
@@ -72,7 +73,7 @@ const FeatureSettingsProject = () => {
                 condition={dirty}
                 show={
                     <PermissionButton
-                        permission={UPDATE_FEATURE}
+                        permission={MOVE_FEATURE_TOGGLE}
                         tooltip="Update feature"
                         onClick={() => setShowConfirmDialog(true)}
                         projectId={projectId}
