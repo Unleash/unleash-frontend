@@ -47,6 +47,7 @@ const EditProjectRole = () => {
             },
             {}
         );
+
         handleInitialCheckedPermissions(initialCheckedPermissions || {});
         /* eslint-disable-next-line */
     }, [role?.permissions?.length, permissions.length]);
