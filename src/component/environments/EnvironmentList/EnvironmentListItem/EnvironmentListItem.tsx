@@ -25,6 +25,7 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import DisabledIndicator from '../../../common/DisabledIndicator/DisabledIndicator';
 import StringTruncator from '../../../common/StringTruncator/StringTruncator';
+import { useHistory } from 'react-router-dom';
 
 interface IEnvironmentListItemProps {
     env: IEnvironment;
@@ -53,6 +54,7 @@ const EnvironmentListItem = ({
     setToggleDialog,
     setEditEnvironment,
 }: IEnvironmentListItemProps) => {
+    const history = useHistory();
     const ref = useRef<HTMLDivElement>(null);
     const ACCEPT_TYPE = 'LIST_ITEM';
     const [{ isDragging }, drag] = useDrag({
@@ -178,8 +180,7 @@ const EnvironmentListItem = ({
                             aria-label="update"
                             disabled={env.protected}
                             onClick={() => {
-                                setSelectedEnv(env);
-                                setEditEnvironment(prev => !prev);
+                                history.push(`/environments/${env.name}`);
                             }}
                         >
                             <Edit />

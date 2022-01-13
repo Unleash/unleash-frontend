@@ -1,9 +1,9 @@
 import { useHistory } from 'react-router-dom';
-import useCreateEnvironmentForm from '../hooks/useCreateEnvironmentForm';
+import useEnvironmentForm from '../hooks/useEnvironmentForm';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
-import CreateEnvironmentForm from '../CreateEnvironmentForm/CreateEnvironmentForm';
+import EnvironmentForm from '../EnvironmentForm/EnvironmentForm';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
 import { Alert } from '@material-ui/lab';
@@ -32,7 +32,7 @@ const CreateEnvironment = () => {
         validateEnvironmentName,
         clearErrors,
         errors,
-    } = useCreateEnvironmentForm();
+    } = useEnvironmentForm();
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
@@ -89,10 +89,10 @@ const CreateEnvironment = () => {
                             development or test environment without
                             enabling the feature toggle in the
                             production environment."
-                            documentationLink="https://docs.getunleash.io/"
+                            documentationLink="https://docs.getunleash.io/user_guide/environments"
                             formatApiCode={formatApiCode}
                         >
-                            <CreateEnvironmentForm
+                            <EnvironmentForm
                                 errors={errors}
                                 handleSubmit={handleSubmit}
                                 handleCancel={handleCancel}

@@ -44,6 +44,7 @@ import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
 import CreateEnvironment from '../environments2/CreateEnvironment/CreateEnvironment';
+import EditEnvironment from '../environments2/EditEnvironment/EditEnvironment';
 
 export const routes = [
     // Project
@@ -260,6 +261,14 @@ export const routes = [
         title: 'Environments',
         component: CreateEnvironment,
         parent: '/environments',
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/environments/:id',
+        title: 'Edit',
+        component: EditEnvironment,
         type: 'protected',
         layout: 'main',
         menu: {},

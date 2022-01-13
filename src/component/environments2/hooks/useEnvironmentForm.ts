@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 
-const useProjectRoleForm = (
+const useEnvironmentForm = (
     initialName = '',
     initialType = 'development'
 ) => {
@@ -66,4 +66,4 @@ const useProjectRoleForm = (
     };
 };
 
-export default useProjectRoleForm;
+export default useEnvironmentForm;

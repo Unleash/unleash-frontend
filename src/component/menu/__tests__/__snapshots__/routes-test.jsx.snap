@@ -155,6 +155,7 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "C",
     "layout": "main",
     "menu": Object {},
     "parent": "/context",
@@ -164,6 +165,7 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "C",
     "layout": "main",
     "menu": Object {},
     "parent": "/context",
@@ -219,6 +221,14 @@ Array [
     "parent": "/environments",
     "path": "/environments/create",
     "title": "Environments",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "layout": "main",
+    "menu": Object {},
+    "path": "/environments/:id",
+    "title": "Edit",
     "type": "protected",
   },
   Object {
@@ -339,6 +349,24 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "RE",
+    "layout": "main",
+    "menu": Object {},
+    "path": "/admin/create-project-role",
+    "title": "Create",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "flag": "RE",
+    "layout": "main",
+    "menu": Object {},
+    "path": "/admin/roles/:id/edit",
+    "title": "Edit",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "layout": "main",
     "menu": Object {
       "advanced": true,
@@ -378,7 +406,7 @@ Array [
   },
   Object {
     "component": [Function],
-    "hidden": false,
+    "flag": "RE",
     "layout": "main",
     "menu": Object {},
     "parent": "/admin",

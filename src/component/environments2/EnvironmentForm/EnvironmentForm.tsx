@@ -2,7 +2,7 @@ import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import { Button } from '@material-ui/core';
 
-import { useStyles } from './CreateEnvironmentForm.styles';
+import { useStyles } from './EnvironmentForm.styles';
 import React from 'react';
 import Input from '../../common/Input/Input';
 import EnvironmentTypeSelector from '../../environments/form/EnvironmentTypeSelector/EnvironmentTypeSelector';
@@ -12,7 +12,7 @@ interface ICreateEnvironmentForm {
     type: string;
     setName: React.Dispatch<React.SetStateAction<string>>;
     setType: React.Dispatch<React.SetStateAction<string>>;
-    validateEnvironmentName: (e: any) => void;
+    validateEnvironmentName?: (e: any) => void;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -51,6 +51,7 @@ const CreateEnvironmentForm = ({
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
                     onBlur={validateEnvironmentName}
+                    disabled={submitButtonText === 'Edit'}
                 />
 
                 <p className={styles.inputDescription}>
