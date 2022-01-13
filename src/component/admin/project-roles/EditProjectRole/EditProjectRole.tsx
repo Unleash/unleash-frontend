@@ -19,18 +19,6 @@ const EditProjectRole = () => {
     const { id } = useParams();
     const { role } = useProjectRole(id);
 
-    useEffect(() => {
-        const initialCheckedPermissions = role?.permissions?.reduce(
-            (acc: { [key: string]: IPermission }, curr: IPermission) => {
-                acc[getRoleKey(curr)] = curr;
-                return acc;
-            },
-            {}
-        );
-        handleInitialCheckedPermissions(initialCheckedPermissions || {});
-        /* eslint-disable-next-line */
-    }, [role?.permissions?.length]);
-
     const history = useHistory();
     const {
         roleName,
@@ -48,7 +36,20 @@ const EditProjectRole = () => {
         clearErrors,
         getRoleKey,
         handleInitialCheckedPermissions,
+        permissions,
     } = useProjectRoleForm(role.name, role.description);
+
+    useEffect(() => {
+        const initialCheckedPermissions = role?.permissions?.reduce(
+            (acc: { [key: string]: IPermission }, curr: IPermission) => {
+                acc[getRoleKey(curr)] = curr;
+                return acc;
+            },
+            {}
+        );
+        handleInitialCheckedPermissions(initialCheckedPermissions || {});
+        /* eslint-disable-next-line */
+    }, [role?.permissions?.length, permissions.length]);
 
     const formatApiCode = () => {
         return `curl --location --request PUT '${

@@ -21,6 +21,7 @@ const useProjectRoleForm = (
         revalidateOnReconnect: false,
         revalidateOnFocus: false,
     });
+
     const [roleName, setRoleName] = useState(initialRoleName);
     const [roleDesc, setRoleDesc] = useState(initialRoleDesc);
     const [checkedPermissions, setCheckedPermissions] =
@@ -261,6 +262,7 @@ const useProjectRoleForm = (
         validateNameUniqueness,
         errors,
         getRoleKey,
+        permissions,
     };
 };
 
