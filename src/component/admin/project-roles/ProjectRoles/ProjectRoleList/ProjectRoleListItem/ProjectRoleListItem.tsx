@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 interface IRoleListItemProps {
     id: number;
     name: string;
+    type: string;
     description: string;
     setCurrentRole: React.Dispatch<React.SetStateAction<IProjectRole>>;
     setDelDialog: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ interface IRoleListItemProps {
 const RoleListItem = ({
     id,
     name,
+    type,
     description,
     setCurrentRole,
     setDelDialog,
@@ -47,6 +49,7 @@ const RoleListItem = ({
                         data-loading
                         aria-label="Edit"
                         tooltip="Edit"
+                        disabled={type === 'project'}
                         onClick={() => {
                             history.push(`/admin/roles/${id}/edit`);
                         }}

@@ -56,6 +56,7 @@ const ProjectRoleList = () => {
                     <ProjectRoleListItem
                         id={role.id}
                         name={role.name}
+                        type={role.type}
                         description={role.description}
                         setCurrentRole={setCurrentRole}
                         setDelDialog={setDelDialog}
