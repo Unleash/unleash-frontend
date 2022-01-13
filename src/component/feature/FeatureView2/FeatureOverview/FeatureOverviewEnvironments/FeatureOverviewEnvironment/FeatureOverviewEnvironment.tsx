@@ -22,10 +22,7 @@ import DisabledIndicator from '../../../../../common/DisabledIndicator/DisabledI
 import EnvironmentIcon from '../../../../../common/EnvironmentIcon/EnvironmentIcon';
 import PermissionButton from '../../../../../common/PermissionButton/PermissionButton';
 import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
-import {
-    CREATE_FEATURE_STRATEGY,
-    UPDATE_FEATURE,
-} from '../../../../../providers/AccessProvider/permissions';
+import { CREATE_FEATURE_STRATEGY } from '../../../../../providers/AccessProvider/permissions';
 
 import { useStyles } from './FeatureOverviewEnvironment.styles';
 import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';

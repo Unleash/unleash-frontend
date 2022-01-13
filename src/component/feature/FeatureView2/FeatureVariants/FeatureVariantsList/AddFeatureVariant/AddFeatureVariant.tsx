@@ -20,10 +20,7 @@ import { useCommonStyles } from '../../../../../../common.styles';
 import Dialogue from '../../../../../common/Dialogue';
 import { trim, modalStyles } from '../../../../../common/util';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
-import {
-    UPDATE_FEATURE,
-    UPDATE_FEATURE_VARIANTS,
-} from '../../../../../providers/AccessProvider/permissions';
+import { UPDATE_FEATURE_VARIANTS } from '../../../../../providers/AccessProvider/permissions';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
