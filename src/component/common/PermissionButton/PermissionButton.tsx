@@ -6,7 +6,7 @@ import ConditionallyRender from '../ConditionallyRender';
 
 interface IPermissionIconButtonProps
     extends React.HTMLProps<HTMLButtonElement> {
-    permission: string;
+    permission: string | string[];
     tooltip?: string;
     onClick?: (e: any) => void;
     disabled?: boolean;
@@ -27,13 +27,32 @@ const PermissionButton: React.FC<IPermissionIconButtonProps> = ({
     const { hasAccess } = useContext(AccessContext);
     let access;
 
-    if (projectId && environmentId) {
-        access = hasAccess(permission, projectId, environmentId);
-    } else if (projectId) {
-        access = hasAccess(permission, projectId);
-    } else {
-        access = hasAccess(permission);
-    }
+    const handleAccess = () => {
+        let access;
+        if (Array.isArray(permission)) {
+            access = permission.some(permission => {
+                if (projectId && environmentId) {
+                    return hasAccess(permission, projectId, environmentId);
+                } else if (projectId) {
+                    return hasAccess(permission, projectId);
+                } else {
+                    return hasAccess(permission);
+                }
+            });
+        } else {
+            if (projectId && environmentId) {
+                access = hasAccess(permission, projectId, environmentId);
+            } else if (projectId) {
+                access = hasAccess(permission, projectId);
+            } else {
+                access = hasAccess(permission);
+            }
+        }
+
+        return access;
+    };
+
+    access = handleAccess();
 
     const tooltipText = access
         ? tooltip

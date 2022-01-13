@@ -17,7 +17,10 @@ import Dialogue from '../../../../../common/Dialogue';
 import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
 import { ADD_CONSTRAINT_ID } from '../../../../../../testIds';
 import AccessContext from '../../../../../../contexts/AccessContext';
-import { UPDATE_FEATURE_STRATEGY } from '../../../../../providers/AccessProvider/permissions';
+import {
+    CREATE_FEATURE_STRATEGY,
+    UPDATE_FEATURE_STRATEGY,
+} from '../../../../../providers/AccessProvider/permissions';
 import Constraint from '../../../../../common/Constraint/Constraint';
 import PermissionButton from '../../../../../common/PermissionButton/PermissionButton';
 import { useParams } from 'react-router';
@@ -159,7 +162,10 @@ const FeatureStrategyAccordionBody: React.FC<
                             onClick={toggleConstraints}
                             variant={'text'}
                             data-test={ADD_CONSTRAINT_ID}
-                            permission={UPDATE_FEATURE_STRATEGY}
+                            permission={[
+                                UPDATE_FEATURE_STRATEGY,
+                                CREATE_FEATURE_STRATEGY,
+                            ]}
                             environmentId={activeEnvironment.name}
                             projectId={projectId}
                         >
@@ -188,11 +194,18 @@ const FeatureStrategyAccordionBody: React.FC<
             </Dialogue>
 
             <ConditionallyRender
-                condition={hasAccess(
-                    UPDATE_FEATURE_STRATEGY,
-                    projectId,
-                    activeEnvironment.name
-                )}
+                condition={
+                    hasAccess(
+                        UPDATE_FEATURE_STRATEGY,
+                        projectId,
+                        activeEnvironment.name
+                    ) ||
+                    hasAccess(
+                        CREATE_FEATURE_STRATEGY,
+                        projectId,
+                        activeEnvironment.name
+                    )
+                }
                 show={
                     <Type
                         parameters={parameters}

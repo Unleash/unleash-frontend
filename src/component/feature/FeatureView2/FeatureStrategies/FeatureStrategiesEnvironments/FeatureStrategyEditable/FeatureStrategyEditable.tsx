@@ -22,7 +22,6 @@ import {
     UPDATE_STRATEGY_BUTTON_ID,
 } from '../../../../../../testIds';
 import {
-    CREATE_FEATURE_STRATEGY,
     DELETE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
 } from '../../../../../providers/AccessProvider/permissions';
@@ -172,6 +171,7 @@ const FeatureStrategyEditable = ({
                                 <PermissionButton
                                     permission={UPDATE_FEATURE_STRATEGY}
                                     projectId={projectId}
+                                    environmentId={activeEnvironment?.name}
                                     variant="contained"
                                     color="primary"
                                     className={styles.editButton}
@@ -189,6 +189,7 @@ const FeatureStrategyEditable = ({
                                     variant="text"
                                     permission={UPDATE_FEATURE_STRATEGY}
                                     projectId={projectId}
+                                    environmentId={activeEnvironment?.name}
                                 >
                                     Discard changes
                                 </PermissionButton>
