@@ -1,4 +1,4 @@
-import { useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../../interfaces/params';
 import ConditionallyRender from '../../../../../../common/ConditionallyRender';
 import NoItemsStrategies from '../../../../../../common/NoItems/NoItemsStrategies/NoItemsStrategies';
