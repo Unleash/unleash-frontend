@@ -22,8 +22,9 @@ import {
     UPDATE_STRATEGY_BUTTON_ID,
 } from '../../../../../../testIds';
 import {
+    CREATE_FEATURE_STRATEGY,
     DELETE_FEATURE_STRATEGY,
-    UPDATE_FEATURE,
+    UPDATE_FEATURE_STRATEGY,
 } from '../../../../../providers/AccessProvider/permissions';
 import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import PermissionIconButton from '../../../../../common/PermissionIconButton/PermissionIconButton';
@@ -169,7 +170,7 @@ const FeatureStrategyEditable = ({
                         <>
                             <div className={styles.buttonContainer}>
                                 <PermissionButton
-                                    permission={UPDATE_FEATURE}
+                                    permission={UPDATE_FEATURE_STRATEGY}
                                     projectId={projectId}
                                     variant="contained"
                                     color="primary"
@@ -186,7 +187,7 @@ const FeatureStrategyEditable = ({
                                     disabled={loading}
                                     color="tertiary"
                                     variant="text"
-                                    permission={UPDATE_FEATURE}
+                                    permission={UPDATE_FEATURE_STRATEGY}
                                     projectId={projectId}
                                 >
                                     Discard changes
