@@ -50,7 +50,11 @@ const EditProjectRole = () => {
 
         handleInitialCheckedPermissions(initialCheckedPermissions || {});
         /* eslint-disable-next-line */
-    }, [role?.permissions?.length, permissions.length]);
+    }, [
+        role?.permissions?.length,
+        permissions?.project?.length,
+        permissions?.environments?.length,
+    ]);
 
     const formatApiCode = () => {
         return `curl --location --request PUT '${
