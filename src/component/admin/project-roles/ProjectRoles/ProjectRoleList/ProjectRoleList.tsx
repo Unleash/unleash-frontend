@@ -50,10 +50,11 @@ const ProjectRoleList = () => {
 
     const renderRoles = () => {
         return page
-            .filter(role => role.type !== ROOTROLE)
+            .filter(role => role?.type !== ROOTROLE)
             .map((role: IProjectRole) => {
                 return (
                     <ProjectRoleListItem
+                        key={role.id}
                         id={role.id}
                         name={role.name}
                         type={role.type}
