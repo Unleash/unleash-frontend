@@ -43,7 +43,7 @@ const EditTag = () => {
     const formatApiCode = () => {
         return `curl --location --request PUT '${
             uiConfig.unleashUrl
-        }/api/admin/tag-types${name}' \\
+        }/api/admin/tag-types/${name}' \\
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getTagPayload(), undefined, 2)}'`;
