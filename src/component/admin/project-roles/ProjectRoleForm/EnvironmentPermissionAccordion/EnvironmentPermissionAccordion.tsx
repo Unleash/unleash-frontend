@@ -22,7 +22,7 @@ interface IEnvironmentPermissionAccordionProps {
     handlePermissionChange: (permission: IPermission, type: string) => void;
     checkAllEnvironmentPermissions: (envName: string) => void;
     checkedPermissions: ICheckedPermission;
-    getRoleKey: (permission: { id: number; environment?: string; }) => string;
+    getRoleKey: (permission: { id: number; environment?: string }) => string;
 }
 
 const EnvironmentPermissionAccordion = ({
@@ -109,7 +109,7 @@ const EnvironmentPermissionAccordion = ({
                         color="primary"
                     />
                 }
-                label={'Check all permissions for this env'}
+                label={'Select all permissions for this env'}
             />
         );
 
