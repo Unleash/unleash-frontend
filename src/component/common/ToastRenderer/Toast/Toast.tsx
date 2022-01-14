@@ -40,6 +40,7 @@ const Toast = ({ title, text, type, confetti }: IToastData) => {
 
             return (
                 <div
+                    key={index}
                     style={style}
                     className={classnames(styles.starting, styles.anim)}
                 />
@@ -61,7 +62,10 @@ const Toast = ({ title, text, type, confetti }: IToastData) => {
                     <div className={styles.createdContainer}>
                         <div className={styles.headerContainer}>
                             <div>
-                                <CheckMarkBadge type={type} className={styles.checkMark} />
+                                <CheckMarkBadge
+                                    type={type}
+                                    className={styles.checkMark}
+                                />
                             </div>
                             <div className={styles.textContainer}>
                                 <h3 className={styles.headerStyles}>{title}</h3>
