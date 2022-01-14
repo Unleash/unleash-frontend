@@ -19,6 +19,7 @@ import EnvironmentListItem from './EnvironmentListItem/EnvironmentListItem';
 import { mutate } from 'swr';
 import EditEnvironment from '../EditEnvironment/EditEnvironment';
 import EnvironmentToggleConfirm from './EnvironmentToggleConfirm/EnvironmentToggleConfirm';
+import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 const EnvironmentList = () => {
     const defaultEnv = {
@@ -31,6 +32,8 @@ const EnvironmentList = () => {
     };
     const { environments, refetch } = useEnvironments();
     const [editEnvironment, setEditEnvironment] = useState(false);
+    const { refetch: refetchProjectRolePermissions } =
+        useProjectRolePermissions();
 
     const [selectedEnv, setSelectedEnv] = useState(defaultEnv);
     const [delDialog, setDeldialogue] = useState(false);
@@ -87,6 +90,7 @@ const EnvironmentList = () => {
     const handleDeleteEnvironment = async () => {
         try {
             await deleteEnvironment(selectedEnv.name);
+            refetchProjectRolePermissions();
             setToastData({
                 type: 'success',
                 title: 'Project environment deleted',

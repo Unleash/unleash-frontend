@@ -14,6 +14,7 @@ import EnvironmentTypeSelector from '../form/EnvironmentTypeSelector/Environment
 import Input from '../../common/Input/Input';
 import useEnvironments from '../../../hooks/api/getters/useEnvironments/useEnvironments';
 import { Alert } from '@material-ui/lab';
+import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 const NAME_EXISTS_ERROR = 'Error: Environment';
 
@@ -28,6 +29,7 @@ const CreateEnvironment = () => {
     const { environments } = useEnvironments();
     const ref = useLoading(loading);
     const { setToastApiError } = useToast();
+    const { refetch } = useProjectRolePermissions();
 
     const handleTypeChange = (event: React.FormEvent<HTMLInputElement>) => {
         setType(event.currentTarget.value);
@@ -72,9 +74,10 @@ const CreateEnvironment = () => {
 
             try {
                 await createEnvironment(environment);
+                refetch();
                 setCreateSucceess(true);
             } catch (e) {
-                setToastApiError(e.toString);
+                setToastApiError(e.toString());
             }
         }
     };
