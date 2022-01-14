@@ -47,6 +47,7 @@ const TagForm = ({
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
+                    disabled={submitButtonText === 'Edit'}
                 />
 
                 <p className={styles.inputDescription}>

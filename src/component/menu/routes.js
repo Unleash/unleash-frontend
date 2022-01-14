@@ -15,7 +15,6 @@ import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
 import ListTagTypes from '../../page/tag-types';
-import EditTagType from '../../page/tag-types/edit';
 import ListTags from '../../page/tags';
 import Addons from '../../page/addons';
 import AddonsCreate from '../../page/addons/create';
@@ -42,6 +41,7 @@ import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
 import CreateTag from '../tagTypes/CreateTag/CreateTag';
+import EditTag from '../tagTypes/EditTag/EditTag';
 
 export const routes = [
     // Project
@@ -277,7 +277,7 @@ export const routes = [
         path: '/tag-types/edit/:name',
         parent: '/tag-types',
         title: ':name',
-        component: EditTagType,
+        component: EditTag,
         type: 'protected',
         layout: 'main',
         menu: {},

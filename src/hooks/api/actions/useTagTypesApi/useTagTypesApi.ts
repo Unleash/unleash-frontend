@@ -2,7 +2,7 @@ import { ITagPayload } from '../../../../interfaces/tags';
 import useAPI from '../useApi/useApi';
 
 const useTagTypesApi = () => {
-    const { makeRequest, createRequest, errors } = useAPI({
+    const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
 
@@ -68,6 +68,7 @@ const useTagTypesApi = () => {
         updateTagType,
         deleteTagType,
         errors,
+        loading
     };
 };
 
