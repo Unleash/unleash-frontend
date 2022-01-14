@@ -440,7 +440,7 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         flag: RE,
-        menu: {},
+        menu: { adminSettings: true },
     },
     {
         path: '/admin',

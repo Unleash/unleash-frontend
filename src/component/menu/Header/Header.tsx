@@ -54,7 +54,7 @@ const Header = () => {
     const filteredMainRoutes = {
         mainNavRoutes: routes.mainNavRoutes.filter(filterByFlags(flags)),
         mobileRoutes: routes.mobileRoutes.filter(filterByFlags(flags)),
-        adminRoutes: routes.adminRoutes,
+        adminRoutes: routes.adminRoutes.filter(filterByFlags(flags)),
     };
 
     return (
@@ -125,7 +125,6 @@ const Header = () => {
                                             rel="noopener noreferrer"
                                             className={styles.docsLink}
                                         >
-                                            
                                             <MenuBookIcon
                                                 className={styles.docsIcon}
                                             />
@@ -148,7 +147,7 @@ const Header = () => {
 
                                     <NavigationMenu
                                         id="admin-navigation"
-                                        options={routes.adminRoutes}
+                                        options={filteredMainRoutes.adminRoutes}
                                         anchorEl={anchorEl}
                                         handleClose={handleClose}
                                         style={{ top: '40px', left: '-125px' }}
