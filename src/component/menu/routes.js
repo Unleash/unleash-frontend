@@ -15,10 +15,8 @@ import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
 import ListTagTypes from '../../page/tag-types';
-import CreateTagType from '../../page/tag-types/create';
 import EditTagType from '../../page/tag-types/edit';
 import ListTags from '../../page/tags';
-import CreateTag from '../../page/tags/create';
 import Addons from '../../page/addons';
 import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
@@ -43,6 +41,7 @@ import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
+import CreateTag from '../tagTypes/CreateTag/CreateTag';
 
 export const routes = [
     // Project
@@ -269,7 +268,7 @@ export const routes = [
         path: '/tag-types/create',
         parent: '/tag-types',
         title: 'Create',
-        component: CreateTagType,
+        component: CreateTag,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -291,15 +290,15 @@ export const routes = [
         layout: 'main',
         menu: { mobile: true, advanced: true },
     },
-    {
-        path: '/tags/create',
-        parent: '/tags',
-        title: 'Create',
-        component: CreateTag,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
+    // {
+    //     path: '/tags/create',
+    //     parent: '/tags',
+    //     title: 'Create',
+    //     component: CreateTag,
+    //     type: 'protected',
+    //     layout: 'main',
+    //     menu: {},
+    // },
     {
         path: '/tags',
         title: 'Tags',
