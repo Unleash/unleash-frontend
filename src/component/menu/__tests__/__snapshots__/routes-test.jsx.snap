@@ -391,7 +391,9 @@ Array [
     "component": [Function],
     "flag": "RE",
     "layout": "main",
-    "menu": Object {},
+    "menu": Object {
+      "adminSettings": true,
+    },
     "parent": "/admin",
     "path": "/admin/roles",
     "title": "Project Roles",
