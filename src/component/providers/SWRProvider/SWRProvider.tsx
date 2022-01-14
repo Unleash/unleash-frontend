@@ -21,7 +21,7 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
 
     const handleFetchError = error => {
         setShowLoader(false);
-        console.log(error.info.name);
+        console.log(error?.info?.name);
         if (error.status === 401) {
             cache.clear();
             const path = location.pathname;
