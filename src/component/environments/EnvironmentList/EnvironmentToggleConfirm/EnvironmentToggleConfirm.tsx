@@ -4,7 +4,7 @@ import React from 'react';
 import { IEnvironment } from '../../../../interfaces/environments';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import Dialogue from '../../../common/Dialogue';
-import CreateEnvironmentSuccessCard from '../../CreateEnvironment/CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
+import CreateEnvironmentSuccessCard from '../../CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
 
 interface IEnvironmentToggleConfirmProps {
     env: IEnvironment;

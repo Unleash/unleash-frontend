@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import CheckMarkBadge from '../../../common/CheckmarkBadge/CheckMarkBadge';
+import CheckMarkBadge from '../../common/CheckmarkBadge/CheckMarkBadge';
 import { useStyles } from './CreateEnvironmentSuccess.styles';
 import CreateEnvironmentSuccessCard from './CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
 

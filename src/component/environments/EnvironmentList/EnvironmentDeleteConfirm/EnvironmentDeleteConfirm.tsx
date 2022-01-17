@@ -3,7 +3,7 @@ import React from 'react';
 import { IEnvironment } from '../../../../interfaces/environments';
 import Dialogue from '../../../common/Dialogue';
 import Input from '../../../common/Input/Input';
-import CreateEnvironmentSuccessCard from '../../CreateEnvironment/CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
+import CreateEnvironmentSuccessCard from '../../CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
 import { useStyles } from './EnvironmentDeleteConfirm.styles';
 
 interface IEnviromentDeleteConfirmProps {
