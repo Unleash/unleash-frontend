@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
     Avatar,
     Button,
@@ -9,27 +8,29 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    InputLabel,
     List,
     ListItem,
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
     MenuItem,
-    Select,
-    FormControl,
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 
-import AddUserComponent from './access-add-user';
+import AddUserComponent from '../access-add-user';
 
-import projectApi from '../../store/project/api';
-import PageContent from '../common/PageContent';
-import useUiConfig from '../../hooks/api/getters/useUiConfig/useUiConfig';
-import { useStyles } from './access-component.style';
-import PermissionIconButton from '../common/PermissionIconButton/PermissionIconButton';
-function AccessComponent({ projectId }) {
+import projectApi from '../../../store/project/api';
+import PageContent from '../../common/PageContent';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import { useStyles } from './ProjectAccess.styles';
+import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
+import { useParams } from 'react-router-dom';
+import { IFeatureViewParams } from '../../../interfaces/params';
+import ProjectRoleSelect from './ProjectRoleSelect/ProjectRoleSelect';
+
+const ProjectAccess = () => {
+    const { id } = useParams<IFeatureViewParams>();
     const styles = useStyles();
     const [roles, setRoles] = useState([]);
     const [users, setUsers] = useState([]);
@@ -39,11 +40,11 @@ function AccessComponent({ projectId }) {
     useEffect(() => {
         fetchAccess();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [projectId]);
+    }, [id]);
 
     const fetchAccess = async () => {
         try {
-            const access = await projectApi.fetchAccess(projectId);
+            const access = await projectApi.fetchAccess(id);
             setRoles(access.roles);
             setUsers(
                 access.users.map(u => ({ ...u, name: u.name || '(No name)' }))
@@ -71,8 +72,8 @@ function AccessComponent({ projectId }) {
     const handleRoleChange = (userId, currRoleId) => async evt => {
         const roleId = evt.target.value;
         try {
-            await projectApi.removeUserFromRole(projectId, currRoleId, userId);
-            await projectApi.addUserToRole(projectId, roleId, userId);
+            await projectApi.removeUserFromRole(id, currRoleId, userId);
+            await projectApi.addUserToRole(id, roleId, userId);
             const newUsers = users.map(u => {
                 if (u.id === userId) {
                     return { ...u, roleId };
@@ -86,7 +87,7 @@ function AccessComponent({ projectId }) {
 
     const addUser = async (userId, roleId) => {
         try {
-            await projectApi.addUserToRole(projectId, roleId, userId);
+            await projectApi.addUserToRole(id, roleId, userId);
             await fetchAccess();
         } catch (err) {
             setError(err.message || 'Server problems when adding users.');
@@ -95,7 +96,7 @@ function AccessComponent({ projectId }) {
 
     const removeAccess = (userId, roleId) => async () => {
         try {
-            await projectApi.removeUserFromRole(projectId, roleId, userId);
+            await projectApi.removeUserFromRole(id, roleId, userId);
             const newUsers = users.filter(u => u.id !== userId);
             setUsers(newUsers);
         } catch (err) {
@@ -149,54 +150,23 @@ function AccessComponent({ projectId }) {
                             <ListItemSecondaryAction
                                 className={styles.actionList}
                             >
-                                <FormControl variant="outlined" size="small">
-                                    <InputLabel
-                                        className={styles.inputLabel}
-                                        for="add-user-select-role-label"
-                                    >
-                                        Role
-                                    </InputLabel>
-                                    <Select
-                                        labelId={`role-${user.id}-select-label`}
-                                        id={`role-${user.id}-select`}
-                                        key={user.id}
-                                        placeholder="Choose role"
-                                        value={user.roleId || ''}
-                                        onChange={handleRoleChange(
-                                            user.id,
-                                            user.roleId
-                                        )}
-                                        renderValue={roleId => {
-                                            return roles.find(role => {
-                                                return role.id === roleId;
-                                            }).name;
-                                        }}
-                                    >
-                                        <MenuItem value="" disabled>
-                                            Choose role
-                                        </MenuItem>
-                                        {roles.map(role => (
-                                            <MenuItem
-                                                key={`${user.id}:${role.id}`}
-                                                value={role.id}
-                                                classes={{
-                                                    root: [styles.menuItem],
-                                                }}
-                                            >
-                                                <div>
-                                                    <span
-                                                        className={
-                                                            styles.roleName
-                                                        }
-                                                    >
-                                                        {role.name}
-                                                    </span>
-                                                    <p>{role.description}</p>
-                                                </div>
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                <ProjectRoleSelect
+                                    labelId={`role-${user.id}-select-label`}
+                                    id={`role-${user.id}-select`}
+                                    key={user.id}
+                                    placeholder="Choose role"
+                                    onChange={handleRoleChange(
+                                        user.id,
+                                        user.roleId
+                                    )}
+                                    roles={roles}
+                                    value={user.roleId || ''}
+                                >
+                                    <MenuItem value="" disabled>
+                                        Choose role
+                                    </MenuItem>
+                                </ProjectRoleSelect>
+
                                 <PermissionIconButton
                                     className={styles.iconButton}
                                     edge="end"
@@ -204,7 +174,11 @@ function AccessComponent({ projectId }) {
                                     title="Remove access"
                                     onClick={removeAccess(user.id, user.roleId)}
                                     disabled={users.length === 1}
-                                    tooltip={users.length === 1 ? 'A project must have at least one owner' : 'Remove acccess'}
+                                    tooltip={
+                                        users.length === 1
+                                            ? 'A project must have at least one owner'
+                                            : 'Remove acccess'
+                                    }
                                 >
                                     <Delete />
                                 </PermissionIconButton>
@@ -215,11 +189,6 @@ function AccessComponent({ projectId }) {
             </List>
         </PageContent>
     );
-}
-
-AccessComponent.propTypes = {
-    projectId: PropTypes.string.isRequired,
-    project: PropTypes.object,
 };
 
-export default AccessComponent;
+export default ProjectAccess;

@@ -16,9 +16,9 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     inputLabel: { backgroundColor: '#fff' },
-    roleName:{
+    roleName: {
         fontWeight: 'bold',
-        padding: '5px 0px'
+        padding: '5px 0px',
     },
     iconButton: {
         marginLeft: '0.5rem',
@@ -26,5 +26,8 @@ export const useStyles = makeStyles(theme => ({
     menuItem: {
         width: '340px',
         whiteSpace: 'normal',
+    },
+    projectRoleSelect: {
+        minWidth: '150px',
     },
 }));

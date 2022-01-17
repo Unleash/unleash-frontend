@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import projectApi from '../../store/project/api';
 import PropTypes from 'prop-types';
 import {
-    Select,
-    MenuItem,
     TextField,
     CircularProgress,
-    InputLabel,
-    FormControl,
     Grid,
     Button,
     InputAdornment,
@@ -15,10 +11,9 @@ import {
 import { Search } from '@material-ui/icons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Alert } from '@material-ui/lab';
-import { useStyles } from './access-component.style';
+import ProjectRoleSelect from './ProjectAccess/ProjectRoleSelect/ProjectRoleSelect';
 
 function AddUserComponent({ roles, addUserToRole }) {
-    const styles = useStyles();
     const [user, setUser] = useState();
     const [role, setRole] = useState({});
     const [options, setOptions] = useState([]);
@@ -133,47 +128,14 @@ function AddUserComponent({ roles, addUserToRole }) {
                     />
                 </Grid>
                 <Grid item>
-                    <FormControl
-                        variant="outlined"
-                        size="small"
-                        style={{ minWidth: '125px' }}
-                    >
-                        <InputLabel
-                            style={{ backgroundColor: '#fff' }}
-                            id="add-user-select-role-label"
-                        >
-                            Role
-                        </InputLabel>
-                        <Select
-                            labelId="add-user-select-role-label"
-                            id="add-user-select-role"
-                            placeholder="Project role"
-                            value={role.id || ''}
-                            onChange={handleRoleChange}
-                            renderValue={roleId => {
-                                return roles.find(role => {
-                                    return role.id === roleId;
-                                }).name;
-                            }}
-                        >
-                            {roles.map(role => (
-                                <MenuItem
-                                    key={role.id}
-                                    value={role.id}
-                                    classes={{
-                                        root: [styles.menuItem],
-                                    }}
-                                >
-                                    <div>
-                                        <span className={styles.roleName}>
-                                            {role.name}
-                                        </span>
-                                        <p>{role.description}</p>
-                                    </div>
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <ProjectRoleSelect
+                        labelId="add-user-select-role-label"
+                        id="add-user-select-role"
+                        placeholder="Project role"
+                        value={role.id || ''}
+                        onChange={handleRoleChange}
+                        roles={roles}
+                    />
                 </Grid>
                 <Grid item>
                     <Button
