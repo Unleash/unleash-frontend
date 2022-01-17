@@ -5,6 +5,9 @@ import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
 import useAddUserForm from '../hooks/useAddUserForm';
 import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
+import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
+import { useState } from 'react';
+import { scrollToTop } from '../../../common/util';
 
 const CreateUser = () => {
     /* @ts-ignore */
@@ -26,6 +29,8 @@ const CreateUser = () => {
         errors,
         clearErrors,
     } = useAddUserForm();
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [inviteLink, setInviteLink] = useState('');
 
     const { addUser, userLoading: loading } = useAdminUsersApi();
 
@@ -38,18 +43,27 @@ const CreateUser = () => {
         if (validName && validEmail) {
             const payload = getAddUserPayload();
             try {
-                await addUser(payload);
-                history.push('/admin/user-admin');
-                setToastData({
-                    title: 'Team member added',
-                    text: 'A new team member has been added. We’ve sent an email on your behalf to inform them of their new account and role. No further steps are required.',
-                    confetti: true,
-                    type: 'success',
-                });
+                await addUser(payload)
+                    .then(res => res.json())
+                    .then(user => {
+                        scrollToTop();
+                        setInviteLink(user.inviteLink);
+                        setShowConfirm(true);
+                        setToastData({
+                            title: 'Team member added',
+                            text: "A new team member has been added. We've sent an email on your behalf to inform them of their new account and role. No further steps are required.",
+                            confetti: true,
+                            type: 'success',
+                        });
+                    });
             } catch (e: any) {
                 setToastApiError(e.toString());
             }
         }
+    };
+    const closeConfirm = () => {
+        setShowConfirm(false);
+        history.push('/admin/user-admin');
     };
 
     const formatApiCode = () => {
@@ -88,6 +102,12 @@ const CreateUser = () => {
                 setRootRole={setRootRole}
                 submitButtonText="Add"
                 clearErrors={clearErrors}
+            />
+            <ConfirmUserAdded
+                open={showConfirm}
+                closeConfirm={closeConfirm}
+                emailSent={sendEmail}
+                inviteLink={inviteLink}
             />
         </FormTemplate>
     );
