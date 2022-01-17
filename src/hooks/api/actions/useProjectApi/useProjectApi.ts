@@ -27,6 +27,22 @@ const useProjectApi = () => {
         }
     };
 
+    const validateId = async (payload: ICreatePayload) => {
+        const path = `api/admin/projects/validate`;
+        const req = createRequest(path, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     const editProject = async (id: string, payload: ICreatePayload) => {
         const path = `api/admin/projects/${id}`;
         const req = createRequest(path, {
@@ -93,6 +109,7 @@ const useProjectApi = () => {
 
     return {
         createProject,
+        validateId,
         editProject,
         deleteProject,
         addEnvironmentToProject,

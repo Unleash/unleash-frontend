@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjectApi';
 import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import { IPermission } from '../../../../interfaces/project';
 
@@ -16,6 +17,7 @@ const useProjectForm = (
     const [projectName, setProjectName] = useState(initialProjectName);
     const [projectDesc, setProjectDesc] = useState(initialProjectDesc);
     const [errors, setErrors] = useState({});
+    const { validateId } = useProjectApi();
 
     useEffect(() => {
         setProjectId(initialProjectId);
@@ -36,28 +38,31 @@ const useProjectForm = (
             description: projectDesc,
         };
     };
-
-    const validateIdUniqueness = () => {
-        if (projectId.length === 0) {
-            setErrors(prev => ({ ...prev, id: 'id can not be empty.' }));
-            return false;
+    const NAME_EXISTS_ERROR = 'Error: A project with this id already exists.';
+    const validateIdUniqueness = async () => {
+        try {
+            await validateId(getProjectPayload());
+        } catch (e: any) {
+            console.log(e.toString());
+            if (e.toString().includes(NAME_EXISTS_ERROR)) {
+                setErrors(prev => ({
+                    ...prev,
+                    id: 'A project with this id already exists',
+                }));
+            }
         }
-        let projectIdExist = projects.some(
-            project => project['id'] === projectId
-        );
-        if (projectIdExist) {
-            setErrors(prev => ({
-                ...prev,
-                id: 'There already exists a project with this id',
-            }));
-            return false;
-        }
-        return true;
     };
 
     const validateName = () => {
         if (projectName.length === 0) {
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
+            return false;
+        }
+        return true;
+    };
+    const validateProjectId = () => {
+        if (projectId.length === 0) {
+            setErrors(prev => ({ ...prev, id: 'id can not be empty.' }));
             return false;
         }
         return true;
@@ -76,6 +81,7 @@ const useProjectForm = (
         setProjectDesc,
         getProjectPayload,
         validateName,
+        validateProjectId,
         validateIdUniqueness,
         clearErrors,
         errors,

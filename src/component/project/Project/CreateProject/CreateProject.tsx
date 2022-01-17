@@ -24,6 +24,7 @@ const CreateProject = () => {
         clearErrors,
         validateIdUniqueness,
         validateName,
+        validateProjectId,
         errors,
     } = useProjectForm();
 
@@ -32,10 +33,9 @@ const CreateProject = () => {
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
-        const validprojectId = validateIdUniqueness();
         const validName = validateName();
-
-        if (validprojectId && validName) {
+        const validId = validateProjectId();
+        if (validName && validId) {
             const payload = getProjectPayload();
             try {
                 await createProject(payload);

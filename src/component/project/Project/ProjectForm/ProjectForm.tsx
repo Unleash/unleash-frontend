@@ -1,9 +1,10 @@
 import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import { CREATE_PROJECT } from '../../../providers/AccessProvider/permissions';
 import Input from '../../../common/Input/Input';
 import { TextField, Button } from '@material-ui/core';
 import { useStyles } from './ProjectForm.style';
 import React from 'react';
+import { trim } from '../../../common/util';
 
 interface IProjectForm {
     projectId: string;
@@ -48,7 +49,7 @@ const ProjectForm = ({
                     className={styles.input}
                     label="Project Id"
                     value={projectId}
-                    onChange={e => setProjectId(e.target.value)}
+                    onChange={e => setProjectId(trim(e.target.value))}
                     error={Boolean(errors.id)}
                     errorText={errors.id}
                     onFocus={() => clearErrors()}
@@ -89,7 +90,7 @@ const ProjectForm = ({
                 </Button>
                 <PermissionButton
                     onClick={handleSubmit}
-                    permission={ADMIN}
+                    permission={CREATE_PROJECT}
                     type="submit"
                 >
                     {submitButtonText} project
