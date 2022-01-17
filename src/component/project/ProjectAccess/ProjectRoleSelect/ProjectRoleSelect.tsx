@@ -24,11 +24,7 @@ const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
 }) => {
     const styles = useStyles();
     return (
-        <FormControl
-            variant="outlined"
-            size="small"
-            style={{ minWidth: '125px' }}
-        >
+        <FormControl variant="outlined" size="small">
             <InputLabel
                 style={{ backgroundColor: '#fff' }}
                 id="add-user-select-role-label"
