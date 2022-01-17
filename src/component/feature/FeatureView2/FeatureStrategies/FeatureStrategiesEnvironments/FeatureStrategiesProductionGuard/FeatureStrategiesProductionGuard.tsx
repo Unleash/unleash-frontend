@@ -3,6 +3,9 @@ import { Alert } from '@material-ui/lab';
 import { useState } from 'react';
 import Dialogue from '../../../../../common/Dialogue';
 
+export const FEATURE_STRATEGY_PRODUCTION_GUARD_SETTING =
+    'FEATURE_STRATEGY_PRODUCTION_GUARD_SETTING';
+
 interface IFeatureStrategiesProductionGuard {
     show: boolean;
     onClick: () => void;
@@ -19,11 +22,17 @@ const FeatureStrategiesProductionGuard = ({
     loading,
 }: IFeatureStrategiesProductionGuard) => {
     const [checked, setIsChecked] = useState(
-        JSON.parse(localStorage.getItem('hide') || 'false')
+        JSON.parse(
+            localStorage.getItem(FEATURE_STRATEGY_PRODUCTION_GUARD_SETTING) ||
+                'false'
+        )
     );
     const handleOnchange = () => {
         setIsChecked(!checked);
-        localStorage.setItem('hide', (!checked).toString());
+        localStorage.setItem(
+            FEATURE_STRATEGY_PRODUCTION_GUARD_SETTING,
+            (!checked).toString()
+        );
     };
     return (
         <Dialogue
