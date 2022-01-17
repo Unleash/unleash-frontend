@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
-
 import {
     List,
     ListItem,
@@ -12,7 +11,6 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Add, Delete, Label } from '@material-ui/icons';
-
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
@@ -22,20 +20,35 @@ import {
 } from '../../providers/AccessProvider/permissions';
 import Dialogue from '../../common/Dialogue/Dialogue';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 import styles from '../TagType.module.scss';
 import AccessContext from '../../../contexts/AccessContext';
+import useTagTypesApi from '../../../hooks/api/actions/useTagTypesApi/useTagTypesApi';
+import useTagTypes from '../../../hooks/api/getters/useTagTypes/useTagTypes';
+import useToast from '../../../hooks/useToast';
 
-const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
+const TagTypeList = () => {
     const { hasAccess } = useContext(AccessContext);
     const [deletion, setDeletion] = useState({ open: false });
     const history = useHistory();
     const smallScreen = useMediaQuery('(max-width:700px)');
+    const { deleteTagType } = useTagTypesApi();
+    const { tagTypes, refetch } = useTagTypes();
+    const { setToastData, setToastApiError } = useToast();
 
-    useEffect(() => {
-        fetchTagTypes();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const deleteTag = async () => {
+        try {
+            await deleteTagType(deletion.name);
+            refetch();
+            setDeletion({ open: false });
+            setToastData({
+                type: 'success',
+                show: true,
+                text: 'Successfully deleted tag type.',
+            });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
+    };
 
     let header = (
         <HeaderTitle
@@ -124,10 +137,7 @@ const TagTypeList = ({ tagTypes, fetchTagTypes, removeTagType }) => {
             <Dialogue
                 title="Really delete Tag type?"
                 open={deletion.open}
-                onClick={() => {
-                    removeTagType(deletion.name);
-                    setDeletion({ open: false });
-                }}
+                onClick={deleteTag}
                 onClose={() => {
                     setDeletion({ open: false });
                 }}

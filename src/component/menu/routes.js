@@ -15,10 +15,7 @@ import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
 import ListTagTypes from '../../page/tag-types';
-import CreateTagType from '../../page/tag-types/create';
-import EditTagType from '../../page/tag-types/edit';
 import ListTags from '../../page/tags';
-import CreateTag from '../../page/tags/create';
 import Addons from '../../page/addons';
 import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
@@ -48,6 +45,8 @@ import CreateApiToken from '../admin/api-token/CreateApiToken/CreateApiToken';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
 
+import EditTag from '../tagTypes/EditTag/EditTag';
+import CreateTag from '../tagTypes/CreateTag/CreateTag';
 
 export const routes = [
     // Project
@@ -282,7 +281,7 @@ export const routes = [
         path: '/tag-types/create',
         parent: '/tag-types',
         title: 'Create',
-        component: CreateTagType,
+        component: CreateTag,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -291,7 +290,7 @@ export const routes = [
         path: '/tag-types/edit/:name',
         parent: '/tag-types',
         title: ':name',
-        component: EditTagType,
+        component: EditTag,
         type: 'protected',
         layout: 'main',
         menu: {},
