@@ -12,7 +12,6 @@ const useProjectForm = (
     initialProjectName = '',
     initialProjectDesc = ''
 ) => {
-    const { projects } = useProjects();
     const [projectId, setProjectId] = useState(initialProjectId);
     const [projectName, setProjectName] = useState(initialProjectName);
     const [projectDesc, setProjectDesc] = useState(initialProjectDesc);
@@ -43,7 +42,6 @@ const useProjectForm = (
         try {
             await validateId(getProjectPayload());
         } catch (e: any) {
-            console.log(e.toString());
             if (e.toString().includes(NAME_EXISTS_ERROR)) {
                 setErrors(prev => ({
                     ...prev,
