@@ -2,7 +2,7 @@ import Input from '../../common/Input/Input';
 import { TextField, Button } from '@material-ui/core';
 
 import { useStyles } from './TagForm.styles';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 interface ITagForm {
     tagName: string;
@@ -14,10 +14,10 @@ interface ITagForm {
     errors: { [key: string]: string };
     mode: string;
     clearErrors: () => void;
-    children?: ReactElement
 }
 
-const TagForm = ({
+const TagForm: React.FC<ITagForm> = ({
+    children,
     handleSubmit,
     handleCancel,
     tagName,
@@ -27,8 +27,7 @@ const TagForm = ({
     errors,
     mode,
     clearErrors,
-    children
-}: ITagForm) => {
+}) => {
     const styles = useStyles();
 
     return (
