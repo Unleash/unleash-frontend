@@ -4,6 +4,8 @@ import useTagType from '../../../hooks/api/getters/useTagType/useTagType';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { UPDATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
 import useTagForm from '../hooks/useTagForm';
 import TagForm from '../TagForm/TagForm';
 
@@ -69,9 +71,17 @@ const EditTag = () => {
                 setTagName={setTagName}
                 tagDesc={tagDesc}
                 setTagDesc={setTagDesc}
-                submitButtonText="Edit"
+                mode="Edit"
                 clearErrors={clearErrors}
-            />
+            >
+                <PermissionButton
+                    onClick={handleSubmit}
+                    permission={UPDATE_TAG_TYPE}
+                    type="submit"
+                >
+                    Edit type
+                </PermissionButton>
+            </TagForm>
         </FormTemplate>
     );
 };

@@ -3,6 +3,8 @@ import useTagTypesApi from '../../../hooks/api/actions/useTagTypesApi/useTagType
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { CREATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
 import useTagForm from '../hooks/useTagForm';
 import TagForm from '../TagForm/TagForm';
 
@@ -71,9 +73,17 @@ const CreateTag = () => {
                 setTagName={setTagName}
                 tagDesc={tagDesc}
                 setTagDesc={setTagDesc}
-                submitButtonText="Create"
+                mode="Create"
                 clearErrors={clearErrors}
-            />
+            >
+                <PermissionButton
+                    onClick={handleSubmit}
+                    permission={CREATE_TAG_TYPE}
+                    type="submit"
+                >
+                    Create type
+                </PermissionButton>
+            </TagForm>
         </FormTemplate>
     );
 };

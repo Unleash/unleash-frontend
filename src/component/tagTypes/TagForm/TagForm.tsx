@@ -1,10 +1,8 @@
-import PermissionButton from '../../common/PermissionButton/PermissionButton';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
 import Input from '../../common/Input/Input';
 import { TextField, Button } from '@material-ui/core';
 
 import { useStyles } from './TagForm.styles';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 interface ITagForm {
     tagName: string;
@@ -14,8 +12,9 @@ interface ITagForm {
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
-    submitButtonText: string;
+    mode: string;
     clearErrors: () => void;
+    children?: ReactElement
 }
 
 const TagForm = ({
@@ -26,8 +25,9 @@ const TagForm = ({
     setTagName,
     setTagDesc,
     errors,
-    submitButtonText,
+    mode,
     clearErrors,
+    children
 }: ITagForm) => {
     const styles = useStyles();
 
@@ -47,7 +47,7 @@ const TagForm = ({
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
-                    disabled={submitButtonText === 'Edit'}
+                    disabled={mode === 'Edit'}
                 />
 
                 <p className={styles.inputDescription}>
@@ -67,13 +67,7 @@ const TagForm = ({
                 <Button onClick={handleCancel} className={styles.cancelButton}>
                     Cancel
                 </Button>
-                <PermissionButton
-                    onClick={handleSubmit}
-                    permission={ADMIN}
-                    type="submit"
-                >
-                    {submitButtonText} type
-                </PermissionButton>
+                {children}
             </div>
         </form>
     );
