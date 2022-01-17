@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjectApi';
-import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import { IPermission } from '../../../../interfaces/project';
 
 export interface ICheckedPermission {
