@@ -9,7 +9,7 @@ import PermissionButton from '../../../common/PermissionButton/PermissionButton'
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import { useStyles } from './ApiTokenForm.styles';
 
-interface ICreateApiTokenFormProps {
+interface IApiTokenFormProps {
     username: string;
     type: string;
     project: string;
@@ -24,7 +24,7 @@ interface ICreateApiTokenFormProps {
     submitButtonText: string;
     clearErrors: () => void;
 }
-const CreateApiTokenForm = ({
+const ApiTokenForm = ({
     username,
     type,
     project,
@@ -38,7 +38,7 @@ const CreateApiTokenForm = ({
     errors,
     clearErrors,
     submitButtonText,
-}: ICreateApiTokenFormProps) => {
+}: IApiTokenFormProps) => {
     const TYPE_ADMIN = 'ADMIN';
     const styles = useStyles();
     const { environments } = useEnvironments();
@@ -71,7 +71,7 @@ const CreateApiTokenForm = ({
 
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
-                    What is your token username?
+                    Who are you generating the token for?
                 </p>
                 <Input
                     className={styles.input}
@@ -96,7 +96,9 @@ const CreateApiTokenForm = ({
                     IconComponent={KeyboardArrowDownOutlined}
                     className={styles.selectInput}
                 />
-                <p className={styles.inputDescription}>Which project?</p>
+                <p className={styles.inputDescription}>
+                    Which project do you want to give access to?
+                </p>
                 <GeneralSelect
                     disabled={type === TYPE_ADMIN}
                     value={project}
@@ -106,7 +108,9 @@ const CreateApiTokenForm = ({
                     IconComponent={KeyboardArrowDownOutlined}
                     className={styles.selectInput}
                 />
-                <p className={styles.inputDescription}>Which environment?</p>
+                <p className={styles.inputDescription}>
+                    Which environment should the token have access to?
+                </p>
                 <GeneralSelect
                     disabled={type === TYPE_ADMIN}
                     options={selectableEnvs}
@@ -135,4 +139,4 @@ const CreateApiTokenForm = ({
     );
 };
 
-export default CreateApiTokenForm;
+export default ApiTokenForm;
