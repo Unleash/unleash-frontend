@@ -26,7 +26,6 @@ import PaginateUI from '../../../common/PaginateUI/PaginateUI';
 function UsersList({ location, closeDialog, showDialog }) {
     const { users, roles, refetch, loading } = useUsers();
     const {
-        addUser,
         removeUser,
         updateUser,
         changePassword,
@@ -72,19 +71,6 @@ function UsersList({ location, closeDialog, showDialog }) {
 
     const closeUpdateDialog = () => {
         setUpdateDialog({ open: false });
-    };
-
-    const onAddUser = data => {
-        addUser(data)
-            .then(res => res.json())
-            .then(user => {
-                setEmailSent(user.emailSent);
-                setInviteLink(user.inviteLink);
-                closeDialog();
-                refetch();
-                setShowConfirm(true);
-            })
-            .catch(handleCatch);
     };
 
     const onDeleteUser = () => {
@@ -183,7 +169,6 @@ function UsersList({ location, closeDialog, showDialog }) {
                 emailSent={emailSent}
                 inviteLink={inviteLink}
             />
-
 
             <UpdateUser
                 showDialog={updateDialog.open}
