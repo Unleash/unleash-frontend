@@ -8,7 +8,6 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import AddUser from '../AddUser/AddUser';
 import ChangePassword from '../change-password-component';
 import UpdateUser from '../update-user-component';
 import DelUser from '../del-user-component';
@@ -185,15 +184,6 @@ function UsersList({ location, closeDialog, showDialog }) {
                 inviteLink={inviteLink}
             />
 
-            <AddUser
-                showDialog={showDialog}
-                closeDialog={closeDialog}
-                addUser={onAddUser}
-                userLoading={userLoading}
-                validatePassword={validatePassword}
-                userApiErrors={userApiErrors}
-                roles={roles}
-            />
 
             <UpdateUser
                 showDialog={updateDialog.open}

@@ -43,7 +43,7 @@ import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
-import AddNewUser from '../admin/users/AddNewUser/AddNewUser';
+import CreateUser from '../admin/users/CreateUser/CreateUser';
 import EditUser from '../admin/users/EditUser/EditUser';
 import CreateApiToken from '../admin/api-token/CreateApiToken/CreateApiToken';
 
@@ -439,7 +439,7 @@ export const routes = [
         path: '/admin/create-user',
         parent: '/admin',
         title: 'Users',
-        component: AddNewUser,
+        component: CreateUser,
         type: 'protected',
         layout: 'main',
         menu: {},
