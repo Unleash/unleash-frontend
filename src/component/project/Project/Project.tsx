@@ -13,7 +13,6 @@ import { useEffect } from 'react';
 import useTabs from '../../../hooks/useTabs';
 import TabPanel from '../../common/TabNav/TabPanel';
 import ProjectAccess from '../access-container';
-import EditProject from '../edit-project-container';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
@@ -57,19 +56,6 @@ const Project = () => {
             component: <ProjectEnvironment projectId={id} />,
             path: `${basePath}/environments`,
             name: 'environments',
-        },
-        {
-            title: 'Settings',
-            // @ts-ignore (fix later)
-            component: (
-                <EditProject
-                    projectId={id}
-                    history={history}
-                    title="Edit project"
-                />
-            ),
-            path: `${basePath}/settings`,
-            name: 'settings',
         },
     ];
 
