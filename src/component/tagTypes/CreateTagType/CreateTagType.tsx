@@ -4,7 +4,7 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
-import { CREATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
+import { UPDATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
 import useTagForm from '../hooks/useTagForm';
 import TagTypeForm from '../TagTypeForm/TagTypeForm';
 
@@ -78,7 +78,7 @@ const CreateTagType = () => {
             >
                 <PermissionButton
                     onClick={handleSubmit}
-                    permission={CREATE_TAG_TYPE}
+                    permission={UPDATE_TAG_TYPE}
                     type="submit"
                 >
                     Create type
