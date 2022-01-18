@@ -61,7 +61,7 @@ const EditUser = () => {
                 refetch();
                 history.push('/admin/users');
                 setToastData({
-                    title: 'User role updated',
+                    title: 'User information updated',
                     type: 'success',
                 });
             } catch (e: any) {

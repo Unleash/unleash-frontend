@@ -13,7 +13,7 @@ import { ADMIN } from '../../../providers/AccessProvider/permissions';
 
 const CreateUser = () => {
     /* @ts-ignore */
-    const { setToastData, setToastApiError } = useToast();
+    const { setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
     const {
@@ -51,12 +51,6 @@ const CreateUser = () => {
                         scrollToTop();
                         setInviteLink(user.inviteLink);
                         setShowConfirm(true);
-                        setToastData({
-                            title: 'Team member added',
-                            text: "A new team member has been added. We've sent an email on your behalf to inform them of their new account and role. No further steps are required.",
-                            confetti: true,
-                            type: 'success',
-                        });
                     });
             } catch (e: any) {
                 setToastApiError(e.toString());
