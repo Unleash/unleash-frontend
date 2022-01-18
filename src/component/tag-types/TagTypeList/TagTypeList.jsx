@@ -10,13 +10,14 @@ import {
     Button,
     Tooltip,
 } from '@material-ui/core';
-import { Add, Delete, Label } from '@material-ui/icons';
+import { Add, Delete, Edit, Label } from '@material-ui/icons';
 import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_TAG_TYPE,
     DELETE_TAG_TYPE,
+    UPDATE_TAG_TYPE,
 } from '../../providers/AccessProvider/permissions';
 import Dialogue from '../../common/Dialogue/Dialogue';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -25,6 +26,7 @@ import AccessContext from '../../../contexts/AccessContext';
 import useTagTypesApi from '../../../hooks/api/actions/useTagTypesApi/useTagTypesApi';
 import useTagTypes from '../../../hooks/api/getters/useTagTypes/useTagTypes';
 import useToast from '../../../hooks/useToast';
+import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 
 const TagTypeList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -109,6 +111,7 @@ const TagTypeList = () => {
                 </IconButton>
             </Tooltip>
         );
+
         return (
             <ListItem
                 key={`${tagType.name}`}
@@ -118,6 +121,13 @@ const TagTypeList = () => {
                     <Label />
                 </ListItemIcon>
                 <ListItemText primary={link} secondary={tagType.description} />
+                <PermissionIconButton
+                    permission={UPDATE_TAG_TYPE}
+                    component={Link}
+                    to={`/tag-types/edit/${tagType.name}`}
+                >
+                    <Edit className={styles.icon} />
+                </PermissionIconButton>
                 <ConditionallyRender
                     condition={hasAccess(DELETE_TAG_TYPE)}
                     show={deleteButton}

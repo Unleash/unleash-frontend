@@ -3,6 +3,8 @@ import { TextField, Button } from '@material-ui/core';
 
 import { useStyles } from './TagTypeForm.styles';
 import React from 'react';
+import { trim } from '../../common/util';
+import { EDIT } from '../../../constants/misc';
 
 interface ITagTypeForm {
     tagName: string;
@@ -42,11 +44,11 @@ const TagTypeForm: React.FC<ITagTypeForm> = ({
                     className={styles.input}
                     label="Tag name"
                     value={tagName}
-                    onChange={e => setTagName(e.target.value)}
+                    onChange={e => setTagName(trim(e.target.value))}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
-                    disabled={mode === 'Edit'}
+                    disabled={mode === EDIT}
                 />
 
                 <p className={styles.inputDescription}>

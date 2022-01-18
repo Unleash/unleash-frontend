@@ -15,7 +15,6 @@ import CreateContextField from '../../page/context/create';
 import EditContextField from '../../page/context/edit';
 import CreateProject from '../../page/project/create';
 import ListTagTypes from '../../page/tag-types';
-import ListTags from '../../page/tags';
 import Addons from '../../page/addons';
 import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
@@ -302,24 +301,6 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
-    },
-    {
-        path: '/tags/create',
-        parent: '/tags',
-        title: 'Create',
-        component: CreateTag,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/tags',
-        title: 'Tags',
-        component: ListTags,
-        hidden: true,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
     },
 
     // Addons
