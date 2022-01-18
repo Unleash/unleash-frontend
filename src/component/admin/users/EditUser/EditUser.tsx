@@ -10,6 +10,7 @@ import { scrollToTop } from '../../../common/util';
 import { useEffect } from 'react';
 import PermissionButton from '../../../common/PermissionButton/PermissionButton';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import { EDIT } from '../../../../constants/misc';
 
 const EditUser = () => {
     useEffect(() => {
@@ -96,6 +97,7 @@ const EditUser = () => {
                 rootRole={rootRole}
                 setRootRole={setRootRole}
                 clearErrors={clearErrors}
+                mode={EDIT}
             >
                 <PermissionButton
                     onClick={handleSubmit}

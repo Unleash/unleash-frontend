@@ -56,7 +56,7 @@ export const useStyles = makeStyles(theme => ({
         marginRight: '15px',
     },
     roleSubtitle: {
-        marginBottom: '0.5rem',
+        margin: '0.5rem 0',
     },
     errorAlert: {
         marginBottom: '1rem',

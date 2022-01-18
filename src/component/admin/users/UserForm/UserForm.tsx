@@ -11,6 +11,8 @@ import {
 import { useStyles } from './UserForm.styles';
 import React from 'react';
 import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
+import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
+import { EDIT } from '../../../../constants/misc';
 
 interface IUserForm {
     email: string;
@@ -25,6 +27,7 @@ interface IUserForm {
     handleCancel: () => void;
     errors: { [key: string]: string };
     clearErrors: () => void;
+    mode?: string;
 }
 
 const UserForm: React.FC<IUserForm> = ({
@@ -41,6 +44,7 @@ const UserForm: React.FC<IUserForm> = ({
     handleCancel,
     errors,
     clearErrors,
+    mode,
 }) => {
     const styles = useStyles();
     const { roles } = useUsers();
@@ -119,23 +123,30 @@ const UserForm: React.FC<IUserForm> = ({
                         ))}
                     </RadioGroup>
                 </FormControl>
-                <FormControl>
-                    <Typography
-                        variant="subtitle1"
-                        className={styles.roleSubtitle}
-                        data-loading
-                    >
-                        Should we send an email to your new team member
-                    </Typography>
-                    <div className={styles.flexRow}>
-                        <Switch
-                            name="sendEmail"
-                            onChange={() => setSendEmail(!sendEmail)}
-                            checked={sendEmail}
-                        />
-                        <Typography>{sendEmail ? 'Yes' : 'No'}</Typography>
-                    </div>
-                </FormControl>
+                <ConditionallyRender
+                    condition={mode !== EDIT}
+                    show={
+                        <FormControl>
+                            <Typography
+                                variant="subtitle1"
+                                className={styles.roleSubtitle}
+                                data-loading
+                            >
+                                Should we send an email to your new team member
+                            </Typography>
+                            <div className={styles.flexRow}>
+                                <Switch
+                                    name="sendEmail"
+                                    onChange={() => setSendEmail(!sendEmail)}
+                                    checked={sendEmail}
+                                />
+                                <Typography>
+                                    {sendEmail ? 'Yes' : 'No'}
+                                </Typography>
+                            </div>
+                        </FormControl>
+                    }
+                />
             </div>
             <div className={styles.buttonContainer}>
                 <Button onClick={handleCancel} className={styles.cancelButton}>
