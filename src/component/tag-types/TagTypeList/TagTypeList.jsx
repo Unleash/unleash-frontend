@@ -15,7 +15,6 @@ import HeaderTitle from '../../common/HeaderTitle';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import {
-    CREATE_TAG_TYPE,
     DELETE_TAG_TYPE,
     UPDATE_TAG_TYPE,
 } from '../../providers/AccessProvider/permissions';
@@ -57,7 +56,7 @@ const TagTypeList = () => {
             title="Tag Types"
             actions={
                 <ConditionallyRender
-                    condition={hasAccess(CREATE_TAG_TYPE)}
+                    condition={hasAccess(UPDATE_TAG_TYPE)}
                     show={
                         <ConditionallyRender
                             condition={smallScreen}
