@@ -1,11 +1,12 @@
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjectApi';
 import { useHistory } from 'react-router-dom';
-import ProjectRoleForm from '../ProjectForm/ProjectForm';
+import ProjectForm from '../ProjectForm/ProjectForm';
 import useProjectForm from '../hooks/useProjectForm';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
 import useUser from '../../../../hooks/api/getters/useUser/useUser';
+import { validateId } from '../../../../store/project/actions';
 
 const CreateProject = () => {
     /* @ts-ignore */
@@ -24,7 +25,6 @@ const CreateProject = () => {
         clearErrors,
         validateIdUniqueness,
         validateName,
-        validateProjectId,
         errors,
     } = useProjectForm();
 
@@ -34,7 +34,7 @@ const CreateProject = () => {
         e.preventDefault();
         clearErrors();
         const validName = validateName();
-        const validId = validateProjectId();
+        const validId = await validateIdUniqueness();
         if (validName && validId) {
             const payload = getProjectPayload();
             try {
@@ -74,7 +74,7 @@ const CreateProject = () => {
             documentationLink="https://docs.getunleash.io/user_guide/projects"
             formatApiCode={formatApiCode}
         >
-            <ProjectRoleForm
+            <ProjectForm
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
