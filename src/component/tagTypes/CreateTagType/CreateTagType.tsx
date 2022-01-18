@@ -1,51 +1,53 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useTagTypesApi from '../../../hooks/api/actions/useTagTypesApi/useTagTypesApi';
-import useTagType from '../../../hooks/api/getters/useTagType/useTagType';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
-import { UPDATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
+import { CREATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
 import useTagForm from '../hooks/useTagForm';
-import TagForm from '../TagForm/TagForm';
+import TagTypeForm from '../TagTypeForm/TagTypeForm';
 
-const EditTag = () => {
+const CreateTagType = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
-    const { name } = useParams<{ name: string }>();
-    const { tagType } = useTagType(name);
     const {
         tagName,
         tagDesc,
         setTagName,
         setTagDesc,
         getTagPayload,
+        validateNameUniqueness,
         errors,
         clearErrors,
-    } = useTagForm(tagType?.name, tagType?.description);
-    const { updateTagType, loading } = useTagTypesApi();
+    } = useTagForm();
+    const { createTag, loading } = useTagTypesApi();
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
+        const validName = await validateNameUniqueness();
+        if (validName) {
             const payload = getTagPayload();
             try {
-                await updateTagType(tagName, payload);
+                await createTag(payload);
                 history.push('/tag-types');
                 setToastData({
-                    title: 'Tag type updated',
+                    title: 'Tag type created',
+                    confetti: true,
                     type: 'success',
                 });
             } catch (e: any) {
                 setToastApiError(e.toString());
             }
+        }
     };
 
     const formatApiCode = () => {
-        return `curl --location --request PUT '${
+        return `curl --location --request POST '${
             uiConfig.unleashUrl
-        }/api/admin/tag-types/${name}' \\
+        }/api/admin/tag-types' \\
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getTagPayload(), undefined, 2)}'`;
@@ -58,12 +60,12 @@ const EditTag = () => {
     return (
         <FormTemplate
             loading={loading}
-            title="Edit tag type"
+            title="Create tag type"
             description="Tag types allow you to group tags together in the management UI"
-            documentationLink="https://docs.getunleash.io/"
+            documentationLink="https://docs.getunleash.io/advanced/tags"
             formatApiCode={formatApiCode}
         >
-            <TagForm
+            <TagTypeForm
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
@@ -71,19 +73,19 @@ const EditTag = () => {
                 setTagName={setTagName}
                 tagDesc={tagDesc}
                 setTagDesc={setTagDesc}
-                mode="Edit"
+                mode="Create"
                 clearErrors={clearErrors}
             >
                 <PermissionButton
                     onClick={handleSubmit}
-                    permission={UPDATE_TAG_TYPE}
+                    permission={CREATE_TAG_TYPE}
                     type="submit"
                 >
-                    Edit type
+                    Create type
                 </PermissionButton>
-            </TagForm>
+            </TagTypeForm>
         </FormTemplate>
     );
 };
 
-export default EditTag;
+export default CreateTagType;

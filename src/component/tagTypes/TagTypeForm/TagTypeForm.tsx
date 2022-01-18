@@ -1,10 +1,10 @@
 import Input from '../../common/Input/Input';
 import { TextField, Button } from '@material-ui/core';
 
-import { useStyles } from './TagForm.styles';
+import { useStyles } from './TagTypeForm.styles';
 import React from 'react';
 
-interface ITagForm {
+interface ITagTypeForm {
     tagName: string;
     tagDesc: string;
     setTagName: React.Dispatch<React.SetStateAction<string>>;
@@ -16,7 +16,7 @@ interface ITagForm {
     clearErrors: () => void;
 }
 
-const TagForm: React.FC<ITagForm> = ({
+const TagTypeForm: React.FC<ITagTypeForm> = ({
     children,
     handleSubmit,
     handleCancel,
@@ -72,4 +72,4 @@ const TagForm: React.FC<ITagForm> = ({
     );
 };
 
-export default TagForm;
+export default TagTypeForm;

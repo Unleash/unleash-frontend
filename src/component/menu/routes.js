@@ -45,8 +45,8 @@ import CreateApiToken from '../admin/api-token/CreateApiToken/CreateApiToken';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
 
-import EditTag from '../tagTypes/EditTag/EditTag';
-import CreateTag from '../tagTypes/CreateTag/CreateTag';
+import EditTagType from '../tagTypes/EditTagType/EditTagType';
+import CreateTagType from '../tagTypes/CreateTagType/CreateTagType';
 
 export const routes = [
     // Project
@@ -281,7 +281,7 @@ export const routes = [
         path: '/tag-types/create',
         parent: '/tag-types',
         title: 'Create',
-        component: CreateTag,
+        component: CreateTagType,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -290,7 +290,7 @@ export const routes = [
         path: '/tag-types/edit/:name',
         parent: '/tag-types',
         title: ':name',
-        component: EditTag,
+        component: EditTagType,
         type: 'protected',
         layout: 'main',
         menu: {},
