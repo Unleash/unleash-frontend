@@ -3,8 +3,9 @@ import { useStyles } from './EnvironmentForm.styles';
 import React from 'react';
 import Input from '../../common/Input/Input';
 import EnvironmentTypeSelector from './EnvironmentTypeSelector/EnvironmentTypeSelector';
+import { trim } from '../../common/util';
 
-interface ICreateEnvironmentForm {
+interface IEnvironmentForm {
     name: string;
     type: string;
     setName: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +18,7 @@ interface ICreateEnvironmentForm {
     clearErrors: () => void;
 }
 
-const CreateEnvironmentForm: React.FC<ICreateEnvironmentForm> = ({
+const EnvironmentForm: React.FC<IEnvironmentForm> = ({
     children,
     handleSubmit,
     handleCancel,
@@ -44,7 +45,7 @@ const CreateEnvironmentForm: React.FC<ICreateEnvironmentForm> = ({
                     className={styles.input}
                     label="Environment name"
                     value={name}
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setName(trim(e.target.value))}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
@@ -70,4 +71,4 @@ const CreateEnvironmentForm: React.FC<ICreateEnvironmentForm> = ({
     );
 };
 
-export default CreateEnvironmentForm;
+export default EnvironmentForm;
