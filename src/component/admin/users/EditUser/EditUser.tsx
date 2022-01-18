@@ -8,6 +8,8 @@ import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/use
 import useUserInfo from '../../../../hooks/api/getters/useUserInfo/useUserInfo';
 import { scrollToTop } from '../../../common/util';
 import { useEffect } from 'react';
+import PermissionButton from '../../../common/PermissionButton/PermissionButton';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
 
 const EditUser = () => {
     useEffect(() => {
@@ -93,9 +95,16 @@ const EditUser = () => {
                 setSendEmail={setSendEmail}
                 rootRole={rootRole}
                 setRootRole={setRootRole}
-                submitButtonText="Edit"
                 clearErrors={clearErrors}
-            />
+            >
+                <PermissionButton
+                    onClick={handleSubmit}
+                    permission={ADMIN}
+                    type="submit"
+                >
+                    Edit user
+                </PermissionButton>
+            </UserForm>
         </FormTemplate>
     );
 };

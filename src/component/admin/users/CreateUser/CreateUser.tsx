@@ -8,6 +8,8 @@ import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/use
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
 import { useState } from 'react';
 import { scrollToTop } from '../../../common/util';
+import PermissionButton from '../../../common/PermissionButton/PermissionButton';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
 
 const CreateUser = () => {
     /* @ts-ignore */
@@ -100,9 +102,16 @@ const CreateUser = () => {
                 setSendEmail={setSendEmail}
                 rootRole={rootRole}
                 setRootRole={setRootRole}
-                submitButtonText="Add"
                 clearErrors={clearErrors}
-            />
+            >
+                <PermissionButton
+                    onClick={handleSubmit}
+                    permission={ADMIN}
+                    type="submit"
+                >
+                    Create user
+                </PermissionButton>
+            </UserForm>
             <ConfirmUserAdded
                 open={showConfirm}
                 closeConfirm={closeConfirm}

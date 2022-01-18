@@ -1,5 +1,3 @@
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import Input from '../../../common/Input/Input';
 import {
     FormControlLabel,
@@ -10,7 +8,6 @@ import {
     Radio,
     Switch,
 } from '@material-ui/core';
-
 import { useStyles } from './UserForm.styles';
 import React from 'react';
 import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
@@ -27,11 +24,11 @@ interface IUserForm {
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
-    submitButtonText: string;
     clearErrors: () => void;
 }
 
-const UserForm = ({
+const UserForm: React.FC<IUserForm> = ({
+    children,
     email,
     name,
     rootRole,
@@ -43,9 +40,8 @@ const UserForm = ({
     handleSubmit,
     handleCancel,
     errors,
-    submitButtonText,
     clearErrors,
-}: IUserForm) => {
+}) => {
     const styles = useStyles();
     const { roles } = useUsers();
 
@@ -145,13 +141,7 @@ const UserForm = ({
                 <Button onClick={handleCancel} className={styles.cancelButton}>
                     Cancel
                 </Button>
-                <PermissionButton
-                    onClick={handleSubmit}
-                    permission={ADMIN}
-                    type="submit"
-                >
-                    {submitButtonText} user
-                </PermissionButton>
+                {children}
             </div>
         </form>
     );
