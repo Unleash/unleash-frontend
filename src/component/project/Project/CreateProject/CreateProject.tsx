@@ -6,7 +6,6 @@ import useProjectForm from '../hooks/useProjectForm';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../../hooks/useToast';
 import useUser from '../../../../hooks/api/getters/useUser/useUser';
-import { validateId } from '../../../../store/project/actions';
 
 const CreateProject = () => {
     /* @ts-ignore */
