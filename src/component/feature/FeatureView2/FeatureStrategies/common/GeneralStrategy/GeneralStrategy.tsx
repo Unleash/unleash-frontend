@@ -94,9 +94,7 @@ const GeneralStrategy = ({
                         </div>
                     );
                 } else if (type === 'number') {
-                    const regex = new RegExp('^\\d+$');
-                    const error = value.length > 0 ? !regex.test(value) : false;
-
+                    const error = isNaN(value) ? true : false;
                     return (
                         <div key={name} className={styles.generalSection}>
                             <TextField
