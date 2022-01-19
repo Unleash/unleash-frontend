@@ -4,7 +4,8 @@ import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_CONTEXT_FIELD,
-    DELETE_CONTEXT_FIELD, UPDATE_CONTEXT_FIELD,
+    DELETE_CONTEXT_FIELD,
+    UPDATE_CONTEXT_FIELD,
 } from '../../providers/AccessProvider/permissions';
 import {
     IconButton,
@@ -23,26 +24,34 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './styles';
 import ConfirmDialogue from '../../common/Dialogue';
 import AccessContext from '../../../contexts/AccessContext';
+import useUnleashContext from '../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 
-const ContextList = ({ removeContextField, history, contextFields }) => {
+const ContextList = ({ removeContextField, history }) => {
     const { hasAccess } = useContext(AccessContext);
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const smallScreen = useMediaQuery('(max-width:700px)');
     const [name, setName] = useState();
+    const { context, refetch } = useUnleashContext();
 
     const styles = useStyles();
     const contextList = () =>
-        contextFields.map(field => (
+        context.map(field => (
             <ListItem key={field.name} classes={{ root: styles.listItem }}>
                 <ListItemIcon>
                     <Album />
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <ConditionallyRender condition={hasAccess(UPDATE_CONTEXT_FIELD)} show={<Link to={`/context/edit/${field.name}`}>
-                            <strong>{field.name}</strong>
-                        </Link>
-                    } elseShow={<strong>{field.name}</strong>} />}
+                        <ConditionallyRender
+                            condition={hasAccess(UPDATE_CONTEXT_FIELD)}
+                            show={
+                                <Link to={`/context/edit/${field.name}`}>
+                                    <strong>{field.name}</strong>
+                                </Link>
+                            }
+                            elseShow={<strong>{field.name}</strong>}
+                        />
+                    }
                     secondary={field.description}
                 />
                 <ConditionallyRender
@@ -102,7 +111,7 @@ const ContextList = ({ removeContextField, history, contextFields }) => {
         >
             <List>
                 <ConditionallyRender
-                    condition={contextFields.length > 0}
+                    condition={context.length > 0}
                     show={contextList}
                     elseShow={<ListItem>No context fields defined</ListItem>}
                 />
@@ -111,6 +120,7 @@ const ContextList = ({ removeContextField, history, contextFields }) => {
                 open={showDelDialogue}
                 onClick={() => {
                     removeContextField({ name });
+                    refetch();
                     setName(undefined);
                     setShowDelDialogue(false);
                 }}
