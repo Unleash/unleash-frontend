@@ -67,7 +67,7 @@ const EditProject = () => {
     return (
         <FormTemplate
             loading={loading}
-            title="Edit project role"
+            title="Edit project"
             description="Projects allows you to group feature toggles together in the management UI."
             documentationLink="https://docs.getunleash.io/user_guide/projects"
             formatApiCode={formatApiCode}
