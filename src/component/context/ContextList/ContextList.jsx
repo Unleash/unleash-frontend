@@ -17,7 +17,7 @@ import {
     useMediaQuery,
     Button,
 } from '@material-ui/core';
-import { Add, Album, Delete } from '@material-ui/icons';
+import { Add, Album, Delete, Edit } from '@material-ui/icons';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useStyles } from './styles';
@@ -73,6 +73,21 @@ const ContextList = ({ removeContextField }) => {
                         />
                     }
                     secondary={field.description}
+                />
+                <ConditionallyRender
+                    condition={hasAccess(UPDATE_CONTEXT_FIELD)}
+                    show={
+                        <Tooltip title="Edit context field">
+                            <IconButton
+                                aria-label="edit"
+                                onClick={() =>
+                                    history.push(`/context/edit/${field.name}`)
+                                }
+                            >
+                                <Edit />
+                            </IconButton>
+                        </Tooltip>
+                    }
                 />
                 <ConditionallyRender
                     condition={hasAccess(DELETE_CONTEXT_FIELD)}
