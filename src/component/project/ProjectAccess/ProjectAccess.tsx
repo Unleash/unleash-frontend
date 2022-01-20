@@ -181,7 +181,7 @@ const ProjectAccess = () => {
                                     tooltip={
                                         users.length === 1
                                             ? 'A project must have at least one owner'
-                                            : 'Remove acccess'
+                                            : 'Remove access'
                                     }
                                 >
                                     <Delete />
