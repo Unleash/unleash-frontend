@@ -129,6 +129,12 @@ const ContextForm: React.FC<IContextForm> = ({
                         variant="outlined"
                         size="small"
                         onChange={e => setValue(trim(e.target.value))}
+                        onKeyPress={e => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                addLegalValue();
+                            }
+                        }}
                     />
                     <Button
                         startIcon={<Add />}
