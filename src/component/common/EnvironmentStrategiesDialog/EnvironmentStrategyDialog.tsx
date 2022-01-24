@@ -1,5 +1,5 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 import Dialogue from '../Dialogue';
 import { useStyles } from './EnvironmentStrategyDialog.styles';
 
@@ -29,6 +29,7 @@ const EnvironmentStrategyDialog = ({
             onClose={() => onClose()}
             title="You need to add a strategy to your toggle"
             primaryButtonText="Take me directly to add strategy"
+            permission={UPDATE_FEATURE}
             secondaryButtonText="Cancel"
         >
             <p className={styles.infoText}>

@@ -10,6 +10,7 @@ import {
 import ConditionallyRender from '../ConditionallyRender/ConditionallyRender';
 import { useStyles } from './Dialogue.styles';
 import { DIALOGUE_CONFIRM_ID } from '../../../testIds';
+import PermissionButton from '../PermissionButton/PermissionButton';
 
 interface IDialogue {
     primaryButtonText?: string;
@@ -23,6 +24,7 @@ interface IDialogue {
     maxWidth?: 'lg' | 'sm' | 'xs' | 'md' | 'xl';
     disabledPrimaryButton?: boolean;
     formId?: string;
+    permission?: string;
 }
 
 const Dialogue: React.FC<IDialogue> = ({
@@ -37,6 +39,7 @@ const Dialogue: React.FC<IDialogue> = ({
     maxWidth = 'sm',
     fullWidth = false,
     formId,
+    permission,
 }) => {
     const styles = useStyles();
     const handleClick = formId
@@ -68,18 +71,37 @@ const Dialogue: React.FC<IDialogue> = ({
                 <ConditionallyRender
                     condition={Boolean(onClick)}
                     show={
-                        <Button
-                            form={formId}
-                            color="primary"
-                            variant="contained"
-                            onClick={handleClick}
-                            autoFocus={!formId}
-                            disabled={disabledPrimaryButton}
-                            data-test={DIALOGUE_CONFIRM_ID}
-                            type={formId ? 'submit' : 'button'}
-                        >
-                            {primaryButtonText || "Yes, I'm sure"}
-                        </Button>
+                        <ConditionallyRender
+                            condition={Boolean(permission)}
+                            show={
+                                <PermissionButton
+                                    form={formId}
+                                    color="primary"
+                                    onClick={handleClick}
+                                    autoFocus={!formId}
+                                    disabled={disabledPrimaryButton}
+                                    data-test={DIALOGUE_CONFIRM_ID}
+                                    type={formId ? 'submit' : 'button'}
+                                    permission={permission || ''}
+                                >
+                                    {primaryButtonText || "Yes, I'm sure"}
+                                </PermissionButton>
+                            }
+                            elseShow={
+                                <Button
+                                    form={formId}
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={handleClick}
+                                    autoFocus={!formId}
+                                    disabled={disabledPrimaryButton}
+                                    data-test={DIALOGUE_CONFIRM_ID}
+                                    type={formId ? 'submit' : 'button'}
+                                >
+                                    {primaryButtonText || "Yes, I'm sure"}
+                                </Button>
+                            }
+                        />
                     }
                 />
 
