@@ -4,7 +4,7 @@ import useContextsApi from '../../../hooks/api/actions/useContextsApi/useContext
 const useContextForm = (
     initialcontextName = '',
     initialcontextDesc = '',
-    initialLegalValues = [],
+    initialLegalValues = [] as string[],
     initialStickiness = false
 ) => {
     const [contextName, setContextName] = useState(initialcontextName);

@@ -1,26 +1,25 @@
-import { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import useContextsApi from "../../../hooks/api/actions/useContextsApi/useContextsApi";
-import useContext from "../../../hooks/api/getters/useContext/useContext";
-import useUiConfig from "../../../hooks/api/getters/useUiConfig/useUiConfig";
-import useToast from "../../../hooks/useToast";
-import FormTemplate from "../../common/FormTemplate/FormTemplate";
-import PermissionButton from "../../common/PermissionButton/PermissionButton";
-import { scrollToTop } from "../../common/util";
-import { UPDATE_CONTEXT_FIELD } from "../../providers/AccessProvider/permissions";
-import ContextForm from "../ContextForm/ContextForm";
-import useContextForm from "../hooks/useContextForm";
-
+import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import useContextsApi from '../../../hooks/api/actions/useContextsApi/useContextsApi';
+import useContext from '../../../hooks/api/getters/useContext/useContext';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from '../../../hooks/useToast';
+import FormTemplate from '../../common/FormTemplate/FormTemplate';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { scrollToTop } from '../../common/util';
+import { UPDATE_CONTEXT_FIELD } from '../../providers/AccessProvider/permissions';
+import ContextForm from '../ContextForm/ContextForm';
+import useContextForm from '../hooks/useContextForm';
 
 const EditContext = () => {
     useEffect(() => {
         scrollToTop();
     }, []);
+
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
     const { name } = useParams<{ name: string }>();
     const { context, refetch } = useContext(name);
-    console.log(context)
     const { updateContext, loading } = useContextsApi();
     const history = useHistory();
     const {
@@ -105,7 +104,6 @@ const EditContext = () => {
                 clearErrors={clearErrors}
             >
                 <PermissionButton
-                    onClick={handleSubmit}
                     permission={UPDATE_CONTEXT_FIELD}
                     type="submit"
                 >

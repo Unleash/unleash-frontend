@@ -23,6 +23,8 @@ interface IContextForm {
     setErrors: React.Dispatch<React.SetStateAction<Object>>;
 }
 
+const ENTER = 'Enter';
+
 const ContextForm: React.FC<IContextForm> = ({
     children,
     handleSubmit,
@@ -43,6 +45,22 @@ const ContextForm: React.FC<IContextForm> = ({
 }) => {
     const styles = useStyles();
     const [value, setValue] = useState('');
+    const [focused, setFocused] = useState(false);
+
+    const submit = (event: React.SyntheticEvent) => {
+        event.preventDefault();
+        if (focused) return;
+        handleSubmit(event);
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === ENTER && focused) {
+            addLegalValue();
+            return;
+        } else if (event.key === ENTER) {
+            handleSubmit(event);
+        }
+    };
 
     const sortIgnoreCase = (a: string, b: string) => {
         a = a.toLowerCase();
@@ -74,7 +92,7 @@ const ContextForm: React.FC<IContextForm> = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={submit} className={styles.form}>
             <h3 className={styles.formHeader}>Context information</h3>
 
             <div className={styles.container}>
@@ -129,12 +147,9 @@ const ContextForm: React.FC<IContextForm> = ({
                         variant="outlined"
                         size="small"
                         onChange={e => setValue(trim(e.target.value))}
-                        onKeyPress={e => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                addLegalValue();
-                            }
-                        }}
+                        onKeyPress={e => handleKeyDown(e)}
+                        onBlur={e => setFocused(false)}
+                        onFocus={e => setFocused(true)}
                     />
                     <Button
                         startIcon={<Add />}

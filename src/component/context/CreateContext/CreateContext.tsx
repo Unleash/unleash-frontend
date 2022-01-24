@@ -92,7 +92,6 @@ const CreateContext = () => {
                 clearErrors={clearErrors}
             >
                 <PermissionButton
-                    onClick={handleSubmit}
                     permission={CREATE_CONTEXT_FIELD}
                     type="submit"
                 >
