@@ -18,50 +18,34 @@ import {
 import { Delete } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 
-import AddUserComponent from '../access-add-user';
+import ProjectAccessAddUser from './ProjectAccessAddUser/ProjectAccessAddUser';
 
-import projectApi from '../../../store/project/api';
 import PageContent from '../../common/PageContent';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useStyles } from './ProjectAccess.styles';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import { useParams } from 'react-router-dom';
-import { IFeatureViewParams } from '../../../interfaces/params';
+import { IProjectViewParams } from '../../../interfaces/params';
 import ProjectRoleSelect from './ProjectRoleSelect/ProjectRoleSelect';
 import usePagination from '../../../hooks/usePagination';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import useToast from '../../../hooks/useToast';
 import ConfirmDialogue from '../../common/Dialogue';
+import useProjectAccess from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
+import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 
 const ProjectAccess = () => {
-    const { id } = useParams<IFeatureViewParams>();
+    const { id } = useParams<IProjectViewParams>();
     const styles = useStyles();
-    const [roles, setRoles] = useState([]);
-    const [users, setUsers] = useState([]);
     const [error, setError] = useState();
+    const { access, refetchProjectAccess } = useProjectAccess(id);
     const { setToastData, setToastApiError } = useToast();
     const { isOss } = useUiConfig();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(users, 10);
+        usePagination(access.users, 10);
+    const { removeUserFromRole, addUserToRole } = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [user, setUser] = useState({});
-
-    useEffect(() => {
-        fetchAccess();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
-
-    const fetchAccess = async () => {
-        try {
-            const access = await projectApi.fetchAccess(id);
-            setRoles(access.roles);
-            setUsers(
-                access.users.map(u => ({ ...u, name: u.name || '(No name)' }))
-            );
-        } catch (e) {
-            setToastApiError(e.toString());
-        }
-    };
 
     if (isOss()) {
         return (
@@ -78,38 +62,34 @@ const ProjectAccess = () => {
         );
     }
 
-    const handleRoleChange = (userId, currRoleId) => async evt => {
-        const roleId = evt.target.value;
-        try {
-            await projectApi.removeUserFromRole(id, currRoleId, userId);
-            await projectApi.addUserToRole(id, roleId, userId).then(() => {
+    const handleRoleChange =
+        (userId: string, currRoleId: string) => async evt => {
+            const roleId = evt.target.value;
+            try {
+                await removeUserFromRole(id, currRoleId, userId);
+                await addUserToRole(id, roleId, userId);
+                refetchProjectAccess();
+
                 setToastData({
                     type: 'success',
                     title: 'User role changed successfully',
                 });
-            });
-            const newUsers = users.map(u => {
-                if (u.id === userId) {
-                    return { ...u, roleId };
-                } else return u;
-            });
-            setUsers(newUsers);
-        } catch (err) {
-            setToastData({
-                type: 'error',
-                title: err.message || 'Server problems when adding users.',
-            });
-        }
-    };
-
-    const addUser = async (userId, roleId) => {
-        try {
-            await projectApi.addUserToRole(id, roleId, userId);
-            await fetchAccess().then(() => {
+            } catch (err) {
                 setToastData({
-                    type: 'success',
-                    title: 'Successfully added user to the project',
+                    type: 'error',
+                    title: err.message || 'Server problems when adding users.',
                 });
+            }
+        };
+
+    const addUser = async (userId: string, roleId: string) => {
+        try {
+            await addUserToRole(id, roleId, userId);
+            refetchProjectAccess();
+
+            setToastData({
+                type: 'success',
+                title: 'Successfully added user to the project',
             });
         } catch (err) {
             setToastData({
@@ -121,14 +101,12 @@ const ProjectAccess = () => {
 
     const removeAccess = (userId: number, roleId: number) => async () => {
         try {
-            await projectApi.removeUserFromRole(id, roleId, userId).then(() => {
-                setToastData({
-                    type: 'success',
-                    title: 'User have been removed from project',
-                });
+            await removeUserFromRole(id, roleId, userId);
+            refetchProjectAccess();
+            setToastData({
+                type: 'success',
+                title: 'User have been removed from project',
             });
-            const newUsers = users.filter(u => u.id !== userId);
-            setUsers(newUsers);
         } catch (err) {
             setToastData({
                 type: 'error',
@@ -142,9 +120,10 @@ const ProjectAccess = () => {
         setError(undefined);
     };
 
+    console.log(access);
     return (
         <PageContent className={styles.pageContent}>
-            <AddUserComponent roles={roles} addUserToRole={addUser} />
+            <ProjectAccessAddUser roles={access.roles} />
             <Dialog
                 open={!!error}
                 onClose={handleCloseError}
@@ -193,7 +172,7 @@ const ProjectAccess = () => {
                                         user.id,
                                         user.roleId
                                     )}
-                                    roles={roles}
+                                    roles={access.roles}
                                     value={user.roleId || ''}
                                 >
                                     <MenuItem value="" disabled>
@@ -210,9 +189,9 @@ const ProjectAccess = () => {
                                         setUser(user);
                                         setShowDelDialogue(true);
                                     }}
-                                    disabled={users.length === 1}
+                                    disabled={access.users.length === 1}
                                     tooltip={
-                                        users.length === 1
+                                        access.users.length === 1
                                             ? 'A project must have at least one owner'
                                             : 'Remove access'
                                     }

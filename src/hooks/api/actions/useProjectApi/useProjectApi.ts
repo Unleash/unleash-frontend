@@ -109,10 +109,10 @@ const useProjectApi = () => {
 
     const addUserToRole = async (
         projectId: string,
-        roleId: number,
-        userId: number
+        roleId: string,
+        userId: string
     ) => {
-        const path = `api/admin/projects//${projectId}/users/${userId}/roles/${roleId}`;
+        const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
         const req = createRequest(path, { method: 'POST' });
 
         try {
@@ -126,11 +126,25 @@ const useProjectApi = () => {
 
     const removeUserFromRole = async (
         projectId: string,
-        roleId: number,
-        userId: number
+        roleId: string,
+        userId: string
     ) => {
-        const path = `api/admin/projects//${projectId}/users/${userId}/roles/${roleId}`;
+        const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
         const req = createRequest(path, { method: 'DELETE' });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    const searchProjectUser = async (query: string) => {
+        const path = `api/admin/user-admin/search?q=${query}`;
+
+        const req = createRequest(path, { method: 'GET' });
 
         try {
             const res = await makeRequest(req.caller, req.id);
@@ -152,6 +166,7 @@ const useProjectApi = () => {
         removeUserFromRole,
         errors,
         loading,
+        searchProjectUser,
     };
 };
 
