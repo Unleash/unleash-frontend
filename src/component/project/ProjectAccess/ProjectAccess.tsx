@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     Avatar,
     Button,
@@ -33,13 +33,14 @@ import useToast from '../../../hooks/useToast';
 import ConfirmDialogue from '../../common/Dialogue';
 import useProjectAccess from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
+import HeaderTitle from '../../common/HeaderTitle';
 
 const ProjectAccess = () => {
     const { id } = useParams<IProjectViewParams>();
     const styles = useStyles();
     const [error, setError] = useState();
     const { access, refetchProjectAccess } = useProjectAccess(id);
-    const { setToastData, setToastApiError } = useToast();
+    const { setToastData } = useToast();
     const { isOss } = useUiConfig();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(access.users, 10);
@@ -49,7 +50,9 @@ const ProjectAccess = () => {
 
     if (isOss()) {
         return (
-            <PageContent>
+            <PageContent
+                headerContent={<HeaderTitle title="Projecttt Access" />}
+            >
                 <Alert severity="error">
                     Controlling access to projects requires a paid version of
                     Unleash. Check out{' '}
@@ -74,7 +77,7 @@ const ProjectAccess = () => {
                     type: 'success',
                     title: 'User role changed successfully',
                 });
-            } catch (err) {
+            } catch (err: any) {
                 setToastData({
                     type: 'error',
                     title: err.message || 'Server problems when adding users.',
@@ -82,24 +85,7 @@ const ProjectAccess = () => {
             }
         };
 
-    const addUser = async (userId: string, roleId: string) => {
-        try {
-            await addUserToRole(id, roleId, userId);
-            refetchProjectAccess();
-
-            setToastData({
-                type: 'success',
-                title: 'Successfully added user to the project',
-            });
-        } catch (err) {
-            setToastData({
-                type: 'error',
-                title: err.message || 'Server problems when adding users.',
-            });
-        }
-    };
-
-    const removeAccess = (userId: number, roleId: number) => async () => {
+    const removeAccess = (userId: string, roleId: string) => async () => {
         try {
             await removeUserFromRole(id, roleId, userId);
             refetchProjectAccess();
@@ -107,7 +93,8 @@ const ProjectAccess = () => {
                 type: 'success',
                 title: 'User have been removed from project',
             });
-        } catch (err) {
+        } catch (err: any) {
+            console.log(err.toString());
             setToastData({
                 type: 'error',
                 title: err.message || 'Server problems when adding users.',
@@ -120,7 +107,6 @@ const ProjectAccess = () => {
         setError(undefined);
     };
 
-    console.log(access);
     return (
         <PageContent className={styles.pageContent}>
             <ProjectAccessAddUser roles={access.roles} />

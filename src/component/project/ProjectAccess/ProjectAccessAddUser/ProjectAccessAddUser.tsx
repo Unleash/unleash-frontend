@@ -16,13 +16,13 @@ import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 
 const ProjectAccessAddUser = ({ roles }) => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState();
-    const [role, setRole] = useState({});
+    const [role, setRole] = useState({ id: '', name: '' });
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [select, setSelect] = useState(false);
-    const { setToastApiError, setToastData } = useToast();
+    const { setToastData } = useToast();
     const { refetchProjectAccess } = useProjectAccess(id);
 
     const { searchProjectUser, addUserToRole } = useProjectApi();
@@ -36,7 +36,7 @@ const ProjectAccessAddUser = ({ roles }) => {
         }
     }, [roles]);
 
-    const search = async q => {
+    const search = async (q: string) => {
         if (q.length > 1) {
             setLoading(true);
             // TODO: Do not hard-code fetch here.
@@ -49,7 +49,7 @@ const ProjectAccessAddUser = ({ roles }) => {
         setLoading(false);
     };
 
-    const handleQueryUpdate = evt => {
+    const handleQueryUpdate = (evt: { target: { value: string } }) => {
         const q = evt.target.value;
         search(q);
         if (options.length === 1) {
@@ -59,21 +59,24 @@ const ProjectAccessAddUser = ({ roles }) => {
         setSelect(false);
     };
 
+<<<<<<< HEAD
     const handleSelectUser = (evt, selectedUser) => {
+=======
+    const handleSelectUser = (evt: Event, value) => {
+>>>>>>> 0bbcaaf6 (fix: remove some ts errors)
         setOptions([]);
         if (selectedUser?.id) {
             setUser(selectedUser);
         }
     };
 
-    const handleRoleChange = evt => {
+    const handleRoleChange = (evt) => {
         const roleId = +evt.target.value;
         const role = roles.find(r => r.id === roleId);
-        console.log(role);
         setRole(role);
     };
 
-    const handleSubmit = async evt => {
+    const handleSubmit = async (evt: React.SyntheticEvent) => {
         evt.preventDefault();
         try {
             await addUserToRole(id, role.id, user.id);
@@ -85,8 +88,18 @@ const ProjectAccessAddUser = ({ roles }) => {
                 title: 'Added user to project',
                 text: `User added to the project with the role of ${role.name}`,
             });
-        } catch (e) {
-            setToastApiError(e.toString());
+        } catch (e: any) {
+            let error;
+
+            if (e.toString().includes(`User already has access to project=${id}`)) {
+                error = `User already has access to project ${id}`;
+            } else {
+                error = e.toString() || 'Server problems when adding users.';
+            }
+            setToastData({
+                type: 'error',
+                title: error,
+            });
         }
     };
 
