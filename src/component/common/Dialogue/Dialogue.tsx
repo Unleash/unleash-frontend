@@ -10,7 +10,7 @@ import {
 import ConditionallyRender from '../ConditionallyRender/ConditionallyRender';
 import { useStyles } from './Dialogue.styles';
 import { DIALOGUE_CONFIRM_ID } from '../../../testIds';
-import PermissionButton from '../PermissionButton/PermissionButton';
+import { IPermissionIconButtonProps } from '../PermissionButton/PermissionButton';
 
 interface IDialogue {
     primaryButtonText?: string;
@@ -24,7 +24,7 @@ interface IDialogue {
     maxWidth?: 'lg' | 'sm' | 'xs' | 'md' | 'xl';
     disabledPrimaryButton?: boolean;
     formId?: string;
-    permission?: string;
+    permissionButton?: React.ReactNode;
 }
 
 const Dialogue: React.FC<IDialogue> = ({
@@ -39,7 +39,7 @@ const Dialogue: React.FC<IDialogue> = ({
     maxWidth = 'sm',
     fullWidth = false,
     formId,
-    permission,
+    permissionButton,
 }) => {
     const styles = useStyles();
     const handleClick = formId
@@ -72,21 +72,8 @@ const Dialogue: React.FC<IDialogue> = ({
                     condition={Boolean(onClick)}
                     show={
                         <ConditionallyRender
-                            condition={Boolean(permission)}
-                            show={
-                                <PermissionButton
-                                    form={formId}
-                                    color="primary"
-                                    onClick={handleClick}
-                                    autoFocus={!formId}
-                                    disabled={disabledPrimaryButton}
-                                    data-test={DIALOGUE_CONFIRM_ID}
-                                    type={formId ? 'submit' : 'button'}
-                                    permission={permission || ''}
-                                >
-                                    {primaryButtonText || "Yes, I'm sure"}
-                                </PermissionButton>
-                            }
+                            condition={Boolean(permissionButton)}
+                            show={permissionButton}
                             elseShow={
                                 <Button
                                     form={formId}

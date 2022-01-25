@@ -1,6 +1,10 @@
 import { useHistory } from 'react-router-dom';
-import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
+import {
+    CREATE_FEATURE_STRATEGY,
+    UPDATE_FEATURE,
+} from '../../providers/AccessProvider/permissions';
 import Dialogue from '../Dialogue';
+import PermissionButton from '../PermissionButton/PermissionButton';
 import { useStyles } from './EnvironmentStrategyDialog.styles';
 
 interface IEnvironmentStrategyDialogProps {
@@ -29,7 +33,14 @@ const EnvironmentStrategyDialog = ({
             onClose={() => onClose()}
             title="You need to add a strategy to your toggle"
             primaryButtonText="Take me directly to add strategy"
-            permission={UPDATE_FEATURE}
+            permissionButton={
+                <PermissionButton
+                    permission={CREATE_FEATURE_STRATEGY}
+                    projectId={projectId}
+                >
+                    Take me directly to add strategy
+                </PermissionButton>
+            }
             secondaryButtonText="Cancel"
         >
             <p className={styles.infoText}>
@@ -37,8 +48,8 @@ const EnvironmentStrategyDialog = ({
                 add an activation strategy.
             </p>
             <p className={styles.infoText}>
-                You can add the activation strategy by selecting the toggle, open
-                the environment accordion and add the activation strategy.
+                You can add the activation strategy by selecting the toggle,
+                open the environment accordion and add the activation strategy.
             </p>
         </Dialogue>
     );
