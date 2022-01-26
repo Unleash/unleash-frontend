@@ -58,33 +58,28 @@ const StrategiesList = ({
 
     const headerButton = () => (
         <ConditionallyRender
-            condition={hasAccess(CREATE_STRATEGY)}
+            condition={smallScreen}
             show={
-                <ConditionallyRender
-                    condition={smallScreen}
-                    show={
-                        <PermissionIconButton
-                            data-test={ADD_NEW_STRATEGY_ID}
-                            onClick={() => history.push('/strategies/create')}
-                            permission={CREATE_STRATEGY}
-                            tooltip={'Add new strategy'}
-                        >
-                            <Add />
-                        </PermissionIconButton>
-                    }
-                    elseShow={
-                        <PermissionButton
-                            onClick={() => history.push('/strategies/create')}
-                            color="primary"
-                            permission={CREATE_STRATEGY}
-                            variant="contained"
-                            data-test={ADD_NEW_STRATEGY_ID}
-                            tooltip={'Add new strategy'}
-                        >
-                            Add new strategy
-                        </PermissionButton>
-                    }
-                />
+                <PermissionIconButton
+                    data-test={ADD_NEW_STRATEGY_ID}
+                    onClick={() => history.push('/strategies/create')}
+                    permission={CREATE_STRATEGY}
+                    tooltip={'Add new strategy'}
+                >
+                    <Add />
+                </PermissionIconButton>
+            }
+            elseShow={
+                <PermissionButton
+                    onClick={() => history.push('/strategies/create')}
+                    color="primary"
+                    permission={CREATE_STRATEGY}
+                    variant="contained"
+                    data-test={ADD_NEW_STRATEGY_ID}
+                    tooltip={'Add new strategy'}
+                >
+                    Add new strategy
+                </PermissionButton>
             }
         />
     );
