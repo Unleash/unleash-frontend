@@ -88,7 +88,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         }
     };
 
-    const handleRoleChange = evt => {
+    const handleRoleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         const roleId = +evt.target.value;
         const role = roles.find(r => r.id === roleId);
         setRole(role);
