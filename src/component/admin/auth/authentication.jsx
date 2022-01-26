@@ -5,7 +5,7 @@ import { Alert } from '@material-ui/lab';
 import GoogleAuth from './google-auth-container';
 import SamlAuth from './saml-auth-container';
 import OidcAuth from './oidc-auth-container';
-import SimpleAuth from './simple-auth';
+import SimpleAuth from './PasswordAuthSettings';
 import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';

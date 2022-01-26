@@ -11,18 +11,19 @@ import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import useAuthSettings from '../../../hooks/api/getters/useAuthSettings/useAuthSettings';
 import useAuthSettingsApi, {ISimpleAuthSettings } from '../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useToast from '../../../hooks/useToast';
 
-function SimpleAuth() {
+const PasswordAuthSettings = () => {
 
+    const { setToastData } = useToast();
     const { config } = useAuthSettings('simple');
-    const [disabled, setDisabled] = useState<boolean>(false);
-    const [info, setInfo] = useState<string>();
-    const { updateSettings, errors } = useAuthSettingsApi<ISimpleAuthSettings>('simple')
+    const [disablePasswordAuth, setDisablePasswordAuth] = useState<boolean>(false);
+    const { updateSettings, errors, loading } = useAuthSettingsApi<ISimpleAuthSettings>('simple')
     const { hasAccess } = useContext(AccessContext);
 
 
     useEffect(() => {
-        setDisabled(!!config.disabled);
+        setDisablePasswordAuth(!!config.disabled);
     }, [ config.disabled ]);
 
     if (!hasAccess(ADMIN)) {
@@ -34,22 +35,32 @@ function SimpleAuth() {
     }
 
     const updateDisabled = () => {
-        setDisabled(!disabled);
+        setDisablePasswordAuth(!disablePasswordAuth);
     };
 
     
-    const onSubmit = async e => {
-        e.preventDefault();
+    const onSubmit = async evt => {
+        evt.preventDefault();
         
-        setInfo('...saving');
         try {
-            const settings: ISimpleAuthSettings = { disabled };
+            const settings: ISimpleAuthSettings = { disabled: disablePasswordAuth };
             await updateSettings(settings);
-            setInfo('Settings stored');
-            setTimeout(() => setInfo(''), 2000);
-        } catch (e) {
-            setInfo('');
-            setDisabled(config.disabled)
+            setToastData({
+                title: 'Successfully saved',
+                text: 'Password authentication settings stored.',
+                autoHideDuration: 4000,
+                type: 'success',
+                show: true,
+            });
+        } catch (err: any) {
+            setToastData({
+                title: 'Could not store settings',
+                text: err?.message,
+                autoHideDuration: 4000,
+                type: 'error',
+                show: true,
+            });
+            setDisablePasswordAuth(config.disabled)
         }
         
     };
@@ -66,12 +77,12 @@ function SimpleAuth() {
                             control={
                                 <Switch
                                     onChange={updateDisabled}
-                                    value={!disabled}
+                                    value={!disablePasswordAuth}
                                     name="disabled"
-                                    checked={!disabled}
+                                    checked={!disablePasswordAuth}
                                 />
                             }
-                            label={!disabled ? 'Enabled' : 'Disabled'}
+                            label={!disablePasswordAuth ? 'Enabled' : 'Disabled'}
                         />
                     </Grid>
                 </Grid>
@@ -81,10 +92,10 @@ function SimpleAuth() {
                             variant="contained"
                             color="primary"
                             type="submit"
+                            disabled={loading}
                         >
                             Save
                         </Button>{' '}
-                        <small>{info}</small>
                         <p><small style={{ color: 'red' }}>{errors?.message}</small></p>
                     </Grid>
                 </Grid>
@@ -93,4 +104,4 @@ function SimpleAuth() {
     );
 }
 
-export default SimpleAuth;
+export default PasswordAuthSettings;
