@@ -16,6 +16,7 @@ import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import IRole from '../../../../interfaces/role';
 import { IUser } from '../../../../interfaces/user';
+import { E } from '../../../common/flags';
 
 interface IProjectAccessAddUserProps {
     roles: IRole[];
@@ -25,7 +26,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState();
     const [role, setRole] = useState<IRole>({
-        id: 0,
+        id: -1,
         name: '',
         project: '',
         description: '',
@@ -54,10 +55,11 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             // TODO: Do not hard-code fetch here.
             const result = await searchProjectUser(q);
             const users = await result.json();
-            const filtredUsers = users.filter((selectUser: IUser) => {
-                return access?.users.some((user: IUser) => {
-                    return user.id === selectUser.id;
-                });
+            const filtredUsers = users.filter((selectedUser: IUser) => {
+                const selected = access.users.find(
+                    (user: IUser) => user.id === selectedUser.id
+                );
+                return selected ? false : true;
             });
             setOptions(filtredUsers);
         } else {

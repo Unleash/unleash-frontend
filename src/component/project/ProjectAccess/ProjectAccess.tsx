@@ -36,10 +36,10 @@ import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectAp
 import HeaderTitle from '../../common/HeaderTitle';
 
 const ProjectAccess = () => {
-    const { id } = useParams<IProjectViewParams>();
+    const { id: projectId } = useParams<IProjectViewParams>();
     const styles = useStyles();
     const [error, setError] = useState();
-    const { access, refetchProjectAccess } = useProjectAccess(id);
+    const { access, refetchProjectAccess } = useProjectAccess(projectId);
     const { setToastData } = useToast();
     const { isOss } = useUiConfig();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
@@ -67,8 +67,8 @@ const ProjectAccess = () => {
         (userId: string, currRoleId: string) => async (evt: React.ChangeEvent<HTMLInputElement>) => {
             const roleId = evt.currentTarget.value;
             try {
-                await removeUserFromRole(id, currRoleId, userId);
-                await addUserToRole(id, roleId, userId);
+                await removeUserFromRole(projectId, currRoleId, userId);
+                await addUserToRole(projectId, roleId, userId);
                 refetchProjectAccess();
 
                 setToastData({
@@ -85,11 +85,11 @@ const ProjectAccess = () => {
 
     const removeAccess = (userId: string, roleId: string) => async () => {
         try {
-            await removeUserFromRole(id, roleId, userId);
+            await removeUserFromRole(projectId, roleId, userId);
             refetchProjectAccess();
             setToastData({
                 type: 'success',
-                title: 'User have been removed from project',
+                title: 'The user has been removed from project',
             });
         } catch (err: any) {
             setToastData({
