@@ -14,11 +14,22 @@ import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjec
 import { useParams } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
+import IRole from '../../../../interfaces/role';
 
-const ProjectAccessAddUser = ({ roles }) => {
+interface IProjectAccessAddUserProps {
+    roles: IRole[];
+}
+
+const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState();
-    const [role, setRole] = useState({ id: '', name: '' });
+    const [role, setRole] = useState<IRole>({
+        id: 0,
+        name: '',
+        project: '',
+        description: '',
+        type: '',
+    });
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [select, setSelect] = useState(false);
@@ -70,7 +81,7 @@ const ProjectAccessAddUser = ({ roles }) => {
         }
     };
 
-    const handleRoleChange = (evt) => {
+    const handleRoleChange = evt => {
         const roleId = +evt.target.value;
         const role = roles.find(r => r.id === roleId);
         setRole(role);
@@ -91,7 +102,11 @@ const ProjectAccessAddUser = ({ roles }) => {
         } catch (e: any) {
             let error;
 
-            if (e.toString().includes(`User already has access to project=${id}`)) {
+            if (
+                e
+                    .toString()
+                    .includes(`User already has access to project=${id}`)
+            ) {
                 error = `User already has access to project ${id}`;
             } else {
                 error = e.toString() || 'Server problems when adding users.';
