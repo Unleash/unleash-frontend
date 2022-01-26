@@ -109,7 +109,7 @@ const ProjectAccess = () => {
             headerContent={<HeaderTitle title="Project Roles"></HeaderTitle>}
             className={styles.pageContent}
         >
-            <ProjectAccessAddUser roles={access.roles} />
+            <ProjectAccessAddUser roles={access?.roles} />
             <Dialog
                 open={!!error}
                 onClose={handleCloseError}

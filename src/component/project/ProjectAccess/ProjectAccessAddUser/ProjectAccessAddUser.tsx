@@ -16,7 +16,6 @@ import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import IRole from '../../../../interfaces/role';
 import { IUser } from '../../../../interfaces/user';
-import { E } from '../../../common/flags';
 
 interface IProjectAccessAddUserProps {
     roles: IRole[];
@@ -98,7 +97,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const handleSubmit = async (evt: React.SyntheticEvent) => {
         evt.preventDefault();
         try {
-            await addUserToRole(id, role.id, user.id);
+            await addUserToRole(id, role?.id, user?.id);
             refetchProjectAccess();
             setUser(undefined);
             setOptions([]);
@@ -110,11 +109,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         } catch (e: any) {
             let error;
 
-            if (
-                e
-                    .toString()
-                    .includes(`User already has access to project=${id}`)
-            ) {
+            if (e.toString().includes(`User already has access to project=${id}`)) {
                 error = `User already has access to project ${id}`;
             } else {
                 error = e.toString() || 'Server problems when adding users.';

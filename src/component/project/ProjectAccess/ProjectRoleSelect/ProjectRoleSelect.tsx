@@ -39,9 +39,10 @@ const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
                 value={value || ''}
                 onChange={onChange}
                 renderValue={roleId => {
-                    return roles?.find(role => {
+                    const role = roles?.find(role => {
                         return role.id === roleId;
-                    }).name;
+                    });
+                    return role?.name || '';
                 }}
             >
                 {children}
