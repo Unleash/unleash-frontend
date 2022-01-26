@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        maxWidth: '470px',
+        maxWidth: '400px',
     },
     form: {
         display: 'flex',
@@ -10,27 +10,18 @@ export const useStyles = makeStyles(theme => ({
         height: '100%',
     },
     input: { width: '100%', marginBottom: '1rem' },
-    inputHeader:{
-        marginBottom: '0.3rem'
+    selectInput: {
+        marginBottom: '1rem',
+        minWidth: '400px',
+        [theme.breakpoints.down(600)]: {
+            minWidth: '379px',
+        },
     },
     label: {
         minWidth: '300px',
         [theme.breakpoints.down(600)]: {
             minWidth: 'auto',
         },
-    },
-    tagContainer: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        marginBottom: '1rem'
-    },
-    tagInput: {
-        width: '75%',
-        marginRight: 'auto',
-    },
-    tagValue: {
-        marginRight: '3px',
-        marginBottom: '1rem'
     },
     buttonContainer: {
         marginTop: 'auto',
@@ -42,6 +33,13 @@ export const useStyles = makeStyles(theme => ({
     },
     inputDescription: {
         marginBottom: '0.5rem',
+    },
+    typeDescription: {
+        //@ts-ignore
+        fontSize: theme.fontSizes.smallBody,
+        color: theme.palette.grey[600],
+        top: '-13px',
+        position: 'relative',
     },
     formHeader: {
         fontWeight: 'normal',
@@ -59,10 +57,5 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.error.main,
         position: 'absolute',
         top: '-8px',
-    },
-    switchContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        marginLeft: '-9px'
     },
 }));
