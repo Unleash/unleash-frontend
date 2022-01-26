@@ -50,9 +50,7 @@ const ProjectAccess = () => {
 
     if (isOss()) {
         return (
-            <PageContent
-                headerContent={<HeaderTitle title="Projecttt Access" />}
-            >
+            <PageContent headerContent={<HeaderTitle title="Project Access" />}>
                 <Alert severity="error">
                     Controlling access to projects requires a paid version of
                     Unleash. Check out{' '}
