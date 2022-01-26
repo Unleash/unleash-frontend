@@ -68,12 +68,12 @@ const Dialogue: React.FC<IDialogue> = ({
 
             <DialogActions>
                 <ConditionallyRender
-                    condition={Boolean(onClick)}
-                    show={
+                    condition={Boolean(permissionButton)}
+                    show={permissionButton}
+                    elseShow={
                         <ConditionallyRender
-                            condition={Boolean(permissionButton)}
-                            show={permissionButton}
-                            elseShow={
+                            condition={Boolean(onClick)}
+                            show={
                                 <Button
                                     form={formId}
                                     color="primary"

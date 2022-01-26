@@ -26,7 +26,6 @@ const EnvironmentStrategyDialog = ({
         <Dialogue
             open={open}
             maxWidth="sm"
-            onClick={() => history.push(strategiesLink)}
             onClose={() => onClose()}
             title="You need to add a strategy to your toggle"
             primaryButtonText="Take me directly to add strategy"
@@ -34,6 +33,8 @@ const EnvironmentStrategyDialog = ({
                 <PermissionButton
                     permission={CREATE_FEATURE_STRATEGY}
                     projectId={projectId}
+                    environmentId={environmentName}
+                    onClick={() => history.push(strategiesLink)}
                 >
                     Take me directly to add strategy
                 </PermissionButton>
