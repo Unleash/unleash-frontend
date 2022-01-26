@@ -23,7 +23,6 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-
         paddingTop: '1.5rem',
     },
     headerTitle: {
@@ -139,6 +138,7 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
     },
+
     strategiesIconsContainer: {
         transform: 'scale(0.8)',
         display: 'flex',
@@ -211,8 +211,9 @@ export const useStyles = makeStyles(theme => ({
             fontWeight: 'normal',
         },
         '&:disabled': {
-            margin: '0px 16px',
             height: '35px',
+            background: 'transparent',
+            color: theme.palette.grey[600],
         },
     },
     separator: {
