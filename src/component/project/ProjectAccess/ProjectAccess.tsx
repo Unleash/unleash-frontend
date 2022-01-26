@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
     Avatar,
     Button,
@@ -64,8 +64,8 @@ const ProjectAccess = () => {
     }
 
     const handleRoleChange =
-        (userId: string, currRoleId: string) => async evt => {
-            const roleId = evt.target.value;
+        (userId: string, currRoleId: string) => async (evt: React.ChangeEvent<HTMLInputElement>) => {
+            const roleId = evt.currentTarget.value;
             try {
                 await removeUserFromRole(id, currRoleId, userId);
                 await addUserToRole(id, roleId, userId);
@@ -92,7 +92,6 @@ const ProjectAccess = () => {
                 title: 'User have been removed from project',
             });
         } catch (err: any) {
-            console.log(err.toString());
             setToastData({
                 type: 'error',
                 title: err.message || 'Server problems when adding users.',
@@ -106,7 +105,10 @@ const ProjectAccess = () => {
     };
 
     return (
-        <PageContent className={styles.pageContent}>
+        <PageContent
+            headerContent={<HeaderTitle title="Project Roles"></HeaderTitle>}
+            className={styles.pageContent}
+        >
             <ProjectAccessAddUser roles={access.roles} />
             <Dialog
                 open={!!error}

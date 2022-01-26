@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import IRole from '../../../../interfaces/role';
+import { IUser } from '../../../../interfaces/user';
 
 interface IProjectAccessAddUserProps {
     roles: IRole[];
@@ -34,7 +35,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const [loading, setLoading] = useState(false);
     const [select, setSelect] = useState(false);
     const { setToastData } = useToast();
-    const { refetchProjectAccess } = useProjectAccess(id);
+    const { refetchProjectAccess, access } = useProjectAccess(id);
 
     const { searchProjectUser, addUserToRole } = useProjectApi();
 
@@ -53,7 +54,12 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             // TODO: Do not hard-code fetch here.
             const result = await searchProjectUser(q);
             const users = await result.json();
-            setOptions([...users]);
+            const filtredUsers = users.filter((selectUser: IUser) => {
+                return access?.users.some((user: IUser) => {
+                    return user.id === selectUser.id;
+                });
+            });
+            setOptions(filtredUsers);
         } else {
             setOptions([]);
         }
