@@ -48,6 +48,8 @@ const ProjectAccess = () => {
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [user, setUser] = useState({});
 
+    console.log(access.roles);
+
     if (isOss()) {
         return (
             <PageContent headerContent={<HeaderTitle title="Project Access" />}>
@@ -64,8 +66,9 @@ const ProjectAccess = () => {
     }
 
     const handleRoleChange =
-        (userId: string, currRoleId: string) => async (evt: React.ChangeEvent<HTMLInputElement>) => {
-            const roleId = evt.currentTarget.value;
+        (userId: string, currRoleId: string) =>
+        async (evt: React.ChangeEvent<HTMLInputElement>) => {
+            const roleId = evt.target.value;
             try {
                 await removeUserFromRole(projectId, currRoleId, userId);
                 await addUserToRole(projectId, roleId, userId);
