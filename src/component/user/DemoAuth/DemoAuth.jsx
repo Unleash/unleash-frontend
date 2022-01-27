@@ -18,12 +18,19 @@ const DemoAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
     const { setToastApiError } = useToast();
 
+    const formatPath = path => {
+        if (path.length > 0 && path[0] === '/') {
+            return path.substring(1);
+        }
+        return path;
+    };
+
     const handleSubmit = async evt => {
         evt.preventDefault();
         const user = { email };
-        const path = evt.target.action;
+
         try {
-            await demoLogin(path, user);
+            await demoLogin(formatPath(authDetails.path), user);
             refetch();
             history.push(`/`);
         } catch (e) {
