@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
@@ -7,21 +7,28 @@ import styles from './DemoAuth.module.scss';
 
 import { ReactComponent as Logo } from '../../../assets/img/logo.svg';
 import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from '../../../testIds';
+import { useHistory } from 'react-router-dom';
+import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import useToast from '../../../hooks/useToast';
 
-const DemoAuth = ({ demoLogin, history, authDetails }) => {
-    const [email, setEmail] = useState('');
-
+const DemoAuth = ({ authDetails }) => {
+    const { demoLogin } = useAuthApi();
+    const history = useHistory();
     const { refetch } = useUser();
+    const [email, setEmail] = useState('');
+    const { setToastApiError } = useToast();
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
         const user = { email };
         const path = evt.target.action;
-
-        demoLogin(path, user).then(() => {
+        try {
+            await demoLogin(path, user);
             refetch();
             history.push(`/`);
-        });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
     };
 
     const handleChange = e => {
@@ -86,8 +93,6 @@ const DemoAuth = ({ demoLogin, history, authDetails }) => {
 
 DemoAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    demoLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default DemoAuth;

@@ -17,8 +17,9 @@ import {
 } from '../../../testIds';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import PasswordField from '../../common/PasswordField/PasswordField';
+import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 
-const PasswordAuth = ({ authDetails, passwordLogin }) => {
+const PasswordAuth = ({ authDetails }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
@@ -30,6 +31,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
         usernameError: '',
         passwordError: '',
     });
+    const { passwordLogin } = useAuthApi();
 
     const handleSubmit = async evt => {
         evt.preventDefault();
@@ -55,8 +57,8 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
         const path = evt.target.action;
 
         try {
-            await passwordLogin(path, user);
-            refetch();
+            await passwordLogin(user);
+            await refetch();
             history.push(`/`);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {
@@ -169,8 +171,6 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
 PasswordAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    passwordLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default PasswordAuth;

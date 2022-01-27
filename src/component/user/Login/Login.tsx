@@ -17,6 +17,8 @@ const Login = () => {
     const query = useQueryParams();
     const history = useHistory();
 
+    console.log(permissions)
+
     useEffect(() => {
         if (permissions?.length > 0) {
             history.push('features');

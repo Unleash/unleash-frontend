@@ -4,20 +4,28 @@ import { Button, TextField } from '@material-ui/core';
 
 import styles from './SimpleAuth.module.scss';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
+import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import useToast from '../../../hooks/useToast';
+import { useHistory } from 'react-router-dom';
 
-const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
+const SimpleAuth = ({ authDetails }) => {
+    const { insecureLogin } = useAuthApi();
     const [email, setEmail] = useState('');
     const { refetch } = useUser();
+    const { setToastApiError } = useToast();
+    const history = useHistory();
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
         const user = { email };
         const path = evt.target.action;
-
-        insecureLogin(path, user).then(() => {
+        try {
+            await insecureLogin(path, user);
             refetch();
             history.push(`/`);
-        });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
     };
 
     const handleChange = e => {
@@ -71,8 +79,6 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
 
 SimpleAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    insecureLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default SimpleAuth;

@@ -11,8 +11,10 @@ import DividerText from '../../common/DividerText/DividerText';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import PasswordField from '../../common/PasswordField/PasswordField';
+import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 
-const HostedAuth = ({ authDetails, passwordLogin }) => {
+const HostedAuth = ({ authDetails }) => {
+    const { passwordLogin } = useAuthApi();
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const { refetch } = useUser();
@@ -138,8 +140,6 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
 
 HostedAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    passwordLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default HostedAuth;
