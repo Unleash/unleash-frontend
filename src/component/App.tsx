@@ -1,15 +1,9 @@
-import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
-
+import { useHistory } from 'react-router';
 import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
-
 import { routes } from './menu/routes';
-
 import styles from './styles.module.scss';
-
-import IAuthStatus from '../interfaces/user';
 import { useState, useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
 import Feedback from './common/Feedback';
@@ -19,32 +13,30 @@ import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
 import Loader from './common/Loader/Loader';
 import useUser from '../hooks/api/getters/useUser/useUser';
 import ToastRenderer from './common/ToastRenderer/ToastRenderer';
+import useUiBootstrap from '../hooks/api/getters/useUiBootstrap/useUiBootstrap';
 
-interface IAppProps extends RouteComponentProps {
-    user: IAuthStatus;
-    fetchUiBootstrap: any;
-    feedback: any;
-}
-const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
+const App = () => {
     // because we need the userId when the component load.
-    const { splash, user: userFromUseUser, authDetails } = useUser();
-
+    const { splash, user, authDetails } = useUser();
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+    const history = useHistory();
+    const { refetchUiBootstrap } = useUiBootstrap();
+    const { location } = history;
     useEffect(() => {
-        fetchUiBootstrap();
+        refetchUiBootstrap();
         /* eslint-disable-next-line */
-    }, [user.authDetails?.type]);
+    }, [authDetails?.type]);
 
     useEffect(() => {
         // Temporary duality until redux store is removed
-        if (!isUnauthorized() && !userFromUseUser?.id && !authDetails) {
+        if (!isUnauthorized() && !user?.id && !authDetails) {
             setShowLoader(true);
             return;
         }
         setShowLoader(false);
         /* eslint-disable-next-line */
-    }, [user.authDetails, userFromUseUser.id]);
+    }, [authDetails, user.id]);
 
     useEffect(() => {
         if (splash?.environment === undefined) return;
@@ -67,7 +59,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
     const isUnauthorized = () => {
         // authDetails only exists if the user is not logged in.
         //if (user?.permissions.length === 0) return true;
-        return user?.authDetails !== undefined;
+        return authDetails !== undefined;
     };
 
     // Change this to IRoute once snags with HashRouter and TS is worked out
@@ -92,7 +84,7 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                     <route.component
                         {...props}
                         isUnauthorized={isUnauthorized}
-                        authDetails={user.authDetails}
+                        authDetails={authDetails}
                     />
                 )}
             />
@@ -147,10 +139,4 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
         </SWRProvider>
     );
 };
-// Set state to any for now, to avoid typing up entire state object while converting to tsx.
-const mapStateToProps = (state: any) => ({
-    user: state.user.toJS(),
-    feedback: state.feedback,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
