@@ -14,7 +14,7 @@ import useToast from '../../../hooks/useToast';
 const DemoAuth = ({ authDetails }) => {
     const { demoLogin } = useAuthApi();
     const history = useHistory();
-    const { refetch } = useUser();
+    const { refetchUser } = useUser();
     const [email, setEmail] = useState('');
     const { setToastApiError } = useToast();
 
@@ -31,7 +31,7 @@ const DemoAuth = ({ authDetails }) => {
 
         try {
             await demoLogin(formatPath(authDetails.path), user);
-            refetch();
+            refetchUser();
             history.push(`/`);
         } catch (e) {
             setToastApiError(e.toString());

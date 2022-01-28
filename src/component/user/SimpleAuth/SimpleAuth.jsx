@@ -12,7 +12,7 @@ import { formatPath } from '../../../utils/format-path';
 const SimpleAuth = ({ authDetails }) => {
     const { insecureLogin } = useAuthApi();
     const [email, setEmail] = useState('');
-    const { refetch } = useUser();
+    const { refetchUser } = useUser();
     const { setToastApiError } = useToast();
     const history = useHistory();
 
@@ -21,7 +21,7 @@ const SimpleAuth = ({ authDetails }) => {
         const user = { email };
         try {
             await insecureLogin(formatPath(authDetails?.path), user);
-            refetch();
+            refetchUser();
             history.push(`/`);
         } catch (e) {
             setToastApiError(e.toString());

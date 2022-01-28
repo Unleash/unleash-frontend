@@ -12,7 +12,7 @@ import { CREATE_PROJECT } from '../../../providers/AccessProvider/permissions';
 const CreateProject = () => {
     /* @ts-ignore */
     const { setToastData, setToastApiError } = useToast();
-    const { refetch } = useUser();
+    const { refetchUser } = useUser();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
     const {
@@ -41,7 +41,7 @@ const CreateProject = () => {
             const payload = getProjectPayload();
             try {
                 await createProject(payload);
-                refetch();
+                refetchUser();
                 history.push(`/projects/${projectId}`);
                 setToastData({
                     title: 'Project created',

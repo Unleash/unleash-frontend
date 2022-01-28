@@ -18,7 +18,7 @@ const HostedAuth = ({ authDetails }) => {
     const { passwordLogin } = useAuthApi();
     const commonStyles = useCommonStyles();
     const styles = useStyles();
-    const { refetch } = useUser();
+    const { refetchUser } = useUser();
     const history = useHistory();
     const params = useQueryParams();
     const [username, setUsername] = useState(params.get('email') || '');
@@ -52,7 +52,7 @@ const HostedAuth = ({ authDetails }) => {
 
         try {
             await passwordLogin(formatPath(authDetails?.path), user);
-            refetch();
+            refetchUser();
             history.push(`/`);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {

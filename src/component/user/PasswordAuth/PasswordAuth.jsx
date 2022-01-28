@@ -24,7 +24,7 @@ const PasswordAuth = ({ authDetails }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
-    const { refetch } = useUser();
+    const { refetchUser } = useUser();
     const params = useQueryParams();
     const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
@@ -58,7 +58,7 @@ const PasswordAuth = ({ authDetails }) => {
 
         try {
             await passwordLogin(formatPath(authDetails?.path),user);
-            await refetch();
+            await refetchUser();
             history.push(`/`);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {

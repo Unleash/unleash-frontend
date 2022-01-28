@@ -1,20 +1,23 @@
-import useSWR, { mutate } from 'swr';
-import { useState, useEffect } from 'react';
 import handleErrorResponses from '../httpErrorResponseHandler';
+import useSWR, { mutate, SWRConfiguration } from 'swr';
+import { useState, useEffect } from 'react';
+import { formatApiPath } from '../../../../utils/format-path';
 
-export const USER_CACHE_KEY = `api/admin/ui-bootstrap`;
+const useUiBootstrap = (options: SWRConfiguration = {}) => {
+    const USER_CACHE_KEY = `api/admin/ui-bootstrap`;
 
-const useUiBootstrap = () => {
     const fetcher = () => {
-        const path = 'api/admin/ui-bootstrap';
+        const path = formatApiPath(`api/admin/ui-bootstrap`);
+
         return fetch(path, {
             method: 'GET',
+            credentials: 'include',
         })
-            .then(handleErrorResponses('bootstrap info'))
-            .then(res => res);
+            .then(handleErrorResponses('ui bootstrap'))
+            .then(res => res.json());
     };
 
-    const { data, error } = useSWR(USER_CACHE_KEY, fetcher);
+    const { data, error } = useSWR(USER_CACHE_KEY, fetcher, options);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetchUiBootstrap = () => {
@@ -25,10 +28,8 @@ const useUiBootstrap = () => {
         setLoading(!error && !data);
     }, [data, error]);
 
-    console.log(data);
-
     return {
-        bootstrap: data || {},
+        bootstrap: { ...data },
         error,
         loading,
         refetchUiBootstrap,

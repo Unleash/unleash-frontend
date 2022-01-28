@@ -1,8 +1,4 @@
 const handleErrorResponses = (target: string) => async (res: Response) => {
-    if (res.status === 401) {
-        const response = await res.json();
-        return response;
-    }
     if (!res.ok) {
         const error = new Error(
             `An error occurred while trying to get ${target}`

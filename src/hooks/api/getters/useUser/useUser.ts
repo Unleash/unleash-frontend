@@ -27,7 +27,7 @@ const useUser = (
     const { data, error } = useSWR(USER_CACHE_KEY, fetcher, options);
     const [loading, setLoading] = useState(!error && !data);
 
-    const refetch = () => {
+    const refetchUser = () => {
         mutate(USER_CACHE_KEY);
     };
 
@@ -48,10 +48,10 @@ const useUser = (
         permissions: (data?.permissions || []) as IPermission[],
         feedback: data?.feedback || [],
         splash: data?.splash || {},
-        authDetails: data || undefined,
+        authDetails: data || {"type":"demo","path":"/auth/demo/login","message":"You must sign in order to use Unleash","options":[],"defaultHidden":false},
         error,
         loading,
-        refetch,
+        refetchUser,
     };
 };
 

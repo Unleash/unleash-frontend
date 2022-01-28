@@ -17,7 +17,7 @@ import useUiBootstrap from '../hooks/api/getters/useUiBootstrap/useUiBootstrap';
 
 const App = () => {
     // because we need the userId when the component load.
-    const { splash, user, authDetails } = useUser();
+    const { splash, user, authDetails, refetchUser } = useUser();
     const [showSplash, setShowSplash] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
     const history = useHistory();
@@ -25,11 +25,11 @@ const App = () => {
     const { location } = history;
     useEffect(() => {
         refetchUiBootstrap();
+        refetchUser();
         /* eslint-disable-next-line */
     }, [authDetails?.type]);
 
     useEffect(() => {
-        // Temporary duality until redux store is removed
         if (!isUnauthorized() && !user?.id && !authDetails) {
             setShowLoader(true);
             return;
