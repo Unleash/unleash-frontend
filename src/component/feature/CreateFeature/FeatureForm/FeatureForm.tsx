@@ -1,6 +1,6 @@
 import { CREATE_FEATURE } from '../../../providers/AccessProvider/permissions';
 import Input from '../../../common/Input/Input';
-import { Button } from '@material-ui/core';
+import { Button, FormControl, Switch, Typography } from '@material-ui/core';
 import { useStyles } from './FeatureForm.styles';
 import FeatureTypeSelect from '../../FeatureView2/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
 import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from '../../../../testIds';
@@ -11,17 +11,20 @@ import { projectFilterGenerator } from '../../../../utils/project-filter-generat
 import FeatureProjectSelect from '../../FeatureView2/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { trim } from '../../../common/util';
+import { Alert } from '@material-ui/lab';
 
 interface IFeatureToggleForm {
     type: string;
     name: string;
     description: string;
     project: string;
+    impressionData: boolean;
     setType: React.Dispatch<React.SetStateAction<string>>;
     setName: React.Dispatch<React.SetStateAction<string>>;
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     setProject: React.Dispatch<React.SetStateAction<string>>;
     validateToggleName: () => void;
+    setImpressionData: React.Dispatch<React.SetStateAction<boolean>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -40,6 +43,8 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
     setDescription,
     setProject,
     validateToggleName,
+    setImpressionData,
+    impressionData,
     handleSubmit,
     handleCancel,
     errors,
@@ -81,9 +86,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                 </p>
                 <FeatureTypeSelect
                     value={type}
-                    onChange={(e: React.SyntheticEvent) =>
-                        setType(e.target.value)
-                    }
+                    onChange={(e: React.ChangeEvent) => setType(e.target.value)}
                     label={'Toggle type'}
                     id="feature-type-select"
                     editable
@@ -108,7 +111,6 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     value={project}
                     onChange={e => setProject(e.target.value)}
                     enabled={editable}
-                    label="Project"
                     filter={projectFilterGenerator(
                         { permissions },
                         CREATE_FEATURE
@@ -127,11 +129,29 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     label="Description"
                     placeholder="A short description of the feature toggle"
                     value={description}
-                    inputProps={{
-                        'data-test': CF_DESC_ID,
-                    }}
+                    data-test={CF_DESC_ID}
                     onChange={e => setDescription(e.target.value)}
                 />
+                <FormControl>
+                    <Typography
+                        variant="subtitle1"
+                        className={styles.roleSubtitle}
+                        data-loading
+                    >
+                        Impression Data
+                    </Typography>
+                    <Alert severity="info">
+                        <p>Text to explain what is impression data</p>
+                    </Alert>
+                    <div className={styles.flexRow}>
+                        <Switch
+                            name="sendEmail"
+                            onChange={() => setImpressionData(!impressionData)}
+                            checked={impressionData}
+                        />
+                        <Typography>{impressionData ? 'Yes' : 'No'}</Typography>
+                    </div>
+                </FormControl>
             </div>
 
             <div className={styles.buttonContainer}>
