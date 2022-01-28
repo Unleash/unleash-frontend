@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
+import useUiBootstrap from '../../../../hooks/api/getters/useUiBootstrap/useUiBootstrap';
 import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
 
 const useProjectRoleForm = (
     initialName = '',
     initialEmail = '',
-    initialSendEmail = true,
+    initialSendEmail = false,
     initialRootRole = 1
 ) => {
+    const { bootstrap } = useUiBootstrap();
     const [name, setName] = useState(initialName);
     const [email, setEmail] = useState(initialEmail);
     const [sendEmail, setSendEmail] = useState(initialSendEmail);
     const [rootRole, setRootRole] = useState(initialRootRole);
     const [errors, setErrors] = useState({});
 
+    console.log(bootstrap?.email);
     const { users } = useUsers();
 
     useEffect(() => {
