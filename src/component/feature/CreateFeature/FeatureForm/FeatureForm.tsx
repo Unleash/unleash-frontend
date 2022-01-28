@@ -3,11 +3,7 @@ import Input from '../../../common/Input/Input';
 import { Button } from '@material-ui/core';
 import { useStyles } from './FeatureForm.styles';
 import FeatureTypeSelect from '../../FeatureView2/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
-import {
-    CF_DESC_ID,
-    CF_NAME_ID,
-    CF_TYPE_ID,
-} from '../../../../testIds';
+import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from '../../../../testIds';
 import useFeatureTypes from '../../../../hooks/api/getters/useFeatureTypes/useFeatureTypes';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import useUser from '../../../../hooks/api/getters/useUser/useUser';
@@ -63,6 +59,23 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
         <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
+                    What would you like to call your toggle?
+                </p>
+                <Input
+                    disabled={mode === 'Edit'}
+                    className={styles.input}
+                    label="Name"
+                    error={Boolean(errors.name)}
+                    errorText={errors.name}
+                    onFocus={() => clearErrors()}
+                    value={name}
+                    onChange={e => setName(trim(e.target.value))}
+                    inputProps={{
+                        'data-test': CF_NAME_ID,
+                    }}
+                    onBlur={validateToggleName}
+                />
+                <p className={styles.inputDescription}>
                     What kind of feature toggle do you want to create?
                 </p>
                 <FeatureTypeSelect
@@ -82,24 +95,6 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                 <p className={styles.typeDescription}>
                     {renderToggleDescription()}
                 </p>
-
-                <p className={styles.inputDescription}>
-                    What would you like to call your toggle?
-                </p>
-                <Input
-                    disabled={mode === 'Edit'}
-                    className={styles.input}
-                    label="Name"
-                    error={Boolean(errors.name)}
-                    errorText={errors.name}
-                    onFocus={() => clearErrors()}
-                    value={name}
-                    onChange={e => setName(trim(e.target.value))}
-                    inputProps={{
-                        'data-test': CF_NAME_ID,
-                    }}
-                    onBlur={validateToggleName}
-                />
                 <ConditionallyRender
                     condition={editable}
                     show={
