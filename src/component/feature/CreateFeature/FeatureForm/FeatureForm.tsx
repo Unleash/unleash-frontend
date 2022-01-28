@@ -25,6 +25,7 @@ interface IFeatureToggleForm {
     setName: React.Dispatch<React.SetStateAction<string>>;
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     setProject: React.Dispatch<React.SetStateAction<string>>;
+    validateToggleName: () => void;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -42,6 +43,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
     setName,
     setDescription,
     setProject,
+    validateToggleName,
     handleSubmit,
     handleCancel,
     errors,
@@ -96,6 +98,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     inputProps={{
                         'data-test': CF_NAME_ID,
                     }}
+                    onBlur={validateToggleName}
                 />
                 <ConditionallyRender
                     condition={editable}
