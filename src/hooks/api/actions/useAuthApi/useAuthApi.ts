@@ -7,7 +7,6 @@ const useAuthApi = () => {
     });
 
     const insecureLogin = async (path: string, user: IUser) => {
-        console.log('insecureLogin')
         const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify(user),
@@ -23,8 +22,6 @@ const useAuthApi = () => {
     };
 
     const demoLogin = async (path: string, user: IUser) => {
-        console.log('demoLogin')
-
         const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify(user),
@@ -39,8 +36,8 @@ const useAuthApi = () => {
         }
     };
 
-    const passwordLogin = async (user: IUser) => {
-        const req = createRequest('auth/simple/login', {
+    const passwordLogin = async (path: string, user: IUser) => {
+        const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify(user),
         });

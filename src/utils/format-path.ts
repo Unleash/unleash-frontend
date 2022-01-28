@@ -49,3 +49,10 @@ export const formatAssetPath = (path: string) => {
 
     return path;
 };
+
+export const formatPath = (path: string) => {
+    if (path.length > 0 && path[0] === '/') {
+        return path.substring(1);
+    }
+    return path;
+};

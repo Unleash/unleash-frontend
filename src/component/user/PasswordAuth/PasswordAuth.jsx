@@ -18,6 +18,7 @@ import {
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 import PasswordField from '../../common/PasswordField/PasswordField';
 import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import { formatPath } from '../../../utils/format-path';
 
 const PasswordAuth = ({ authDetails }) => {
     const commonStyles = useCommonStyles();
@@ -54,10 +55,9 @@ const PasswordAuth = ({ authDetails }) => {
         }
 
         const user = { username, password };
-        const path = evt.target.action;
 
         try {
-            await passwordLogin(user);
+            await passwordLogin(formatPath(authDetails?.path),user);
             await refetch();
             history.push(`/`);
         } catch (error) {

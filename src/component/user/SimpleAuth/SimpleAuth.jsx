@@ -7,6 +7,7 @@ import useUser from '../../../hooks/api/getters/useUser/useUser';
 import useAuthApi from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 import useToast from '../../../hooks/useToast';
 import { useHistory } from 'react-router-dom';
+import { formatPath } from '../../../utils/format-path';
 
 const SimpleAuth = ({ authDetails }) => {
     const { insecureLogin } = useAuthApi();
@@ -18,9 +19,8 @@ const SimpleAuth = ({ authDetails }) => {
     const handleSubmit = async evt => {
         evt.preventDefault();
         const user = { email };
-        const path = evt.target.action;
         try {
-            await insecureLogin(path, user);
+            await insecureLogin(formatPath(authDetails?.path), user);
             refetch();
             history.push(`/`);
         } catch (e) {
