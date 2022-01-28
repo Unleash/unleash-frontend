@@ -50,7 +50,6 @@ const UserForm: React.FC<IUserForm> = ({
     const styles = useStyles();
     const { roles } = useUsers();
     const { bootstrap } = useUiBootstrap();
-    console.log(bootstrap)
 
     const sortRoles = (a, b) => {
         if (b.name[0] < a.name[0]) {
@@ -128,7 +127,7 @@ const UserForm: React.FC<IUserForm> = ({
                     </RadioGroup>
                 </FormControl>
                 <ConditionallyRender
-                    condition={mode !== EDIT}
+                    condition={mode !== EDIT && bootstrap?.email}
                     show={
                         <FormControl>
                             <Typography
