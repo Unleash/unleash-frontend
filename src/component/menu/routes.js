@@ -10,7 +10,6 @@ import ShowArchive from '../../page/archive/show';
 import Archive from '../../page/archive';
 import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
-import ContextFields from '../../page/context';
 import ListTagTypes from '../../page/tag-types';
 import Addons from '../../page/addons';
 import AddonsCreate from '../../page/addons/create';
@@ -47,6 +46,7 @@ import EditProject from '../project/Project/EditProject/EditProject';
 import CreateProject from '../project/Project/CreateProject/CreateProject';
 import CreateFeature from '../feature/CreateFeature/CreateFeature/CreateFeature';
 import EditFeature from '../feature/CreateFeature/EditFeature/EditFeature';
+import ContextList from '../context/ContextList/ContextList';
 
 export const routes = [
     // Project
@@ -233,7 +233,7 @@ export const routes = [
     {
         path: '/context',
         title: 'Context Fields',
-        component: ContextFields,
+        component: ContextList,
         type: 'protected',
         flag: C,
         layout: 'main',
