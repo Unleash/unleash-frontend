@@ -176,22 +176,18 @@ exports[`renders correctly with one feature 1`] = `
       <ul
         className="MuiList-root MuiList-padding"
       >
-        <ListItem
-          feature={
-            Object {
-              "name": "Another",
-              "reviveName": "Another",
-            }
-          }
-          flags={Object {}}
-          hasAccess={[Function]}
-          settings={
-            Object {
-              "sort": "name",
-            }
-          }
-          toggleFeature={[MockFunction]}
-        />
+        <li
+          className="MuiListItem-root makeStyles-emptyStateListItem-17 MuiListItem-gutters"
+          disabled={false}
+        >
+          No features available. Get started by adding a new feature toggle.
+          <a
+            href="/features/create"
+            onClick={[Function]}
+          >
+            Add your first toggle
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -377,22 +373,18 @@ exports[`renders correctly with one feature without permissions 1`] = `
       <ul
         className="MuiList-root MuiList-padding"
       >
-        <ListItem
-          feature={
-            Object {
-              "name": "Another",
-              "reviveName": "Another",
-            }
-          }
-          flags={Object {}}
-          hasAccess={[Function]}
-          settings={
-            Object {
-              "sort": "name",
-            }
-          }
-          toggleFeature={[MockFunction]}
-        />
+        <li
+          className="MuiListItem-root makeStyles-emptyStateListItem-17 MuiListItem-gutters"
+          disabled={false}
+        >
+          No features available. Get started by adding a new feature toggle.
+          <a
+            href="/features/create"
+            onClick={[Function]}
+          >
+            Add your first toggle
+          </a>
+        </li>
       </ul>
     </div>
   </div>

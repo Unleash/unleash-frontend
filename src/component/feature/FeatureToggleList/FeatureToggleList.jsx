@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -23,10 +23,9 @@ import { useStyles } from './styles';
 import ListPlaceholder from '../../common/ListPlaceholder/ListPlaceholder';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 import { NAVIGATE_TO_CREATE_FEATURE } from '../../../testIds';
+import useFeatures from '../../../hooks/api/getters/useFeatures/useFeatures';
 
 const FeatureToggleList = ({
-    fetcher,
-    features,
     settings,
     revive,
     currentProjectId,
@@ -41,10 +40,7 @@ const FeatureToggleList = ({
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:800px)');
     const mobileView = useMediaQuery('(max-width:600px)');
-
-    useLayoutEffect(() => {
-        fetcher();
-    }, [fetcher]);
+    const { features } = useFeatures();
 
     useEffect(() => {
         updateSetting('filter', '');
