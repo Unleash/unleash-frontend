@@ -7,7 +7,7 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import ChangePassword from '../change-password-component';
+import ChangePassword from './ChangePassword/ChangePassword';
 import DelUser from '../del-user-component';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 import AccessContext from '../../../../contexts/AccessContext';

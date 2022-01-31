@@ -1,21 +1,30 @@
 import React from 'react';
-import Dialogue from '../../common/Dialogue/Dialogue';
-import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import propTypes from 'prop-types';
-import { REMOVE_USER_ERROR } from '../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
+import Dialogue from '../../../../common/Dialogue/Dialogue';
+import ConditionallyRender from '../../../../common/ConditionallyRender/ConditionallyRender';
+import { REMOVE_USER_ERROR } from '../../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 import { Alert } from '@material-ui/lab';
-import useLoading from '../../../hooks/useLoading';
+import useLoading from '../../../../../hooks/useLoading';
 import { Avatar, Typography } from '@material-ui/core';
-import { useCommonStyles } from '../../../common.styles';
+import { useCommonStyles } from '../../../../../common.styles';
+import { IUser } from '../../../../../interfaces/user';
 
-const DelUserComponent = ({
+interface IDeleteUserProps {
+    showDialog: () => void;
+    closeDialog: () => void;
+    user: IUser;
+    userLoading: boolean;
+    removeUser: () => void;
+    userApiErrors: Object;
+}
+
+const DeleteUser = ({
     showDialog,
     closeDialog,
     user,
     userLoading,
     removeUser,
     userApiErrors,
-}) => {
+}: IDeleteUserProps) => {
     const ref = useLoading(userLoading);
     const commonStyles = useCommonStyles();
 
@@ -75,11 +84,4 @@ const DelUserComponent = ({
     );
 };
 
-DelUserComponent.propTypes = {
-    showDialog: propTypes.bool.isRequired,
-    closeDialog: propTypes.func.isRequired,
-    user: propTypes.object,
-    removeUser: propTypes.func.isRequired,
-};
-
-export default DelUserComponent;
+export default DeleteUser;

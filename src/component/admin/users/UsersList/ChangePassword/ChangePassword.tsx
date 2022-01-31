@@ -1,22 +1,29 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { TextField, Typography, Avatar } from '@material-ui/core';
-import { trim } from '../../common/util';
-import { modalStyles } from './util';
-import Dialogue from '../../common/Dialogue/Dialogue';
-import PasswordChecker from '../../user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
-import { useCommonStyles } from '../../../common.styles';
-import PasswordMatcher from '../../user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
-import ConditionallyRender from '../../common/ConditionallyRender';
+import { trim } from '../../../../common/util';
+import { modalStyles } from '../../util';
+import Dialogue from '../../../../common/Dialogue/Dialogue';
+import PasswordChecker from '../../../../user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
+import { useCommonStyles } from '../../../../../common.styles';
+import PasswordMatcher from '../../../../user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
+import { IUser } from '../../../../../interfaces/user';
 
-function ChangePassword({
+interface IChangePasswordProps {
+    showDialog: () => void;
+    closeDialog: () => void;
+    changePassword: () => void;
+    user: IUser;
+}
+
+const ChangePassword = ({
     showDialog,
     closeDialog,
     changePassword,
     user = {},
-}) {
+}: IChangePasswordProps) => {
     const [data, setData] = useState({});
     const [error, setError] = useState({});
     const [validPassword, setValidPassword] = useState(false);
@@ -137,14 +144,6 @@ function ChangePassword({
             </form>
         </Dialogue>
     );
-}
-
-ChangePassword.propTypes = {
-    showDialog: PropTypes.bool.isRequired,
-    closeDialog: PropTypes.func.isRequired,
-    changePassword: PropTypes.func.isRequired,
-    validatePassword: PropTypes.func.isRequired,
-    user: PropTypes.object,
 };
 
 export default ChangePassword;
