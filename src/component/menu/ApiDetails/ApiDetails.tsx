@@ -15,13 +15,13 @@ interface IProps {
 	uiConfig: IPartialUiConfig;
 }
 
-export function ApiDetailsContainer(): ReactElement {
+export const ApiDetailsContainer = (): ReactElement => {
 	const { uiConfig } = useUiConfig();
 
 	return <ApiDetails uiConfig={uiConfig} />;
-}
+};
 
-export function ApiDetails(props: IProps): ReactElement {
+export const ApiDetails = (props: IProps): ReactElement => {
 	return (
 		<section title="API details">
 			<CurrentVersion {...props} />
@@ -32,9 +32,9 @@ export function ApiDetails(props: IProps): ReactElement {
 			<InstanceId {...props} />
 		</section>
 	);
-}
+};
 
-function InstanceId(props: IProps) {
+const InstanceId = (props: IProps): ReactElement => {
 	const instanceId = props.uiConfig.versionInfo?.instanceId;
 
 	return (
@@ -43,9 +43,9 @@ function InstanceId(props: IProps) {
 			show={<small>{`${instanceId}`}</small>}
 		/>
 	);
-}
+};
 
-function CurrentVersion(props: IProps) {
+const CurrentVersion = (props: IProps): ReactElement => {
 	const currentVersion = formatCurrentVersion(props.uiConfig);
 	const environment = props.uiConfig.environment;
 
@@ -58,9 +58,9 @@ function CurrentVersion(props: IProps) {
 			/>
 		</h4>
 	);
-}
+};
 
-function UpdateNotification(props: IProps) {
+const UpdateNotification = (props: IProps): ReactElement => {
 	const updateNotification = formatUpdateNotification(props.uiConfig);
 
 	return (
@@ -74,9 +74,9 @@ function UpdateNotification(props: IProps) {
 			}
 		/>
 	);
-}
+};
 
-function formatCurrentVersion(uiConfig: IPartialUiConfig): string {
+const formatCurrentVersion = (uiConfig: IPartialUiConfig): string => {
 	const current = uiConfig.versionInfo?.current;
 
 	if (current?.enterprise) {
@@ -88,11 +88,11 @@ function formatCurrentVersion(uiConfig: IPartialUiConfig): string {
 	}
 
 	return `${uiConfig.name} ${uiConfig.version}`;
-}
+};
 
-function formatUpdateNotification(
+const formatUpdateNotification = (
 	uiConfig: IPartialUiConfig
-): string | undefined {
+): string | undefined => {
 	const latest = uiConfig.versionInfo?.latest;
 	const isLatest = uiConfig.versionInfo?.isLatest;
 
@@ -103,4 +103,4 @@ function formatUpdateNotification(
 	if (latest?.oss && !isLatest) {
 		return `Upgrade available - Latest OSS release: ${latest.oss}`;
 	}
-}
+};
