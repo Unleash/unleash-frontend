@@ -1,12 +1,10 @@
 import CopyFeatureToggle from '../../page/features/copy';
-import ViewFeatureToggle from '../../page/features/show';
 import Features from '../../page/features';
 import CreateStrategies from '../../page/strategies/create';
 import StrategyView from '../../page/strategies/show';
 import Strategies from '../../page/strategies';
 import HistoryPage from '../../page/history';
 import HistoryTogglePage from '../../page/history/toggle';
-import ShowArchive from '../../page/archive/show';
 import Archive from '../../page/archive';
 import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
@@ -29,7 +27,7 @@ import Project from '../project/Project/Project';
 import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import FeatureView2 from '../feature/FeatureView2/FeatureView2';
+import FeatureView2 from '../feature/FeatureView/FeatureView';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
@@ -119,7 +117,7 @@ export const routes = [
         path: '/projects/:id/features/:name/:activeTab',
         parent: '/projects',
         title: ':name',
-        component: ViewFeatureToggle,
+        component: FeatureView2,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -371,15 +369,6 @@ export const routes = [
     },
 
     // Archive
-    {
-        path: '/projects/:id/archived/:name/:activeTab',
-        title: ':name',
-        parent: '/archive',
-        component: ShowArchive,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
     {
         path: '/archive',
         title: 'Archived Toggles',

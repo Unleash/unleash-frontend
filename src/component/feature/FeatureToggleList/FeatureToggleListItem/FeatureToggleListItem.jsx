@@ -15,8 +15,8 @@ import { styles as commonStyles } from '../../../common';
 
 import { useStyles } from './styles';
 import { getTogglePath } from '../../../../utils/route-path-helpers';
-import FeatureStatus from '../../FeatureView2/FeatureStatus/FeatureStatus';
-import FeatureType from '../../FeatureView2/FeatureType/FeatureType';
+import FeatureStatus from '../../FeatureView/FeatureStatus/FeatureStatus';
+import FeatureType from '../../FeatureView/FeatureType/FeatureType';
 import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
 

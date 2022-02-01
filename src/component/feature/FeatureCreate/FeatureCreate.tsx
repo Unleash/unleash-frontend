@@ -5,7 +5,7 @@ import { IFeatureViewParams } from '../../../interfaces/params';
 import PageContent from '../../common/PageContent';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import { CardActions } from '@material-ui/core';
-import FeatureTypeSelect from '../FeatureView2/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
+import FeatureTypeSelect from '../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
 import {
     CF_CREATE_BTN_ID,
     CF_DESC_ID,
@@ -75,7 +75,7 @@ const FeatureCreate = () => {
 
         await validateName(toggle.name);
 
-        if(!toggle.name) {
+        if (!toggle.name) {
             setNameError('Name is not allowed to be empty');
             return;
         }
@@ -85,11 +85,13 @@ const FeatureCreate = () => {
         }
 
         try {
-            await createFeatureToggle(toggle.project, toggle)
-            history.push(getTogglePath(toggle.project, toggle.name, uiConfig.flags.E));
+            await createFeatureToggle(toggle.project, toggle);
+            history.push(
+                getTogglePath(toggle.project, toggle.name, uiConfig.flags.E)
+            );
             // Trigger
         } catch (err) {
-            if(err instanceof Error) {
+            if (err instanceof Error) {
                 if (err.toString().includes('not allowed to be empty')) {
                     setNameError('Name is not allowed to be empty');
                 }
@@ -144,7 +146,10 @@ const FeatureCreate = () => {
                     <ProjectSelect
                         value={toggle.project}
                         onChange={v => setValue('project', v.target.value)}
-                        filter={projectFilterGenerator({ permissions }, CREATE_FEATURE)}
+                        filter={projectFilterGenerator(
+                            { permissions },
+                            CREATE_FEATURE
+                        )}
                     />
                 </section>
                 <section className={styles.formContainer}>
