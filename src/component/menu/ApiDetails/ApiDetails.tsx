@@ -10,11 +10,11 @@ interface IPartialUiConfig {
 	versionInfo?: IVersionInfo;
 }
 
-interface IProps {
+interface IApiDetailsProps {
 	uiConfig: IPartialUiConfig;
 }
 
-export const ApiDetails = (props: IProps): ReactElement => {
+export const ApiDetails = (props: IApiDetailsProps): ReactElement => {
 	return (
 		<section title="API details">
 			<CurrentVersion {...props} />
@@ -27,7 +27,7 @@ export const ApiDetails = (props: IProps): ReactElement => {
 	);
 };
 
-const InstanceId = (props: IProps): ReactElement => {
+const InstanceId = (props: IApiDetailsProps): ReactElement => {
 	const instanceId = props.uiConfig.versionInfo?.instanceId;
 
 	return (
@@ -38,7 +38,7 @@ const InstanceId = (props: IProps): ReactElement => {
 	);
 };
 
-const CurrentVersion = (props: IProps): ReactElement => {
+const CurrentVersion = (props: IApiDetailsProps): ReactElement => {
 	const currentVersion = formatCurrentVersion(props.uiConfig);
 	const environment = props.uiConfig.environment;
 
@@ -53,7 +53,7 @@ const CurrentVersion = (props: IProps): ReactElement => {
 	);
 };
 
-const UpdateNotification = (props: IProps): ReactElement => {
+const UpdateNotification = (props: IApiDetailsProps): ReactElement => {
 	const updateNotification = formatUpdateNotification(props.uiConfig);
 
 	return (
