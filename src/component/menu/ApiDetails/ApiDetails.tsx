@@ -16,56 +16,36 @@ interface IApiDetailsProps {
 }
 
 export const ApiDetails = (props: IApiDetailsProps): ReactElement => {
+	const instanceId = props.uiConfig.versionInfo?.instanceId;
+	const currentVersion = formatCurrentVersion(props.uiConfig);
+	const environment = props.uiConfig.environment;
+	const updateNotification = formatUpdateNotification(props.uiConfig);
+	
 	return (
 		<section title="API details">
-			<CurrentVersion {...props} />
-			<UpdateNotification {...props} />
+			<h4>
+				{currentVersion}{' '}
+				<ConditionallyRender
+					condition={environment}
+					show={<small>({environment})</small>}
+				/>
+			</h4>
+			<ConditionallyRender
+				condition={updateNotification}
+				show={
+					<small>
+						{updateNotification}
+						<br />
+					</small>
+				}
+			/>
 			<br />
 			<small>{props.uiConfig.slogan}</small>
 			<br />
-			<InstanceId {...props} />
-		</section>
-	);
-};
-
-const InstanceId = (props: IApiDetailsProps): ReactElement => {
-	const instanceId = props.uiConfig.versionInfo?.instanceId;
-
-	return (
-		<ConditionallyRender
-			condition={instanceId}
-			show={<small>{`${instanceId}`}</small>}
-		/>
-	);
-};
-
-const CurrentVersion = (props: IApiDetailsProps): ReactElement => {
-	const currentVersion = formatCurrentVersion(props.uiConfig);
-	const environment = props.uiConfig.environment;
-
-	return (
-		<h4>
-			{currentVersion}{' '}
 			<ConditionallyRender
-				condition={environment}
-				show={<small>({environment})</small>}
+				condition={instanceId}
+				show={<small>{`${instanceId}`}</small>}
 			/>
-		</h4>
-	);
-};
-
-const UpdateNotification = (props: IApiDetailsProps): ReactElement => {
-	const updateNotification = formatUpdateNotification(props.uiConfig);
-
-	return (
-		<ConditionallyRender
-			condition={updateNotification}
-			show={
-				<small>
-					{updateNotification}
-					<br />
-				</small>
-			}
-		/>
+		</section>
 	);
 };
