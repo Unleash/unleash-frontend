@@ -1,4 +1,3 @@
-import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { ReactElement } from 'react';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { IVersionInfo } from '../../../interfaces/uiConfig';
@@ -14,12 +13,6 @@ interface IPartialUiConfig {
 interface IProps {
 	uiConfig: IPartialUiConfig;
 }
-
-export const ApiDetailsContainer = (): ReactElement => {
-	const { uiConfig } = useUiConfig();
-
-	return <ApiDetails uiConfig={uiConfig} />;
-};
 
 export const ApiDetails = (props: IProps): ReactElement => {
 	return (
