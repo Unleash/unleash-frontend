@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import UsersList from './UsersList/UsersList';
-import AdminMenu from '../admin-menu';
+import AdminMenu from '../menu/AdminMenu';
 import PageContent from '../../common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import ConditionallyRender from '../../common/ConditionallyRender';
@@ -8,7 +8,7 @@ import { ADMIN } from '../../providers/AccessProvider/permissions';
 import { Alert } from '@material-ui/lab';
 import HeaderTitle from '../../common/HeaderTitle';
 import { Button } from '@material-ui/core';
-import { useStyles } from './index.styles';
+import { useStyles } from './UserAdmin.styles';
 import { useHistory } from 'react-router-dom';
 
 const UsersAdmin = () => {

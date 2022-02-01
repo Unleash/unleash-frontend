@@ -16,7 +16,7 @@ import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
-import AdminUsers from '../admin/users';
+import AdminUsers from '../admin/users/UsersAdmin';
 import AdminInvoice from '../admin/invoice';
 import AdminAuth from '../admin/auth';
 import Login from '../user/Login/Login';
