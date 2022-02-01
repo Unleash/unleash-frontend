@@ -28,8 +28,12 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
             if (error?.info?.name !== INVALID_TOKEN_ERROR) {
                 mutate(USER_CACHE_KEY, { ...error.info }, false);
             }
-            console.log(path);
-            if (path === '/login' || '/new-user' || '/reset-password') {
+
+            if (
+                path === '/login' ||
+                path === '/new-user' ||
+                path === '/reset-password'
+            ) {
                 return;
             }
 
