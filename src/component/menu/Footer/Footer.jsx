@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 
 import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
-
-import ShowApiDetailsContainer from '../../api/show-api-details-container';
-
+import { ApiDetailsContainer } from '../ApiDetails/ApiDetails';
 import { useStyles } from './Footer.styles';
 
 export const Footer = () => {
@@ -13,7 +11,7 @@ export const Footer = () => {
         <footer className={styles.footer}>
             <Grid container justifyContent="center" spacing={10} style={{marginBottom: 0}}>
                 <Grid item md={4} xs={12}>
-                    <ShowApiDetailsContainer />
+                    <ApiDetailsContainer />
                 </Grid>
                 <Grid item xs={12} md="auto">
                     <Grid container spacing={7} direction="row">
