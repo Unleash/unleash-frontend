@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { ApiDetails } from '../ApiDetails/ApiDetails';
+import { ApiDetails } from '../Footer/ApiDetails';
 
 test('renders correctly with empty version', () => {
     const uiConfig = {
