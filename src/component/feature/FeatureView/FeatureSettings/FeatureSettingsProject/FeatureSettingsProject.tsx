@@ -59,7 +59,7 @@ const FeatureSettingsProject = () => {
             setDirty(false);
             setShowConfirmDialog(false);
             history.replace(
-                `/projects/${newProject}/features2/${featureId}/settings`
+                `/projects/${newProject}/features/${featureId}/settings`
             );
         } catch (e) {
             setToastApiError(e.message);

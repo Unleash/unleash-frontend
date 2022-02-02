@@ -86,9 +86,7 @@ const FeatureCreate = () => {
 
         try {
             await createFeatureToggle(toggle.project, toggle);
-            history.push(
-                getTogglePath(toggle.project, toggle.name, uiConfig.flags.E)
-            );
+            history.push(getTogglePath(toggle.project, toggle.name));
             // Trigger
         } catch (err) {
             if (err instanceof Error) {

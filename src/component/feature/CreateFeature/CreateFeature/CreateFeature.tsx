@@ -46,7 +46,7 @@ const CreateFeature = () => {
             const payload = getTogglePayload();
             try {
                 await createFeatureToggle(project, payload);
-                history.push(`/projects/${project}/features2/${name}`);
+                history.push(`/projects/${project}/features/${name}`);
                 setToastData({
                     title: 'Toggle created successfully',
                     text: 'Now you can start using your toggle.',

@@ -49,7 +49,7 @@ const FeatureOverviewMetaData = () => {
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
-                                        to={`/projects/${projectId}/features2/${featureId}/settings`}
+                                        to={`/projects/${projectId}/features/${featureId}/settings`}
                                     >
                                         <Edit className={styles.editIcon} />
                                     </PermissionIconButton>
@@ -64,7 +64,7 @@ const FeatureOverviewMetaData = () => {
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
-                                        to={`/projects/${projectId}/features2/${featureId}/settings`}
+                                        to={`/projects/${projectId}/features/${featureId}/settings`}
                                     >
                                         <Edit className={styles.editIcon} />
                                     </PermissionIconButton>

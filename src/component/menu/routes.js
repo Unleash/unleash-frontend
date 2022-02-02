@@ -24,10 +24,9 @@ import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
-import RedirectFeatureViewPage from '../../page/features/redirect';
 import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import FeatureView2 from '../feature/FeatureView/FeatureView';
+import FeatureView from '../feature/FeatureView/FeatureView';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
@@ -45,6 +44,7 @@ import CreateProject from '../project/Project/CreateProject/CreateProject';
 import CreateFeature from '../feature/CreateFeature/CreateFeature/CreateFeature';
 import EditFeature from '../feature/CreateFeature/EditFeature/EditFeature';
 import ContextList from '../context/ContextList/ContextList';
+import RedirectFeatureView from '../feature/RedirectFeatureView/RedirectFeatureView';
 
 export const routes = [
     // Project
@@ -86,7 +86,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/features2/:name/:activeTab/copy',
+        path: '/projects/:id/features/:name/:activeTab/copy',
         parent: '/projects/:id/features/:name/:activeTab',
         title: 'Copy',
         component: CopyFeatureToggle,
@@ -95,7 +95,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features2/:featureId/settings',
+        path: '/projects/:projectId/features/:featureId/settings',
         parent: '/projects',
         title: 'Edit Feature',
         component: EditFeature,
@@ -104,10 +104,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features2/:featureId',
+        path: '/projects/:projectId/features/:featureId',
         parent: '/projects',
-        title: 'FeatureView2',
-        component: FeatureView2,
+        title: 'FeatureView',
+        component: FeatureView,
         type: 'protected',
         layout: 'main',
         flags: E,
@@ -117,7 +117,7 @@ export const routes = [
         path: '/projects/:id/features/:name/:activeTab',
         parent: '/projects',
         title: ':name',
-        component: FeatureView2,
+        component: FeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -132,10 +132,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features/:name',
+        path: '/projects/:projectId/features2/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -174,7 +174,7 @@ export const routes = [
         path: '/features/:activeTab/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},

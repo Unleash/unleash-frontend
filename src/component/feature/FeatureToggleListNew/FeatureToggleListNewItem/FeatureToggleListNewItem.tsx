@@ -57,7 +57,7 @@ const FeatureToggleListNewItem = ({
 
     const onClick = (e: SyntheticEvent) => {
         if (!ref.current?.contains(e.target)) {
-            history.push(getTogglePath(projectId, name, uiConfig.flags.E));
+            history.push(getTogglePath(projectId, name));
         }
     };
 

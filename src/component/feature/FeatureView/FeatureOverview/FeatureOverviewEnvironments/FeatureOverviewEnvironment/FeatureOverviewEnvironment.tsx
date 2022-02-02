@@ -63,7 +63,7 @@ const FeatureOverviewEnvironment = ({
         return `This environment is disabled, which means that none of your strategies are executing`;
     };
 
-    const strategiesLink = `/projects/${projectId}/features2/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
+    const strategiesLink = `/projects/${projectId}/features/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
 
     const getStrategyIcons = () => {
         const strategyObjects = featureEnvironment?.strategies.reduce(

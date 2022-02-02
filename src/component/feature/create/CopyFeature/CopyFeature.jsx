@@ -96,13 +96,7 @@ const CopyFeature = props => {
                 <p className={styles.text}>
                     You are about to create a new feature toggle by cloning the
                     configuration of feature toggle&nbsp;
-                    <Link
-                        to={getTogglePath(
-                            projectId,
-                            copyToggleName,
-                            uiConfig.flags.E
-                        )}
-                    >
+                    <Link to={getTogglePath(projectId, copyToggleName)}>
                         {copyToggleName}
                     </Link>
                     . You must give the new feature toggle a unique name before

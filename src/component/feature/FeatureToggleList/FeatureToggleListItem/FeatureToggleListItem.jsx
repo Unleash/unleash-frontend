@@ -76,7 +76,7 @@ const FeatureToggleListItem = ({
                     condition={!isArchive}
                     show={
                         <Link
-                            to={getTogglePath(feature.project, name, flags.E)}
+                            to={getTogglePath(feature.project, name)}
                             className={classnames(
                                 commonStyles.listLink,
                                 commonStyles.truncate

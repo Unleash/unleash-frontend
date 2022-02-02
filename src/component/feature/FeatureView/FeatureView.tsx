@@ -47,7 +47,7 @@ const FeatureView = () => {
     const ref = useLoading(loading);
     const { uiConfig } = useUiConfig();
 
-    const basePath = `/projects/${projectId}/features2/${featureId}`;
+    const basePath = `/projects/${projectId}/features/${featureId}`;
 
     const archiveToggle = async () => {
         try {
@@ -157,7 +157,7 @@ const FeatureView = () => {
                                     tooltip="Copy"
                                     data-loading
                                     component={Link}
-                                    to={`/projects/${projectId}/features2/${featureId}/strategies/copy`}
+                                    to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
                                 >
                                     <FileCopy />
                                 </PermissionIconButton>
@@ -204,27 +204,27 @@ const FeatureView = () => {
                     </div>
                     <Route
                         exact
-                        path={`/projects/:projectId/features2/:featureId`}
+                        path={`/projects/:projectId/features/:featureId`}
                         component={FeatureOverview}
                     />
                     <Route
-                        path={`/projects/:projectId/features2/:featureId/strategies`}
+                        path={`/projects/:projectId/features/:featureId/strategies`}
                         component={FeatureStrategies}
                     />
                     <Route
-                        path={`/projects/:projectId/features2/:featureId/metrics`}
+                        path={`/projects/:projectId/features/:featureId/metrics`}
                         component={FeatureMetrics}
                     />
                     <Route
-                        path={`/projects/:projectId/features2/:featureId/logs`}
+                        path={`/projects/:projectId/features/:featureId/logs`}
                         component={FeatureLog}
                     />
                     <Route
-                        path={`/projects/:projectId/features2/:featureId/variants`}
+                        path={`/projects/:projectId/features/:featureId/variants`}
                         component={FeatureVariants}
                     />
                     <Route
-                        path={`/projects/:projectId/features2/:featureId/settings`}
+                        path={`/projects/:projectId/features/:featureId/settings`}
                         component={FeatureSettings}
                     />
                     <Dialogue

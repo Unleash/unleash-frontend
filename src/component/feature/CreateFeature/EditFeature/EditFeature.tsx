@@ -53,7 +53,7 @@ const EditFeature = () => {
         const patch = createPatch();
         try {
             await patchFeatureToggle(project, featureId, patch);
-            history.push(`/projects/${project}/features2/${name}`);
+            history.push(`/projects/${project}/features/${name}`);
             setToastData({
                 title: 'Toggle updated successfully',
                 text: 'Now you can start using your toggle.',
