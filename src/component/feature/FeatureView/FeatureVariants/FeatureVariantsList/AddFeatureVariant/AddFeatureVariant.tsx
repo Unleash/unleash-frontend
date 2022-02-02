@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 
-import { weightTypes } from '../../../../variant/enums';
+import { weightTypes } from './enums';
 
 import OverrideConfig from './OverrideConfig/OverrideConfig';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';

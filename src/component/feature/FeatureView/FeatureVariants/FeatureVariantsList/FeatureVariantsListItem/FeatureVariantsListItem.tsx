@@ -4,7 +4,7 @@ import { Edit, Delete } from '@material-ui/icons';
 import styles from '../variants.module.scss';
 import { IFeatureVariant } from '../../../../../../interfaces/featureToggle';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import { weightTypes } from '../../../../variant/enums';
+import { weightTypes } from '../AddFeatureVariant/enums';
 
 interface IFeatureVariantListItem {
     variant: IFeatureVariant;
@@ -23,11 +23,7 @@ const FeatureVariantListItem = ({
 
     return (
         <TableRow>
-            <TableCell
-                data-test={'VARIANT_NAME'}
-            >
-                {variant.name}
-            </TableCell>
+            <TableCell data-test={'VARIANT_NAME'}>{variant.name}</TableCell>
             <TableCell className={styles.chipContainer}>
                 <ConditionallyRender
                     condition={variant.payload}

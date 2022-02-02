@@ -12,16 +12,16 @@ import {
 } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 
-import { styles as commonStyles } from '../../../common';
+import { styles as commonStyles } from '../../common';
 import styles from './CopyFeature.module.scss';
 
-import { trim } from '../../../common/util';
-import ConditionallyRender from '../../../common/ConditionallyRender';
+import { trim } from '../../common/util';
+import ConditionallyRender from '../../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
-import { getTogglePath } from '../../../../utils/route-path-helpers';
-import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
-import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import { getTogglePath } from '../../../utils/route-path-helpers';
+import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const CopyFeature = props => {
     // static displayName = `AddFeatureComponent-${getDisplayName(Component)}`;
