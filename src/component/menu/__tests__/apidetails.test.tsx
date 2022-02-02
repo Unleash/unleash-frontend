@@ -10,9 +10,7 @@ test('renders correctly with empty version', () => {
         version: '',
     };
 
-    const tree = renderer
-        .create(<ApiDetails uiConfig={uiConfig} />)
-        .toJSON();
+    const tree = renderer.create(<ApiDetails uiConfig={uiConfig} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -24,9 +22,7 @@ test('renders correctly with ui-config', () => {
         version: '1.1.0',
     };
 
-    const tree = renderer
-        .create(<ApiDetails uiConfig={uiConfig} />)
-        .toJSON();
+    const tree = renderer.create(<ApiDetails uiConfig={uiConfig} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -36,9 +32,7 @@ test('renders correctly without uiConfig', () => {
         version: '1.1.0',
     };
 
-    const tree = renderer
-        .create(<ApiDetails uiConfig={uiConfig} />)
-        .toJSON();
+    const tree = renderer.create(<ApiDetails uiConfig={uiConfig} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -54,8 +48,6 @@ test('renders correctly with versionInfo', () => {
         },
     };
 
-    const tree = renderer
-        .create(<ApiDetails uiConfig={uiConfig} />)
-        .toJSON();
+    const tree = renderer.create(<ApiDetails uiConfig={uiConfig} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
