@@ -22,8 +22,8 @@ interface IFeatureToggleForm {
     setName: React.Dispatch<React.SetStateAction<string>>;
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     setProject: React.Dispatch<React.SetStateAction<string>>;
-    validateToggleName: () => void;
     setImpressionData: React.Dispatch<React.SetStateAction<boolean>>;
+    validateToggleName?: () => void;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -75,9 +75,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     onFocus={() => clearErrors()}
                     value={name}
                     onChange={e => setName(trim(e.target.value))}
-                    inputProps={{
-                        'data-test': CF_NAME_ID,
-                    }}
+                    data-test={CF_NAME_ID}
                     onBlur={validateToggleName}
                 />
                 <p className={styles.inputDescription}>
@@ -89,9 +87,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     label={'Toggle type'}
                     id="feature-type-select"
                     editable
-                    inputProps={{
-                        'data-test': CF_TYPE_ID,
-                    }}
+                    data-test={CF_TYPE_ID}
                     IconComponent={KeyboardArrowDownOutlined}
                     className={styles.selectInput}
                 />
