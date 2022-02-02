@@ -6,7 +6,7 @@ import { useCommonStyles } from '../../../../../../common.styles';
 import useUiConfig from '../../../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { C } from '../../../../../common/flags';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
-import StrategyConstraintInputField from '../../../../strategy/StrategyConstraint/StrategyConstraintInputField';
+import StrategyConstraintInputField from './StrategyConstraintInputField';
 import { useEffect } from 'react';
 
 interface IStrategyConstraintProps {
