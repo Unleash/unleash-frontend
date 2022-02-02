@@ -1,15 +1,15 @@
-import FormTemplate from '../../../common/FormTemplate/FormTemplate';
+import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import { useHistory } from 'react-router-dom';
 import FeatureForm from '../FeatureForm/FeatureForm';
 import useFeatureForm from '../hooks/useFeatureForm';
-import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
-import useToast from '../../../../hooks/useToast';
-import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import { CREATE_FEATURE } from '../../../providers/AccessProvider/permissions';
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { CF_CREATE_BTN_ID } from '../../../../testIds';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from '../../../hooks/useToast';
+import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import { CREATE_FEATURE } from '../../providers/AccessProvider/permissions';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { CF_CREATE_BTN_ID } from '../../../testIds';
 import { useContext } from 'react';
-import UIContext from '../../../../contexts/UIContext';
+import UIContext from '../../../contexts/UIContext';
 
 const CreateFeature = () => {
     /* @ts-ignore */

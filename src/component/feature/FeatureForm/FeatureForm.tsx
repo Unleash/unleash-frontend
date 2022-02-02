@@ -2,15 +2,15 @@ import { CREATE_FEATURE } from '../../../providers/AccessProvider/permissions';
 import Input from '../../../common/Input/Input';
 import { Button, FormControl, Switch, Typography } from '@material-ui/core';
 import { useStyles } from './FeatureForm.styles';
-import FeatureTypeSelect from '../../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
-import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from '../../../../testIds';
-import useFeatureTypes from '../../../../hooks/api/getters/useFeatureTypes/useFeatureTypes';
+import FeatureTypeSelect from '../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
+import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from '../../../testIds';
+import useFeatureTypes from '../../../hooks/api/getters/useFeatureTypes/useFeatureTypes';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
-import useUser from '../../../../hooks/api/getters/useUser/useUser';
-import { projectFilterGenerator } from '../../../../utils/project-filter-generator';
-import FeatureProjectSelect from '../../FeatureView/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
-import ConditionallyRender from '../../../common/ConditionallyRender';
-import { trim } from '../../../common/util';
+import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { projectFilterGenerator } from '../../../utils/project-filter-generator';
+import FeatureProjectSelect from '../FeatureView/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import { trim } from '../../common/util';
 
 interface IFeatureToggleForm {
     type: string;

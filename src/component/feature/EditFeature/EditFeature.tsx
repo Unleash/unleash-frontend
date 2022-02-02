@@ -1,15 +1,15 @@
-import FormTemplate from '../../../common/FormTemplate/FormTemplate';
+import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import { useHistory, useParams } from 'react-router-dom';
 import FeatureForm from '../FeatureForm/FeatureForm';
 import useFeatureForm from '../hooks/useFeatureForm';
-import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
-import useToast from '../../../../hooks/useToast';
-import useFeatureApi from '../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
-import { IFeatureViewParams } from '../../../../interfaces/params';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from '../../../hooks/useToast';
+import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
+import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
+import { IFeatureViewParams } from '../../../interfaces/params';
 import * as jsonpatch from 'fast-json-patch';
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 
 const EditFeature = () => {
     /* @ts-ignore */
