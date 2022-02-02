@@ -1,5 +1,5 @@
 interface IConditionallyRenderProps {
-    condition: boolean | string | undefined;
+    condition: boolean;
     show: JSX.Element | RenderFunc;
     elseShow?: JSX.Element | RenderFunc;
 }
