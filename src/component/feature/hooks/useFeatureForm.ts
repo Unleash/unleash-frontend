@@ -48,9 +48,14 @@ const useFeatureForm = (
 
     const getTogglePayload = () => {
         return {
+<<<<<<< HEAD:src/component/feature/hooks/useFeatureForm.ts
             type,
             name,
             projectId: project,
+=======
+            type: type,
+            name: name,
+>>>>>>> 2b515fd7 (fix: remove projectId from create feature form):src/component/feature/CreateFeature/hooks/useFeatureForm.ts
             description: description,
             impressionData
         };
