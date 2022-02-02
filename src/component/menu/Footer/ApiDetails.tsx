@@ -26,12 +26,12 @@ export const ApiDetails = (props: IApiDetailsProps): ReactElement => {
 			<h4>
 				{currentVersion}{' '}
 				<ConditionallyRender
-					condition={environment}
+					condition={Boolean(environment)}
 					show={<small>({environment})</small>}
 				/>
 			</h4>
 			<ConditionallyRender
-				condition={updateNotification}
+				condition={Boolean(updateNotification)}
 				show={
 					<small>
 						{updateNotification}
@@ -43,7 +43,7 @@ export const ApiDetails = (props: IApiDetailsProps): ReactElement => {
 			<small>{props.uiConfig.slogan}</small>
 			<br />
 			<ConditionallyRender
-				condition={instanceId}
+				condition={Boolean(instanceId)}
 				show={<small>{`${instanceId}`}</small>}
 			/>
 		</section>
