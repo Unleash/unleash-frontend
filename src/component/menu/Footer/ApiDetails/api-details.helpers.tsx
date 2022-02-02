@@ -1,4 +1,12 @@
-import { IPartialUiConfig } from './ApiDetails';
+import { IVersionInfo } from "../../../../interfaces/uiConfig";
+
+export interface IPartialUiConfig {
+	name: string;
+	version: string;
+	slogan?: string;
+	environment?: string;
+	versionInfo?: IVersionInfo;
+}
 
 export const formatCurrentVersion = (uiConfig: IPartialUiConfig): string => {
 	const current = uiConfig.versionInfo?.current;

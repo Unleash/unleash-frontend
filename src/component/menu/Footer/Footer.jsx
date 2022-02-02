@@ -2,7 +2,7 @@
 
 import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
-import { ApiDetails } from './ApiDetails';
+import { ApiDetails } from './ApiDetails/ApiDetails';
 import { useStyles } from './Footer.styles';
 
 export const Footer = () => {

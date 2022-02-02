@@ -1,15 +1,6 @@
 import { ReactElement } from 'react';
-import ConditionallyRender from '../../common/ConditionallyRender';
-import { IVersionInfo } from '../../../interfaces/uiConfig';
-import { formatCurrentVersion, formatUpdateNotification } from './ApiDetails.helpers';
-
-export interface IPartialUiConfig {
-	name: string;
-	version: string;
-	slogan?: string;
-	environment?: string;
-	versionInfo?: IVersionInfo;
-}
+import ConditionallyRender from '../../../common/ConditionallyRender';
+import { formatCurrentVersion, formatUpdateNotification, IPartialUiConfig } from './api-details.helpers';
 
 interface IApiDetailsProps {
 	uiConfig: IPartialUiConfig;
