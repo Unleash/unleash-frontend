@@ -22,7 +22,7 @@ const FeatureOverviewEnvironmentBody = ({
     const styles = useStyles();
     const history = useHistory();
     const { hasAccess } = useContext(AccessContext);
-    const strategiesLink = `/projects/${projectId}/features/${featureId}/strategies?environment=${featureEnvironment?.name}&addStrategy=true`;
+    const strategiesLink = `/projects/${projectId}/features/${featureId}/strategies?environment=${featureEnvironment?.name}`;
 
     if (!featureEnvironment) return null;
 
