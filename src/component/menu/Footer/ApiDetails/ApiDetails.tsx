@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import ConditionallyRender from '../../../common/ConditionallyRender';
-import { formatCurrentVersion, formatUpdateNotification, IPartialUiConfig } from './api-details.helpers';
+import { formatCurrentVersion, formatUpdateNotification, IPartialUiConfig } from './apidetails.helpers';
 
 interface IApiDetailsProps {
 	uiConfig: IPartialUiConfig;
