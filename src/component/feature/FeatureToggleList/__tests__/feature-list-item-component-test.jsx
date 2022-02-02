@@ -7,8 +7,6 @@ import renderer from 'react-test-renderer';
 
 import theme from '../../../../themes/main-theme';
 
-jest.mock('../FeatureToggleListItem/FeatureToggleListItemChip');
-
 test('renders correctly with one feature', () => {
     const feature = {
         name: 'Another',
