@@ -9,22 +9,53 @@ import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyR
 import { styles as commonStyles, FormButtons } from '../../common';
 import { trim } from '../../common/util';
 import StrategyParameters from './StrategyParameters/StrategyParameters';
+import { useHistory } from 'react-router-dom';
+import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 
 const CreateStrategy = ({
     input,
     setValue,
     appParameter,
-    onCancel,
     editMode = false,
     errors,
     onSubmit,
     clearErrors,
     updateParameter,
 }) => {
+    const history = useHistory();
+    // const [] = useState();
+   // const [errors, setErrors] = useState();
+   const {createStrategy, updateStrategy} = useStrategiesApi()
+
+
     const getHeaderTitle = () => {
         if (editMode) return 'Edit strategy';
         return 'Create a new strategy';
     };
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     if (editMode) {
+    //         await updateStrategy(strategy);
+    //         history.push(`/strategies/view/${strategy.name}`);
+    //     } else {
+    //         try {
+    //             await createStrategy(strategy);
+    //             history.push(`/strategies`);
+    //         } catch (e) {
+    //             if (e.toString().includes(STRATEGY_EXIST_ERROR)) {
+    //                 this.setState({
+    //                     errors: {
+    //                         name: 'A strategy with this name already exists ',
+    //                     },
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
+
+    const handleCancel = () => history.goBack();
+    
 
     return (
         <PageContent headerContent={getHeaderTitle()}>
@@ -104,7 +135,7 @@ const CreateStrategy = ({
                     elseShow={
                         <FormButtons
                             submitText={'Create'}
-                            onCancel={onCancel}
+                            onCancel={handleCancel}
                         />
                     }
                 />

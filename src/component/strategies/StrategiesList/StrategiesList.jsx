@@ -37,22 +37,21 @@ import { ADD_NEW_STRATEGY_ID } from '../../../testIds';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
+import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 
-const StrategiesList = ({
-    strategies,
-    fetchStrategies,
-    removeStrategy,
-    deprecateStrategy,
-    reactivateStrategy,
-}) => {
+const StrategiesList = () => {
     const history = useHistory();
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
     const [dialogueMetaData, setDialogueMetaData] = useState({ show: false });
+    const { strategies, refetchStrategies } = useStrategies();
+    const { removeStrategy, deprecateStrategy, reactivateStrategy } =
+        useStrategiesApi();
 
     useEffect(() => {
-        fetchStrategies();
+        refetchStrategies();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

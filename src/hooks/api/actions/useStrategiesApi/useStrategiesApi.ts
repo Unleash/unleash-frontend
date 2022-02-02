@@ -1,7 +1,7 @@
 import { IStrategyPayload } from '../../../../interfaces/strategy';
 import useAPI from '../useApi/useApi';
 
-const useStrategies = () => {
+const useStrategiesApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
@@ -90,4 +90,4 @@ const useStrategies = () => {
     };
 };
 
-export default useStrategies;
+export default useStrategiesApi;
