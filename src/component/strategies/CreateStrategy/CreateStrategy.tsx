@@ -12,14 +12,24 @@ import StrategyParameters from './StrategyParameters/StrategyParameters';
 import { useHistory } from 'react-router-dom';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 
+interface ICustomStrategyParams {
+    name?: string;
+    type?: string;
+    description?: string;
+    required?: boolean;
+}
+
+interface ICustomStrategyErrors {
+    name?: string;
+}
+
 const CreateStrategy = ({ editMode = false }) => {
     const history = useHistory();
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [params, setParams] = useState([{}]);
-    const [errors, setErrors] = useState({});
-    const [dirty, setDirty] = useState(false);
+    const [params, setParams] = useState<ICustomStrategyParams[]>([]);
+    const [errors, setErrors] = useState<ICustomStrategyErrors>({});
     const { createStrategy, updateStrategy } = useStrategiesApi();
 
     const clearErrors = () => {
@@ -33,24 +43,39 @@ const CreateStrategy = ({ editMode = false }) => {
 
     const appParameter = () => {
         setParams(prev => [...prev, {}]);
-        setDirty(true);
     };
 
     const updateParameter = (index: number, updated: object) => {
         let item = { ...params[index] };
         params[index] = Object.assign({}, item, updated);
-        console.log(params);
         setParams(prev => [...prev]);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const parameters = (params || [])
+            .filter(({ name }) => !!name)
+            .map(
+                ({
+                    name,
+                    type = 'string',
+                    description = '',
+                    required = false,
+                }) => ({
+                    name,
+                    type,
+                    description,
+                    required,
+                })
+            );
+        setParams(prev => [...parameters]);
         if (editMode) {
-            await updateStrategy({ name, description, params });
+            await updateStrategy({ name, description, parameters: params });
             history.push(`/strategies/view/${name}`);
         } else {
             try {
-                await createStrategy({ name, description, params });
+                console.log({ name, description, params });
+                await createStrategy({ name, description, parameters: params });
                 history.push(`/strategies`);
             } catch (e: any) {
                 const STRATEGY_EXIST_ERROR = 'Error: Strategy with name';
@@ -151,16 +176,7 @@ const CreateStrategy = ({ editMode = false }) => {
 };
 
 CreateStrategy.propTypes = {
-    input: PropTypes.object,
-    setValue: PropTypes.func,
-    appParameter: PropTypes.func,
-    updateParameter: PropTypes.func,
-    clear: PropTypes.func,
-    onCancel: PropTypes.func,
-    onSubmit: PropTypes.func,
-    errors: PropTypes.object,
     editMode: PropTypes.bool,
-    clearErrors: PropTypes.func,
 };
 
 export default CreateStrategy;
