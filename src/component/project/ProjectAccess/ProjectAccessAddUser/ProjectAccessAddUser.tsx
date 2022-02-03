@@ -14,11 +14,10 @@ import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjec
 import { useParams } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
-import IRole from '../../../../interfaces/role';
-import { IUser } from '../../../../interfaces/user';
+import { IProjectRole } from '../../../../interfaces/role';
 
 interface IProjectAccessAddUserProps {
-    roles: IRole[];
+    roles: IProjectRole[];
 }
 
 const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
@@ -54,9 +53,10 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             // TODO: Do not hard-code fetch here.
             const result = await searchProjectUser(q);
             const users = await result.json();
-            const filtredUsers = users.filter((selectedUser: IUser) => {
+            console.log(users);
+            const filtredUsers = users.filter(selectedUser => {
                 const selected = access.users.find(
-                    (user: IUser) => user.id === selectedUser.id
+                    user => user.id === selectedUser.id
                 );
                 return selected ? false : true;
             });

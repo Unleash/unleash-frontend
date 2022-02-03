@@ -1,3 +1,4 @@
+import { IProjectAccessUsers } from '../../getters/useProjectAccess/useProjectAccess';
 import useAPI from '../useApi/useApi';
 
 interface ICreatePayload {
@@ -109,8 +110,8 @@ const useProjectApi = () => {
 
     const addUserToRole = async (
         projectId: string,
-        roleId: string,
-        userId: string
+        roleId: number,
+        userId: number
     ) => {
         const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
         const req = createRequest(path, { method: 'POST' });
@@ -126,8 +127,8 @@ const useProjectApi = () => {
 
     const removeUserFromRole = async (
         projectId: string,
-        roleId: string,
-        userId: string
+        roleId: number,
+        userId: number
     ) => {
         const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
         const req = createRequest(path, { method: 'DELETE' });
@@ -141,7 +142,7 @@ const useProjectApi = () => {
         }
     };
 
-    const searchProjectUser = async (query: string) => {
+    const searchProjectUser = async (query: string): Promise<Response> => {
         const path = `api/admin/user-admin/search?q=${query}`;
 
         const req = createRequest(path, { method: 'GET' });

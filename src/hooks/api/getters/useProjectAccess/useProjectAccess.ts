@@ -2,6 +2,22 @@ import useSWR, { mutate, SWRConfiguration } from 'swr';
 import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 import handleErrorResponses from '../httpErrorResponseHandler';
+import { IProjectRole } from '../../../../interfaces/role';
+
+export interface IProjectAccessUsers {
+    id: number;
+    imageUrl: string;
+    isAPI: boolean;
+    roleId: number;
+    username?: string;
+    name?: string;
+    email?: string;
+}
+
+interface IProjectAccessResponse {
+    users: IProjectAccessUsers[];
+    roles: IProjectRole[];
+}
 
 const useProjectAccess = (
     projectId: string,
@@ -18,7 +34,11 @@ const useProjectAccess = (
 
     const CACHE_KEY = `api/admin/projects/${projectId}/users`;
 
-    const { data, error } = useSWR(CACHE_KEY, fetcher, options);
+    const { data, error } = useSWR<IProjectAccessResponse>(
+        CACHE_KEY,
+        fetcher,
+        options
+    );
     const [loading, setLoading] = useState(!error && !data);
 
     const refetchProjectAccess = () => {

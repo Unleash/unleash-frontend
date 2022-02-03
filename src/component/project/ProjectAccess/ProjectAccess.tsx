@@ -31,9 +31,12 @@ import usePagination from '../../../hooks/usePagination';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import useToast from '../../../hooks/useToast';
 import ConfirmDialogue from '../../common/Dialogue';
-import useProjectAccess from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
+import useProjectAccess, {
+    IProjectAccessUsers,
+} from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
+import { IUser } from '../../../interfaces/user';
 
 const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
@@ -46,9 +49,7 @@ const ProjectAccess = () => {
         usePagination(access.users, 10);
     const { removeUserFromRole, addUserToRole } = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
-    const [user, setUser] = useState({});
-
-    console.log(access.roles);
+    const [user, setUser] = useState<IUser | Object>({});
 
     if (isOss()) {
         return (
@@ -66,7 +67,7 @@ const ProjectAccess = () => {
     }
 
     const handleRoleChange =
-        (userId: string, currRoleId: string) =>
+        (userId: number, currRoleId: number) =>
         async (evt: React.ChangeEvent<HTMLInputElement>) => {
             const roleId = evt.target.value;
             try {
@@ -86,7 +87,7 @@ const ProjectAccess = () => {
             }
         };
 
-    const removeAccess = (userId: string, roleId: string) => async () => {
+    const removeAccess = (userId: number, roleId: number) => async () => {
         try {
             await removeUserFromRole(projectId, roleId, userId);
             refetchProjectAccess();
@@ -137,7 +138,7 @@ const ProjectAccess = () => {
             </Dialog>
             <div className={styles.divider}></div>
             <List>
-                {page.map(user => {
+                {page.map((user: IProjectAccessUsers) => {
                     const labelId = `checkbox-list-secondary-label-${user.id}`;
                     return (
                         <ListItem key={user.id} button>
@@ -162,7 +163,7 @@ const ProjectAccess = () => {
                                         user.roleId
                                     )}
                                     roles={access.roles}
-                                    value={user.roleId || ''}
+                                    value={user.roleId || -1}
                                 >
                                     <MenuItem value="" disabled>
                                         Choose role
@@ -202,7 +203,7 @@ const ProjectAccess = () => {
             </List>
             <ConfirmDialogue
                 open={showDelDialogue}
-                onClick={removeAccess(user.id, user.roleId)}
+                onClick={removeAccess(user?.id, user?.roleId)}
                 onClose={() => {
                     setUser({});
                     setShowDelDialogue(false);

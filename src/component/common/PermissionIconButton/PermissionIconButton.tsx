@@ -1,9 +1,15 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import {
+    ExtendButtonBase,
+    IconButtonTypeMap,
+    IconButton,
+    Tooltip,
+} from '@material-ui/core';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
 interface IPermissionIconButtonProps
-    extends React.HTMLProps<HTMLButtonElement> {
+    extends ExtendButtonBase<IconButtonTypeMap>,
+        React.HTMLProps<HTMLButtonElement> {
     permission: string;
     Icon?: React.ElementType;
     tooltip: string;

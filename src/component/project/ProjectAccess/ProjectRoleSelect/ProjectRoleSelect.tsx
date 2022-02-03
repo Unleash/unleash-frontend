@@ -1,15 +1,15 @@
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import React from 'react';
-import IRole from '../../../../interfaces/role';
+import IRole, { IProjectRole } from '../../../../interfaces/role';
 
 import { useStyles } from '../ProjectAccess.styles';
 
 interface IProjectRoleSelect {
-    roles: IRole[];
+    roles: IProjectRole[];
     labelId: string;
     id: string;
     placeholder?: string;
-    onChange: () => void;
+    onChange: (evt: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
     value: any;
 }
 
