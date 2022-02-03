@@ -27,12 +27,9 @@ const CreateFeature = () => {
         setProject,
         description,
         setDescription,
-<<<<<<< HEAD
         validateToggleName,
-=======
         impressionData,
         setImpressionData,
->>>>>>> 72b3c9fa (feat: add impressionData switch to create feature form)
         getTogglePayload,
         clearErrors,
         errors,
@@ -94,12 +91,9 @@ const CreateFeature = () => {
                 setName={setName}
                 setProject={setProject}
                 setDescription={setDescription}
-<<<<<<< HEAD
                 validateToggleName={validateToggleName}
-=======
                 setImpressionData={setImpressionData}
                 impressionData={impressionData}
->>>>>>> 72b3c9fa (feat: add impressionData switch to create feature form)
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
