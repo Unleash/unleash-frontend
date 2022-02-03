@@ -70,5 +70,6 @@ export const useStyles = makeStyles(theme => ({
     flexRow: {
         display: 'flex',
         alignItems: 'center',
+        marginTop: '0.5rem',
     },
 }));
