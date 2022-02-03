@@ -77,11 +77,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         setSelect(false);
     };
 
-<<<<<<< HEAD
-    const handleSelectUser = (evt, selectedUser) => {
-=======
     const handleSelectUser = (evt: Event, value) => {
->>>>>>> 0bbcaaf6 (fix: remove some ts errors)
         setOptions([]);
         if (selectedUser?.id) {
             setUser(selectedUser);
@@ -109,7 +105,11 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         } catch (e: any) {
             let error;
 
-            if (e.toString().includes(`User already has access to project=${id}`)) {
+            if (
+                e
+                    .toString()
+                    .includes(`User already has access to project=${id}`)
+            ) {
                 error = `User already has access to project ${id}`;
             } else {
                 error = e.toString() || 'Server problems when adding users.';
