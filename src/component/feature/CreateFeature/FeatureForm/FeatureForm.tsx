@@ -145,6 +145,8 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                         every time this toggle gets triggered. Learn more in{' '}
                         <a
                             className={styles.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             href="https://docs.getunleash.io/advanced/impression_data"
                         >
                             the impression data documentation
