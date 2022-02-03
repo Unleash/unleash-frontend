@@ -8,12 +8,18 @@ import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRend
 import TabNav from '../common/TabNav/TabNav';
 import PageContent from '../common/PageContent/PageContent';
 import AccessContext from '../../contexts/AccessContext';
+import useStrategies from '../../hooks/api/getters/useStrategies/useStrategies';
+import { useParams } from 'react-router-dom';
 
 const StrategyDetails = props => {
     const { hasAccess } = useContext(AccessContext);
+    const { strategies, refetchStrategies } = useStrategies();
+    const { strategyName } = useParams<{ strategyName: string }>();
+    const strategy = strategies.find(n => n.name === strategyName);
+    
     useEffect(() => {
-        if (!props.strategy) {
-            props.fetchStrategies();
+        if (!strategy) {
+            refetchStrategies();
         }
         if (!props.applications || props.applications.length === 0) {
             props.fetchApplications();
@@ -29,7 +35,7 @@ const StrategyDetails = props => {
             label: 'Details',
             component: (
                 <ShowStrategy
-                    strategy={props.strategy}
+                    strategy={strategy}
                     toggles={props.toggles}
                     applications={props.applications}
                 />
@@ -39,14 +45,14 @@ const StrategyDetails = props => {
             label: 'Edit',
             component: (
                 <EditStrategy
-                    strategy={props.strategy}
+                    strategy={strategy}
                     history={props.history}
                     editMode
                 />
             ),
         },
     ];
-    const strategy = props.strategy;
+
     if (!strategy) return null;
     return (
         <PageContent headerContent={strategy.name}>
@@ -68,7 +74,7 @@ const StrategyDetails = props => {
                             <section>
                                 <div className="content">
                                     <ShowStrategy
-                                        strategy={props.strategy}
+                                        strategy={strategy}
                                         toggles={props.toggles}
                                         applications={props.applications}
                                     />
@@ -83,11 +89,9 @@ const StrategyDetails = props => {
 };
 
 StrategyDetails.propTypes = {
-    strategyName: PropTypes.string.isRequired,
     toggles: PropTypes.array,
     applications: PropTypes.array,
     activeTab: PropTypes.string.isRequired,
-    strategy: PropTypes.object,
     fetchStrategies: PropTypes.func.isRequired,
     fetchApplications: PropTypes.func.isRequired,
     fetchFeatureToggles: PropTypes.func.isRequired,
