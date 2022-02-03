@@ -25,7 +25,7 @@ interface IProjectAccessAddUserProps {
 const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState();
-    const [role, setRole] = useState<IRole>({
+    const [role, setRole] = useState<IProjectRole>({
         id: -1,
         name: '',
         project: '',
@@ -48,11 +48,11 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         }
     }, [roles]);
 
-    const search = async (q: string) => {
-        if (q.length > 1) {
+    const search = async (query: string) => {
+        if (query.length > 1) {
             setLoading(true);
-            // TODO: Do not hard-code fetch here.
-            const result = await searchProjectUser(q);
+
+            const result = await searchProjectUser(query);
             const userSearchResults = await result.json();
 
             const filteredUsers = userSearchResults.filter(
