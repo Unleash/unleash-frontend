@@ -24,18 +24,12 @@ test('renders correctly with one feature', () => {
         ],
         createdAt: '2018-02-04T20:27:52.127Z',
     };
-    const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
                 <FeatureToggleListItem
                     key={0}
-                    settings={settings}
-                    metricsLastHour={featureMetrics.lastHour[feature.name]}
-                    metricsLastMinute={featureMetrics.lastMinute[feature.name]}
                     feature={feature}
-                    toggleFeature={jest.fn()}
                     hasAccess={() => true}
                 />
             </ThemeProvider>
@@ -61,18 +55,12 @@ test('renders correctly with one feature without permission', () => {
         ],
         createdAt: '2018-02-04T20:27:52.127Z',
     };
-    const featureMetrics = { lastHour: {}, lastMinute: {}, seenApps: {} };
-    const settings = { sort: 'name' };
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
                 <FeatureToggleListItem
                     key={0}
-                    settings={settings}
-                    metricsLastHour={featureMetrics.lastHour[feature.name]}
-                    metricsLastMinute={featureMetrics.lastMinute[feature.name]}
                     feature={feature}
-                    toggleFeature={jest.fn()}
                     hasAccess={() => true}
                 />
             </ThemeProvider>
