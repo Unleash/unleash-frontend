@@ -11,7 +11,6 @@ import { projectFilterGenerator } from '../../../../utils/project-filter-generat
 import FeatureProjectSelect from '../../FeatureView2/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { trim } from '../../../common/util';
-import { Alert } from '@material-ui/lab';
 
 interface IFeatureToggleForm {
     type: string;
@@ -140,12 +139,20 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     >
                         Impression Data
                     </Typography>
-                    <Alert severity="info">
-                        <p>Text to explain what is impression data</p>
-                    </Alert>
+                    <p>
+                        When you enable impression data for a feature toggle,
+                        your client SDKs will emit events you can listen for
+                        every time this toggle gets triggered. Learn more in{' '}
+                        <a
+                            className={styles.link}
+                            href="https://docs.getunleash.io/advanced/impression_data"
+                        >
+                            the impression data documentation
+                        </a>
+                    </p>
                     <div className={styles.flexRow}>
                         <Switch
-                            name="sendEmail"
+                            name="impressionData"
                             onChange={() => setImpressionData(!impressionData)}
                             checked={impressionData}
                         />
