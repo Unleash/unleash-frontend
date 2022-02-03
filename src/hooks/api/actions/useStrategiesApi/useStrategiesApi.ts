@@ -1,5 +1,10 @@
-import { IStrategyPayload } from '../../../../interfaces/strategy';
 import useAPI from '../useApi/useApi';
+
+interface ICustomStrategyPayload {
+    name: string;
+    description: string;
+    parameters: object[];
+}
 
 const useStrategiesApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
@@ -7,7 +12,7 @@ const useStrategiesApi = () => {
     });
     const URI = 'api/admin/strategies';
 
-    const createStrategy = async (strategy: IStrategyPayload) => {
+    const createStrategy = async (strategy: ICustomStrategyPayload) => {
         const req = createRequest(URI, {
             method: 'POST',
             body: JSON.stringify(strategy),
@@ -22,7 +27,7 @@ const useStrategiesApi = () => {
         }
     };
 
-    const updateStrategy = async (strategy: IStrategyPayload) => {
+    const updateStrategy = async (strategy: ICustomStrategyPayload) => {
         const path = `${URI}/${strategy.name}`;
         const req = createRequest(path, {
             method: 'PUT',
@@ -38,7 +43,7 @@ const useStrategiesApi = () => {
         }
     };
 
-    const removeStrategy = async (strategy: IStrategyPayload) => {
+    const removeStrategy = async (strategy: ICustomStrategyPayload) => {
         const path = `${URI}/${strategy.name}`;
         const req = createRequest(path, { method: 'DELETE' });
 
@@ -51,7 +56,7 @@ const useStrategiesApi = () => {
         }
     };
 
-    const deprecateStrategy = async (strategy: IStrategyPayload) => {
+    const deprecateStrategy = async (strategy: ICustomStrategyPayload) => {
         const path = `${URI}/${strategy.name}/deprecate`;
         const req = createRequest(path, {
             method: 'POST',
@@ -66,7 +71,7 @@ const useStrategiesApi = () => {
         }
     };
 
-    const reactivateStrategy = async (strategy: IStrategyPayload) => {
+    const reactivateStrategy = async (strategy: ICustomStrategyPayload) => {
         const path = `${URI}/${strategy.name}/reactivate`;
         const req = createRequest(path, { method: 'POST' });
 
