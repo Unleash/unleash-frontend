@@ -1,29 +1,19 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 import EventLog from '../EventLog';
+import { useEvents } from '../../../hooks/api/getters/useEvents/useEvents';
 
-const FeatureEventHistory = ({
-    toggleName,
-    history,
-    fetchHistoryForToggle,
-}) => {
-    useEffect(() => {
-        fetchHistoryForToggle(toggleName);
-    }, [fetchHistoryForToggle, toggleName]);
+export const FeatureEventHistory = ({ toggleName }) => {
+    const { events } = useEvents(toggleName);
 
-    if (!history || history.length === 0) {
-        return <span>fetching..</span>;
+    if (events.length === 0) {
+        return null;
     }
 
     return (
-        <EventLog history={history} hideName title="Change log" displayInline />
+        <EventLog history={events} hideName title="Change log" displayInline />
     );
 };
 
 FeatureEventHistory.propTypes = {
     toggleName: PropTypes.string.isRequired,
-    history: PropTypes.array,
-    fetchHistoryForToggle: PropTypes.func.isRequired,
 };
-
-export default FeatureEventHistory;
