@@ -64,9 +64,6 @@ export const useStyles = makeStyles(theme => ({
     roleSubtitle: {
         margin: '0.5rem 0',
     },
-    errorAlert: {
-        marginBottom: '1rem',
-    },
     flexRow: {
         display: 'flex',
         alignItems: 'center',
