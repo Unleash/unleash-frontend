@@ -16,14 +16,12 @@ const RedirectFeatureView = () => {
     );
 
     useEffect(() => {
-        /* eslint-disable-next-line */
         const toggle = features.find(
             (toggle: IFeatureToggle) => toggle.name === name
         );
 
         setFeatureToggle(toggle);
-        /* eslint-disable-next-line */
-    }, [features]);
+    }, [features, name]);
 
     if (!featureToggle) return null;
 
