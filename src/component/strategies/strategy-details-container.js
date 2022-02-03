@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import ShowStrategy from './strategy-details-component';
 import { fetchStrategies } from './../../store/strategy/actions';
 import { fetchAll } from './../../store/application/actions';
 import { fetchFeatureToggles } from './../../store/feature-toggle/actions';
+import ShowStrategyDetails from './StrategyDetails'
 
 const mapStateToProps = (state, props) => {
     let strategy = state.strategies.get('list').find(n => n.name === props.strategyName);
@@ -28,6 +28,6 @@ const Constainer = connect(mapStateToProps, {
     fetchStrategies,
     fetchApplications: fetchAll,
     fetchFeatureToggles,
-})(ShowStrategy);
+})(ShowStrategyDetails);
 
 export default Constainer;
