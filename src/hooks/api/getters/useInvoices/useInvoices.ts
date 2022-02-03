@@ -27,7 +27,7 @@ const useInvoices = (options: SWRConfiguration = {}) => {
     }, [data, error]);
 
     return {
-        invoices: data || [],
+        invoices: data?.invoices || [],
         error,
         loading,
         refetchInvoices,

@@ -18,7 +18,7 @@ import AddonsEdit from '../../page/addons/edit';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
 import AdminUsers from '../admin/users';
-import AdminInvoice from '../admin/invoice';
+import AdminInvoice from '../admin/invoice/InvoiceAdminPage';
 import AdminAuth from '../admin/auth';
 import Login from '../user/Login/Login';
 import { P, C, E, EEA, RE } from '../common/flags';

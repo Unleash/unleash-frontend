@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
     Table,
     TableHead,
@@ -15,16 +14,19 @@ import HeaderTitle from '../../common/HeaderTitle';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { formatApiPath } from '../../../utils/format-path';
 import useInvoices from '../../../hooks/api/getters/useInvoices/useInvoices';
+import { useLocation } from 'react-router-dom';
+import { IInvoice } from '../../../interfaces/invoice';
 
 const PORTAL_URL = formatApiPath('api/admin/invoices/portal');
 
-function InvoiceList({ location }) {
+const InvoiceList = () => {
     const { refetchInvoices, invoices } = useInvoices();
     const [isLoaded, setLoaded] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         refetchInvoices();
-        setLoaded(true)
+        setLoaded(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -61,7 +63,7 @@ function InvoiceList({ location }) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {invoices.map(item => (
+                                {invoices.map((item: IInvoice) => (
                                     <TableRow
                                         key={item.invoiceURL}
                                         style={{
@@ -116,10 +118,5 @@ function InvoiceList({ location }) {
             elseShow={<div>{isLoaded && 'No invoices to show.'}</div>}
         />
     );
-}
-
-InvoiceList.propTypes = {
-    location: PropTypes.object,
 };
-
 export default InvoiceList;
