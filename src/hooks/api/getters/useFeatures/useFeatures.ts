@@ -6,14 +6,14 @@ import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 
 const PATH = formatApiPath('api/admin/features');
 
-export interface UseFeaturesOutput {
+export interface IUseFeaturesOutput {
     features: IFeatureToggle[];
     refetchFeatures: () => void;
     loading: boolean;
     error?: Error;
 }
 
-export const useFeatures = (options?: SWRConfiguration): UseFeaturesOutput => {
+export const useFeatures = (options?: SWRConfiguration): IUseFeaturesOutput => {
     const { data, error } = useSWR<{ features: IFeatureToggle[] }>(
         PATH,
         fetchFeatures,
