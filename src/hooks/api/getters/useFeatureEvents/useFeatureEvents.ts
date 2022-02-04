@@ -13,10 +13,13 @@ export interface IUseEventsOutput {
     error?: Error;
 }
 
-export const useEvents = (options?: SWRConfiguration): IUseEventsOutput => {
+export const useFeatureEvents = (
+    featureName: string,
+    options?: SWRConfiguration
+): IUseEventsOutput => {
     const { data, error } = useSWR<{ events: IEvent[] }>(
-        PATH,
-        fetchAllEvents,
+        [PATH, featureName],
+        () => fetchFeatureEvents(featureName),
         options
     );
 
@@ -32,8 +35,8 @@ export const useEvents = (options?: SWRConfiguration): IUseEventsOutput => {
     };
 };
 
-const fetchAllEvents = () => {
-    return fetch(PATH, { method: 'GET' })
+const fetchFeatureEvents = (featureName: string) => {
+    return fetch(`${PATH}/${featureName}`, { method: 'GET' })
         .then(handleErrorResponses('Event history'))
         .then(res => res.json());
 };

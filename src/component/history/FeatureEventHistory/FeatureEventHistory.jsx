@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import EventLog from '../EventLog';
-import { useEvents } from '../../../hooks/api/getters/useEvents/useEvents';
+import { useFeatureEvents } from '../../../hooks/api/getters/useFeatureEvents/useFeatureEvents';
 
 export const FeatureEventHistory = ({ toggleName }) => {
-    const { events } = useEvents(toggleName);
+    const { events } = useFeatureEvents(toggleName);
 
     if (events.length === 0) {
         return null;
