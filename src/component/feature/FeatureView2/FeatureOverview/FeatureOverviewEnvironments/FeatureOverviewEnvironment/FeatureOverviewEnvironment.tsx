@@ -80,6 +80,8 @@ const FeatureOverviewEnvironment = ({
             },
             {} as { [key: string]: IStrategyIconObject }
         );
+        console.log(strategyObjects);
+        if (!strategyObjects) return [];
 
         return Object.keys(strategyObjects).map(strategyName => {
             return { ...strategyObjects[strategyName], name: strategyName };
