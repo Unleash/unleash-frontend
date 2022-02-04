@@ -25,8 +25,7 @@ const Empty = () => (
     </React.Fragment>
 );
 
-const ClientStrategies = props => {
-    const { fetchAll, applications } = props
+const ClientStrategies = ({ fetchAll, applications }) => {
     const [filter, setFilter] = useState('');
 
     useEffect(() => {
