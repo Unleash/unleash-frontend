@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 import handleErrorResponses from '../httpErrorResponseHandler';
 
-const useInvoices = (options: SWRConfiguration = {}) => {
-    const KEY = `api/admin/invoices`;
+const KEY = `api/admin/invoices`;
+const path = formatApiPath(KEY);
 
+const useInvoices = (options: SWRConfiguration = {}) => {
     const fetcher = () => {
-        const path = formatApiPath(KEY);
         return fetch(path, {
             method: 'GET',
         })
