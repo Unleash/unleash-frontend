@@ -1,5 +1,7 @@
 import { IFeatureToggle } from '../interfaces/featureToggle';
-import { useCallback, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { getBasePath } from '../utils/format-path';
+import { createPersistentGlobalState } from './usePersistentGlobalState';
 
 export interface IFeaturesFilter {
     query?: string;
@@ -9,66 +11,40 @@ export interface IFeaturesFilter {
 export interface IFeaturesSortOutput {
     filtered: IFeatureToggle[];
     filter: IFeaturesFilter;
-    setFilter: (fn: (prev: IFeaturesFilter) => IFeaturesFilter) => void;
+    setFilter: React.Dispatch<React.SetStateAction<IFeaturesFilter>>
 }
 
+// Store the features filter state globally, and in localStorage.
+// When changing the format of IFeaturesFilter, change the version as well.
+const useFeaturesFilterState = createPersistentGlobalState<IFeaturesFilter>(
+    `${getBasePath()}:useFeaturesFilter:v1`,
+    { project: '*' }
+);
+
 export const useFeaturesFilter = (
-    features: IFeatureToggle[],
-    initialValue?: Partial<IFeaturesFilter>
+    features: IFeatureToggle[]
 ): IFeaturesSortOutput => {
-    const [filter, setFilter] = useState<IFeaturesFilter>(() => {
-        return createInitialValue(initialValue);
-    });
+    const [filter, setFilter] = useFeaturesFilterState();
 
     const filtered = useMemo(() => {
         return filterFeatures(features, filter);
     }, [features, filter]);
 
-    const setFilterWithValidation = useCallback(
-        (fn: (prev: IFeaturesFilter) => IFeaturesFilter) => {
-            setFilter(prev => {
-                const next = fn(prev);
-                assertValidFilter(next);
-                return next;
-            });
-        },
-        [setFilter]
-    );
-
     return {
-        setFilter: setFilterWithValidation,
-        filtered,
+        setFilter,
         filter,
+        filtered,
     };
 };
 
 // Return the current project ID a project has been selected,
 // or the 'default' project if showing all projects.
-export const resolveFilteredProjectId = (
-    filter: IFeaturesFilter
-): string => {
+export const resolveFilteredProjectId = (filter: IFeaturesFilter): string => {
     if (!filter.project || filter.project === '*') {
         return 'default';
     }
 
     return filter.project;
-};
-
-const createInitialValue = (
-    initialFilter?: Partial<IFeaturesFilter>
-): IFeaturesFilter => {
-    return {
-        project: '*',
-        ...initialFilter,
-    };
-};
-
-// The project filter should always be a non-empty string.
-// It can be a project ID or a '*' to match all projects.
-const assertValidFilter = (filter: IFeaturesFilter) => {
-    if (!filter.project) {
-        throw new Error(`Invalid useFeaturesFilter project: ${filter.project}`);
-    }
 };
 
 const filterFeatures = (

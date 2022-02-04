@@ -1,5 +1,7 @@
 import { IFeatureToggle } from '../interfaces/featureToggle';
-import { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { getBasePath } from '../utils/format-path';
+import { createPersistentGlobalState } from './usePersistentGlobalState';
 
 type FeaturesSortType =
     | 'name'
@@ -17,7 +19,7 @@ interface IFeaturesSort {
 export interface IFeaturesSortOutput {
     sort: IFeaturesSort;
     sorted: IFeatureToggle[];
-    setSort: (sort: IFeaturesSort) => void;
+    setSort: React.Dispatch<React.SetStateAction<IFeaturesSort>>
 }
 
 export interface IFeaturesFilterSortOption {
@@ -25,31 +27,26 @@ export interface IFeaturesFilterSortOption {
     name: string;
 }
 
+// Store the features sort state globally, and in localStorage.
+// When changing the format of IFeaturesSort, change the version as well.
+const useFeaturesSortState = createPersistentGlobalState<IFeaturesSort>(
+    `${getBasePath()}:useFeaturesSort:v1`,
+    { type: 'name' }
+);
+
 export const useFeaturesSort = (
-    features: IFeatureToggle[],
-    initialValue?: Partial<IFeaturesSort>
+    features: IFeatureToggle[]
 ): IFeaturesSortOutput => {
-    const [sort, setSort] = useState<IFeaturesSort>(() => {
-        return createInitialValue(initialValue);
-    });
+    const [sort, setSort] = useFeaturesSortState();
 
     const sorted = useMemo(() => {
         return sortFeatures(features, sort);
     }, [features, sort]);
 
     return {
-        sort,
         setSort,
+        sort,
         sorted,
-    };
-};
-
-const createInitialValue = (
-    initialFilter?: Partial<IFeaturesSort>
-): IFeaturesSort => {
-    return {
-        type: 'name',
-        ...initialFilter,
     };
 };
 
