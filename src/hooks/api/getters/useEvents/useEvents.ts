@@ -6,7 +6,7 @@ import { IEvent } from '../../../../interfaces/event';
 
 const PATH = formatApiPath('api/admin/events');
 
-export interface UseEventsOutput {
+export interface IUseEventsOutput {
     events: IEvent[];
     refetchEvents: () => void;
     loading: boolean;
@@ -16,7 +16,7 @@ export interface UseEventsOutput {
 export const useEvents = (
     featureName?: string,
     options?: SWRConfiguration
-): UseEventsOutput => {
+): IUseEventsOutput => {
     const { data, error } = useSWR<{ events: IEvent[] }>(
         [PATH, featureName],
         () => fetchEvents(featureName),
