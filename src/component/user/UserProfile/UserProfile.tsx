@@ -10,7 +10,7 @@ import { useCommonStyles } from '../../../common.styles';
 import UserProfileContent from './UserProfileContent/UserProfileContent';
 import { IUser } from "../../../interfaces/user";
 
-interface UserProfileProps {
+interface IUserProfileProps {
     profile: IUser
     updateSettingLocation: (field: 'locale', value: string) => void
 }
@@ -19,7 +19,7 @@ const UserProfile = ({
     profile,
     location,
     updateSettingLocation,
-}: UserProfileProps) => {
+}: IUserProfileProps) => {
     const [showProfile, setShowProfile] = useState(false);
     const [currentLocale, setCurrentLocale] = useState<string>();
 

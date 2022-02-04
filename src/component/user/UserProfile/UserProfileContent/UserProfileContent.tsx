@@ -19,7 +19,7 @@ import { getBasePath } from '../../../../utils/format-path';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { IUser } from "../../../../interfaces/user";
 
-interface UserProfileContentProps {
+interface IUserProfileContentProps {
     showProfile: boolean
     profile: IUser
     possibleLocales: string[]
@@ -37,7 +37,7 @@ const UserProfileContent = ({
     imageUrl,
     currentLocale,
     setCurrentLocale,
-}: UserProfileContentProps) => {
+}: IUserProfileContentProps) => {
     const commonStyles = useCommonStyles();
     const { uiConfig } = useUiConfig();
     const [updatedPassword, setUpdatedPassword] = useState(false);
