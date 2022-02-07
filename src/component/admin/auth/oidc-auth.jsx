@@ -180,7 +180,10 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                 <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Enable Single Sign-Out</strong>
-                        <p>If you enable Single Sign-Out Unleash will redirect the user to the IDP as part of the Sign-out process.</p>
+                        <p>
+                            If you enable Single Sign-Out Unleash will redirect
+                            the user to the IDP as part of the Sign-out process.
+                        </p>
                     </Grid>
                     <Grid item md={6} style={{ padding: '20px' }}>
                         <FormControlLabel
@@ -204,8 +207,14 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                 <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>ACR Values</strong>
-                        <p>Requested Authentication Context Class Reference values. If multiple values are specified they should be "space" separated. Will be sent as "acr_values" as 
-                            part of the authentication request. Unleash will validate the acr value in the id token claims against the list of acr values.</p>
+                        <p>
+                            Requested Authentication Context Class Reference
+                            values. If multiple values are specified they should
+                            be "space" separated. Will be sent as "acr_values"
+                            as part of the authentication request. Unleash will
+                            validate the acr value in the id token claims
+                            against the list of acr values.
+                        </p>
                     </Grid>
                     <Grid item md={6}>
                         <TextField
