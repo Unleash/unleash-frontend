@@ -36,7 +36,6 @@ import useProjectAccess, {
 } from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
-import { IUser } from '../../../interfaces/user';
 
 const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
@@ -49,7 +48,7 @@ const ProjectAccess = () => {
         usePagination(access.users, 10);
     const { removeUserFromRole, addUserToRole } = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
-    const [user, setUser] = useState<IUser | Object>({});
+    const [user, setUser] = useState<IProjectAccessUsers | null>(null);
 
     if (isOss()) {
         return (
@@ -69,7 +68,7 @@ const ProjectAccess = () => {
     const handleRoleChange =
         (userId: number, currRoleId: number) =>
         async (evt: React.ChangeEvent<HTMLInputElement>) => {
-            const roleId = evt.target.value;
+            const roleId = Number(evt.target.value);
             try {
                 await removeUserFromRole(projectId, currRoleId, userId);
                 await addUserToRole(projectId, roleId, userId);
@@ -87,9 +86,12 @@ const ProjectAccess = () => {
             }
         };
 
-    const removeAccess = (userId: number, roleId: number) => async () => {
+    const removeAccess = (user: IProjectAccessUsers | null) => async () => {
+        if (!user) return;
+        const { id, roleId } = user;
+
         try {
-            await removeUserFromRole(projectId, roleId, userId);
+            await removeUserFromRole(projectId, roleId, id);
             refetchProjectAccess();
             setToastData({
                 type: 'success',
@@ -224,7 +226,7 @@ const ProjectAccess = () => {
             </List>
             <ConfirmDialogue
                 open={showDelDialogue}
-                onClick={removeAccess(user?.id, user?.roleId)}
+                onClick={removeAccess(user)}
                 onClose={() => {
                     setUser({});
                     setShowDelDialogue(false);
