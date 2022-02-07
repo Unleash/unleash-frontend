@@ -1,12 +1,29 @@
 import React, { useEffect } from 'react';
 import { MenuItem } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
+import { IProjectCard } from '../../../interfaces/project';
 
-const ALL_PROJECTS = { id: '*', name: '> All projects' };
+const ALL_PROJECTS = {
+    id: '*',
+    name: '> All projects',
+    createdAt: '',
+    health: 0,
+    description: '',
+    featureCount: 0,
+    memberCount: 0,
+};
 
-const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
+interface IProjectSelectProps {
+    currentProjectId: string;
+    updateCurrentProject: (id: string) => void;
+}
+
+const ProjectSelect = ({
+    currentProjectId,
+    updateCurrentProject,
+    ...rest
+}: IProjectSelectProps) => {
     const { projects } = useProjects();
 
     useEffect(() => {
@@ -21,7 +38,7 @@ const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
         /* eslint-disable-next-line */
     }, []);
 
-    const setProject = v => {
+    const setProject = (v: string) => {
         const id = typeof v === 'string' ? v.trim() : '';
         updateCurrentProject(id);
     };
@@ -32,12 +49,12 @@ const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
         curentProject = ALL_PROJECTS;
     }
 
-    const handleChangeProject = e => {
+    const handleChangeProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const target = e.target.getAttribute('data-target');
         setProject(target);
     };
 
-    const renderProjectItem = (selectedId, item) => (
+    const renderProjectItem = (selectedId: string, item: IProjectCard) => (
         <MenuItem
             disabled={selectedId === item.id}
             data-target={item.id}
@@ -66,10 +83,10 @@ const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
         ];
     };
 
-    const { updateSetting, fetchProjects, ...passDown } = rest;
+    const { ...passDown } = rest;
 
     return (
-        <React.Fragment>
+        <>
             <DropdownMenu
                 id={'project'}
                 title="Select project"
@@ -79,15 +96,8 @@ const ProjectSelect = ({ currentProjectId, updateCurrentProject, ...rest }) => {
                 className=""
                 {...passDown}
             />
-        </React.Fragment>
+        </>
     );
-};
-
-ProjectSelect.propTypes = {
-    projects: PropTypes.array.isRequired,
-    fetchProjects: PropTypes.func.isRequired,
-    currentProjectId: PropTypes.string.isRequired,
-    updateCurrentProject: PropTypes.func.isRequired,
 };
 
 export default ProjectSelect;

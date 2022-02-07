@@ -1,11 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement, ReactNode } from 'react';
 import { Menu } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
-
 import { DropdownButton } from '..';
-
 import styles from '../common.module.scss';
+
+interface IDropdownMenuProps {
+    renderOptions: () => ReactNode;
+    id: string;
+    title: string;
+    className?: string;
+    callback: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    icon?: ReactElement;
+    label: string;
+    style?: object;
+    startIcon?: ReactElement;
+}
 
 const DropdownMenu = ({
     renderOptions,
@@ -16,13 +25,14 @@ const DropdownMenu = ({
     label,
     style,
     startIcon,
+    className,
     ...rest
-}) => {
+}: IDropdownMenuProps) => {
     const [anchor, setAnchor] = React.useState(null);
 
-    const handleOpen = e => setAnchor(e.currentTarget);
+    const handleOpen = (e: Event) => setAnchor(e.currentTarget);
 
-    const handleClose = e => {
+    const handleClose = (e: Event) => {
         if (callback && typeof callback === 'function') {
             callback(e);
         }
@@ -47,7 +57,7 @@ const DropdownMenu = ({
             <Menu
                 id={id}
                 className={styles.dropdownMenu}
-                onClick={handleClose}
+                onClick={() => handleClose}
                 anchorEl={anchor}
                 open={Boolean(anchor)}
             >
@@ -55,16 +65,6 @@ const DropdownMenu = ({
             </Menu>
         </>
     );
-};
-
-DropdownMenu.propTypes = {
-    renderOptions: PropTypes.func,
-    id: PropTypes.string,
-    title: PropTypes.string,
-    callback: PropTypes.func,
-    icon: PropTypes.object,
-    label: PropTypes.string,
-    startIcon: PropTypes.object,
 };
 
 export default DropdownMenu;
