@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 
 const useUiBootstrap = (options: SWRConfiguration = {}) => {
-    const USER_CACHE_KEY = `api/admin/ui-bootstrap`;
+
+    const BOOTSTRAP_CACHE_KEY = `api/admin/ui-bootstrap`;
 
     const fetcher = () => {
         const path = formatApiPath(`api/admin/ui-bootstrap`);
@@ -17,11 +18,11 @@ const useUiBootstrap = (options: SWRConfiguration = {}) => {
             .then(res => res.json());
     };
 
-    const { data, error } = useSWR(USER_CACHE_KEY, fetcher, options);
+    const { data, error } = useSWR(BOOTSTRAP_CACHE_KEY, fetcher, options);
     const [loading, setLoading] = useState(!error && !data);
 
     const refetchUiBootstrap = () => {
-        mutate(USER_CACHE_KEY);
+        mutate(BOOTSTRAP_CACHE_KEY);
     };
 
     useEffect(() => {
@@ -29,7 +30,7 @@ const useUiBootstrap = (options: SWRConfiguration = {}) => {
     }, [data, error]);
 
     return {
-        bootstrap: { ...data },
+        bootstrap: data,
         error,
         loading,
         refetchUiBootstrap,

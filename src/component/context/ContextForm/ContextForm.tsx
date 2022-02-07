@@ -104,11 +104,12 @@ const ContextForm: React.FC<IContextForm> = ({
                     label="Context name"
                     value={contextName}
                     disabled={mode === 'Edit'}
-                    onChange={e => setContextName(e.target.value)}
+                    onChange={e => setContextName(trim(e.target.value))}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
                     onBlur={validateNameUniqueness}
+                    autoFocus
                 />
                 <p className={styles.inputDescription}>
                     What is this context for?
@@ -160,7 +161,7 @@ const ContextForm: React.FC<IContextForm> = ({
                         Add
                     </Button>
                 </div>
-                <p className={styles.inputHeader}>Custom stickiness (beta)</p>
+                <p className={styles.inputHeader}>Custom stickiness</p>
                 <p>
                     By enabling stickiness on this context field you can use it
                     together with the flexible-rollout strategy. This will

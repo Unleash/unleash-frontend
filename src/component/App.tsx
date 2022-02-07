@@ -6,7 +6,7 @@ import { routes } from './menu/routes';
 import styles from './styles.module.scss';
 import { useState, useEffect } from 'react';
 import NotFound from './common/NotFound/NotFound';
-import Feedback from './common/Feedback';
+import Feedback from './common/Feedback/Feedback';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
 import ConditionallyRender from './common/ConditionallyRender';
 import EnvironmentSplash from './common/EnvironmentSplash/EnvironmentSplash';
@@ -101,6 +101,8 @@ const App = () => {
                 show={<Loader />}
                 elseShow={
                     <div className={styles.container}>
+                        <ToastRenderer />
+
                         <ConditionallyRender
                             condition={showSplash}
                             show={
@@ -131,8 +133,6 @@ const App = () => {
                                 </LayoutPicker>
                             }
                         />
-
-                        <ToastRenderer />
                     </div>
                 }
             />
