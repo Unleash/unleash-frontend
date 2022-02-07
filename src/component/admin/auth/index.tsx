@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AdminMenu from '../menu/AdminMenu';
 import { Alert } from '@material-ui/lab';
 import GoogleAuth from './google-auth-container';
@@ -9,8 +8,11 @@ import PasswordAuthSettings from './PasswordAuthSettings';
 import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
-function AdminAuthPage({ authenticationType, history }) {
+export const AdminAuthPage = () => {
+    const { uiConfig } = useUiConfig();
+
     const tabs = [
         {
             label: 'OpenID Connect',
@@ -32,14 +34,14 @@ function AdminAuthPage({ authenticationType, history }) {
 
     return (
         <div>
-            <AdminMenu history={history} />
+            <AdminMenu />
             <PageContent headerContent="Single Sign-On">
                 <ConditionallyRender
-                    condition={authenticationType === 'enterprise'}
+                    condition={uiConfig.authenticationType === 'enterprise'}
                     show={<TabNav tabData={tabs} />}
                 />
                 <ConditionallyRender
-                    condition={authenticationType === 'open-source'}
+                    condition={uiConfig.authenticationType === 'open-source'}
                     show={
                         <Alert severity="warning">
                             You are running the open-source version of Unleash.
@@ -49,7 +51,7 @@ function AdminAuthPage({ authenticationType, history }) {
                     }
                 />
                 <ConditionallyRender
-                    condition={authenticationType === 'demo'}
+                    condition={uiConfig.authenticationType === 'demo'}
                     show={
                         <Alert severity="warning">
                             You are running Unleash in demo mode. You have to
@@ -59,7 +61,7 @@ function AdminAuthPage({ authenticationType, history }) {
                     }
                 />
                 <ConditionallyRender
-                    condition={authenticationType === 'custom'}
+                    condition={uiConfig.authenticationType === 'custom'}
                     show={
                         <Alert severity="warning">
                             You have decided to use custom authentication type.
@@ -69,7 +71,7 @@ function AdminAuthPage({ authenticationType, history }) {
                     }
                 />
                 <ConditionallyRender
-                    condition={authenticationType === 'hosted'}
+                    condition={uiConfig.authenticationType === 'hosted'}
                     show={
                         <Alert severity="info">
                             Your Unleash instance is managed by the Unleash
@@ -80,12 +82,4 @@ function AdminAuthPage({ authenticationType, history }) {
             </PageContent>
         </div>
     );
-}
-
-AdminAuthPage.propTypes = {
-    match: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    authenticationType: PropTypes.string,
 };
-
-export default AdminAuthPage;
