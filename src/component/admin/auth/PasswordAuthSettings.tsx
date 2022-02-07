@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, FormControlLabel, Grid, Switch } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import PageContent from '../../common/PageContent/PageContent';
@@ -35,8 +35,8 @@ const PasswordAuthSettings = () => {
         setDisablePasswordAuth(!disablePasswordAuth);
     };
 
-    const onSubmit = async evt => {
-        evt.preventDefault();
+    const onSubmit = async (event: React.SyntheticEvent) => {
+        event.preventDefault();
 
         try {
             const settings: ISimpleAuthSettings = {

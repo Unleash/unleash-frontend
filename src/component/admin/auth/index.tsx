@@ -1,7 +1,7 @@
 import React from 'react';
 import AdminMenu from '../menu/AdminMenu';
 import { Alert } from '@material-ui/lab';
-import GoogleAuth from './google-auth-container';
+import { GoogleAuth } from './google-auth';
 import SamlAuth from './saml-auth-container';
 import OidcAuth from './oidc-auth-container';
 import PasswordAuthSettings from './PasswordAuthSettings';

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -11,27 +10,27 @@ import { Alert } from '@material-ui/lab';
 import PageContent from '../../common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useAuthSettings from '../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import useAuthSettingsApi from '../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useToast from '../../../hooks/useToast';
 
 const initialState = {
     enabled: false,
     autoCreate: false,
     unleashHostname: location.hostname,
+    clientId: '',
+    clientSecret: '',
+    emailDomains: '',
 };
 
-function GoogleAuth({
-    config,
-    getGoogleConfig,
-    updateGoogleConfig,
-    unleashUrl,
-}) {
+export const GoogleAuth = () => {
+    const { setToastData } = useToast();
+    const { uiConfig } = useUiConfig();
     const [data, setData] = useState(initialState);
-    const [info, setInfo] = useState();
     const { hasAccess } = useContext(AccessContext);
-
-    useEffect(() => {
-        getGoogleConfig();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { config } = useAuthSettings('google');
+    const { updateSettings, errors, loading } = useAuthSettingsApi('google');
 
     useEffect(() => {
         if (config.clientId) {
@@ -43,10 +42,10 @@ function GoogleAuth({
         return <span>You need admin privileges to access this section.</span>;
     }
 
-    const updateField = e => {
+    const updateField = (event: React.ChangeEvent<HTMLInputElement>) => {
         setData({
             ...data,
-            [e.target.name]: e.target.value,
+            [event.target.name]: event.target.value,
         });
     };
 
@@ -58,19 +57,26 @@ function GoogleAuth({
         setData({ ...data, autoCreate: !data.autoCreate });
     };
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        setInfo('...saving');
+    const onSubmit = async (event: React.SyntheticEvent) => {
+        event.preventDefault();
+
         try {
-            await updateGoogleConfig(data);
-            setInfo('Settings stored');
-            setTimeout(() => setInfo(''), 2000);
-        } catch (e) {
-            setInfo(e.message);
+            await updateSettings(data);
+            setToastData({
+                title: 'Settings stored',
+                type: 'success',
+            });
+        } catch (err: any) {
+            setToastData({
+                title: 'Could not store settings',
+                text: err?.message,
+                type: 'error',
+            });
         }
     };
+
     return (
-        <PageContent>
+        <PageContent headerContent="">
             <Grid container style={{ marginBottom: '1rem' }}>
                 <Grid item xs={12}>
                     <Alert severity="info">
@@ -84,7 +90,7 @@ function GoogleAuth({
                         </a>{' '}
                         to learn how to integrate with Google OAuth 2.0. <br />
                         Callback URL:{' '}
-                        <code>{unleashUrl}/auth/google/callback</code>
+                        <code>{uiConfig.unleashUrl}/auth/google/callback</code>
                     </Alert>
                 </Grid>
             </Grid>
@@ -125,7 +131,7 @@ function GoogleAuth({
                             label="Client ID"
                             name="clientId"
                             placeholder=""
-                            value={data.clientId || ''}
+                            value={data.clientId}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -146,7 +152,7 @@ function GoogleAuth({
                             onChange={updateField}
                             label="Client Secret"
                             name="clientSecret"
-                            value={data.clientSecret || ''}
+                            value={data.clientSecret}
                             placeholder=""
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -195,9 +201,7 @@ function GoogleAuth({
                             onChange={updateAutoCreate}
                             name="enabled"
                             checked={data.autoCreate}
-                        >
-                            Auto-create users
-                        </Switch>
+                        />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -229,22 +233,18 @@ function GoogleAuth({
                             variant="contained"
                             color="primary"
                             type="submit"
+                            disabled={loading}
                         >
                             Save
                         </Button>{' '}
-                        <small>{info}</small>
+                        <p>
+                            <small style={{ color: 'red' }}>
+                                {errors?.message}
+                            </small>
+                        </p>
                     </Grid>
                 </Grid>
             </form>
         </PageContent>
     );
-}
-
-GoogleAuth.propTypes = {
-    config: PropTypes.object,
-    unleashUrl: PropTypes.string,
-    getGoogleConfig: PropTypes.func.isRequired,
-    updateGoogleConfig: PropTypes.func.isRequired,
 };
-
-export default GoogleAuth;
