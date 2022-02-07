@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -12,30 +11,34 @@ import PageContent from '../../common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import AutoCreateForm from './AutoCreateForm/AutoCreateForm';
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useAuthSettingsApi from '../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useAuthSettings from '../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import useToast from '../../../hooks/useToast';
 
 const initialState = {
     enabled: false,
     enableSingleSignOut: false,
     autoCreate: false,
     unleashHostname: location.hostname,
+    clientId: '',
+    discoverUrl: '',
+    secret: '',
+    acrValues: '',
 };
 
-function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
+export const OidcAuth = () => {
+    const { setToastData } = useToast();
+    const { uiConfig } = useUiConfig();
     const [data, setData] = useState(initialState);
-    const [info, setInfo] = useState();
-    const [error, setError] = useState();
     const { hasAccess } = useContext(AccessContext);
-
-    useEffect(() => {
-        getOidcConfig();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { config } = useAuthSettings('oidc');
+    const { updateSettings, errors, loading } = useAuthSettingsApi('oidc');
 
     useEffect(() => {
         if (config.discoverUrl) {
             setData(config);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [config]);
 
     if (!hasAccess(ADMIN)) {
@@ -46,8 +49,8 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
         );
     }
 
-    const updateField = e => {
-        setValue(e.target.name, e.target.value);
+    const updateField = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.name, event.target.value);
     };
 
     const updateEnabled = () => {
@@ -58,28 +61,33 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
         setData({ ...data, enableSingleSignOut: !data.enableSingleSignOut });
     };
 
-    const setValue = (field, value) => {
+    const setValue = (name: string, value: string | boolean) => {
         setData({
             ...data,
-            [field]: value,
+            [name]: value,
         });
     };
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        setInfo('...saving');
-        setError('');
+    const onSubmit = async (event: React.SyntheticEvent) => {
+        event.preventDefault();
+
         try {
-            await updateOidcConfig(data);
-            setInfo('Settings stored');
-            setTimeout(() => setInfo(''), 2000);
-        } catch (e) {
-            setInfo('');
-            setError(e.message);
+            await updateSettings(data);
+            setToastData({
+                title: 'Settings stored',
+                type: 'success',
+            });
+        } catch (err: any) {
+            setToastData({
+                title: 'Could not store settings',
+                text: err?.message,
+                type: 'error',
+            });
         }
     };
+
     return (
-        <PageContent>
+        <PageContent headerContent="">
             <Grid container style={{ marginBottom: '1rem' }}>
                 <Grid item md={12}>
                     <Alert severity="info">
@@ -94,7 +102,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                         to learn how to integrate with specific Open Id Connect
                         providers (Okta, Keycloak, Google, etc). <br />
                         Callback URL:{' '}
-                        <code>{unleashUrl}/auth/oidc/callback</code>
+                        <code>{uiConfig.unleashUrl}/auth/oidc/callback</code>
                     </Alert>
                 </Grid>
             </Grid>
@@ -128,7 +136,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             onChange={updateField}
                             label="Discover URL"
                             name="discoverUrl"
-                            value={data.discoverUrl || ''}
+                            value={data.discoverUrl}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -146,7 +154,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             onChange={updateField}
                             label="Client ID"
                             name="clientId"
-                            value={data.clientId || ''}
+                            value={data.clientId}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -167,7 +175,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             onChange={updateField}
                             label="Client Secret"
                             name="secret"
-                            value={data.secret || ''}
+                            value={data.secret}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -221,7 +229,7 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             onChange={updateField}
                             label="ACR Values"
                             name="acrValues"
-                            value={data.acrValues || ''}
+                            value={data.acrValues}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -238,23 +246,18 @@ function OidcAuth({ config, getOidcConfig, updateOidcConfig, unleashUrl }) {
                             variant="contained"
                             color="primary"
                             type="submit"
+                            disabled={loading}
                         >
                             Save
                         </Button>{' '}
-                        <small>{info}</small>
-                        <small style={{ color: 'red' }}>{error}</small>
+                        <p>
+                            <small style={{ color: 'red' }}>
+                                {errors?.message}
+                            </small>
+                        </p>
                     </Grid>
                 </Grid>
             </form>
         </PageContent>
     );
-}
-
-OidcAuth.propTypes = {
-    config: PropTypes.object,
-    unleash: PropTypes.string,
-    getOidcConfig: PropTypes.func.isRequired,
-    updateOidcConfig: PropTypes.func.isRequired,
 };
-
-export default OidcAuth;

@@ -3,7 +3,7 @@ import AdminMenu from '../menu/AdminMenu';
 import { Alert } from '@material-ui/lab';
 import { GoogleAuth } from './google-auth';
 import SamlAuth from './saml-auth-container';
-import OidcAuth from './oidc-auth-container';
+import { OidcAuth } from './oidc-auth';
 import PasswordAuthSettings from './PasswordAuthSettings';
 import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
