@@ -9,7 +9,7 @@ import { ArchiveListContainer } from '../archive/ArchiveListContainer';
 import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
 import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
-import Addons from '../../page/addons';
+import AddonList from '../addons/AddonList/AddonList';
 import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
 import Admin from '../admin';
@@ -342,7 +342,7 @@ export const routes = [
     {
         path: '/addons',
         title: 'Addons',
-        component: Addons,
+        component: AddonList,
         hidden: false,
         type: 'protected',
         layout: 'main',

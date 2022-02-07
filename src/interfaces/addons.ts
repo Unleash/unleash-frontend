@@ -1,4 +1,4 @@
-export interface IAddons {
+export interface IAddon {
     id: number;
     provider: string;
     description: string;

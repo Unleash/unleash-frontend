@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, FormControlLabel, Switch } from '@material-ui/core';
-
 import { FormButtons, styles as commonStyles } from '../common';
 import { trim } from '../common/util';
 import AddonParameters from './form-addon-parameters';
 import AddonEvents from './form-addon-events';
 import cloneDeep from 'lodash.clonedeep';
-
 import styles from './form-addon-component.module.scss';
 import PageContent from '../common/PageContent/PageContent';
 import useAddonsApi from '../../hooks/api/actions/useAddonsApi/useAddonsApi';

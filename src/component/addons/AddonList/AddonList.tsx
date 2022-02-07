@@ -1,12 +1,9 @@
-import { useContext, useEffect } from 'react';
-import ConfiguredAddons from './ConfiguredAddons';
-import AvailableAddons from './AvailableAddons';
+import { ReactElement, useEffect } from 'react';
+import ConfiguredAddons from './ConfiguredAddons/ConfiguredAddons';
+import AvailableAddons from './AvailableAddons/AvailableAddons';
 import { Avatar } from '@material-ui/core';
 import { DeviceHub } from '@material-ui/icons';
-
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import AccessContext from '../../../contexts/AccessContext';
-
 import slackIcon from '../../../assets/icons/slack.svg';
 import jiraIcon from '../../../assets/icons/jira.svg';
 import webhooksIcon from '../../../assets/icons/webhooks.svg';
@@ -14,7 +11,6 @@ import teamsIcon from '../../../assets/icons/teams.svg';
 import dataDogIcon from '../../../assets/icons/datadog.svg';
 import { formatAssetPath } from '../../../utils/format-path';
 import useAddons from '../../../hooks/api/getters/useAddons/useAddons';
-import { useHistory } from 'react-router-dom';
 
 const style = {
     width: '40px',
@@ -23,7 +19,7 @@ const style = {
     float: 'left',
 };
 
-const getIcon = name => {
+const AddonIcon = (name: string): ReactElement => {
     switch (name) {
         case 'slack':
             return (
@@ -75,9 +71,7 @@ const getIcon = name => {
 };
 
 const AddonList = () => {
-    const { hasAccess } = useContext(AccessContext);
     const { addons, providers, refetchAddons } = useAddons();
-    const history = useHistory();
 
     useEffect(() => {
         if (addons.length === 0) {
@@ -90,22 +84,11 @@ const AddonList = () => {
         <>
             <ConditionallyRender
                 condition={addons.length > 0}
-                show={
-                    <ConfiguredAddons
-                        addons={addons}
-                        hasAccess={hasAccess}
-                        getIcon={getIcon}
-                    />
-                }
+                show={<ConfiguredAddons AddonIcon={AddonIcon} />}
             />
 
             <br />
-            <AvailableAddons
-                providers={providers}
-                hasAccess={hasAccess}
-                history={history}
-                getIcon={getIcon}
-            />
+            <AvailableAddons providers={providers} AddonIcon={AddonIcon} />
         </>
     );
 };

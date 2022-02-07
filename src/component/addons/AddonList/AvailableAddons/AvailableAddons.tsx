@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactElement, useContext } from 'react';
 import PageContent from '../../../common/PageContent/PageContent';
 import {
     Button,
@@ -10,13 +10,30 @@ import {
 } from '@material-ui/core';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 import { CREATE_ADDON } from '../../../providers/AccessProvider/permissions';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import AccessContext from '../../../../contexts/AccessContext';
 
-const AvailableAddons = ({ providers, getIcon, hasAccess, history }) => {
-    
-    const renderProvider = provider => (
+interface IProvider {
+    name: string;
+    displayName: string;
+    description: string;
+    documentationUrl: string;
+    parameters: object[];
+    events: string[];
+}
+
+interface IAvailableAddonsProps {
+    AddonIcon: (name: string) => ReactElement;
+    providers: IProvider[];
+}
+
+const AvailableAddons = ({ providers, AddonIcon }: IAvailableAddonsProps) => {
+    const history = useHistory();
+    const { hasAccess } = useContext(AccessContext);
+
+    const renderProvider = (provider: IProvider) => (
         <ListItem key={provider.name}>
-            <ListItemAvatar>{getIcon(provider.name)}</ListItemAvatar>
+            <ListItemAvatar>{AddonIcon(provider.name)}</ListItemAvatar>
             <ListItemText
                 primary={provider.displayName}
                 secondary={provider.description}
@@ -42,16 +59,13 @@ const AvailableAddons = ({ providers, getIcon, hasAccess, history }) => {
     );
     return (
         <PageContent headerContent="Available addons">
-            <List>{providers.map(provider => renderProvider(provider))}</List>
+            <List>
+                {providers.map((provider: IProvider) =>
+                    renderProvider(provider)
+                )}
+            </List>
         </PageContent>
     );
-};
-
-AvailableAddons.propTypes = {
-    providers: PropTypes.array.isRequired,
-    getIcon: PropTypes.func.isRequired,
-    hasAccess: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default AvailableAddons;
