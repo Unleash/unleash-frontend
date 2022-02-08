@@ -11,6 +11,7 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import { trim } from '../../common/util';
 import Input from '../../common/Input/Input';
 import { CREATE_FEATURE } from '../../providers/AccessProvider/permissions';
+import { useHistory } from 'react-router-dom';
 
 interface IFeatureToggleForm {
     type: string;
@@ -52,6 +53,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
 }) => {
     const styles = useStyles();
     const { featureTypes } = useFeatureTypes();
+    const history = useHistory();
     const { permissions } = useUser();
     const editable = mode !== 'Edit';
 
@@ -104,7 +106,12 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                 />
                 <FeatureProjectSelect
                     value={project}
-                    onChange={e => setProject(e.target.value)}
+                    onChange={e => {
+                        setProject(e.target.value);
+                        history.replace(
+                            `/projects/${e.target.value}/create-toggle`
+                        );
+                    }}
                     enabled={editable}
                     filter={projectFilterGenerator(
                         { permissions },
