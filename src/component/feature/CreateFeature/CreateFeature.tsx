@@ -12,7 +12,7 @@ import { useContext } from 'react';
 import UIContext from '../../../contexts/UIContext';
 
 const CreateFeature = () => {
-    /* @ts-ignore */
+    // @ts-expect-error
     const { setToastData, setToastApiError } = useToast();
     const { setShowFeedback } = useContext(UIContext);
     const { uiConfig } = useUiConfig();

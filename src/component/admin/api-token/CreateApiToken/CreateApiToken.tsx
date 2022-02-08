@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { scrollToTop } from '../../../common/util';
 
 const CreateApiToken = () => {
-    /* @ts-ignore */
+    // @ts-expect-error
     const { setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();

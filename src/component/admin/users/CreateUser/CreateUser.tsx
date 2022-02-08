@@ -12,7 +12,7 @@ import PermissionButton from '../../../common/PermissionButton/PermissionButton'
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 
 const CreateUser = () => {
-    /* @ts-ignore */
+    // @ts-expect-error
     const { setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();

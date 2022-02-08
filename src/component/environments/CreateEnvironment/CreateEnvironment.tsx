@@ -16,7 +16,7 @@ import { ADMIN } from '../../providers/AccessProvider/permissions';
 import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 const CreateEnvironment = () => {
-    /* @ts-ignore */
+    // @ts-expect-error
     const { setToastApiError, setToastData } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
@@ -76,7 +76,7 @@ const CreateEnvironment = () => {
                 <FormTemplate
                     loading={loading}
                     title="Create Environment"
-                    description="Environments allow you to manage your 
+                    description="Environments allow you to manage your
                             product lifecycle from local development
                             through production. Your projects and
                             feature toggles are accessible in all your

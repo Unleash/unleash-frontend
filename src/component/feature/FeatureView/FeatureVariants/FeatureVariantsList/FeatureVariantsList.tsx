@@ -147,7 +147,7 @@ const FeatureOverviewVariants = () => {
 
         try {
             const res = await patchFeatureVariants(projectId, featureId, patch);
-            // @ts-ignore
+            // @ts-expect-error
             const { variants } = await res.json();
             mutate(FEATURE_CACHE_KEY, { ...feature, variants }, false);
             setToastData({
@@ -204,7 +204,7 @@ const FeatureOverviewVariants = () => {
         if (patch.length === 0) return;
         try {
             const res = await patchFeatureVariants(projectId, featureId, patch);
-            // @ts-ignore
+            // @ts-expect-error
             const { variants } = await res.json();
             mutate(FEATURE_CACHE_KEY, { ...feature, variants }, false);
             setToastData({

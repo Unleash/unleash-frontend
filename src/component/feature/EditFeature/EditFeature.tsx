@@ -12,7 +12,7 @@ import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 
 const EditFeature = () => {
-    /* @ts-ignore */
+    // @ts-expect-error
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
