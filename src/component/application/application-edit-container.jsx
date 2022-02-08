@@ -8,7 +8,7 @@ import {
 import { useLocationSettings } from '../../hooks/useLocationSettings';
 
 const ApplicationEditContainer = props => {
-    const [locationSettings] = useLocationSettings();
+    const { locationSettings } = useLocationSettings();
 
     return <ApplicationEdit {...props} locationSettings={locationSettings} />;
 };

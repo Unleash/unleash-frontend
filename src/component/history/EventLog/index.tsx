@@ -9,8 +9,8 @@ interface IEventLogContainerProps {
 }
 
 const EventLogContainer = (props: IEventLogContainerProps) => {
-    const [locationSettings] = useLocationSettings();
-    const [eventSettings, setEventSettings] = useEventSettings();
+    const { locationSettings } = useLocationSettings();
+    const { eventSettings, setEventSettings } = useEventSettings();
 
     return (
         <EventLog

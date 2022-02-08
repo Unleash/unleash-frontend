@@ -48,7 +48,7 @@ const ApiTokenList = () => {
     const { uiConfig } = useUiConfig();
     const [showDelete, setShowDelete] = useState(false);
     const [delToken, setDeleteToken] = useState<IApiToken>();
-    const [locationSettings] = useLocationSettings()
+    const { locationSettings } = useLocationSettings()
     const { setToastData } = useToast();
     const { tokens, loading, refetch, error } = useApiTokens();
     const { deleteToken } = useApiTokensApi();

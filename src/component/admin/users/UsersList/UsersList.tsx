@@ -36,7 +36,7 @@ const UsersList = () => {
         userApiErrors,
     } = useAdminUsersApi();
     const { hasAccess } = useContext(AccessContext);
-    const [locationSettings] = useLocationSettings()
+    const { locationSettings } = useLocationSettings()
     const [pwDialog, setPwDialog] = useState<{ open: boolean; user?: IUser }>({
         open: false,
     });

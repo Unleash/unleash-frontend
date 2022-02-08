@@ -22,7 +22,7 @@ const PORTAL_URL = formatApiPath('api/admin/invoices/portal');
 const InvoiceList = () => {
     const { refetchInvoices, invoices } = useInvoices();
     const [isLoaded, setLoaded] = useState(false);
-    const [locationSettings] = useLocationSettings();
+    const { locationSettings } = useLocationSettings();
 
     useEffect(() => {
         refetchInvoices();

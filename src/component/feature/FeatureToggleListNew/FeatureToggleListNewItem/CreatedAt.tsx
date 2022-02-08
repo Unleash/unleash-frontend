@@ -7,7 +7,7 @@ interface CreatedAtProps {
 }
 
 const CreatedAt = ({time}: CreatedAtProps) => {
-    const [locationSettings] = useLocationSettings();
+    const { locationSettings } = useLocationSettings();
 
     return (
         <Tooltip title={`Created at ${formatFullDateTimeWithLocale(time, locationSettings.locale)}`}>
