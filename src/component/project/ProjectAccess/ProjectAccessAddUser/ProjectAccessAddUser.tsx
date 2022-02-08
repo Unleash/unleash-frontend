@@ -90,10 +90,6 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         selectedUser: IProjectAccessUsers
     ) => {
         setOptions([]);
-<<<<<<< HEAD
-=======
-        console.log(selectedUser, evt);
->>>>>>> 6d204e57 (fix: sort users)
         if (selectedUser?.id) {
             setUser(selectedUser);
         }

@@ -36,6 +36,7 @@ import useProjectAccess, {
 } from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
+import { UPDATE_PROJECT } from '../../providers/AccessProvider/permissions';
 
 const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
@@ -194,9 +195,11 @@ const ProjectAccess = () => {
                                     </ProjectRoleSelect>
 
                                     <PermissionIconButton
+                                        permission={UPDATE_PROJECT}
+                                        projectId={projectId}
                                         className={styles.iconButton}
                                         edge="end"
-                                        aria-label="delete"
+                                        ariaLabel="delete"
                                         title="Remove access"
                                         onClick={() => {
                                             setUser(user);
