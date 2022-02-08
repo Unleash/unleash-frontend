@@ -15,6 +15,7 @@ import useToast from '../../../../hooks/useToast';
 import useUiConfig from "../../../../hooks/api/getters/useUiConfig/useUiConfig";
 import useAuthSettings from "../../../../hooks/api/getters/useAuthSettings/useAuthSettings";
 import useAuthSettingsApi from "../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi";
+import { formatUnknownError } from "../../../../utils/format-unknown-error";
 
 const initialState = {
     enabled: false,
@@ -28,7 +29,7 @@ const initialState = {
 };
 
 export const SamlAuth = () => {
-    const { setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const [data, setData] = useState(initialState);
     const { hasAccess } = useContext(AccessContext);
@@ -73,12 +74,8 @@ export const SamlAuth = () => {
                 title: 'Settings stored',
                 type: 'success',
             });
-        } catch (err: any) {
-            setToastData({
-                title: 'Could not store settings',
-                text: err?.message,
-                type: 'error',
-            });
+        } catch (err) {
+            setToastApiError(formatUnknownError(err));
         }
     };
 

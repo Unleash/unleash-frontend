@@ -9,9 +9,10 @@ import useAuthSettingsApi, {
     ISimpleAuthSettings,
 } from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
 import useToast from '../../../../hooks/useToast';
+import { formatUnknownError } from "../../../../utils/format-unknown-error";
 
 export const PasswordAuth = () => {
-    const { setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { config } = useAuthSettings('simple');
     const [disablePasswordAuth, setDisablePasswordAuth] =
         useState<boolean>(false);
@@ -50,14 +51,8 @@ export const PasswordAuth = () => {
                 type: 'success',
                 show: true,
             });
-        } catch (err: any) {
-            setToastData({
-                title: 'Could not store settings',
-                text: err?.message,
-                autoHideDuration: 4000,
-                type: 'error',
-                show: true,
-            });
+        } catch (err) {
+            setToastApiError(formatUnknownError(err));
             setDisablePasswordAuth(config.disabled);
         }
     };
