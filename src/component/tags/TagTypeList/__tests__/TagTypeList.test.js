@@ -8,7 +8,6 @@ import { createFakeStore } from '../../../../accessStoreFake';
 import AccessProvider from '../../../providers/AccessProvider/AccessProvider';
 import {
     ADMIN,
-    CREATE_TAG_TYPE,
     UPDATE_TAG_TYPE,
     DELETE_TAG_TYPE,
 } from '../../../providers/AccessProvider/permissions';
@@ -43,7 +42,6 @@ test('renders a list with elements correctly', () => {
                 <UIProvider>
                     <AccessProvider
                         store={createFakeStore([
-                            { permission: CREATE_TAG_TYPE },
                             { permission: UPDATE_TAG_TYPE },
                             { permission: DELETE_TAG_TYPE },
                         ])}
