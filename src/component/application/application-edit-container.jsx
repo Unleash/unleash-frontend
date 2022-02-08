@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 import ApplicationEdit from './application-edit-component';
-import { fetchApplication, storeApplicationMetaData, deleteApplication } from "../../store/application/actions";
-import { useLocationSettings } from "../../hooks/useLocationSettings";
+import {
+    deleteApplication,
+    fetchApplication,
+    storeApplicationMetaData,
+} from '../../store/application/actions';
+import { useLocationSettings } from '../../hooks/useLocationSettings';
 
-const ApplicationEditContainer = (props) => {
+const ApplicationEditContainer = props => {
     const [locationSettings] = useLocationSettings();
 
-    return <ApplicationEdit {...props} location={locationSettings} />
-}
+    return <ApplicationEdit {...props} location={locationSettings} />;
+};
 
 const mapStateToProps = (state, props) => {
     let application = state.applications.getIn(['apps', props.appName]);
@@ -15,7 +19,7 @@ const mapStateToProps = (state, props) => {
         application = application.toJS();
     }
     return {
-        application
+        application,
     };
 };
 
