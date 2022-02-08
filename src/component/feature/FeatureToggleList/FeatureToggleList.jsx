@@ -23,7 +23,7 @@ import { useStyles } from './styles';
 import ListPlaceholder from '../../common/ListPlaceholder/ListPlaceholder';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 import { NAVIGATE_TO_CREATE_FEATURE } from '../../../testIds';
-import { resolveFilteredProjectId } from "../../../hooks/useFeaturesFilter";
+import { resolveFilteredProjectId } from '../../../hooks/useFeaturesFilter';
 
 const FeatureToggleList = ({
     features,
@@ -46,7 +46,7 @@ const FeatureToggleList = ({
         setFilter(prev => ({ ...prev, query }));
     };
 
-    const resolvedProjectId =  resolveFilteredProjectId(filter)
+    const resolvedProjectId = resolveFilteredProjectId(filter);
     const createURL = getCreateTogglePath(resolvedProjectId, flags.E);
 
     const renderFeatures = () => {
