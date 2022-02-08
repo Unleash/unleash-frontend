@@ -11,7 +11,7 @@ import { PasswordAuth } from "./PasswordAuth/PasswordAuth";
 import { GoogleAuth } from "./GoogleAuth/GoogleAuth";
 
 export const AuthSettings = () => {
-    const { uiConfig } = useUiConfig();
+    const { authenticationType } = useUiConfig().uiConfig;
 
     const tabs = [
         {
@@ -37,11 +37,11 @@ export const AuthSettings = () => {
             <AdminMenu />
             <PageContent headerContent="Single Sign-On">
                 <ConditionallyRender
-                    condition={uiConfig.authenticationType === 'enterprise'}
+                    condition={authenticationType === 'enterprise'}
                     show={<TabNav tabData={tabs} />}
                 />
                 <ConditionallyRender
-                    condition={uiConfig.authenticationType === 'open-source'}
+                    condition={authenticationType === 'open-source'}
                     show={
                         <Alert severity="warning">
                             You are running the open-source version of Unleash.
@@ -51,7 +51,7 @@ export const AuthSettings = () => {
                     }
                 />
                 <ConditionallyRender
-                    condition={uiConfig.authenticationType === 'demo'}
+                    condition={authenticationType === 'demo'}
                     show={
                         <Alert severity="warning">
                             You are running Unleash in demo mode. You have to
@@ -61,7 +61,7 @@ export const AuthSettings = () => {
                     }
                 />
                 <ConditionallyRender
-                    condition={uiConfig.authenticationType === 'custom'}
+                    condition={authenticationType === 'custom'}
                     show={
                         <Alert severity="warning">
                             You have decided to use custom authentication type.
@@ -71,7 +71,7 @@ export const AuthSettings = () => {
                     }
                 />
                 <ConditionallyRender
-                    condition={uiConfig.authenticationType === 'hosted'}
+                    condition={authenticationType === 'hosted'}
                     show={
                         <Alert severity="info">
                             Your Unleash instance is managed by the Unleash
