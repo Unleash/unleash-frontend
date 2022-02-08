@@ -16,6 +16,7 @@ import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
 import useAuthSettingsApi from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
 import { formatUnknownError } from '../../../../utils/format-unknown-error';
+import { removeEmptyStringFields } from '../../../../utils/remove-empty-string-fields';
 
 const initialState = {
     enabled: false,
@@ -69,7 +70,7 @@ export const SamlAuth = () => {
         event.preventDefault();
 
         try {
-            await updateSettings(data);
+            await updateSettings(removeEmptyStringFields(data));
             setToastData({
                 title: 'Settings stored',
                 type: 'success',

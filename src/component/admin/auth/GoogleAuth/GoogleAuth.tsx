@@ -15,6 +15,7 @@ import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAu
 import useAuthSettingsApi from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
 import useToast from '../../../../hooks/useToast';
 import { formatUnknownError } from '../../../../utils/format-unknown-error';
+import { removeEmptyStringFields } from '../../../../utils/remove-empty-string-fields';
 
 const initialState = {
     enabled: false,
@@ -62,7 +63,7 @@ export const GoogleAuth = () => {
         event.preventDefault();
 
         try {
-            await updateSettings(data);
+            await updateSettings(removeEmptyStringFields(data));
             setToastData({
                 title: 'Settings stored',
                 type: 'success',
