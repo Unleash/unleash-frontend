@@ -1,17 +1,15 @@
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import PageContent from '../../../common/PageContent/PageContent';
 import {
-    Button,
     List,
     ListItem,
     ListItemAvatar,
     ListItemSecondaryAction,
     ListItemText,
 } from '@material-ui/core';
-import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 import { CREATE_ADDON } from '../../../providers/AccessProvider/permissions';
 import { useHistory } from 'react-router-dom';
-import AccessContext from '../../../../contexts/AccessContext';
+import PermissionButton from '../../../common/PermissionButton/PermissionButton';
 
 interface IProvider {
     name: string;
@@ -27,9 +25,11 @@ interface IAvailableAddonsProps {
     providers: IProvider[];
 }
 
-const AvailableAddons = ({ providers, getAddonIcon }: IAvailableAddonsProps) => {
+const AvailableAddons = ({
+    providers,
+    getAddonIcon,
+}: IAvailableAddonsProps) => {
     const history = useHistory();
-    const { hasAccess } = useContext(AccessContext);
 
     const renderProvider = (provider: IProvider) => (
         <ListItem key={provider.name}>
@@ -39,21 +39,15 @@ const AvailableAddons = ({ providers, getAddonIcon }: IAvailableAddonsProps) => 
                 secondary={provider.description}
             />
             <ListItemSecondaryAction>
-                <ConditionallyRender
-                    condition={hasAccess(CREATE_ADDON)}
-                    show={
-                        <Button
-                            variant="contained"
-                            name="device_hub"
-                            onClick={() =>
-                                history.push(`/addons/create/${provider.name}`)
-                            }
-                            title="Configure"
-                        >
-                            Configure
-                        </Button>
+                <PermissionButton
+                    permission={CREATE_ADDON}
+                    onClick={() =>
+                        history.push(`/addons/create/${provider.name}`)
                     }
-                />
+                    tooltip={`Configure ${provider.name} Addon`}
+                >
+                    Configure
+                </PermissionButton>
             </ListItemSecondaryAction>
         </ListItem>
     );
