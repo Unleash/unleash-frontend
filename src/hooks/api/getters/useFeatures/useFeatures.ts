@@ -32,8 +32,8 @@ export const useFeatures = (options?: SWRConfiguration): IUseFeaturesOutput => {
     };
 };
 
-function fetchFeatures() {
+const fetchFeatures = () => {
     return fetch(PATH, { method: 'GET' })
         .then(handleErrorResponses('Features'))
         .then(res => res.json());
-}
+};

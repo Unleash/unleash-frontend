@@ -18,7 +18,7 @@ export const useFeaturesArchive = (
 ): UseFeaturesArchiveOutput => {
     const { data, error } = useSWR<{ features: IFeatureToggle[] }>(
         PATH,
-        fetchFeatures,
+        fetchArchivedFeatures,
         options
     );
 
@@ -34,8 +34,8 @@ export const useFeaturesArchive = (
     };
 };
 
-function fetchFeatures() {
+const fetchArchivedFeatures = () => {
     return fetch(PATH, { method: 'GET' })
         .then(handleErrorResponses('Archive'))
         .then(res => res.json());
-}
+};
