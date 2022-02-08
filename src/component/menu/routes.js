@@ -1,5 +1,5 @@
 import CopyFeatureToggle from '../../page/features/copy';
-import { FeatureToggleListContainer } from '../feature/FeatureToggleList';
+import { FeatureToggleListContainer } from '../feature/FeatureToggleList/FeatureToggleListContainer';
 import CreateStrategies from '../../page/strategies/create';
 import StrategyView from '../../page/strategies/show';
 import Strategies from '../../page/strategies';
