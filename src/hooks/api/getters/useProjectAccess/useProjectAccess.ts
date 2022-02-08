@@ -14,7 +14,7 @@ export interface IProjectAccessUsers {
     email?: string;
 }
 
-interface IProjectAccessResponse {
+export interface IProjectAccessOutput {
     users: IProjectAccessUsers[];
     roles: IProjectRole[];
 }

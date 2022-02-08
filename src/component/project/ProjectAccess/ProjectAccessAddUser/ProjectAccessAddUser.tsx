@@ -58,7 +58,8 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             const filteredUsers = userSearchResults.filter(
                 (selectedUser: IProjectAccessUsers) => {
                     const selected = access.users.find(
-                        user => user.id === selectedUser.id
+                        (user: IProjectAccessUsers) =>
+                            user.id === selectedUser.id
                     );
                     return selected ? false : true;
                 }

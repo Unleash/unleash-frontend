@@ -37,6 +37,7 @@ import useProjectAccess, {
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
 import { UPDATE_PROJECT } from '../../providers/AccessProvider/permissions';
+import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 
 const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
@@ -86,6 +87,11 @@ const ProjectAccess = () => {
                 });
             }
         };
+
+    const handleRemoveAccess = (user: IProjectAccessUsers) => {
+        setUser(user);
+        setShowDelDialogue(true);
+    };
 
     const removeAccess = (user: IProjectAccessUsers | null) => async () => {
         if (!user) return;
@@ -140,84 +146,12 @@ const ProjectAccess = () => {
                 </DialogActions>
             </Dialog>
             <div className={styles.divider}></div>
-            <List>
-                {/* This should be done on the API side in the future, 
-                we should expect the list of users to come in the 
-                same order each time and not jump around on the screen*/}
-                {page
-                    .sort(
-                        (
-                            userA: IProjectAccessUsers,
-                            userB: IProjectAccessUsers
-                        ) => {
-                            if (!userA.name) {
-                                return -1;
-                            } else if (!userB.name) {
-                                return 1;
-                            }
-
-                            return userA.name.localeCompare(userB.name);
-                        }
-                    )
-                    .map((user: IProjectAccessUsers) => {
-                        const labelId = `checkbox-list-secondary-label-${user.id}`;
-                        return (
-                            <ListItem key={user.id} button>
-                                <ListItemAvatar>
-                                    <Avatar
-                                        alt={user.name}
-                                        src={user.imageUrl}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    id={labelId}
-                                    primary={user.name}
-                                    secondary={user.email || user.username}
-                                />
-                                <ListItemSecondaryAction
-                                    className={styles.actionList}
-                                >
-                                    <ProjectRoleSelect
-                                        labelId={`role-${user.id}-select-label`}
-                                        id={`role-${user.id}-select`}
-                                        key={user.id}
-                                        placeholder="Choose role"
-                                        onChange={handleRoleChange(
-                                            user.id,
-                                            user.roleId
-                                        )}
-                                        roles={access.roles}
-                                        value={user.roleId || -1}
-                                    >
-                                        <MenuItem value="" disabled>
-                                            Choose role
-                                        </MenuItem>
-                                    </ProjectRoleSelect>
-
-                                    <PermissionIconButton
-                                        permission={UPDATE_PROJECT}
-                                        projectId={projectId}
-                                        className={styles.iconButton}
-                                        edge="end"
-                                        aria-label="delete"
-                                        title="Remove access"
-                                        onClick={() => {
-                                            setUser(user);
-                                            setShowDelDialogue(true);
-                                        }}
-                                        disabled={access.users.length === 1}
-                                        tooltip={
-                                            access.users.length === 1
-                                                ? 'A project must have at least one owner'
-                                                : 'Remove access'
-                                        }
-                                    >
-                                        <Delete />
-                                    </PermissionIconButton>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        );
-                    })}
+            <ProjectAccessList
+                handleRoleChange={handleRoleChange}
+                handleRemoveAccess={handleRemoveAccess}
+                page={page}
+                access={access}
+            >
                 <PaginateUI
                     pages={pages}
                     pageIndex={pageIndex}
@@ -226,7 +160,8 @@ const ProjectAccess = () => {
                     prevPage={prevPage}
                     style={{ bottom: '-21px' }}
                 />
-            </List>
+            </ProjectAccessList>
+
             <ConfirmDialogue
                 open={showDelDialogue}
                 onClick={removeAccess(user)}
