@@ -10,7 +10,7 @@ import { Alert } from '@material-ui/lab';
 import PageContent from '../../common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
-import AutoCreateForm from './AutoCreateForm/AutoCreateForm';
+import { AutoCreateForm } from './AutoCreateForm/AutoCreateForm';
 import useToast from '../../../hooks/useToast';
 import useUiConfig from "../../../hooks/api/getters/useUiConfig/useUiConfig";
 import useAuthSettings from "../../../hooks/api/getters/useAuthSettings/useAuthSettings";

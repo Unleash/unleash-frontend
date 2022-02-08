@@ -20,10 +20,10 @@ interface Props {
     setValue: (name: string, value: string | boolean) => void;
 }
 
-function AutoCreateForm({
+export const AutoCreateForm = ({
     data = { enabled: false, autoCreate: false },
     setValue,
-}: Props) {
+}: Props) => {
     const updateAutoCreate = () => {
         setValue('autoCreate', !data.autoCreate);
     };
@@ -117,4 +117,3 @@ function AutoCreateForm({
         </Fragment>
     );
 }
-export default AutoCreateForm;
