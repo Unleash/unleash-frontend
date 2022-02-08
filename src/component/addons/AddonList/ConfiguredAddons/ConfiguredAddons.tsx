@@ -16,10 +16,11 @@ import PageContent from '../../../common/PageContent/PageContent';
 import useAddons from '../../../../hooks/api/getters/useAddons/useAddons';
 import useToast from '../../../../hooks/useToast';
 import useAddonsApi from '../../../../hooks/api/actions/useAddonsApi/useAddonsApi';
-import { ReactElement, useContext } from 'react';
+import { ReactElement, useContext, useState } from 'react';
 import AccessContext from '../../../../contexts/AccessContext';
 import { IAddon } from '../../../../interfaces/addons';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
+import Dialogue from '../../../common/Dialogue';
 
 interface IConfigureAddonsProps {
     getAddonIcon: (name: string) => ReactElement;
@@ -30,6 +31,15 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
     const { updateAddon, removeAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
     const { hasAccess } = useContext(AccessContext);
+    const [showDelete, setShowDelete] = useState(false);
+    const [deletedAddon, setDeletedAddon] = useState<IAddon>({
+        id: 0,
+        provider: '',
+        description: '',
+        enabled: false,
+        events: [],
+        parameters: {},
+    });
 
     const toggleAddon = async (addon: IAddon) => {
         try {
@@ -104,7 +114,10 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 <PermissionIconButton
                     permission={DELETE_ADDON}
                     tooltip={'Remove Addon'}
-                    onClick={() => onRemoveAddon(addon)}
+                    onClick={() => {
+                        setDeletedAddon(addon);
+                        setShowDelete(true);
+                    }}
                 >
                     <Delete />
                 </PermissionIconButton>
@@ -114,6 +127,16 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
     return (
         <PageContent headerContent="Configured addons">
             <List>{addons.map((addon: IAddon) => renderAddon(addon))}</List>
+            <Dialogue
+                open={showDelete}
+                onClick={() => onRemoveAddon(deletedAddon)}
+                onClose={() => {
+                    setShowDelete(false);
+                }}
+                title="Confirm deletion"
+            >
+                <div>Are you sure you want to delete this Addon?</div>
+            </Dialogue>
         </PageContent>
     );
 };
