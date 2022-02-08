@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -7,36 +7,36 @@ import {
     TextField,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import PageContent from '../../common/PageContent/PageContent';
-import AccessContext from '../../../contexts/AccessContext';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
-import { AutoCreateForm } from './AutoCreateForm/AutoCreateForm';
-import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
-import useAuthSettingsApi from '../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
-import useAuthSettings from '../../../hooks/api/getters/useAuthSettings/useAuthSettings';
-import useToast from '../../../hooks/useToast';
+import PageContent from '../../../common/PageContent/PageContent';
+import AccessContext from '../../../../contexts/AccessContext';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import { AutoCreateForm } from '../AutoCreateForm/AutoCreateForm';
+import useToast from '../../../../hooks/useToast';
+import useUiConfig from "../../../../hooks/api/getters/useUiConfig/useUiConfig";
+import useAuthSettings from "../../../../hooks/api/getters/useAuthSettings/useAuthSettings";
+import useAuthSettingsApi from "../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi";
 
 const initialState = {
     enabled: false,
-    enableSingleSignOut: false,
     autoCreate: false,
     unleashHostname: location.hostname,
-    clientId: '',
-    discoverUrl: '',
-    secret: '',
-    acrValues: '',
+    entityId: '',
+    signOnUrl: '',
+    certificate: '',
+    signOutUrl: '',
+    spCertificate: '',
 };
 
-export const OidcAuth = () => {
+export const SamlAuth = () => {
     const { setToastData } = useToast();
     const { uiConfig } = useUiConfig();
     const [data, setData] = useState(initialState);
     const { hasAccess } = useContext(AccessContext);
-    const { config } = useAuthSettings('oidc');
-    const { updateSettings, errors, loading } = useAuthSettingsApi('oidc');
+    const { config } = useAuthSettings('saml');
+    const { updateSettings, errors, loading } = useAuthSettingsApi('saml');
 
     useEffect(() => {
-        if (config.discoverUrl) {
+        if (config.entityId) {
             setData(config);
         }
     }, [config]);
@@ -55,10 +55,6 @@ export const OidcAuth = () => {
 
     const updateEnabled = () => {
         setData({ ...data, enabled: !data.enabled });
-    };
-
-    const updateSingleSignOut = () => {
-        setData({ ...data, enableSingleSignOut: !data.enableSingleSignOut });
     };
 
     const setValue = (name: string, value: string | boolean) => {
@@ -99,10 +95,10 @@ export const OidcAuth = () => {
                         >
                             documentation
                         </a>{' '}
-                        to learn how to integrate with specific Open Id Connect
-                        providers (Okta, Keycloak, Google, etc). <br />
+                        to learn how to integrate with specific SAML 2.0
+                        providers (Okta, Keycloak, etc). <br />
                         Callback URL:{' '}
-                        <code>{uiConfig.unleashUrl}/auth/oidc/callback</code>
+                        <code>{uiConfig.unleashUrl}/auth/saml/callback</code>
                     </Alert>
                 </Grid>
             </Grid>
@@ -110,9 +106,9 @@ export const OidcAuth = () => {
                 <Grid container spacing={3}>
                     <Grid item md={5}>
                         <strong>Enable</strong>
-                        <p>Enable Open Id Connect Authentication.</p>
+                        <p>Enable SAML 2.0 Authentication.</p>
                     </Grid>
-                    <Grid item md={6} style={{ padding: '20px' }}>
+                    <Grid item md={6}>
                         <FormControlLabel
                             control={
                                 <Switch
@@ -128,33 +124,15 @@ export const OidcAuth = () => {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item md={5}>
-                        <strong>Discover URL</strong>
-                        <p>(Required) Issuer discover metadata URL</p>
+                        <strong>Entity ID</strong>
+                        <p>(Required) The Entity Identity provider issuer.</p>
                     </Grid>
                     <Grid item md={6}>
                         <TextField
                             onChange={updateField}
-                            label="Discover URL"
-                            name="discoverUrl"
-                            value={data.discoverUrl}
-                            disabled={!data.enabled}
-                            style={{ width: '400px' }}
-                            variant="outlined"
-                            size="small"
-                        />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Client ID</strong>
-                        <p>(Required) Client ID of your OpenID application</p>
-                    </Grid>
-                    <Grid item md={6}>
-                        <TextField
-                            onChange={updateField}
-                            label="Client ID"
-                            name="clientId"
-                            value={data.clientId}
+                            label="Entity ID"
+                            name="entityId"
+                            value={data.entityId}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -165,19 +143,51 @@ export const OidcAuth = () => {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item md={5}>
-                        <strong>Client secret</strong>
+                        <strong>Single Sign-On URL</strong>
                         <p>
-                            (Required) Client secret of your OpenID application.{' '}
+                            (Required) The url to redirect the user to for
+                            signing in.
                         </p>
                     </Grid>
                     <Grid item md={6}>
                         <TextField
                             onChange={updateField}
-                            label="Client Secret"
-                            name="secret"
-                            value={data.secret}
+                            label="Single Sign-On URL"
+                            name="signOnUrl"
+                            value={data.signOnUrl}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
+                            variant="outlined"
+                            size="small"
+                            required
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item md={5}>
+                        <strong>X.509 Certificate</strong>
+                        <p>
+                            (Required) The certificate used to sign the SAML 2.0
+                            request.
+                        </p>
+                    </Grid>
+                    <Grid item md={7}>
+                        <TextField
+                            onChange={updateField}
+                            label="X.509 Certificate"
+                            name="certificate"
+                            value={data.certificate}
+                            disabled={!data.enabled}
+                            style={{ width: '100%' }}
+                            InputProps={{
+                                style: {
+                                    fontSize: '0.6em',
+                                    fontFamily: 'monospace',
+                                },
+                            }}
+                            multiline
+                            rows={14}
+                            rowsMax={14}
                             variant="outlined"
                             size="small"
                             required
@@ -187,49 +197,18 @@ export const OidcAuth = () => {
                 <h3>Optional Configuration</h3>
                 <Grid container spacing={3}>
                     <Grid item md={5}>
-                        <strong>Enable Single Sign-Out</strong>
+                        <strong>Single Sign-out URL</strong>
                         <p>
-                            If you enable Single Sign-Out Unleash will redirect
-                            the user to the IDP as part of the Sign-out process.
-                        </p>
-                    </Grid>
-                    <Grid item md={6} style={{ padding: '20px' }}>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    onChange={updateSingleSignOut}
-                                    value={data.enableSingleSignOut}
-                                    disabled={!data.enabled}
-                                    name="enableSingleSignOut"
-                                    checked={data.enableSingleSignOut}
-                                />
-                            }
-                            label={
-                                data.enableSingleSignOut
-                                    ? 'Enabled'
-                                    : 'Disabled'
-                            }
-                        />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>ACR Values</strong>
-                        <p>
-                            Requested Authentication Context Class Reference
-                            values. If multiple values are specified they should
-                            be "space" separated. Will be sent as "acr_values"
-                            as part of the authentication request. Unleash will
-                            validate the acr value in the id token claims
-                            against the list of acr values.
+                            (Optional) The url to redirect the user to for
+                            signing out of the IDP.
                         </p>
                     </Grid>
                     <Grid item md={6}>
                         <TextField
                             onChange={updateField}
-                            label="ACR Values"
-                            name="acrValues"
-                            value={data.acrValues}
+                            label="Single Sign-out URL"
+                            name="signOutUrl"
+                            value={data.signOutUrl}
                             disabled={!data.enabled}
                             style={{ width: '400px' }}
                             variant="outlined"
@@ -237,11 +216,41 @@ export const OidcAuth = () => {
                         />
                     </Grid>
                 </Grid>
-
-                <AutoCreateForm data={data} setValue={setValue} />
-
                 <Grid container spacing={3}>
-                    <Grid item md={12}>
+                    <Grid item md={5}>
+                        <strong>Service Provider X.509 Certificate</strong>
+                        <p>
+                            (Optional) The private certificate used by the
+                            Service Provider used to sign the SAML 2.0 request
+                            towards the IDP. E.g. used to sign single logout
+                            requests (SLO).
+                        </p>
+                    </Grid>
+                    <Grid item md={7}>
+                        <TextField
+                            onChange={updateField}
+                            label="X.509 Certificate"
+                            name="spCertificate"
+                            value={data.spCertificate}
+                            disabled={!data.enabled}
+                            style={{ width: '100%' }}
+                            InputProps={{
+                                style: {
+                                    fontSize: '0.6em',
+                                    fontFamily: 'monospace',
+                                },
+                            }}
+                            multiline
+                            rows={14}
+                            rowsMax={14}
+                            variant="outlined"
+                            size="small"
+                        />
+                    </Grid>
+                </Grid>
+                <AutoCreateForm data={data} setValue={setValue} />
+                <Grid container spacing={3}>
+                    <Grid item md={5}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -260,4 +269,4 @@ export const OidcAuth = () => {
             </form>
         </PageContent>
     );
-};
+}

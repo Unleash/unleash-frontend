@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -7,61 +7,54 @@ import {
     TextField,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import PageContent from '../../common/PageContent/PageContent';
-import AccessContext from '../../../contexts/AccessContext';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
-import { AutoCreateForm } from './AutoCreateForm/AutoCreateForm';
-import useToast from '../../../hooks/useToast';
-import useUiConfig from "../../../hooks/api/getters/useUiConfig/useUiConfig";
-import useAuthSettings from "../../../hooks/api/getters/useAuthSettings/useAuthSettings";
-import useAuthSettingsApi from "../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi";
+import PageContent from '../../../common/PageContent/PageContent';
+import AccessContext from '../../../../contexts/AccessContext';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import useAuthSettingsApi from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useToast from '../../../../hooks/useToast';
 
 const initialState = {
     enabled: false,
     autoCreate: false,
     unleashHostname: location.hostname,
-    entityId: '',
-    signOnUrl: '',
-    certificate: '',
-    signOutUrl: '',
-    spCertificate: '',
+    clientId: '',
+    clientSecret: '',
+    emailDomains: '',
 };
 
-export const SamlAuth = () => {
+export const GoogleAuth = () => {
     const { setToastData } = useToast();
     const { uiConfig } = useUiConfig();
     const [data, setData] = useState(initialState);
     const { hasAccess } = useContext(AccessContext);
-    const { config } = useAuthSettings('saml');
-    const { updateSettings, errors, loading } = useAuthSettingsApi('saml');
+    const { config } = useAuthSettings('google');
+    const { updateSettings, errors, loading } = useAuthSettingsApi('google');
 
     useEffect(() => {
-        if (config.entityId) {
+        if (config.clientId) {
             setData(config);
         }
     }, [config]);
 
     if (!hasAccess(ADMIN)) {
-        return (
-            <Alert severity="error">
-                You need to be a root admin to access this section.
-            </Alert>
-        );
+        return <span>You need admin privileges to access this section.</span>;
     }
 
     const updateField = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.name, event.target.value);
+        setData({
+            ...data,
+            [event.target.name]: event.target.value,
+        });
     };
 
     const updateEnabled = () => {
         setData({ ...data, enabled: !data.enabled });
     };
 
-    const setValue = (name: string, value: string | boolean) => {
-        setData({
-            ...data,
-            [name]: value,
-        });
+    const updateAutoCreate = () => {
+        setData({ ...data, autoCreate: !data.autoCreate });
     };
 
     const onSubmit = async (event: React.SyntheticEvent) => {
@@ -85,30 +78,32 @@ export const SamlAuth = () => {
     return (
         <PageContent headerContent="">
             <Grid container style={{ marginBottom: '1rem' }}>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <Alert severity="info">
                         Please read the{' '}
                         <a
-                            href="https://www.unleash-hosted.com/docs/enterprise-authentication"
+                            href="https://www.unleash-hosted.com/docs/enterprise-authentication/google"
                             target="_blank"
                             rel="noreferrer"
                         >
                             documentation
                         </a>{' '}
-                        to learn how to integrate with specific SAML 2.0
-                        providers (Okta, Keycloak, etc). <br />
+                        to learn how to integrate with Google OAuth 2.0. <br />
                         Callback URL:{' '}
-                        <code>{uiConfig.unleashUrl}/auth/saml/callback</code>
+                        <code>{uiConfig.unleashUrl}/auth/google/callback</code>
                     </Alert>
                 </Grid>
             </Grid>
             <form onSubmit={onSubmit}>
                 <Grid container spacing={3}>
-                    <Grid item md={5}>
+                    <Grid item xs={5}>
                         <strong>Enable</strong>
-                        <p>Enable SAML 2.0 Authentication.</p>
+                        <p>
+                            Enable Google users to login. Value is ignored if
+                            Client ID and Client Secret are not defined.
+                        </p>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item xs={6} style={{ padding: '20px' }}>
                         <FormControlLabel
                             control={
                                 <Switch
@@ -123,17 +118,20 @@ export const SamlAuth = () => {
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Entity ID</strong>
-                        <p>(Required) The Entity Identity provider issuer.</p>
+                    <Grid item xs={5}>
+                        <strong>Client ID</strong>
+                        <p>
+                            (Required) The Client ID provided by Google when
+                            registering the application.
+                        </p>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item xs={6}>
                         <TextField
                             onChange={updateField}
-                            label="Entity ID"
-                            name="entityId"
-                            value={data.entityId}
-                            disabled={!data.enabled}
+                            label="Client ID"
+                            name="clientId"
+                            placeholder=""
+                            value={data.clientId}
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -143,19 +141,19 @@ export const SamlAuth = () => {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item md={5}>
-                        <strong>Single Sign-On URL</strong>
+                        <strong>Client Secret</strong>
                         <p>
-                            (Required) The url to redirect the user to for
-                            signing in.
+                            (Required) Client Secret provided by Google when
+                            registering the application.
                         </p>
                     </Grid>
                     <Grid item md={6}>
                         <TextField
                             onChange={updateField}
-                            label="Single Sign-On URL"
-                            name="signOnUrl"
-                            value={data.signOnUrl}
-                            disabled={!data.enabled}
+                            label="Client Secret"
+                            name="clientSecret"
+                            value={data.clientSecret}
+                            placeholder=""
                             style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
@@ -165,90 +163,70 @@ export const SamlAuth = () => {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item md={5}>
-                        <strong>X.509 Certificate</strong>
+                        <strong>Unleash hostname</strong>
                         <p>
-                            (Required) The certificate used to sign the SAML 2.0
-                            request.
+                            (Required) The hostname you are running Unleash on
+                            that Google should send the user back to. The final
+                            callback URL will be{' '}
+                            <small>
+                                <code>
+                                    https://[unleash.hostname.com]/auth/google/callback
+                                </code>
+                            </small>
                         </p>
                     </Grid>
-                    <Grid item md={7}>
+                    <Grid item md={6}>
                         <TextField
                             onChange={updateField}
-                            label="X.509 Certificate"
-                            name="certificate"
-                            value={data.certificate}
-                            disabled={!data.enabled}
-                            style={{ width: '100%' }}
-                            InputProps={{
-                                style: {
-                                    fontSize: '0.6em',
-                                    fontFamily: 'monospace',
-                                },
-                            }}
+                            label="Unleash Hostname"
+                            name="unleashHostname"
+                            placeholder=""
+                            value={data.unleashHostname || ''}
+                            style={{ width: '400px' }}
+                            variant="outlined"
+                            size="small"
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item md={5}>
+                        <strong>Auto-create users</strong>
+                        <p>
+                            Enable automatic creation of new users when signing
+                            in with Google.
+                        </p>
+                    </Grid>
+                    <Grid item md={6} style={{ padding: '20px' }}>
+                        <Switch
+                            onChange={updateAutoCreate}
+                            name="enabled"
+                            checked={data.autoCreate}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item md={5}>
+                        <strong>Email domains</strong>
+                        <p>
+                            (Optional) Comma separated list of email domains
+                            that should be allowed to sign in.
+                        </p>
+                    </Grid>
+                    <Grid item md={6}>
+                        <TextField
+                            onChange={updateField}
+                            label="Email domains"
+                            name="emailDomains"
+                            value={data.emailDomains}
+                            placeholder="@company.com, @anotherCompany.com"
+                            style={{ width: '400px' }}
+                            rows={2}
                             multiline
-                            rows={14}
-                            rowsMax={14}
-                            variant="outlined"
-                            size="small"
-                            required
-                        />
-                    </Grid>
-                </Grid>
-                <h3>Optional Configuration</h3>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Single Sign-out URL</strong>
-                        <p>
-                            (Optional) The url to redirect the user to for
-                            signing out of the IDP.
-                        </p>
-                    </Grid>
-                    <Grid item md={6}>
-                        <TextField
-                            onChange={updateField}
-                            label="Single Sign-out URL"
-                            name="signOutUrl"
-                            value={data.signOutUrl}
-                            disabled={!data.enabled}
-                            style={{ width: '400px' }}
                             variant="outlined"
                             size="small"
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
-                    <Grid item md={5}>
-                        <strong>Service Provider X.509 Certificate</strong>
-                        <p>
-                            (Optional) The private certificate used by the
-                            Service Provider used to sign the SAML 2.0 request
-                            towards the IDP. E.g. used to sign single logout
-                            requests (SLO).
-                        </p>
-                    </Grid>
-                    <Grid item md={7}>
-                        <TextField
-                            onChange={updateField}
-                            label="X.509 Certificate"
-                            name="spCertificate"
-                            value={data.spCertificate}
-                            disabled={!data.enabled}
-                            style={{ width: '100%' }}
-                            InputProps={{
-                                style: {
-                                    fontSize: '0.6em',
-                                    fontFamily: 'monospace',
-                                },
-                            }}
-                            multiline
-                            rows={14}
-                            rowsMax={14}
-                            variant="outlined"
-                            size="small"
-                        />
-                    </Grid>
-                </Grid>
-                <AutoCreateForm data={data} setValue={setValue} />
                 <Grid container spacing={3}>
                     <Grid item md={5}>
                         <Button
@@ -269,4 +247,4 @@ export const SamlAuth = () => {
             </form>
         </PageContent>
     );
-}
+};

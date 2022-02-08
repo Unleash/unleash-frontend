@@ -1,16 +1,16 @@
 import React from 'react';
 import AdminMenu from '../menu/AdminMenu';
 import { Alert } from '@material-ui/lab';
-import { GoogleAuth } from './google-auth';
-import { SamlAuth } from './saml-auth';
-import { OidcAuth } from './oidc-auth';
-import PasswordAuthSettings from './PasswordAuthSettings';
 import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import { OidcAuth } from "./OidcAuth/OidcAuth";
+import { SamlAuth } from "./SamlAuth/SamlAuth";
+import { PasswordAuth } from "./PasswordAuth/PasswordAuth";
+import { GoogleAuth } from "./GoogleAuth/GoogleAuth";
 
-export const AdminAuthPage = () => {
+export const AuthSettings = () => {
     const { uiConfig } = useUiConfig();
 
     const tabs = [
@@ -24,7 +24,7 @@ export const AdminAuthPage = () => {
         },
         {
             label: 'Password',
-            component: <PasswordAuthSettings />,
+            component: <PasswordAuth />,
         },
         {
             label: 'Google',

@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, FormControlLabel, Grid, Switch } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import PageContent from '../../common/PageContent/PageContent';
-import AccessContext from '../../../contexts/AccessContext';
-import { ADMIN } from '../../providers/AccessProvider/permissions';
-import useAuthSettings from '../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import PageContent from '../../../common/PageContent/PageContent';
+import AccessContext from '../../../../contexts/AccessContext';
+import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
 import useAuthSettingsApi, {
     ISimpleAuthSettings,
-} from '../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
-import useToast from '../../../hooks/useToast';
+} from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useToast from '../../../../hooks/useToast';
 
-const PasswordAuthSettings = () => {
+export const PasswordAuth = () => {
     const { setToastData } = useToast();
     const { config } = useAuthSettings('simple');
     const [disablePasswordAuth, setDisablePasswordAuth] =
@@ -106,5 +106,3 @@ const PasswordAuthSettings = () => {
         </PageContent>
     );
 };
-
-export default PasswordAuthSettings;
