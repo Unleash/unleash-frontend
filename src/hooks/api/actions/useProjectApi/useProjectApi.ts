@@ -1,4 +1,3 @@
-import { IProjectAccessUsers } from '../../getters/useProjectAccess/useProjectAccess';
 import useAPI from '../useApi/useApi';
 
 interface ICreatePayload {

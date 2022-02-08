@@ -13,7 +13,9 @@ import ProjectRoleSelect from '../ProjectRoleSelect/ProjectRoleSelect';
 import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjectApi';
 import { useParams } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
-import useProjectAccess from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
+import useProjectAccess, {
+    IProjectAccessUsers,
+} from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import { IProjectRole } from '../../../../interfaces/role';
 
 interface IProjectAccessAddUserProps {
@@ -32,7 +34,6 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     });
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [select, setSelect] = useState(false);
     const { setToastData } = useToast();
     const { refetchProjectAccess, access } = useProjectAccess(id);
 
@@ -52,15 +53,17 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             setLoading(true);
             // TODO: Do not hard-code fetch here.
             const result = await searchProjectUser(q);
-            const users = await result.json();
-            console.log(users);
-            const filtredUsers = users.filter(selectedUser => {
-                const selected = access.users.find(
-                    user => user.id === selectedUser.id
-                );
-                return selected ? false : true;
-            });
-            setOptions(filtredUsers);
+            const userSearchResults = await result.json();
+
+            const filteredUsers = userSearchResults.filter(
+                (selectedUser: IProjectAccessUsers) => {
+                    const selected = access.users.find(
+                        user => user.id === selectedUser.id
+                    );
+                    return selected ? false : true;
+                }
+            );
+            setOptions(filteredUsers);
         } else {
             setOptions([]);
         }
@@ -71,22 +74,34 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         const q = evt.target.value;
         search(q);
         if (options.length === 1) {
-            setSelect(true);
             return;
         }
-        setSelect(false);
     };
 
-    const handleSelectUser = (evt: Event, value) => {
+    const handleBlur = () => {
+        if (options.length > 0) {
+            const user = options[0];
+            setUser(user);
+        }
+    };
+
+    const handleSelectUser = (
+        evt: Event,
+        selectedUser: IProjectAccessUsers
+    ) => {
         setOptions([]);
+<<<<<<< HEAD
+=======
+        console.log(selectedUser, evt);
+>>>>>>> 6d204e57 (fix: sort users)
         if (selectedUser?.id) {
             setUser(selectedUser);
         }
     };
 
     const handleRoleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        const roleId = +evt.target.value;
-        const role = roles.find(r => r.id === roleId);
+        const roleId = Number(evt.target.value);
+        const role = roles.find(role => role.id === roleId);
         setRole(role);
     };
 
@@ -134,12 +149,12 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
                         style={{ width: 300 }}
                         noOptionsText="No users found."
                         onChange={handleSelectUser}
-                        autoSelect={select}
+                        onBlur={e => handleBlur()}
                         value={user || ''}
                         freeSolo
                         getOptionSelected={() => true}
                         filterOptions={o => o}
-                        getOptionLabel={option => {
+                        getOptionLabel={(option: IProjectAccessUsers) => {
                             if (option) {
                                 return `${option.name || '(Empty name)'} <${
                                     option.email || option.username
@@ -184,7 +199,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
                         labelId="add-user-select-role-label"
                         id="add-user-select-role"
                         placeholder="Project role"
-                        value={role.id || ''}
+                        value={role.id || -1}
                         onChange={handleRoleChange}
                         roles={roles}
                     />
