@@ -10,7 +10,12 @@ interface IProps {
     handleRoleChange: (
         userId: number,
         currRoleId: number
-    ) => (evt: React.ChangeEvent<HTMLInputElement>) => void;
+    ) => (
+        evt: React.ChangeEvent<{
+            name?: string | undefined;
+            value: unknown;
+        }>
+    ) => void;
     handleRemoveAccess: (user: IProjectAccessUsers) => void;
     access: IProjectAccessOutput;
 }
@@ -46,6 +51,7 @@ export const ProjectAccessList: React.FC<IProps> = ({
                 return (
                     <ProjectAccessListItem
                         key={user.id}
+                        user={user}
                         access={access}
                         handleRoleChange={handleRoleChange}
                         handleRemoveAccess={handleRemoveAccess}

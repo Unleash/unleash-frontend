@@ -19,11 +19,11 @@ import useProjectAccess, {
 import { IProjectRole } from '../../../../interfaces/role';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 
-interface IProjectAccessAddUserProps {
+interface IProps {
     roles: IProjectRole[];
 }
 
-const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
+export const ProjectAccessAddUser = ({ roles }: IProps) => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState<IProjectAccessUsers | undefined>();
     const [role, setRole] = useState<IProjectRole>({
@@ -239,5 +239,3 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         </>
     );
 };
-
-export default ProjectAccessAddUser;

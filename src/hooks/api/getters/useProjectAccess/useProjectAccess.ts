@@ -34,11 +34,12 @@ const useProjectAccess = (
 
     const CACHE_KEY = `api/admin/projects/${projectId}/users`;
 
-    const { data, error } = useSWR<IProjectAccessResponse>(
+    const { data, error } = useSWR<IProjectAccessOutput>(
         CACHE_KEY,
         fetcher,
         options
     );
+
     const [loading, setLoading] = useState(!error && !data);
 
     const refetchProjectAccess = () => {

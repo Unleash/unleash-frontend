@@ -7,9 +7,11 @@ import {
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
-interface IPermissionIconButtonProps
-    extends ExtendButtonBase<IconButtonTypeMap>,
-        React.HTMLProps<HTMLButtonElement> {
+interface IProps
+    extends React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLButtonElement>,
+        HTMLButtonElement
+    > {
     permission: string;
     Icon?: React.ElementType;
     tooltip: string;
@@ -17,10 +19,11 @@ interface IPermissionIconButtonProps
     projectId?: string;
     environmentId?: string;
     edge?: string;
+    className?: string;
     title?: string;
 }
 
-const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
+const PermissionIconButton: React.FC<IProps> = ({
     permission,
     Icon,
     tooltip,

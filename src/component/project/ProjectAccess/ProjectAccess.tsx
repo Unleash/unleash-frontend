@@ -1,32 +1,22 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState } from 'react';
 import {
-    Avatar,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemSecondaryAction,
-    ListItemText,
-    MenuItem,
 } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 
-import ProjectAccessAddUser from './ProjectAccessAddUser/ProjectAccessAddUser';
+import { ProjectAccessAddUser } from './ProjectAccessAddUser/ProjectAccessAddUser';
 
 import PageContent from '../../common/PageContent';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useStyles } from './ProjectAccess.styles';
-import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import { useParams } from 'react-router-dom';
 import { IProjectViewParams } from '../../../interfaces/params';
-import ProjectRoleSelect from './ProjectRoleSelect/ProjectRoleSelect';
 import usePagination from '../../../hooks/usePagination';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import useToast from '../../../hooks/useToast';
@@ -36,7 +26,6 @@ import useProjectAccess, {
 } from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
-import { UPDATE_PROJECT } from '../../providers/AccessProvider/permissions';
 import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 
 const ProjectAccess = () => {
@@ -69,7 +58,12 @@ const ProjectAccess = () => {
 
     const handleRoleChange =
         (userId: number, currRoleId: number) =>
-        async (evt: React.ChangeEvent<HTMLInputElement>) => {
+        async (
+            evt: React.ChangeEvent<{
+                name?: string | undefined;
+                value: unknown;
+            }>
+        ) => {
             const roleId = Number(evt.target.value);
             try {
                 await removeUserFromRole(projectId, currRoleId, userId);
@@ -116,6 +110,8 @@ const ProjectAccess = () => {
     const handleCloseError = () => {
         setError(undefined);
     };
+
+    if (!access) return null;
 
     return (
         <PageContent

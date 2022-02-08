@@ -6,6 +6,7 @@ import {
     ListItemSecondaryAction,
     MenuItem,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 import {
     IProjectAccessUsers,
@@ -22,7 +23,12 @@ interface IProps {
     handleRoleChange: (
         userId: number,
         currRoleId: number
-    ) => (evt: React.ChangeEvent<HTMLInputElement>) => void;
+    ) => (
+        evt: React.ChangeEvent<{
+            name?: string | undefined;
+            value: unknown;
+        }>
+    ) => void;
     handleRemoveAccess: (user: IProjectAccessUsers) => void;
     access: IProjectAccessOutput;
 }
