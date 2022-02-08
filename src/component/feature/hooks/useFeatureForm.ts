@@ -48,9 +48,9 @@ const useFeatureForm = (
 
     const getTogglePayload = () => {
         return {
-            type: type,
-            name: name,
-            description: description,
+            type,
+            name,
+            description,
             impressionData,
         };
     };
