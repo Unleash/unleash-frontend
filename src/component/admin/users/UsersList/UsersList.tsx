@@ -103,7 +103,7 @@ const UsersList = () => {
                     user={user}
                     openPwDialog={openPwDialog}
                     openDelDialog={openDelDialog}
-                    location={locationSettings}
+                    locationSettings={locationSettings}
                     renderRole={renderRole}
                 />
             ));
@@ -116,7 +116,7 @@ const UsersList = () => {
                     user={user}
                     openPwDialog={openPwDialog}
                     openDelDialog={openDelDialog}
-                    location={locationSettings}
+                    locationSettings={locationSettings}
                     renderRole={renderRole}
                 />
             );

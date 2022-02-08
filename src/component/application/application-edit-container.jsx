@@ -10,7 +10,7 @@ import { useLocationSettings } from '../../hooks/useLocationSettings';
 const ApplicationEditContainer = props => {
     const [locationSettings] = useLocationSettings();
 
-    return <ApplicationEdit {...props} location={locationSettings} />;
+    return <ApplicationEdit {...props} locationSettings={locationSettings} />;
 };
 
 const mapStateToProps = (state, props) => {

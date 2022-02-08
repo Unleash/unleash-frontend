@@ -22,7 +22,7 @@ interface IUserListItemProps {
     openUpdateDialog: (user: IUser) => (e: SyntheticEvent) => void;
     openPwDialog: (user: IUser) => (e: SyntheticEvent) => void;
     openDelDialog: (user: IUser) => (e: SyntheticEvent) => void;
-    location: ILocationSettings;
+    locationSettings: ILocationSettings;
 }
 
 const UserListItem = ({
@@ -31,7 +31,7 @@ const UserListItem = ({
     openDelDialog,
     openPwDialog,
     openUpdateDialog,
-    location,
+    locationSettings,
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory()
@@ -51,7 +51,7 @@ const UserListItem = ({
             </TableCell>
             <TableCell>
                 <span data-loading>
-                    {formatDateWithLocale(user.createdAt, location.locale)}
+                    {formatDateWithLocale(user.createdAt, locationSettings.locale)}
                 </span>
             </TableCell>
             <TableCell className={styles.leftTableCell}>
