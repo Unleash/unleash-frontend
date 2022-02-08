@@ -15,7 +15,7 @@ import {
 import { IProjectViewParams } from '../../../../../interfaces/params';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from '../../../../providers/AccessProvider/permissions';
-import ProjectRoleSelect from '../../ProjectRoleSelect/ProjectRoleSelect';
+import { ProjectRoleSelect } from '../../ProjectRoleSelect/ProjectRoleSelect';
 import { useStyles } from '../ProjectAccessListItem/ProjectAccessListItem.styles';
 
 interface IProps {

@@ -18,7 +18,7 @@ interface IProjectRoleSelect {
     value: any;
 }
 
-const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
+export const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
     roles,
     onChange,
     labelId,
@@ -72,5 +72,3 @@ const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
         </FormControl>
     );
 };
-
-export default ProjectRoleSelect;

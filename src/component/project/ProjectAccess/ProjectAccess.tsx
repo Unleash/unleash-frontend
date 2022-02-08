@@ -28,7 +28,7 @@ import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectAp
 import HeaderTitle from '../../common/HeaderTitle';
 import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 
-const ProjectAccess = () => {
+export const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
     const styles = useStyles();
     const [error, setError] = useState();
@@ -111,8 +111,6 @@ const ProjectAccess = () => {
         setError(undefined);
     };
 
-    if (!access) return null;
-
     return (
         <PageContent
             headerContent={<HeaderTitle title="Project Roles"></HeaderTitle>}
@@ -170,5 +168,3 @@ const ProjectAccess = () => {
         </PageContent>
     );
 };
-
-export default ProjectAccess;
