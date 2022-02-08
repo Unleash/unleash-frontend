@@ -15,7 +15,7 @@ import { useStyles } from './Header.styles';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useCommonStyles } from '../../../common.styles';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
 import { getRoutes } from '../routes';
@@ -27,7 +27,7 @@ const Header = () => {
     const [anchorEl, setAnchorEl] = useState();
     const [anchorElAdvanced, setAnchorElAdvanced] = useState();
     const [admin, setAdmin] = useState(false);
-    const { permissions } = useUser();
+    const { permissions } = useAuth().auth ?? {};
     const commonStyles = useCommonStyles();
     const { uiConfig } = useUiConfig();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -39,7 +39,7 @@ const Header = () => {
     const handleCloseAdvanced = () => setAnchorElAdvanced(null);
 
     useEffect(() => {
-        const admin = permissions.find(
+        const admin = permissions?.find(
             (element: IPermission) => element.permission === ADMIN
         );
 

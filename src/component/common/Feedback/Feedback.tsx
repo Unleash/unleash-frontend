@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { Button, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
 import CloseIcon from '@material-ui/icons/Close';
-
 import { ReactComponent as Logo } from '../../../assets/icons/logo-plain.svg';
 import { useCommonStyles } from '../../../common.styles';
 import { useStyles } from './Feedback.styles';
@@ -10,7 +9,7 @@ import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
 import { formatApiPath } from '../../../utils/format-path';
 import UIContext from '../../../contexts/UIContext';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import { PNPS_FEEDBACK_ID, showPnpsFeedback } from '../util';
 
 interface IFeedbackProps {
@@ -19,7 +18,7 @@ interface IFeedbackProps {
 
 const Feedback = ({ openUrl }: IFeedbackProps) => {
     const { showFeedback, setShowFeedback } = useContext(UIContext);
-    const { refetch, feedback } = useUser();
+    const { auth, refetchAuth } = useAuth();
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
     const styles = useStyles();
     const commonStyles = useCommonStyles();
@@ -37,7 +36,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
                 },
                 body: JSON.stringify({ feedbackId }),
             });
-            await refetch();
+            await refetchAuth();
         } catch (err) {
             console.warn(err);
             setShowFeedback(false);
@@ -65,7 +64,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
                 },
                 body: JSON.stringify({ feedbackId, neverShow: true }),
             });
-            await refetch();
+            await refetchAuth();
         } catch (err) {
             console.warn(err);
             setShowFeedback(false);
@@ -76,7 +75,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
         }, 100);
     };
 
-    if (!showPnpsFeedback(feedback)) {
+    if (!showPnpsFeedback(auth?.feedback)) {
         return null;
     }
 

@@ -1,16 +1,20 @@
-import useUser from '../../../hooks/api/getters/useUser/useUser';
 import UserProfile from './UserProfile';
 import { useLocationSettings } from '../../../hooks/useLocationSettings';
+import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 
 const UserProfileContainer = () => {
-    const user = useUser();
     const { locationSettings, setLocationSettings } = useLocationSettings();
+    const { auth } = useAuth();
+
+    if (!auth?.profile) {
+        return null;
+    }
 
     return (
         <UserProfile
             locationSettings={locationSettings}
             setLocationSettings={setLocationSettings}
-            profile={user.user}
+            profile={auth.profile}
         />
     );
 };

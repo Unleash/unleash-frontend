@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
-
 import styles from './SimpleAuth.module.scss';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
+import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
+import { useHistory } from "react-router-dom";
+import { useAuthApi } from "../../../hooks/api/actions/useAuthApi/useAuthApi";
 
-const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
+const SimpleAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
-    const { refetch } = useUser();
+    const { refetchAuth } = useAuth();
+    const { emailAuth } = useAuthApi();
+    const history = useHistory();
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        const user = { email };
-        const path = evt.target.action;
 
-        insecureLogin(path, user).then(() => {
-            refetch();
+        emailAuth(authDetails.path, email).then(() => {
+            refetchAuth();
             history.push(`/`);
         });
     };
@@ -26,7 +27,7 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} action={authDetails.path}>
+        <form onSubmit={handleSubmit}>
             <div className={styles.container}>
                 <p>{authDetails.message}</p>
                 <p>
@@ -71,8 +72,6 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
 
 SimpleAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    insecureLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default SimpleAuth;

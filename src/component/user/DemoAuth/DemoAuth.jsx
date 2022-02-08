@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
-
+import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import styles from './DemoAuth.module.scss';
-
 import { ReactComponent as Logo } from '../../../assets/img/logo.svg';
 import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from '../../../testIds';
+import { useHistory } from 'react-router-dom';
+import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 
-const DemoAuth = ({ demoLogin, history, authDetails }) => {
+const DemoAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
-
-    const { refetch } = useUser();
+    const history = useHistory();
+    const { refetchAuth } = useAuth();
+    const { emailAuth } = useAuthApi();
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        const user = { email };
-        const path = evt.target.action;
 
-        demoLogin(path, user).then(() => {
-            refetch();
+        emailAuth(authDetails.path, email).then(() => {
+            refetchAuth();
             history.push(`/`);
         });
     };
@@ -30,7 +29,7 @@ const DemoAuth = ({ demoLogin, history, authDetails }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} action={authDetails.path}>
+        <form onSubmit={handleSubmit}>
             <Logo className={styles.logo} />
             <div className={styles.container}>
                 <h2>Access the Unleash demo instance</h2>
@@ -86,8 +85,6 @@ const DemoAuth = ({ demoLogin, history, authDetails }) => {
 
 DemoAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    demoLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 export default DemoAuth;

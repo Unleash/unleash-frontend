@@ -1,9 +1,9 @@
 export interface IAuthStatus {
-    authDetails: IAuthDetails;
-    showDialog: boolean;
+    authDetails?: IAuthDetails;
     profile?: IUser;
     permissions: IPermission[];
     splash: ISplash;
+    feedback: IUserFeedback[]
 }
 
 export interface ISplash {
@@ -12,14 +12,15 @@ export interface ISplash {
 
 export interface IPermission {
     permission: string;
-    project: string;
-    displayName: string;
+    project?: string;
+    environment?: string;
 }
 
-interface IAuthDetails {
+export interface IAuthDetails {
     type: string;
     path: string;
     message: string;
+    defaultHidden: boolean;
     options: IAuthOptions[];
 }
 
@@ -27,6 +28,13 @@ export interface IAuthOptions {
     type: string;
     message: string;
     path: string;
+}
+
+export interface IUserResponse {
+    user: IUser;
+    feedback: IUserFeedback[];
+    permissions: IPermission[];
+    splash: ISplash;
 }
 
 export interface IUser {
@@ -41,6 +49,13 @@ export interface IUser {
     rootRole: number;
     seenAt: string | null;
     username?: string;
+}
+
+export interface IUserFeedback {
+    neverShow: boolean;
+    feedbackId: string;
+    given?: string;
+    userId: number;
 }
 
 export interface IUserPayload {

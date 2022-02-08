@@ -1,31 +1,26 @@
-import { FC } from 'react';
-
+import { ReactNode } from "react";
 import AccessContext from '../../../contexts/AccessContext';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { ADMIN } from './permissions';
+import { useAuth } from "../../../hooks/api/getters/useAuth/useAuth";
+import { IPermission } from '../../../interfaces/user';
 
-// TODO: Type up redux store
-interface IAccessProvider {
-    store: any;
+interface IAccessProviderProps {
+    children: ReactNode
+    permissions?: IPermission[]
 }
 
-interface IPermission {
-    permission: string;
-    project?: string | null;
-    environment: string | null;
-}
+const AccessProvider = (props: IAccessProviderProps) => {
+    const { auth } = useAuth()
+    const permissions = props.permissions ?? auth?.permissions ?? []
 
-const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
-    const { permissions } = useUser();
     const isAdminHigherOrder = () => {
         let called = false;
         let result = false;
 
         return () => {
             if (called) return result;
-            const permissions = store.getState().user.get('permissions') || [];
             result = permissions.some(
-                (p: IPermission) => p.permission === ADMIN
+                (p) => p.permission === ADMIN
             );
 
             if (permissions.length > 0) {
@@ -41,7 +36,7 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
         project: string,
         environment?: string
     ) => {
-        const result = permissions.some((p: IPermission) => {
+        const result = permissions.some((p) => {
             if (p.permission === ADMIN) {
                 return true;
             }
@@ -80,7 +75,7 @@ const AccessProvider: FC<IAccessProvider> = ({ store, children }) => {
 
     return (
         <AccessContext.Provider value={context}>
-            {children}
+            {props.children}
         </AccessContext.Provider>
     );
 };
