@@ -1,5 +1,4 @@
 import {
-    IconButton,
     List,
     ListItem,
     ListItemAvatar,
@@ -20,6 +19,7 @@ import useAddonsApi from '../../../../hooks/api/actions/useAddonsApi/useAddonsAp
 import { ReactElement, useContext } from 'react';
 import AccessContext from '../../../../contexts/AccessContext';
 import { IAddon } from '../../../../interfaces/addons';
+import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
 
 interface IConfigureAddonsProps {
     getAddonIcon: (name: string) => ReactElement;
@@ -90,36 +90,24 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 secondary={addon.description}
             />
             <ListItemSecondaryAction>
-                <ConditionallyRender
-                    condition={hasAccess(UPDATE_ADDON)}
-                    show={
-                        <IconButton
-                            size="small"
-                            title={
-                                addon.enabled ? 'Disable addon' : 'Enable addon'
-                            }
-                            onClick={() => toggleAddon(addon)}
-                        >
-                            <ConditionallyRender
-                                condition={addon.enabled}
-                                show={<Visibility />}
-                                elseShow={<VisibilityOff />}
-                            />
-                        </IconButton>
-                    }
-                />
-                <ConditionallyRender
-                    condition={hasAccess(DELETE_ADDON)}
-                    show={
-                        <IconButton
-                            size="small"
-                            title="Remove addon"
-                            onClick={() => onRemoveAddon(addon)}
-                        >
-                            <Delete />
-                        </IconButton>
-                    }
-                />
+                <PermissionIconButton
+                    permission={UPDATE_ADDON}
+                    tooltip={addon.enabled ? 'Disable addon' : 'Enable addon'}
+                    onClick={() => toggleAddon(addon)}
+                >
+                    <ConditionallyRender
+                        condition={addon.enabled}
+                        show={<Visibility />}
+                        elseShow={<VisibilityOff />}
+                    />
+                </PermissionIconButton>
+                <PermissionIconButton
+                    permission={DELETE_ADDON}
+                    tooltip={'Remove Addon'}
+                    onClick={() => onRemoveAddon(addon)}
+                >
+                    <Delete />
+                </PermissionIconButton>
             </ListItemSecondaryAction>
         </ListItem>
     );
