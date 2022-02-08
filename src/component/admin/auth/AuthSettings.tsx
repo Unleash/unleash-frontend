@@ -5,10 +5,10 @@ import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
-import { OidcAuth } from "./OidcAuth/OidcAuth";
-import { SamlAuth } from "./SamlAuth/SamlAuth";
-import { PasswordAuth } from "./PasswordAuth/PasswordAuth";
-import { GoogleAuth } from "./GoogleAuth/GoogleAuth";
+import { OidcAuth } from './OidcAuth/OidcAuth';
+import { SamlAuth } from './SamlAuth/SamlAuth';
+import { PasswordAuth } from './PasswordAuth/PasswordAuth';
+import { GoogleAuth } from './GoogleAuth/GoogleAuth';
 
 export const AuthSettings = () => {
     const { authenticationType } = useUiConfig().uiConfig;

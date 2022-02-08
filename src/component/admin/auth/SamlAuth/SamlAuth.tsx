@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -12,10 +12,10 @@ import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import { AutoCreateForm } from '../AutoCreateForm/AutoCreateForm';
 import useToast from '../../../../hooks/useToast';
-import useUiConfig from "../../../../hooks/api/getters/useUiConfig/useUiConfig";
-import useAuthSettings from "../../../../hooks/api/getters/useAuthSettings/useAuthSettings";
-import useAuthSettingsApi from "../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi";
-import { formatUnknownError } from "../../../../utils/format-unknown-error";
+import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import useAuthSettingsApi from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import { formatUnknownError } from '../../../../utils/format-unknown-error';
 
 const initialState = {
     enabled: false,
@@ -266,4 +266,4 @@ export const SamlAuth = () => {
             </form>
         </PageContent>
     );
-}
+};

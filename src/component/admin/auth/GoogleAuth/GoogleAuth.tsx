@@ -14,7 +14,7 @@ import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
 import useAuthSettingsApi from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
 import useToast from '../../../../hooks/useToast';
-import { formatUnknownError } from "../../../../utils/format-unknown-error";
+import { formatUnknownError } from '../../../../utils/format-unknown-error';
 
 const initialState = {
     enabled: false,

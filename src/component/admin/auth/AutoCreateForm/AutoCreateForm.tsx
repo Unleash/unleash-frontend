@@ -1,13 +1,13 @@
 import React, { ChangeEvent, Fragment } from 'react';
 import {
     FormControl,
+    FormControlLabel,
     Grid,
+    InputLabel,
     MenuItem,
+    Select,
     Switch,
     TextField,
-    Select,
-    InputLabel,
-    FormControlLabel,
 } from '@material-ui/core';
 
 interface Props {
@@ -116,4 +116,4 @@ export const AutoCreateForm = ({
             </Grid>
         </Fragment>
     );
-}
+};
