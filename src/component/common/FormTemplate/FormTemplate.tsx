@@ -24,7 +24,6 @@ const FormTemplate: React.FC<ICreateProps> = ({
     loading,
     formatApiCode,
 }) => {
-    // @ts-expect-error
     const { setToastData } = useToast();
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);

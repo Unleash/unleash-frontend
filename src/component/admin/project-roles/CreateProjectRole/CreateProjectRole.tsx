@@ -9,7 +9,6 @@ import PermissionButton from '../../../common/PermissionButton/PermissionButton'
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
 
 const CreateProjectRole = () => {
-    // @ts-expect-error
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();

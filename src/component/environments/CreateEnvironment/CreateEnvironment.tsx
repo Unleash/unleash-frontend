@@ -16,7 +16,6 @@ import { ADMIN } from '../../providers/AccessProvider/permissions';
 import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 const CreateEnvironment = () => {
-    // @ts-expect-error
     const { setToastApiError, setToastData } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
