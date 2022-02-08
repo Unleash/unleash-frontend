@@ -22,10 +22,10 @@ import AccessContext from '../../../../contexts/AccessContext';
 import { IAddon } from '../../../../interfaces/addons';
 
 interface IConfigureAddonsProps {
-    AddonIcon: (name: string) => ReactElement;
+    getAddonIcon: (name: string) => ReactElement;
 }
 
-const ConfiguredAddons = ({ AddonIcon }: IConfigureAddonsProps) => {
+const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
     const { refetchAddons, addons } = useAddons();
     const { updateAddon, removeAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
@@ -65,7 +65,7 @@ const ConfiguredAddons = ({ AddonIcon }: IConfigureAddonsProps) => {
 
     const renderAddon = (addon: IAddon) => (
         <ListItem key={addon.id}>
-            <ListItemAvatar>{AddonIcon(addon.provider)}</ListItemAvatar>
+            <ListItemAvatar>{getAddonIcon(addon.provider)}</ListItemAvatar>
             <ListItemText
                 primary={
                     <span>

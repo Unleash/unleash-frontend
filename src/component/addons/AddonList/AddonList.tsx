@@ -19,7 +19,7 @@ const style = {
     float: 'left',
 };
 
-const AddonIcon = (name: string): ReactElement => {
+const getAddonIcon = (name: string): ReactElement => {
     switch (name) {
         case 'slack':
             return (
@@ -84,11 +84,11 @@ const AddonList = () => {
         <>
             <ConditionallyRender
                 condition={addons.length > 0}
-                show={<ConfiguredAddons AddonIcon={AddonIcon} />}
+                show={<ConfiguredAddons getAddonIcon={getAddonIcon} />}
             />
 
             <br />
-            <AvailableAddons providers={providers} AddonIcon={AddonIcon} />
+            <AvailableAddons providers={providers} getAddonIcon={getAddonIcon} />
         </>
     );
 };

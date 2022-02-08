@@ -23,17 +23,17 @@ interface IProvider {
 }
 
 interface IAvailableAddonsProps {
-    AddonIcon: (name: string) => ReactElement;
+    getAddonIcon: (name: string) => ReactElement;
     providers: IProvider[];
 }
 
-const AvailableAddons = ({ providers, AddonIcon }: IAvailableAddonsProps) => {
+const AvailableAddons = ({ providers, getAddonIcon }: IAvailableAddonsProps) => {
     const history = useHistory();
     const { hasAccess } = useContext(AccessContext);
 
     const renderProvider = (provider: IProvider) => (
         <ListItem key={provider.name}>
-            <ListItemAvatar>{AddonIcon(provider.name)}</ListItemAvatar>
+            <ListItemAvatar>{getAddonIcon(provider.name)}</ListItemAvatar>
             <ListItemText
                 primary={provider.displayName}
                 secondary={provider.description}
