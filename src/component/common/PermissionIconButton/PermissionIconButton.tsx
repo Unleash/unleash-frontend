@@ -16,6 +16,7 @@ interface IPermissionIconButtonProps
     onClick?: (e: any) => void;
     projectId?: string;
     environmentId?: string;
+    edge?: string;
 }
 
 const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({

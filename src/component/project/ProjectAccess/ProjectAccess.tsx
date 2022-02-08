@@ -228,7 +228,7 @@ const ProjectAccess = () => {
                 open={showDelDialogue}
                 onClick={removeAccess(user)}
                 onClose={() => {
-                    setUser({});
+                    setUser(null);
                     setShowDelDialogue(false);
                 }}
                 title="Really remove user from this project"
