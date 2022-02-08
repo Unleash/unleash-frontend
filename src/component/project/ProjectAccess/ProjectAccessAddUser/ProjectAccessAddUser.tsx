@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
     TextField,
     CircularProgress,
@@ -17,6 +17,7 @@ import useProjectAccess, {
     IProjectAccessUsers,
 } from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import { IProjectRole } from '../../../../interfaces/role';
+import ConditionallyRender from '../../../common/ConditionallyRender';
 
 interface IProjectAccessAddUserProps {
     roles: IProjectRole[];
@@ -24,11 +25,10 @@ interface IProjectAccessAddUserProps {
 
 const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<IProjectAccessUsers | undefined>();
     const [role, setRole] = useState<IProjectRole>({
         id: -1,
         name: '',
-        project: '',
         description: '',
         type: '',
     });
@@ -86,25 +86,45 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     };
 
     const handleSelectUser = (
-        evt: Event,
-        selectedUser: IProjectAccessUsers
+        evt: ChangeEvent<{}>,
+        selectedUser: string | IProjectAccessUsers | null
     ) => {
         setOptions([]);
+        if (typeof selectedUser === 'string' || selectedUser === null) {
+            return;
+        }
+
         if (selectedUser?.id) {
             setUser(selectedUser);
         }
     };
 
-    const handleRoleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const handleRoleChange = (
+        evt: React.ChangeEvent<{
+            name?: string | undefined;
+            value: unknown;
+        }>
+    ) => {
         const roleId = Number(evt.target.value);
         const role = roles.find(role => role.id === roleId);
-        setRole(role);
+        if (role) {
+            setRole(role);
+        }
     };
 
     const handleSubmit = async (evt: React.SyntheticEvent) => {
         evt.preventDefault();
+        if (!role || !user) {
+            setToastData({
+                type: 'error',
+                title: 'Invalid selection',
+                text: `The selected user or role does not exist`,
+            });
+            return;
+        }
+
         try {
-            await addUserToRole(id, role?.id, user?.id);
+            await addUserToRole(id, role.id, user.id);
             refetchProjectAccess();
             setUser(undefined);
             setOptions([]);
@@ -145,7 +165,7 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
                         style={{ width: 300 }}
                         noOptionsText="No users found."
                         onChange={handleSelectUser}
-                        onBlur={e => handleBlur()}
+                        onBlur={() => handleBlur()}
                         value={user || ''}
                         freeSolo
                         getOptionSelected={() => true}
@@ -176,12 +196,16 @@ const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
                                     ),
                                     endAdornment: (
                                         <React.Fragment>
-                                            {loading ? (
-                                                <CircularProgress
-                                                    color="inherit"
-                                                    size={20}
-                                                />
-                                            ) : null}
+                                            <ConditionallyRender
+                                                condition={loading}
+                                                show={
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}
+                                                    />
+                                                }
+                                            />
+
                                             {params.InputProps.endAdornment}
                                         </React.Fragment>
                                     ),

@@ -9,7 +9,7 @@ interface IProjectRoleSelect {
     labelId: string;
     id: string;
     placeholder?: string;
-    onChange: (evt: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+    onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
     value: any;
 }
 

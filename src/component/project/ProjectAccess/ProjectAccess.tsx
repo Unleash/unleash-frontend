@@ -199,7 +199,7 @@ const ProjectAccess = () => {
                                         projectId={projectId}
                                         className={styles.iconButton}
                                         edge="end"
-                                        ariaLabel="delete"
+                                        aria-label="delete"
                                         title="Remove access"
                                         onClick={() => {
                                             setUser(user);
