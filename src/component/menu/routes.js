@@ -10,7 +10,6 @@ import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
 import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
 import AddonList from '../addons/AddonList/AddonList';
-import AddonsCreate from '../../page/addons/create';
 import AddonsEdit from '../../page/addons/edit';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
@@ -45,6 +44,7 @@ import CreateFeature from '../feature/CreateFeature/CreateFeature';
 import EditFeature from '../feature/EditFeature/EditFeature';
 import ContextList from '../context/ContextList/ContextList';
 import RedirectFeatureView from '../feature/RedirectFeatureView/RedirectFeatureView';
+import { CreateAddon } from '../addons/CreateAddon/CreateAddon';
 
 export const routes = [
     // Project
@@ -322,10 +322,10 @@ export const routes = [
 
     // Addons
     {
-        path: '/addons/create/:provider',
+        path: '/addons/create/:providerId',
         parent: '/addons',
         title: 'Create',
-        component: AddonsCreate,
+        component: CreateAddon,
         type: 'protected',
         layout: 'main',
         menu: {},
