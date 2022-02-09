@@ -1,7 +1,6 @@
 import api from './api';
 import { dispatchError } from '../util';
 import { receiveConfig } from '../ui-config/actions';
-import { receiveContext } from '../context/actions';
 import { receiveProjects } from '../project/actions';
 import { receiveTagTypes } from '../tag-type/actions';
 import { receiveStrategies } from '../strategy/actions';
@@ -16,7 +15,6 @@ export function fetchUiBootstrap() {
             .then(json => {
                 dispatch(receiveProjects(json.projects));
                 dispatch(receiveConfig(json.uiConfig));
-                dispatch(receiveContext(json.context));
                 dispatch(receiveTagTypes(json));
                 dispatch(receiveStrategies(json.strategies));
             })
