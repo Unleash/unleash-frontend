@@ -63,7 +63,3 @@ export interface IUserPayload {
     email: string;
     id?: string;
 }
-
-export interface IAddedUser extends IUser {
-    emailSent?: boolean;
-}
