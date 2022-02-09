@@ -74,7 +74,6 @@ const CreateStrategy = ({ editMode = false }) => {
             history.push(`/strategies/view/${name}`);
         } else {
             try {
-                console.log({ name, description, params });
                 await createStrategy({ name, description, parameters: params });
                 history.push(`/strategies`);
             } catch (e: any) {

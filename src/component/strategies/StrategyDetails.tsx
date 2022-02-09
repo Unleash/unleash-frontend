@@ -10,13 +10,22 @@ import PageContent from '../common/PageContent/PageContent';
 import AccessContext from '../../contexts/AccessContext';
 import useStrategies from '../../hooks/api/getters/useStrategies/useStrategies';
 import { useParams } from 'react-router-dom';
+import { useFeatures } from '../../hooks/api/getters/useFeatures/useFeatures';
 
 const StrategyDetails = props => {
     const { hasAccess } = useContext(AccessContext);
-    const { strategies, refetchStrategies } = useStrategies();
     const { strategyName } = useParams<{ strategyName: string }>();
+    const { strategies, refetchStrategies } = useStrategies();
+    const { features, refetchFeatures } = useFeatures();
+    const toggles = features.filter(toggle => {
+        return toggle?.strategies.findIndex(s => s.name === strategyName) > -1;
+    });
+    console.log(toggles);
+
     const strategy = strategies.find(n => n.name === strategyName);
-    
+
+    console.log(strategyName)
+
     useEffect(() => {
         if (!strategy) {
             refetchStrategies();
@@ -24,8 +33,8 @@ const StrategyDetails = props => {
         if (!props.applications || props.applications.length === 0) {
             props.fetchApplications();
         }
-        if (!props.toggles || props.toggles.length === 0) {
-            props.fetchFeatureToggles();
+        if (toggles || toggles.length === 0) {
+            refetchFeatures();
         }
         //eslint-disable-next-line
     }, []);
