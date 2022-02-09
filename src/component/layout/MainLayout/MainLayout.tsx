@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import classnames from 'classnames';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import styles from '../../styles.module.scss';
 import ErrorContainer from '../../error/error-container';
@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         padding: '3.25rem 0',
         position: 'relative',
-        // @ts-expect-error
         [theme.breakpoints.down('sm')]: {
             padding: '3.25rem 0.75rem',
         },
