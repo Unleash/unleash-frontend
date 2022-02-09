@@ -1,5 +1,5 @@
 import { ADMIN } from '../component/providers/AccessProvider/permissions';
-import IAuthStatus, { IPermission } from '../interfaces/user';
+import { IAuthStatus, IPermission } from '../interfaces/user';
 
 type objectIdx = {
     [key: string]: string;

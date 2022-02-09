@@ -67,5 +67,3 @@ export interface IUserPayload {
 export interface IAddedUser extends IUser {
     emailSent?: boolean;
 }
-
-export default IAuthStatus;
