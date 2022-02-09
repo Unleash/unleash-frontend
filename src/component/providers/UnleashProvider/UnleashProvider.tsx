@@ -29,7 +29,8 @@ export const UnleashProvider: FC<any> = ({ children }) => {
             unleash.start();
             setClient(unleash);
         }
-    }, [JSON.stringify(uiConfig.unleashConfig)]);
+        // eslint-disable-next-line
+    }, [JSON.stringify(uiConfig?.unleashConfig)]);
 
     const isEnabled = (toggleName: string) => {
         if (!client) return false;
