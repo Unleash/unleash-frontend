@@ -24,6 +24,7 @@ import ListPlaceholder from '../../common/ListPlaceholder/ListPlaceholder';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
 import { NAVIGATE_TO_CREATE_FEATURE } from '../../../testIds';
 import { resolveFilteredProjectId } from '../../../hooks/useFeaturesFilter';
+import UnleashContext from '../../../contexts/UnleashContext';
 
 const FeatureToggleList = ({
     features,
@@ -36,6 +37,7 @@ const FeatureToggleList = ({
     sort,
     setSort,
 }) => {
+    const { isEnabled } = useContext(UnleashContext);
     const { hasAccess } = useContext(AccessContext);
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:800px)');
@@ -117,6 +119,11 @@ const FeatureToggleList = ({
                     show={<Link to="/archive">Archive</Link>}
                 />
             </div>
+
+            <ConditionallyRender
+                condition={isEnabled('un-fe-poc')}
+                show={<div>Hello world</div>}
+            />
 
             <PageContent
                 headerContent={

@@ -21,6 +21,7 @@ import { writeWarning } from './security-logger';
 import AccessProvider from './component/providers/AccessProvider/AccessProvider';
 import { getBasePath } from './utils/format-path';
 import UIProvider from './component/providers/UIProvider/UIProvider';
+import { UnleashProvider } from './component/providers/UnleashProvider/UnleashProvider';
 
 let composeEnhancers;
 
@@ -42,20 +43,22 @@ const unleashStore = createStore(
 ReactDOM.render(
     <Provider store={unleashStore}>
         <DndProvider backend={HTML5Backend}>
-            <UIProvider>
-                <AccessProvider store={unleashStore}>
-                    <Router basename={`${getBasePath()}`}>
-                        <ThemeProvider theme={mainTheme}>
-                            <StylesProvider injectFirst>
-                                <CssBaseline />
-                                <ScrollToTop>
-                                    <Route path="/" component={App} />
-                                </ScrollToTop>
-                            </StylesProvider>
-                        </ThemeProvider>
-                    </Router>
-                </AccessProvider>
-            </UIProvider>
+            <UnleashProvider>
+                <UIProvider>
+                    <AccessProvider store={unleashStore}>
+                        <Router basename={`${getBasePath()}`}>
+                            <ThemeProvider theme={mainTheme}>
+                                <StylesProvider injectFirst>
+                                    <CssBaseline />
+                                    <ScrollToTop>
+                                        <Route path="/" component={App} />
+                                    </ScrollToTop>
+                                </StylesProvider>
+                            </ThemeProvider>
+                        </Router>
+                    </AccessProvider>
+                </UIProvider>
+            </UnleashProvider>
         </DndProvider>
     </Provider>,
     document.getElementById('app')
