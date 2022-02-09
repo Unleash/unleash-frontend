@@ -9,6 +9,7 @@ interface IAccessProviderProps {
     permissions: IPermission[];
 }
 
+// TODO(olav): Mock useAuth instead of using props.permissions in tests.
 const AccessProvider = (props: IAccessProviderProps): ReactElement => {
     const { auth } = useAuth();
     const permissions = props.permissions ?? auth?.permissions;
