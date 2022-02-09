@@ -9,14 +9,10 @@ import { useStyles } from './Feedback.styles';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
 import { formatApiPath } from '../../../utils/format-path';
-import { Action, Dispatch } from 'redux';
 import UIContext from '../../../contexts/UIContext';
 import useUser from '../../../hooks/api/getters/useUser/useUser';
 
 interface IFeedbackProps {
-    show?: boolean;
-    hideFeedback: () => Dispatch<Action>;
-    fetchUser: () => void;
     feedbackId: string;
     openUrl: string;
 }
