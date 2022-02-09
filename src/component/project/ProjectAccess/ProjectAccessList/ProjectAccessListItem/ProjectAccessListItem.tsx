@@ -9,7 +9,7 @@ import {
 import { Delete } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 import {
-    IProjectAccessUsers,
+    IProjectAccessUser,
     IProjectAccessOutput,
 } from '../../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import { IProjectViewParams } from '../../../../../interfaces/params';
@@ -18,18 +18,18 @@ import { UPDATE_PROJECT } from '../../../../providers/AccessProvider/permissions
 import { ProjectRoleSelect } from '../../ProjectRoleSelect/ProjectRoleSelect';
 import { useStyles } from '../ProjectAccessListItem/ProjectAccessListItem.styles';
 
-interface IProps {
-    user: IProjectAccessUsers;
+interface IProjectAccessListItemProps {
+    user: IProjectAccessUser;
     handleRoleChange: (
         userId: number,
         currRoleId: number
     ) => (
         evt: React.ChangeEvent<{
-            name?: string | undefined;
+            name?: string;
             value: unknown;
         }>
     ) => void;
-    handleRemoveAccess: (user: IProjectAccessUsers) => void;
+    handleRemoveAccess: (user: IProjectAccessUser) => void;
     access: IProjectAccessOutput;
 }
 
@@ -38,7 +38,7 @@ export const ProjectAccessListItem = ({
     access,
     handleRoleChange,
     handleRemoveAccess,
-}: IProps) => {
+}: IProjectAccessListItemProps) => {
     const { id: projectId } = useParams<IProjectViewParams>();
     const styles = useStyles();
 

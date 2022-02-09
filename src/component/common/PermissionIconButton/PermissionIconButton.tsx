@@ -2,7 +2,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
-interface IProps
+interface IPermissionIconButtonProps
     extends React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLButtonElement>,
         HTMLButtonElement
@@ -18,7 +18,7 @@ interface IProps
     title?: string;
 }
 
-const PermissionIconButton: React.FC<IProps> = ({
+const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
     permission,
     Icon,
     tooltip,

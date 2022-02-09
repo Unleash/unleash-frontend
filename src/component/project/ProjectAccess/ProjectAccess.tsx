@@ -1,13 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState } from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 import { ProjectAccessAddUser } from './ProjectAccessAddUser/ProjectAccessAddUser';
@@ -22,7 +14,7 @@ import PaginateUI from '../../common/PaginateUI/PaginateUI';
 import useToast from '../../../hooks/useToast';
 import ConfirmDialogue from '../../common/Dialogue';
 import useProjectAccess, {
-    IProjectAccessUsers,
+    IProjectAccessUser,
 } from '../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
 import HeaderTitle from '../../common/HeaderTitle';
@@ -31,7 +23,6 @@ import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 export const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
     const styles = useStyles();
-    const [error, setError] = useState();
     const { access, refetchProjectAccess } = useProjectAccess(projectId);
     const { setToastData } = useToast();
     const { isOss } = useUiConfig();
@@ -39,7 +30,7 @@ export const ProjectAccess = () => {
         usePagination(access.users, 10);
     const { removeUserFromRole, addUserToRole } = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
-    const [user, setUser] = useState<IProjectAccessUsers | null>(null);
+    const [user, setUser] = useState<IProjectAccessUser | undefined>();
 
     if (isOss()) {
         return (
@@ -60,7 +51,7 @@ export const ProjectAccess = () => {
         (userId: number, currRoleId: number) =>
         async (
             evt: React.ChangeEvent<{
-                name?: string | undefined;
+                name?: string;
                 value: unknown;
             }>
         ) => {
@@ -82,12 +73,12 @@ export const ProjectAccess = () => {
             }
         };
 
-    const handleRemoveAccess = (user: IProjectAccessUsers) => {
+    const handleRemoveAccess = (user: IProjectAccessUser) => {
         setUser(user);
         setShowDelDialogue(true);
     };
 
-    const removeAccess = (user: IProjectAccessUsers | null) => async () => {
+    const removeAccess = (user: IProjectAccessUser | undefined) => async () => {
         if (!user) return;
         const { id, roleId } = user;
 
@@ -107,38 +98,13 @@ export const ProjectAccess = () => {
         setShowDelDialogue(false);
     };
 
-    const handleCloseError = () => {
-        setError(undefined);
-    };
-
     return (
         <PageContent
             headerContent={<HeaderTitle title="Project Roles"></HeaderTitle>}
             className={styles.pageContent}
         >
             <ProjectAccessAddUser roles={access?.roles} />
-            <Dialog
-                open={Boolean(error)}
-                onClose={handleCloseError}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{'Error'}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {error}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={handleCloseError}
-                        color="secondary"
-                        autoFocus
-                    >
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
+
             <div className={styles.divider}></div>
             <ProjectAccessList
                 handleRoleChange={handleRoleChange}
@@ -160,7 +126,7 @@ export const ProjectAccess = () => {
                 open={showDelDialogue}
                 onClick={removeAccess(user)}
                 onClose={() => {
-                    setUser(null);
+                    setUser(undefined);
                     setShowDelDialogue(false);
                 }}
                 title="Really remove user from this project"

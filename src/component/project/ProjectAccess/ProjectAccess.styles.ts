@@ -11,13 +11,11 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: '#efefef',
         marginTop: '2rem',
     },
-
     inputLabel: { backgroundColor: '#fff' },
     roleName: {
         fontWeight: 'bold',
         padding: '5px 0px',
     },
-
     menuItem: {
         width: '340px',
         whiteSpace: 'normal',

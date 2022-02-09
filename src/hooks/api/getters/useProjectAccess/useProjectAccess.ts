@@ -4,7 +4,7 @@ import { formatApiPath } from '../../../../utils/format-path';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import { IProjectRole } from '../../../../interfaces/role';
 
-export interface IProjectAccessUsers {
+export interface IProjectAccessUser {
     id: number;
     imageUrl: string;
     isAPI: boolean;
@@ -15,7 +15,7 @@ export interface IProjectAccessUsers {
 }
 
 export interface IProjectAccessOutput {
-    users: IProjectAccessUsers[];
+    users: IProjectAccessUser[];
     roles: IProjectRole[];
 }
 
@@ -23,8 +23,8 @@ const useProjectAccess = (
     projectId: string,
     options: SWRConfiguration = {}
 ) => {
+    const path = formatApiPath(`api/admin/projects/${projectId}/users`);
     const fetcher = () => {
-        const path = formatApiPath(`api/admin/projects/${projectId}/users`);
         return fetch(path, {
             method: 'GET',
         })

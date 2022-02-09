@@ -14,24 +14,19 @@ import useProjectApi from '../../../../hooks/api/actions/useProjectApi/useProjec
 import { useParams } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import useProjectAccess, {
-    IProjectAccessUsers,
+    IProjectAccessUser,
 } from '../../../../hooks/api/getters/useProjectAccess/useProjectAccess';
 import { IProjectRole } from '../../../../interfaces/role';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 
-interface IProps {
+interface IProjectAccessAddUserProps {
     roles: IProjectRole[];
 }
 
-export const ProjectAccessAddUser = ({ roles }: IProps) => {
+export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
-    const [user, setUser] = useState<IProjectAccessUsers | undefined>();
-    const [role, setRole] = useState<IProjectRole>({
-        id: -1,
-        name: '',
-        description: '',
-        type: '',
-    });
+    const [user, setUser] = useState<IProjectAccessUser | undefined>();
+    const [role, setRole] = useState<IProjectRole | undefined>();
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const { setToastData } = useToast();
@@ -56,12 +51,12 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
             const userSearchResults = await result.json();
 
             const filteredUsers = userSearchResults.filter(
-                (selectedUser: IProjectAccessUsers) => {
+                (selectedUser: IProjectAccessUser) => {
                     const selected = access.users.find(
-                        (user: IProjectAccessUsers) =>
+                        (user: IProjectAccessUser) =>
                             user.id === selectedUser.id
                     );
-                    return selected ? false : true;
+                    return !selected;
                 }
             );
             setOptions(filteredUsers);
@@ -74,9 +69,6 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
     const handleQueryUpdate = (evt: { target: { value: string } }) => {
         const q = evt.target.value;
         search(q);
-        if (options.length === 1) {
-            return;
-        }
     };
 
     const handleBlur = () => {
@@ -88,9 +80,10 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
 
     const handleSelectUser = (
         evt: ChangeEvent<{}>,
-        selectedUser: string | IProjectAccessUsers | null
+        selectedUser: string | IProjectAccessUser | null
     ) => {
         setOptions([]);
+
         if (typeof selectedUser === 'string' || selectedUser === null) {
             return;
         }
@@ -153,6 +146,14 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
         }
     };
 
+    const getOptionLabel = (option: IProjectAccessUser) => {
+        if (option) {
+            return `${option.name || '(Empty name)'} <${
+                option.email || option.username
+            }>`;
+        } else return '';
+    };
+
     return (
         <>
             <Alert severity="info" style={{ marginBottom: '20px' }}>
@@ -171,13 +172,7 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
                         freeSolo
                         getOptionSelected={() => true}
                         filterOptions={o => o}
-                        getOptionLabel={(option: IProjectAccessUsers) => {
-                            if (option) {
-                                return `${option.name || '(Empty name)'} <${
-                                    option.email || option.username
-                                }>`;
-                            } else return '';
-                        }}
+                        getOptionLabel={getOptionLabel}
                         options={options}
                         loading={loading}
                         renderInput={params => (
@@ -196,7 +191,7 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
-                                        <React.Fragment>
+                                        <>
                                             <ConditionallyRender
                                                 condition={loading}
                                                 show={
@@ -208,7 +203,7 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
                                             />
 
                                             {params.InputProps.endAdornment}
-                                        </React.Fragment>
+                                        </>
                                     ),
                                 }}
                             />
@@ -220,7 +215,7 @@ export const ProjectAccessAddUser = ({ roles }: IProps) => {
                         labelId="add-user-select-role-label"
                         id="add-user-select-role"
                         placeholder="Project role"
-                        value={role.id || -1}
+                        value={role?.id || -1}
                         onChange={handleRoleChange}
                         roles={roles}
                     />
