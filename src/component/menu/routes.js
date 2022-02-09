@@ -9,7 +9,7 @@ import { ArchiveListContainer } from '../archive/ArchiveListContainer';
 import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
 import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
-import AddonList from '../addons/AddonList/AddonList';
+import { AddonList } from '../addons/AddonList/AddonList';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
 import AdminInvoice from '../admin/invoice/InvoiceAdminPage';

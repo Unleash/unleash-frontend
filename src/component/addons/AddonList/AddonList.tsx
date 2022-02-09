@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import ConfiguredAddons from './ConfiguredAddons/ConfiguredAddons';
-import AvailableAddons from './AvailableAddons/AvailableAddons';
+import { ConfiguredAddons } from './ConfiguredAddons/ConfiguredAddons';
+import { AvailableAddons } from './AvailableAddons/AvailableAddons';
 import { Avatar } from '@material-ui/core';
 import { DeviceHub } from '@material-ui/icons';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
@@ -70,7 +70,7 @@ const getAddonIcon = (name: string): ReactElement => {
     }
 };
 
-const AddonList = () => {
+export const AddonList = () => {
     const { providers, addons } = useAddons();
 
     return (
@@ -88,5 +88,3 @@ const AddonList = () => {
         </>
     );
 };
-
-export default AddonList;

@@ -25,7 +25,7 @@ interface IAvailableAddonsProps {
     providers: IProvider[];
 }
 
-const AvailableAddons = ({
+export const AvailableAddons = ({
     providers,
     getAddonIcon,
 }: IAvailableAddonsProps) => {
@@ -61,5 +61,3 @@ const AvailableAddons = ({
         </PageContent>
     );
 };
-
-export default AvailableAddons;
