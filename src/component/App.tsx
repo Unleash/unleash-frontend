@@ -134,7 +134,6 @@ const App = ({ location, user, fetchUiBootstrap }: IAppProps) => {
                                         <Redirect to="/404" />
                                     </Switch>
                                     <Feedback
-                                        feedbackId="pnps"
                                         openUrl="http://feedback.unleash.run"
                                     />
                                 </LayoutPicker>
