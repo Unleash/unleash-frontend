@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import ConfiguredAddons from './ConfiguredAddons/ConfiguredAddons';
 import AvailableAddons from './AvailableAddons/AvailableAddons';
 import { Avatar } from '@material-ui/core';
@@ -71,14 +71,7 @@ const getAddonIcon = (name: string): ReactElement => {
 };
 
 const AddonList = () => {
-    const { addons, providers, refetchAddons } = useAddons();
-
-    useEffect(() => {
-        if (addons.length === 0) {
-            refetchAddons();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addons.length]);
+    const { providers, addons } = useAddons();
 
     return (
         <>
@@ -88,7 +81,10 @@ const AddonList = () => {
             />
 
             <br />
-            <AvailableAddons providers={providers} getAddonIcon={getAddonIcon} />
+            <AvailableAddons
+                providers={providers}
+                getAddonIcon={getAddonIcon}
+            />
         </>
     );
 };

@@ -41,6 +41,14 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
         parameters: {},
     });
 
+    const sortAddons = (addons: IAddon[]) => {
+        if (!addons) return [];
+
+        return addons.sort((addonA: IAddon, addonB: IAddon) => {
+            return addonA.id - addonB.id;
+        });
+    };
+
     const toggleAddon = async (addon: IAddon) => {
         try {
             await updateAddon({ ...addon, enabled: !addon.enabled });
@@ -126,10 +134,15 @@ const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
     );
     return (
         <PageContent headerContent="Configured addons">
-            <List>{addons.map((addon: IAddon) => renderAddon(addon))}</List>
+            <List>
+                {sortAddons(addons).map((addon: IAddon) => renderAddon(addon))}
+            </List>
             <Dialogue
                 open={showDelete}
-                onClick={() => onRemoveAddon(deletedAddon)}
+                onClick={() => {
+                    onRemoveAddon(deletedAddon);
+                    setShowDelete(false);
+                }}
                 onClose={() => {
                     setShowDelete(false);
                 }}

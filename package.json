@@ -121,5 +121,8 @@
       "no-useless-computed-key": "off",
       "import/no-anonymous-default-export": "off"
     }
+  },
+  "dependencies": {
+    "@types/lodash.clonedeep": "^4.5.6"
   }
 }

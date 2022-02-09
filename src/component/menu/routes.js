@@ -10,7 +10,6 @@ import Applications from '../../page/applications';
 import ApplicationView from '../../page/applications/view';
 import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
 import AddonList from '../addons/AddonList/AddonList';
-import AddonsEdit from '../../page/addons/edit';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
 import AdminInvoice from '../admin/invoice/InvoiceAdminPage';
@@ -45,6 +44,7 @@ import EditFeature from '../feature/EditFeature/EditFeature';
 import ContextList from '../context/ContextList/ContextList';
 import RedirectFeatureView from '../feature/RedirectFeatureView/RedirectFeatureView';
 import { CreateAddon } from '../addons/CreateAddon/CreateAddon';
+import { EditAddon } from '../addons/EditAddon/EditAddon';
 
 export const routes = [
     // Project
@@ -331,10 +331,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/addons/edit/:id',
+        path: '/addons/edit/:addonId',
         parent: '/addons',
         title: 'Edit',
-        component: AddonsEdit,
+        component: EditAddon,
         type: 'protected',
         layout: 'main',
         menu: {},
