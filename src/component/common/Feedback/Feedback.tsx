@@ -9,8 +9,8 @@ import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
 import { formatApiPath } from '../../../utils/format-path';
 import UIContext from '../../../contexts/UIContext';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import { PNPS_FEEDBACK_ID, showPnpsFeedback } from '../util';
+import { useAuthFeedback } from '../../../hooks/api/getters/useAuth/useAuthFeedback';
 
 interface IFeedbackProps {
     openUrl: string;
@@ -18,7 +18,7 @@ interface IFeedbackProps {
 
 const Feedback = ({ openUrl }: IFeedbackProps) => {
     const { showFeedback, setShowFeedback } = useContext(UIContext);
-    const { auth, refetchAuth } = useAuth();
+    const { feedback, refetchFeedback } = useAuthFeedback();
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
     const styles = useStyles();
     const commonStyles = useCommonStyles();
@@ -36,7 +36,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
                 },
                 body: JSON.stringify({ feedbackId }),
             });
-            await refetchAuth();
+            await refetchFeedback();
         } catch (err) {
             console.warn(err);
             setShowFeedback(false);
@@ -64,7 +64,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
                 },
                 body: JSON.stringify({ feedbackId, neverShow: true }),
             });
-            await refetchAuth();
+            await refetchFeedback();
         } catch (err) {
             console.warn(err);
             setShowFeedback(false);
@@ -75,7 +75,7 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
         }, 100);
     };
 
-    if (!showPnpsFeedback(auth?.feedback)) {
+    if (!showPnpsFeedback(feedback)) {
         return null;
     }
 

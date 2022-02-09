@@ -9,14 +9,14 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
 import ConditionallyRender from '../../common/ConditionallyRender';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import PasswordField from '../../common/PasswordField/PasswordField';
 import { useAuthApi } from "../../../hooks/api/actions/useAuthApi/useAuthApi";
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
 
 const HostedAuth = ({ authDetails }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
-    const { refetchAuth } = useAuth();
+    const { refetchUser } = useAuthUser();
     const history = useHistory();
     const params = useQueryParams();
     const { passwordAuth } = useAuthApi()
@@ -49,7 +49,7 @@ const HostedAuth = ({ authDetails }) => {
 
         try {
             await passwordAuth(authDetails.path, username, password);
-            refetchAuth();
+            refetchUser();
             history.push(`/`);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {

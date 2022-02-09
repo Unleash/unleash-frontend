@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode, useCallback, useMemo } from 'react';
 import AccessContext, { IAccessContext } from '../../../contexts/AccessContext';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import { ADMIN } from './permissions';
 import { IPermission } from '../../../interfaces/user';
+import { useAuthPermissions } from '../../../hooks/api/getters/useAuth/useAuthPermissions';
 
 interface IAccessProviderProps {
     children: ReactNode;
@@ -11,8 +11,8 @@ interface IAccessProviderProps {
 
 // TODO(olav): Mock useAuth instead of using props.permissions in tests.
 const AccessProvider = (props: IAccessProviderProps): ReactElement => {
-    const { auth } = useAuth();
-    const permissions = props.permissions ?? auth?.permissions;
+    const auth = useAuthPermissions();
+    const permissions = props.permissions ?? auth.permissions;
 
     const isAdmin: boolean = useMemo(() => {
         return checkAdmin(permissions);

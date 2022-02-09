@@ -9,10 +9,10 @@ import ConditionallyRender from '../../common/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
+import { useAuthDetails } from '../../../hooks/api/getters/useAuth/useAuthDetails';
 
 export const NewUser = () => {
-    const { authDetails } = useAuth().auth ?? {};
+    const { authDetails } = useAuthDetails();
     const { token, data, loading, setLoading, invalidToken } =
         useResetPassword();
     const ref = useLoading(loading);

@@ -10,13 +10,13 @@ import {
     HOSTED_TYPE,
 } from '../../../constants/authTypes';
 import SecondaryLoginActions from '../common/SecondaryLoginActions/SecondaryLoginActions';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import useQueryParams from '../../../hooks/useQueryParams';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
+import { useAuthDetails } from '../../../hooks/api/getters/useAuth/useAuthDetails';
 
 const Authentication = () => {
-    const { authDetails } = useAuth().auth ?? {};
+    const { authDetails } = useAuthDetails();
     const params = useQueryParams();
 
     const error = params.get('errorMsg');

@@ -2,8 +2,8 @@ import { mutate, SWRConfig, useSWRConfig } from 'swr';
 import { useHistory } from 'react-router';
 import useToast from '../../../hooks/useToast';
 import { formatApiPath } from '../../../utils/format-path';
-import React from "react";
-import { USER_CACHE_KEY } from "../../../hooks/api/getters/useAuth/useAuth";
+import React from 'react';
+import { USER_ENDPOINT_PATH } from '../../../hooks/api/getters/useAuth/useAuthEndpoint';
 
 interface ISWRProviderProps {
     isUnauthorized: () => boolean;
@@ -25,7 +25,7 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
             // Only populate user with authDetails if 401 and
             // error is not invalid token
             if (error?.info?.name !== INVALID_TOKEN_ERROR) {
-                mutate(USER_CACHE_KEY, { ...error.info }, false);
+                mutate(USER_ENDPOINT_PATH, { ...error.info }, false);
             }
 
             if (

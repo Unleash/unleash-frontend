@@ -11,22 +11,27 @@ import styles from './styles.module.scss';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { routes } from './menu/routes';
-import { useAuth } from '../hooks/api/getters/useAuth/useAuth';
 import { useEffect } from 'react';
+import { useAuthDetails } from '../hooks/api/getters/useAuth/useAuthDetails';
+import { useAuthUser } from '../hooks/api/getters/useAuth/useAuthUser';
+import { useAuthSplash } from '../hooks/api/getters/useAuth/useAuthSplash';
 
 interface IAppProps extends RouteComponentProps {
     fetchUiBootstrap: () => void;
 }
 
 export const App = ({ fetchUiBootstrap }: IAppProps) => {
-    const { auth, refetchAuth } = useAuth();
-    const hasFetchedAuth = Boolean(auth);
-    const isLoggedIn = Boolean(auth?.profile?.id);
-    const showEnvSplash = isLoggedIn && auth?.splash.environment === false;
+    const { splash, refetchSplash } = useAuthSplash();
+    const { authDetails } = useAuthDetails();
+    const { user } = useAuthUser();
+
+    const isLoggedIn = Boolean(user?.id);
+    const hasFetchedAuth = Boolean(authDetails || user);
+    const showEnvSplash = isLoggedIn && splash?.environment === false;
 
     useEffect(() => {
         fetchUiBootstrap();
-    }, [fetchUiBootstrap, auth?.authDetails?.type]);
+    }, [fetchUiBootstrap, authDetails?.type]);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);
@@ -64,7 +69,7 @@ export const App = ({ fetchUiBootstrap }: IAppProps) => {
                     <route.component
                         {...props}
                         isUnauthorized={isUnauthorized}
-                        authDetails={auth?.authDetails}
+                        authDetails={authDetails}
                     />
                 )}
             />
@@ -82,7 +87,9 @@ export const App = ({ fetchUiBootstrap }: IAppProps) => {
 
                         <ConditionallyRender
                             condition={showEnvSplash}
-                            show={<EnvironmentSplash onFinish={refetchAuth} />}
+                            show={
+                                <EnvironmentSplash onFinish={refetchSplash} />
+                            }
                             elseShow={
                                 <LayoutPicker location={location}>
                                     <Switch>

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
 import styles from './SimpleAuth.module.scss';
-import { useAuth } from '../../../hooks/api/getters/useAuth/useAuth';
 import { useHistory } from "react-router-dom";
 import { useAuthApi } from "../../../hooks/api/actions/useAuthApi/useAuthApi";
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
 
 const SimpleAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
-    const { refetchAuth } = useAuth();
+    const { refetchUser } = useAuthUser();
     const { emailAuth } = useAuthApi();
     const history = useHistory();
 
@@ -16,7 +16,7 @@ const SimpleAuth = ({ authDetails }) => {
         evt.preventDefault();
 
         emailAuth(authDetails.path, email).then(() => {
-            refetchAuth();
+            refetchUser();
             history.push(`/`);
         });
     };
