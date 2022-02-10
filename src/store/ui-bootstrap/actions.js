@@ -1,6 +1,6 @@
 import api from './api';
 import { dispatchError } from '../util';
-import { receiveStrategies } from '../strategy/actions';
+import { receiveProjects } from '../project/actions';
 
 export const RECEIVE_BOOTSTRAP = 'RECEIVE_CONFIG';
 export const ERROR_RECEIVE_BOOTSTRAP = 'ERROR_RECEIVE_CONFIG';
@@ -10,7 +10,7 @@ export function fetchUiBootstrap() {
         api
             .fetchUIBootstrap()
             .then(json => {
-                dispatch(receiveStrategies(json.strategies));
+                dispatch(receiveProjects(json.projects));
             })
             .catch(dispatchError(dispatch, ERROR_RECEIVE_BOOTSTRAP));
 }
