@@ -18,7 +18,7 @@ import { useAuthDetails } from '../../../hooks/api/getters/useAuth/useAuthDetail
 const Authentication = () => {
     const { authDetails } = useAuthDetails();
     const params = useQueryParams();
-
+    console.log(authDetails);
     const error = params.get('errorMsg');
     if (!authDetails) return null;
 
@@ -26,9 +26,7 @@ const Authentication = () => {
     if (authDetails.type === PASSWORD_TYPE) {
         content = (
             <>
-                <PasswordAuth
-                    authDetails={authDetails}
-                />
+                <PasswordAuth authDetails={authDetails} />
                 <ConditionallyRender
                     condition={!authDetails.defaultHidden}
                     show={<SecondaryLoginActions />}
@@ -36,23 +34,13 @@ const Authentication = () => {
             </>
         );
     } else if (authDetails.type === SIMPLE_TYPE) {
-        content = (
-            <SimpleAuth
-                authDetails={authDetails}
-            />
-        );
+        content = <SimpleAuth authDetails={authDetails} />;
     } else if (authDetails.type === DEMO_TYPE) {
-        content = (
-            <DemoAuth
-                authDetails={authDetails}
-            />
-        );
+        content = <DemoAuth authDetails={authDetails} />;
     } else if (authDetails.type === HOSTED_TYPE) {
         content = (
             <>
-                <HostedAuth
-                    authDetails={authDetails}
-                />
+                <HostedAuth authDetails={authDetails} />
                 <ConditionallyRender
                     condition={!authDetails.defaultHidden}
                     show={<SecondaryLoginActions />}

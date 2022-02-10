@@ -5,6 +5,7 @@ import { ReactComponent as GoogleSvg } from '../../../../assets/icons/google.svg
 import LockRounded from '@material-ui/icons/LockRounded';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { IAuthOptions } from '../../../../hooks/api/getters/useAuth/useAuthEndpoint';
+import { SSO_LOGIN_BUTTON } from '../../../../testIds';
 
 interface IAuthOptionProps {
     options?: IAuthOptions[];
@@ -28,6 +29,7 @@ const AuthOptions = ({ options }: IAuthOptionProps) => {
                         variant="outlined"
                         href={o.path}
                         size="small"
+                        data-test={`${SSO_LOGIN_BUTTON}-${o.type}`}
                         style={{ height: '40px', color: '#000' }}
                         startIcon={
                             <ConditionallyRender

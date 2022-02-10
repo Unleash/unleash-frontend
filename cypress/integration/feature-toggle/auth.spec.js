@@ -57,4 +57,104 @@ describe('auth', () => {
 
         cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
     });
+
+    it('renders google auth when options are specified', () => {
+        const ssoPath = '/auth/google/login';
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: true,
+                message: 'You must sign in in order to use Unleash',
+                options: [
+                    {
+                        type: 'google',
+                        message: 'Sign in with Google',
+                        path: ssoPath,
+                    },
+                ],
+                path: '/auth/simple/login',
+                type: 'password',
+            },
+        });
+
+        cy.visit('/');
+        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+
+        cy.get('[data-test="SSO_LOGIN_BUTTON-google"]')
+            .should('exist')
+            .should('have.attr', 'href', ssoPath);
+    });
+
+    it('renders oidc auth when options are specified', () => {
+        const ssoPath = '/auth/oidc/login';
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: true,
+                message: 'You must sign in in order to use Unleash',
+                options: [
+                    {
+                        type: 'oidc',
+                        message: 'Sign in with OpenId Connect',
+                        path: ssoPath,
+                    },
+                ],
+                path: '/auth/simple/login',
+                type: 'password',
+            },
+        });
+
+        cy.visit('/');
+        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+
+        cy.get('[data-test="SSO_LOGIN_BUTTON-oidc"]')
+            .should('exist')
+            .should('have.attr', 'href', ssoPath);
+    });
+
+    it('renders saml auth when options are specified', () => {
+        const ssoPath = '/auth/saml/login';
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: true,
+                message: 'You must sign in in order to use Unleash',
+                options: [
+                    {
+                        type: 'saml',
+                        message: 'Sign in with SAML 2.0',
+                        path: ssoPath,
+                    },
+                ],
+                path: '/auth/simple/login',
+                type: 'password',
+            },
+        });
+
+        cy.visit('/');
+        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+
+        cy.get('[data-test="SSO_LOGIN_BUTTON-saml"]')
+            .should('exist')
+            .should('have.attr', 'href', ssoPath);
+    });
+
+    it('can visit forgot password when password auth is enabled', () => {
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: false,
+                message: 'You must sign in in order to use Unleash',
+                options: [],
+                path: '/auth/simple/login',
+                type: 'password',
+            },
+        });
+
+        cy.visit('/forgotten-password');
+        cy.get('[data-test="FORGOTTEN_PASSWORD_FIELD"').type('me@myemail.com');
+    });
 });
