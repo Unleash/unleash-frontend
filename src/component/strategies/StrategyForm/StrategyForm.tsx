@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-
 import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-
 import { styles as commonStyles, FormButtons } from '../../common';
 import { trim } from '../../common/util';
 import StrategyParameters from './StrategyParameters/StrategyParameters';
@@ -22,7 +20,7 @@ interface ICustomStrategyErrors {
     name?: string;
 }
 
-const CreateStrategy = (props) => {
+export const StrategyForm = (props) => {
     const history = useHistory();  
     const editMode = false 
     console.log(props)
@@ -174,5 +172,3 @@ const CreateStrategy = (props) => {
         </PageContent>
     );
 };
-
-export default CreateStrategy;

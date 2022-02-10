@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography } from '@material-ui/core';
 import ShowStrategy from './show-strategy-component';
-import EditStrategy from './CreateStrategy';
+import { StrategyForm } from './StrategyForm/StrategyForm';
 import { UPDATE_STRATEGY } from '../providers/AccessProvider/permissions';
 import ConditionallyRender from '../common/ConditionallyRender/ConditionallyRender';
 import TabNav from '../common/TabNav/TabNav';
@@ -51,7 +51,7 @@ const StrategyDetails = props => {
         {
             label: 'Edit',
             component: (
-                <EditStrategy
+                <StrategyForm
                     strategy={strategy}
                     history={props.history}
                     editMode
