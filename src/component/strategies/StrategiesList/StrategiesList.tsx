@@ -118,7 +118,7 @@ export const StrategiesList = () => {
             title: 'Really deprecate strategy?',
             onConfirm: () => {
                 try {
-                    removeStrategy(strategy);
+                    deprecateStrategy(strategy);
                     refetchStrategies();
                     setToastData({
                         type: 'success',
@@ -138,7 +138,7 @@ export const StrategiesList = () => {
             title: 'Really delete strategy?',
             onConfirm: () => {
                 try {
-                    deprecateStrategy(strategy);
+                    removeStrategy(strategy);
                     refetchStrategies();
                     setToastData({
                         type: 'success',
