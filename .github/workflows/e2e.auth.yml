@@ -1,8 +1,8 @@
-name: e2e-tests
+name: e2e:auth
 # https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on: [deployment_status]
 jobs:
-  e2e:feature:
+  e2e:auth:
     # only runs this job on successful deploy
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
