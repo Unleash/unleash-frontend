@@ -157,4 +157,48 @@ describe('auth', () => {
         cy.visit('/forgotten-password');
         cy.get('[data-test="FORGOTTEN_PASSWORD_FIELD"').type('me@myemail.com');
     });
+
+    it('renders demo auth correctly', () => {
+        const email = 'hello@hello.com';
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: false,
+                message: 'You must sign in in order to use Unleash',
+                options: [],
+                path: '/auth/demo/login',
+                type: 'demo',
+            },
+        });
+
+        cy.intercept('POST', '/auth/demo/login', req => {
+            expect(req.body.email).to.equal(email);
+        }).as('passwordLogin');
+
+        cy.visit('/');
+        cy.get('[data-test="LOGIN_EMAIL_ID"]').type(email);
+        cy.get("[data-test='LOGIN_BUTTON']").click();
+    });
+
+    it('renders email auth correctly', () => {
+        const email = 'hello@hello.com';
+        cy.intercept('GET', '/api/admin/user', {
+            statusCode: 401,
+            body: {
+                defaultHidden: false,
+                message: 'You must sign in in order to use Unleash',
+                options: [],
+                path: '/auth/unsecure/login',
+                type: 'unsecure',
+            },
+        });
+
+        cy.intercept('POST', '/auth/unsecure/login', req => {
+            expect(req.body.email).to.equal(email);
+        }).as('passwordLogin');
+
+        cy.visit('/');
+        cy.get('[data-test="LOGIN_EMAIL_ID"]').type(email);
+        cy.get("[data-test='LOGIN_BUTTON']").click();
+    });
 });

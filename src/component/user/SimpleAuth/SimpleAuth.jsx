@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
 import styles from './SimpleAuth.module.scss';
-import { useHistory } from "react-router-dom";
-import { useAuthApi } from "../../../hooks/api/actions/useAuthApi/useAuthApi";
+import { useHistory } from 'react-router-dom';
+import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
+import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from '../../../testIds';
+import useToast from '../../../hooks/useToast';
 
 const SimpleAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
     const { refetchUser } = useAuthUser();
     const { emailAuth } = useAuthApi();
     const history = useHistory();
+    const { setToastApiError } = useToast();
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
 
-        emailAuth(authDetails.path, email).then(() => {
+        try {
+            await emailAuth(authDetails.path, email);
             refetchUser();
             history.push(`/`);
-        });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
     };
 
     const handleChange = e => {
@@ -51,6 +57,7 @@ const SimpleAuth = ({ authDetails }) => {
                     name="email"
                     required
                     type="email"
+                    data-test={LOGIN_EMAIL_ID}
                 />
                 <br />
 
@@ -59,8 +66,8 @@ const SimpleAuth = ({ authDetails }) => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        data-test="login-submit"
                         className={styles.button}
+                        data-test={LOGIN_BUTTON}
                     >
                         Sign in
                     </Button>

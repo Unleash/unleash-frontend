@@ -18,7 +18,7 @@ import { useAuthDetails } from '../../../hooks/api/getters/useAuth/useAuthDetail
 const Authentication = () => {
     const { authDetails } = useAuthDetails();
     const params = useQueryParams();
-    console.log(authDetails);
+
     const error = params.get('errorMsg');
     if (!authDetails) return null;
 

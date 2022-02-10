@@ -7,20 +7,25 @@ import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from '../../../testIds';
 import { useHistory } from 'react-router-dom';
 import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
+import useToast from '../../../hooks/useToast';
 
 const DemoAuth = ({ authDetails }) => {
     const [email, setEmail] = useState('');
     const history = useHistory();
     const { refetchUser } = useAuthUser();
     const { emailAuth } = useAuthApi();
+    const { setToastApiError } = useToast();
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
 
-        emailAuth(authDetails.path, email).then(() => {
+        try {
+            await emailAuth(authDetails.path, email);
             refetchUser();
             history.push(`/`);
-        });
+        } catch (e) {
+            setToastApiError(e.toString());
+        }
     };
 
     const handleChange = e => {
