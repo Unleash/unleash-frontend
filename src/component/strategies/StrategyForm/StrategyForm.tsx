@@ -8,6 +8,8 @@ import { trim } from '../../common/util';
 import StrategyParameters from './StrategyParameters/StrategyParameters';
 import { useHistory } from 'react-router-dom';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
+import { IStrategy } from '../../../interfaces/strategy';
+import useToast from '../../../hooks/useToast';
 
 interface ICustomStrategyParams {
     name?: string;
@@ -20,16 +22,20 @@ interface ICustomStrategyErrors {
     name?: string;
 }
 
-export const StrategyForm = (props) => {
-    const history = useHistory();  
-    const editMode = false 
-    console.log(props)
-
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [params, setParams] = useState<ICustomStrategyParams[]>([]);
+interface IStrategyFormProps {
+    editMode: boolean;
+    strategy: IStrategy;
+}
+export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
+    const history = useHistory();
+    const [name, setName] = useState(strategy?.name || '');
+    const [description, setDescription] = useState(strategy?.description || '');
+    const [params, setParams] = useState<ICustomStrategyParams[]>(
+        strategy?.parameters || []
+    );
     const [errors, setErrors] = useState<ICustomStrategyErrors>({});
     const { createStrategy, updateStrategy } = useStrategiesApi();
+    const { setToastData, setToastApiError } = useToast();
 
     const clearErrors = () => {
         setErrors({});
@@ -69,12 +75,26 @@ export const StrategyForm = (props) => {
             );
         setParams(prev => [...parameters]);
         if (editMode) {
-            await updateStrategy({ name, description, parameters: params });
-            history.push(`/strategies/view/${name}`);
+            try {
+                await updateStrategy({ name, description, parameters: params });
+                history.push(`/strategies/view/${name}`);
+                setToastData({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'Successfully updated strategy',
+                });
+            } catch (e: any) {
+                setToastApiError(e.toString());
+            }
         } else {
             try {
                 await createStrategy({ name, description, parameters: params });
                 history.push(`/strategies`);
+                setToastData({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'Successfully created new strategy',
+                });
             } catch (e: any) {
                 const STRATEGY_EXIST_ERROR = 'Error: Strategy with name';
                 if (e.toString().includes(STRATEGY_EXIST_ERROR)) {
