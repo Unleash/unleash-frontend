@@ -15,16 +15,14 @@ import { useFeatures } from '../../hooks/api/getters/useFeatures/useFeatures';
 const StrategyDetails = props => {
     const { hasAccess } = useContext(AccessContext);
     const { strategyName } = useParams<{ strategyName: string }>();
+    console.log('hu', strategyName);
     const { strategies, refetchStrategies } = useStrategies();
     const { features, refetchFeatures } = useFeatures();
     const toggles = features.filter(toggle => {
         return toggle?.strategies.findIndex(s => s.name === strategyName) > -1;
     });
-    console.log(toggles);
 
     const strategy = strategies.find(n => n.name === strategyName);
-
-    console.log(strategyName)
 
     useEffect(() => {
         if (!strategy) {
@@ -57,6 +55,7 @@ const StrategyDetails = props => {
                     strategy={strategy}
                     history={props.history}
                     editMode
+                    strategyName={strategyName}
                 />
             ),
         },

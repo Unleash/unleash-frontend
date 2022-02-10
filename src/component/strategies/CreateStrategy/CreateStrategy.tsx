@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Typography, TextField, Button } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
@@ -23,8 +22,10 @@ interface ICustomStrategyErrors {
     name?: string;
 }
 
-const CreateStrategy = ({ editMode = false }) => {
-    const history = useHistory();
+const CreateStrategy = (props) => {
+    const history = useHistory();  
+    const editMode = false 
+    console.log(props)
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -172,10 +173,6 @@ const CreateStrategy = ({ editMode = false }) => {
             </form>
         </PageContent>
     );
-};
-
-CreateStrategy.propTypes = {
-    editMode: PropTypes.bool,
 };
 
 export default CreateStrategy;

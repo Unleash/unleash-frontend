@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
 import classnames from 'classnames';
 import { Link, useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 import {
     IconButton,
     List,
@@ -19,18 +17,15 @@ import {
     Visibility,
     VisibilityOff,
 } from '@material-ui/icons';
-
 import {
     CREATE_STRATEGY,
     DELETE_STRATEGY,
     UPDATE_STRATEGY,
 } from '../../providers/AccessProvider/permissions';
-
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
-
-import { useStyles } from './styles';
+import { useStyles } from './StrategiesList.styles';
 import AccessContext from '../../../contexts/AccessContext';
 import Dialogue from '../../common/Dialogue';
 import { ADD_NEW_STRATEGY_ID } from '../../../testIds';
@@ -39,21 +34,21 @@ import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
+import useToast from '../../../hooks/useToast';
 
-const StrategiesList = () => {
+export const StrategiesList = () => {
     const history = useHistory();
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
-    const [dialogueMetaData, setDialogueMetaData] = useState({ show: false });
+    const [dialogueMetaData, setDialogueMetaData] = useState({
+        show: false,
+        title: '',
+    });
     const { strategies, refetchStrategies } = useStrategies();
     const { removeStrategy, deprecateStrategy, reactivateStrategy } =
         useStrategiesApi();
-
-    useEffect(() => {
-        refetchStrategies();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const { setToastData, setToastApiError } = useToast();
 
     const headerButton = () => (
         <ConditionallyRender
@@ -76,7 +71,6 @@ const StrategiesList = () => {
                             onClick={() => history.push('/strategies/create')}
                             color="primary"
                             permission={CREATE_STRATEGY}
-                            variant="contained"
                             data-test={ADD_NEW_STRATEGY_ID}
                             tooltip={'Add new strategy'}
                         >
@@ -98,16 +92,70 @@ const StrategiesList = () => {
         </Link>
     );
 
+    const onReactivateStrategy = strategy => {
+        setDialogueMetaData({
+            show: true,
+            title: 'Really reactivate strategy?',
+            onConfirm: () => {
+                try {
+                    reactivateStrategy(strategy);
+                    refetchStrategies();
+                    setToastData({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Strategy reactivated successfully',
+                    });
+                } catch (e: any) {
+                    setToastApiError(e.toString());
+                }
+            },
+        });
+    };
+
+    const onDeprecateStrategy = strategy => {
+        setDialogueMetaData({
+            show: true,
+            title: 'Really deprecate strategy?',
+            onConfirm: () => {
+                try {
+                    removeStrategy(strategy);
+                    refetchStrategies();
+                    setToastData({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Strategy deprecated successfully',
+                    });
+                } catch (e: any) {
+                    setToastApiError(e.toString());
+                }
+            },
+        });
+    };
+
+    const onDeleteStrategy = strategy => {
+        setDialogueMetaData({
+            show: true,
+            title: 'Really delete strategy?',
+            onConfirm: () => {
+                try {
+                    deprecateStrategy(strategy);
+                    refetchStrategies();
+                    setToastData({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Strategy deleted successfully',
+                    });
+                } catch (e: any) {
+                    setToastApiError(e.toString());
+                }
+            },
+        });
+    };
+
     const reactivateButton = strategy => (
         <Tooltip title="Reactivate activation strategy">
             <PermissionIconButton
-                onClick={() =>
-                    setDialogueMetaData({
-                        show: true,
-                        title: 'Really reactivate strategy?',
-                        onConfirm: () => reactivateStrategy(strategy),
-                    })
-                }
+                onClick={() => onReactivateStrategy(strategy)}
                 permission={UPDATE_STRATEGY}
                 tooltip={'Reactivate activation strategy'}
             >
@@ -131,13 +179,7 @@ const StrategiesList = () => {
             elseShow={
                 <div>
                     <PermissionIconButton
-                        onClick={() =>
-                            setDialogueMetaData({
-                                show: true,
-                                title: 'Really deprecate strategy?',
-                                onConfirm: () => deprecateStrategy(strategy),
-                            })
-                        }
+                        onClick={() => onDeprecateStrategy(strategy)}
                         permission={UPDATE_STRATEGY}
                         tooltip={'Deprecate activation strategy'}
                     >
@@ -153,13 +195,7 @@ const StrategiesList = () => {
             condition={strategy.editable}
             show={
                 <PermissionIconButton
-                    onClick={() =>
-                        setDialogueMetaData({
-                            show: true,
-                            title: 'Really delete strategy?',
-                            onConfirm: () => removeStrategy(strategy),
-                        })
-                    }
+                    onClick={() => onDeleteStrategy(strategy)}
                     permission={DELETE_STRATEGY}
                     tooltip={'Delete strategy'}
                 >
@@ -229,23 +265,10 @@ const StrategiesList = () => {
             <List>
                 <ConditionallyRender
                     condition={strategies.length > 0}
-                    show={strategyList()}
+                    show={<>{strategyList()}</>}
                     elseShow={<ListItem>No strategies found</ListItem>}
                 />
             </List>
         </PageContent>
     );
 };
-
-StrategiesList.propTypes = {
-    strategies: PropTypes.array.isRequired,
-    fetchStrategies: PropTypes.func.isRequired,
-    removeStrategy: PropTypes.func.isRequired,
-    deprecateStrategy: PropTypes.func.isRequired,
-    reactivateStrategy: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
-    name: PropTypes.string,
-    deprecated: PropTypes.bool,
-};
-
-export default StrategiesList;
