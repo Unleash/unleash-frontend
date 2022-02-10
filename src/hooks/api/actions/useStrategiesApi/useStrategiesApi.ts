@@ -1,6 +1,6 @@
 import useAPI from '../useApi/useApi';
 
-interface ICustomStrategyPayload {
+export interface ICustomStrategyPayload {
     name: string;
     description: string;
     parameters: object[];

@@ -35,6 +35,7 @@ import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useToast from '../../../hooks/useToast';
+import { IStrategy } from '../../../interfaces/strategy';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -97,13 +98,13 @@ export const StrategiesList = () => {
         </Link>
     );
 
-    const onReactivateStrategy = strategy => {
+    const onReactivateStrategy = (strategy: IStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really reactivate strategy?',
-            onConfirm: () => {
+            onConfirm: async () => {
                 try {
-                    reactivateStrategy(strategy);
+                    await reactivateStrategy(strategy);
                     refetchStrategies();
                     setToastData({
                         type: 'success',
@@ -117,13 +118,13 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeprecateStrategy = strategy => {
+    const onDeprecateStrategy = (strategy: IStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really deprecate strategy?',
-            onConfirm: () => {
+            onConfirm: async () => {
                 try {
-                    deprecateStrategy(strategy);
+                    await deprecateStrategy(strategy);
                     refetchStrategies();
                     setToastData({
                         type: 'success',
@@ -137,13 +138,13 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeleteStrategy = strategy => {
+    const onDeleteStrategy = (strategy: IStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really delete strategy?',
-            onConfirm: () => {
+            onConfirm: async () => {
                 try {
-                    removeStrategy(strategy);
+                    await removeStrategy(strategy);
                     refetchStrategies();
                     setToastData({
                         type: 'success',
@@ -157,7 +158,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const reactivateButton = strategy => (
+    const reactivateButton = (strategy: IStrategy) => (
         <Tooltip title="Reactivate activation strategy">
             <PermissionIconButton
                 onClick={() => onReactivateStrategy(strategy)}
@@ -169,7 +170,7 @@ export const StrategiesList = () => {
         </Tooltip>
     );
 
-    const deprecateButton = strategy => (
+    const deprecateButton = (strategy: IStrategy) => (
         <ConditionallyRender
             condition={strategy.name === 'default'}
             show={
@@ -195,7 +196,7 @@ export const StrategiesList = () => {
         />
     );
 
-    const deleteButton = strategy => (
+    const deleteButton = (strategy: IStrategy) => (
         <ConditionallyRender
             condition={strategy.editable}
             show={

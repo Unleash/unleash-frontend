@@ -10,7 +10,7 @@ import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategie
 import { useParams } from 'react-router-dom';
 import { useFeatures } from '../../../hooks/api/getters/useFeatures/useFeatures';
 import useApplications from '../../../hooks/api/getters/useApplications/useApplications';
-import { StrategyDetails } from '../StrategyDetails/StrategyDetails';
+import { StrategyDetails } from './StrategyDetails/StrategyDetails';
 
 export const StrategyView = () => {
     const { hasAccess } = useContext(AccessContext);

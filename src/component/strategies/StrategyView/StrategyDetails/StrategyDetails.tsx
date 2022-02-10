@@ -7,13 +7,13 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Add, RadioButtonChecked } from '@material-ui/icons';
-import { AppsLinkList } from '../../common';
-import ConditionallyRender from '../../common/ConditionallyRender';
-import styles from '../strategies.module.scss';
-import { TogglesLinkList } from '../TogglesLinkList/TogglesLinkList';
-import { IParameter, IStrategy } from '../../../interfaces/strategy';
-import { IApplication } from '../../../interfaces/application';
-import { IFeatureToggle } from '../../../interfaces/featureToggle';
+import { AppsLinkList } from '../../../common';
+import ConditionallyRender from '../../../common/ConditionallyRender';
+import styles from '../../strategies.module.scss';
+import { TogglesLinkList } from '../../TogglesLinkList/TogglesLinkList';
+import { IParameter, IStrategy } from '../../../../interfaces/strategy';
+import { IApplication } from '../../../../interfaces/application';
+import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 
 interface IStrategyDetailsProps {
     strategy: IStrategy;
