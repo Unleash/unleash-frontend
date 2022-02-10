@@ -52,7 +52,7 @@ const useFeatureForm = (
             name,
             projectId: project,
             description: description,
-            impressionData
+            impressionData,
         };
     };
 
@@ -71,6 +71,11 @@ const useFeatureForm = (
                 setErrors(prev => ({
                     ...prev,
                     name: 'A feature with this name already exists',
+                }));
+            } else {
+                setErrors(prev => ({
+                    ...prev,
+                    name: e.toString(),
                 }));
             }
             return false;
