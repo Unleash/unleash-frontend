@@ -50,12 +50,7 @@ const useFeatureForm = (
         return {
             type,
             name,
-<<<<<<< HEAD:src/component/feature/CreateFeature/hooks/useFeatureForm.ts
-            projectId: project,
-            description: description,
-=======
             description,
->>>>>>> main:src/component/feature/hooks/useFeatureForm.ts
             impressionData,
         };
     };
