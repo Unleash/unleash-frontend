@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import { ShowStrategy } from '../ShowStrategy';
 import { StrategyForm } from '../StrategyForm/StrategyForm';
 import { UPDATE_STRATEGY } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
@@ -11,6 +10,7 @@ import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategie
 import { useParams } from 'react-router-dom';
 import { useFeatures } from '../../../hooks/api/getters/useFeatures/useFeatures';
 import useApplications from '../../../hooks/api/getters/useApplications/useApplications';
+import { StrategyDetails } from '../StrategyDetails/StrategyDetails';
 
 export const StrategyView = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -29,7 +29,7 @@ export const StrategyView = () => {
         {
             label: 'Details',
             component: (
-                <ShowStrategy
+                <StrategyDetails
                     strategy={strategy}
                     toggles={toggles}
                     applications={applications}
@@ -62,7 +62,7 @@ export const StrategyView = () => {
                         elseShow={
                             <section>
                                 <div className="content">
-                                    <ShowStrategy
+                                    <StrategyDetails
                                         strategy={strategy}
                                         toggles={toggles}
                                         applications={applications}

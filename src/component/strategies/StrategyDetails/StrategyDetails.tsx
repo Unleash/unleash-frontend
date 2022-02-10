@@ -7,15 +7,27 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Add, RadioButtonChecked } from '@material-ui/icons';
-import { AppsLinkList } from '../common';
-import ConditionallyRender from '../common/ConditionallyRender';
-import styles from './strategies.module.scss';
-import { TogglesLinkList } from './TogglesLinkList';
+import { AppsLinkList } from '../../common';
+import ConditionallyRender from '../../common/ConditionallyRender';
+import styles from '../strategies.module.scss';
+import { TogglesLinkList } from '../TogglesLinkList/TogglesLinkList';
+import { IParameter, IStrategy } from '../../../interfaces/strategy';
+import { IApplication } from '../../../interfaces/application';
+import { IFeatureToggle } from '../../../interfaces/featureToggle';
 
-export const ShowStrategy = props => {
-    const { strategy, applications, toggles } = props;
+interface IStrategyDetailsProps {
+    strategy: IStrategy;
+    applications: IApplication[];
+    toggles: IFeatureToggle[];
+}
+
+export const StrategyDetails = ({
+    strategy,
+    applications,
+    toggles,
+}: IStrategyDetailsProps) => {
     const { parameters = [] } = strategy;
-    const renderParameters = params => {
+    const renderParameters = (params: IParameter[]) => {
         if (params) {
             return params.map(({ name, type, description, required }, i) => (
                 <ListItem key={`${name}-${i}`}>

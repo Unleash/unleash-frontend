@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import { IStrategy } from '../../../interfaces/strategy';
 import useToast from '../../../hooks/useToast';
+import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 
 interface ICustomStrategyParams {
     name?: string;
@@ -35,6 +36,7 @@ export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
     );
     const [errors, setErrors] = useState<ICustomStrategyErrors>({});
     const { createStrategy, updateStrategy } = useStrategiesApi();
+    const { refetchStrategies } = useStrategies();
     const { setToastData, setToastApiError } = useToast();
 
     const clearErrors = () => {
@@ -83,6 +85,7 @@ export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
                     title: 'Success',
                     text: 'Successfully updated strategy',
                 });
+                refetchStrategies();
             } catch (e: any) {
                 setToastApiError(e.toString());
             }
@@ -95,6 +98,7 @@ export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
                     title: 'Success',
                     text: 'Successfully created new strategy',
                 });
+                refetchStrategies();
             } catch (e: any) {
                 const STRATEGY_EXIST_ERROR = 'Error: Strategy with name';
                 if (e.toString().includes(STRATEGY_EXIST_ERROR)) {
