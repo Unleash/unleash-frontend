@@ -20,6 +20,6 @@ jobs:
           env: AUTH_TOKEN=${{ secrets.UNLEASH_TOKEN }},DEFAULT_ENV="development"
           config: baseUrl=${{ github.event.deployment_status.target_url }}
           record: true
-          spec: cypress/integration/auth.spec.js
+          spec: cypress/integration/auth/auth.spec.js
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
