@@ -8,12 +8,22 @@ export interface IUiConfig {
     version: string;
     versionInfo: IVersionInfo;
     links: ILinks[];
+    disablePasswordAuth?: boolean;
+    toast?: IProclamationToast
+}
+
+export interface IProclamationToast {
+    message: string;
+    id: string;
+    severity: 'success' | 'info' | 'warning' | 'error';
+    link: string;
 }
 
 export interface IFlags {
     C: boolean;
     P: boolean;
     E: boolean;
+    RE: boolean;
 }
 
 export interface IVersionInfo {

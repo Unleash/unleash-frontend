@@ -7,8 +7,8 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import ChangePassword from '../change-password-component';
-import DelUser from '../del-user-component';
+import ChangePassword from './ChangePassword/ChangePassword';
+import DeleteUser from './DeleteUser/DeleteUser';
 import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
 import AccessContext from '../../../../contexts/AccessContext';
 import { ADMIN } from '../../../providers/AccessProvider/permissions';
@@ -20,10 +20,10 @@ import loadingData from './loadingData';
 import useLoading from '../../../../hooks/useLoading';
 import usePagination from '../../../../hooks/usePagination';
 import PaginateUI from '../../../common/PaginateUI/PaginateUI';
-import { useHistory } from 'react-router-dom';
 import { IUser } from '../../../../interfaces/user';
 import IRole from '../../../../interfaces/role';
 import useToast from '../../../../hooks/useToast';
+import { useLocationSettings } from "../../../../hooks/useLocationSettings";
 
 const UsersList = () => {
     const { users, roles, refetch, loading } = useUsers();
@@ -35,9 +35,8 @@ const UsersList = () => {
         userLoading,
         userApiErrors,
     } = useAdminUsersApi();
-    const history = useHistory();
-    const { location } = history;
     const { hasAccess } = useContext(AccessContext);
+    const { locationSettings } = useLocationSettings()
     const [pwDialog, setPwDialog] = useState<{ open: boolean; user?: IUser }>({
         open: false,
     });
@@ -104,7 +103,7 @@ const UsersList = () => {
                     user={user}
                     openPwDialog={openPwDialog}
                     openDelDialog={openDelDialog}
-                    location={location}
+                    locationSettings={locationSettings}
                     renderRole={renderRole}
                 />
             ));
@@ -117,7 +116,7 @@ const UsersList = () => {
                     user={user}
                     openPwDialog={openPwDialog}
                     openDelDialog={openDelDialog}
-                    location={location}
+                    locationSettings={locationSettings}
                     renderRole={renderRole}
                 />
             );
@@ -170,7 +169,7 @@ const UsersList = () => {
             <ConditionallyRender
                 condition={Boolean(delUser)}
                 show={
-                    <DelUser
+                    <DeleteUser
                         showDialog={delDialog}
                         closeDialog={closeDelDialog}
                         user={delUser}

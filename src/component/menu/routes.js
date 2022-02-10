@@ -1,25 +1,18 @@
 import CopyFeatureToggle from '../../page/features/copy';
-import ViewFeatureToggle from '../../page/features/show';
-import Features from '../../page/features';
+import { FeatureToggleListContainer } from '../feature/FeatureToggleList/FeatureToggleListContainer';
 import CreateStrategies from '../../page/strategies/create';
 import StrategyView from '../../page/strategies/show';
 import Strategies from '../../page/strategies';
 import HistoryPage from '../../page/history';
 import HistoryTogglePage from '../../page/history/toggle';
-import ShowArchive from '../../page/archive/show';
-import Archive from '../../page/archive';
-import Applications from '../../page/applications';
-import ApplicationView from '../../page/applications/view';
-import ContextFields from '../../page/context';
-import ListTagTypes from '../../page/tag-types';
-import Addons from '../../page/addons';
-import AddonsCreate from '../../page/addons/create';
-import AddonsEdit from '../../page/addons/edit';
+import { ArchiveListContainer } from '../archive/ArchiveListContainer';
+import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
+import { AddonList } from '../addons/AddonList/AddonList';
 import Admin from '../admin';
 import AdminApi from '../admin/api';
-import AdminUsers from '../admin/users';
-import AdminInvoice from '../admin/invoice';
-import AdminAuth from '../admin/auth';
+import AdminInvoice from '../admin/invoice/InvoiceAdminPage';
+import AdminUsers from '../admin/users/UsersAdmin';
+import { AuthSettings } from '../admin/auth/AuthSettings';
 import Login from '../user/Login/Login';
 import { P, C, E, EEA, RE } from '../common/flags';
 import NewUser from '../user/NewUser';
@@ -27,10 +20,9 @@ import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
 import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
-import RedirectFeatureViewPage from '../../page/features/redirect';
-import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
+import RedirectArchive from '../archive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import FeatureView2 from '../feature/FeatureView2/FeatureView2';
+import FeatureView from '../feature/FeatureView/FeatureView';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
@@ -41,12 +33,18 @@ import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironme
 import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
 import CreateContext from '../context/CreateContext/CreateContext';
 import EditContext from '../context/EditContext/EditContext';
-import EditTagType from '../tagTypes/EditTagType/EditTagType';
-import CreateTagType from '../tagTypes/CreateTagType/CreateTagType';
+import EditTagType from '../tags/EditTagType/EditTagType';
+import CreateTagType from '../tags/CreateTagType/CreateTagType';
 import EditProject from '../project/Project/EditProject/EditProject';
 import CreateProject from '../project/Project/CreateProject/CreateProject';
-import CreateFeature from '../feature/CreateFeature/CreateFeature/CreateFeature';
-import EditFeature from '../feature/CreateFeature/EditFeature/EditFeature';
+import CreateFeature from '../feature/CreateFeature/CreateFeature';
+import EditFeature from '../feature/EditFeature/EditFeature';
+import { ApplicationEdit } from '../application/ApplicationEdit/ApplicationEdit';
+import { ApplicationList } from '../application/ApplicationList/ApplicationList';
+import ContextList from '../context/ContextList/ContextList';
+import RedirectFeatureView from '../feature/RedirectFeatureView/RedirectFeatureView';
+import { CreateAddon } from '../addons/CreateAddon/CreateAddon';
+import { EditAddon } from '../addons/EditAddon/EditAddon';
 
 export const routes = [
     // Project
@@ -88,7 +86,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/features2/:name/:activeTab/copy',
+        path: '/projects/:id/features/:name/:activeTab/copy',
         parent: '/projects/:id/features/:name/:activeTab',
         title: 'Copy',
         component: CopyFeatureToggle,
@@ -97,7 +95,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features2/:featureId/settings',
+        path: '/projects/:projectId/features/:featureId/settings',
         parent: '/projects',
         title: 'Edit Feature',
         component: EditFeature,
@@ -106,10 +104,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features2/:featureId',
+        path: '/projects/:projectId/features/:featureId',
         parent: '/projects',
-        title: 'FeatureView2',
-        component: FeatureView2,
+        title: 'FeatureView',
+        component: FeatureView,
         type: 'protected',
         layout: 'main',
         flags: E,
@@ -119,7 +117,7 @@ export const routes = [
         path: '/projects/:id/features/:name/:activeTab',
         parent: '/projects',
         title: ':name',
-        component: ViewFeatureToggle,
+        component: FeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -134,10 +132,10 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features/:name',
+        path: '/projects/:projectId/features2/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -176,7 +174,7 @@ export const routes = [
         path: '/features/:activeTab/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -184,7 +182,7 @@ export const routes = [
     {
         path: '/features',
         title: 'Feature Toggles',
-        component: Features,
+        component: FeatureToggleListContainer,
         type: 'protected',
         layout: 'main',
         menu: { mobile: true },
@@ -195,7 +193,7 @@ export const routes = [
         path: '/applications/:name',
         title: ':name',
         parent: '/applications',
-        component: ApplicationView,
+        component: ApplicationEdit,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -203,7 +201,7 @@ export const routes = [
     {
         path: '/applications',
         title: 'Applications',
-        component: Applications,
+        component: ApplicationList,
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
@@ -233,7 +231,7 @@ export const routes = [
     {
         path: '/context',
         title: 'Context Fields',
-        component: ContextFields,
+        component: ContextList,
         type: 'protected',
         flag: C,
         layout: 'main',
@@ -316,7 +314,7 @@ export const routes = [
     {
         path: '/tag-types',
         title: 'Tag types',
-        component: ListTagTypes,
+        component: TagTypeList,
         type: 'protected',
         layout: 'main',
         menu: { mobile: true, advanced: true },
@@ -324,19 +322,19 @@ export const routes = [
 
     // Addons
     {
-        path: '/addons/create/:provider',
+        path: '/addons/create/:providerId',
         parent: '/addons',
         title: 'Create',
-        component: AddonsCreate,
+        component: CreateAddon,
         type: 'protected',
         layout: 'main',
         menu: {},
     },
     {
-        path: '/addons/edit/:id',
+        path: '/addons/edit/:addonId',
         parent: '/addons',
         title: 'Edit',
-        component: AddonsEdit,
+        component: EditAddon,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -344,7 +342,7 @@ export const routes = [
     {
         path: '/addons',
         title: 'Addons',
-        component: Addons,
+        component: AddonList,
         hidden: false,
         type: 'protected',
         layout: 'main',
@@ -372,18 +370,9 @@ export const routes = [
 
     // Archive
     {
-        path: '/projects/:id/archived/:name/:activeTab',
-        title: ':name',
-        parent: '/archive',
-        component: ShowArchive,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
         path: '/archive',
         title: 'Archived Toggles',
-        component: Archive,
+        component: ArchiveListContainer,
         type: 'protected',
         layout: 'main',
         menu: {},
@@ -457,7 +446,7 @@ export const routes = [
         path: '/admin/auth',
         parent: '/admin',
         title: 'Single Sign-On',
-        component: AdminAuth,
+        component: AuthSettings,
         type: 'protected',
         layout: 'main',
         menu: { adminSettings: true },
