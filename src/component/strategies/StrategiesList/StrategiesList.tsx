@@ -36,15 +36,20 @@ import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategie
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useToast from '../../../hooks/useToast';
 
+interface IDialogueMetaData {
+    show: boolean;
+    title: string;
+    onConfirm: () => void;
+}
+
 export const StrategiesList = () => {
     const history = useHistory();
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
-    const [dialogueMetaData, setDialogueMetaData] = useState({
-        show: false,
-        title: '',
-    });
+    const [dialogueMetaData, setDialogueMetaData] = useState<IDialogueMetaData>(
+        { show: false, title: '', onConfirm: () => {} }
+    );
     const { strategies, refetchStrategies } = useStrategies();
     const { removeStrategy, deprecateStrategy, reactivateStrategy } =
         useStrategiesApi();
