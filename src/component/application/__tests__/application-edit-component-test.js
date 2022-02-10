@@ -4,7 +4,6 @@ import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
 import theme from '../../../themes/main-theme';
-import { createFakeStore } from '../../../accessStoreFake';
 import AccessProvider from '../../providers/AccessProvider/AccessProvider';
 import UIProvider from '../../providers/UIProvider/UIProvider';
 
