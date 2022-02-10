@@ -8,11 +8,7 @@ import {
     UPDATE_FEATURE_TOGGLE_STRATEGIES,
     UPDATE_FEATURE_TOGGLE,
 } from '../feature-toggle/actions';
-import {
-    ERROR_REMOVING_PROJECT,
-    ERROR_ADD_PROJECT,
-    ERROR_UPDATE_PROJECT,
-} from '../project/actions';
+
 import { FORBIDDEN } from '../util';
 
 const debug = require('debug')('unleash:error-store');
@@ -37,9 +33,6 @@ const strategies = (state = getInitState(), action) => {
         case ERROR_REMOVE_FEATURE_TOGGLE:
         case ERROR_FETCH_FEATURE_TOGGLES:
         case ERROR_UPDATE_FEATURE_TOGGLE:
-        case ERROR_REMOVING_PROJECT:
-        case ERROR_UPDATE_PROJECT:
-        case ERROR_ADD_PROJECT:
             return addErrorIfNotAlreadyInList(state, action.error.message);
         case FORBIDDEN:
             return addErrorIfNotAlreadyInList(
