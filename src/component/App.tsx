@@ -9,29 +9,26 @@ import SWRProvider from './providers/SWRProvider/SWRProvider';
 import ToastRenderer from './common/ToastRenderer/ToastRenderer';
 import styles from './styles.module.scss';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
 import { routes } from './menu/routes';
 import { useEffect } from 'react';
 import { useAuthDetails } from '../hooks/api/getters/useAuth/useAuthDetails';
 import { useAuthUser } from '../hooks/api/getters/useAuth/useAuthUser';
 import { useAuthSplash } from '../hooks/api/getters/useAuth/useAuthSplash';
+import useUiBootstrap from '../hooks/api/getters/useUiBootstrap/useUiBootstrap';
 
-interface IAppProps extends RouteComponentProps {
-    fetchUiBootstrap: () => void;
-}
-
-export const App = ({ fetchUiBootstrap }: IAppProps) => {
+export const App = () => {
     const { splash, refetchSplash } = useAuthSplash();
     const { authDetails } = useAuthDetails();
     const { user } = useAuthUser();
+    const { bootstrap, refetchUiBootstrap } = useUiBootstrap();
 
     const isLoggedIn = Boolean(user?.id);
     const hasFetchedAuth = Boolean(authDetails || user);
     const showEnvSplash = isLoggedIn && splash?.environment === false;
 
     useEffect(() => {
-        fetchUiBootstrap();
-    }, [fetchUiBootstrap, authDetails?.type]);
+        refetchUiBootstrap();
+    }, [bootstrap, authDetails?.type]);
 
     const renderMainLayoutRoutes = () => {
         return routes.filter(route => route.layout === 'main').map(renderRoute);

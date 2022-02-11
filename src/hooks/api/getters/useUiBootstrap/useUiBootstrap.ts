@@ -5,10 +5,9 @@ import { formatApiPath } from '../../../../utils/format-path';
 
 const useUiBootstrap = (options: SWRConfiguration = {}) => {
     const BOOTSTRAP_CACHE_KEY = `api/admin/ui-bootstrap`;
+    const path = formatApiPath(BOOTSTRAP_CACHE_KEY);
 
     const fetcher = () => {
-        const path = formatApiPath(`api/admin/ui-bootstrap`);
-
         return fetch(path, {
             method: 'GET',
             credentials: 'include',
@@ -29,10 +28,10 @@ const useUiBootstrap = (options: SWRConfiguration = {}) => {
     }, [data, error]);
 
     return {
-        bootstrap: data,
+        bootstrap: data || {},
+        refetchUiBootstrap,
         error,
         loading,
-        refetchUiBootstrap,
     };
 };
 
