@@ -17,7 +17,7 @@ interface IUseAuthApiOutput {
 }
 
 export const useAuthApi = (): IUseAuthApiOutput => {
-    const { makeRequest, createRequest, errors, loading } = useAPI({
+    const { makeRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
 
