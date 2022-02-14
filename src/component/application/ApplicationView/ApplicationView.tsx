@@ -15,7 +15,6 @@ import {
     FlagRounded,
     SvgIconComponent,
 } from '@material-ui/icons';
-import { shorten } from '../../common';
 import {
     CREATE_FEATURE,
     CREATE_STRATEGY,
@@ -25,6 +24,7 @@ import { getTogglePath } from '../../../utils/route-path-helpers';
 import useApplication from '../../../hooks/api/getters/useApplication/useApplication';
 import AccessContext from '../../../contexts/AccessContext';
 import { formatFullDateTimeWithLocale } from '../../common/util';
+import { truncateString } from '../../../utils/truncate-string';
 
 export const ApplicationView = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -87,9 +87,9 @@ export const ApplicationView = () => {
             </ListItemAvatar>
             <ListItemText
                 primary={
-                    <Link to={`${viewUrl}/${name}`}>{shorten(name, 50)}</Link>
+                    <Link to={`${viewUrl}/${name}`}>{truncateString(name, 50)}</Link>
                 }
-                secondary={shorten(description, 60)}
+                secondary={truncateString(description, 60)}
             />
         </ListItem>
     );

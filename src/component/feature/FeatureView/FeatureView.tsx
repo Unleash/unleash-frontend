@@ -29,6 +29,7 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
+import { truncateString } from '../../../utils/truncate-string';
 
 const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -115,7 +116,7 @@ const FeatureView = () => {
         return (
             <div>
                 <p>
-                    The feature <strong>{featureId.substring(0, 30)}</strong>{' '}
+                    The feature <strong>{truncateString(featureId, 30)}</strong>{' '}
                     does not exist. Do you want to &nbsp;
                     <Link
                         to={getCreateTogglePath(projectId, uiConfig.flags.E, {
