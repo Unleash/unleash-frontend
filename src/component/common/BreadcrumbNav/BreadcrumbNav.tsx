@@ -5,6 +5,7 @@ import { useStyles } from './BreadcrumbNav.styles';
 import AccessContext from '../../../contexts/AccessContext';
 import { useContext } from 'react';
 import { truncateString } from '../../../utils/truncate-string';
+import StringTruncator from '../StringTruncator/StringTruncator';
 
 const BreadcrumbNav = () => {
     const { isAdmin } = useContext(AccessContext);
@@ -52,7 +53,7 @@ const BreadcrumbNav = () => {
                                                 styles.breadcrumbNavParagraph
                                             }
                                         >
-                                            {truncateString(path, 30)}
+                                            <StringTruncator text={path} maxWidth="200" />
                                         </p>
                                     );
                                 }
@@ -73,7 +74,7 @@ const BreadcrumbNav = () => {
                                         className={styles.breadcrumbLink}
                                         to={link}
                                     >
-                                        {truncateString(path, 30)}
+                                        <StringTruncator text={path} maxWidth="200" />
                                     </Link>
                                 );
                             })}
