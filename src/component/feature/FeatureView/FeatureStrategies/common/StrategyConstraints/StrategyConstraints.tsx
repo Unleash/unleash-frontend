@@ -8,6 +8,7 @@ import { C } from '../../../../../common/flags';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import StrategyConstraintInputField from './StrategyConstraintInputField';
 import { useEffect } from 'react';
+import { ConstraintAccordion } from '../../../../../common/ConstraintAccordion/ConstraintAccordion';
 
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
@@ -92,6 +93,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
                     <Info style={{ fontSize: '0.9rem', color: 'gray' }} />
                 </Typography>
             </Tooltip>
+
             <table style={{ margin: 0 }}>
                 <tbody>
                     {constraints.map((c, index) => (

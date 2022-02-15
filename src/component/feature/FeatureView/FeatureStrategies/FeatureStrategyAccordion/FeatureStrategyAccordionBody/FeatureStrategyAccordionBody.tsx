@@ -26,6 +26,7 @@ import PermissionButton from '../../../../../common/PermissionButton/PermissionB
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
+import { ConstraintAccordion } from '../../../../../common/ConstraintAccordion/ConstraintAccordion';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IFeatureStrategy;
@@ -160,6 +161,7 @@ const FeatureStrategyAccordionBody: React.FC<
                     <>
                         <p className={styles.constraintHeader}>Constraints</p>
                         {renderConstraints()}
+                        <ConstraintAccordion />
 
                         <PermissionButton
                             className={styles.addConstraintBtn}
