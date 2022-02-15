@@ -79,7 +79,7 @@ export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
         setParams(prev => [...parameters]);
         if (editMode) {
             try {
-                await updateStrategy({ name, description, parameters: params });
+                await updateStrategy({ name, description, parameters });
                 history.push(`/strategies/view/${name}`);
                 setToastData({
                     type: 'success',
@@ -92,7 +92,7 @@ export const StrategyForm = ({ editMode, strategy }: IStrategyFormProps) => {
             }
         } else {
             try {
-                await createStrategy({ name, description, parameters: params });
+                await createStrategy({ name, description, parameters });
                 history.push(`/strategies`);
                 setToastData({
                     type: 'success',
