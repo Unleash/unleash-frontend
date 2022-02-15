@@ -54,7 +54,7 @@ const FeatureSettingsMetadata = () => {
             });
             setDirty(false);
             refetch();
-        } catch (e) {
+        } catch (e: any) {
             setToastApiError(e.toString());
         }
     };

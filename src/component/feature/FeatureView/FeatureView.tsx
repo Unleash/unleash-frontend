@@ -21,7 +21,7 @@ import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { useStyles } from './FeatureView.styles';
-import FeatureSettings from './FeatureSettings/FeatureSettings';
+import { FeatureSettings } from './FeatureSettings/FeatureSettings';
 import useLoading from '../../../hooks/useLoading';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
@@ -30,7 +30,7 @@ import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
 
-const FeatureView = () => {
+export const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, loading, error } = useFeature(projectId, featureId);
     const { refetch: projectRefetch } = useProject(projectId);
@@ -226,7 +226,13 @@ const FeatureView = () => {
                     />
                     <Route
                         path={`/projects/:projectId/features/:featureId/settings`}
-                        component={FeatureSettings}
+                        render={props => (
+                            <FeatureSettings
+                                {...props}
+                                projectId={projectId}
+                                featureId={featureId}
+                            />
+                        )}
                     />
                     <Dialogue
                         onClick={() => archiveToggle()}
@@ -253,5 +259,3 @@ const FeatureView = () => {
         />
     );
 };
-
-export default FeatureView;

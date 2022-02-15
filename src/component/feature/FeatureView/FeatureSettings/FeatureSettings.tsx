@@ -1,32 +1,35 @@
 import { useState } from 'react';
 import PageContent from '../../../common/PageContent';
 import { useStyles } from './FeatureSettings.styles';
-
 import { List, ListItem } from '@material-ui/core';
 import ConditionallyRender from '../../../common/ConditionallyRender';
-import FeatureSettingsMetadata from './FeatureSettingsMetadata/FeatureSettingsMetadata';
 import FeatureSettingsProject from './FeatureSettingsProject/FeatureSettingsProject';
+import { useHistory } from 'react-router-dom';
+import { Edit } from '@material-ui/icons';
+import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_FEATURE } from '../../../providers/AccessProvider/permissions';
 
-const METADATA = 'metadata';
 const PROJECT = 'project';
 
-const FeatureSettings = () => {
-    const styles = useStyles();
+interface IFeatureSettingsProps {
+    projectId: string;
+    featureId: string;
+}
 
-    const [settings, setSettings] = useState(METADATA);
+export const FeatureSettings = ({
+    projectId,
+    featureId,
+}: IFeatureSettingsProps) => {
+    const styles = useStyles();
+    const history = useHistory();
+
+    const [settings, setSettings] = useState(PROJECT);
 
     return (
         <PageContent headerContent="Settings" bodyClass={styles.bodyContainer}>
             <div className={styles.innerContainer}>
                 <div className={styles.listContainer}>
-                    <List className={styles.list}>
-                        <ListItem
-                            className={styles.listItem}
-                            button
-                            onClick={() => setSettings(METADATA)}
-                        >
-                            Metadata
-                        </ListItem>
+                    <List>
                         <ListItem
                             className={styles.listItem}
                             button
@@ -34,14 +37,26 @@ const FeatureSettings = () => {
                         >
                             Project
                         </ListItem>
+                        <ListItem className={styles.listItem}>
+                            Metadata
+                            <PermissionIconButton
+                                permission={UPDATE_FEATURE}
+                                tooltip={'Edit feature'}
+                                projectId={projectId}
+                                data-loading
+                                onClick={() =>
+                                    history.push(
+                                        `/projects/${projectId}/features/${featureId}/edit`
+                                    )
+                                }
+                            >
+                                <Edit />
+                            </PermissionIconButton>
+                        </ListItem>
                     </List>
                 </div>
 
                 <div className={styles.innerBodyContainer}>
-                    <ConditionallyRender
-                        condition={settings === METADATA}
-                        show={<FeatureSettingsMetadata />}
-                    />
                     <ConditionallyRender
                         condition={settings === PROJECT}
                         show={<FeatureSettingsProject />}
@@ -51,5 +66,3 @@ const FeatureSettings = () => {
         </PageContent>
     );
 };
-
-export default FeatureSettings;
