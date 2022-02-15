@@ -7,6 +7,7 @@ import Dialogue from '../../../../common/Dialogue';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import React from 'react';
 import useToast from '../../../../../hooks/useToast';
+import { formatUnknownError } from '../../../../../utils/format-unknown-error';
 
 interface IStaleDialogProps {
     open: boolean;
@@ -15,7 +16,7 @@ interface IStaleDialogProps {
 }
 
 const StaleDialog = ({ open, setOpen, stale }: IStaleDialogProps) => {
-    const { setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { patchFeatureToggle } = useFeatureApi();
     const { refetch } = useFeature(projectId, featureId);
@@ -35,10 +36,15 @@ const StaleDialog = ({ open, setOpen, stale }: IStaleDialogProps) => {
 
     const onSubmit = async (event: React.SyntheticEvent) => {
         event.stopPropagation();
-        const patch = [{ op: 'replace', path: '/stale', value: !stale }];
-        await patchFeatureToggle(projectId, featureId, patch);
-        refetch();
-        setOpen(false);
+
+        try {
+            const patch = [{ op: 'replace', path: '/stale', value: !stale }];
+            await patchFeatureToggle(projectId, featureId, patch);
+            refetch();
+            setOpen(false);
+        } catch (err: unknown) {
+            setToastApiError(formatUnknownError(err));
+        }
 
         if (stale) {
             setToastData({
