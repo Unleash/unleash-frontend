@@ -1,6 +1,6 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
 import { useState } from 'react';
-import { WatchLater, Archive, FileCopy, Label } from '@material-ui/icons';
+import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
@@ -29,7 +29,6 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
-import { truncateString } from '../../../utils/truncate-string';
 
 const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -116,7 +115,8 @@ const FeatureView = () => {
         return (
             <div>
                 <p>
-                    The feature <strong>{truncateString(featureId, 30)}</strong>{' '}
+                    The feature{' '}
+                    <strong className={styles.featureId}>{featureId}</strong>{' '}
                     does not exist. Do you want to &nbsp;
                     <Link
                         to={getCreateTogglePath(projectId, uiConfig.flags.E, {

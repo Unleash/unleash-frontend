@@ -24,7 +24,6 @@ import { getTogglePath } from '../../../utils/route-path-helpers';
 import useApplication from '../../../hooks/api/getters/useApplication/useApplication';
 import AccessContext from '../../../contexts/AccessContext';
 import { formatFullDateTimeWithLocale } from '../../common/util';
-import { truncateString } from '../../../utils/truncate-string';
 
 export const ApplicationView = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -87,9 +86,14 @@ export const ApplicationView = () => {
             </ListItemAvatar>
             <ListItemText
                 primary={
-                    <Link to={`${viewUrl}/${name}`}>{truncateString(name, 50)}</Link>
+                    <Link
+                        to={`${viewUrl}/${name}`}
+                        style={{ wordBreak: 'break-all' }}
+                    >
+                        {name}
+                    </Link>
                 }
-                secondary={truncateString(description, 60)}
+                secondary={description}
             />
         </ListItem>
     );

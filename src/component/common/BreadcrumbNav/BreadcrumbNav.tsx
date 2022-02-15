@@ -4,7 +4,6 @@ import ConditionallyRender from '../ConditionallyRender';
 import { useStyles } from './BreadcrumbNav.styles';
 import AccessContext from '../../../contexts/AccessContext';
 import { useContext } from 'react';
-import { truncateString } from '../../../utils/truncate-string';
 import StringTruncator from '../StringTruncator/StringTruncator';
 
 const BreadcrumbNav = () => {
