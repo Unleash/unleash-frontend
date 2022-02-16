@@ -27,14 +27,12 @@ export const ConstraintAccordion = ({
             show={
                 <ConstraintAccordionEdit
                     constraint={constraint}
-                    setEditMode={() => {}}
                     handleCancel={handleCancel}
                     handleSave={handleSave}
                 />
             }
             elseShow={
                 <ConstraintAccordionView
-                    setEditMode={() => {}}
                     constraint={constraint}
                     handleEdit={handleEdit}
                     handleDelete={handleDelete}

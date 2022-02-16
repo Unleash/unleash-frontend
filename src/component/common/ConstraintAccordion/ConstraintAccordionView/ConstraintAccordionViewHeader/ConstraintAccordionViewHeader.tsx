@@ -5,11 +5,11 @@ import { Delete, Edit } from '@material-ui/icons';
 import { IConstraint } from '../../../../../interfaces/strategy';
 
 import { useStyles } from '../../ConstraintAccordion.styles';
-import { truncate } from 'fs/promises';
 
 interface IConstraintAccordionViewHeader {
     constraint: IConstraint;
-    handleEdit: any;
+    handleDelete: () => void;
+    handleEdit: () => void;
 }
 
 export const ConstraintAccordionViewHeader = ({

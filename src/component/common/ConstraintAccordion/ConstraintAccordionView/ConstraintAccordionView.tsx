@@ -12,7 +12,8 @@ import { useStyles } from '../ConstraintAccordion.styles';
 
 interface IConstraintAccordionViewProps {
     constraint: IConstraint;
-    setEditMode: any;
+    handleDelete: () => void;
+    handleEdit: () => void;
 }
 
 export const ConstraintAccordionView = ({

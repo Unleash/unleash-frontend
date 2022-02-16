@@ -12,6 +12,7 @@ import {
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
     handleCancel: () => void;
+    handleSave: (constraint: IConstraint) => void;
 }
 
 export const ConstraintAccordionEdit = ({

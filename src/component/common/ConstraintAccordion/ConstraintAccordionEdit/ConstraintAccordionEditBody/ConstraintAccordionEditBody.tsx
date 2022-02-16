@@ -1,10 +1,10 @@
 import { Button, Chip } from '@material-ui/core';
 import { IConstraint } from '../../../../../interfaces/strategy';
-import PermissionButton from '../../../PermissionButton/PermissionButton';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
     setValues: (values: string[]) => void;
+    handleSave: (constraint: IConstraint) => void;
     onCancel: () => void;
 }
 
