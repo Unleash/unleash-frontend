@@ -160,7 +160,7 @@ const FeatureView = () => {
                                     component={Link}
                                     to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
                                 >
-                                    <FileCopy />
+                                    <FileCopy titleAccess="Copy" />
                                 </PermissionIconButton>
                                 <PermissionIconButton
                                     permission={DELETE_FEATURE}
@@ -169,7 +169,7 @@ const FeatureView = () => {
                                     data-loading
                                     onClick={() => setShowDelDialog(true)}
                                 >
-                                    <Archive />
+                                    <Archive titleAccess="Archive feature toggle" />
                                 </PermissionIconButton>
                                 <PermissionIconButton
                                     onClick={() => setOpenStaleDialog(true)}
@@ -178,7 +178,7 @@ const FeatureView = () => {
                                     tooltip="Toggle stale status"
                                     data-loading
                                 >
-                                    <WatchLater />
+                                    <WatchLater titleAccess="Toggle stale status" />
                                 </PermissionIconButton>
                                 <PermissionIconButton
                                     onClick={() => setOpenTagDialog(true)}
@@ -187,7 +187,7 @@ const FeatureView = () => {
                                     tooltip="Add tag"
                                     data-loading
                                 >
-                                    <Label />
+                                    <Label titleAccess="Add tag" />
                                 </PermissionIconButton>
                             </div>
                         </div>
