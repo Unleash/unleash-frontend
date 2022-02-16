@@ -45,6 +45,7 @@ import { EditAddon } from '../addons/EditAddon/EditAddon';
 import { CopyFeatureToggle } from '../feature/CopyFeature/CopyFeature';
 import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
+import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 
 export const routes = [
     // Project
@@ -515,6 +516,15 @@ export const routes = [
         title: 'reset-password',
         hidden: true,
         component: ForgottenPassword,
+        type: 'unprotected',
+        layout: 'standalone',
+        menu: {},
+    },
+    {
+        path: '/test',
+        title: 'reset-password',
+        hidden: true,
+        component: CreateStrategy,
         type: 'unprotected',
         layout: 'standalone',
         menu: {},
