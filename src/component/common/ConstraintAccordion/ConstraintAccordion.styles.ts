@@ -37,6 +37,17 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         width: '100%',
     },
+    chip: {
+        margin: '0 0.5rem 0.5rem 0',
+    },
     headerActions: { marginLeft: 'auto' },
+    accordionDetails: {
+        borderTop: `1px solid ${theme.palette.grey[300]}`,
+    },
+    valuesContainer: {
+        padding: '1rem 0rem',
+        maxHeight: '400px',
+        overflowY: 'scroll',
+    },
     summary: { border: 'none', padding: '0.25rem 1rem' },
 }));

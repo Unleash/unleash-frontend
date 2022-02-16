@@ -114,16 +114,19 @@ const FeatureStrategyAccordionBody: React.FC<
 
         return constraints.map((constraint, index) => {
             return (
-                <Constraint
-                    constraint={constraint}
-                    editCallback={() => {
-                        setShowConstraints(true);
-                    }}
-                    deleteCallback={() => {
-                        removeConstraint(index);
-                    }}
-                    key={`${constraint.contextName}-${index}`}
-                />
+                <>
+                    <ConstraintAccordion constraint={constraint} />
+                    <Constraint
+                        constraint={constraint}
+                        editCallback={() => {
+                            setShowConstraints(true);
+                        }}
+                        deleteCallback={() => {
+                            removeConstraint(index);
+                        }}
+                        key={`${constraint.contextName}-${index}`}
+                    />
+                </>
             );
         });
     };
