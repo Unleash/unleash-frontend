@@ -16,12 +16,16 @@ export const ConstraintAccordionViewBody = ({
 }: IConstraintAccordionViewBodyProps) => {
     const [filter, setFilter] = useState('');
     const styles = useStyles();
-
+    console.log(constraint);
     const renderConstraintValues = () => {
         return constraint.values
             .filter(value => value.includes(filter))
-            .map(value => (
-                <Chip key={value} label={value} className={styles.chip} />
+            .map((value, index) => (
+                <Chip
+                    key={`${value}-${index}`}
+                    label={value}
+                    className={styles.chip}
+                />
             ));
     };
 

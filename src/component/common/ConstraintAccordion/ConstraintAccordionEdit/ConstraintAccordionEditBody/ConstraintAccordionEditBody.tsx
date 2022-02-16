@@ -63,6 +63,7 @@ export const ConstraintAccordionEditBody = ({
                 <FreeTextInput
                     values={localConstraint.values}
                     removeValue={removeValue}
+                    setValues={setValues}
                 />
             );
         }

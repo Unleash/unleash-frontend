@@ -166,14 +166,13 @@ const FeatureStrategyAccordionBody: React.FC<
     };
 
     const renderConstraints = () => {
-        if (constraints.length === 0) {
+        if (localConstraints.length === 0) {
             return (
                 <p className={styles.noConstraints}>
                     No constraints configured
                 </p>
             );
         }
-
         return localConstraints.map((localConstraint, index) => {
             return (
                 <>
@@ -222,6 +221,7 @@ const FeatureStrategyAccordionBody: React.FC<
     const ON = uiConfig.flags[C];
 
     const addConstraint = () => {
+        console.log('ADDING', createConstraint());
         setLocalConstraints(prev => [...prev, createConstraint()]);
     };
 

@@ -42,7 +42,6 @@ export const ConstraintAccordionEdit = ({
     };
 
     const setValues = (values: string[]) => {
-        console.log('TRIGGERING WITH AN EMTPY GOD DAMN VALUE', values);
         setLocalConstraint({
             ...localConstraint,
             values,
@@ -52,8 +51,6 @@ export const ConstraintAccordionEdit = ({
     const onCancel = () => {
         setExpanded(false);
     };
-
-    console.log('LOCAL', localConstraint);
 
     return (
         <Accordion
