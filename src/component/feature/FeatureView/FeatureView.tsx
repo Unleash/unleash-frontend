@@ -16,7 +16,6 @@ import {
 import Dialogue from '../../common/Dialogue';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
-import FeatureMetrics from './FeatureMetrics/FeatureMetrics';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
@@ -29,6 +28,7 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
+import { FeatureMetrics } from './FeatureMetrics2/FeatureMetrics';
 
 const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
