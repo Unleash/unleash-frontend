@@ -1,19 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IConstraint } from '../../../../interfaces/strategy';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
 import { ConstraintAccordionEditHeader } from './ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
-
+import cloneDeep from 'lodash.clonedeep';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+} from '@material-ui/core';
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
+    handleCancel: () => void;
 }
 
 export const ConstraintAccordionEdit = ({
     constraint,
+    handleCancel,
+    handleSave,
 }: IConstraintAccordionEditProps) => {
-    const [localConstraint, setLocalConstraint] =
-        useState<IConstraint>(constraint);
+    const [localConstraint, setLocalConstraint] = useState<IConstraint>(
+        cloneDeep(constraint)
+    );
+    const [expanded, setExpanded] = useState(false);
     const styles = useStyles();
+
+    useEffect(() => {
+        setExpanded(true);
+    }, []);
 
     const setContextName = (contextName: string) => {
         setLocalConstraint({ ...localConstraint, contextName });
@@ -33,26 +47,39 @@ export const ConstraintAccordionEdit = ({
         });
     };
 
-    console.log(localConstraint);
+    const onCancel = () => {
+        setExpanded(false);
+    };
 
     return (
-        <div style={{ boxShadow: 'none' }} className={styles.accordion}>
-            <div className={styles.summary} style={{ padding: '1rem' }}>
+        <Accordion
+            style={{ boxShadow: 'none' }}
+            className={styles.accordion}
+            expanded={expanded}
+            TransitionProps={{
+                onExited: () => {
+                    handleCancel();
+                },
+            }}
+        >
+            <AccordionSummary className={styles.summary}>
                 <ConstraintAccordionEditHeader
                     localConstraint={localConstraint}
                     setContextName={setContextName}
                     setOperator={setOperator}
                 />
-            </div>
-            <div
+            </AccordionSummary>
+            <AccordionDetails
                 className={styles.accordionDetails}
                 style={{ padding: '1rem' }}
             >
                 <ConstraintAccordionEditBody
                     localConstraint={localConstraint}
                     setValues={setValues}
+                    onCancel={onCancel}
+                    handleSave={handleSave}
                 />
-            </div>
-        </div>
+            </AccordionDetails>
+        </Accordion>
     );
 };

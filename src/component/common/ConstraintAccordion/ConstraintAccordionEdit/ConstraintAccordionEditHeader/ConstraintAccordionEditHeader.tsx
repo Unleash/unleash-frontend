@@ -52,8 +52,13 @@ export const ConstraintAccordionEditHeader = ({
                     label="Context Field"
                     options={constraintNameOptions}
                     value={localConstraint.contextName || ''}
-                    onChange={evt => setContextName(evt.target.value)}
-                    style={{ marginRight: '2rem', minWidth: '150px' }}
+                    onChange={(
+                        e: React.ChangeEvent<{
+                            name?: string;
+                            value: unknown;
+                        }>
+                    ) => setContextName(e.target.value as string)}
+                    className={styles.headerSelect}
                 />
             </div>
             <div>
@@ -62,15 +67,26 @@ export const ConstraintAccordionEditHeader = ({
                     label="Operator"
                     options={constraintOperators}
                     value={localConstraint.operator}
-                    onChange={evt => setOperator(evt.target.value)}
-                    style={{ minWidth: '150px', marginRight: '2rem' }}
+                    onChange={(
+                        e: React.ChangeEvent<{
+                            name?: string;
+                            value: unknown;
+                        }>
+                    ) => setOperator(e.target.value as string)}
+                    className={styles.headerSelect}
                 />
             </div>
 
-            <p style={{ maxWidth: '400px' }}>{resolveText()}</p>
+            <p className={styles.headerText}>{resolveText()}</p>
 
-            <a href="http://docs.getunleash.ai/" style={{ marginLeft: 'auto' }}>
-                <Help style={{ fill: 'grey' }} />
+            <p className={styles.editingBadge}>Editing</p>
+            <a
+                href="http://docs.getunleash.ai/"
+                style={{ marginLeft: 'auto' }}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Help className={styles.help} />
             </a>
         </div>
     );

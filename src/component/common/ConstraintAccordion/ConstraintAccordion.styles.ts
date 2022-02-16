@@ -37,6 +37,19 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         width: '100%',
     },
+    editingBadge: {
+        borderRadius: '25px',
+        padding: '0.25rem 0.5rem',
+        backgroundColor: '#635DC5',
+        color: '#fff',
+        marginLeft: 'auto',
+        fontSize: '0.9rem',
+    },
+    help: {
+        fill: theme.palette.grey[600],
+    },
+    headerText: { maxWidth: '400px' },
+    headerSelect: { marginRight: '2rem', minWidth: '150px' },
     chip: {
         margin: '0 0.5rem 0.5rem 0',
     },

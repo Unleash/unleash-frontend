@@ -9,12 +9,13 @@ import { truncate } from 'fs/promises';
 
 interface IConstraintAccordionViewHeader {
     constraint: IConstraint;
-    setEditMode: any;
+    handleEdit: any;
 }
 
 export const ConstraintAccordionViewHeader = ({
     constraint,
-    setEditMode,
+    handleEdit,
+    handleDelete,
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
 
@@ -27,10 +28,10 @@ export const ConstraintAccordionViewHeader = ({
                 <p>30+ values. Expand to view</p>
             </div>
             <div className={styles.headerActions}>
-                <IconButton onClick={() => setEditMode(true)}>
+                <IconButton onClick={() => handleEdit()}>
                     <Edit />
                 </IconButton>
-                <IconButton onClick={() => setEditMode(false)}>
+                <IconButton onClick={() => handleDelete()}>
                     <Delete />
                 </IconButton>
             </div>

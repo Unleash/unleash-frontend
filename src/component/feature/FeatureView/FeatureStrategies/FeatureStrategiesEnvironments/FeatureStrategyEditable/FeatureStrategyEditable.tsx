@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { mutate } from 'swr';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
@@ -64,6 +64,23 @@ const FeatureStrategyEditable = ({
             revalidateOnFocus: false,
         }
     );
+
+    const mapConstraints = useCallback((constraint: IConstraint) => {
+        return {
+            constraint: { ...cloneDeep(constraint) },
+            metadata: {},
+        };
+    }, []);
+
+    const [localConstraints, setLocalConstraints] = useState(
+        strategy.constraints.map(mapConstraints)
+    );
+
+    //const strategyConstraintJSON = JSON.stringify(strategy.constraints);
+
+    useEffect(() => {
+        setLocalConstraints(strategy.constraints.map(mapConstraints));
+    }, [strategy.constraints, setLocalConstraints, mapConstraints]);
 
     const setStrategyParams = (parameters: IParameter) => {
         const updatedStrategy = { ...strategy };
@@ -135,8 +152,10 @@ const FeatureStrategyEditable = ({
                 constraints={cloneDeep(constraints)}
                 data-test={`${STRATEGY_ACCORDION_ID}-${strategy.name}`}
                 strategy={strategy}
-                setStrategyParams={setStrategyParams}
                 setStrategyConstraints={setStrategyConstraints}
+                setStrategyParams={setStrategyParams}
+                localConstraints={localConstraints}
+                setLocalConstraints={setLocalConstraints}
                 dirty={dirty[strategy.id]}
                 actions={
                     <Tooltip title="Delete strategy">

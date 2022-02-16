@@ -1,41 +1,43 @@
-import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-} from '@material-ui/core';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { useState } from 'react';
 import { IConstraint } from '../../../interfaces/strategy';
 import ConditionallyRender from '../ConditionallyRender';
 
-import { useStyles } from './ConstraintAccordion.styles';
 import { ConstraintAccordionEdit } from './ConstraintAccordionEdit/ConstraintAccordionEdit';
-import { ConstraintAccordionEditHeader } from './ConstraintAccordionEdit/ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
 import { ConstraintAccordionView } from './ConstraintAccordionView/ConstraintAccordionView';
-import { ConstraintAccordionViewBody } from './ConstraintAccordionView/ConstraintAccordionViewBody/ConstraintAccordionViewBody';
-import { ConstraintAccordionViewHeader } from './ConstraintAccordionView/ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
 
 interface IConstraintAccordionProps {
-    initialMode?: boolean;
+    editing: boolean;
     constraint: IConstraint;
+    handleEdit: () => void;
 }
 
 export const ConstraintAccordion = ({
-    initialMode = false,
     constraint,
+    editing,
+    handleEdit,
+    handleCancel,
+    handleDelete,
+    handleSave,
 }: IConstraintAccordionProps) => {
-    const [editMode, setEditMode] = useState(initialMode);
-
     if (!constraint) return null;
 
     return (
         <ConditionallyRender
-            condition={editMode}
-            show={<ConstraintAccordionEdit constraint={constraint} />}
+            condition={editing}
+            show={
+                <ConstraintAccordionEdit
+                    constraint={constraint}
+                    setEditMode={() => {}}
+                    handleCancel={handleCancel}
+                    handleSave={handleSave}
+                />
+            }
             elseShow={
                 <ConstraintAccordionView
-                    setEditMode={setEditMode}
+                    setEditMode={() => {}}
                     constraint={constraint}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
                 />
             }
         />

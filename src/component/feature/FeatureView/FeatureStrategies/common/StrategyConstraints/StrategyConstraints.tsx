@@ -55,6 +55,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
             contextName: contextNames[0],
             operator: 'IN',
             values: [],
+            editing: true,
         };
     };
 
@@ -115,7 +116,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
                     title="Add constraint"
                     variant="contained"
                     color="primary"
-                    onClick={onClick}
+                    onClick={addConstraint}
                 >
                     Add constraint
                 </Button>

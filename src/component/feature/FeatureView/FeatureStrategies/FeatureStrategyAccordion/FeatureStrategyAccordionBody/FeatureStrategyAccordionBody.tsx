@@ -27,6 +27,7 @@ import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
 import { ConstraintAccordion } from '../../../../../common/ConstraintAccordion/ConstraintAccordion';
+import cloneDeep from 'lodash.clonedeep';
 
 interface IFeatureStrategyAccordionBodyProps {
     strategy: IFeatureStrategy;
@@ -46,6 +47,8 @@ const FeatureStrategyAccordionBody: React.FC<
     constraints,
     updateConstraints,
     setStrategyConstraints,
+    localConstraints,
+    setLocalConstraints,
 }) => {
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
@@ -57,6 +60,8 @@ const FeatureStrategyAccordionBody: React.FC<
     const { activeEnvironment } = useContext(FeatureStrategiesUIContext);
 
     const { context } = useUnleashContext();
+
+    const contextNames = context.map(context => context.name);
 
     const resolveInputType = () => {
         switch (strategy?.name) {
@@ -70,8 +75,6 @@ const FeatureStrategyAccordionBody: React.FC<
                 return GeneralStrategy;
         }
     };
-
-    const toggleConstraints = () => setShowConstraints(prev => !prev);
 
     const resolveStrategyDefinition = () => {
         const definition = strategies.find(
@@ -103,6 +106,65 @@ const FeatureStrategyAccordionBody: React.FC<
         }
     };
 
+    const handleSave = (index: number) => (constraint: IConstraint) => {
+        // Update local state, then update the feature cache
+        const newConstraints = cloneDeep(localConstraints);
+        newConstraints[index] = { constraint, metadata: {} };
+
+        setLocalConstraints(newConstraints);
+        const formattedConstraints = newConstraints.map(
+            constraintsObject => constraintsObject.constraint
+        );
+        updateConstraints(formattedConstraints);
+    };
+
+    const handleEdit = (index: number) => {
+        setLocalConstraints(prev => {
+            const newArray = [...cloneDeep(prev)];
+
+            const constraint = {
+                ...prev[index],
+                metadata: { ...prev[index].metadata, editing: true },
+            };
+            newArray[index] = constraint;
+
+            return newArray;
+        });
+    };
+
+    const handleDelete = (index: number) => {
+        setLocalConstraints(prev => {
+            const newArray = [...cloneDeep(prev)];
+            newArray.splice(index, 1);
+
+            return newArray;
+        });
+    };
+
+    const handleCancel = (index: number) => {
+        const constraint = localConstraints[index];
+
+        if (constraint.metadata.new) {
+            setLocalConstraints(prev => {
+                const newArray = [...cloneDeep(prev)];
+                newArray.splice(index, 1);
+                return newArray;
+            });
+            return;
+        }
+        setLocalConstraints(prev => {
+            const newArray = [...cloneDeep(prev)];
+
+            const constraint = {
+                ...prev[index],
+                metadata: { ...prev[index].metadata, editing: false },
+            };
+            newArray[index] = constraint;
+
+            return newArray;
+        });
+    };
+
     const renderConstraints = () => {
         if (constraints.length === 0) {
             return (
@@ -112,11 +174,18 @@ const FeatureStrategyAccordionBody: React.FC<
             );
         }
 
-        return constraints.map((constraint, index) => {
+        return localConstraints.map((localConstraint, index) => {
             return (
                 <>
-                    <ConstraintAccordion constraint={constraint} />
-                    <Constraint
+                    <ConstraintAccordion
+                        constraint={localConstraint.constraint}
+                        editing={localConstraint.metadata.editing}
+                        handleSave={handleSave(index)}
+                        handleEdit={() => handleEdit(index)}
+                        handleDelete={() => handleDelete(index)}
+                        handleCancel={() => handleCancel(index)}
+                    />
+                    {/* <Constraint
                         constraint={constraint}
                         editCallback={() => {
                             setShowConstraints(true);
@@ -125,7 +194,7 @@ const FeatureStrategyAccordionBody: React.FC<
                             removeConstraint(index);
                         }}
                         key={`${constraint.contextName}-${index}`}
-                    />
+                    /> */}
                 </>
             );
         });
@@ -152,6 +221,24 @@ const FeatureStrategyAccordionBody: React.FC<
     const { parameters } = strategy;
     const ON = uiConfig.flags[C];
 
+    const addConstraint = () => {
+        setLocalConstraints(prev => [...prev, createConstraint()]);
+    };
+
+    const createConstraint = () => {
+        return {
+            constraint: {
+                contextName: contextNames[0],
+                operator: 'IN',
+                values: [],
+            },
+            metadata: {
+                editing: true,
+                new: true,
+            },
+        };
+    };
+
     const editable =
         hasAccess(UPDATE_FEATURE_STRATEGY, projectId, activeEnvironment.name) ||
         hasAccess(CREATE_FEATURE_STRATEGY, projectId, activeEnvironment.name);
@@ -164,11 +251,10 @@ const FeatureStrategyAccordionBody: React.FC<
                     <>
                         <p className={styles.constraintHeader}>Constraints</p>
                         {renderConstraints()}
-                        <ConstraintAccordion />
 
                         <PermissionButton
                             className={styles.addConstraintBtn}
-                            onClick={toggleConstraints}
+                            onClick={addConstraint}
                             variant={'text'}
                             data-test={ADD_CONSTRAINT_ID}
                             permission={[
@@ -184,7 +270,7 @@ const FeatureStrategyAccordionBody: React.FC<
                 }
             />
 
-            <Dialogue
+            {/* <Dialogue
                 title="Define constraints"
                 open={showConstraints}
                 onClick={saveConstraintsLocally}
@@ -200,7 +286,7 @@ const FeatureStrategyAccordionBody: React.FC<
                     constraintError={constraintError}
                     setConstraintError={setConstraintError}
                 />
-            </Dialogue>
+            </Dialogue> */}
 
             <Type
                 parameters={parameters}

@@ -6,9 +6,10 @@ import {
 import { ExpandMore } from '@material-ui/icons';
 import { IConstraint } from '../../../../interfaces/strategy';
 
-import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/ConstraintAccordionViewBody';
 import { ConstraintAccordionViewHeader } from './ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
+import { useStyles } from '../ConstraintAccordion.styles';
+
 interface IConstraintAccordionViewProps {
     constraint: IConstraint;
     setEditMode: any;
@@ -16,7 +17,8 @@ interface IConstraintAccordionViewProps {
 
 export const ConstraintAccordionView = ({
     constraint,
-    setEditMode,
+    handleEdit,
+    handleDelete,
 }: IConstraintAccordionViewProps) => {
     const styles = useStyles();
     return (
@@ -27,7 +29,8 @@ export const ConstraintAccordionView = ({
             >
                 <ConstraintAccordionViewHeader
                     constraint={constraint}
-                    setEditMode={setEditMode}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
                 />
             </AccordionSummary>
             <AccordionDetails className={styles.accordionDetails}>

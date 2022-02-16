@@ -38,6 +38,8 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     parameters,
     constraints,
     setStrategyConstraints,
+    localConstraints,
+    setLocalConstraints,
     actions,
     children,
     ...rest
@@ -89,6 +91,8 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                         updateConstraints={updateConstraints}
                         constraints={constraints}
                         setStrategyConstraints={setStrategyConstraints}
+                        localConstraints={localConstraints}
+                        setLocalConstraints={setLocalConstraints}
                     >
                         {children}
                     </FeatureStrategyAccordionBody>
