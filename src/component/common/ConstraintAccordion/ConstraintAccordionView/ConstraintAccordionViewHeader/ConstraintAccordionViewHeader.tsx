@@ -25,7 +25,7 @@ export const ConstraintAccordionViewHeader = ({
                 <ConstraintIcon />
                 <StringTruncator text={constraint.contextName} maxWidth="200" />
                 <p className={styles.operator}>{constraint.operator}</p>
-                <p>30+ values. Expand to view</p>
+                <p>{constraint.values.length}+ values. Expand to view</p>
             </div>
             <div className={styles.headerActions}>
                 <IconButton onClick={() => handleEdit()}>

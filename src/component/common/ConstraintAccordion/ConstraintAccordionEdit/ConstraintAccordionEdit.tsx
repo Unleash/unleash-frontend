@@ -31,7 +31,7 @@ export const ConstraintAccordionEdit = ({
     }, []);
 
     const setContextName = (contextName: string) => {
-        setLocalConstraint({ ...localConstraint, contextName });
+        setLocalConstraint({ ...localConstraint, contextName, values: [] });
     };
 
     const setOperator = (operator: string) => {
@@ -41,7 +41,8 @@ export const ConstraintAccordionEdit = ({
         });
     };
 
-    const setValues = values => {
+    const setValues = (values: string[]) => {
+        console.log('TRIGGERING WITH AN EMTPY GOD DAMN VALUE', values);
         setLocalConstraint({
             ...localConstraint,
             values,
@@ -51,6 +52,8 @@ export const ConstraintAccordionEdit = ({
     const onCancel = () => {
         setExpanded(false);
     };
+
+    console.log('LOCAL', localConstraint);
 
     return (
         <Accordion
@@ -72,7 +75,7 @@ export const ConstraintAccordionEdit = ({
             </AccordionSummary>
             <AccordionDetails
                 className={styles.accordionDetails}
-                style={{ padding: '1rem' }}
+                style={{ padding: '0' }}
             >
                 <ConstraintAccordionEditBody
                     localConstraint={localConstraint}

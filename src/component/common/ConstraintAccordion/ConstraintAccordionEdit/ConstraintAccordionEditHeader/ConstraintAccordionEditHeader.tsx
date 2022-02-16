@@ -48,6 +48,7 @@ export const ConstraintAccordionEditHeader = ({
             <ConstraintIcon />
             <div>
                 <GeneralSelect
+                    id="context-field-select"
                     name="contextName"
                     label="Context Field"
                     options={constraintNameOptions}
@@ -57,12 +58,15 @@ export const ConstraintAccordionEditHeader = ({
                             name?: string;
                             value: unknown;
                         }>
-                    ) => setContextName(e.target.value as string)}
+                    ) => {
+                        setContextName(e.target.value as string);
+                    }}
                     className={styles.headerSelect}
                 />
             </div>
             <div>
                 <GeneralSelect
+                    id="operator-select"
                     name="operator"
                     label="Operator"
                     options={constraintOperators}
