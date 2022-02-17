@@ -23,6 +23,8 @@ export const createChartOptions = (
                 callbacks: {
                     title: items => formatTimestamp(items[0].parsed.x),
                 },
+                // Sort tooltip items in the same order as the lines in the chart.
+                itemSort: (a, b) => b.parsed.y - a.parsed.y,
             },
             legend: {
                 position: 'bottom',
