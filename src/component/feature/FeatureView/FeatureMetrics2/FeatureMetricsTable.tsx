@@ -24,8 +24,8 @@ export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
-        return [...metrics].sort((a, b) => {
-            return b.timestamp.localeCompare(a.timestamp);
+        return [...metrics].sort((metricA, metricB) => {
+            return metricB.timestamp.localeCompare(metricA.timestamp);
         });
     }, [metrics]);
 
@@ -45,20 +45,20 @@ export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {sortedMetrics.map(m => (
-                    <TableRow key={m.timestamp}>
+                {sortedMetrics.map(metric => (
+                    <TableRow key={metric.timestamp}>
                         <TableCell>
                             {formatFullDateTimeWithLocale(
-                                m.timestamp,
+                                metric.timestamp,
                                 locationSettings.locale
                             )}
                         </TableCell>
-                        <TableCell hidden={smallScreen}>{m.appName}</TableCell>
+                        <TableCell hidden={smallScreen}>{metric.appName}</TableCell>
                         <TableCell hidden={smallScreen}>
-                            {m.environment}
+                            {metric.environment}
                         </TableCell>
-                        <TableCell align="right">{m.yes + m.no}</TableCell>
-                        <TableCell align="right">{m.yes}</TableCell>
+                        <TableCell align="right">{metric.yes + metric.no}</TableCell>
+                        <TableCell align="right">{metric.yes}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>

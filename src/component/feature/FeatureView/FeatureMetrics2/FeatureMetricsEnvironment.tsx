@@ -23,12 +23,12 @@ export const FeatureMetricsEnvironment = ({
 
     return (
         <FeatureMetricsChips>
-            {Array.from(environments).map(e => (
-                <FeatureMetricsChipsItem key={e}>
+            {Array.from(environments).map(env => (
+                <FeatureMetricsChipsItem key={env}>
                     <Chip
-                        label={e}
-                        onClick={onClick(e)}
-                        aria-pressed={e === environment}
+                        label={env}
+                        onClick={onClick(env)}
+                        aria-pressed={env === environment}
                     />
                 </FeatureMetricsChipsItem>
             ))}

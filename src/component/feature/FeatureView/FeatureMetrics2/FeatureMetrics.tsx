@@ -38,17 +38,17 @@ export const FeatureMetrics = () => {
         useQueryStringState('application');
 
     const environments = useMemo(() => {
-        return new Set(cachedMetrics?.map(m => m.environment));
+        return new Set(cachedMetrics?.map(metric => metric.environment));
     }, [cachedMetrics]);
 
     const applications = useMemo(() => {
-        return new Set(cachedMetrics?.map(m => m.appName));
+        return new Set(cachedMetrics?.map(metric => metric.appName));
     }, [cachedMetrics]);
 
     const filteredMetrics = useMemo(() => {
         return cachedMetrics
-            ?.filter(m => m.environment === environment)
-            .filter(m => m.appName === application);
+            ?.filter(metric => metric.environment === environment)
+            .filter(metric => metric.appName === application);
     }, [cachedMetrics, environment, application]);
 
     if (!filteredMetrics) {

@@ -23,12 +23,12 @@ export const FeatureMetricsApplication = ({
 
     return (
         <FeatureMetricsChips>
-            {Array.from(applications).map(a => (
-                <FeatureMetricsChipsItem key={a}>
+            {Array.from(applications).map(app => (
+                <FeatureMetricsChipsItem key={app}>
                     <Chip
-                        label={a}
-                        onClick={onClick(a)}
-                        aria-pressed={a === application}
+                        label={app}
+                        onClick={onClick(app)}
+                        aria-pressed={app === application}
                     />
                 </FeatureMetricsChipsItem>
             ))}

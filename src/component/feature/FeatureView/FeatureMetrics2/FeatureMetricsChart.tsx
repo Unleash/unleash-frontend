@@ -36,8 +36,8 @@ export const FeatureMetricsChart = ({ metrics }: IFeatureMetricsChartProps) => {
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
-        return [...metrics].sort((a, b) => {
-            return a.timestamp.localeCompare(b.timestamp);
+        return [...metrics].sort((metricA, metricB) => {
+            return metricA.timestamp.localeCompare(metricB.timestamp);
         });
     }, [metrics]);
 
@@ -94,12 +94,12 @@ const createChartPoints = (
     locationSettings: ILocationSettings,
     y: (m: IFeatureMetricsRaw) => number
 ): IPoint[] => {
-    const points = metrics.map(m => ({
-        x: m.timestamp,
-        y: y(m),
+    const points = metrics.map(metric => ({
+        x: metric.timestamp,
+        y: y(metric),
     }));
 
-    return points.filter(p => p.y > 0);
+    return points.filter(point => point.y > 0);
 };
 
 const createChartOptions = (
