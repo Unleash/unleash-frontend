@@ -1,5 +1,5 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
-import { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
@@ -203,31 +203,33 @@ const FeatureView = () => {
                             </Tabs>
                         </div>
                     </div>
-                    <Route
-                        exact
-                        path={`/projects/:projectId/features/:featureId`}
-                        component={FeatureOverview}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/strategies`}
-                        component={FeatureStrategies}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/metrics`}
-                        component={FeatureMetrics}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/logs`}
-                        component={FeatureLog}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/variants`}
-                        component={FeatureVariants}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/settings`}
-                        component={FeatureSettings}
-                    />
+                    <Suspense fallback={null}>
+                        <Route
+                            exact
+                            path={`/projects/:projectId/features/:featureId`}
+                            component={FeatureOverview}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/strategies`}
+                            component={FeatureStrategies}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/metrics`}
+                            component={FeatureMetricsLazy}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/logs`}
+                            component={FeatureLog}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/variants`}
+                            component={FeatureVariants}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/settings`}
+                            component={FeatureSettings}
+                        />
+                    </Suspense>
                     <Dialogue
                         onClick={() => archiveToggle()}
                         open={showDelDialog}
@@ -253,5 +255,9 @@ const FeatureView = () => {
         />
     );
 };
+
+const FeatureMetricsLazy = React.lazy(
+    () => import('./FeatureMetrics2/FeatureMetrics')
+);
 
 export default FeatureView;

@@ -88,3 +88,5 @@ export const FeatureMetrics = () => {
         </PageContent>
     );
 };
+
+export default FeatureMetrics;
