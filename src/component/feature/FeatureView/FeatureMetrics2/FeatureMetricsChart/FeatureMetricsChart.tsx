@@ -43,7 +43,7 @@ export const FeatureMetricsChart = ({ metrics }: IFeatureMetricsChartProps) => {
             <Line
                 options={options}
                 data={data}
-                aria-label="Metrics chart"
+                aria-label="A line chart with series for all requests, positive requests, and negative requests."
                 aria-describedby={FEATURE_METRICS_TABLE_ID}
             />
         </div>
