@@ -14,10 +14,12 @@ export const createChartOptions = (
         locale: locationSettings.locale,
         responsive: true,
         maintainAspectRatio: false,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
         plugins: {
             tooltip: {
-                mode: 'index',
-                intersect: false,
                 callbacks: {
                     title: items => formatTimestamp(items[0].parsed.x),
                 },
@@ -45,6 +47,12 @@ export const createChartOptions = (
                 ticks: {
                     callback: (_, i, data) => formatTimestamp(data[i].value),
                 },
+            },
+        },
+        elements: {
+            point: {
+                radius: 0,
+                hoverRadius: 6,
             },
         },
     };
