@@ -23,14 +23,16 @@ import { FEATURE_METRICS_TABLE_ID } from './FeatureMetricsTable';
 import 'chartjs-adapter-date-fns';
 import { formatTimeWithLocale } from '../../../common/util';
 
-interface Point {
+interface IPoint {
     x: string;
     y: number;
 }
 
-export const FeatureMetricsChart = (props: {
+interface IFeatureMetricsChartProps {
     metrics: IFeatureMetricsRaw[];
-}) => {
+}
+
+export const FeatureMetricsChart = (props: IFeatureMetricsChartProps) => {
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
@@ -62,7 +64,7 @@ export const FeatureMetricsChart = (props: {
 const createChartData = (
     metrics: IFeatureMetricsRaw[],
     locationSettings: ILocationSettings
-): ChartData<'line', Point[], string> => {
+): ChartData<'line', IPoint[], string> => {
     const requestsSeries = {
         label: 'Requests',
         borderColor: theme.palette.primary.light,
@@ -91,7 +93,7 @@ const createChartPoints = (
     metrics: IFeatureMetricsRaw[],
     locationSettings: ILocationSettings,
     y: (m: IFeatureMetricsRaw) => number
-): Point[] => {
+): IPoint[] => {
     const points = metrics.map(m => ({
         x: m.timestamp,
         y: y(m),

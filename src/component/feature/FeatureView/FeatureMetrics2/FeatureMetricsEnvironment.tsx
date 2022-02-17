@@ -4,11 +4,15 @@ import {
     FeatureMetricsChipsItem,
 } from './FeatureMetricsChips';
 
-export const FeatureMetricsEnvironment = (props: {
+interface IFeatureMetricsEnvironmentProps {
     environments: Set<string>;
     environment?: string;
     setEnvironment: (value: string) => void;
-}) => {
+}
+
+export const FeatureMetricsEnvironment = (
+    props: IFeatureMetricsEnvironmentProps
+) => {
     const onClick = (environment: string) => () => {
         if (props.environments.has(environment)) {
             props.setEnvironment(environment);

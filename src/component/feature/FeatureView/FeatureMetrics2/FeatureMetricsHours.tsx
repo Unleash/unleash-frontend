@@ -4,10 +4,12 @@ import GeneralSelect, {
 
 export type FeatureMetricsHour = 1 | 24 | 48;
 
-export const FeatureMetricsHours = (props: {
+interface IFeatureMetricsHoursProps {
     hoursBack: number;
     setHoursBack: (value: FeatureMetricsHour) => void;
-}) => {
+}
+
+export const FeatureMetricsHours = (props: IFeatureMetricsHoursProps) => {
     const onChange: OnGeneralSelectChange = event => {
         props.setHoursBack(parseFeatureMetricsHour(event.target.value));
     };

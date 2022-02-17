@@ -4,10 +4,12 @@ import { calculatePercentage } from '../../../../utils/calculate-percentage';
 import { useStyles } from './FeatureMetricsStats.styles';
 import { Grid } from '@material-ui/core';
 
-export const FeatureMetricsStatsRaw = (props: {
+interface IFeatureMetricsStatsRawProps {
     metrics: IFeatureMetricsRaw[];
     hoursBack: number;
-}) => {
+}
+
+export const FeatureMetricsStatsRaw = (props: IFeatureMetricsStatsRawProps) => {
     const totalYes = useMemo(() => {
         return props.metrics.reduce((acc, m) => acc + m.yes, 0);
     }, [props.metrics]);
@@ -25,11 +27,13 @@ export const FeatureMetricsStatsRaw = (props: {
     );
 };
 
-export const FeatureMetricsStats = (props: {
+interface IFeatureMetricsStatsProps {
     totalYes: number;
     totalNo: number;
     hoursBack: number;
-}) => {
+}
+
+export const FeatureMetricsStats = (props: IFeatureMetricsStatsProps) => {
     const styles = useStyles();
 
     const hoursSuffix =

@@ -14,9 +14,11 @@ import { useMemo } from 'react';
 
 export const FEATURE_METRICS_TABLE_ID = 'feature-metrics-table-id';
 
-export const FeatureMetricsTable = (props: {
+interface IFeatureMetricsTableProps {
     metrics: IFeatureMetricsRaw[];
-}) => {
+}
+
+export const FeatureMetricsTable = (props: IFeatureMetricsTableProps) => {
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const { locationSettings } = useLocationSettings();

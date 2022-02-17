@@ -4,11 +4,15 @@ import {
 } from './FeatureMetricsChips';
 import { Chip } from '@material-ui/core';
 
-export const FeatureMetricsApplication = (props: {
+interface IFeatureMetricsApplicationProps {
     applications: Set<string>;
     application?: string;
     setApplication: (value: string) => void;
-}) => {
+}
+
+export const FeatureMetricsApplication = (
+    props: IFeatureMetricsApplicationProps
+) => {
     const onClick = (application: string) => () => {
         if (props.applications.has(application)) {
             props.setApplication(application);

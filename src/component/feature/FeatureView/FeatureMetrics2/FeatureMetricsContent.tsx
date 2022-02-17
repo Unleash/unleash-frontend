@@ -5,10 +5,12 @@ import { FeatureMetricsChart } from './FeatureMetricsChart';
 import { FeatureMetricsEmpty } from './FeatureMetricsEmpty';
 import { Box } from '@material-ui/core';
 
-export const FeatureMetricsContent = (props: {
+interface IFeatureMetricsContentProps {
     metrics: IFeatureMetricsRaw[];
     hoursBack: number;
-}) => {
+}
+
+export const FeatureMetricsContent = (props: IFeatureMetricsContentProps) => {
     if (props.metrics.length === 0) {
         return <FeatureMetricsEmpty />;
     }
