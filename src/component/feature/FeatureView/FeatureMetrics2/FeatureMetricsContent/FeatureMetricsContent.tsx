@@ -21,7 +21,7 @@ export const FeatureMetricsContent = ({
     return (
         <>
             <Box>
-                <FeatureMetricsChart metrics={metrics} />
+                <FeatureMetricsChart metrics={metrics} hoursBack={hoursBack} />
             </Box>
             <Box mt={4}>
                 <FeatureMetricsStatsRaw

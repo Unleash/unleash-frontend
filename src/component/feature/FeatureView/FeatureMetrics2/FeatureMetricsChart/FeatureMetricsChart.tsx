@@ -9,6 +9,7 @@ import {
     LineElement,
     PointElement,
     TimeScale,
+    Title,
     Tooltip,
 } from 'chart.js';
 import { useLocationSettings } from '../../../../../hooks/useLocationSettings';
@@ -19,9 +20,13 @@ import { createChartOptions } from './createChartOptions';
 
 interface IFeatureMetricsChartProps {
     metrics: IFeatureMetricsRaw[];
+    hoursBack: number;
 }
 
-export const FeatureMetricsChart = ({ metrics }: IFeatureMetricsChartProps) => {
+export const FeatureMetricsChart = ({
+    hoursBack,
+    metrics,
+}: IFeatureMetricsChartProps) => {
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
@@ -31,15 +36,15 @@ export const FeatureMetricsChart = ({ metrics }: IFeatureMetricsChartProps) => {
     }, [metrics]);
 
     const options = useMemo(() => {
-        return createChartOptions(locationSettings);
-    }, [locationSettings]);
+        return createChartOptions(hoursBack, locationSettings);
+    }, [hoursBack, locationSettings]);
 
     const data = useMemo(() => {
         return createChartData(sortedMetrics, locationSettings);
     }, [sortedMetrics, locationSettings]);
 
     return (
-        <div style={{ height: 300 }}>
+        <div style={{ height: 400 }}>
             <Line
                 options={options}
                 data={data}
@@ -58,5 +63,6 @@ ChartJS.register(
     LineElement,
     TimeScale,
     Legend,
-    Tooltip
+    Tooltip,
+    Title
 );

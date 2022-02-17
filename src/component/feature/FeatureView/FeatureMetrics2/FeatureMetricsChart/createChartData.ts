@@ -14,7 +14,7 @@ export const createChartData = (
     locationSettings: ILocationSettings
 ): ChartData<'line', IPoint[], string> => {
     const requestsSeries = {
-        label: 'Requests',
+        label: 'Total requests',
         borderColor: theme.palette.primary.light,
         backgroundColor: theme.palette.primary.light,
         data: createChartPoints(metrics, locationSettings, m => m.yes + m.no),

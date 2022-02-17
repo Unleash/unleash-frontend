@@ -87,7 +87,7 @@ export const FeatureMetrics = () => {
                     />
                 </Grid>
             </Grid>
-            <Box mt={4}>
+            <Box mt={2}>
                 <FeatureMetricsContent
                     metrics={filteredMetrics}
                     hoursBack={hoursBack}

@@ -4,6 +4,7 @@ import { ChartOptions, defaults } from 'chart.js';
 import { formatTimeWithLocale } from '../../../../common/util';
 
 export const createChartOptions = (
+    hoursBack: number,
     locationSettings: ILocationSettings
 ): ChartOptions<'line'> => {
     const formatTimestamp = (value: string | number) => {
@@ -27,25 +28,28 @@ export const createChartOptions = (
                 itemSort: (a, b) => b.parsed.y - a.parsed.y,
             },
             legend: {
-                position: 'bottom',
+                position: 'top',
                 align: 'end',
+            },
+            title: {
+                text: formatChartLabel(hoursBack),
+                position: 'bottom',
+                display: true,
             },
         },
         scales: {
             y: {
                 type: 'linear',
-                ticks: {
-                    precision: 0,
+                title: {
+                    display: true,
+                    text: 'Number of requests',
                 },
+                ticks: { precision: 0 },
             },
             x: {
                 type: 'time',
-                time: {
-                    unit: 'hour',
-                },
-                grid: {
-                    display: false,
-                },
+                time: { unit: 'hour' },
+                grid: { display: false },
                 ticks: {
                     callback: (_, i, data) => formatTimestamp(data[i].value),
                 },
@@ -58,6 +62,12 @@ export const createChartOptions = (
             },
         },
     };
+};
+
+const formatChartLabel = (hoursBack: number): string => {
+    return hoursBack === 1
+        ? 'Requests in the last hour'
+        : `Requests in the last ${hoursBack} hours`;
 };
 
 // Set the default font for ticks, legends, tooltips, etc.
