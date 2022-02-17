@@ -1,8 +1,8 @@
-import { FeatureMetricsTable } from './FeatureMetricsTable';
-import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
-import { FeatureMetricsStatsRaw } from './FeatureMetricsStats';
-import { FeatureMetricsChart } from './FeatureMetricsChart';
-import { FeatureMetricsEmpty } from './FeatureMetricsEmpty';
+import { FeatureMetricsTable } from '../FeatureMetricsTable/FeatureMetricsTable';
+import { IFeatureMetricsRaw } from '../../../../../interfaces/featureToggle';
+import { FeatureMetricsStatsRaw } from '../FeatureMetricsStats/FeatureMetricsStatsRaw';
+import { FeatureMetricsChart } from '../FeatureMetricsChart/FeatureMetricsChart';
+import { FeatureMetricsEmpty } from '../FeatureMetricsEmpty/FeatureMetricsEmpty';
 import { Box } from '@material-ui/core';
 
 interface IFeatureMetricsContentProps {

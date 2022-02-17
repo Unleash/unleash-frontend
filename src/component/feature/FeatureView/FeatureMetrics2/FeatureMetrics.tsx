@@ -3,12 +3,12 @@ import { IFeatureViewParams } from '../../../../interfaces/params';
 import { useFeatureMetricsRaw } from '../../../../hooks/api/getters/useFeatureMetricsRaw/useFeatureMetricsRaw';
 import PageContent from '../../../common/PageContent';
 import { useEffect, useMemo, useState } from 'react';
-import { FeatureMetricsEnvironment } from './FeatureMetricsEnvironment';
-import { FeatureMetricsApplication } from './FeatureMetricsApplication';
-import { FeatureMetricsHours } from './FeatureMetricsHours';
+import { FeatureMetricsEnvironment } from './FeatureMetricsEnvironment/FeatureMetricsEnvironment';
+import { FeatureMetricsApplication } from './FeatureMetricsApplication/FeatureMetricsApplication';
+import { FeatureMetricsHours } from './FeatureMetricsHours/FeatureMetricsHours';
 import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
 import { Box, Grid } from '@material-ui/core';
-import { FeatureMetricsContent } from './FeatureMetricsContent';
+import { FeatureMetricsContent } from './FeatureMetricsContent/FeatureMetricsContent';
 import { useQueryStringNumberState } from '../../../../hooks/useQueryStringNumberState';
 import { useQueryStringState } from '../../../../hooks/useQueryStringState';
 

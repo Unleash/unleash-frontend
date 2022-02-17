@@ -1,6 +1,7 @@
 import GeneralSelect, {
     OnGeneralSelectChange,
-} from '../../../common/GeneralSelect/GeneralSelect';
+} from '../../../../common/GeneralSelect/GeneralSelect';
+import { parseFeatureMetricsHour } from './parseFeatureMetricsHour';
 
 export type FeatureMetricsHour = 1 | 24 | 48;
 
@@ -28,17 +29,6 @@ export const FeatureMetricsHours = ({
             fullWidth
         />
     );
-};
-
-const parseFeatureMetricsHour = (value: unknown): FeatureMetricsHour => {
-    switch (value) {
-        case '1':
-            return 1;
-        case '24':
-            return 24;
-        default:
-            return 48;
-    }
 };
 
 const hourOptions: { key: `${FeatureMetricsHour}`; label: string }[] = [

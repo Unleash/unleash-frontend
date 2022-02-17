@@ -1,6 +1,6 @@
 import { IFeatureEnvironmentMetrics } from '../../../../../../../interfaces/featureToggle';
 import { useStyles } from '../FeatureOverviewEnvironment.styles';
-import { FeatureMetricsStats } from '../../../../FeatureMetrics2/FeatureMetricsStats';
+import { FeatureMetricsStats } from '../../../../FeatureMetrics2/FeatureMetricsStats/FeatureMetricsStats';
 
 interface IFeatureOverviewEnvironmentFooterProps {
     environmentMetric?: IFeatureEnvironmentMetrics;

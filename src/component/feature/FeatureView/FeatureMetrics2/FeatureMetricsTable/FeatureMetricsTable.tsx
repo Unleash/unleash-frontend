@@ -1,4 +1,4 @@
-import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
+import { IFeatureMetricsRaw } from '../../../../../interfaces/featureToggle';
 import {
     Table,
     TableBody,
@@ -8,8 +8,8 @@ import {
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
-import { useLocationSettings } from '../../../../hooks/useLocationSettings';
-import { formatFullDateTimeWithLocale } from '../../../common/util';
+import { useLocationSettings } from '../../../../../hooks/useLocationSettings';
+import { formatFullDateTimeWithLocale } from '../../../../common/util';
 import { useMemo } from 'react';
 
 export const FEATURE_METRICS_TABLE_ID = 'feature-metrics-table-id';

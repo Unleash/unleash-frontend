@@ -1,8 +1,6 @@
 import { Chip } from '@material-ui/core';
-import {
-    FeatureMetricsChips,
-    FeatureMetricsChipsItem,
-} from './FeatureMetricsChips';
+import { FeatureMetricsChips } from '../FeatureMetricsChips/FeatureMetricsChips';
+import { FeatureMetricsChipsItem } from '../FeatureMetricsChips/FeatureMetricsChipsItem';
 
 interface IFeatureMetricsEnvironmentProps {
     environments: Set<string>;

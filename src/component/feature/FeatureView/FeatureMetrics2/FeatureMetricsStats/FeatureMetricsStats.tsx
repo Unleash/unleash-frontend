@@ -1,34 +1,6 @@
-import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
-import { useMemo } from 'react';
-import { calculatePercentage } from '../../../../utils/calculate-percentage';
+import { calculatePercentage } from '../../../../../utils/calculate-percentage';
 import { useStyles } from './FeatureMetricsStats.styles';
 import { Grid } from '@material-ui/core';
-
-interface IFeatureMetricsStatsRawProps {
-    metrics: IFeatureMetricsRaw[];
-    hoursBack: number;
-}
-
-export const FeatureMetricsStatsRaw = ({
-    metrics,
-    hoursBack,
-}: IFeatureMetricsStatsRawProps) => {
-    const totalYes = useMemo(() => {
-        return metrics.reduce((acc, m) => acc + m.yes, 0);
-    }, [metrics]);
-
-    const totalNo = useMemo(() => {
-        return metrics.reduce((acc, m) => acc + m.no, 0);
-    }, [metrics]);
-
-    return (
-        <FeatureMetricsStats
-            totalYes={totalYes}
-            totalNo={totalNo}
-            hoursBack={hoursBack}
-        />
-    );
-};
 
 interface IFeatureMetricsStatsProps {
     totalYes: number;
