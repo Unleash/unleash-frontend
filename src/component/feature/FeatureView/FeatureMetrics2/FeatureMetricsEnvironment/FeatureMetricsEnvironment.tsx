@@ -20,7 +20,7 @@ export const FeatureMetricsEnvironment = ({
     };
 
     return (
-        <FeatureMetricsChips>
+        <FeatureMetricsChips title="Environments">
             {Array.from(environments).map(env => (
                 <FeatureMetricsChipsItem key={env}>
                     <Chip

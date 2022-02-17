@@ -57,25 +57,33 @@ export const FeatureMetrics = () => {
 
     return (
         <PageContent headerContent="">
-            <Grid container component="header" spacing={2}>
-                <Grid item xs={12} md={4}>
+            <Grid
+                container
+                component="header"
+                spacing={2}
+            >
+                <Grid item xs={12} md={5}>
+                    {environments.size > 0 && (
+                        <FeatureMetricsEnvironment
+                            environments={environments}
+                            environment={environment}
+                            setEnvironment={setEnvironment}
+                        />
+                    )}
+                </Grid>
+                <Grid item xs={12} md={5}>
+                    {applications.size > 0 && (
+                        <FeatureMetricsApplication
+                            applications={applications}
+                            application={application}
+                            setApplication={setApplication}
+                        />
+                    )}
+                </Grid>
+                <Grid item xs={12} md={2}>
                     <FeatureMetricsHours
                         hoursBack={hoursBack}
                         setHoursBack={setHoursBack}
-                    />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <FeatureMetricsEnvironment
-                        environments={environments}
-                        environment={environment}
-                        setEnvironment={setEnvironment}
-                    />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <FeatureMetricsApplication
-                        applications={applications}
-                        application={application}
-                        setApplication={setApplication}
                     />
                 </Grid>
             </Grid>

@@ -20,7 +20,7 @@ export const FeatureMetricsApplication = ({
     };
 
     return (
-        <FeatureMetricsChips>
+        <FeatureMetricsChips title="Applications">
             {Array.from(applications).map(app => (
                 <FeatureMetricsChipsItem key={app}>
                     <Chip
