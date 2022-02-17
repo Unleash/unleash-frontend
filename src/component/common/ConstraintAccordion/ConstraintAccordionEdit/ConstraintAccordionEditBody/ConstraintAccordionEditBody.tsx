@@ -5,11 +5,11 @@ import { IConstraint } from '../../../../../interfaces/strategy';
 import ConditionallyRender from '../../../ConditionallyRender';
 import { FreeTextInput } from './FreeTextInput/FreeTextInput';
 import { RestrictiveLegalValues } from './RestrictiveLegalValues/RestrictiveLegalValues';
+import { CANCEL, SAVE } from '../ConstraintAccordionEdit';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
     setValues: (values: string[]) => void;
-    handleSave: (constraint: IConstraint) => void;
     triggerTransition: () => void;
     setAction: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -71,18 +71,15 @@ export const ConstraintAccordionEditBody = ({
     };
 
     const validateConstraint = () => {
-        if (localConstraint.values.length > 0) {
-            return true;
-        }
-        return false;
+        return localConstraint.values.length > 0;
     };
 
-    const onSubmit = event => {
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const valid = validateConstraint();
 
         if (valid) {
-            setAction('save');
+            setAction(SAVE);
             triggerTransition();
             return;
         }
@@ -119,7 +116,7 @@ export const ConstraintAccordionEditBody = ({
                     </Button>
                     <Button
                         onClick={() => {
-                            setAction('cancel');
+                            setAction(CANCEL);
                             triggerTransition();
                         }}
                         style={{ marginLeft: '0.5rem', minWidth: '125px' }}

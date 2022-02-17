@@ -15,6 +15,9 @@ interface IConstraintAccordionEditProps {
     handleSave: (constraint: IConstraint) => void;
 }
 
+export const CANCEL = 'cancel';
+export const SAVE = 'save';
+
 export const ConstraintAccordionEdit = ({
     constraint,
     handleCancel,
@@ -28,7 +31,9 @@ export const ConstraintAccordionEdit = ({
     const styles = useStyles();
 
     useEffect(() => {
-        setExpanded(true);
+        // Setting expanded to true on mount will cause the accordion
+        // animation to take effect and transition the expanded accordion in
+        triggerTransition();
     }, []);
 
     const setContextName = (contextName: string) => {
@@ -60,10 +65,9 @@ export const ConstraintAccordionEdit = ({
             expanded={expanded}
             TransitionProps={{
                 onExited: () => {
-                    console.log(action);
-                    if (action === 'cancel') {
+                    if (action === CANCEL) {
                         handleCancel();
-                    } else if (action === 'save') {
+                    } else if (action === SAVE) {
                         handleSave(localConstraint);
                     }
                 },
@@ -74,6 +78,7 @@ export const ConstraintAccordionEdit = ({
                     localConstraint={localConstraint}
                     setContextName={setContextName}
                     setOperator={setOperator}
+                    action={action}
                 />
             </AccordionSummary>
             <AccordionDetails

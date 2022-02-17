@@ -55,7 +55,6 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
             contextName: contextNames[0],
             operator: 'IN',
             values: [],
-            editing: true,
         };
     };
 

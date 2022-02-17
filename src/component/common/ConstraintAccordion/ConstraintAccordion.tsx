@@ -9,6 +9,9 @@ interface IConstraintAccordionProps {
     editing: boolean;
     constraint: IConstraint;
     handleEdit: () => void;
+    handleCancel: () => void;
+    handleDelete: () => void;
+    handleSave: () => void;
 }
 
 export const ConstraintAccordion = ({

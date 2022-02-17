@@ -7,11 +7,14 @@ import useUnleashContext from '../../../../../hooks/api/getters/useUnleashContex
 import GeneralSelect from '../../../GeneralSelect/GeneralSelect';
 import { ConstraintIcon } from '../../ConstraintIcon';
 import { Help } from '@material-ui/icons';
+import ConditionallyRender from '../../../ConditionallyRender';
+import Loader from '../../../Loader/Loader';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
     setContextName: (contextName: string) => void;
     setOperator: (operator: string) => void;
+    action: string;
 }
 
 const constraintOperators = [
@@ -23,12 +26,13 @@ export const ConstraintAccordionEditHeader = ({
     localConstraint,
     setContextName,
     setOperator,
+    action,
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
     const { context } = useUnleashContext();
+    console.log(context);
 
     if (!context) return null;
-
     const constraintNameOptions = context.map(context => {
         return { key: context.name, label: context.name };
     });
@@ -82,8 +86,12 @@ export const ConstraintAccordionEditHeader = ({
             </div>
 
             <p className={styles.headerText}>{resolveText()}</p>
+            <ConditionallyRender
+                condition={action === 'save'}
+                show={<p className={styles.editingBadge}>Updating...</p>}
+                elseShow={<p className={styles.editingBadge}>Editing</p>}
+            />
 
-            <p className={styles.editingBadge}>Editing</p>
             <a
                 href="http://docs.getunleash.ai/"
                 style={{ marginLeft: 'auto' }}

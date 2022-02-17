@@ -1,4 +1,5 @@
 import { Button, Chip, TextField } from '@material-ui/core';
+import { getValueByPointer } from 'fast-json-patch';
 import { useState } from 'react';
 
 interface IFreeTextInputProps {
@@ -29,10 +30,13 @@ export const FreeTextInput = ({
 
     const handleAddValues = () => {
         if (inputValues.includes(',')) {
-            const newValues = inputValues.split(',').filter(values => values);
+            const newValues = inputValues
+                .split(',')
+                .filter(values => values)
+                .map(value => value.trim());
             setValues([...values, ...newValues]);
         } else {
-            setValues([...values, inputValues]);
+            setValues([...values, inputValues.trim()]);
         }
         setInputValues('');
     };

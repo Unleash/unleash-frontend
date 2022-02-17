@@ -31,7 +31,7 @@ const ContextList = () => {
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const smallScreen = useMediaQuery('(max-width:700px)');
     const [name, setName] = useState();
-    const { context, refetch } = useUnleashContext();
+    const { context, refetchUnleashContext } = useUnleashContext();
     const { removeContext } = useContextsApi();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
@@ -40,7 +40,7 @@ const ContextList = () => {
     const onDeleteContext = async name => {
         try {
             await removeContext(name);
-            refetch();
+            refetchUnleashContext();
             setToastData({
                 type: 'success',
                 title: 'Successfully deleted context',
