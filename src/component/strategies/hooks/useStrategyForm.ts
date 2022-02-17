@@ -1,62 +1,52 @@
 import { useEffect, useState } from 'react';
-import useContextsApi from '../../../hooks/api/actions/useContextsApi/useContextsApi';
 
 export const useStrategyForm = (
-    initialcontextName = '',
-    initialcontextDesc = '',
-    initialLegalValues = [] as string[],
-    initialStickiness = false
+    initialStrategyName = '',
+    initialStrategyDesc = '',
+    initialParams = []
 ) => {
-    const [contextName, setContextName] = useState(initialcontextName);
-    const [contextDesc, setContextDesc] = useState(initialcontextDesc);
-    const [legalValues, setLegalValues] = useState(initialLegalValues);
-    const [stickiness, setStickiness] = useState(initialStickiness);
+    const [strategyName, setStrategyName] = useState(initialStrategyName);
+    const [strategyDesc, setStrategyDesc] = useState(initialStrategyDesc);
+    const [params, setParams] = useState(initialParams);
     const [errors, setErrors] = useState({});
-    const { validateContextName } = useContextsApi();
 
     useEffect(() => {
-        setContextName(initialcontextName);
-    }, [initialcontextName]);
+        setStrategyName(initialStrategyName);
+    }, [initialStrategyName]);
 
     useEffect(() => {
-        setContextDesc(initialcontextDesc);
-    }, [initialcontextDesc]);
+        setStrategyDesc(initialStrategyDesc);
+    }, [initialStrategyDesc]);
 
     useEffect(() => {
-        setLegalValues(initialLegalValues);
-        // eslint-disable-next-line
-    }, [initialLegalValues.length]);
+        setParams(initialParams);
+    }, [JSON.stringify(initialParams)]);
 
-    useEffect(() => {
-        setStickiness(initialStickiness);
-    }, [initialStickiness]);
-
-    const getContextPayload = () => {
+    const getStrategyPayload = () => {
         return {
-            name: contextName,
-            description: contextDesc,
-            legalValues,
-            stickiness,
+            name: strategyName,
+            description: strategyDesc,
+            parameters: params,
         };
     };
 
     const NAME_EXISTS_ERROR = 'A context field with that name already exist';
 
     const validateNameUniqueness = async () => {
-        try {
-            await validateContextName(contextName);
-        } catch (e: any) {
-            if (e.toString().includes(NAME_EXISTS_ERROR)) {
-                setErrors(prev => ({
-                    ...prev,
-                    name: 'A context field with that name already exist',
-                }));
-            }
-        }
+        // try {
+        //     await validatestrategyName(strategyName);
+        // } catch (e: any) {
+        //     if (e.toString().includes(NAME_EXISTS_ERROR)) {
+        //         setErrors(prev => ({
+        //             ...prev,
+        //             name: 'A context field with that name already exist',
+        //         }));
+        //     }
+        // }
     };
 
     const validateName = () => {
-        if (contextName.length === 0) {
+        if (strategyName.length === 0) {
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
             return false;
         }
@@ -68,15 +58,13 @@ export const useStrategyForm = (
     };
 
     return {
-        contextName,
-        contextDesc,
-        legalValues,
-        stickiness,
-        setContextName,
-        setContextDesc,
-        setLegalValues,
-        setStickiness,
-        getContextPayload,
+        strategyName,
+        strategyDesc,
+        params,
+        setStrategyName,
+        setStrategyDesc,
+        setParams,
+        getStrategyPayload,
         validateNameUniqueness,
         validateName,
         setErrors,

@@ -1,0 +1,114 @@
+import { Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
+import { useStyles } from './StrategyParameter.styles';
+import GeneralSelect from '../../../../common/GeneralSelect/GeneralSelect';
+import Input from '../../../../common/Input/Input';
+import ConditionallyRender from '../../../../common/ConditionallyRender';
+
+const paramTypesOptions = [
+    {
+        key: 'string',
+        label: 'string',
+        description: 'A string is a collection of characters',
+    },
+    {
+        key: 'percentage',
+        label: 'percentage',
+        description:
+            'Percentage is used when you want to make your feature visible to a process part of your customers',
+    },
+    {
+        key: 'list',
+        label: 'list',
+        description:
+            'A list is used when you want to define several parameters that must be met before your feature becomes visible to your customers',
+    },
+    {
+        key: 'number',
+        label: 'number',
+        description:
+            'Number is used when you have one or more digits that must be met for your feature to be visible to your customers',
+    },
+    {
+        key: 'boolean',
+        label: 'boolean',
+        description:
+            'A boolean value represents a truth value, which is either true or false',
+    },
+];
+
+export const StrategyParameter = ({
+    set,
+    input = { name: '', description: '', type: '', required: false },
+    index,
+    params,
+    setParams,
+}) => {
+    const styles = useStyles();
+    const handleTypeChange = event => {
+        set({ type: event.target.value });
+    };
+
+    const renderParamTypeDescription = () => {
+        return paramTypesOptions.find(param => param.key === input.type)
+            ?.description;
+    };
+    return (
+        <div className={styles.paramsContainer}>
+            <hr className={styles.divider} />
+            <ConditionallyRender
+                condition={index === 0}
+                show={
+                    <p className={styles.input}>
+                        The parameters define how the strategy will look like.
+                    </p>
+                }
+            />
+            <div className={styles.nameContainer}>
+                <Input
+                    label={`Parameter name ${index + 1}*`}
+                    onChange={({ target }) => set({ name: target.value }, true)}
+                    value={input.name}
+                    className={styles.name}
+                />
+                <IconButton
+                    onClick={() => {
+                        setParams(params.filter((e, i) => i !== index));
+                    }}
+                >
+                    <Delete />
+                </IconButton>
+            </div>
+            <GeneralSelect
+                label="Type*"
+                name="type"
+                options={paramTypesOptions}
+                value={input.type}
+                onChange={handleTypeChange}
+                id={`prop-type-${index}-select`}
+                className={styles.input}
+            />
+            <p className={styles.typeDescription}>
+                {renderParamTypeDescription()}
+            </p>
+            <Input
+                rows={2}
+                multiline
+                label={`Parameter name ${index + 1} description`}
+                onChange={({ target }) => set({ description: target.value })}
+                value={input.description}
+                className={styles.description}
+            />
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={!!input.required}
+                        onChange={() => set({ required: !input.required })}
+                    />
+                }
+                label="Required"
+                className={styles.checkboxLabel}
+            />
+        </div>
+    );
+};

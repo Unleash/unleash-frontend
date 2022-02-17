@@ -5,7 +5,7 @@ import PageContent from '../../common/PageContent/PageContent';
 import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
 import { styles as commonStyles, FormButtons } from '../../common';
 import { trim } from '../../common/util';
-import StrategyParameters from './StrategyParameters/StrategyParameters';
+import { StrategyParameters } from './StrategyParameters/StrategyParameters';
 import { useHistory } from 'react-router-dom';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import { IStrategy } from '../../../interfaces/strategy';
