@@ -4,6 +4,7 @@ import { FeatureMetricsStatsRaw } from '../FeatureMetricsStats/FeatureMetricsSta
 import { FeatureMetricsChart } from '../FeatureMetricsChart/FeatureMetricsChart';
 import { FeatureMetricsEmpty } from '../FeatureMetricsEmpty/FeatureMetricsEmpty';
 import { Box } from '@material-ui/core';
+import theme from '../../../../../themes/main-theme';
 
 interface IFeatureMetricsContentProps {
     metrics: IFeatureMetricsRaw[];
@@ -20,7 +21,7 @@ export const FeatureMetricsContent = ({
 
     return (
         <>
-            <Box>
+            <Box borderTop={1} pt={2} mt={3} borderColor={theme.palette.grey[200]}>
                 <FeatureMetricsChart metrics={metrics} hoursBack={hoursBack} />
             </Box>
             <Box mt={4}>

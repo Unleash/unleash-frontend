@@ -43,8 +43,13 @@ export const createChartOptions = (
             },
             title: {
                 text: formatChartLabel(hoursBack),
-                position: 'bottom',
+                position: 'top',
+                align: 'start',
                 display: true,
+                font: {
+                    size: 16,
+                    weight: '400',
+                },
             },
         },
         scales: {
