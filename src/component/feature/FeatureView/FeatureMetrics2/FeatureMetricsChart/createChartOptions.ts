@@ -40,6 +40,10 @@ export const createChartOptions = (
             legend: {
                 position: 'top',
                 align: 'end',
+                labels: {
+                    boxWidth: 12,
+                    boxHeight: 12,
+                }
             },
             title: {
                 text: formatChartLabel(hoursBack),
