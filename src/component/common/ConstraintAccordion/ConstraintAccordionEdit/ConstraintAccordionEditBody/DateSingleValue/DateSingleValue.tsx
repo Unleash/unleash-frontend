@@ -1,5 +1,7 @@
 import { TextField } from '@material-ui/core';
+import { useEffect } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
+import formatISO from 'date-fns/formatISO';
 
 interface IDateSingleValueProps {
     setValue: (value: string) => void;
@@ -8,10 +10,15 @@ interface IDateSingleValueProps {
 
 export const DateSingleValue = ({ setValue, value }: IDateSingleValueProps) => {
     const parseValue = (value?: string) => {
-        console.log(value);
         if (!value) return;
         return value.substring(0, value.length - 1);
     };
+
+    useEffect(() => {
+        if (!value) {
+            setValue(new Date().toISOString());
+        }
+    }, []);
 
     return (
         <>
@@ -20,15 +27,10 @@ export const DateSingleValue = ({ setValue, value }: IDateSingleValueProps) => {
                 id="date"
                 label="Date"
                 type="datetime-local"
-                defaultValue={
-                    parseValue(value) || parseValue(new Date().toISOString())
-                }
                 value={parseValue(value)}
                 variant="outlined"
                 size="small"
                 onChange={e => {
-                    console.log(e.target.value);
-                    console.log(new Date(e.target.value).toISOString());
                     setValue(new Date(e.target.value).toISOString());
                 }}
                 InputLabelProps={{

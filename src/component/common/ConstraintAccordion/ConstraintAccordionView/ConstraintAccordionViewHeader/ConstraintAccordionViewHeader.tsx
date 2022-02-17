@@ -1,5 +1,5 @@
 import StringTruncator from '../../../StringTruncator/StringTruncator';
-import { IconButton } from '@material-ui/core';
+import { Chip, IconButton } from '@material-ui/core';
 import { ConstraintIcon } from '../../ConstraintIcon';
 import { Delete, Edit } from '@material-ui/icons';
 import { IConstraint } from '../../../../../interfaces/strategy';
@@ -26,11 +26,19 @@ export const ConstraintAccordionViewHeader = ({
         <div className={styles.headerContainer}>
             <div className={styles.headerMetaInfo}>
                 <ConstraintIcon />
-                <StringTruncator text={constraint.contextName} maxWidth="200" />
-                <p className={styles.operator}>{constraint.operator}</p>
+                <div style={{ minWidth: '175px' }}>
+                    <StringTruncator
+                        text={constraint.contextName}
+                        maxWidth="175px"
+                    />
+                </div>
+
+                <div style={{ minWidth: '220px' }}>
+                    <p className={styles.operator}>{constraint.operator}</p>
+                </div>
                 <ConditionallyRender
                     condition={nonExpandable}
-                    show={<p>{constraint.value}</p>}
+                    show={<Chip label={constraint.value} />}
                     elseShow={
                         <p>
                             {constraint.values.length}+ values. Expand to view

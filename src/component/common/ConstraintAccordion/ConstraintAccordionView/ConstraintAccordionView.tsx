@@ -10,7 +10,11 @@ import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/Const
 import { ConstraintAccordionViewHeader } from './ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { oneOf } from '../../../../utils/one-of';
-import { numOperators, semVerOperators } from '../../../../constants/operators';
+import {
+    dateOperators,
+    numOperators,
+    semVerOperators,
+} from '../../../../constants/operators';
 import ConditionallyRender from '../../ConditionallyRender';
 
 interface IConstraintAccordionViewProps {
@@ -27,7 +31,7 @@ export const ConstraintAccordionView = ({
     const styles = useStyles();
 
     const nonExpandable = oneOf(
-        [...semVerOperators, ...numOperators],
+        [...semVerOperators, ...numOperators, ...dateOperators],
         constraint.operator
     );
 
