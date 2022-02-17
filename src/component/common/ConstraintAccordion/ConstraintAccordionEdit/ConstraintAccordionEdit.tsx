@@ -33,7 +33,7 @@ export const ConstraintAccordionEdit = ({
     useEffect(() => {
         // Setting expanded to true on mount will cause the accordion
         // animation to take effect and transition the expanded accordion in
-        triggerTransition();
+        setExpanded(true);
     }, []);
 
     const setContextName = (contextName: string) => {
@@ -44,6 +44,7 @@ export const ConstraintAccordionEdit = ({
         setLocalConstraint(prev => ({
             ...prev,
             operator,
+            values: [],
         }));
     };
 
@@ -51,6 +52,17 @@ export const ConstraintAccordionEdit = ({
         setLocalConstraint(prev => ({
             ...prev,
             values,
+        }));
+    };
+
+    const setValue = (value: string) => {
+        setLocalConstraint(prev => ({ ...prev, value }));
+    };
+
+    const setCaseInsensitive = () => {
+        setLocalConstraint(prev => ({
+            ...prev,
+            caseInsensitive: !prev.caseInsensitive,
         }));
     };
 
@@ -88,6 +100,8 @@ export const ConstraintAccordionEdit = ({
                 <ConstraintAccordionEditBody
                     localConstraint={localConstraint}
                     setValues={setValues}
+                    setValue={setValue}
+                    setCaseInsensitive={setCaseInsensitive}
                     triggerTransition={triggerTransition}
                     setAction={setAction}
                 />

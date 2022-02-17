@@ -6,12 +6,24 @@ import ConditionallyRender from '../../../ConditionallyRender';
 import { FreeTextInput } from './FreeTextInput/FreeTextInput';
 import { RestrictiveLegalValues } from './RestrictiveLegalValues/RestrictiveLegalValues';
 import { CANCEL, SAVE } from '../ConstraintAccordionEdit';
+import {
+    numOperators,
+    semVerOperators,
+    inOperators,
+    stringOperators,
+} from '../../../../../constants/operators';
+import { oneOf } from '../../../../../utils/one-of';
+import { exists } from '../../../../../utils/exists';
+import { CaseInsensitive } from './CaseInsensitive/CaseInsensitive';
+import { SingleValue } from './SingleValue/SingleValue';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
     setValues: (values: string[]) => void;
     triggerTransition: () => void;
+    setValue: (value: string) => void;
     setAction: React.Dispatch<React.SetStateAction<string>>;
+    setCaseInsensitive: () => void;
 }
 
 const resolveContextDefinition = (context: any[], contextName: string) => {
@@ -24,7 +36,9 @@ const resolveContextDefinition = (context: any[], contextName: string) => {
 export const ConstraintAccordionEditBody = ({
     localConstraint,
     setValues,
+    setValue,
     triggerTransition,
+    setCaseInsensitive,
     setAction,
 }: IConstraintAccordionBody) => {
     const [error, setError] = useState('');
@@ -48,9 +62,8 @@ export const ConstraintAccordionEditBody = ({
 
     const resolveInputType = () => {
         if (
-            contextDefinition.legalValues &&
-            (localConstraint.operator === 'IN' ||
-                localConstraint.operator === 'NOT_IN')
+            exists(contextDefinition.legalValues) &&
+            oneOf(inOperators, localConstraint.operator)
         ) {
             return (
                 <RestrictiveLegalValues
@@ -59,7 +72,26 @@ export const ConstraintAccordionEditBody = ({
                     setValues={setValues}
                 />
             );
-        } else {
+        } else if (
+            exists(contextDefinition.legalValues) &&
+            oneOf(stringOperators, localConstraint.operator)
+        ) {
+            return (
+                <>
+                    <CaseInsensitive
+                        setCaseInsensitive={setCaseInsensitive}
+                        caseInsensitive={Boolean(
+                            localConstraint.caseInsensitive
+                        )}
+                    />
+                    <RestrictiveLegalValues
+                        legalValues={contextDefinition.legalValues}
+                        values={localConstraint.values}
+                        setValues={setValues}
+                    />
+                </>
+            );
+        } else if (oneOf(inOperators, localConstraint.operator)) {
             return (
                 <FreeTextInput
                     values={localConstraint.values}
@@ -67,11 +99,46 @@ export const ConstraintAccordionEditBody = ({
                     setValues={setValues}
                 />
             );
+        } else if (oneOf(stringOperators, localConstraint.operator)) {
+            return (
+                <>
+                    {' '}
+                    <CaseInsensitive
+                        setCaseInsensitive={setCaseInsensitive}
+                        caseInsensitive={Boolean(
+                            localConstraint.caseInsensitive
+                        )}
+                    />
+                    <FreeTextInput
+                        values={localConstraint.values}
+                        removeValue={removeValue}
+                        setValues={setValues}
+                    />
+                </>
+            );
+        } else if (oneOf(numOperators, localConstraint.operator)) {
+            return (
+                <SingleValue
+                    setValue={setValue}
+                    value={localConstraint.value}
+                    type="number"
+                />
+            );
+        } else if (oneOf(semVerOperators, localConstraint.operator)) {
+            return (
+                <SingleValue
+                    setValue={setValue}
+                    value={localConstraint.value}
+                    type="semver"
+                />
+            );
         }
     };
 
     const validateConstraint = () => {
-        return localConstraint.values.length > 0;
+        return (
+            localConstraint.values.length > 0 || Boolean(localConstraint.value)
+        );
     };
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {

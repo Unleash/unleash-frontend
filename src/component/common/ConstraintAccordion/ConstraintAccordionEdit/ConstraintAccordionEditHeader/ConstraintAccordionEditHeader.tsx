@@ -8,7 +8,7 @@ import GeneralSelect from '../../../GeneralSelect/GeneralSelect';
 import { ConstraintIcon } from '../../ConstraintIcon';
 import { Help } from '@material-ui/icons';
 import ConditionallyRender from '../../../ConditionallyRender';
-import Loader from '../../../Loader/Loader';
+import { allOperators } from '../../../../../constants/operators';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
@@ -17,10 +17,9 @@ interface IConstraintAccordionViewHeader {
     action: string;
 }
 
-const constraintOperators = [
-    { key: 'IN', label: 'IN' },
-    { key: 'NOT_IN', label: 'NOT_IN' },
-];
+const constraintOperators = allOperators.map(operator => {
+    return { key: operator, label: operator };
+});
 
 export const ConstraintAccordionEditHeader = ({
     localConstraint,
@@ -30,7 +29,6 @@ export const ConstraintAccordionEditHeader = ({
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
     const { context } = useUnleashContext();
-    console.log(context);
 
     if (!context) return null;
     const constraintNameOptions = context.map(context => {

@@ -1,8 +1,9 @@
-import { Chip, InputAdornment, TextField } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { Chip, FormControlLabel, Switch } from '@material-ui/core';
 import { useState } from 'react';
+import { stringOperators } from '../../../../../constants/operators';
 
 import { IConstraint } from '../../../../../interfaces/strategy';
+import { oneOf } from '../../../../../utils/one-of';
 import ConditionallyRender from '../../../ConditionallyRender';
 import { useStyles } from '../../ConstraintAccordion.styles';
 import { ConstraintValueSearch } from '../../ConstraintValueSearch/ConstraintValueSearch';
@@ -29,19 +30,43 @@ export const ConstraintAccordionViewBody = ({
             ));
     };
 
-    const renderSearchfield = () => {
-        return <ConstraintValueSearch filter={filter} setFilter={setFilter} />;
+    const renderSingleValue = () => {
+        if (!Boolean(constraint.value)) return null;
+
+        return <Chip label={constraint.value} className={styles.chip} />;
     };
 
     return (
         <div>
             <ConditionallyRender
                 condition={Boolean(constraint.values.length)}
-                show={renderSearchfield()}
+                show={
+                    <ConstraintValueSearch
+                        filter={filter}
+                        setFilter={setFilter}
+                    />
+                }
+            />
+
+            <ConditionallyRender
+                condition={oneOf(stringOperators, constraint.operator)}
+                show={
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                disabled
+                                checked={constraint.caseInsensitive}
+                                color="primary"
+                            />
+                        }
+                        label={'Case insensitive'}
+                    />
+                }
             />
 
             <div className={styles.valuesContainer}>
                 {renderConstraintValues()}
+                {renderSingleValue()}
             </div>
         </div>
     );

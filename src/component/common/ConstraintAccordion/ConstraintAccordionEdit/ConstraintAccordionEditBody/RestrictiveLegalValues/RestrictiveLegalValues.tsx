@@ -6,6 +6,7 @@ interface IRestrictiveLegalValuesProps {
     legalValues: string[];
     values: string[];
     setValues: (values: string[]) => void;
+    beforeValues?: JSX.Element;
 }
 
 type ValuesMap = { [key: string]: Boolean };
@@ -65,6 +66,7 @@ export const RestrictiveLegalValues = ({
 
     return (
         <>
+            <h3>Add values</h3>
             <ConstraintValueSearch filter={filter} setFilter={setFilter} />
             {renderLegalValueInputs()}
         </>

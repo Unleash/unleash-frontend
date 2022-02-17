@@ -16,6 +16,8 @@ export interface IStrategy {
 
 export interface IConstraint {
     values: string[];
+    value?: string;
+    caseInsensitive?: boolean;
     operator: string;
     contextName: string;
 }

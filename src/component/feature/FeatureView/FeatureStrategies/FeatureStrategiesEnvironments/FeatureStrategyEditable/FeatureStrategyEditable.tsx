@@ -67,7 +67,11 @@ const FeatureStrategyEditable = ({
 
     const mapConstraints = useCallback((constraint: IConstraint) => {
         return {
-            constraint: { ...cloneDeep(constraint) },
+            constraint: {
+                caseInsensitive: false,
+                value: '',
+                ...cloneDeep(constraint),
+            },
             metadata: {},
         };
     }, []);

@@ -6,6 +6,7 @@ interface IFreeTextInputProps {
     values: string[];
     removeValue: (index: number) => void;
     setValues: (values: string[]) => void;
+    beforeValues?: JSX.Element;
 }
 
 export const FreeTextInput = ({

@@ -221,7 +221,6 @@ const FeatureStrategyAccordionBody: React.FC<
     const ON = uiConfig.flags[C];
 
     const addConstraint = () => {
-        console.log('ADDING', createConstraint());
         setLocalConstraints(prev => [...prev, createConstraint()]);
     };
 
@@ -231,6 +230,8 @@ const FeatureStrategyAccordionBody: React.FC<
                 contextName: contextNames[0],
                 operator: 'IN',
                 values: [],
+                value: '',
+                caseInsensitive: false,
             },
             metadata: {
                 editing: true,
