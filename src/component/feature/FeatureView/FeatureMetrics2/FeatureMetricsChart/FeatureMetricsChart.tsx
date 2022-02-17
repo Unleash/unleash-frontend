@@ -24,8 +24,8 @@ interface IFeatureMetricsChartProps {
 }
 
 export const FeatureMetricsChart = ({
-    hoursBack,
     metrics,
+    hoursBack,
 }: IFeatureMetricsChartProps) => {
     const { locationSettings } = useLocationSettings();
 
@@ -36,8 +36,8 @@ export const FeatureMetricsChart = ({
     }, [metrics]);
 
     const options = useMemo(() => {
-        return createChartOptions(hoursBack, locationSettings);
-    }, [hoursBack, locationSettings]);
+        return createChartOptions(sortedMetrics, hoursBack, locationSettings);
+    }, [sortedMetrics, hoursBack, locationSettings]);
 
     const data = useMemo(() => {
         return createChartData(sortedMetrics, locationSettings);

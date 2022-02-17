@@ -2,8 +2,10 @@ import { ILocationSettings } from '../../../../../hooks/useLocationSettings';
 import 'chartjs-adapter-date-fns';
 import { ChartOptions, defaults } from 'chart.js';
 import { formatTimeWithLocale } from '../../../../common/util';
+import { IFeatureMetricsRaw } from '../../../../../interfaces/featureToggle';
 
 export const createChartOptions = (
+    metrics: IFeatureMetricsRaw[],
     hoursBack: number,
     locationSettings: ILocationSettings
 ): ChartOptions<'line'> => {
@@ -57,7 +59,9 @@ export const createChartOptions = (
         },
         elements: {
             point: {
-                radius: 0,
+                // If we only have one point, always show a dot (since there's no line).
+                // If we have multiple points, only show dots on hover (looks better).
+                radius: metrics.length === 1 ? 6 : 0,
                 hoverRadius: 6,
             },
         },
