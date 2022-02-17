@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
@@ -19,6 +19,7 @@ import { ADD_NEW_STRATEGY_SAVE_ID } from '../../../../../../testIds';
 import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { scrollToTop } from '../../../../../common/util';
 import useToast from '../../../../../../hooks/useToast';
+import { IConstraint } from '../../../../../../interfaces/strategy';
 
 const FeatureStrategiesConfigure = () => {
     const history = useHistory();
@@ -42,13 +43,30 @@ const FeatureStrategiesConfigure = () => {
         setFeatureCache,
     } = useContext(FeatureStrategiesUIContext);
 
-    const [strategyConstraints, setStrategyConstraints] = useState(
-        configureNewStrategy.constraints
+    const mapConstraints = useCallback((constraint: IConstraint) => {
+        return {
+            constraint: {
+                caseInsensitive: false,
+                value: '',
+                values: [],
+                ...cloneDeep(constraint),
+            },
+            metadata: {},
+        };
+    }, []);
+
+    const [localConstraints, setLocalConstraints] = useState(
+        configureNewStrategy.constraints.map(mapConstraints)
     );
+
     const [strategyParams, setStrategyParams] = useState(
         configureNewStrategy.parameters
     );
     const { addStrategyToFeature, loading } = useFeatureStrategyApi();
+
+    const setStrategyConstraints = (constraints: IConstraint[]) => {
+        setConfigureNewStrategy(prev => ({ ...prev, constraints }));
+    };
 
     const handleCancel = () => {
         setConfigureNewStrategy(null);
@@ -66,7 +84,9 @@ const FeatureStrategiesConfigure = () => {
     const handleSubmit = async () => {
         const strategyPayload = {
             ...configureNewStrategy,
-            constraints: strategyConstraints,
+            constraints: localConstraints.map(
+                localConstraints => localConstraints.constraint
+            ),
             parameters: strategyParams,
         };
 
@@ -103,7 +123,7 @@ const FeatureStrategiesConfigure = () => {
             setToastApiError(e.message);
         }
     };
-
+    console.log(localConstraints);
     return (
         <div className={styles.container}>
             <ConditionallyRender
@@ -124,9 +144,10 @@ const FeatureStrategiesConfigure = () => {
                         expanded
                         hideActions
                         parameters={strategyParams}
-                        constraints={strategyConstraints}
-                        setStrategyParams={setStrategyParams}
+                        localConstraints={localConstraints}
+                        setLocalConstraints={setLocalConstraints}
                         setStrategyConstraints={setStrategyConstraints}
+                        setStrategyParams={setStrategyParams}
                     />
                 </div>
             </div>

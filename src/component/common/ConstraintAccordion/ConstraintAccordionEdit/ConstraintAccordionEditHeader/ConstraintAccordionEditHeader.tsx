@@ -9,6 +9,8 @@ import { ConstraintIcon } from '../../ConstraintIcon';
 import { Help } from '@material-ui/icons';
 import ConditionallyRender from '../../../ConditionallyRender';
 import { allOperators } from '../../../../../constants/operators';
+import { SAVE } from '../ConstraintAccordionEdit';
+import { resolveText } from './helpers';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
@@ -34,16 +36,6 @@ export const ConstraintAccordionEditHeader = ({
     const constraintNameOptions = context.map(context => {
         return { key: context.name, label: context.name };
     });
-
-    const resolveText = () => {
-        if (localConstraint.operator === 'IN') {
-            return 'To satisfy this constraint, values passed into the SDK as appName must include:';
-        }
-
-        if (localConstraint.operator === 'NOT_IN') {
-            return 'To satisfy this constraint, values passed into the SDK as appName must not include:';
-        }
-    };
 
     return (
         <div className={styles.headerContainer}>
@@ -83,9 +75,14 @@ export const ConstraintAccordionEditHeader = ({
                 />
             </div>
 
-            <p className={styles.headerText}>{resolveText()}</p>
+            <p className={styles.headerText}>
+                {resolveText(
+                    localConstraint.operator,
+                    localConstraint.contextName
+                )}
+            </p>
             <ConditionallyRender
-                condition={action === 'save'}
+                condition={action === SAVE}
                 show={<p className={styles.editingBadge}>Updating...</p>}
                 elseShow={<p className={styles.editingBadge}>Editing</p>}
             />

@@ -19,8 +19,8 @@ export const ConstraintAccordionViewBody = ({
     const styles = useStyles();
 
     const renderConstraintValues = () => {
-        return constraint.values
-            .filter(value => value.includes(filter))
+        return constraint?.values
+            ?.filter(value => value.includes(filter))
             .map((value, index) => (
                 <Chip
                     key={`${value}-${index}`}
@@ -54,7 +54,7 @@ export const ConstraintAccordionViewBody = ({
                 }
             />
             <ConditionallyRender
-                condition={Boolean(constraint.values.length)}
+                condition={Boolean(constraint?.values?.length)}
                 show={
                     <ConstraintValueSearch
                         filter={filter}

@@ -41,7 +41,7 @@ export const ConstraintAccordionViewHeader = ({
                     show={<Chip label={constraint.value} />}
                     elseShow={
                         <p>
-                            {constraint.values.length}+ values. Expand to view
+                            {constraint?.values?.length}+ values. Expand to view
                         </p>
                     }
                 />

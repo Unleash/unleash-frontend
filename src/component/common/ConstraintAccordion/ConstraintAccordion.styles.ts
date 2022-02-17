@@ -49,7 +49,7 @@ export const useStyles = makeStyles(theme => ({
         fill: theme.palette.grey[600],
     },
     headerText: { maxWidth: '400px' },
-    headerSelect: { marginRight: '2rem', minWidth: '150px' },
+    headerSelect: { marginRight: '2rem', width: '200px' },
     chip: {
         margin: '0 0.5rem 0.5rem 0',
     },

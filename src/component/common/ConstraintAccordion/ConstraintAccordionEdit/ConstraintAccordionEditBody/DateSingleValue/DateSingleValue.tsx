@@ -1,7 +1,6 @@
 import { TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
-import formatISO from 'date-fns/formatISO';
 
 interface IDateSingleValueProps {
     setValue: (value: string) => void;
