@@ -28,7 +28,7 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
-import { FeatureMetrics } from './FeatureMetrics2/FeatureMetrics';
+import { formatUnknownError } from '../../../utils/format-unknown-error';
 
 const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -60,8 +60,8 @@ const FeatureView = () => {
             setShowDelDialog(false);
             projectRefetch();
             history.push(`/projects/${projectId}`);
-        } catch (e) {
-            setToastApiError(e.toString());
+        } catch (error) {
+            setToastApiError(formatUnknownError(error));
             setShowDelDialog(false);
         }
     };
