@@ -3,6 +3,7 @@ import 'chartjs-adapter-date-fns';
 import { ChartOptions, defaults } from 'chart.js';
 import { formatTimeWithLocale } from '../../../../common/util';
 import { IFeatureMetricsRaw } from '../../../../../interfaces/featureToggle';
+import theme from '../../../../../themes/main-theme';
 
 export const createChartOptions = (
     metrics: IFeatureMetricsRaw[],
@@ -23,6 +24,13 @@ export const createChartOptions = (
         },
         plugins: {
             tooltip: {
+                backgroundColor: 'white',
+                bodyColor: theme.palette.text.primary,
+                titleColor: theme.palette.grey[700],
+                borderColor: theme.palette.primary.main,
+                borderWidth: 1,
+                padding: 10,
+                boxPadding: 5,
                 callbacks: {
                     title: items => formatTimestamp(items[0].parsed.x),
                 },
