@@ -3,11 +3,9 @@ import GeneralSelect, {
 } from '../../../../common/GeneralSelect/GeneralSelect';
 import { parseFeatureMetricsHour } from './parseFeatureMetricsHour';
 
-export type FeatureMetricsHour = 1 | 24 | 48;
-
 interface IFeatureMetricsHoursProps {
     hoursBack: number;
-    setHoursBack: (value: FeatureMetricsHour) => void;
+    setHoursBack: (value: number) => void;
 }
 
 export const FeatureMetricsHours = ({
@@ -31,7 +29,7 @@ export const FeatureMetricsHours = ({
     );
 };
 
-const hourOptions: { key: `${FeatureMetricsHour}`; label: string }[] = [
+const hourOptions: { key: `${number}`; label: string }[] = [
     { key: '1', label: 'Last hour' },
     { key: '24', label: 'Last 24 hours' },
     { key: '48', label: 'Last 48 hours' },
