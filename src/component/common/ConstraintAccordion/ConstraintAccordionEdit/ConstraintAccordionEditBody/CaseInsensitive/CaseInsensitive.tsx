@@ -1,4 +1,5 @@
 import { FormControlLabel, Checkbox, Switch } from '@material-ui/core';
+import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface ICaseInsensitiveProps {
     caseInsensitive: boolean;
@@ -11,7 +12,9 @@ export const CaseInsensitive = ({
 }: ICaseInsensitiveProps) => {
     return (
         <>
-            <h3>Should the constraint be case insensitive?</h3>
+            <ConstraintFormHeader>
+                Should the constraint be case insensitive?
+            </ConstraintFormHeader>
             <FormControlLabel
                 style={{ display: 'block' }}
                 control={

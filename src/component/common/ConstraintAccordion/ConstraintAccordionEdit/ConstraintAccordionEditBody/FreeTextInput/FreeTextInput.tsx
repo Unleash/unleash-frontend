@@ -1,6 +1,7 @@
 import { Button, Chip, TextField } from '@material-ui/core';
 import { getValueByPointer } from 'fast-json-patch';
 import { useState } from 'react';
+import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface IFreeTextInputProps {
     values: string[];
@@ -44,6 +45,9 @@ export const FreeTextInput = ({
 
     return (
         <div>
+            <ConstraintFormHeader style={{ marginBottom: 0 }}>
+                Set any number of values
+            </ConstraintFormHeader>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ minWidth: '300px' }}>
                     <TextField

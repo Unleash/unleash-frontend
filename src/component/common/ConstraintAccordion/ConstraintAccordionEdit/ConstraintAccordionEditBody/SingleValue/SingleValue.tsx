@@ -1,11 +1,19 @@
 import { TextField } from '@material-ui/core';
-import { useState } from 'react';
+import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
-export const SingleValue = ({ setValue, value, type }) => {
+interface ISingleValueProps {
+    setValue: (value: string) => void;
+    value?: string;
+    type: string;
+}
+
+export const SingleValue = ({ setValue, value, type }: ISingleValueProps) => {
     return (
         <>
-            <h3>Add a single {type.toLowerCase()} value</h3>
-            <div style={{ maxWidth: '300px' }}>
+            <ConstraintFormHeader>
+                Add a single {type.toLowerCase()} value
+            </ConstraintFormHeader>
+            <div style={{ maxWidth: '300px', marginTop: '-1rem' }}>
                 <TextField
                     label={type}
                     name="value"

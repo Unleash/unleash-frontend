@@ -39,16 +39,6 @@ export const ConstraintAccordionViewBody = ({
     return (
         <div>
             <ConditionallyRender
-                condition={Boolean(constraint.values.length)}
-                show={
-                    <ConstraintValueSearch
-                        filter={filter}
-                        setFilter={setFilter}
-                    />
-                }
-            />
-
-            <ConditionallyRender
                 condition={oneOf(stringOperators, constraint.operator)}
                 show={
                     <FormControlLabel
@@ -60,6 +50,15 @@ export const ConstraintAccordionViewBody = ({
                             />
                         }
                         label={'Case insensitive'}
+                    />
+                }
+            />
+            <ConditionallyRender
+                condition={Boolean(constraint.values.length)}
+                show={
+                    <ConstraintValueSearch
+                        filter={filter}
+                        setFilter={setFilter}
                     />
                 }
             />

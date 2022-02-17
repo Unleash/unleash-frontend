@@ -37,7 +37,12 @@ export const ConstraintAccordionEdit = ({
     }, []);
 
     const setContextName = (contextName: string) => {
-        setLocalConstraint(prev => ({ ...prev, contextName, values: [] }));
+        setLocalConstraint(prev => ({
+            ...prev,
+            contextName,
+            values: [],
+            value: '',
+        }));
     };
 
     const setOperator = (operator: string) => {
@@ -45,6 +50,7 @@ export const ConstraintAccordionEdit = ({
             ...prev,
             operator,
             values: [],
+            value: '',
         }));
     };
 

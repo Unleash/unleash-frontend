@@ -9,6 +9,9 @@ import { IConstraint } from '../../../../interfaces/strategy';
 import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/ConstraintAccordionViewBody';
 import { ConstraintAccordionViewHeader } from './ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
 import { useStyles } from '../ConstraintAccordion.styles';
+import { oneOf } from '../../../../utils/one-of';
+import { numOperators, semVerOperators } from '../../../../constants/operators';
+import ConditionallyRender from '../../ConditionallyRender';
 
 interface IConstraintAccordionViewProps {
     constraint: IConstraint;
@@ -22,6 +25,12 @@ export const ConstraintAccordionView = ({
     handleDelete,
 }: IConstraintAccordionViewProps) => {
     const styles = useStyles();
+
+    const nonExpandable = oneOf(
+        [...semVerOperators, ...numOperators],
+        constraint.operator
+    );
+
     return (
         <Accordion style={{ boxShadow: 'none' }} className={styles.accordion}>
             <AccordionSummary
@@ -32,11 +41,17 @@ export const ConstraintAccordionView = ({
                     constraint={constraint}
                     handleEdit={handleEdit}
                     handleDelete={handleDelete}
+                    nonExpandable={nonExpandable}
                 />
             </AccordionSummary>
-            <AccordionDetails className={styles.accordionDetails}>
-                <ConstraintAccordionViewBody constraint={constraint} />
-            </AccordionDetails>
+            <ConditionallyRender
+                condition={!nonExpandable}
+                show={
+                    <AccordionDetails className={styles.accordionDetails}>
+                        <ConstraintAccordionViewBody constraint={constraint} />
+                    </AccordionDetails>
+                }
+            />
         </Accordion>
     );
 };

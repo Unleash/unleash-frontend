@@ -11,11 +11,15 @@ import {
     semVerOperators,
     inOperators,
     stringOperators,
+    dateOperators,
 } from '../../../../../constants/operators';
 import { oneOf } from '../../../../../utils/one-of';
 import { exists } from '../../../../../utils/exists';
 import { CaseInsensitive } from './CaseInsensitive/CaseInsensitive';
 import { SingleValue } from './SingleValue/SingleValue';
+import { SingleLegalValue } from './SingleLegalValue/SingleLegalValue';
+import { number } from 'prop-types';
+import { DateSingleValue } from './DateSingleValue/DateSingleValue';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
@@ -90,6 +94,43 @@ export const ConstraintAccordionEditBody = ({
                         setValues={setValues}
                     />
                 </>
+            );
+        } else if (
+            exists(contextDefinition.legalValues) &&
+            oneOf(numOperators, localConstraint.operator)
+        ) {
+            return (
+                <>
+                    <SingleLegalValue
+                        setValue={setValue}
+                        value={localConstraint.value}
+                        type="number"
+                        legalValues={contextDefinition.legalValues.filter(
+                            (value: string) => Number(value)
+                        )}
+                    />
+                </>
+            );
+        } else if (
+            exists(contextDefinition.legalValues) &&
+            oneOf(semVerOperators, localConstraint.operator)
+        ) {
+            return (
+                <>
+                    <SingleLegalValue
+                        setValue={setValue}
+                        value={localConstraint.value}
+                        type="semver"
+                        legalValues={contextDefinition.legalValues}
+                    />
+                </>
+            );
+        } else if (oneOf(dateOperators, localConstraint.operator)) {
+            return (
+                <DateSingleValue
+                    value={localConstraint.value}
+                    setValue={setValue}
+                />
             );
         } else if (oneOf(inOperators, localConstraint.operator)) {
             return (

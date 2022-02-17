@@ -1,6 +1,7 @@
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { ConstraintValueSearch } from '../../../ConstraintValueSearch/ConstraintValueSearch';
+import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface IRestrictiveLegalValuesProps {
     legalValues: string[];
@@ -66,7 +67,9 @@ export const RestrictiveLegalValues = ({
 
     return (
         <>
-            <h3>Add values</h3>
+            <ConstraintFormHeader>
+                Select values from a predefined set
+            </ConstraintFormHeader>
             <ConstraintValueSearch filter={filter} setFilter={setFilter} />
             {renderLegalValueInputs()}
         </>
