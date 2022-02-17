@@ -16,7 +16,7 @@ export const ConstraintAccordionViewBody = ({
 }: IConstraintAccordionViewBodyProps) => {
     const [filter, setFilter] = useState('');
     const styles = useStyles();
-    console.log(constraint);
+
     const renderConstraintValues = () => {
         return constraint.values
             .filter(value => value.includes(filter))

@@ -10,7 +10,8 @@ interface IConstraintAccordionBody {
     localConstraint: IConstraint;
     setValues: (values: string[]) => void;
     handleSave: (constraint: IConstraint) => void;
-    onCancel: () => void;
+    triggerTransition: () => void;
+    setAction: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const resolveContextDefinition = (context: any[], contextName: string) => {
@@ -23,8 +24,8 @@ const resolveContextDefinition = (context: any[], contextName: string) => {
 export const ConstraintAccordionEditBody = ({
     localConstraint,
     setValues,
-    onCancel,
-    handleSave,
+    triggerTransition,
+    setAction,
 }: IConstraintAccordionBody) => {
     const [error, setError] = useState('');
     const { context } = useUnleashContext();
@@ -81,7 +82,8 @@ export const ConstraintAccordionEditBody = ({
         const valid = validateConstraint();
 
         if (valid) {
-            handleSave(localConstraint);
+            setAction('save');
+            triggerTransition();
             return;
         }
         setError('You must choose at least one value in order to save.');
@@ -116,7 +118,10 @@ export const ConstraintAccordionEditBody = ({
                         Save
                     </Button>
                     <Button
-                        onClick={() => onCancel()}
+                        onClick={() => {
+                            setAction('cancel');
+                            triggerTransition();
+                        }}
                         style={{ marginLeft: '0.5rem', minWidth: '125px' }}
                     >
                         Cancel

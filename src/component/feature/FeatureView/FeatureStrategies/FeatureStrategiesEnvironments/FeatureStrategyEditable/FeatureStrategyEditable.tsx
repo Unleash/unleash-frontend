@@ -76,8 +76,6 @@ const FeatureStrategyEditable = ({
         strategy.constraints.map(mapConstraints)
     );
 
-    //const strategyConstraintJSON = JSON.stringify(strategy.constraints);
-
     useEffect(() => {
         setLocalConstraints(strategy.constraints.map(mapConstraints));
     }, [strategy.constraints, setLocalConstraints, mapConstraints]);

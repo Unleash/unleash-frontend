@@ -39,21 +39,24 @@ export const FreeTextInput = ({
 
     return (
         <div>
-            <div style={{ maxWidth: '350px' }}>
-                <TextField
-                    label="Values"
-                    name="values"
-                    value={inputValues}
-                    onChange={e => setInputValues(e.target.value)}
-                    placeholder="Enter comma separated values here"
-                    style={{
-                        width: '100%',
-                        margin: '1rem 0',
-                    }}
-                    variant="outlined"
-                    size="small"
-                />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ minWidth: '300px' }}>
+                    <TextField
+                        label="Values"
+                        name="values"
+                        value={inputValues}
+                        onChange={e => setInputValues(e.target.value)}
+                        placeholder="Enter comma separated values here"
+                        style={{
+                            width: '100%',
+                            margin: '1rem 0',
+                        }}
+                        variant="outlined"
+                        size="small"
+                    />
+                </div>
                 <Button
+                    style={{ marginLeft: '1rem' }}
                     variant="contained"
                     color="primary"
                     onClick={() => handleAddValues()}
@@ -61,7 +64,7 @@ export const FreeTextInput = ({
                     Add values
                 </Button>
             </div>
-            <div style={{ marginTop: '2rem' }}>{renderCurrentValues()}</div>
+            <div style={{ marginTop: '1rem' }}>{renderCurrentValues()}</div>
         </div>
     );
 };

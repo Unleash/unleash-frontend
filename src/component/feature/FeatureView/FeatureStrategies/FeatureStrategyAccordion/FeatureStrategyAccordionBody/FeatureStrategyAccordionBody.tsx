@@ -166,7 +166,7 @@ const FeatureStrategyAccordionBody: React.FC<
     };
 
     const renderConstraints = () => {
-        if (localConstraints.length === 0) {
+        if (localConstraints?.length === 0) {
             return (
                 <p className={styles.noConstraints}>
                     No constraints configured

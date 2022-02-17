@@ -24,6 +24,7 @@ export const ConstraintAccordionEdit = ({
         cloneDeep(constraint)
     );
     const [expanded, setExpanded] = useState(false);
+    const [action, setAction] = useState('');
     const styles = useStyles();
 
     useEffect(() => {
@@ -31,24 +32,24 @@ export const ConstraintAccordionEdit = ({
     }, []);
 
     const setContextName = (contextName: string) => {
-        setLocalConstraint({ ...localConstraint, contextName, values: [] });
+        setLocalConstraint(prev => ({ ...prev, contextName, values: [] }));
     };
 
     const setOperator = (operator: string) => {
-        setLocalConstraint({
-            ...localConstraint,
+        setLocalConstraint(prev => ({
+            ...prev,
             operator,
-        });
+        }));
     };
 
     const setValues = (values: string[]) => {
-        setLocalConstraint({
-            ...localConstraint,
+        setLocalConstraint(prev => ({
+            ...prev,
             values,
-        });
+        }));
     };
 
-    const onCancel = () => {
+    const triggerTransition = () => {
         setExpanded(false);
     };
 
@@ -59,7 +60,12 @@ export const ConstraintAccordionEdit = ({
             expanded={expanded}
             TransitionProps={{
                 onExited: () => {
-                    handleCancel();
+                    console.log(action);
+                    if (action === 'cancel') {
+                        handleCancel();
+                    } else if (action === 'save') {
+                        handleSave(localConstraint);
+                    }
                 },
             }}
         >
@@ -77,8 +83,8 @@ export const ConstraintAccordionEdit = ({
                 <ConstraintAccordionEditBody
                     localConstraint={localConstraint}
                     setValues={setValues}
-                    onCancel={onCancel}
-                    handleSave={handleSave}
+                    triggerTransition={triggerTransition}
+                    setAction={setAction}
                 />
             </AccordionDetails>
         </Accordion>
