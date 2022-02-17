@@ -10,23 +10,25 @@ interface IFeatureMetricsEnvironmentProps {
     setEnvironment: (value: string) => void;
 }
 
-export const FeatureMetricsEnvironment = (
-    props: IFeatureMetricsEnvironmentProps
-) => {
+export const FeatureMetricsEnvironment = ({
+    environments,
+    environment,
+    setEnvironment,
+}: IFeatureMetricsEnvironmentProps) => {
     const onClick = (environment: string) => () => {
-        if (props.environments.has(environment)) {
-            props.setEnvironment(environment);
+        if (environments.has(environment)) {
+            setEnvironment(environment);
         }
     };
 
     return (
         <FeatureMetricsChips>
-            {Array.from(props.environments).map(e => (
+            {Array.from(environments).map(e => (
                 <FeatureMetricsChipsItem key={e}>
                     <Chip
                         label={e}
                         onClick={onClick(e)}
-                        aria-pressed={e === props.environment}
+                        aria-pressed={e === environment}
                     />
                 </FeatureMetricsChipsItem>
             ))}

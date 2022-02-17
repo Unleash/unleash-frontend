@@ -9,20 +9,23 @@ interface IFeatureMetricsStatsRawProps {
     hoursBack: number;
 }
 
-export const FeatureMetricsStatsRaw = (props: IFeatureMetricsStatsRawProps) => {
+export const FeatureMetricsStatsRaw = ({
+    metrics,
+    hoursBack,
+}: IFeatureMetricsStatsRawProps) => {
     const totalYes = useMemo(() => {
-        return props.metrics.reduce((acc, m) => acc + m.yes, 0);
-    }, [props.metrics]);
+        return metrics.reduce((acc, m) => acc + m.yes, 0);
+    }, [metrics]);
 
     const totalNo = useMemo(() => {
-        return props.metrics.reduce((acc, m) => acc + m.no, 0);
-    }, [props.metrics]);
+        return metrics.reduce((acc, m) => acc + m.no, 0);
+    }, [metrics]);
 
     return (
         <FeatureMetricsStats
             totalYes={totalYes}
             totalNo={totalNo}
-            hoursBack={props.hoursBack}
+            hoursBack={hoursBack}
         />
     );
 };
@@ -33,20 +36,22 @@ interface IFeatureMetricsStatsProps {
     hoursBack: number;
 }
 
-export const FeatureMetricsStats = (props: IFeatureMetricsStatsProps) => {
+export const FeatureMetricsStats = ({
+    totalYes,
+    totalNo,
+    hoursBack,
+}: IFeatureMetricsStatsProps) => {
     const styles = useStyles();
 
     const hoursSuffix =
-        props.hoursBack === 1
-            ? 'in the last hour'
-            : `in the last ${props.hoursBack} hours`;
+        hoursBack === 1 ? 'in the last hour' : `in the last ${hoursBack} hours`;
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
                 <article className={styles.item}>
                     <h3 className={styles.title}>Exposure</h3>
-                    <p className={styles.value}>{props.totalYes}</p>
+                    <p className={styles.value}>{totalYes}</p>
                     <p className={styles.text}>
                         Total exposure of the feature in the environment{' '}
                         {hoursSuffix}.
@@ -57,11 +62,7 @@ export const FeatureMetricsStats = (props: IFeatureMetricsStatsProps) => {
                 <article className={styles.item}>
                     <h3 className={styles.title}>Exposure %</h3>
                     <p className={styles.value}>
-                        {calculatePercentage(
-                            props.totalYes + props.totalNo,
-                            props.totalYes
-                        )}
-                        %
+                        {calculatePercentage(totalYes + totalNo, totalYes)}%
                     </p>
                     <p className={styles.text}>
                         % total exposure of the feature in the environment{' '}
@@ -72,9 +73,7 @@ export const FeatureMetricsStats = (props: IFeatureMetricsStatsProps) => {
             <Grid item xs={12} sm={4}>
                 <article className={styles.item}>
                     <h3 className={styles.title}>Requests</h3>
-                    <p className={styles.value}>
-                        {props.totalYes + props.totalNo}
-                    </p>
+                    <p className={styles.value}>{totalYes + totalNo}</p>
                     <p className={styles.text}>
                         Total requests for the feature in the environment{' '}
                         {hoursSuffix}.

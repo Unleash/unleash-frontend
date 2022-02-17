@@ -32,14 +32,14 @@ interface IFeatureMetricsChartProps {
     metrics: IFeatureMetricsRaw[];
 }
 
-export const FeatureMetricsChart = (props: IFeatureMetricsChartProps) => {
+export const FeatureMetricsChart = ({ metrics }: IFeatureMetricsChartProps) => {
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
-        return [...props.metrics].sort((a, b) => {
+        return [...metrics].sort((a, b) => {
             return a.timestamp.localeCompare(b.timestamp);
         });
-    }, [props.metrics]);
+    }, [metrics]);
 
     const options = useMemo(() => {
         return createChartOptions(locationSettings);

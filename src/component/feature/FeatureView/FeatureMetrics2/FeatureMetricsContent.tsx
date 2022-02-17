@@ -10,24 +10,27 @@ interface IFeatureMetricsContentProps {
     hoursBack: number;
 }
 
-export const FeatureMetricsContent = (props: IFeatureMetricsContentProps) => {
-    if (props.metrics.length === 0) {
+export const FeatureMetricsContent = ({
+    metrics,
+    hoursBack,
+}: IFeatureMetricsContentProps) => {
+    if (metrics.length === 0) {
         return <FeatureMetricsEmpty />;
     }
 
     return (
         <>
             <Box>
-                <FeatureMetricsChart metrics={props.metrics} />
+                <FeatureMetricsChart metrics={metrics} />
             </Box>
             <Box mt={4}>
                 <FeatureMetricsStatsRaw
-                    metrics={props.metrics}
-                    hoursBack={props.hoursBack}
+                    metrics={metrics}
+                    hoursBack={hoursBack}
                 />
             </Box>
             <Box mt={4}>
-                <FeatureMetricsTable metrics={props.metrics} />
+                <FeatureMetricsTable metrics={metrics} />
             </Box>
         </>
     );

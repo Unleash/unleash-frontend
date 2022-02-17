@@ -9,9 +9,12 @@ interface IFeatureMetricsHoursProps {
     setHoursBack: (value: FeatureMetricsHour) => void;
 }
 
-export const FeatureMetricsHours = (props: IFeatureMetricsHoursProps) => {
+export const FeatureMetricsHours = ({
+    hoursBack,
+    setHoursBack,
+}: IFeatureMetricsHoursProps) => {
     const onChange: OnGeneralSelectChange = event => {
-        props.setHoursBack(parseFeatureMetricsHour(event.target.value));
+        setHoursBack(parseFeatureMetricsHour(event.target.value));
     };
 
     return (
@@ -20,7 +23,7 @@ export const FeatureMetricsHours = (props: IFeatureMetricsHoursProps) => {
             name="feature-metrics-period"
             id="feature-metrics-period"
             options={hourOptions}
-            value={String(props.hoursBack)}
+            value={String(hoursBack)}
             onChange={onChange}
             fullWidth
         />

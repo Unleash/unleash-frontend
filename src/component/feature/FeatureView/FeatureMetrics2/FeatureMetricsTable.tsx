@@ -18,16 +18,16 @@ interface IFeatureMetricsTableProps {
     metrics: IFeatureMetricsRaw[];
 }
 
-export const FeatureMetricsTable = (props: IFeatureMetricsTableProps) => {
+export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const { locationSettings } = useLocationSettings();
 
     const sortedMetrics = useMemo(() => {
-        return [...props.metrics].sort((a, b) => {
+        return [...metrics].sort((a, b) => {
             return b.timestamp.localeCompare(a.timestamp);
         });
-    }, [props.metrics]);
+    }, [metrics]);
 
     if (sortedMetrics.length === 0) {
         return null;

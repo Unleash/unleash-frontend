@@ -10,23 +10,25 @@ interface IFeatureMetricsApplicationProps {
     setApplication: (value: string) => void;
 }
 
-export const FeatureMetricsApplication = (
-    props: IFeatureMetricsApplicationProps
-) => {
+export const FeatureMetricsApplication = ({
+    applications,
+    application,
+    setApplication,
+}: IFeatureMetricsApplicationProps) => {
     const onClick = (application: string) => () => {
-        if (props.applications.has(application)) {
-            props.setApplication(application);
+        if (applications.has(application)) {
+            setApplication(application);
         }
     };
 
     return (
         <FeatureMetricsChips>
-            {Array.from(props.applications).map(a => (
+            {Array.from(applications).map(a => (
                 <FeatureMetricsChipsItem key={a}>
                     <Chip
                         label={a}
                         onClick={onClick(a)}
-                        aria-pressed={a === props.application}
+                        aria-pressed={a === application}
                     />
                 </FeatureMetricsChipsItem>
             ))}
