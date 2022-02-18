@@ -173,7 +173,7 @@ const UsersList = () => {
                     <DeleteUser
                         showDialog={delDialog}
                         closeDialog={closeDelDialog}
-                        user={delUser}
+                        user={delUser!}
                         removeUser={onDeleteUser}
                         userLoading={userLoading}
                         userApiErrors={userApiErrors}
