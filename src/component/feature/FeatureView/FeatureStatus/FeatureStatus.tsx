@@ -47,7 +47,7 @@ function getColor(unit?: string): string {
 }
 
 interface FeatureStatusProps {
-    lastSeenAt?: Date;
+    lastSeenAt?: string;
     tooltipPlacement?: string;
 }
 
@@ -77,7 +77,7 @@ const FeatureStatus = ({
             condition={!!lastSeenAt}
             show={
                 <TimeAgo
-                    date={lastSeenAt}
+                    date={lastSeenAt!}
                     title=""
                     live={false}
                     formatter={(
