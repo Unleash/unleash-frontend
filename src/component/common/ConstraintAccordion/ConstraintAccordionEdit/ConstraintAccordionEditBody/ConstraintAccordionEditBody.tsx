@@ -18,7 +18,6 @@ import { exists } from '../../../../../utils/exists';
 import { CaseInsensitive } from './CaseInsensitive/CaseInsensitive';
 import { SingleValue } from './SingleValue/SingleValue';
 import { SingleLegalValue } from './SingleLegalValue/SingleLegalValue';
-import { number } from 'prop-types';
 import { DateSingleValue } from './DateSingleValue/DateSingleValue';
 
 interface IConstraintAccordionBody {
