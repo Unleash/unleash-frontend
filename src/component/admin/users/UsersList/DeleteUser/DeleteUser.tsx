@@ -14,7 +14,7 @@ interface IDeleteUserProps {
     user: IUser;
     userLoading: boolean;
     removeUser: () => void;
-    userApiErrors: Object;
+    userApiErrors: Record<string, string>;
 }
 
 const DeleteUser = ({
@@ -39,7 +39,7 @@ const DeleteUser = ({
         >
             <div ref={ref}>
                 <ConditionallyRender
-                    condition={userApiErrors[REMOVE_USER_ERROR]}
+                    condition={Boolean(userApiErrors[REMOVE_USER_ERROR])}
                     show={
                         <Alert
                             data-loading
