@@ -11,12 +11,16 @@ export const UnleashProvider: FC<any> = ({ children }) => {
     const [changed, setChanged] = useState(false);
 
     useEffect(() => {
-        if (uiConfig.unleashConfig) {
+        if (uiConfig?.unleash?.config) {
             if (client) return;
 
             const unleash = new UnleashClient({
-                ...uiConfig.unleashConfig,
+                ...uiConfig.unleash.config,
             });
+
+            if (uiConfig.unleash.context) {
+                unleash.updateContext({ ...uiConfig.unleash.context });
+            }
 
             unleash.on('ready', () => {
                 setReady(true);
@@ -30,7 +34,7 @@ export const UnleashProvider: FC<any> = ({ children }) => {
             setClient(unleash);
         }
         // eslint-disable-next-line
-    }, [JSON.stringify(uiConfig?.unleashConfig)]);
+    }, [JSON.stringify(uiConfig?.unleash)]);
 
     const isEnabled = (toggleName: string) => {
         if (!client) return false;

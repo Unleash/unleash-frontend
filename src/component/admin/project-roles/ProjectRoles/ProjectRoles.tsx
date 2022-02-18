@@ -10,9 +10,12 @@ import { ADMIN } from '../../../providers/AccessProvider/permissions';
 import AdminMenu from '../../menu/AdminMenu';
 import { useStyles } from './ProjectRoles.styles';
 import ProjectRoleList from './ProjectRoleList/ProjectRoleList';
+import UnleashContext from '../../../../contexts/UnleashContext';
 
 const ProjectRoles = () => {
     const { hasAccess } = useContext(AccessContext);
+    const { isEnabled } = useContext(UnleashContext);
+
     const styles = useStyles();
     const history = useHistory();
 
@@ -51,12 +54,27 @@ const ProjectRoles = () => {
                 }
             >
                 <ConditionallyRender
-                    condition={hasAccess(ADMIN)}
+                    condition={hasAccess(ADMIN) && isEnabled('project-roles')}
                     show={<ProjectRoleList />}
                     elseShow={
-                        <Alert severity="error">
-                            You need instance admin to access this section.
-                        </Alert>
+                        <div>
+                            {' '}
+                            <h3
+                                style={{
+                                    marginBottom: '1rem',
+                                    maxWidth: '600px',
+                                    fontWeight: 'normal',
+                                }}
+                            >
+                                This is a paid feature. If you want access to
+                                project roles, this will upgrade you to an
+                                enterprise plan. Based on your current number of
+                                users this will cost you X amount per month:
+                            </h3>
+                            <Button color="primary" variant="contained">
+                                Upgrade to enterprise
+                            </Button>
+                        </div>
                     }
                 />
             </PageContent>
