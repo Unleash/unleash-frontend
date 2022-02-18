@@ -8,6 +8,7 @@ import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
 import StringTruncator from '../../../../../common/StringTruncator/StringTruncator';
 import { UPDATE_FEATURE_ENVIRONMENT } from '../../../../../providers/AccessProvider/permissions';
+import React from 'react';
 
 interface IFeatureOverviewEnvSwitchProps {
     env: IFeatureEnvironment;

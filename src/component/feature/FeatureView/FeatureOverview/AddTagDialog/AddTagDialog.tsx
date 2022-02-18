@@ -1,6 +1,6 @@
 import { DialogContentText } from '@material-ui/core';
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import Dialogue from '../../../../common/Dialogue';
 import Input from '../../../../common/Input/Input';
@@ -20,6 +20,7 @@ interface IAddTagDialogProps {
 interface IDefaultTag {
     type: string;
     value: string;
+
     [index: string]: string;
 }
 

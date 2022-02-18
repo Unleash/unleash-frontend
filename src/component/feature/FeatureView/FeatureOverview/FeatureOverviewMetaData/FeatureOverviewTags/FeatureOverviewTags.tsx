@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Chip } from '@material-ui/core';
-import { Label, Close } from '@material-ui/icons';
+import { Close, Label } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 import useTags from '../../../../../../hooks/api/getters/useTags/useTags';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';

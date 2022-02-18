@@ -7,7 +7,7 @@ import useUiConfig from '../../../../../../hooks/api/getters/useUiConfig/useUiCo
 import { C } from '../../../../../common/flags';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import StrategyConstraintInputField from './StrategyConstraintInputField';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
