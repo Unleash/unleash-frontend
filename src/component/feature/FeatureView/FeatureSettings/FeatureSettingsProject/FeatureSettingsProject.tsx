@@ -69,9 +69,9 @@ const FeatureSettingsProject = () => {
 
     const createMoveTargets = () => {
         return permissions.reduce(
-            (acc: { [key: string]: boolean }, permission: IPermission) => {
-                if (permission.permission === MOVE_FEATURE_TOGGLE) {
-                    acc[permission.project] = true;
+            (acc: { [key: string]: boolean }, p: IPermission) => {
+                if (p.project && p.permission === MOVE_FEATURE_TOGGLE) {
+                    acc[p.project] = true;
                 }
                 return acc;
             },
