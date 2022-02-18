@@ -10,10 +10,6 @@ export const createChartOptions = (
     hoursBack: number,
     locationSettings: ILocationSettings
 ): ChartOptions<'line'> => {
-    const formatTimestamp = (value: string | number) => {
-        return formatTimeWithLocale(value, locationSettings.locale);
-    };
-
     return {
         locale: locationSettings.locale,
         responsive: true,
@@ -32,7 +28,11 @@ export const createChartOptions = (
                 padding: 10,
                 boxPadding: 5,
                 callbacks: {
-                    title: items => formatTimestamp(items[0].parsed.x),
+                    title: items =>
+                        formatTimeWithLocale(
+                            items[0].parsed.x,
+                            locationSettings.locale
+                        ),
                 },
                 // Sort tooltip items in the same order as the lines in the chart.
                 itemSort: (a, b) => b.parsed.y - a.parsed.y,
@@ -70,7 +70,11 @@ export const createChartOptions = (
                 time: { unit: 'hour' },
                 grid: { display: false },
                 ticks: {
-                    callback: (_, i, data) => formatTimestamp(data[i].value),
+                    callback: (_, i, data) =>
+                        formatTimeWithLocale(
+                            data[i].value,
+                            locationSettings.locale
+                        ),
                 },
             },
         },
