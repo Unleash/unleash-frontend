@@ -33,7 +33,7 @@ const DeleteUser = ({
             open={showDialog}
             title="Really delete user?"
             onClose={closeDialog}
-            onClick={() => removeUser(user)}
+            onClick={removeUser}
             primaryButtonText="Delete user"
             secondaryButtonText="Cancel"
         >
