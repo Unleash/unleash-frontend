@@ -57,15 +57,15 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
         };
     };
 
-    const removeConstraint = index => evt => {
-        evt.preventDefault();
+    const removeConstraint = (index: number) => (event: Event) => {
+        event.preventDefault();
         const updatedConstraints = [...constraints];
         updatedConstraints.splice(index, 1);
 
         updateConstraints(updatedConstraints);
     };
 
-    const updateConstraint = index => (value, field) => {
+    const updateConstraint = (index: number) => (value, field) => {
         const updatedConstraints = [...constraints];
         const constraint = updatedConstraints[index];
         constraint[field] = value;
