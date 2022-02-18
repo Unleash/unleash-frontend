@@ -9,7 +9,7 @@ import { useCommonStyles } from '../../../../../common.styles';
 import { IUser } from '../../../../../interfaces/user';
 
 interface IDeleteUserProps {
-    showDialog: () => void;
+    showDialog: boolean;
     closeDialog: () => void;
     user: IUser;
     userLoading: boolean;
