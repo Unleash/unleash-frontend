@@ -53,11 +53,15 @@ export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
                                 locationSettings.locale
                             )}
                         </TableCell>
-                        <TableCell hidden={smallScreen}>{metric.appName}</TableCell>
+                        <TableCell hidden={smallScreen}>
+                            {metric.appName}
+                        </TableCell>
                         <TableCell hidden={smallScreen}>
                             {metric.environment}
                         </TableCell>
-                        <TableCell align="right">{metric.yes + metric.no}</TableCell>
+                        <TableCell align="right">
+                            {metric.yes + metric.no}
+                        </TableCell>
                         <TableCell align="right">{metric.yes}</TableCell>
                     </TableRow>
                 ))}

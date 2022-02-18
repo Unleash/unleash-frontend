@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         [theme.breakpoints.up('md')]: {
             padding: theme.spacing(4),
-        }
+        },
     },
     title: {
         margin: 0,

@@ -21,7 +21,12 @@ export const FeatureMetricsContent = ({
 
     return (
         <>
-            <Box borderTop={1} pt={2} mt={3} borderColor={theme.palette.grey[200]}>
+            <Box
+                borderTop={1}
+                pt={2}
+                mt={3}
+                borderColor={theme.palette.grey[200]}
+            >
                 <FeatureMetricsChart metrics={metrics} hoursBack={hoursBack} />
             </Box>
             <Box mt={4}>

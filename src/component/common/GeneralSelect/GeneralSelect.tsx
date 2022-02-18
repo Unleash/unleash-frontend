@@ -61,9 +61,7 @@ const GeneralSelect: React.FC<ISelectMenuProps> = ({
             classes={classes}
             fullWidth={fullWidth}
         >
-            <InputLabel htmlFor={id}>
-                {label}
-            </InputLabel>
+            <InputLabel htmlFor={id}>{label}</InputLabel>
             <Select
                 defaultValue={defaultValue}
                 name={name}

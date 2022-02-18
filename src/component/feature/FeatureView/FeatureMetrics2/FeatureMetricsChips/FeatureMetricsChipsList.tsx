@@ -18,7 +18,7 @@ export const FeatureMetricsChipsList = ({
     );
 };
 
-const Title = styled('h3')(({theme}) => ({
+const Title = styled('h3')(({ theme }) => ({
     margin: 0,
     marginBottom: '.5rem',
     fontSize: theme.fontSizes.smallerBody,
