@@ -11,6 +11,7 @@ import TagSelect from '../../../../common/TagSelect/TagSelect';
 import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import useTags from '../../../../../hooks/api/getters/useTags/useTags';
 import useToast from '../../../../../hooks/useToast';
+import { formatUnknownError } from '../../../../../utils/format-unknown-error';
 
 interface IAddTagDialogProps {
     open: boolean;
@@ -63,9 +64,10 @@ const AddTagDialog = ({ open, setOpen }: IAddTagDialogProps) => {
                 text: 'We successfully added a tag to your toggle',
                 confetti: true,
             });
-        } catch (e) {
-            setToastApiError(e.message);
-            setErrors({ tagError: e.message });
+        } catch (error: unknown) {
+            const message = formatUnknownError(error);
+            setToastApiError(message);
+            setErrors({ tagError: message });
         }
     };
 

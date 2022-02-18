@@ -7,6 +7,7 @@ import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
+import { formatUnknownError } from '../../../../../../utils/format-unknown-error';
 
 const useFeatureStrategiesEnvironmentList = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -85,8 +86,8 @@ const useFeatureStrategiesEnvironmentList = () => {
             strategy.constraints = updateStrategyPayload.constraints;
             history.replace(history.location.pathname);
             setFeatureCache(feature);
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
@@ -118,8 +119,8 @@ const useFeatureStrategiesEnvironmentList = () => {
                 text: `Successfully deleted strategy from ${featureId}`,
             });
             history.replace(history.location.pathname);
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 

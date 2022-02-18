@@ -30,6 +30,7 @@ import cloneDeep from 'lodash.clonedeep';
 import useDeleteVariantMarkup from './FeatureVariantsListItem/useDeleteVariantMarkup';
 import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
 import { mutate } from 'swr';
+import { formatUnknownError } from '../../../../../utils/format-unknown-error';
 
 const FeatureOverviewVariants = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -155,8 +156,8 @@ const FeatureOverviewVariants = () => {
                 type: 'success',
                 text: 'Successfully updated variant stickiness',
             });
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
@@ -167,8 +168,8 @@ const FeatureOverviewVariants = () => {
                 updatedVariants,
                 'Successfully removed variant'
             );
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
     const updateVariant = async (variant: IFeatureVariant) => {
@@ -210,8 +211,8 @@ const FeatureOverviewVariants = () => {
                 type: 'success',
                 text: successText,
             });
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 

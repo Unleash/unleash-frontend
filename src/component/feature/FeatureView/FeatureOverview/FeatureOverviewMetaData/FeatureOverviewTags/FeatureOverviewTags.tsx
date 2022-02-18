@@ -17,6 +17,7 @@ import useToast from '../../../../../../hooks/useToast';
 import { UPDATE_FEATURE } from '../../../../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import AccessContext from '../../../../../../contexts/AccessContext';
+import { formatUnknownError } from '../../../../../../utils/format-unknown-error';
 
 interface IFeatureOverviewTagsProps extends React.HTMLProps<HTMLButtonElement> {
     projectId: string;
@@ -53,8 +54,8 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
                 title: 'Tag deleted',
                 text: 'Successfully deleted tag',
             });
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 

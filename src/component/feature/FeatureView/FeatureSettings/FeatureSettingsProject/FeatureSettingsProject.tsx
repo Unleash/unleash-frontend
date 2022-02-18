@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import AccessContext from '../../../../../contexts/AccessContext';
 import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
@@ -61,8 +61,8 @@ const FeatureSettingsProject = () => {
             history.replace(
                 `/projects/${newProject}/features/${featureId}/settings`
             );
-        } catch (e) {
-            setToastApiError(e.message);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
