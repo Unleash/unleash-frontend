@@ -27,6 +27,7 @@ export const createChartOptions = (
                 borderWidth: 1,
                 padding: 10,
                 boxPadding: 5,
+                usePointStyle: true,
                 callbacks: {
                     title: items =>
                         formatTimeWithLocale(
@@ -41,9 +42,10 @@ export const createChartOptions = (
                 position: 'top',
                 align: 'end',
                 labels: {
-                    boxWidth: 12,
-                    boxHeight: 12,
-                }
+                    boxWidth: 10,
+                    boxHeight: 10,
+                    usePointStyle: true,
+                },
             },
             title: {
                 text: formatChartLabel(hoursBack),

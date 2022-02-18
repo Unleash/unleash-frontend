@@ -14,21 +14,21 @@ export const createChartData = (
     locationSettings: ILocationSettings
 ): ChartData<'line', IPoint[], string> => {
     const requestsSeries = {
-        label: 'Total requests',
+        label: 'total requests',
         borderColor: theme.palette.primary.light,
         backgroundColor: theme.palette.primary.light,
         data: createChartPoints(metrics, locationSettings, m => m.yes + m.no),
     };
 
     const yesSeries = {
-        label: 'Exposed',
+        label: 'exposed',
         borderColor: theme.palette.success.light,
         backgroundColor: theme.palette.success.light,
         data: createChartPoints(metrics, locationSettings, m => m.yes),
     };
 
     const noSeries = {
-        label: 'Not exposed',
+        label: 'not exposed',
         borderColor: theme.palette.error.light,
         backgroundColor: theme.palette.error.light,
         data: createChartPoints(metrics, locationSettings, m => m.no),
