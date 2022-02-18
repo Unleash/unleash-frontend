@@ -1,5 +1,5 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
-import React, { useState, Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
@@ -257,7 +257,7 @@ const FeatureView = () => {
 };
 
 const FeatureMetricsLazy = React.lazy(
-    () => import('./FeatureMetrics2/FeatureMetrics')
+    () => import('./FeatureMetrics/FeatureMetrics')
 );
 
 export default FeatureView;
