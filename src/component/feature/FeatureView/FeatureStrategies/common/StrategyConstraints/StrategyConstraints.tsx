@@ -38,7 +38,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
     const enabled = uiConfig.flags[C];
     const contextNames = contextFields.map(context => context.name);
 
-    const onClick = evt => {
+    const onClick = (evt: React.SyntheticEvent) => {
         evt.preventDefault();
         addConstraint();
     };
