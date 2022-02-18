@@ -1,36 +1,44 @@
-import { styled } from '@material-ui/core';
-import { ReactNode } from 'react';
+import { Chip } from '@material-ui/core';
+import { FeatureMetricsChipsList } from './FeatureMetricsChipsList';
+import { FeatureMetricsChipsItem } from './FeatureMetricsChipsItem';
+import { useMemo } from 'react';
 
 interface IFeatureMetricsChipsProps {
     title: string;
-    children: ReactNode;
+    values: Set<string>;
+    value?: string;
+    setValue: (value: string) => void;
 }
 
 export const FeatureMetricsChips = ({
     title,
-    children,
+    values,
+    value,
+    setValue,
 }: IFeatureMetricsChipsProps) => {
+    const onClick = (value: string) => () => {
+        if (values.has(value)) {
+            setValue(value);
+        }
+    };
+
+    const sortedValues = useMemo(() => {
+        return Array.from(values).sort((valueA, valueB) => {
+            return valueA.localeCompare(valueB);
+        });
+    }, [values]);
+
     return (
-        <div>
-            <Title>{title}</Title>
-            <List>{children}</List>
-        </div>
+        <FeatureMetricsChipsList title={title}>
+            {sortedValues.map(val => (
+                <FeatureMetricsChipsItem key={val}>
+                    <Chip
+                        label={val}
+                        onClick={onClick(val)}
+                        aria-pressed={val === value}
+                    />
+                </FeatureMetricsChipsItem>
+            ))}
+        </FeatureMetricsChipsList>
     );
 };
-
-const Title = styled('h3')(({theme}) => ({
-    margin: 0,
-    marginBottom: '.5rem',
-    fontSize: theme.fontSizes.smallerBody,
-    fontWeight: theme.fontWeight.thin,
-    color: theme.palette.grey[600],
-}));
-
-const List = styled('ul')({
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '.5rem',
-    listStyleType: 'none',
-    padding: 0,
-    minHeight: '100%',
-});

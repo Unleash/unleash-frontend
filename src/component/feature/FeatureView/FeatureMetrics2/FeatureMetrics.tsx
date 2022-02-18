@@ -3,14 +3,13 @@ import { IFeatureViewParams } from '../../../../interfaces/params';
 import { useFeatureMetricsRaw } from '../../../../hooks/api/getters/useFeatureMetricsRaw/useFeatureMetricsRaw';
 import PageContent from '../../../common/PageContent';
 import { useEffect, useMemo, useState } from 'react';
-import { FeatureMetricsEnvironment } from './FeatureMetricsEnvironment/FeatureMetricsEnvironment';
-import { FeatureMetricsApplication } from './FeatureMetricsApplication/FeatureMetricsApplication';
 import { FeatureMetricsHours } from './FeatureMetricsHours/FeatureMetricsHours';
 import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
 import { Box, Grid, styled } from '@material-ui/core';
 import { FeatureMetricsContent } from './FeatureMetricsContent/FeatureMetricsContent';
 import { useQueryStringNumberState } from '../../../../hooks/useQueryStringNumberState';
 import { useQueryStringState } from '../../../../hooks/useQueryStringState';
+import { FeatureMetricsChips } from './FeatureMetricsChips/FeatureMetricsChips';
 
 export const FeatureMetrics = () => {
     const defaultHoursBack = 48;
@@ -65,19 +64,21 @@ export const FeatureMetrics = () => {
             >
                 <Grid item xs={12} md={5}>
                     {environments.size > 0 && (
-                        <FeatureMetricsEnvironment
-                            environments={environments}
-                            environment={environment}
-                            setEnvironment={setEnvironment}
+                        <FeatureMetricsChips
+                            title="Environments"
+                            values={environments}
+                            value={environment}
+                            setValue={setEnvironment}
                         />
                     )}
                 </Grid>
                 <Grid item xs={12} md={5}>
                     {applications.size > 0 && (
-                        <FeatureMetricsApplication
-                            applications={applications}
-                            application={application}
-                            setApplication={setApplication}
+                        <FeatureMetricsChips
+                            title="Applications"
+                            values={applications}
+                            value={application}
+                            setValue={setApplication}
                         />
                     )}
                 </Grid>
