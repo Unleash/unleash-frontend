@@ -16,7 +16,7 @@ interface IDialogue {
     secondaryButtonText?: string;
     open: boolean;
     onClick: (e: React.SyntheticEvent) => void;
-    onClose: (e: React.SyntheticEvent) => void;
+    onClose?: (e: React.SyntheticEvent) => void;
     style?: object;
     title: string;
     fullWidth?: boolean;
