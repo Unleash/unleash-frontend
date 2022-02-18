@@ -1,12 +1,13 @@
 import GeneralSelect, {
     OnGeneralSelectChange,
 } from '../../../../common/GeneralSelect/GeneralSelect';
-import { parseFeatureMetricsHour } from './parseFeatureMetricsHour';
 
 interface IFeatureMetricsHoursProps {
     hoursBack: number;
     setHoursBack: (value: number) => void;
 }
+
+export const FEATURE_METRIC_HOURS_BACK_MAX = 48;
 
 export const FeatureMetricsHours = ({
     hoursBack,
@@ -29,8 +30,28 @@ export const FeatureMetricsHours = ({
     );
 };
 
+const parseFeatureMetricsHour = (value: unknown) => {
+    switch (value) {
+        case '1':
+            return 1;
+        case '24':
+            return 24;
+        default:
+            return FEATURE_METRIC_HOURS_BACK_MAX;
+    }
+};
+
 const hourOptions: { key: `${number}`; label: string }[] = [
-    { key: '1', label: 'Last hour' },
-    { key: '24', label: 'Last 24 hours' },
-    { key: '48', label: 'Last 48 hours' },
+    {
+        key: '1',
+        label: 'Last hour',
+    },
+    {
+        key: '24',
+        label: 'Last 24 hours',
+    },
+    {
+        key: `${FEATURE_METRIC_HOURS_BACK_MAX}`,
+        label: `Last ${FEATURE_METRIC_HOURS_BACK_MAX} hours`,
+    },
 ];

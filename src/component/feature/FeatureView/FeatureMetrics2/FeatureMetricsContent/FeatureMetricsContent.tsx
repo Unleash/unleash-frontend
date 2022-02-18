@@ -16,7 +16,11 @@ export const FeatureMetricsContent = ({
     hoursBack,
 }: IFeatureMetricsContentProps) => {
     if (metrics.length === 0) {
-        return <FeatureMetricsEmpty />;
+        return (
+            <Box mt={6}>
+                <FeatureMetricsEmpty />
+            </Box>
+        );
     }
 
     return (
