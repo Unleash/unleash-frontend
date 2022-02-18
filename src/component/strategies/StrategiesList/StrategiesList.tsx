@@ -93,7 +93,7 @@ export const StrategiesList = () => {
         />
     );
 
-    const strategyLink = ({ name, deprecated }) => (
+    const strategyLink = ({ name, deprecated }: IStrategy) => (
         <Link to={`/strategies/view/${name}`}>
             <strong>{getHumanReadableStrategyName(name)}</strong>
             <ConditionallyRender
