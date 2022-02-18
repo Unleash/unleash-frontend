@@ -126,7 +126,6 @@ const useFeatureStrategiesEnvironmentList = () => {
 
     return {
         activeEnvironmentsRef,
-        setToastData,
         deleteStrategy,
         updateStrategy,
         delDialog,
