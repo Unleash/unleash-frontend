@@ -1,5 +1,5 @@
 /* eslint react/no-multi-comp:off */
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Avatar,
     Icon,
@@ -45,7 +45,7 @@ export const ApplicationEdit = () => {
 
     const formatDate = (v: string) => formatDateYMD(v, locationSettings.locale);
 
-    const onDeleteApplication = async (evt: Event) => {
+    const onDeleteApplication = async (evt: React.SyntheticEvent) => {
         evt.preventDefault();
         try {
             await deleteApplication(appName);
