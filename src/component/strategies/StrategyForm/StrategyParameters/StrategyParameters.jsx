@@ -10,6 +10,7 @@ export const StrategyParameters = ({
     count = 0,
     updateParameter,
     setParams,
+    errors,
 }) => (
     <div>
         {gerArrayWithEntries(count).map((v, i) => (
@@ -20,6 +21,7 @@ export const StrategyParameters = ({
                 index={i}
                 input={input[i]}
                 setParams={setParams}
+                errors={errors}
             />
         ))}
     </div>

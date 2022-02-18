@@ -4,6 +4,7 @@ import { useStyles } from './StrategyParameter.styles';
 import GeneralSelect from '../../../../common/GeneralSelect/GeneralSelect';
 import Input from '../../../../common/Input/Input';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
+import React from 'react';
 
 const paramTypesOptions = [
     {
@@ -37,15 +38,31 @@ const paramTypesOptions = [
     },
 ];
 
+interface IParameter {
+    name: string;
+    description: string;
+    type: string;
+    required: boolean;
+}
+interface IStrategyParameterProps {
+    set: React.Dispatch<React.SetStateAction<object>>;
+    input: IParameter;
+    index: number;
+    params: IParameter[];
+    setParams: React.Dispatch<React.SetStateAction<object>>;
+    errors: { [key: string]: string };
+}
+
 export const StrategyParameter = ({
     set,
-    input = { name: '', description: '', type: '', required: false },
+    input,
     index,
     params,
     setParams,
-}) => {
+    errors,
+}: IStrategyParameterProps) => {
     const styles = useStyles();
-    const handleTypeChange = event => {
+    const handleTypeChange = (event: { target: { value: any } }) => {
         set({ type: event.target.value });
     };
 
@@ -53,6 +70,7 @@ export const StrategyParameter = ({
         return paramTypesOptions.find(param => param.key === input.type)
             ?.description;
     };
+
     return (
         <div className={styles.paramsContainer}>
             <hr className={styles.divider} />
@@ -66,10 +84,13 @@ export const StrategyParameter = ({
             />
             <div className={styles.nameContainer}>
                 <Input
+                    autoFocus
                     label={`Parameter name ${index + 1}*`}
-                    onChange={({ target }) => set({ name: target.value }, true)}
+                    onChange={e => set({ name: e.target.value })}
                     value={input.name}
                     className={styles.name}
+                    error={Boolean(errors?.[`paramName${index}`])}
+                    errorText={errors?.[`paramName${index}`]}
                 />
                 <IconButton
                     onClick={() => {

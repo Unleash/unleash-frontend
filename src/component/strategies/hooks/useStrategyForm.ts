@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 
 export const useStrategyForm = (
     initialStrategyName = '',
@@ -9,6 +10,7 @@ export const useStrategyForm = (
     const [strategyDesc, setStrategyDesc] = useState(initialStrategyDesc);
     const [params, setParams] = useState(initialParams);
     const [errors, setErrors] = useState({});
+    const { strategies } = useStrategies();
 
     useEffect(() => {
         setStrategyName(initialStrategyName);
@@ -30,27 +32,33 @@ export const useStrategyForm = (
         };
     };
 
-    const NAME_EXISTS_ERROR = 'A context field with that name already exist';
-
-    const validateNameUniqueness = async () => {
-        // try {
-        //     await validatestrategyName(strategyName);
-        // } catch (e: any) {
-        //     if (e.toString().includes(NAME_EXISTS_ERROR)) {
-        //         setErrors(prev => ({
-        //             ...prev,
-        //             name: 'A context field with that name already exist',
-        //         }));
-        //     }
-        // }
-    };
-
-    const validateName = () => {
+    const validateStrategyName = async () => {
         if (strategyName.length === 0) {
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
             return false;
         }
+        if (strategies.some(strategy => strategy.name === strategyName)) {
+            setErrors(prev => ({
+                ...prev,
+                name: 'A strategy name with that name already exist',
+            }));
+            return false;
+        }
         return true;
+    };
+
+    const validateParams = () => {
+        let res = true;
+        for (const [index, p] of params.entries()) {
+            if (p.name.length === 0) {
+                setErrors(prev => ({
+                    ...prev,
+                    [`paramName${index}`]: 'Name can not be empty',
+                }));
+                res = false;
+            }
+        }
+        return res;
     };
 
     const clearErrors = () => {
@@ -65,8 +73,8 @@ export const useStrategyForm = (
         setStrategyDesc,
         setParams,
         getStrategyPayload,
-        validateNameUniqueness,
-        validateName,
+        validateStrategyName,
+        validateParams,
         setErrors,
         clearErrors,
         errors,

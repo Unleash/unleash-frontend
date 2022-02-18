@@ -21,8 +21,8 @@ export const CreateStrategy = () => {
         setStrategyName,
         setStrategyDesc,
         getStrategyPayload,
-        validateNameUniqueness,
-        validateName,
+        validateStrategyName,
+        validateParams,
         clearErrors,
         setErrors,
         errors,
@@ -31,19 +31,24 @@ export const CreateStrategy = () => {
     const { refetchStrategies } = useStrategies();
 
     const handleSubmit = async (e: Event) => {
+        clearErrors();
         e.preventDefault();
-        const payload = getStrategyPayload();
-        try {
-            await createStrategy(payload);
-            refetchStrategies();
-            history.push('/strategies');
-            setToastData({
-                title: 'Context created',
-                confetti: true,
-                type: 'success',
-            });
-        } catch (e: any) {
-            setToastApiError(e.toString());
+        const validName = await validateStrategyName();
+       
+        if (validName && validateParams()) {
+            const payload = getStrategyPayload();
+            try {
+                await createStrategy(payload);
+                refetchStrategies();
+                history.push('/strategies');
+                setToastData({
+                    title: 'Strategy created',
+                    confetti: true,
+                    type: 'success',
+                });
+            } catch (e: any) {
+                setToastApiError(e.toString());
+            }
         }
     };
 
@@ -80,7 +85,6 @@ export const CreateStrategy = () => {
                 params={params}
                 setParams={setParams}
                 mode="Create"
-                validateNameUniqueness={validateNameUniqueness}
                 setErrors={setErrors}
                 clearErrors={clearErrors}
             >

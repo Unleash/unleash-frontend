@@ -40,7 +40,6 @@ export const StrategyFormV2: React.FC<IStrategyForm> = ({
     setStrategyDesc,
     errors,
     mode,
-    validateNameUniqueness,
     setErrors,
     clearErrors,
 }) => {
@@ -52,7 +51,10 @@ export const StrategyFormV2: React.FC<IStrategyForm> = ({
     };
 
     const appParameter = () => {
-        setParams(prev => [...prev, {}]);
+        setParams(prev => [
+            ...prev,
+            { name: '', type: 'string', description: '', required: false },
+        ]);
     };
 
     return (
@@ -64,6 +66,7 @@ export const StrategyFormV2: React.FC<IStrategyForm> = ({
                     What would you like to call your strategy?
                 </p>
                 <Input
+                    autoFocus
                     className={styles.input}
                     label="Strategy name*"
                     value={strategyName}
@@ -89,6 +92,7 @@ export const StrategyFormV2: React.FC<IStrategyForm> = ({
                     count={params.length}
                     updateParameter={updateParameter}
                     setParams={setParams}
+                    errors={errors}
                 />
                 <Button
                     onClick={e => {
