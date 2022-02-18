@@ -222,7 +222,7 @@ const FeatureOverviewVariants = () => {
         }
     };
 
-    const validateWeight = (weight: number) => {
+    const validateWeight = (weight: string) => {
         const weightValue = parseInt(weight);
         if (weightValue > 100 || weightValue < 0) {
             return { weight: 'weight must be between 0 and 100' };
@@ -231,7 +231,7 @@ const FeatureOverviewVariants = () => {
 
     const delDialogueMarkup = useDeleteVariantMarkup({
         show: delDialog.show,
-        onClick: e => {
+        onClick: () => {
             removeVariant(delDialog.name);
             setDelDialog({ name: '', show: false });
             setToastData({
