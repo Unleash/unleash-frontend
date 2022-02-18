@@ -25,7 +25,7 @@ const ChangePassword = ({
     user = {},
 }: IChangePasswordProps) => {
     const [data, setData] = useState({});
-    const [error, setError] = useState({});
+    const [error, setError] = useState<Record<string, string>>({});
     const [validPassword, setValidPassword] = useState(false);
     const commonStyles = useCommonStyles();
 
@@ -88,7 +88,7 @@ const ChangePassword = ({
                 )}
             >
                 <ConditionallyRender
-                    condition={error.general}
+                    condition={Boolean(error.general)}
                     show={<Alert severity="error">{error.general}</Alert>}
                 />
                 <Typography variant="subtitle1">
