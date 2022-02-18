@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import { TextField, Typography, Avatar } from '@material-ui/core';
+import { Avatar, TextField, Typography } from '@material-ui/core';
 import { trim } from '../../../../common/util';
 import { modalStyles } from '../../util';
 import Dialogue from '../../../../common/Dialogue/Dialogue';
@@ -12,10 +12,10 @@ import { Alert } from '@material-ui/lab';
 import { IUser } from '../../../../../interfaces/user';
 
 interface IChangePasswordProps {
-    showDialog: () => void;
+    showDialog: boolean;
     closeDialog: () => void;
-    changePassword: () => void;
-    user: IUser;
+    changePassword: (user: IUser, password: string) => Promise<Response>;
+    user: Partial<IUser>;
 }
 
 const ChangePassword = ({
