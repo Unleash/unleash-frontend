@@ -27,7 +27,7 @@ interface ProjectEnvironmentListProps {
 
 const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
     // api state
-    const [envs, setEnvs] = useState<IProjectEnvironment>([]);
+    const [envs, setEnvs] = useState<IProjectEnvironment[]>([]);
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const {
