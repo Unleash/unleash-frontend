@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useStyles } from './ProjectEnvironment.styles';
 
@@ -76,7 +76,7 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         } the environment.`;
     };
 
-    const toggleEnv = async (env: ProjectEnvironment) => {
+    const toggleEnv = async (env: IProjectEnvironment) => {
         if (env.enabled) {
             const enabledEnvs = getEnabledEnvs(envs);
 
@@ -128,7 +128,7 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         setConfirmName('');
     };
 
-    const genLabel = (env: ProjectEnvironment) => (
+    const genLabel = (env: IProjectEnvironment) => (
         <>
             <code>{env.name}</code> environment is{' '}
             <strong>{env.enabled ? 'enabled' : 'disabled'}</strong>
