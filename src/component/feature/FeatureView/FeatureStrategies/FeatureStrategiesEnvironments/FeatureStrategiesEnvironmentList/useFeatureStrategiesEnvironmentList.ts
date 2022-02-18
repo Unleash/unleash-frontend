@@ -4,7 +4,10 @@ import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrate
 import useFeatureStrategyApi from '../../../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
 import useToast from '../../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import { IFeatureStrategy } from '../../../../../../interfaces/strategy';
+import {
+    IFeatureStrategy,
+    IStrategyPayload,
+} from '../../../../../../interfaces/strategy';
 import cloneDeep from 'lodash.clonedeep';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { formatUnknownError } from '../../../../../../utils/format-unknown-error';
