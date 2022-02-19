@@ -244,7 +244,7 @@ export const routes = [
         path: '/strategies/create',
         title: 'Create',
         parent: '/strategies',
-        component: StrategyForm,
+        component: CreateStrategy,
         type: 'protected',
         layout: 'main',
         menu: {},
