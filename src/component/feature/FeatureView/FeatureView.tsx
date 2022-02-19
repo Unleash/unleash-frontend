@@ -226,13 +226,7 @@ export const FeatureView = () => {
                     />
                     <Route
                         path={`/projects/:projectId/features/:featureId/settings`}
-                        render={props => (
-                            <FeatureSettings
-                                {...props}
-                                projectId={projectId}
-                                featureId={featureId}
-                            />
-                        )}
+                        component={FeatureSettings}
                     />
                     <Dialogue
                         onClick={() => archiveToggle()}
