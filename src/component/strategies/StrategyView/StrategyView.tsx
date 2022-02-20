@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useFeatures } from '../../../hooks/api/getters/useFeatures/useFeatures';
 import useApplications from '../../../hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
+import { EditStrategy } from '../EditStrategy/EditStrategy';
 
 export const StrategyView = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -38,7 +39,7 @@ export const StrategyView = () => {
         },
         {
             label: 'Edit',
-            component: <StrategyForm strategy={strategy} editMode />,
+            component: <EditStrategy strategy={strategy}/>,
         },
     ];
 
