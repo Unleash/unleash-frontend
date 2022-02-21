@@ -8,18 +8,20 @@ import {
     FeatureMetricsHours,
 } from './FeatureMetricsHours/FeatureMetricsHours';
 import { IFeatureMetricsRaw } from '../../../../interfaces/featureToggle';
-import { Box, Grid, styled } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { FeatureMetricsContent } from './FeatureMetricsContent/FeatureMetricsContent';
 import { useQueryStringNumberState } from '../../../../hooks/useQueryStringNumberState';
 import { useQueryStringState } from '../../../../hooks/useQueryStringState';
 import { FeatureMetricsChips } from './FeatureMetricsChips/FeatureMetricsChips';
 import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
 import ConditionallyRender from '../../../common/ConditionallyRender';
+import { useStyles } from './FeatureMetrics.styles';
 
 export const FeatureMetrics = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const environments = useFeatureMetricsEnvironments(projectId, featureId);
     const applications = useFeatureMetricsApplications(featureId);
+    const styles = useStyles();
 
     const [hoursBack = FEATURE_METRIC_HOURS_BACK_MAX, setHoursBack] =
         useQueryStringNumberState('hoursBack');
@@ -87,12 +89,12 @@ export const FeatureMetrics = () => {
                     />
                 </Grid>
                 <Grid item xs={12} md={2}>
-                    <MobileMarginTop>
+                    <div className={styles.mobileMarginTop}>
                         <FeatureMetricsHours
                             hoursBack={hoursBack}
                             setHoursBack={setHoursBack}
                         />
-                    </MobileMarginTop>
+                    </div>
                 </Grid>
             </Grid>
             <FeatureMetricsContent
@@ -132,11 +134,5 @@ const useFeatureMetricsApplications = (featureId: string): Set<string> => {
 
     return new Set(applications);
 };
-
-const MobileMarginTop = styled(Box)(({ theme }) => ({
-    [theme.breakpoints.down('sm')]: {
-        marginTop: theme.spacing(2),
-    },
-}));
 
 export default FeatureMetrics;

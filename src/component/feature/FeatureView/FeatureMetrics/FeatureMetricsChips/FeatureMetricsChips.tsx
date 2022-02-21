@@ -1,7 +1,6 @@
 import { Chip } from '@material-ui/core';
-import { FeatureMetricsChipsList } from './FeatureMetricsChipsList';
-import { FeatureMetricsChipsItem } from './FeatureMetricsChipsItem';
 import { useMemo } from 'react';
+import { useStyles } from './FeatureMetricsChips.styles';
 
 interface IFeatureMetricsChipsProps {
     title: string;
@@ -16,6 +15,8 @@ export const FeatureMetricsChips = ({
     value,
     setValue,
 }: IFeatureMetricsChipsProps) => {
+    const styles = useStyles();
+
     const onClick = (value: string) => () => {
         if (values.has(value)) {
             setValue(value);
@@ -29,16 +30,19 @@ export const FeatureMetricsChips = ({
     }, [values]);
 
     return (
-        <FeatureMetricsChipsList title={title}>
-            {sortedValues.map(val => (
-                <FeatureMetricsChipsItem key={val}>
-                    <Chip
-                        label={val}
-                        onClick={onClick(val)}
-                        aria-pressed={val === value}
-                    />
-                </FeatureMetricsChipsItem>
-            ))}
-        </FeatureMetricsChipsList>
+        <div>
+            <h3 className={styles.title}>{title}</h3>
+            <ul className={styles.list}>
+                {sortedValues.map(val => (
+                    <li key={val} className={styles.item}>
+                        <Chip
+                            label={val}
+                            onClick={onClick(val)}
+                            aria-pressed={val === value}
+                        />
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
