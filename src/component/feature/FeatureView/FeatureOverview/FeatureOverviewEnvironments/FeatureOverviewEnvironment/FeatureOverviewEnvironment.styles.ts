@@ -84,7 +84,6 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        marginLeft: '-0.75rem',
         [theme.breakpoints.down(560)]: {
             marginLeft: '0px',
             top: '5px',
