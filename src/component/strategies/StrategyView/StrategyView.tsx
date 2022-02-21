@@ -6,7 +6,7 @@ import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyR
 import TabNav from '../../common/TabNav/TabNav';
 import PageContent from '../../common/PageContent/PageContent';
 import AccessContext from '../../../contexts/AccessContext';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../hooks/api/getters/useStrategies/useStrategies';
 import { useParams } from 'react-router-dom';
 import { useFeatures } from '../../../hooks/api/getters/useFeatures/useFeatures';
 import useApplications from '../../../hooks/api/getters/useApplications/useApplications';

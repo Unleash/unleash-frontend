@@ -9,7 +9,7 @@ import PercentageCircle from '../../../../common/PercentageCircle/PercentageCirc
 import FeatureStrategiesSeparator from '../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import { useStyles } from './FeatureStrategyExecution.styles';
 import FeatureStrategyExecutionChips from './FeatureStrategyExecutionChips/FeatureStrategyExecutionChips';
-import useStrategies from '../../../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../../../hooks/api/getters/useStrategies/useStrategies';
 import Constraint from '../../../../common/Constraint/Constraint';
 
 interface IFeatureStrategiesExecutionProps {

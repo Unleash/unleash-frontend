@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import { IStrategy } from '../../../interfaces/strategy';
 import useToast from '../../../hooks/useToast';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../hooks/api/getters/useStrategies/useStrategies';
 import { formatUnknownError } from '../../../utils/format-unknown-error';
 
 interface ICustomStrategyParams {

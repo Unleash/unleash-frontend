@@ -32,7 +32,7 @@ import { ADD_NEW_STRATEGY_ID } from '../../../testIds';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../hooks/api/getters/useStrategies/useStrategies';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useToast from '../../../hooks/useToast';
 import { IStrategy } from '../../../interfaces/strategy';

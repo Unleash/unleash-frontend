@@ -2,7 +2,7 @@ import { IFeatureStrategy } from '../../../../../../interfaces/strategy';
 import { FEATURE_STRATEGIES_DRAG_TYPE } from '../../FeatureStrategiesList/FeatureStrategyCard/FeatureStrategyCard';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { Fragment } from 'react';
-import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import classnames from 'classnames';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 

@@ -6,7 +6,7 @@ import { useDrag } from 'react-dnd';
 import { useParams } from 'react-router-dom';
 import AccessContext from '../../../../../../contexts/AccessContext';
 import FeatureStrategiesUIContext from '../../../../../../contexts/FeatureStrategiesUIContext';
-import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
+import { useStrategies } from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { ADD_NEW_STRATEGY_CARD_BUTTON_ID } from '../../../../../../testIds';
 import { getStrategyObject } from '../../../../../../utils/get-strategy-object';
