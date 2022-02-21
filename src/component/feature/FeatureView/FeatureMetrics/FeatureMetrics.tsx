@@ -14,6 +14,7 @@ import { useQueryStringNumberState } from '../../../../hooks/useQueryStringNumbe
 import { useQueryStringState } from '../../../../hooks/useQueryStringState';
 import { FeatureMetricsChips } from './FeatureMetricsChips/FeatureMetricsChips';
 import useFeature from '../../../../hooks/api/getters/useFeature/useFeature';
+import ConditionallyRender from '../../../common/ConditionallyRender';
 
 export const FeatureMetrics = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
@@ -60,24 +61,30 @@ export const FeatureMetrics = () => {
                 alignItems="flex-end"
             >
                 <Grid item xs={12} md={5}>
-                    {environments.size > 0 && (
-                        <FeatureMetricsChips
-                            title="Environments"
-                            values={environments}
-                            value={environment}
-                            setValue={setEnvironment}
-                        />
-                    )}
+                    <ConditionallyRender
+                        condition={environments.size > 0}
+                        show={
+                            <FeatureMetricsChips
+                                title="Environments"
+                                values={environments}
+                                value={environment}
+                                setValue={setEnvironment}
+                            />
+                        }
+                    />
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    {applications.size > 0 && (
-                        <FeatureMetricsChips
-                            title="Applications"
-                            values={applications}
-                            value={application}
-                            setValue={setApplication}
-                        />
-                    )}
+                    <ConditionallyRender
+                        condition={applications.size > 0}
+                        show={
+                            <FeatureMetricsChips
+                                title="Applications"
+                                values={applications}
+                                value={application}
+                                setValue={setApplication}
+                            />
+                        }
+                    />
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <MobileMarginTop>
