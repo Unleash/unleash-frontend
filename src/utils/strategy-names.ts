@@ -1,8 +1,8 @@
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PeopleIcon from '@material-ui/icons/People';
 import LanguageIcon from '@material-ui/icons/Language';
+import PieChart from '@material-ui/icons/PieChart';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import RolloutIcon from '../component/common/RolloutIcon/RolloutIcon';
 import { ElementType } from 'react';
 
 export const getHumanReadableStrategyName = (strategyName: string) => {
@@ -20,7 +20,7 @@ export const getFeatureStrategyIcon = (strategyName: string): ElementType => {
         case 'remoteAddress':
             return LanguageIcon;
         case 'flexibleRollout':
-            return RolloutIcon;
+            return PieChart;
         case 'userWithId':
             return PeopleIcon;
         case 'applicationHostname':
