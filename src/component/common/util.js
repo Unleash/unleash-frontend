@@ -16,6 +16,11 @@ const dateOptions = {
     year: 'numeric',
 };
 
+const timeOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+};
+
 export const filterByFlags = flags => r => {
     if (r.flag && !flags[r.flag]) {
         return false;
@@ -39,6 +44,13 @@ export const formatDateWithLocale = (v, locale, tz) => {
         dateTimeOptions.timeZone = tz;
     }
     return new Date(v).toLocaleString(locale, dateOptions);
+};
+
+export const formatTimeWithLocale = (v, locale, tz) => {
+    if (tz) {
+        dateTimeOptions.timeZone = tz;
+    }
+    return new Date(v).toLocaleString(locale, timeOptions);
 };
 
 export const trim = value => {
@@ -88,11 +100,6 @@ export function updateWeight(variants, totalWeight) {
     });
 }
 
-export function loadNameFromUrl() {
-    const params = new URLSearchParams(document.location.search);
-    return params.get('name') || '';
-}
-
 export const modalStyles = {
     overlay: {
         position: 'absolute',
@@ -115,10 +122,7 @@ export const modalStyles = {
     },
 };
 
-export const updateIndexInArray = (array, index, newValue) =>
-    array.map((v, i) => (i === index ? newValue : v));
-
-export const showPnpsFeedback = (feedbackList) => {
+export const showPnpsFeedback = feedbackList => {
     if (!feedbackList) return;
     if (feedbackList.length > 0) {
         const feedback = feedbackList.find(
@@ -143,4 +147,4 @@ export const showPnpsFeedback = (feedbackList) => {
     return true;
 };
 
-export const PNPS_FEEDBACK_ID = 'pnps'
+export const PNPS_FEEDBACK_ID = 'pnps';
