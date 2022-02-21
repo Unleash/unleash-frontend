@@ -7,7 +7,7 @@ import {
 import { ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import { useParams } from 'react-router';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from '../../../../../../hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';

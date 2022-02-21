@@ -17,7 +17,7 @@ import Dialogue from '../../../../../common/Dialogue';
 import { modalStyles, trim } from 'component/common/util';
 import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 import { IFeatureVariant, IOverride } from 'interfaces/featureToggle';

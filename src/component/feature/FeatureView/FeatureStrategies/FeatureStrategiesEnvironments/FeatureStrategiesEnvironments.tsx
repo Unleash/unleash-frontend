@@ -9,7 +9,7 @@ import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { ADD_NEW_STRATEGY_ID } from '../../../../../testIds';
 import { CREATE_FEATURE_STRATEGY } from '../../../../providers/AccessProvider/permissions';
 
-import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../hooks/api/getters/useFeature/useFeature';
 import useTabs from '../../../../../hooks/useTabs';
 import useQueryParams from '../../../../../hooks/useQueryParams';
 

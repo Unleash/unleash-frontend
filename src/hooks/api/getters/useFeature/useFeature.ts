@@ -6,7 +6,7 @@ import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 import { defaultFeature } from './defaultFeature';
 import handleErrorResponses from '../httpErrorResponseHandler';
 
-const useFeature = (
+export const useFeature = (
     projectId: string,
     id: string,
     options: SWRConfiguration = {}
@@ -46,5 +46,3 @@ const useFeature = (
         FEATURE_CACHE_KEY,
     };
 };
-
-export default useFeature;

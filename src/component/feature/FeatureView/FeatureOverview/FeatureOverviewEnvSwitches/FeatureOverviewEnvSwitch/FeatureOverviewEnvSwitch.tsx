@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { ENVIRONMENT_STRATEGY_ERROR } from '../../../../../../constants/apiErrors';
 import useFeatureApi from '../../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../../hooks/api/getters/useFeature/useFeature';
 import useToast from '../../../../../../hooks/useToast';
 import { IFeatureEnvironment } from '../../../../../../interfaces/featureToggle';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';

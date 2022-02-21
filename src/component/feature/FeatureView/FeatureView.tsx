@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../hooks/api/getters/useFeature/useFeature';
 import useProject from '../../../hooks/api/getters/useProject/useProject';
 import useTabs from '../../../hooks/useTabs';
 import useToast from '../../../hooks/useToast';

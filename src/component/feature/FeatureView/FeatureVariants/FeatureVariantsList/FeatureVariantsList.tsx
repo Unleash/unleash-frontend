@@ -13,7 +13,7 @@ import {
 import AddVariant from './AddFeatureVariant/AddFeatureVariant';
 
 import { useContext, useEffect, useState } from 'react';
-import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import AccessContext from '../../../../../contexts/AccessContext';

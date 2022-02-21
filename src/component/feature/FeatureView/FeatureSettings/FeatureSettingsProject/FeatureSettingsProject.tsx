@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import AccessContext from '../../../../../contexts/AccessContext';
 import useFeatureApi from '../../../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../../../hooks/api/getters/useFeature/useFeature';
 import useToast from '../../../../../hooks/useToast';
 import { IFeatureViewParams } from '../../../../../interfaces/params';
 import { MOVE_FEATURE_TOGGLE } from '../../../../providers/AccessProvider/permissions';
