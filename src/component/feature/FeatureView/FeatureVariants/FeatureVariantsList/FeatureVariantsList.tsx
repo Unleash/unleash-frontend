@@ -35,7 +35,7 @@ import { formatUnknownError } from '../../../../../utils/format-unknown-error';
 const FeatureOverviewVariants = () => {
     const { hasAccess } = useContext(AccessContext);
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { feature, FEATURE_CACHE_KEY } = useFeature(projectId, featureId);
+    const { feature, featureCacheKey } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
     const [editing, setEditing] = useState(false);
     const { context } = useUnleashContext();
@@ -156,7 +156,7 @@ const FeatureOverviewVariants = () => {
         try {
             const res = await patchFeatureVariants(projectId, featureId, patch);
             const { variants } = await res.json();
-            mutate(FEATURE_CACHE_KEY, { ...feature, variants }, false);
+            mutate(featureCacheKey, { ...feature, variants }, false);
             setToastData({
                 title: 'Updated variant',
                 confetti: true,
@@ -212,7 +212,7 @@ const FeatureOverviewVariants = () => {
         try {
             const res = await patchFeatureVariants(projectId, featureId, patch);
             const { variants } = await res.json();
-            mutate(FEATURE_CACHE_KEY, { ...feature, variants }, false);
+            mutate(featureCacheKey, { ...feature, variants }, false);
             setToastData({
                 title: 'Updated variant',
                 type: 'success',

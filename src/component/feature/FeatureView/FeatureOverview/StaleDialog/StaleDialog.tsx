@@ -19,7 +19,7 @@ const StaleDialog = ({ open, setOpen, stale }: IStaleDialogProps) => {
     const { setToastData, setToastApiError } = useToast();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { patchFeatureToggle } = useFeatureApi();
-    const { refetch } = useFeature(projectId, featureId);
+    const { refetchFeature } = useFeature(projectId, featureId);
 
     const toggleToStaleContent = (
         <DialogContentText>
@@ -40,7 +40,7 @@ const StaleDialog = ({ open, setOpen, stale }: IStaleDialogProps) => {
         try {
             const patch = [{ op: 'replace', path: '/stale', value: !stale }];
             await patchFeatureToggle(projectId, featureId, patch);
-            refetch();
+            refetchFeature();
             setOpen(false);
         } catch (err: unknown) {
             setToastApiError(formatUnknownError(err));

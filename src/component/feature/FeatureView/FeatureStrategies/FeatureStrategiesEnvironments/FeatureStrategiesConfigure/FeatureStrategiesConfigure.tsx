@@ -26,7 +26,7 @@ const FeatureStrategiesConfigure = () => {
     const { setToastData, setToastApiError } = useToast();
 
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { refetch } = useFeature(projectId, featureId);
+    const { refetchFeature } = useFeature(projectId, featureId);
 
     const [productionGuard, setProductionGuard] = useState(false);
     const dontShow = JSON.parse(
@@ -105,7 +105,7 @@ const FeatureStrategiesConfigure = () => {
                 confetti: true,
             });
             history.replace(history.location.pathname);
-            refetch();
+            refetchFeature();
             scrollToTop();
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));

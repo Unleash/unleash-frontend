@@ -17,7 +17,7 @@ import { formatUnknownError } from '../../../../../utils/format-unknown-error';
 const FeatureSettingsProject = () => {
     const { hasAccess } = useContext(AccessContext);
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { feature, refetch } = useFeature(projectId, featureId);
+    const { feature, refetchFeature } = useFeature(projectId, featureId);
     const [project, setProject] = useState(feature.project);
     const [dirty, setDirty] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -50,7 +50,7 @@ const FeatureSettingsProject = () => {
         const newProject = project;
         try {
             await changeFeatureProject(projectId, featureId, newProject);
-            refetch();
+            refetchFeature();
             setToastData({
                 title: 'Updated project',
                 confetti: true,

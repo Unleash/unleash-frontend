@@ -27,7 +27,7 @@ const FeatureOverviewEnvSwitch = ({
     const { featureId, projectId } = useParams<IFeatureViewParams>();
     const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
         useFeatureApi();
-    const { refetch } = useFeature(projectId, featureId);
+    const { refetchFeature } = useFeature(projectId, featureId);
     const { setToastData, setToastApiError } = useToast();
 
     const handleToggleEnvironmentOn = async () => {
@@ -38,7 +38,7 @@ const FeatureOverviewEnvSwitch = ({
                 title: 'Environment turned on',
                 text: 'Successfully turned environment on. Strategies are executing in this environment.',
             });
-            refetch();
+            refetchFeature();
             if (callback) {
                 callback();
             }
@@ -62,7 +62,7 @@ const FeatureOverviewEnvSwitch = ({
                 title: 'Environment turned off',
                 text: 'Successfully turned environment off. Strategies are no longer executing in this environment.',
             });
-            refetch();
+            refetchFeature();
             if (callback) {
                 callback();
             }
