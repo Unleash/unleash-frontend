@@ -10,6 +10,7 @@ export const useStyles = makeStyles(theme => ({
     header: {
         padding: '0.5rem',
         display: 'flex',
+        gap: '0.5rem',
         alignItems: 'center',
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
     },

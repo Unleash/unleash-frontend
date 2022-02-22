@@ -45,6 +45,8 @@ import { EditAddon } from '../addons/EditAddon/EditAddon';
 import { CopyFeatureToggle } from '../feature/CopyFeature/CopyFeature';
 import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
+import { FeatureStrategyCreate } from '../feature/FeatureStrategy/FeatureStrategyCreate/FeatureStrategyCreate';
+import { FeatureStrategyEdit } from '../feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 
 export const routes = [
     // Project
@@ -72,6 +74,22 @@ export const routes = [
         title: ':name',
         parent: '/archive',
         component: RedirectArchive,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:projectId/features/:featureId/strategies/create',
+        title: 'Create feature',
+        component: FeatureStrategyCreate,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:projectId/features/:featureId/strategies/edit',
+        title: 'Edit feature',
+        component: FeatureStrategyEdit,
         type: 'protected',
         layout: 'main',
         menu: {},

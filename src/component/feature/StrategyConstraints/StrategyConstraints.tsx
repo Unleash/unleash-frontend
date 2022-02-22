@@ -7,6 +7,7 @@ import { C } from '../../common/flags';
 import useUnleashContext from '../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import StrategyConstraintInputField from './StrategyConstraintInputField';
 import React, { useEffect } from 'react';
+import cloneDeep from 'lodash.clonedeep';
 
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
@@ -69,7 +70,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
 
     // @ts-expect-error
     const updateConstraint = (index: number) => (value, field) => {
-        const updatedConstraints = [...constraints];
+        const updatedConstraints = cloneDeep(constraints);
         const constraint = updatedConstraints[index];
         // @ts-expect-error
         constraint[field] = value;
