@@ -104,15 +104,6 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:id/features/:name/:activeTab/copy',
-        parent: '/projects/:id/features/:name/:activeTab',
-        title: 'Copy',
-        component: CopyFeatureToggle,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
         path: '/projects/:projectId/features/:featureId/edit',
         parent: '/projects',
         title: 'Edit Feature',

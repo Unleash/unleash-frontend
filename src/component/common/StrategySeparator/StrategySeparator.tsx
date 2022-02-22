@@ -1,14 +1,14 @@
 import { useTheme } from '@material-ui/core';
 
-interface IFeatureStrategiesSeparatorProps {
+interface IStrategySeparatorProps {
     text: string;
     maxWidth?: string;
 }
 
-const FeatureStrategiesSeparator = ({
+export const StrategySeparator = ({
     text,
     maxWidth = '50px',
-}: IFeatureStrategiesSeparatorProps) => {
+}: IStrategySeparatorProps) => {
     const theme = useTheme();
     return (
         <div
@@ -28,5 +28,3 @@ const FeatureStrategiesSeparator = ({
         </div>
     );
 };
-
-export default FeatureStrategiesSeparator;

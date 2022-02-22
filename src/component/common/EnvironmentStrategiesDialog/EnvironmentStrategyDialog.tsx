@@ -3,13 +3,14 @@ import { CREATE_FEATURE_STRATEGY } from '../../providers/AccessProvider/permissi
 import Dialogue from '../Dialogue';
 import PermissionButton from '../PermissionButton/PermissionButton';
 import { useStyles } from './EnvironmentStrategyDialog.styles';
+import { formatCreateStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyCreate/FeatureStrategyCreate';
 
 interface IEnvironmentStrategyDialogProps {
     open: boolean;
     featureId: string;
     projectId: string;
     onClose: () => void;
-    environmentName?: string;
+    environmentName: string;
 }
 const EnvironmentStrategyDialog = ({
     open,
@@ -20,7 +21,13 @@ const EnvironmentStrategyDialog = ({
 }: IEnvironmentStrategyDialogProps) => {
     const styles = useStyles();
     const history = useHistory();
-    const strategiesLink = `/projects/${projectId}/features/${featureId}/strategies?environment=${environmentName}&addStrategy=true`;
+
+    const createStrategyPath = formatCreateStrategyPath(
+        projectId,
+        featureId,
+        environmentName,
+        'default'
+    );
 
     return (
         // @ts-expect-error
@@ -35,7 +42,7 @@ const EnvironmentStrategyDialog = ({
                     permission={CREATE_FEATURE_STRATEGY}
                     projectId={projectId}
                     environmentId={environmentName}
-                    onClick={() => history.push(strategiesLink)}
+                    onClick={() => history.push(createStrategyPath)}
                 >
                     Take me directly to add strategy
                 </PermissionButton>

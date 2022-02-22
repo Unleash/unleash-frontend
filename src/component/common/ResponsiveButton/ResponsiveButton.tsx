@@ -54,7 +54,6 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
                     permission={permission}
                     projectId={projectId}
                     color="primary"
-                    // @ts-expect-error
                     variant="contained"
                     disabled={disabled}
                     environmentId={environmentId}

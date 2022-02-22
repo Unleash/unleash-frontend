@@ -6,24 +6,24 @@ import {
 } from '../../../../../interfaces/strategy';
 import ConditionallyRender from '../../../../common/ConditionallyRender';
 import PercentageCircle from '../../../../common/PercentageCircle/PercentageCircle';
-import FeatureStrategiesSeparator from '../FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
-import { useStyles } from './FeatureStrategyExecution.styles';
-import FeatureStrategyExecutionChips from './FeatureStrategyExecutionChips/FeatureStrategyExecutionChips';
+import { StrategySeparator } from '../../../../common/StrategySeparator/StrategySeparator';
+import { useStyles } from './FeatureOverviewExecution.styles';
+import FeatureOverviewExecutionChips from './FeatureOverviewExecutionChips/FeatureOverviewExecutionChips';
 import { useStrategies } from '../../../../../hooks/api/getters/useStrategies/useStrategies';
 import Constraint from '../../../../common/Constraint/Constraint';
 
-interface IFeatureStrategiesExecutionProps {
+interface IFeatureOverviewExecutionProps {
     parameters: IParameter;
     constraints?: IConstraint[];
     strategy: IFeatureStrategy;
     percentageFill?: string;
 }
 
-const FeatureStrategyExecution = ({
+const FeatureOverviewExecution = ({
     parameters,
     constraints = [],
     strategy,
-}: IFeatureStrategiesExecutionProps) => {
+}: IFeatureOverviewExecutionProps) => {
     const styles = useStyles();
     const { strategies } = useStrategies();
 
@@ -40,7 +40,7 @@ const FeatureStrategyExecution = ({
                     <Fragment key={`${constraint.contextName}-${index}`}>
                         <Constraint constraint={constraint} />
 
-                        <FeatureStrategiesSeparator text="AND" />
+                        <StrategySeparator text="AND" />
                     </Fragment>
                 );
             }
@@ -80,7 +80,7 @@ const FeatureStrategyExecution = ({
                         .filter((userId: string) => userId);
 
                     return (
-                        <FeatureStrategyExecutionChips
+                        <FeatureOverviewExecutionChips
                             key={key}
                             value={users}
                             text="user"
@@ -93,7 +93,7 @@ const FeatureStrategyExecution = ({
                         .filter((hosts: string) => hosts);
 
                     return (
-                        <FeatureStrategyExecutionChips
+                        <FeatureOverviewExecutionChips
                             key={key}
                             value={hosts}
                             text={'host'}
@@ -105,7 +105,7 @@ const FeatureStrategyExecution = ({
                         .filter((hosts: string) => hosts);
 
                     return (
-                        <FeatureStrategyExecutionChips
+                        <FeatureOverviewExecutionChips
                             key={key}
                             value={IPs}
                             text={'IP'}
@@ -132,13 +132,13 @@ const FeatureStrategyExecution = ({
 
                     return (
                         <Fragment key={param?.name}>
-                            <FeatureStrategyExecutionChips
+                            <FeatureOverviewExecutionChips
                                 value={values}
                                 text={param.name}
                             />
                             <ConditionallyRender
                                 condition={notLastItem}
-                                show={<FeatureStrategiesSeparator text="AND" />}
+                                show={<StrategySeparator text="AND" />}
                             />
                         </Fragment>
                     );
@@ -158,7 +158,7 @@ const FeatureStrategyExecution = ({
                             />
                             <ConditionallyRender
                                 condition={notLastItem}
-                                show={<FeatureStrategiesSeparator text="AND" />}
+                                show={<StrategySeparator text="AND" />}
                             />
                         </Fragment>
                     );
@@ -174,9 +174,7 @@ const FeatureStrategyExecution = ({
                                 show={
                                     <ConditionallyRender
                                         condition={notLastItem}
-                                        show={
-                                            <FeatureStrategiesSeparator text="AND" />
-                                        }
+                                        show={<StrategySeparator text="AND" />}
                                     />
                                 }
                             />
@@ -195,9 +193,7 @@ const FeatureStrategyExecution = ({
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
-                                        show={
-                                            <FeatureStrategiesSeparator text="AND" />
-                                        }
+                                        show={<StrategySeparator text="AND" />}
                                     />
                                 </>
                             }
@@ -216,9 +212,7 @@ const FeatureStrategyExecution = ({
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
-                                        show={
-                                            <FeatureStrategiesSeparator text="AND" />
-                                        }
+                                        show={<StrategySeparator text="AND" />}
                                     />
                                 </>
                             }
@@ -240,7 +234,7 @@ const FeatureStrategyExecution = ({
                         <div className={styles.constraintsContainer}>
                             <p>Enabled for match:</p>
                             {renderConstraints()}
-                            <FeatureStrategiesSeparator text="AND" />
+                            <StrategySeparator text="AND" />
                         </div>
                     </>
                 }
@@ -255,4 +249,4 @@ const FeatureStrategyExecution = ({
     );
 };
 
-export default FeatureStrategyExecution;
+export default FeatureOverviewExecution;

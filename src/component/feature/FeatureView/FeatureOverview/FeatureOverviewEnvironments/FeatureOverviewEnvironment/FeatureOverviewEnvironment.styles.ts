@@ -111,7 +111,6 @@ export const useStyles = makeStyles(theme => ({
             padding: '0.5rem',
         },
     },
-
     strategyIcon: {
         fill: theme.palette.grey[600],
     },
@@ -122,32 +121,6 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down(560)]: {
             flexDirection: 'column',
             marginLeft: '0',
-        },
-    },
-    addStrategyButton: {
-        background: 'none',
-        textDecoration: 'none',
-        boxShadow: 'none',
-        color: theme.palette.primary.main,
-        fontWeight: 'normal',
-        '&:hover': {
-            background: 'none',
-            textDecoration: 'none',
-            boxShadow: 'none',
-            color: theme.palette.primary.main,
-            fontWeight: 'normal',
-        },
-        '&:disabled': {
-            height: '35px',
-            background: 'transparent',
-            color: theme.palette.grey[600],
-        },
-    },
-    separator: {
-        marginLeft: '-10px',
-        marginRight: '9px',
-        [theme.breakpoints.down(560)]: {
-            display: 'none',
         },
     },
 }));

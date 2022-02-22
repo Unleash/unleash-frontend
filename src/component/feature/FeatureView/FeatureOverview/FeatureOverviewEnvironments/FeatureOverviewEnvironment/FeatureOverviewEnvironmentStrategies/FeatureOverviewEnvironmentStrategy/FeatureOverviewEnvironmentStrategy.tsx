@@ -9,25 +9,31 @@ import {
 } from '../../../../../../../../utils/strategy-names';
 import PermissionIconButton from '../../../../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE_STRATEGY } from '../../../../../../../providers/AccessProvider/permissions';
-import FeatureStrategyExecution from '../../../../../FeatureStrategies/FeatureStrategyExecution/FeatureStrategyExecution';
+import FeatureOverviewExecution from '../../../../FeatureOverviewExecution/FeatureOverviewExecution';
 import { useStyles } from './FeatureOverviewEnvironmentStrategy.styles';
+import { formatEditStrategyPath } from '../../../../../../FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 
 interface IFeatureOverviewEnvironmentStrategyProps {
+    environmentId: string;
     strategy: IFeatureStrategy;
-    environmentName: string;
 }
 
 const FeatureOverviewEnvironmentStrategy = ({
+    environmentId,
     strategy,
-    environmentName,
 }: IFeatureOverviewEnvironmentStrategyProps) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const theme = useTheme();
     const styles = useStyles();
-
     const Icon = getFeatureStrategyIcon(strategy.name);
-
     const { parameters, constraints } = strategy;
+
+    const editStrategyPath = formatEditStrategyPath(
+        projectId,
+        featureId,
+        environmentId,
+        strategy.id
+    );
 
     return (
         <div className={styles.container}>
@@ -37,11 +43,11 @@ const FeatureOverviewEnvironmentStrategy = ({
                 <div className={styles.editStrategy}>
                     <PermissionIconButton
                         permission={UPDATE_FEATURE_STRATEGY}
-                        environmentId={environmentName}
+                        environmentId={environmentId}
                         projectId={projectId}
                         // @ts-expect-error
                         component={Link}
-                        to={`/projects/${projectId}/features/${featureId}/strategies?environment=${environmentName}`}
+                        to={editStrategyPath}
                     >
                         <Settings titleAccess="Edit" />
                     </PermissionIconButton>
@@ -49,7 +55,7 @@ const FeatureOverviewEnvironmentStrategy = ({
             </div>
 
             <div className={styles.body}>
-                <FeatureStrategyExecution
+                <FeatureOverviewExecution
                     parameters={parameters}
                     strategy={strategy}
                     constraints={constraints}

@@ -1,16 +1,16 @@
 import { Chip } from '@material-ui/core';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import { useStyles } from './FeatureStrategyExecutionChips.styles';
+import { useStyles } from './FeatureOverviewExecutionChips.styles';
 
-interface IFeatureStrategyExecutionChipsProps {
+interface IFeatureOverviewExecutionChipsProps {
     value: string[];
     text: string;
 }
 
-const FeatureStrategyExecutionChips = ({
+const FeatureOverviewExecutionChips = ({
     value,
     text,
-}: IFeatureStrategyExecutionChipsProps) => {
+}: IFeatureOverviewExecutionChipsProps) => {
     const styles = useStyles();
     return (
         <div className={styles.container}>
@@ -38,4 +38,4 @@ const FeatureStrategyExecutionChips = ({
     );
 };
 
-export default FeatureStrategyExecutionChips;
+export default FeatureOverviewExecutionChips;

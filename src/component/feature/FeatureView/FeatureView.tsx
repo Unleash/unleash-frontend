@@ -17,7 +17,6 @@ import Dialogue from '../../common/Dialogue';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
-import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
@@ -74,11 +73,6 @@ export const FeatureView = () => {
             title: 'Overview',
             path: `${basePath}`,
             name: 'overview',
-        },
-        {
-            title: 'Strategies',
-            path: `${basePath}/strategies`,
-            name: 'strategies',
         },
         {
             title: 'Metrics',
@@ -209,10 +203,6 @@ export const FeatureView = () => {
                         exact
                         path={`/projects/:projectId/features/:featureId`}
                         component={FeatureOverview}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/strategies`}
-                        component={FeatureStrategies}
                     />
                     <Route
                         path={`/projects/:projectId/features/:featureId/metrics`}
