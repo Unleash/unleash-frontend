@@ -8,6 +8,7 @@ export interface IPermissionButtonProps
     extends React.HTMLProps<HTMLButtonElement> {
     permission: string | string[];
     tooltip?: string;
+    variant?: string;
     onClick?: (e: any) => void;
     disabled?: boolean;
     projectId?: string;
