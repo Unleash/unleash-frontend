@@ -28,7 +28,7 @@ export const StrategyDetails = ({
 }: IStrategyDetailsProps) => {
     const { parameters = [] } = strategy;
     const renderParameters = (params: IParameter[]) => {
-        if (params) {
+        if (params.length > 0) {
             return params.map(({ name, type, description, required }, i) => (
                 <ListItem key={`${name}-${i}`}>
                     <ConditionallyRender
@@ -59,7 +59,7 @@ export const StrategyDetails = ({
                 </ListItem>
             ));
         } else {
-            return <ListItem>(no params)</ListItem>;
+            return <ListItem>No params</ListItem>;
         }
     };
 

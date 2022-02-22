@@ -13,6 +13,7 @@ import {
 import {
     Add,
     Delete,
+    Edit,
     Extension,
     Visibility,
     VisibilityOff,
@@ -196,6 +197,32 @@ export const StrategiesList = () => {
         />
     );
 
+    const editButton = (strategy: IStrategy) => (
+        <ConditionallyRender
+            condition={strategy.editable}
+            show={
+                <PermissionIconButton
+                    onClick={() =>
+                        history.push(`/strategies/${strategy?.name}/edit`)
+                    }
+                    permission={UPDATE_STRATEGY}
+                    tooltip={'Edit strategy'}
+                >
+                    <Edit />
+                </PermissionIconButton>
+            }
+            elseShow={
+                <Tooltip title="You cannot delete a built-in strategy">
+                    <div>
+                        <IconButton disabled>
+                            <Edit />
+                        </IconButton>
+                    </div>
+                </Tooltip>
+            }
+        />
+    );
+
     const deleteButton = (strategy: IStrategy) => (
         <ConditionallyRender
             condition={strategy.editable}
@@ -241,6 +268,10 @@ export const StrategiesList = () => {
                     condition={strategy.deprecated}
                     show={reactivateButton(strategy)}
                     elseShow={deprecateButton(strategy)}
+                />
+                <ConditionallyRender
+                    condition={hasAccess(UPDATE_STRATEGY)}
+                    show={editButton(strategy)}
                 />
                 <ConditionallyRender
                     condition={hasAccess(DELETE_STRATEGY)}

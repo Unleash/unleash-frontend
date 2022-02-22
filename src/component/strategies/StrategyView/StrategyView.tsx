@@ -9,6 +9,7 @@ import { StrategyDetails } from './StrategyDetails/StrategyDetails';
 import HeaderTitle from '../../common/HeaderTitle';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@material-ui/icons';
+import ConditionallyRender from '../../common/ConditionallyRender';
 
 export const StrategyView = () => {
     const { name } = useParams<{ name: string }>();
@@ -35,14 +36,19 @@ export const StrategyView = () => {
                     title={strategy?.name}
                     subtitle={strategy?.description}
                     actions={
-                        <PermissionIconButton
-                            permission={UPDATE_STRATEGY}
-                            tooltip={'Edit strategy'}
-                            data-loading
-                            onClick={handleEdit}
-                        >
-                            <Edit />
-                        </PermissionIconButton>
+                        <ConditionallyRender
+                            condition={strategy.editable}
+                            show={
+                                <PermissionIconButton
+                                    permission={UPDATE_STRATEGY}
+                                    tooltip={'Edit strategy'}
+                                    data-loading
+                                    onClick={handleEdit}
+                                >
+                                    <Edit />
+                                </PermissionIconButton>
+                            }
+                        />
                     }
                 />
             }

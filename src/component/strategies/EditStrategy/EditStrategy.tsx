@@ -16,9 +16,7 @@ export const EditStrategy = () => {
     const { uiConfig } = useUiConfig();
     const history = useHistory();
     const { name } = useParams<{ name: string }>();
-
     const { strategy } = useStrategy(name);
-    console.log(strategy);
     const {
         strategyName,
         strategyDesc,
@@ -27,7 +25,6 @@ export const EditStrategy = () => {
         setStrategyName,
         setStrategyDesc,
         getStrategyPayload,
-        validateStrategyName,
         validateParams,
         clearErrors,
         setErrors,
@@ -43,13 +40,11 @@ export const EditStrategy = () => {
     const handleSubmit = async (e: Event) => {
         clearErrors();
         e.preventDefault();
-        const validName = await validateStrategyName();
-
-        if (validName && validateParams()) {
+        if (validateParams()) {
             const payload = getStrategyPayload();
             try {
                 await updateStrategy(payload);
-                history.push(`/strategies/view/${strategyName}`);
+                history.push(`/strategies/${strategyName}`);
                 setToastData({
                     type: 'success',
                     title: 'Success',
@@ -65,7 +60,7 @@ export const EditStrategy = () => {
     const formatApiCode = () => {
         return `curl --location --request PUT '${
             uiConfig.unleashUrl
-        }/api/admin/strategies' \\
+        }/api/admin/strategies/${name}' \\
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getStrategyPayload(), undefined, 2)}'`;

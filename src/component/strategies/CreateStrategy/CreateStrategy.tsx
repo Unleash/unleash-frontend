@@ -34,15 +34,16 @@ export const CreateStrategy = () => {
         clearErrors();
         e.preventDefault();
         const validName = await validateStrategyName();
-       
+
         if (validName && validateParams()) {
             const payload = getStrategyPayload();
             try {
                 await createStrategy(payload);
                 refetchStrategies();
-                history.push('/strategies');
+                history.push(`/strategies/${strategyName}`);
                 setToastData({
                     title: 'Strategy created',
+                    text: 'Successfully created strategy',
                     confetti: true,
                     type: 'success',
                 });
