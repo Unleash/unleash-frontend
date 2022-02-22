@@ -43,7 +43,7 @@ const FeatureOverviewEnvironmentStrategy = ({
                         component={Link}
                         to={`/projects/${projectId}/features/${featureId}/strategies?environment=${environmentName}`}
                     >
-                        <Settings />
+                        <Settings titleAccess="Edit" />
                     </PermissionIconButton>
                 </div>
             </div>
