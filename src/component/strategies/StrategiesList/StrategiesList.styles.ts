@@ -11,10 +11,4 @@ export const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.grey[200],
         },
     },
-    deprecated: {
-        '& a': {
-            // @ts-expect-error
-            color: theme.palette.links.deprecated,
-        },
-    },
 }));
