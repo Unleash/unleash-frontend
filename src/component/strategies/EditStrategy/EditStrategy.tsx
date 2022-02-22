@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
@@ -9,11 +9,15 @@ import { CREATE_STRATEGY } from '../../providers/AccessProvider/permissions';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 import { formatUnknownError } from '../../../utils/format-unknown-error';
+import useStrategy from '../../../hooks/api/getters/useStrategy/useStrategy';
 
-export const EditStrategy = ({ strategy }) => {
+export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
+    const { name } = useParams<{ name: string }>();
+
+    const { strategy } = useStrategy(name);
     console.log(strategy);
     const {
         strategyName,
