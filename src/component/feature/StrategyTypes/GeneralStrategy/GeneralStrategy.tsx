@@ -13,8 +13,8 @@ import { useStyles } from './GeneralStrategy.styles';
 
 interface IGeneralStrategyProps {
     parameters: IParameter;
-    strategyDefinition: IFeatureStrategy;
-    updateParameter: () => void;
+    strategyDefinition: Partial<IFeatureStrategy>;
+    updateParameter: (field: string, value: any) => void;
     editable: boolean;
 }
 
