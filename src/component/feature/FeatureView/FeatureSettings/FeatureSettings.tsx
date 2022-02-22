@@ -22,16 +22,20 @@ export const FeatureSettings = () => {
                 <div className={styles.listContainer}>
                     <List>
                         <ListItem
+                            key={0}
                             className={styles.listItem}
                             button
                             onClick={() => setSettings(METADATA)}
+                            selected={settings === METADATA}
                         >
                             Metadata
                         </ListItem>
                         <ListItem
+                            key={1}
                             className={styles.listItem}
                             button
                             onClick={() => setSettings(PROJECT)}
+                            selected={settings === PROJECT}
                         >
                             Project
                         </ListItem>

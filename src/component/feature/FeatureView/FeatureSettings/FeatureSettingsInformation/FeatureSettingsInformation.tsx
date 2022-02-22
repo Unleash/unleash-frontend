@@ -17,9 +17,10 @@ export const FeatureSettingsInformation = ({
     const { feature } = useFeature(projectId, featureId);
     const history = useHistory();
 
-    const handleEdit = () => {
+    const onEdit = () => {
         history.push(`/projects/${projectId}/features/${featureId}/edit`);
     };
+
     return (
         <>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -31,28 +32,30 @@ export const FeatureSettingsInformation = ({
                     tooltip={'Edit feature'}
                     projectId={projectId}
                     data-loading
-                    onClick={handleEdit}
+                    onClick={onEdit}
                 >
-                    <Edit />
+                    <Edit titleAccess="Edit" />
                 </PermissionIconButton>
             </div>
             <Typography>
-                Name:&nbsp;<b>{feature?.name}</b>
+                Name:&nbsp;<strong>{feature?.name}</strong>
             </Typography>
             <Typography>
                 Description:&nbsp;
-                <b>
+                <strong>
                     {feature?.description.length === 0
-                        ? 'No description'
+                        ? 'no description'
                         : feature?.description}
-                </b>
+                </strong>
             </Typography>
             <Typography>
-                Type:&nbsp;<b>{feature?.type}</b>
+                Type:&nbsp;<strong>{feature?.type}</strong>
             </Typography>
             <Typography>
                 Impression Data:&nbsp;
-                <b>{String(feature?.impressionData)}</b>
+                <strong>
+                    {feature?.impressionData ? 'enabled' : 'disabled'}
+                </strong>
             </Typography>
         </>
     );
