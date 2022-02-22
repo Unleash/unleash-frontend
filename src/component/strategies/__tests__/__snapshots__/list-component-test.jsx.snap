@@ -11,23 +11,23 @@ exports[`renders correctly with one strategy 1`] = `
   }
 >
   <div
-    className="makeStyles-headerContainer-3"
+    className="makeStyles-headerContainer-2"
   >
     <div
-      className="makeStyles-headerTitleContainer-7"
+      className="makeStyles-headerTitleContainer-6"
     >
       <div
         className=""
         data-loading={true}
       >
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-8 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-7 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-9"
+        className="makeStyles-headerActions-8"
       >
         <span
           aria-describedby={null}
@@ -76,7 +76,7 @@ exports[`renders correctly with one strategy 1`] = `
     </div>
   </div>
   <div
-    className="makeStyles-bodyContainer-4"
+    className="makeStyles-bodyContainer-3"
   >
     <ul
       className="MuiList-root MuiList-padding"
@@ -280,23 +280,23 @@ exports[`renders correctly with one strategy without permissions 1`] = `
   }
 >
   <div
-    className="makeStyles-headerContainer-3"
+    className="makeStyles-headerContainer-2"
   >
     <div
-      className="makeStyles-headerTitleContainer-7"
+      className="makeStyles-headerTitleContainer-6"
     >
       <div
         className=""
         data-loading={true}
       >
         <h2
-          className="MuiTypography-root makeStyles-headerTitle-8 MuiTypography-h2"
+          className="MuiTypography-root makeStyles-headerTitle-7 MuiTypography-h2"
         >
           Strategies
         </h2>
       </div>
       <div
-        className="makeStyles-headerActions-9"
+        className="makeStyles-headerActions-8"
       >
         <span
           aria-describedby={null}
@@ -345,7 +345,7 @@ exports[`renders correctly with one strategy without permissions 1`] = `
     </div>
   </div>
   <div
-    className="makeStyles-bodyContainer-4"
+    className="makeStyles-bodyContainer-3"
   >
     <ul
       className="MuiList-root MuiList-padding"
