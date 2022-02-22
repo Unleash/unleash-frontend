@@ -11,9 +11,4 @@ export const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.grey[200],
         },
     },
-    deprecated: {
-        '& a': {
-            color: theme.palette.links.deprecated,
-        },
-    },
 }));
