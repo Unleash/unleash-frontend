@@ -1,20 +1,20 @@
-import FlexibleStrategy from '../../common/FlexibleStrategy/FlexibleStrategy';
+import FlexibleStrategy from '../../../../StrategyTypes/FlexibleStrategy/FlexibleStrategy';
 import {
     IConstraint,
     IFeatureStrategy,
 } from '../../../../../../interfaces/strategy';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import { useStrategies } from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
-import GeneralStrategy from '../../common/GeneralStrategy/GeneralStrategy';
-import UserWithIdStrategy from '../../common/UserWithIdStrategy/UserWithId';
-import StrategyConstraints from '../../common/StrategyConstraints/StrategyConstraints';
 import React, { useContext, useState } from 'react';
+import GeneralStrategy from '../../../../StrategyTypes/GeneralStrategy/GeneralStrategy';
+import UserWithIdStrategy from '../../../../StrategyTypes/UserWithIdStrategy/UserWithId';
+import StrategyConstraints from '../../../../StrategyConstraints/StrategyConstraints';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useUiConfig from '../../../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { C } from '../../../../../common/flags';
 import { useStyles } from './FeatureStrategyAccordionBody.styles';
 import Dialogue from '../../../../../common/Dialogue';
-import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
+import DefaultStrategy from '../../../../StrategyTypes/DefaultStrategy/DefaultStrategy';
 import { ADD_CONSTRAINT_ID } from '../../../../../../testIds';
 import AccessContext from '../../../../../../contexts/AccessContext';
 import {
