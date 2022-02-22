@@ -1,6 +1,5 @@
 import { Button, Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
-
 import { IConstraint } from '../../../interfaces/strategy';
 import { useCommonStyles } from '../../../common.styles';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
@@ -12,8 +11,10 @@ import React, { useEffect } from 'react';
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
     updateConstraints: (constraints: IConstraint[]) => void;
-    constraintError: string;
-    setConstraintError: () => void;
+    constraintError: Record<string, string>;
+    setConstraintError: React.Dispatch<
+        React.SetStateAction<Record<string, string>>
+    >;
 }
 
 const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
