@@ -34,9 +34,10 @@ import PermissionIconButton from '../../common/PermissionIconButton/PermissionIc
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
-import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
+import useStrategiesApi, {
+    ICustomStrategyPayload,
+} from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useToast from '../../../hooks/useToast';
-import { IStrategy } from '../../../interfaces/strategy';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -81,7 +82,7 @@ export const StrategiesList = () => {
                             data-test={ADD_NEW_STRATEGY_ID}
                             tooltip={'Add new strategy'}
                         >
-                            Add new strategy
+                            New strategy
                         </PermissionButton>
                     }
                 />
@@ -89,7 +90,7 @@ export const StrategiesList = () => {
         />
     );
 
-    const strategyLink = ({ name, deprecated }) => (
+    const strategyLink = (name: string, deprecated: boolean) => (
         <Link to={`/strategies/${name}`}>
             <strong>{getHumanReadableStrategyName(name)}</strong>
             <ConditionallyRender
@@ -99,7 +100,7 @@ export const StrategiesList = () => {
         </Link>
     );
 
-    const onReactivateStrategy = (strategy: IStrategy) => {
+    const onReactivateStrategy = (strategy: ICustomStrategyPayload) => {
         setDialogueMetaData({
             show: true,
             title: 'Really reactivate strategy?',
@@ -119,7 +120,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeprecateStrategy = (strategy: IStrategy) => {
+    const onDeprecateStrategy = (strategy: ICustomStrategyPayload) => {
         setDialogueMetaData({
             show: true,
             title: 'Really deprecate strategy?',
@@ -139,7 +140,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeleteStrategy = (strategy: IStrategy) => {
+    const onDeleteStrategy = (strategy: ICustomStrategyPayload) => {
         setDialogueMetaData({
             show: true,
             title: 'Really delete strategy?',
@@ -159,7 +160,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const reactivateButton = (strategy: IStrategy) => (
+    const reactivateButton = (strategy: ICustomStrategyPayload) => (
         <Tooltip title="Reactivate activation strategy">
             <PermissionIconButton
                 onClick={() => onReactivateStrategy(strategy)}
@@ -171,7 +172,7 @@ export const StrategiesList = () => {
         </Tooltip>
     );
 
-    const deprecateButton = (strategy: IStrategy) => (
+    const deprecateButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
             condition={strategy.name === 'default'}
             show={
@@ -197,9 +198,9 @@ export const StrategiesList = () => {
         />
     );
 
-    const editButton = (strategy: IStrategy) => (
+    const editButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
-            condition={strategy.editable}
+            condition={strategy?.editable}
             show={
                 <PermissionIconButton
                     onClick={() =>
@@ -223,9 +224,9 @@ export const StrategiesList = () => {
         />
     );
 
-    const deleteButton = (strategy: IStrategy) => (
+    const deleteButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
-            condition={strategy.editable}
+            condition={strategy?.editable}
             show={
                 <PermissionIconButton
                     onClick={() => onDeleteStrategy(strategy)}
@@ -261,7 +262,7 @@ export const StrategiesList = () => {
                     <Extension style={{ color: '#0000008a' }} />
                 </ListItemAvatar>
                 <ListItemText
-                    primary={strategyLink(strategy)}
+                    primary={strategyLink(strategy?.name, strategy?.deprecated)}
                     secondary={strategy.description}
                 />
                 <ConditionallyRender

@@ -17,7 +17,7 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
             .then(res => res.json());
     };
 
-    const { data, error } = useSWR<{ strategies: IStrategy[] }>(
+    const { data, error } = useSWR<{ strategy: IStrategy }>(
         STRATEGY_CACHE_KEY,
         fetcher,
         options
@@ -33,7 +33,11 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
     }, [data, error]);
 
     return {
-        strategy: data || {},
+        strategy: data || {
+            name: '',
+            description: '',
+            parameters: [],
+        },
         error,
         loading,
         refetchStrategy,

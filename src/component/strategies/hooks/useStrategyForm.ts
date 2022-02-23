@@ -1,10 +1,11 @@
+import { ICustomStrategyParameter } from 'interfaces/strategy';
 import { useEffect, useState } from 'react';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
 
 export const useStrategyForm = (
-    initialStrategyName = '',
-    initialStrategyDesc = '',
-    initialParams = []
+    initialStrategyName: string = '',
+    initialStrategyDesc: string = '',
+    initialParams: ICustomStrategyParameter[] = []
 ) => {
     const [strategyName, setStrategyName] = useState(initialStrategyName);
     const [strategyDesc, setStrategyDesc] = useState(initialStrategyDesc);
@@ -49,6 +50,7 @@ export const useStrategyForm = (
 
     const validateParams = () => {
         let res = true;
+        //@ts-expect-error
         for (const [index, p] of params.entries()) {
             if (p.name.length === 0) {
                 setErrors(prev => ({

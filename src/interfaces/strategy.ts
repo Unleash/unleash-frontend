@@ -32,3 +32,9 @@ export interface IStrategyPayload {
     constraints: IConstraint[];
     parameters: IParameter;
 }
+export interface ICustomStrategyParameter {
+    name: string;
+    description: string;
+    required: boolean;
+    type: string;
+}

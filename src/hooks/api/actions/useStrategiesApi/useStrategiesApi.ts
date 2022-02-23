@@ -1,9 +1,10 @@
+import { IParameter } from 'interfaces/strategy';
 import useAPI from '../useApi/useApi';
 
 export interface ICustomStrategyPayload {
     name: string;
     description: string;
-    parameters: object[];
+    parameters: IParameter[];
 }
 
 const useStrategiesApi = () => {

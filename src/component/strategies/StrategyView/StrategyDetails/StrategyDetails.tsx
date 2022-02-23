@@ -11,14 +11,16 @@ import { AppsLinkList } from '../../../common';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import styles from '../../strategies.module.scss';
 import { TogglesLinkList } from '../../TogglesLinkList/TogglesLinkList';
-import { IParameter, IStrategy } from '../../../../interfaces/strategy';
+import {
+    ICustomStrategyParameter,
+    IStrategy,
+} from '../../../../interfaces/strategy';
 import { IApplication } from '../../../../interfaces/application';
-import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 
 interface IStrategyDetailsProps {
     strategy: IStrategy;
     applications: IApplication[];
-    toggles: IFeatureToggle[];
+    toggles: [];
 }
 
 export const StrategyDetails = ({
@@ -27,7 +29,7 @@ export const StrategyDetails = ({
     toggles,
 }: IStrategyDetailsProps) => {
     const { parameters = [] } = strategy;
-    const renderParameters = (params: IParameter[]) => {
+    const renderParameters = (params: ICustomStrategyParameter[]) => {
         if (params.length > 0) {
             return params.map(({ name, type, description, required }, i) => (
                 <ListItem key={`${name}-${i}`}>

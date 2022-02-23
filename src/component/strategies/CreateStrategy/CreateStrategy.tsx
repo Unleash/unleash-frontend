@@ -3,7 +3,7 @@ import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from '../../../hooks/useToast';
 import FormTemplate from '../../common/FormTemplate/FormTemplate';
 import { useStrategyForm } from '../hooks/useStrategyForm';
-import { StrategyFormV2 } from '../StrategyForm/StrategyFormV2';
+import { StrategyForm } from '../StrategyForm/StrategyForm';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { CREATE_STRATEGY } from '../../providers/AccessProvider/permissions';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
@@ -75,7 +75,7 @@ export const CreateStrategy = () => {
             documentationLink="https://docs.getunleash.io/advanced/custom_activation_strategy"
             formatApiCode={formatApiCode}
         >
-            <StrategyFormV2
+            <StrategyForm
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
@@ -92,7 +92,7 @@ export const CreateStrategy = () => {
                 <PermissionButton permission={CREATE_STRATEGY} type="submit">
                     Create strategy
                 </PermissionButton>
-            </StrategyFormV2>
+            </StrategyForm>
         </FormTemplate>
     );
 };

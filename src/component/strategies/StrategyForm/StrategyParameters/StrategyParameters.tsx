@@ -1,8 +1,17 @@
 import { StrategyParameter } from './StrategyParameter/StrategyParameter';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { ICustomStrategyParameter } from 'interfaces/strategy';
 
-function gerArrayWithEntries(num) {
+function gerArrayWithEntries(num: number) {
     return Array.from(Array(num));
+}
+
+interface IStrategyParametersProps {
+    input: ICustomStrategyParameter[];
+    count: number;
+    updateParameter: (index: number, updated: object) => void;
+    setParams: React.Dispatch<React.SetStateAction<ICustomStrategyParameter[]>>;
+    errors: { [key: string]: string };
 }
 
 export const StrategyParameters = ({
@@ -11,7 +20,7 @@ export const StrategyParameters = ({
     updateParameter,
     setParams,
     errors,
-}) => (
+}: IStrategyParametersProps) => (
     <div>
         {gerArrayWithEntries(count).map((v, i) => (
             <StrategyParameter
@@ -26,9 +35,3 @@ export const StrategyParameters = ({
         ))}
     </div>
 );
-
-StrategyParameters.propTypes = {
-    input: PropTypes.array,
-    updateParameter: PropTypes.func.isRequired,
-    count: PropTypes.number,
-};
