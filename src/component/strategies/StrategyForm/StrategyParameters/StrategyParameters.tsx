@@ -2,8 +2,13 @@ import { StrategyParameter } from './StrategyParameter/StrategyParameter';
 import React from 'react';
 import { ICustomStrategyParameter } from 'interfaces/strategy';
 
+function gerArrayWithEntries(num: number) {
+    return Array.from(Array(num));
+}
+
 interface IStrategyParametersProps {
     input: ICustomStrategyParameter[];
+    count: number;
     updateParameter: (index: number, updated: object) => void;
     setParams: React.Dispatch<React.SetStateAction<ICustomStrategyParameter[]>>;
     errors: { [key: string]: string };
@@ -11,18 +16,19 @@ interface IStrategyParametersProps {
 
 export const StrategyParameters = ({
     input = [],
+    count = 0,
     updateParameter,
     setParams,
     errors,
 }: IStrategyParametersProps) => (
     <div>
-        {input.map((item, index) => (
+        {gerArrayWithEntries(count).map((v, i) => (
             <StrategyParameter
                 params={input}
-                key={index}
-                set={value => updateParameter(index, value)}
-                index={index}
-                input={input[index]}
+                key={i}
+                set={v => updateParameter(i, v)}
+                index={i}
+                input={input[i]}
                 setParams={setParams}
                 errors={errors}
             />

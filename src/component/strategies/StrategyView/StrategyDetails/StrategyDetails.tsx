@@ -21,7 +21,7 @@ import { IFeatureToggle } from 'interfaces/featureToggle';
 interface IStrategyDetailsProps {
     strategy: IStrategy;
     applications: IApplication[];
-    toggles: IFeatureToggle[];
+    toggles: [];
 }
 
 export const StrategyDetails = ({
