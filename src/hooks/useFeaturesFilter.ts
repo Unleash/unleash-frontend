@@ -1,7 +1,7 @@
 import { IFeatureToggle } from '../interfaces/featureToggle';
 import React, { useMemo } from 'react';
 import { getBasePath } from '../utils/format-path';
-import { createPersistentGlobalState } from './usePersistentGlobalState';
+import { createPersistentGlobalStateHook } from './usePersistentGlobalState';
 
 export interface IFeaturesFilter {
     query?: string;
@@ -16,7 +16,7 @@ export interface IFeaturesSortOutput {
 
 // Store the features filter state globally, and in localStorage.
 // When changing the format of IFeaturesFilter, change the version as well.
-const useFeaturesFilterState = createPersistentGlobalState<IFeaturesFilter>(
+const useFeaturesFilterState = createPersistentGlobalStateHook<IFeaturesFilter>(
     `${getBasePath()}:useFeaturesFilter:v1`,
     { project: '*' }
 );
