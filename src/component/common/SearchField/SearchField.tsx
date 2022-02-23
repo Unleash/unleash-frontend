@@ -23,15 +23,15 @@ export const SearchField = ({
     const [localValue, setLocalValue] = useState(initialValue);
     const debounceUpdateValue = debounce(updateValue, 500);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const v = e.target.value || '';
-        setLocalValue(v);
-        debounceUpdateValue(v);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+        const value = event.target.value || '';
+        setLocalValue(value);
+        debounceUpdateValue(value);
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
             updateValue(localValue);
         }
     };
