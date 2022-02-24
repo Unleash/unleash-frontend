@@ -1,54 +1,32 @@
 /// <reference types="cypress" />
 
-let featureToggleName = '';
-let enterprise = false;
+const featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
+const enterprise = Boolean(Cypress.env('ENTERPRISE'));
+const passwordAuth = Cypress.env('PASSWORD_AUTH');
+const authToken = Cypress.env('AUTH_TOKEN');
+const baseUrl = Cypress.config().baseUrl;
 let strategyId = '';
 
 describe('feature', () => {
-    before(() => {
-        featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
-        enterprise = Boolean(Cypress.env('ENTERPRISE'));
-    });
-
     after(() => {
-        const authToken = Cypress.env('AUTH_TOKEN');
-
         cy.request({
             method: 'DELETE',
-            url: `${
-                Cypress.config().baseUrl
-            }/api/admin/features/${featureToggleName}`,
-            headers: {
-                Authorization: authToken,
-            },
+            url: `${baseUrl}/api/admin/features/${featureToggleName}`,
+            headers: { Authorization: authToken },
         });
-
         cy.request({
             method: 'DELETE',
-            url: `${
-                Cypress.config().baseUrl
-            }/api/admin/archive/${featureToggleName}`,
-            headers: {
-                Authorization: authToken,
-            },
+            url: `${baseUrl}/api/admin/archive/${featureToggleName}`,
+            headers: { Authorization: authToken },
         });
     });
 
     beforeEach(() => {
-        // Cypress starts out with a blank slate for each test
-        // so we must tell it to visit our website with the `cy.visit()` command.
-        // Since we want to visit the same URL at the start of all our tests,
-        // we include it in our beforeEach function so that it runs before each test
-        const passwordAuth = Cypress.env('PASSWORD_AUTH');
-        enterprise = Boolean(Cypress.env('ENTERPRISE'));
-
         cy.visit('/');
 
         if (passwordAuth) {
             cy.get('[data-test="LOGIN_EMAIL_ID"]').type('test@test.com');
-
             cy.get('[data-test="LOGIN_PASSWORD_ID"]').type('qY70$NDcJNXA');
-
             cy.get("[data-test='LOGIN_BUTTON']").click();
         } else {
             cy.get('[data-test=LOGIN_EMAIL_ID]').type('test@unleash-e2e.com');
