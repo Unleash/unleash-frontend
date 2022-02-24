@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { disableFeatureStrategiesProductionGuard } from '../../../src/component/feature/FeatureView/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesProductionGuard/FeatureStrategiesProductionGuard';
+
 const randomId = String(Math.random()).split('.')[1];
 const featureToggleName = `unleash-e2e-${randomId}`;
 const enterprise = Boolean(Cypress.env('ENTERPRISE'));
@@ -23,6 +25,7 @@ describe('feature', () => {
     });
 
     beforeEach(() => {
+        disableFeatureStrategiesProductionGuard();
         cy.visit('/');
 
         if (passwordAuth) {
