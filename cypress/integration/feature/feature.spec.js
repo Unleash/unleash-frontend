@@ -16,7 +16,7 @@ let enterprise = false;
 let strategyId = '';
 let defaultEnv = 'development';
 
-describe('feature toggle', () => {
+describe('feature', () => {
     before(() => {
         featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
         enterprise = Boolean(Cypress.env('ENTERPRISE'));
@@ -73,7 +73,7 @@ describe('feature toggle', () => {
         }
     });
 
-    it('Creates a feature toggle', () => {
+    it('can create a feature toggle', () => {
         if (
             document.querySelectorAll("[data-test='CLOSE_SPLASH']").length > 0
         ) {
@@ -94,7 +94,7 @@ describe('feature toggle', () => {
         cy.url().should('include', featureToggleName);
     });
 
-    it('Gives an error if a toggle exists with the same name', () => {
+    it('gives an error if a toggle exists with the same name', () => {
         cy.get('[data-test=NAVIGATE_TO_CREATE_FEATURE').click();
 
         cy.intercept('POST', '/api/admin/projects/default/features').as(
@@ -111,7 +111,7 @@ describe('feature toggle', () => {
         );
     });
 
-    it('Gives an error if a toggle name is url unsafe', () => {
+    it('gives an error if a toggle name is url unsafe', () => {
         cy.get('[data-test=NAVIGATE_TO_CREATE_FEATURE').click();
 
         cy.intercept('POST', '/api/admin/projects/default/features').as(
@@ -128,7 +128,7 @@ describe('feature toggle', () => {
         );
     });
 
-    it('Can add a gradual rollout strategy to the development environment', () => {
+    it('can add a gradual rollout strategy to the development environment', () => {
         cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
@@ -237,7 +237,7 @@ describe('feature toggle', () => {
         cy.wait('@deleteStrategy');
     });
 
-    it('Can add a userid  strategy to the development environment', () => {
+    it('can add a userid strategy to the development environment', () => {
         cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
@@ -282,7 +282,7 @@ describe('feature toggle', () => {
         cy.wait('@addStrategyToFeature');
     });
 
-    it('Can add two variant to the feature', () => {
+    it('can add two variant to the feature', () => {
         const variantName = 'my-new-variant';
         const secondVariantName = 'my-second-variant';
         cy.wait(1000);
@@ -314,7 +314,8 @@ describe('feature toggle', () => {
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@variantcreation');
     });
-    it('Can set weight to fixed value for one of the variants', () => {
+
+    it('can set weight to fixed value for one of the variants', () => {
         cy.wait(1000);
 
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
@@ -350,7 +351,7 @@ describe('feature toggle', () => {
             .should('have.text', '15 %');
     });
 
-    it(`can delete variant`, () => {
+    it('can delete variant', () => {
         const variantName = 'to-be-deleted';
         cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
