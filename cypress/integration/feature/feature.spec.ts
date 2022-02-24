@@ -60,6 +60,9 @@ describe('feature', () => {
             cy.get('[data-test=LOGIN_EMAIL_ID]').type('test@unleash-e2e.com');
             cy.get('[data-test=LOGIN_BUTTON]').click();
         }
+
+        // Wait for the login redirects to complete.
+        cy.get('[data-test=HEADER_USER_AVATAR');
     });
 
     it('can create a feature toggle', () => {
