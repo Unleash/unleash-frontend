@@ -121,7 +121,6 @@ describe('feature', () => {
     });
 
     it('can add a gradual rollout strategy to the development environment', () => {
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
         cy.get('[data-test=ADD_NEW_STRATEGY_CARD_BUTTON_ID-2').click();
@@ -164,7 +163,6 @@ describe('feature', () => {
     });
 
     it('can update a strategy in the development environment', () => {
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
         cy.get('[data-test=STRATEGY_ACCORDION_ID-flexibleRollout').click();
 
@@ -211,7 +209,6 @@ describe('feature', () => {
     });
 
     it('can delete a strategy in the development environment', () => {
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
 
         cy.intercept(
@@ -230,7 +227,6 @@ describe('feature', () => {
     });
 
     it('can add a userid strategy to the development environment', () => {
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/strategies`);
         cy.get('[data-test=ADD_NEW_STRATEGY_ID]').click();
         cy.get('[data-test=ADD_NEW_STRATEGY_CARD_BUTTON_ID-3').click();
@@ -277,7 +273,6 @@ describe('feature', () => {
     it('can add two variant to the feature', () => {
         const variantName = 'my-new-variant';
         const secondVariantName = 'my-second-variant';
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
         cy.intercept(
             'PATCH',
@@ -308,8 +303,6 @@ describe('feature', () => {
     });
 
     it('can set weight to fixed value for one of the variants', () => {
-        cy.wait(1000);
-
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
         cy.get('[data-test=VARIANT_EDIT_BUTTON]').first().click();
         cy.get('[data-test=VARIANT_NAME_INPUT]')
@@ -345,7 +338,6 @@ describe('feature', () => {
 
     it('can delete variant', () => {
         const variantName = 'to-be-deleted';
-        cy.wait(1000);
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
         cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);
