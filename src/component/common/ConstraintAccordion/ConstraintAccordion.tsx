@@ -24,6 +24,8 @@ export const ConstraintAccordion = ({
 }: IConstraintAccordionProps) => {
     if (!constraint) return null;
 
+    console.log(editing, constraint);
+
     return (
         <ConditionallyRender
             condition={editing}
