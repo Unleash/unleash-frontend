@@ -183,7 +183,7 @@ export const useConstraintInput = ({
                 );
             }
 
-            if (oneOf(stringOperators, operator)) {
+            if (oneOf([...stringOperators, ...inOperators], operator)) {
                 setValidator(() =>
                     stringValidatorGenerator(localConstraint.values, setError)
                 );
@@ -199,12 +199,12 @@ export const useConstraintInput = ({
             }
 
             if (oneOf(dateOperators, operator)) {
-                setValidator(() => {
+                setValidator(() =>
                     dateValidatorGenerator(
                         localConstraint.value || '',
                         setError
-                    );
-                });
+                    )
+                );
             }
         },
         [setValidator, localConstraint.value, localConstraint.values]

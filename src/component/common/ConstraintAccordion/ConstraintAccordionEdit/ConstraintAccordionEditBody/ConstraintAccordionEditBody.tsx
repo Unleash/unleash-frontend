@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import useUnleashContext from '../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from '../../../../../interfaces/strategy';
-import ConditionallyRender from '../../../ConditionallyRender';
 import { CANCEL, SAVE } from '../ConstraintAccordionEdit';
 
 import { IUnleashContextDefinition } from 'interfaces/context';

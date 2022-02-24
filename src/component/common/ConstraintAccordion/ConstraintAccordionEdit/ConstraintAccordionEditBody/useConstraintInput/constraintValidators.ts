@@ -19,6 +19,7 @@ export const stringValidatorGenerator = (
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
+        console.log('Running validation');
         if (!Array.isArray(values)) {
             setError('Values must be a list of strings');
             return false;

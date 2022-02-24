@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IConstraint } from '../../../../interfaces/strategy';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
@@ -45,14 +45,14 @@ export const ConstraintAccordionEdit = ({
         }));
     };
 
-    const setOperator = (operator: string) => {
+    const setOperator = useCallback((operator: string) => {
         setLocalConstraint(prev => ({
             ...prev,
             operator,
             values: [],
             value: '',
         }));
-    };
+    }, []);
 
     const setValues = (values: string[]) => {
         setLocalConstraint(prev => ({
