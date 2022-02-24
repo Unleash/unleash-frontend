@@ -263,11 +263,13 @@ describe('feature', () => {
         ).as('variantCreation');
 
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
-        cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);
+        cy.get('[data-test=VARIANT_NAME_INPUT]').click().type(variantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@variantCreation');
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
-        cy.get('[data-test=VARIANT_NAME_INPUT]').type(secondVariantName);
+        cy.get('[data-test=VARIANT_NAME_INPUT]')
+            .click()
+            .type(secondVariantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@variantCreation');
     });
@@ -314,7 +316,7 @@ describe('feature', () => {
 
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
-        cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);
+        cy.get('[data-test=VARIANT_NAME_INPUT]').click().type(variantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
 
         cy.intercept(
