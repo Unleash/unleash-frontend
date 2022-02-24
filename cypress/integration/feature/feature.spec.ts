@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-const featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
+const randomId = String(Math.random()).split('.')[1];
+const featureToggleName = `unleash-e2e-${randomId}`;
 const enterprise = Boolean(Cypress.env('ENTERPRISE'));
 const passwordAuth = Cypress.env('PASSWORD_AUTH');
 const authToken = Cypress.env('AUTH_TOKEN');
