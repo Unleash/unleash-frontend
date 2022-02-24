@@ -1,5 +1,5 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
 import { Link, Route, useHistory, useParams } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
@@ -31,7 +31,7 @@ import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from '../../common/StatusChip/StatusChip';
 import { formatUnknownError } from '../../../utils/format-unknown-error';
 
-const FeatureView = () => {
+export const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, loading, error } = useFeature(projectId, featureId);
     const { refetch: projectRefetch } = useProject(projectId);
@@ -132,127 +132,117 @@ const FeatureView = () => {
         );
     };
 
-    return (
-        <ConditionallyRender
-            condition={error === undefined}
-            show={
-                <div ref={ref}>
-                    <div className={styles.header}>
-                        <div className={styles.innerContainer}>
-                            <div className={styles.toggleInfoContainer}>
-                                <h2
-                                    className={styles.featureViewHeader}
-                                    data-loading
-                                >
-                                    {feature.name}{' '}
-                                </h2>
-                                <ConditionallyRender
-                                    condition={!smallScreen}
-                                    show={<StatusChip stale={feature?.stale} />}
-                                />
-                            </div>
+    if (error) {
+        return renderFeatureNotExist();
+    }
 
-                            <div className={styles.actions}>
-                                <PermissionIconButton
-                                    permission={CREATE_FEATURE}
-                                    projectId={projectId}
-                                    tooltip="Copy"
-                                    data-loading
-                                    component={Link}
-                                    to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
-                                >
-                                    <FileCopy titleAccess="Copy" />
-                                </PermissionIconButton>
-                                <PermissionIconButton
-                                    permission={DELETE_FEATURE}
-                                    projectId={projectId}
-                                    tooltip="Archive feature toggle"
-                                    data-loading
-                                    onClick={() => setShowDelDialog(true)}
-                                >
-                                    <Archive titleAccess="Archive feature toggle" />
-                                </PermissionIconButton>
-                                <PermissionIconButton
-                                    onClick={() => setOpenStaleDialog(true)}
-                                    permission={UPDATE_FEATURE}
-                                    projectId={projectId}
-                                    tooltip="Toggle stale status"
-                                    data-loading
-                                >
-                                    <WatchLater titleAccess="Toggle stale status" />
-                                </PermissionIconButton>
-                                <PermissionIconButton
-                                    onClick={() => setOpenTagDialog(true)}
-                                    permission={UPDATE_FEATURE}
-                                    projectId={projectId}
-                                    tooltip="Add tag"
-                                    data-loading
-                                >
-                                    <Label titleAccess="Add tag" />
-                                </PermissionIconButton>
-                            </div>
-                        </div>
-                        <div className={styles.separator} />
-                        <div className={styles.tabContainer}>
-                            <Tabs
-                                value={history.location.pathname}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                className={styles.tabNavigation}
-                            >
-                                {renderTabs()}
-                            </Tabs>
-                        </div>
+    return (
+        <div ref={ref}>
+            <div className={styles.header}>
+                <div className={styles.innerContainer}>
+                    <div className={styles.toggleInfoContainer}>
+                        <h2 className={styles.featureViewHeader} data-loading>
+                            {feature.name}{' '}
+                        </h2>
+                        <ConditionallyRender
+                            condition={!smallScreen}
+                            show={<StatusChip stale={feature?.stale} />}
+                        />
                     </div>
-                    <Route
-                        exact
-                        path={`/projects/:projectId/features/:featureId`}
-                        component={FeatureOverview}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/strategies`}
-                        component={FeatureStrategies}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/metrics`}
-                        component={FeatureMetrics}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/logs`}
-                        component={FeatureLog}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/variants`}
-                        component={FeatureVariants}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/settings`}
-                        component={FeatureSettings}
-                    />
-                    <Dialogue
-                        onClick={() => archiveToggle()}
-                        open={showDelDialog}
-                        onClose={handleCancel}
-                        primaryButtonText="Archive toggle"
-                        secondaryButtonText="Cancel"
-                        title="Archive feature toggle"
-                    >
-                        Are you sure you want to archive this feature toggle?
-                    </Dialogue>
-                    <StaleDialog
-                        stale={feature.stale}
-                        open={openStaleDialog}
-                        setOpen={setOpenStaleDialog}
-                    />
-                    <AddTagDialog
-                        open={openTagDialog}
-                        setOpen={setOpenTagDialog}
-                    />
+
+                    <div className={styles.actions}>
+                        <PermissionIconButton
+                            permission={CREATE_FEATURE}
+                            projectId={projectId}
+                            tooltip="Copy"
+                            data-loading
+                            component={Link}
+                            to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
+                        >
+                            <FileCopy titleAccess="Copy" />
+                        </PermissionIconButton>
+                        <PermissionIconButton
+                            permission={DELETE_FEATURE}
+                            projectId={projectId}
+                            tooltip="Archive feature toggle"
+                            data-loading
+                            onClick={() => setShowDelDialog(true)}
+                        >
+                            <Archive titleAccess="Archive feature toggle" />
+                        </PermissionIconButton>
+                        <PermissionIconButton
+                            onClick={() => setOpenStaleDialog(true)}
+                            permission={UPDATE_FEATURE}
+                            projectId={projectId}
+                            tooltip="Toggle stale status"
+                            data-loading
+                        >
+                            <WatchLater titleAccess="Toggle stale status" />
+                        </PermissionIconButton>
+                        <PermissionIconButton
+                            onClick={() => setOpenTagDialog(true)}
+                            permission={UPDATE_FEATURE}
+                            projectId={projectId}
+                            tooltip="Add tag"
+                            data-loading
+                        >
+                            <Label titleAccess="Add tag" />
+                        </PermissionIconButton>
+                    </div>
                 </div>
-            }
-            elseShow={renderFeatureNotExist()}
-        />
+                <div className={styles.separator} />
+                <div className={styles.tabContainer}>
+                    <Tabs
+                        value={history.location.pathname}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        className={styles.tabNavigation}
+                    >
+                        {renderTabs()}
+                    </Tabs>
+                </div>
+            </div>
+            <Route
+                exact
+                path={`/projects/:projectId/features/:featureId`}
+                component={FeatureOverview}
+            />
+            <Route
+                path={`/projects/:projectId/features/:featureId/strategies`}
+                component={FeatureStrategies}
+            />
+            <Route
+                path={`/projects/:projectId/features/:featureId/metrics`}
+                component={FeatureMetrics}
+            />
+            <Route
+                path={`/projects/:projectId/features/:featureId/logs`}
+                component={FeatureLog}
+            />
+            <Route
+                path={`/projects/:projectId/features/:featureId/variants`}
+                component={FeatureVariants}
+            />
+            <Route
+                path={`/projects/:projectId/features/:featureId/settings`}
+                component={FeatureSettings}
+            />
+            <Dialogue
+                onClick={() => archiveToggle()}
+                open={showDelDialog}
+                onClose={handleCancel}
+                primaryButtonText="Archive toggle"
+                secondaryButtonText="Cancel"
+                title="Archive feature toggle"
+            >
+                Are you sure you want to archive this feature toggle?
+            </Dialogue>
+            <StaleDialog
+                stale={feature.stale}
+                open={openStaleDialog}
+                setOpen={setOpenStaleDialog}
+            />
+            <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
+        </div>
     );
 };
-
-export default FeatureView;

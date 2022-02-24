@@ -19,7 +19,7 @@ import ProjectListNew from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
 import RedirectArchive from '../archive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import FeatureView from '../feature/FeatureView/FeatureView';
+import { FeatureView } from '../feature/FeatureView/FeatureView';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
