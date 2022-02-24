@@ -14,7 +14,10 @@ export const numberValidatorGenerator = (
     };
 };
 
-export const stringValidatorGenerator = (values: string[], setError) => {
+export const stringValidatorGenerator = (
+    values: string[],
+    setError: React.Dispatch<React.SetStateAction<string>>
+) => {
     return () => {
         if (!Array.isArray(values)) {
             setError('Values must be a list of strings');
@@ -24,14 +27,20 @@ export const stringValidatorGenerator = (values: string[], setError) => {
     };
 };
 
-export const semVerValidatorGenerator = (value: string, setError) => {
+export const semVerValidatorGenerator = (
+    value: string,
+    setError: React.Dispatch<React.SetStateAction<string>>
+) => {
     return () => {
         return true;
         // Validate semver here
     };
 };
 
-export const dateValidatorGenerator = (value: string, setError) => {
+export const dateValidatorGenerator = (
+    value: string,
+    setError: React.Dispatch<React.SetStateAction<string>>
+) => {
     return () => {
         return true;
         // Validate date
