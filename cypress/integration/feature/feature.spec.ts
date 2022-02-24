@@ -3,17 +3,11 @@
 let featureToggleName = '';
 let enterprise = false;
 let strategyId = '';
-let defaultEnv = 'development';
 
 describe('feature', () => {
     before(() => {
         featureToggleName = `unleash-e2e-${Math.floor(Math.random() * 100)}`;
         enterprise = Boolean(Cypress.env('ENTERPRISE'));
-
-        const env = Cypress.env('DEFAULT_ENV');
-        if (env) {
-            defaultEnv = env;
-        }
     });
 
     after(() => {
@@ -138,7 +132,7 @@ describe('feature', () => {
 
         cy.intercept(
             'POST',
-            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies`,
+            `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies`,
             req => {
                 expect(req.body.name).to.equal('flexibleRollout');
 
@@ -186,7 +180,7 @@ describe('feature', () => {
 
         cy.intercept(
             'PUT',
-            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies/${strategyId}`,
+            `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies/${strategyId}`,
             req => {
                 expect(req.body.parameters.groupId).to.equal(newGroupId);
                 expect(req.body.parameters.stickiness).to.equal('sessionId');
@@ -213,7 +207,7 @@ describe('feature', () => {
 
         cy.intercept(
             'DELETE',
-            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies/${strategyId}`,
+            `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies/${strategyId}`,
             req => {
                 req.continue(res => {
                     expect(res.statusCode).to.equal(200);
@@ -248,7 +242,7 @@ describe('feature', () => {
 
         cy.intercept(
             'POST',
-            `/api/admin/projects/default/features/${featureToggleName}/environments/${defaultEnv}/strategies`,
+            `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies`,
             req => {
                 expect(req.body.name).to.equal('userWithId');
 
