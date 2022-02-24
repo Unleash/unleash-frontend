@@ -39,9 +39,7 @@ describe('feature', () => {
     });
 
     it('can create a feature toggle', () => {
-        if (
-            document.querySelectorAll("[data-test='CLOSE_SPLASH']").length > 0
-        ) {
+        if (document.querySelector("[data-test='CLOSE_SPLASH']")) {
             cy.get("[data-test='CLOSE_SPLASH']").click();
         }
 
@@ -52,8 +50,7 @@ describe('feature', () => {
         );
 
         cy.get("[data-test='CF_NAME_ID'").type(featureToggleName);
-        cy.get("[data-test='CF_DESC_ID'").type('hellowrdada');
-
+        cy.get("[data-test='CF_DESC_ID'").type('hello-world');
         cy.get("[data-test='CF_CREATE_BTN_ID']").click();
         cy.wait('@createFeature');
         cy.url().should('include', featureToggleName);
@@ -67,10 +64,8 @@ describe('feature', () => {
         );
 
         cy.get("[data-test='CF_NAME_ID'").type(featureToggleName);
-        cy.get("[data-test='CF_DESC_ID'").type('hellowrdada');
-
+        cy.get("[data-test='CF_DESC_ID'").type('hello-world');
         cy.get("[data-test='CF_CREATE_BTN_ID']").click();
-
         cy.get("[data-test='INPUT_ERROR_TEXT']").contains(
             'A feature with this name already exists'
         );
@@ -84,10 +79,8 @@ describe('feature', () => {
         );
 
         cy.get("[data-test='CF_NAME_ID'").type('featureToggleUnsafe####$#//');
-        cy.get("[data-test='CF_DESC_ID'").type('hellowrdada');
-
+        cy.get("[data-test='CF_DESC_ID'").type('hello-world');
         cy.get("[data-test='CF_CREATE_BTN_ID']").click();
-
         cy.get("[data-test='INPUT_ERROR_TEXT']").contains(
             `"name" must be URL friendly`
         );
@@ -114,7 +107,6 @@ describe('feature', () => {
             `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies`,
             req => {
                 expect(req.body.name).to.equal('flexibleRollout');
-
                 expect(req.body.parameters.groupId).to.equal(featureToggleName);
                 expect(req.body.parameters.stickiness).to.equal('default');
                 expect(req.body.parameters.rollout).to.equal(30);
@@ -151,7 +143,6 @@ describe('feature', () => {
             .first()
             .click();
 
-        let newGroupId = 'new-group-id';
         cy.get('[data-test=FLEXIBLE_STRATEGY_GROUP_ID]')
             .first()
             .clear()
@@ -161,7 +152,7 @@ describe('feature', () => {
             'PUT',
             `/api/admin/projects/default/features/${featureToggleName}/environments/*/strategies/${strategyId}`,
             req => {
-                expect(req.body.parameters.groupId).to.equal(newGroupId);
+                expect(req.body.parameters.groupId).to.equal('new-group-id');
                 expect(req.body.parameters.stickiness).to.equal('sessionId');
                 expect(req.body.parameters.rollout).to.equal(60);
 
@@ -246,7 +237,9 @@ describe('feature', () => {
     it('can add two variant to the feature', () => {
         const variantName = 'my-new-variant';
         const secondVariantName = 'my-second-variant';
+
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
+
         cy.intercept(
             'PATCH',
             `/api/admin/projects/default/features/${featureToggleName}/variants`,
@@ -264,19 +257,21 @@ describe('feature', () => {
                     expect(req.body[1].value.name).to.equal(secondVariantName);
                 }
             }
-        ).as('variantcreation');
+        ).as('variantCreation');
+
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
         cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
-        cy.wait('@variantcreation');
+        cy.wait('@variantCreation');
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
         cy.get('[data-test=VARIANT_NAME_INPUT]').type(secondVariantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
-        cy.wait('@variantcreation');
+        cy.wait('@variantCreation');
     });
 
     it('can set weight to fixed value for one of the variants', () => {
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
+
         cy.get('[data-test=VARIANT_EDIT_BUTTON]').first().click();
         cy.get('[data-test=VARIANT_NAME_INPUT]')
             .children()
@@ -287,6 +282,7 @@ describe('feature', () => {
             .find('input')
             .check();
         cy.get('[data-test=VARIANT_WEIGHT_INPUT]').clear().type('15');
+
         cy.intercept(
             'PATCH',
             `/api/admin/projects/default/features/${featureToggleName}/variants`,
@@ -301,9 +297,10 @@ describe('feature', () => {
                 expect(req.body[2].path).to.match(/weight/);
                 expect(req.body[2].value).to.equal(150);
             }
-        ).as('variantupdate');
+        ).as('variantUpdate');
+
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
-        cy.wait('@variantupdate');
+        cy.wait('@variantUpdate');
         cy.get('[data-test=VARIANT_WEIGHT]')
             .first()
             .should('have.text', '15 %');
@@ -311,10 +308,12 @@ describe('feature', () => {
 
     it('can delete variant', () => {
         const variantName = 'to-be-deleted';
+
         cy.visit(`/projects/default/features/${featureToggleName}/variants`);
         cy.get('[data-test=ADD_VARIANT_BUTTON]').click();
         cy.get('[data-test=VARIANT_NAME_INPUT]').type(variantName);
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
+
         cy.intercept(
             'PATCH',
             `/api/admin/projects/default/features/${featureToggleName}/variants`,
@@ -323,6 +322,7 @@ describe('feature', () => {
                 expect(e.path).to.match(/\//);
             }
         ).as('delete');
+
         cy.get(`[data-test=VARIANT_DELETE_BUTTON_${variantName}]`).click();
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@delete');
