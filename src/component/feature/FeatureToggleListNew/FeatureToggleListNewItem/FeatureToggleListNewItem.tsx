@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { TableCell, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { useStyles } from '../FeatureToggleListNew.styles';
@@ -9,7 +9,6 @@ import {
 } from '../../../../interfaces/featureToggle';
 import useToast from '../../../../hooks/useToast';
 import { getTogglePath } from '../../../../utils/route-path-helpers';
-import { SyntheticEvent } from 'react-router/node_modules/@types/react';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import FeatureStatus from '../../FeatureView/FeatureStatus/FeatureStatus';
 import FeatureType from '../../FeatureView/FeatureType/FeatureType';
@@ -49,7 +48,7 @@ const FeatureToggleListNewItem = ({
     const { refetch } = useProject(projectId);
     const styles = useStyles();
     const history = useHistory();
-    const ref = useRef(null);
+    const ref = useRef<HTMLButtonElement>(null);
     const [showInfoBox, setShowInfoBox] = useState(false);
     const [environmentName, setEnvironmentName] = useState('');
 
@@ -57,8 +56,8 @@ const FeatureToggleListNewItem = ({
         setShowInfoBox(false);
     };
 
-    const onClick = (e: SyntheticEvent) => {
-        if (!ref.current?.contains(e.target)) {
+    const onClick = (e: React.MouseEvent) => {
+        if (!ref.current?.contains(e.target as Node)) {
             history.push(getTogglePath(projectId, name));
         }
     };
