@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
-
+import { format } from 'date-fns';
 interface IDateSingleValueProps {
     setValue: (value: string) => void;
     value?: string;
@@ -10,7 +10,8 @@ interface IDateSingleValueProps {
 export const DateSingleValue = ({ setValue, value }: IDateSingleValueProps) => {
     const parseValue = (value?: string) => {
         if (!value) return;
-        return value.substring(0, value.length - 1);
+        const date = new Date(value);
+        return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'kk:mm');
     };
 
     useEffect(() => {
