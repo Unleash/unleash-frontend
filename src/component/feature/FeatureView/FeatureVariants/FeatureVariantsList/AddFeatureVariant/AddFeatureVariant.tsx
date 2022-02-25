@@ -58,7 +58,7 @@ const AddVariant = ({
     title,
     editing,
 }: IAddVariantProps) => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState<Record<string, unknown>>({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
     const [overrides, setOverrides] = useState<IOverride[]>([]);
     const [error, setError] = useState<Record<string, string>>({});
@@ -108,7 +108,7 @@ const AddVariant = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editVariant]);
 
-    const setVariantValue = e => {
+    const setVariantValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setData({
             ...data,
@@ -116,7 +116,7 @@ const AddVariant = ({
         });
     };
 
-    const setVariantWeightType = e => {
+    const setVariantWeightType = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked, name } = e.target;
         const weightType = checked ? weightTypes.FIX : weightTypes.VARIABLE;
         setData({
@@ -125,7 +125,7 @@ const AddVariant = ({
         });
     };
 
-    const submit = async e => {
+    const submit = async (e: React.FormEvent) => {
         setError({});
         e.preventDefault();
 

@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 interface IPermissionSwitchProps extends OverridableComponent<any> {
     permission: string;
     tooltip: string;
-    onChange?: (e: any) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
     projectId?: string;
     environmentId?: string;
