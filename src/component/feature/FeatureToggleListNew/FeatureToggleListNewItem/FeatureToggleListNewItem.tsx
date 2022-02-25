@@ -3,10 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { useStyles } from '../FeatureToggleListNew.styles';
 import useToggleFeatureByEnv from '../../../../hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
-import {
-    IEnvironments,
-    IFeatureEnvironment,
-} from '../../../../interfaces/featureToggle';
+import { IEnvironments } from '../../../../interfaces/featureToggle';
 import useToast from '../../../../hooks/useToast';
 import { getTogglePath } from '../../../../utils/route-path-helpers';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
@@ -24,7 +21,7 @@ import EnvironmentStrategyDialog from '../../../common/EnvironmentStrategiesDial
 interface IFeatureToggleListNewItemProps {
     name: string;
     type: string;
-    environments: IFeatureEnvironment[];
+    environments: IEnvironments[];
     projectId: string;
     lastSeenAt?: string;
     createdAt: string;
