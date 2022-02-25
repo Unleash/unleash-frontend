@@ -1,11 +1,10 @@
-import { Switch, Tooltip } from '@material-ui/core';
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import { Switch, Tooltip, SwitchProps } from '@material-ui/core';
 import AccessContext from '../../../contexts/AccessContext';
 import React, { useContext } from 'react';
 
-interface IPermissionSwitchProps extends OverridableComponent<any> {
+interface IPermissionSwitchProps extends SwitchProps {
     permission: string;
-    tooltip: string;
+    tooltip?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
     projectId?: string;
