@@ -57,7 +57,7 @@ export interface IOverride {
 }
 
 export interface IPayload {
-    name: string;
+    type: string;
     value: string;
 }
 
