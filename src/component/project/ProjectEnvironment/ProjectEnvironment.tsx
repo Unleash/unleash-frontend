@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { useStyles } from './ProjectEnvironment.styles';
 
@@ -27,8 +27,8 @@ interface ProjectEnvironmentListProps {
 
 const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
     // api state
-    const [envs, setEnvs] = useState<IProjectEnvironment>([]);
-    const { toast, setToastData } = useToast();
+    const [envs, setEnvs] = useState<IProjectEnvironment[]>([]);
+    const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const {
         environments,
@@ -76,7 +76,7 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         } the environment.`;
     };
 
-    const toggleEnv = async (env: ProjectEnvironment) => {
+    const toggleEnv = async (env: IProjectEnvironment) => {
         if (env.enabled) {
             const enabledEnvs = getEnabledEnvs(envs);
 
@@ -85,24 +85,20 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
                 return;
             }
             setToastData({
+                title: 'One environment must be active',
                 text: 'You must always have at least one active environment per project',
                 type: 'error',
-                show: true,
             });
         } else {
             try {
                 await addEnvironmentToProject(projectId, env.name);
                 setToastData({
-                    text: 'Environment successfully enabled.',
+                    title: 'Environment enabled',
+                    text: 'Environment successfully enabled. You can now use it to segment strategies in your feature toggles.',
                     type: 'success',
-                    show: true,
                 });
             } catch (error) {
-                setToastData({
-                    text: errorMsg(true),
-                    type: 'error',
-                    show: true,
-                });
+                setToastApiError(errorMsg(true));
             }
         }
         refetch();
@@ -115,16 +111,12 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
                 setSelectedEnv(undefined);
                 setConfirmName('');
                 setToastData({
+                    title: 'Environment disabled',
                     text: 'Environment successfully disabled.',
                     type: 'success',
-                    show: true,
                 });
             } catch (e) {
-                setToastData({
-                    text: errorMsg(false),
-                    type: 'error',
-                    show: true,
-                });
+                setToastApiError(errorMsg(false));
             }
 
             refetch();
@@ -136,7 +128,7 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
         setConfirmName('');
     };
 
-    const genLabel = (env: ProjectEnvironment) => (
+    const genLabel = (env: IProjectEnvironment) => (
         <>
             <code>{env.name}</code> environment is{' '}
             <strong>{env.enabled ? 'enabled' : 'disabled'}</strong>
@@ -229,8 +221,6 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
                         </Alert>
                     }
                 />
-
-                {toast}
             </PageContent>
         </div>
     );

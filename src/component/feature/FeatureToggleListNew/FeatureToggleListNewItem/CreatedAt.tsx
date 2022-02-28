@@ -1,25 +1,24 @@
 import { Tooltip } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { formatDateWithLocale, formatFullDateTimeWithLocale } from '../../../common/util';
+import { useLocationSettings } from '../../../../hooks/useLocationSettings';
+import { formatDateYMD, formatDateYMDHMS } from '../../../../utils/format-date';
 
 interface CreatedAtProps {
     time: Date;
-    //@ts-ignore
-    location: any;
 }
 
-const CreatedAt = ({time, location}: CreatedAtProps) => {
+const CreatedAt = ({ time }: CreatedAtProps) => {
+    const { locationSettings } = useLocationSettings();
+
     return (
-        <Tooltip title={`Created at ${formatFullDateTimeWithLocale(time, location.locale)}`}>
-            <span>
-                {formatDateWithLocale(time, location.locale)}
-            </span>
+        <Tooltip
+            title={`Created at ${formatDateYMDHMS(
+                time,
+                locationSettings.locale
+            )}`}
+        >
+            <span>{formatDateYMD(time, locationSettings.locale)}</span>
         </Tooltip>
     );
-}
+};
 
-const mapStateToProps = (state: any) => ({
-    location: state.settings.toJS().location,
-});
-
-export default connect(mapStateToProps)(CreatedAt);
+export default CreatedAt;

@@ -1,5 +1,4 @@
 import { Card, Menu, MenuItem } from '@material-ui/core';
-import { Dispatch, SetStateAction } from 'react';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -12,7 +11,8 @@ import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@material-ui/icons';
 import { getProjectEditPath } from '../../../utils/route-path-helpers';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from '../../../store/project/actions';
+import useToast from '../../../hooks/useToast';
+import { UPDATE_PROJECT } from '../../providers/AccessProvider/permissions';
 interface IProjectCardProps {
     name: string;
     featureCount: number;
@@ -20,13 +20,6 @@ interface IProjectCardProps {
     memberCount: number;
     id: string;
     onHover: () => void;
-    setToastData: Dispatch<
-        SetStateAction<{
-            show: boolean;
-            type: string;
-            text: string;
-        }>
-    >;
 }
 
 const ProjectCard = ({
@@ -36,7 +29,6 @@ const ProjectCard = ({
     memberCount,
     onHover,
     id,
-    setToastData,
 }: IProjectCardProps) => {
     const styles = useStyles();
     const { refetch: refetchProjectOverview } = useProjects();
@@ -44,6 +36,7 @@ const ProjectCard = ({
     const [showDelDialog, setShowDelDialog] = useState(false);
     const { deleteProject } = useProjectApi();
     const history = useHistory();
+    const { setToastData, setToastApiError } = useToast();
 
     const handleClick = e => {
         e.preventDefault();
@@ -53,7 +46,7 @@ const ProjectCard = ({
     return (
         <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header} data-loading>
-                <h2 className={styles.title}>{name}</h2>
+                <div className={styles.title}>{name}</div>
 
                 <PermissionIconButton
                     permission={UPDATE_PROJECT}
@@ -127,18 +120,14 @@ const ProjectCard = ({
                     deleteProject(id)
                         .then(() => {
                             setToastData({
-                                show: true,
+                                title: 'Deleted project',
                                 type: 'success',
                                 text: 'Successfully deleted project',
                             });
                             refetchProjectOverview();
                         })
                         .catch(e => {
-                            setToastData({
-                                show: true,
-                                type: 'error',
-                                text: e.toString(),
-                            });
+                            setToastApiError(e.message);
                         })
                         .finally(() => {
                             setShowDelDialog(false);

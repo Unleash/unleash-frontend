@@ -8,22 +8,34 @@ export interface IUiConfig {
     version: string;
     versionInfo: IVersionInfo;
     links: ILinks[];
+    disablePasswordAuth?: boolean;
+    toast?: IProclamationToast;
+}
+
+export interface IProclamationToast {
+    message: string;
+    id: string;
+    severity: 'success' | 'info' | 'warning' | 'error';
+    link: string;
 }
 
 export interface IFlags {
     C: boolean;
     P: boolean;
     E: boolean;
+    RE: boolean;
+    EEA?: boolean;
+    OIDC?: boolean;
 }
 
 export interface IVersionInfo {
     instanceId: string;
     isLatest: boolean;
-    latest: Object;
-    current: ICurrent;
+    latest: Partial<IVersion>;
+    current: IVersion;
 }
 
-export interface ICurrent {
+export interface IVersion {
     oss: string;
     enterprise: string;
 }

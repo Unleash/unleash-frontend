@@ -15,17 +15,13 @@ import { styles as commonStyles } from '../../../common';
 
 import { useStyles } from './styles';
 import { getTogglePath } from '../../../../utils/route-path-helpers';
-import FeatureStatus from '../../FeatureView2/FeatureStatus/FeatureStatus';
-import FeatureType from '../../FeatureView2/FeatureType/FeatureType';
+import FeatureStatus from '../../FeatureView/FeatureStatus/FeatureStatus';
+import FeatureType from '../../FeatureView/FeatureType/FeatureType';
 import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
 
 const FeatureToggleListItem = ({
     feature,
-    toggleFeature,
-    settings,
-    metricsLastHour = { yes: 0, no: 0, isFallback: true },
-    metricsLastMinute = { yes: 0, no: 0, isFallback: true },
     revive,
     hasAccess,
     flags = {},
@@ -76,7 +72,7 @@ const FeatureToggleListItem = ({
                     condition={!isArchive}
                     show={
                         <Link
-                            to={getTogglePath(feature.project, name, flags.E)}
+                            to={getTogglePath(feature.project, name)}
                             className={classnames(
                                 commonStyles.listLink,
                                 commonStyles.truncate
@@ -148,7 +144,10 @@ const FeatureToggleListItem = ({
                     <PermissionIconButton
                         permission={UPDATE_FEATURE}
                         projectId={project}
-                        disabled={!projectExists()}
+                        disabled={
+                            !hasAccess(UPDATE_FEATURE, project) ||
+                            !projectExists()
+                        }
                         onClick={reviveFeature}
                     >
                         <Undo />
@@ -161,10 +160,6 @@ const FeatureToggleListItem = ({
 
 FeatureToggleListItem.propTypes = {
     feature: PropTypes.object,
-    toggleFeature: PropTypes.func,
-    settings: PropTypes.object,
-    metricsLastHour: PropTypes.object,
-    metricsLastMinute: PropTypes.object,
     revive: PropTypes.func,
     hasAccess: PropTypes.func.isRequired,
     flags: PropTypes.object,

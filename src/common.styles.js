@@ -65,6 +65,19 @@ export const useCommonStyles = makeStyles(theme => ({
         fontWeight: 'bold',
         marginBottom: '0.5rem',
     },
+    fadeInBottomStartNoPosition: {
+        transform: 'translateY(400px)',
+        opacity: '0',
+        boxShadow: `rgb(129 129 129 / 40%) 4px 5px 11px 4px`,
+        zIndex: 500,
+        width: '100%',
+        backgroundColor: '#fff',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        height: '300px',
+        position: 'fixed',
+    },
     fadeInBottomStart: {
         opacity: '0',
         position: 'fixed',
@@ -77,7 +90,7 @@ export const useCommonStyles = makeStyles(theme => ({
         right: '40px',
         bottom: '40px',
         transform: 'translateY(400px)',
-        zIndex: 300,
+        zIndex: 1400,
         position: 'fixed',
     },
     fadeInBottomEnter: {
@@ -87,6 +100,23 @@ export const useCommonStyles = makeStyles(theme => ({
     },
     fadeInBottomLeave: {
         transform: 'translateY(400px)',
+        opacity: '0',
+        transition: 'transform 1.25s ease, opacity 1s ease',
+    },
+    fadeInTopStart: {
+        opacity: '0',
+        position: 'fixed',
+        right: '40px',
+        top: '40px',
+        transform: 'translateY(-400px)',
+    },
+    fadeInTopEnter: {
+        transform: 'translateY(100px)',
+        opacity: '1',
+        transition: 'transform 0.6s ease, opacity 1s ease',
+    },
+    fadeInTopLeave: {
+        transform: 'translateY(-400px)',
         opacity: '0',
         transition: 'transform 1.25s ease, opacity 1s ease',
     },

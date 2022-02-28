@@ -11,6 +11,7 @@ export interface IProjectCard {
 }
 
 export interface IProject {
+    id?: string;
     members: number;
     version: string;
     name: string;
@@ -24,5 +25,22 @@ export interface IProjectHealthReport extends IProject {
     staleCount: number;
     potentiallyStaleCount: number;
     activeCount: number;
-    updatedAt: Date;
+    updatedAt: string;
+}
+
+export interface IPermission {
+    id: number;
+    name: string;
+    displayName: string;
+    environment?: string;
+}
+
+export interface IProjectRolePermissions {
+    project: IPermission[];
+    environments: IProjectEnvironmentPermissions[];
+}
+
+export interface IProjectEnvironmentPermissions {
+    name: string;
+    permissions: IPermission[];
 }

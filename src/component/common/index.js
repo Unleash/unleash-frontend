@@ -19,8 +19,6 @@ import ConditionallyRender from './ConditionallyRender/ConditionallyRender';
 
 export { styles };
 
-export const shorten = (str, len = 50) =>
-    str && str.length > len ? `${str.substring(0, len)}...` : str;
 export const AppsLinkList = ({ apps }) => (
     <List>
         <ConditionallyRender
@@ -100,21 +98,6 @@ FormButtons.propTypes = {
     onCancel: PropTypes.func.isRequired,
     primaryButtonTestId: PropTypes.string,
 };
-
-export function getIcon(type) {
-    switch (type) {
-        case 'feature-updated':
-            return 'autorenew';
-        case 'feature-created':
-            return 'add';
-        case 'feature-deleted':
-            return 'remove';
-        case 'feature-archived':
-            return 'archived';
-        default:
-            return 'star';
-    }
-}
 
 export const IconLink = ({ url, icon: IconComponent }) => (
     <a
@@ -202,9 +185,6 @@ export function calc(value, total, decimal) {
     });
 
     return ((value / total) * 100).toFixed(decimal);
-}
-export function getDisplayName(WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
 export const selectStyles = {

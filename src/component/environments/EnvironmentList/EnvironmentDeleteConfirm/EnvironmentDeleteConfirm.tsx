@@ -3,7 +3,7 @@ import React from 'react';
 import { IEnvironment } from '../../../../interfaces/environments';
 import Dialogue from '../../../common/Dialogue';
 import Input from '../../../common/Input/Input';
-import CreateEnvironmentSuccessCard from '../../CreateEnvironment/CreateEnvironmentSuccess/CreateEnvironmentSuccessCard/CreateEnvironmentSuccessCard';
+import EnvironmentCard from '../EnvironmentCard/EnvironmentCard';
 import { useStyles } from './EnvironmentDeleteConfirm.styles';
 
 interface IEnviromentDeleteConfirmProps {
@@ -11,7 +11,7 @@ interface IEnviromentDeleteConfirmProps {
     open: boolean;
     setSelectedEnv: React.Dispatch<React.SetStateAction<IEnvironment>>;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
-    handleDeleteEnvironment: (name: string) => Promise<void>;
+    handleDeleteEnvironment: () => Promise<void>;
     confirmName: string;
     setConfirmName: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -52,7 +52,7 @@ const EnvironmentDeleteConfirm = ({
                 strategies that are active in this environment across all
                 feature toggles.
             </Alert>
-            <CreateEnvironmentSuccessCard name={env?.name} type={env?.type} />
+            <EnvironmentCard name={env?.name} type={env?.type} />
 
             <p className={styles.deleteParagraph}>
                 In order to delete this environment, please enter the id of the

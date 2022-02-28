@@ -8,7 +8,6 @@ import { useCommonStyles } from '../../../../common.styles';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from '../../../common/PercentageCircle/PercentageCircle';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from '../../../../store/project/actions';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import {
     Accordion,
@@ -16,6 +15,7 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
+import { UPDATE_PROJECT } from '../../../providers/AccessProvider/permissions';
 
 interface IProjectInfoProps {
     id: string;
@@ -50,12 +50,11 @@ const ProjectInfo = ({
     const permissionButton = (
         <PermissionIconButton
             permission={UPDATE_PROJECT}
-            tooltip={'Edit description'}
             projectId={id}
             component={Link}
             className={permissionButtonClass}
             data-loading
-            to={`/projects/${id}/settings`}
+            to={`/projects/${id}/edit`}
         >
             <Edit />
         </PermissionIconButton>

@@ -1,11 +1,10 @@
-import { SyntheticEvent, useState } from 'react';
-import { Button, TextField, Typography } from '@material-ui/core';
+import React, { SyntheticEvent, useState } from 'react';
+import { Button, Typography } from '@material-ui/core';
 import classnames from 'classnames';
 import { useStyles } from './EditProfile.styles';
 import { useCommonStyles } from '../../../../common.styles';
 import PasswordChecker from '../../common/ResetPasswordForm/PasswordChecker/PasswordChecker';
 import PasswordMatcher from '../../common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
-import { headers } from '../../../../store/api-helper';
 import { Alert } from '@material-ui/lab';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import useLoading from '../../../../hooks/useLoading';
@@ -16,6 +15,8 @@ import {
     UNAUTHORIZED,
 } from '../../../../constants/statusCodes';
 import { formatApiPath } from '../../../../utils/format-path';
+import PasswordField from '../../../common/PasswordField/PasswordField';
+import { headers } from '../../../../utils/api-utils';
 
 interface IEditProfileProps {
     setEditingProfile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -54,7 +55,7 @@ const EditProfile = ({
                     credentials: 'include',
                 });
                 handleResponse(res);
-            } catch (e) {
+            } catch (e: any) {
                 setError(e);
             }
         }
@@ -112,27 +113,25 @@ const EditProfile = ({
                     callback={setValidPassword}
                     data-loading
                 />
-                <TextField
+                <PasswordField
                     data-loading
-                    variant="outlined"
-                    size="small"
                     label="Password"
-                    type="password"
                     name="password"
                     value={password}
                     autoComplete="on"
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPassword(e.target.value)
+                    }
                 />
-                <TextField
+                <PasswordField
                     data-loading
-                    variant="outlined"
-                    size="small"
                     label="Confirm password"
-                    type="password"
                     name="confirmPassword"
                     value={confirmPassword}
                     autoComplete="on"
-                    onChange={e => setConfirmPassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setConfirmPassword(e.target.value)
+                    }
                 />
                 <PasswordMatcher
                     data-loading

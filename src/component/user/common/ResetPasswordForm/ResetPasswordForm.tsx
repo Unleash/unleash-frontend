@@ -1,11 +1,12 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import classnames from 'classnames';
-import {
-    SyntheticEvent,
-    useEffect,
-    useState,
+import React, {
     Dispatch,
     SetStateAction,
+    SyntheticEvent,
+    useCallback,
+    useEffect,
+    useState,
 } from 'react';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from '../../../../common.styles';
@@ -15,8 +16,8 @@ import ResetPasswordError from '../ResetPasswordError/ResetPasswordError';
 import PasswordChecker from './PasswordChecker/PasswordChecker';
 import PasswordMatcher from './PasswordMatcher/PasswordMatcher';
 import { useStyles } from './ResetPasswordForm.styles';
-import { useCallback } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
+import PasswordField from '../../../common/PasswordField/PasswordField';
 
 interface IResetPasswordProps {
     token: string;
@@ -107,24 +108,22 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
                     styles.container
                 )}
             >
-                <TextField
-                    variant="outlined"
-                    size="small"
-                    type="password"
+                <PasswordField
                     placeholder="Password"
                     value={password || ''}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPassword(e.target.value)
+                    }
                     onFocus={() => setShowPasswordChecker(true)}
                     autoComplete="password"
                     data-loading
                 />
-                <TextField
-                    variant="outlined"
-                    size="small"
-                    type="password"
+                <PasswordField
                     value={confirmPassword || ''}
                     placeholder="Confirm password"
-                    onChange={e => setConfirmPassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setConfirmPassword(e.target.value)
+                    }
                     autoComplete="confirm-password"
                     data-loading
                 />

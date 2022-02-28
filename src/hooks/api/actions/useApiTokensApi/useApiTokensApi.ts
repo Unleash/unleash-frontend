@@ -8,7 +8,7 @@ export interface IApiTokenCreate {
 }
 
 const useApiTokensApi = () => {
-    const { makeRequest, createRequest, errors } = useAPI({
+    const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
 
@@ -27,7 +27,10 @@ const useApiTokensApi = () => {
 
     const createToken = async (newToken: IApiTokenCreate) => {
         const path = `api/admin/api-tokens`;
-        const req = createRequest(path, { method: 'POST', body: JSON.stringify(newToken) });
+        const req = createRequest(path, {
+            method: 'POST',
+            body: JSON.stringify(newToken),
+        });
 
         try {
             const res = await makeRequest(req.caller, req.id);
@@ -38,7 +41,7 @@ const useApiTokensApi = () => {
         }
     };
 
-    return { deleteToken, createToken, errors };
+    return { deleteToken, createToken, errors, loading };
 };
 
 export default useApiTokensApi;

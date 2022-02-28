@@ -17,13 +17,14 @@ import {
     IFeatureToggleListItem,
 } from '../../../interfaces/featureToggle';
 import PaginateUI from '../../common/PaginateUI/PaginateUI';
+import StringTruncator from '../../common/StringTruncator/StringTruncator';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
     projectId: string;
 }
 
-//@ts-ignore
+// @ts-expect-error
 const sortList = (list, sortOpt) => {
     if (!list) {
         return list;
@@ -32,7 +33,7 @@ const sortList = (list, sortOpt) => {
         return list;
     }
     if (sortOpt.type === 'string') {
-        //@ts-ignore
+        // @ts-expect-error
         return list.sort((a, b) => {
             const fieldA = a[sortOpt.field]?.toUpperCase();
             const fieldB = b[sortOpt.field]?.toUpperCase();
@@ -48,7 +49,7 @@ const sortList = (list, sortOpt) => {
         });
     }
     if (sortOpt.type === 'date') {
-        //@ts-ignore
+        // @ts-expect-error
         return list.sort((a, b) => {
             const fieldA = new Date(a[sortOpt.field]);
             const fieldB = new Date(b[sortOpt.field]);
@@ -236,12 +237,11 @@ const FeatureToggleListNew = ({
                                     )}
                                     align="center"
                                 >
-                                    <span
+                                    <StringTruncator
+                                        text={env.name}
+                                        maxWidth="90"
                                         data-loading
-                                        className={styles.envName}
-                                    >
-                                        {env.name}
-                                    </span>
+                                    />
                                 </TableCell>
                             );
                         })}

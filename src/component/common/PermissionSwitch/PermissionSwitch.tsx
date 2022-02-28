@@ -9,26 +9,39 @@ interface IPermissionSwitchProps extends OverridableComponent<any> {
     onChange?: (e: any) => void;
     disabled?: boolean;
     projectId?: string;
+    environmentId?: string;
     checked: boolean;
 }
 
-const PermissionSwitch: React.FC<IPermissionSwitchProps> = ({
-    permission,
-    tooltip = '',
-    disabled,
-    projectId,
-    checked,
-    onChange,
-    ...rest
-}) => {
-    const { hasAccess } = useContext(AccessContext);
-    const access = projectId
-        ? hasAccess(permission, projectId)
-        : hasAccess(permission);
+const PermissionSwitch = React.forwardRef<
+    HTMLButtonElement,
+    IPermissionSwitchProps
+>((props, ref) => {
+    const {
+        permission,
+        tooltip,
+        disabled,
+        projectId,
+        environmentId,
+        checked,
+        onChange,
+        ...rest
+    } = props;
 
-    const tooltipText = access
-        ? tooltip
-        : "You don't have access to perform this operation";
+    const { hasAccess } = useContext(AccessContext);
+
+    let access;
+    if (projectId && environmentId) {
+        access = hasAccess(permission, projectId, environmentId);
+    } else if (projectId) {
+        access = hasAccess(permission, projectId);
+    } else {
+        access = hasAccess(permission);
+    }
+
+    const tooltipText = !access
+        ? "You don't have access to perform this operation"
+        : '';
 
     return (
         <Tooltip title={tooltipText} arrow>
@@ -37,11 +50,12 @@ const PermissionSwitch: React.FC<IPermissionSwitchProps> = ({
                     onChange={onChange}
                     disabled={disabled || !access}
                     checked={checked}
+                    ref={ref}
                     {...rest}
                 />
             </span>
         </Tooltip>
     );
-};
+});
 
 export default PermissionSwitch;

@@ -1,34 +1,36 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import Toast from '../component/common/Toast/Toast';
-
-export interface IToast {
-    show: boolean;
-    type: 'success' | 'info' | 'warning' | 'error';
-    text: string;
-}
-
-export type TSetToastData = Dispatch<SetStateAction<IToast>>;
+import { useContext } from 'react';
+import UIContext from '../contexts/UIContext';
+import { IToast } from '../interfaces/toast';
 
 const useToast = () => {
-    const [toastData, setToastData] = useState<IToast>({
-        show: false,
-        type: 'success',
-        text: '',
-    });
+    const { setToast } = useContext(UIContext);
 
-    const hideToast = () => {
-        setToastData((prev: IToast) => ({ ...prev, show: false }));
+    const hideToast = () =>
+        setToast((prev: IToast) => ({
+            ...prev,
+            show: false,
+        }));
+
+    const setToastApiError = (errorText: string, overrides?: IToast) => {
+        setToast({
+            title: 'Something went wrong',
+            text: `We had trouble talking to our API. Here's why: ${errorText}`,
+            type: 'error',
+            show: true,
+            autoHideDuration: 6000,
+            ...overrides,
+        });
     };
-    const toast = (
-        <Toast
-            show={toastData.show}
-            onClose={hideToast}
-            text={toastData.text}
-            type={toastData.type}
-        />
-    );
 
-    return { toast, setToastData, hideToast };
+    const setToastData = (toast: IToast) => {
+        if (toast.persist) {
+            setToast({ ...toast, show: true });
+        } else {
+            setToast({ ...toast, show: true, autoHideDuration: 6000 });
+        }
+    };
+
+    return { setToastData, setToastApiError, hideToast };
 };
 
 export default useToast;

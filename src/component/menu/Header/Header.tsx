@@ -15,19 +15,19 @@ import { useStyles } from './Header.styles';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useCommonStyles } from '../../../common.styles';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
 import { IPermission } from '../../../interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
 import { getRoutes } from '../routes';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { filterByFlags } from '../../common/util';
+import { useAuthPermissions } from '../../../hooks/api/getters/useAuth/useAuthPermissions';
 
 const Header = () => {
     const theme = useTheme();
     const [anchorEl, setAnchorEl] = useState();
     const [anchorElAdvanced, setAnchorElAdvanced] = useState();
     const [admin, setAdmin] = useState(false);
-    const { permissions } = useUser();
+    const { permissions } = useAuthPermissions();
     const commonStyles = useCommonStyles();
     const { uiConfig } = useUiConfig();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -39,7 +39,7 @@ const Header = () => {
     const handleCloseAdvanced = () => setAnchorElAdvanced(null);
 
     useEffect(() => {
-        const admin = permissions.find(
+        const admin = permissions?.find(
             (element: IPermission) => element.permission === ADMIN
         );
 
@@ -54,7 +54,7 @@ const Header = () => {
     const filteredMainRoutes = {
         mainNavRoutes: routes.mainNavRoutes.filter(filterByFlags(flags)),
         mobileRoutes: routes.mobileRoutes.filter(filterByFlags(flags)),
-        adminRoutes: routes.adminRoutes,
+        adminRoutes: routes.adminRoutes.filter(filterByFlags(flags)),
     };
 
     return (
@@ -68,12 +68,19 @@ const Header = () => {
                                 className={styles.drawerButton}
                                 onClick={toggleDrawer}
                             >
-                                <MenuIcon />
+                                <MenuIcon titleAccess="Menu" />
                             </IconButton>
                         }
                         elseShow={
-                            <Link to="/" className={commonStyles.flexRow}>
-                                <UnleashLogo className={styles.logo} />{' '}
+                            <Link
+                                to="/"
+                                className={commonStyles.flexRow}
+                                aria-label="Home"
+                            >
+                                <UnleashLogo
+                                    className={styles.logo}
+                                    aria-label="Unleash logo"
+                                />
                             </Link>
                         }
                     />
@@ -127,6 +134,7 @@ const Header = () => {
                                         >
                                             <MenuBookIcon
                                                 className={styles.docsIcon}
+                                                titleAccess="Documentation"
                                             />
                                         </a>
                                     </Tooltip>
@@ -140,6 +148,7 @@ const Header = () => {
                                             >
                                                 <SettingsIcon
                                                     className={styles.docsIcon}
+                                                    titleAccess="Settings"
                                                 />
                                             </IconButton>
                                         }
@@ -147,7 +156,7 @@ const Header = () => {
 
                                     <NavigationMenu
                                         id="admin-navigation"
-                                        options={routes.adminRoutes}
+                                        options={filteredMainRoutes.adminRoutes}
                                         anchorEl={anchorEl}
                                         handleClose={handleClose}
                                         style={{ top: '40px', left: '-125px' }}

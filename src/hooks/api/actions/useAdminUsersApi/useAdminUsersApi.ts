@@ -1,5 +1,3 @@
-import { IUserPayload } from '../../../../interfaces/user';
-
 import useAPI from '../useApi/useApi';
 import {
     handleBadRequest,
@@ -8,19 +6,13 @@ import {
     handleUnauthorized,
 } from './errorHandlers';
 
-export interface IUserApiErrors {
-    addUser?: string;
-    removeUser?: string;
-    updateUser?: string;
-    changePassword?: string;
-    validatePassword?: string;
+interface IUserPayload {
+    name: string;
+    email: string;
+    id?: string;
 }
 
-export const ADD_USER_ERROR = 'addUser';
-export const UPDATE_USER_ERROR = 'updateUser';
 export const REMOVE_USER_ERROR = 'removeUser';
-export const CHANGE_PASSWORD_ERROR = 'changePassword';
-export const VALIDATE_PASSWORD_ERROR = 'validatePassword';
 
 const useAdminUsersApi = () => {
     const { loading, makeRequest, createRequest, errors } = useAPI({

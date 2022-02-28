@@ -17,8 +17,11 @@ import useToast from '../../../hooks/useToast';
 import useEnvironmentApi from '../../../hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import EnvironmentListItem from './EnvironmentListItem/EnvironmentListItem';
 import { mutate } from 'swr';
-import EditEnvironment from '../EditEnvironment/EditEnvironment';
 import EnvironmentToggleConfirm from './EnvironmentToggleConfirm/EnvironmentToggleConfirm';
+import useProjectRolePermissions from '../../../hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import { formatUnknownError } from '../../../utils/format-unknown-error';
 
 const EnvironmentList = () => {
     const defaultEnv = {
@@ -30,7 +33,9 @@ const EnvironmentList = () => {
         protected: false,
     };
     const { environments, refetch } = useEnvironments();
-    const [editEnvironment, setEditEnvironment] = useState(false);
+    const { uiConfig } = useUiConfig();
+    const { refetch: refetchProjectRolePermissions } =
+        useProjectRolePermissions();
 
     const [selectedEnv, setSelectedEnv] = useState(defaultEnv);
     const [delDialog, setDeldialogue] = useState(false);
@@ -38,7 +43,7 @@ const EnvironmentList = () => {
     const [confirmName, setConfirmName] = useState('');
 
     const history = useHistory();
-    const { toast, setToastData } = useToast();
+    const { setToastApiError, setToastData } = useToast();
     const {
         deleteEnvironment,
         changeSortOrder,
@@ -71,41 +76,30 @@ const EnvironmentList = () => {
         try {
             await sortOrderAPICall(sortOrder);
             refetch();
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
     const sortOrderAPICall = async (sortOrder: ISortOrderPayload) => {
         try {
             await changeSortOrder(sortOrder);
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
     const handleDeleteEnvironment = async () => {
         try {
             await deleteEnvironment(selectedEnv.name);
+            refetchProjectRolePermissions();
             setToastData({
-                show: true,
                 type: 'success',
-                text: 'Successfully deleted environment.',
+                title: 'Project environment deleted',
+                text: 'You have successfully deleted the project environment.',
             });
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         } finally {
             setDeldialogue(false);
             setSelectedEnv(defaultEnv);
@@ -125,17 +119,14 @@ const EnvironmentList = () => {
         try {
             await toggleEnvironmentOn(selectedEnv.name);
             setToggleDialog(false);
+
             setToastData({
-                show: true,
                 type: 'success',
-                text: 'Successfully enabled environment.',
+                title: 'Project environment enabled',
+                text: 'Your environment is enabled',
             });
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         } finally {
             refetch();
         }
@@ -146,16 +137,12 @@ const EnvironmentList = () => {
             await toggleEnvironmentOff(selectedEnv.name);
             setToggleDialog(false);
             setToastData({
-                show: true,
                 type: 'success',
-                text: 'Successfully disabled environment.',
+                title: 'Project environment disabled',
+                text: 'Your environment is disabled.',
             });
-        } catch (e) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: e.toString(),
-            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         } finally {
             refetch();
         }
@@ -166,7 +153,6 @@ const EnvironmentList = () => {
             <EnvironmentListItem
                 key={env.name}
                 env={env}
-                setEditEnvironment={setEditEnvironment}
                 setDeldialogue={setDeldialogue}
                 setSelectedEnv={setSelectedEnv}
                 setToggleDialog={setToggleDialog}
@@ -179,7 +165,6 @@ const EnvironmentList = () => {
     const navigateToCreateEnvironment = () => {
         history.push('/environments/create');
     };
-
     return (
         <PageContent
             headerContent={
@@ -190,10 +175,11 @@ const EnvironmentList = () => {
                             <ResponsiveButton
                                 onClick={navigateToCreateEnvironment}
                                 maxWidth="700px"
-                                tooltip="Add environment"
                                 Icon={Add}
+                                permission={ADMIN}
+                                disabled={!Boolean(uiConfig.flags.EEA)}
                             >
-                                Add Environment
+                                New Environment
                             </ResponsiveButton>
                         </>
                     }
@@ -210,20 +196,12 @@ const EnvironmentList = () => {
                 confirmName={confirmName}
                 setConfirmName={setConfirmName}
             />
-
-            <EditEnvironment
-                env={selectedEnv}
-                setEditEnvironment={setEditEnvironment}
-                editEnvironment={editEnvironment}
-                setToastData={setToastData}
-            />
             <EnvironmentToggleConfirm
                 env={selectedEnv}
                 open={toggleDialog}
                 setToggleDialog={setToggleDialog}
                 handleConfirmToggleEnvironment={handleConfirmToggleEnvironment}
             />
-            {toast}
         </PageContent>
     );
 };

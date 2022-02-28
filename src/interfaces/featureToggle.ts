@@ -11,27 +11,28 @@ export interface IEnvironments {
     enabled: boolean;
 }
 
-export interface IFeatureToggleDTO {
-    stale: boolean;
-    archived: boolean;
+export interface IFeatureTogglePayload {
     description: string;
     name: string;
-    project: string;
+    projectId: string;
     type: string;
-    variants: IFeatureVariant[];
+    impressionData: boolean;
 }
 
 export interface IFeatureToggle {
     stale: boolean;
     archived: boolean;
-    createdAt: Date;
-    lastSeenAt?: Date;
+    enabled?: boolean;
+    createdAt: string;
+    lastSeenAt?: string;
     description: string;
     environments: IFeatureEnvironment[];
     name: string;
     project: string;
     type: string;
     variants: IFeatureVariant[];
+    impressionData: boolean;
+    strategies?: IFeatureStrategy[];
 }
 
 export interface IFeatureEnvironment {
@@ -68,8 +69,24 @@ export interface IFeatureEnvironmentMetrics {
 }
 
 export interface IFeatureMetrics {
+    version?: number;
+    maturity?: string;
+    lastHourUsage: IFeatureEnvironmentMetrics[];
+    seenApplications: string[];
+}
+
+export interface IFeatureMetrics {
     version: number;
     maturity: string;
-    lastHourUsage: IFeatureEnvironmentMetrics[],
-    seenApplications: string[]
+    lastHourUsage: IFeatureEnvironmentMetrics[];
+    seenApplications: string[];
+}
+
+export interface IFeatureMetricsRaw {
+    featureName: string;
+    appName: string;
+    environment: string;
+    timestamp: string;
+    yes: number;
+    no: number;
 }

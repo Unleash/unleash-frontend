@@ -1,22 +1,13 @@
-export const getTogglePath = (projectId: string, featureToggleName: string, newPath: boolean) => {
-    return `/projects/${projectId}/features${newPath ? `2/${featureToggleName}` : `/${featureToggleName}/strategies`}`;
-};
-
-export const getToggleCopyPath = (
-    projectId: string,
-    featureToggleName: string
-) => {
-    return `/projects/${projectId}/features/${featureToggleName}/strategies/copy`;
+export const getTogglePath = (projectId: string, featureToggleName: string) => {
+    return `/projects/${projectId}/features/${featureToggleName}`;
 };
 
 export const getCreateTogglePath = (
     projectId: string,
     newPath: boolean = false,
-    query?: Object
+    query?: Record<string, string>
 ) => {
-    const path = newPath
-        ? `/projects/${projectId}/create-toggle2`
-        : `/projects/${projectId}/create-toggle`;
+    const path = `/projects/${projectId}/create-toggle`;
 
     let queryString;
     if (query) {
@@ -25,9 +16,11 @@ export const getCreateTogglePath = (
             return acc;
         }, '');
     }
+
     if (queryString) {
         return `${path}?${queryString}`;
     }
+
     return path;
 };
 
