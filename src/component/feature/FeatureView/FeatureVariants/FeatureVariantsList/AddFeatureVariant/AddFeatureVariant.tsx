@@ -151,6 +151,11 @@ const AddVariant = ({
             return;
         }
 
+        if (payload.type === 'json' && !isJSON(payload.value)) {
+            setError({ payload: 'The payload is not a valid JSON format' });
+            return;
+        }
+
         try {
             const variant = {
                 name: data.name,
@@ -378,7 +383,10 @@ const AddVariant = ({
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
                         <TextField
-                            rows={1}
+                            rows={payload.type === 'json' ? 10 : 0}
+                            error={Boolean(error.payload)}
+                            helperText={error.payload}
+                            multiline
                             label="Value"
                             name="value"
                             className={commonStyles.fullWidth}
