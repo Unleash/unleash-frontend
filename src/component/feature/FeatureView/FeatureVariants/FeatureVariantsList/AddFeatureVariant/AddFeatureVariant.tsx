@@ -68,9 +68,7 @@ export const AddVariant = ({
             return true;
         } catch (e: unknown) {
             setError({
-                payload: `The payload is not a valid JSON format: ${e
-                    .toString()
-                    .slice(24)}`,
+                payload: 'Invalid JSON',
             });
             return false;
         }
@@ -152,6 +150,7 @@ export const AddVariant = ({
         }
 
         if (payload.type === 'json' && !isJSON(payload.value)) {
+            setError({ payload: 'Invalid JSON' });
             return;
         }
 
@@ -192,6 +191,7 @@ export const AddVariant = ({
 
     const onPayload = (e: ChangeEvent<{ name?: string; value: unknown }>) => {
         e.preventDefault();
+        setError({ payload: '' });
         setPayload({
             ...payload,
             // @ts-expect-error
@@ -386,46 +386,19 @@ export const AddVariant = ({
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
-                        <ConditionallyRender
-                            condition={payload.type === 'json'}
-                            show={
-                                <>
-                                    <p style={{ color: 'red' }}>
-                                        {error.payload || ''}
-                                    </p>
-                                    <CodeEditor
-                                        name="value"
-                                        value={payload.value}
-                                        language="json"
-                                        placeholder="Please enter JSON payload."
-                                        onChange={onPayload}
-                                        padding={15}
-                                        style={{
-                                            fontSize: 12,
-                                            backgroundColor: '#f5f5f5',
-                                            fontFamily:
-                                                'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                                            minHeight: 5,
-                                        }}
-                                    />
-                                </>
-                            }
-                            elseShow={
-                                <TextField
-                                    rows={payload.type === 'json' ? 10 : 0}
-                                    error={Boolean(error.payload)}
-                                    helperText={error.payload}
-                                    multiline
-                                    label="Value"
-                                    name="value"
-                                    className={commonStyles.fullWidth}
-                                    value={payload.value}
-                                    onChange={onPayload}
-                                    variant="outlined"
-                                    size="small"
-                                    data-test={'VARIANT_PAYLOAD_VALUE'}
-                                />
-                            }
+                        <TextField
+                            rows={payload.type === 'json' ? 10 : 0}
+                            error={Boolean(error.payload)}
+                            helperText={error.payload}
+                            multiline
+                            label="Value"
+                            name="value"
+                            className={commonStyles.fullWidth}
+                            value={payload.value}
+                            onChange={onPayload}
+                            variant="outlined"
+                            size="small"
+                            data-test={'VARIANT_PAYLOAD_VALUE'}
                         />
                     </Grid>
                 </Grid>
