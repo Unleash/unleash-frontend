@@ -28,6 +28,7 @@ import {
     IOverride,
 } from '../../../../../../interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -66,10 +67,11 @@ const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [code, setCode] = useState('');
 
-    const isJSON = (jsonString: string) => {
+    const isJSON = () => {
         try {
-            let parsedString = JSON.parse(jsonString);
+            let parsedString = JSON.parse(code);
             if (parsedString && typeof parsedString === 'object') {
                 return true;
             }
@@ -151,8 +153,9 @@ const AddVariant = ({
             return;
         }
 
-        if (payload.type === 'json' && !isJSON(payload.value)) {
+        if (payload.type === 'json' && !isJSON()) {
             setError({ payload: 'The payload is not a valid JSON format' });
+            alert('The payload is not a valid JSON format')
             return;
         }
 
@@ -382,19 +385,40 @@ const AddVariant = ({
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
-                        <TextField
-                            rows={payload.type === 'json' ? 10 : 0}
-                            error={Boolean(error.payload)}
-                            helperText={error.payload}
-                            multiline
-                            label="Value"
-                            name="value"
-                            className={commonStyles.fullWidth}
-                            value={payload.value}
-                            onChange={onPayload}
-                            variant="outlined"
-                            size="small"
-                            data-test={'VARIANT_PAYLOAD_VALUE'}
+                        <ConditionallyRender
+                            condition={payload.type === 'json'}
+                            show={
+                                <CodeEditor
+                                    value={code}
+                                    language="json"
+                                    placeholder="Please enter JSON payload."
+                                    onChange={e => setCode(e.target.value)}
+                                    padding={15}
+                                    style={{
+                                        fontSize: 12,
+                                        backgroundColor: '#f5f5f5',
+                                        fontFamily:
+                                            'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                        minHeight: 5,
+                                    }}
+                                />
+                            }
+                            elseShow={
+                                <TextField
+                                    rows={payload.type === 'json' ? 10 : 0}
+                                    error={Boolean(error.payload)}
+                                    helperText={error.payload}
+                                    multiline
+                                    label="Value"
+                                    name="value"
+                                    className={commonStyles.fullWidth}
+                                    value={payload.value}
+                                    onChange={onPayload}
+                                    variant="outlined"
+                                    size="small"
+                                    data-test={'VARIANT_PAYLOAD_VALUE'}
+                                />
+                            }
                         />
                     </Grid>
                 </Grid>
