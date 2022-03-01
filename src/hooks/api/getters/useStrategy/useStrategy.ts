@@ -9,10 +9,7 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
     const path = formatApiPath(STRATEGY_CACHE_KEY);
 
     const fetcher = () => {
-        return fetch(path, {
-            method: 'GET',
-            credentials: 'include',
-        })
+        return fetch(path)
             .then(handleErrorResponses(`${strategyName} strategy`))
             .then(res => res.json());
     };
@@ -22,15 +19,10 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
         fetcher,
         options
     );
-    const [loading, setLoading] = useState(!error && !data);
 
     const refetchStrategy = () => {
         mutate(STRATEGY_CACHE_KEY);
     };
-
-    useEffect(() => {
-        setLoading(!error && !data);
-    }, [data, error]);
 
     return {
         strategy: data || {
@@ -39,7 +31,7 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
             parameters: [],
         },
         error,
-        loading,
+        loading: !error && !data,
         refetchStrategy,
     };
 };

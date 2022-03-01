@@ -6,22 +6,22 @@ import { trim } from '../../common/util';
 import { StrategyParameters } from './StrategyParameters/StrategyParameters';
 import { ICustomStrategyParameter } from 'interfaces/strategy';
 
-interface IStrategyForm {
+interface IStrategyFormProps {
     strategyName: string;
     strategyDesc: string;
     params: ICustomStrategyParameter[];
     setStrategyName: React.Dispatch<React.SetStateAction<string>>;
     setStrategyDesc: React.Dispatch<React.SetStateAction<string>>;
     setParams: React.Dispatch<React.SetStateAction<ICustomStrategyParameter[]>>;
-    handleSubmit: (e: any) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
-    mode: string;
+    mode: 'Create' | 'Edit';
     clearErrors: () => void;
-    setErrors: React.Dispatch<React.SetStateAction<Object>>;
+    setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 }
 
-export const StrategyForm: React.FC<IStrategyForm> = ({
+export const StrategyForm: React.FC<IStrategyFormProps> = ({
     children,
     handleSubmit,
     handleCancel,
@@ -102,7 +102,11 @@ export const StrategyForm: React.FC<IStrategyForm> = ({
             </div>
             <div className={styles.buttonContainer}>
                 {children}
-                <Button onClick={handleCancel} className={styles.cancelButton}>
+                <Button
+                    type="button"
+                    onClick={handleCancel}
+                    className={styles.cancelButton}
+                >
                     Cancel
                 </Button>
             </div>

@@ -33,7 +33,7 @@ export const useStrategyForm = (
         };
     };
 
-    const validateStrategyName = async () => {
+    const validateStrategyName = () => {
         if (strategyName.length === 0) {
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
             return false;
@@ -50,15 +50,16 @@ export const useStrategyForm = (
 
     const validateParams = () => {
         let res = true;
-        //@ts-expect-error
-        for (const [index, p] of params.entries()) {
-            if (p.name.length === 0) {
-                setErrors(prev => ({
-                    ...prev,
-                    [`paramName${index}`]: 'Name can not be empty',
-                }));
-                res = false;
-            }
+        for (const [index, p] of Object.entries(params)) {
+            params.forEach((p, index) => {
+                if (p.name.length === 0) {
+                    setErrors(prev => ({
+                        ...prev,
+                        [`paramName${index}`]: 'Name can not be empty',
+                    }));
+                    res = false;
+                }
+            });
         }
         return res;
     };

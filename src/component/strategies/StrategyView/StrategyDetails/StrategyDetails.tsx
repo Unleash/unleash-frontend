@@ -16,11 +16,12 @@ import {
     IStrategy,
 } from '../../../../interfaces/strategy';
 import { IApplication } from '../../../../interfaces/application';
+import { IFeatureToggle } from 'interfaces/featureToggle';
 
 interface IStrategyDetailsProps {
     strategy: IStrategy;
     applications: IApplication[];
-    toggles: [];
+    toggles: IFeatureToggle[];
 }
 
 export const StrategyDetails = ({

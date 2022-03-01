@@ -92,7 +92,7 @@ export const StrategyParameter = ({
                         setParams(params.filter((e, i) => i !== index));
                     }}
                 >
-                    <Delete />
+                    <Delete titleAccess="Delete" />
                 </IconButton>
             </div>
             <GeneralSelect

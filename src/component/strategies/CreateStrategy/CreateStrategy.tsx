@@ -33,7 +33,7 @@ export const CreateStrategy = () => {
     const handleSubmit = async (e: Event) => {
         clearErrors();
         e.preventDefault();
-        const validName = await validateStrategyName();
+        const validName = validateStrategyName();
 
         if (validName && validateParams()) {
             const payload = getStrategyPayload();

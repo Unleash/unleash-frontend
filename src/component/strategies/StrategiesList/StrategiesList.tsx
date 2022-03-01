@@ -209,14 +209,14 @@ export const StrategiesList = () => {
                     permission={UPDATE_STRATEGY}
                     tooltip={'Edit strategy'}
                 >
-                    <Edit />
+                    <Edit titleAccess="Edit strategy" />
                 </PermissionIconButton>
             }
             elseShow={
                 <Tooltip title="You cannot delete a built-in strategy">
                     <div>
                         <IconButton disabled>
-                            <Edit />
+                            <Edit titleAccess="Edit strategy" />
                         </IconButton>
                     </div>
                 </Tooltip>

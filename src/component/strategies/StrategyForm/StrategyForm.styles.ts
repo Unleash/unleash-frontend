@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        maxWidth: '400px',
+        maxWidth: 400,
     },
     form: {
         display: 'flex',

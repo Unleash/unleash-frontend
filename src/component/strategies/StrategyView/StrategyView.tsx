@@ -45,7 +45,7 @@ export const StrategyView = () => {
                                     data-loading
                                     onClick={handleEdit}
                                 >
-                                    <Edit />
+                                    <Edit titleAccess="Edit strategy" />
                                 </PermissionIconButton>
                             }
                         />
