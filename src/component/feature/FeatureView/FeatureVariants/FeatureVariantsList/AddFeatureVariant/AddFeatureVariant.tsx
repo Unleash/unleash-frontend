@@ -67,6 +67,17 @@ const AddVariant = ({
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
 
+    const isJSON = (jsonString: string) => {
+        try {
+            let parsedString = JSON.parse(jsonString);
+            if (parsedString && typeof parsedString === 'object') {
+                return true;
+            }
+        } catch (e) {
+            return false;
+        }
+    };
+
     const clear = () => {
         if (editVariant) {
             setData({
