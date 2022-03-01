@@ -61,6 +61,7 @@ export const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [code, setCode] = useState('');
 
     const isJSON = (input: string): boolean => {
         try {
@@ -386,19 +387,40 @@ export const AddVariant = ({
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
-                        <TextField
-                            rows={payload.type === 'json' ? 10 : 0}
-                            error={Boolean(error.payload)}
-                            helperText={error.payload}
-                            multiline
-                            label="Value"
-                            name="value"
-                            className={commonStyles.fullWidth}
-                            value={payload.value}
-                            onChange={onPayload}
-                            variant="outlined"
-                            size="small"
-                            data-test={'VARIANT_PAYLOAD_VALUE'}
+                        <ConditionallyRender
+                            condition={payload.type === 'json'}
+                            show={
+                                <CodeEditor
+                                    value={code}
+                                    language="json"
+                                    placeholder="Please enter JSON payload."
+                                    onChange={e => setCode(e.target.value)}
+                                    padding={15}
+                                    style={{
+                                        fontSize: 12,
+                                        backgroundColor: '#f5f5f5',
+                                        fontFamily:
+                                            'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                        minHeight: 5,
+                                    }}
+                                />
+                            }
+                            elseShow={
+                                <TextField
+                                    rows={payload.type === 'json' ? 10 : 0}
+                                    error={Boolean(error.payload)}
+                                    helperText={error.payload}
+                                    multiline
+                                    label="Value"
+                                    name="value"
+                                    className={commonStyles.fullWidth}
+                                    value={payload.value}
+                                    onChange={onPayload}
+                                    variant="outlined"
+                                    size="small"
+                                    data-test={'VARIANT_PAYLOAD_VALUE'}
+                                />
+                            }
                         />
                     </Grid>
                 </Grid>
