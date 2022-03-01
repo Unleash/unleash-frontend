@@ -39,7 +39,6 @@ const FeatureStrategiesEnvironmentList = ({
 
     const {
         activeEnvironmentsRef,
-        setToastData,
         deleteStrategy,
         updateStrategy,
         delDialog,
@@ -105,6 +104,7 @@ const FeatureStrategiesEnvironmentList = ({
         }
 
         updateStrategy(strategy);
+        callback();
     };
 
     const renderStrategies = () => {
@@ -161,7 +161,6 @@ const FeatureStrategiesEnvironmentList = ({
                                                 : 'Toggle is disabled and no strategies are executing'
                                         }
                                         env={activeEnvironment}
-                                        setToastData={setToastData}
                                         callback={updateFeatureEnvironmentCache}
                                     />
                                 </div>
