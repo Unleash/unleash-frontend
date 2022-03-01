@@ -529,15 +529,6 @@ export const routes = [
         layout: 'standalone',
         menu: {},
     },
-    {
-        path: '/test',
-        title: 'reset-password',
-        hidden: true,
-        component: CreateStrategy,
-        type: 'unprotected',
-        layout: 'standalone',
-        menu: {},
-    },
 ];
 
 export const getRoute = path => routes.find(route => route.path === path);
