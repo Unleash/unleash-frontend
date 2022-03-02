@@ -61,7 +61,7 @@ export const FeatureView = () => {
             setShowDelDialog(false);
             projectRefetch();
             history.push(`/projects/${projectId}`);
-        } catch (error) {
+        } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
             setShowDelDialog(false);
         }

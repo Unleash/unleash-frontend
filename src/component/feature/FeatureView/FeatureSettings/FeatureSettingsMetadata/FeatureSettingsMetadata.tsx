@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as jsonpatch from 'fast-json-patch';
 import { TextField } from '@material-ui/core';
 import PermissionButton from '../../../../common/PermissionButton/PermissionButton';
