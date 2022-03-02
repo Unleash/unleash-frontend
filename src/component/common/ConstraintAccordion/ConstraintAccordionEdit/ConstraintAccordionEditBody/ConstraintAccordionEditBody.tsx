@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button, FormControlLabel, Switch } from '@material-ui/core';
+import {
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    FormControlLabel,
+    Switch,
+} from '@material-ui/core';
 import useUnleashContext from '../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from '../../../../../interfaces/strategy';
 import { CANCEL, SAVE } from '../ConstraintAccordionEdit';
@@ -11,6 +17,8 @@ import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 import { formatUnknownError } from 'utils/format-unknown-error';
 import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeader';
+import { useStyles } from '../../ConstraintAccordion.styles';
+import { ConstraintAccordionEditHeader } from '../ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
@@ -20,63 +28,16 @@ interface IConstraintAccordionBody {
     setAction: React.Dispatch<React.SetStateAction<string>>;
     setCaseInsensitive: () => void;
     setInvertedOperator: () => void;
+    input: JSX.Element;
 }
-
-const resolveContextDefinition = (
-    context: any[],
-    contextName: string
-): IUnleashContextDefinition => {
-    const definition = context.find(
-        contextDef => contextDef.name === contextName
-    );
-    return definition;
-};
 
 export const ConstraintAccordionEditBody = ({
     localConstraint,
-    setValues,
-    setValue,
+    input,
     triggerTransition,
-    setCaseInsensitive,
     setInvertedOperator,
     setAction,
 }: IConstraintAccordionBody) => {
-    const { context } = useUnleashContext();
-    const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const [contextDefinition, setContextDefinition] = useState(
-        resolveContextDefinition(context, localConstraint.contextName)
-    );
-    const { validateConstraint } = useFeatureApi();
-
-    const removeValue = useCallback(
-        (index: number) => {
-            const valueCopy = [...localConstraint.values!];
-            valueCopy.splice(index, 1);
-
-            setValues(valueCopy);
-        },
-        [localConstraint, setValues]
-    );
-
-    const { input, validator, setError } = useConstraintInput({
-        contextDefinition,
-        localConstraint,
-        setValue,
-        setValues,
-        setCaseInsensitive,
-        removeValue,
-    });
-
-    useEffect(() => {
-        setError('');
-    }, [localConstraint.contextName, setError]);
-
-    useEffect(() => {
-        setContextDefinition(
-            resolveContextDefinition(context, localConstraint.contextName)
-        );
-    }, [localConstraint.contextName, context]);
-
     const validateConstraintValues = () => {
         if (
             Boolean(localConstraint.values?.length > 0) ||
@@ -89,30 +50,11 @@ export const ConstraintAccordionEditBody = ({
         return false;
     };
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const frontendValidation = validateConstraintValues() && validator();
-
-        if (frontendValidation) {
-            try {
-                await validateConstraint(projectId, featureId, localConstraint);
-
-                setError('');
-                setAction(SAVE);
-                triggerTransition();
-                return;
-            } catch (error: unknown) {
-                setError(formatUnknownError(error));
-            }
-        }
-    };
-
     return (
-        <form onSubmit={onSubmit} style={{ width: '100%' }}>
+        <>
             <div style={{ padding: '1rem' }}>
                 <InvertedOperator
-                    inverted={localConstraint.inverted}
+                    inverted={Boolean(localConstraint.inverted)}
                     setInvertedOperator={setInvertedOperator}
                 />
                 {input}
@@ -132,7 +74,10 @@ export const ConstraintAccordionEditBody = ({
                         type="submit"
                         variant="contained"
                         color="primary"
-                        style={{ marginRight: '0.5rem', minWidth: '125px' }}
+                        style={{
+                            marginRight: '0.5rem',
+                            minWidth: '125px',
+                        }}
                     >
                         Save
                     </Button>
@@ -141,13 +86,16 @@ export const ConstraintAccordionEditBody = ({
                             setAction(CANCEL);
                             triggerTransition();
                         }}
-                        style={{ marginLeft: '0.5rem', minWidth: '125px' }}
+                        style={{
+                            marginLeft: '0.5rem',
+                            minWidth: '125px',
+                        }}
                     >
                         Cancel
                     </Button>
                 </div>
             </div>
-        </form>
+        </>
     );
 };
 

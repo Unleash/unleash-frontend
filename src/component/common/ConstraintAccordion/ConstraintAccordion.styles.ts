@@ -56,6 +56,8 @@ export const useStyles = makeStyles(theme => ({
     headerActions: { marginLeft: 'auto' },
     accordionDetails: {
         borderTop: `1px solid ${theme.palette.grey[300]}`,
+        display: 'flex',
+        flexDirection: 'column',
     },
     valuesContainer: {
         padding: '1rem 0rem',

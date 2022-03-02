@@ -134,6 +134,7 @@ export const useConstraintInput = ({
                     removeValue={removeValue}
                     setValues={setValues}
                     error={error}
+                    setError={setError}
                 />
             );
         } else if (oneOf(stringOperators, localConstraint.operator)) {
@@ -151,6 +152,7 @@ export const useConstraintInput = ({
                         removeValue={removeValue}
                         setValues={setValues}
                         error={error}
+                        setError={setError}
                     />
                 </>
             );

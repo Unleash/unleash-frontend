@@ -1,7 +1,7 @@
 import { Button, Chip, TextField } from '@material-ui/core';
 import Input from 'component/common/Input/Input';
 import { getValueByPointer } from 'fast-json-patch';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface IFreeTextInputProps {
@@ -10,6 +10,7 @@ interface IFreeTextInputProps {
     setValues: (values: string[]) => void;
     beforeValues?: JSX.Element;
     error: string;
+    setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const FreeTextInput = ({
@@ -17,8 +18,10 @@ export const FreeTextInput = ({
     removeValue,
     setValues,
     error,
+    setError,
 }: IFreeTextInputProps) => {
     const [inputValues, setInputValues] = useState('');
+    const [focused, setFocused] = useState(false);
 
     const renderCurrentValues = () => {
         return values.map((value, index) => {
@@ -34,6 +37,11 @@ export const FreeTextInput = ({
     };
 
     const handleAddValues = () => {
+        if (inputValues.length === 0) {
+            setError('values can not be empty');
+            return;
+        }
+
         if (inputValues.includes(',')) {
             const newValues = inputValues
                 .split(',')
@@ -43,6 +51,7 @@ export const FreeTextInput = ({
         } else {
             setValues([...values, inputValues.trim()]);
         }
+
         setInputValues('');
     };
 
@@ -57,6 +66,11 @@ export const FreeTextInput = ({
                         label="Values"
                         name="values"
                         value={inputValues}
+                        onBlur={e => setFocused(false)}
+                        onFocus={() => {
+                            setError('');
+                            setFocused(true);
+                        }}
                         onChange={e => setInputValues(e.target.value)}
                         placeholder="Enter comma separated values here"
                         style={{
