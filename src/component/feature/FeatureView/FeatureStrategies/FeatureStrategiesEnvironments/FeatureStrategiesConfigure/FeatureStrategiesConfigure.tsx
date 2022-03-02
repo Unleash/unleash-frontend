@@ -47,6 +47,7 @@ const FeatureStrategiesConfigure = () => {
         return {
             constraint: {
                 caseInsensitive: false,
+                inverted: false,
                 value: '',
                 values: [],
                 ...cloneDeep(constraint),
@@ -123,7 +124,7 @@ const FeatureStrategiesConfigure = () => {
             setToastApiError(e.message);
         }
     };
-    console.log(localConstraints);
+
     return (
         <div className={styles.container}>
             <ConditionallyRender

@@ -1,4 +1,5 @@
-import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { Checkbox, FormControlLabel, useTheme } from '@material-ui/core';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import { useEffect, useState } from 'react';
 import { ConstraintValueSearch } from '../../../ConstraintValueSearch/ConstraintValueSearch';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
@@ -8,6 +9,7 @@ interface IRestrictiveLegalValuesProps {
     values: string[];
     setValues: (values: string[]) => void;
     beforeValues?: JSX.Element;
+    error: string;
 }
 
 type ValuesMap = { [key: string]: Boolean };
@@ -25,7 +27,9 @@ export const RestrictiveLegalValues = ({
     legalValues,
     values,
     setValues,
+    error,
 }: IRestrictiveLegalValuesProps) => {
+    const theme = useTheme();
     const [filter, setFilter] = useState('');
     const [valuesMap, setValuesMap] = useState(createValuesMap(values));
 
@@ -72,6 +76,19 @@ export const RestrictiveLegalValues = ({
             </ConstraintFormHeader>
             <ConstraintValueSearch filter={filter} setFilter={setFilter} />
             {renderLegalValueInputs()}
+            <ConditionallyRender
+                condition={Boolean(error)}
+                show={
+                    <p
+                        style={{
+                            fontSize: '0.9rem',
+                            color: theme.palette.error.main,
+                        }}
+                    >
+                        {error}
+                    </p>
+                }
+            />
         </>
     );
 };

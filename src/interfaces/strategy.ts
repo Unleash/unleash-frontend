@@ -15,11 +15,13 @@ export interface IStrategy {
 }
 
 export interface IConstraint {
-    values: string[];
+    inverted?: boolean;
+    values?: string[];
     value?: string;
     caseInsensitive?: boolean;
     operator: string;
     contextName: string;
+    [index: string]: unknown;
 }
 
 export interface IParameter {

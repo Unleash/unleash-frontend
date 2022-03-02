@@ -1,4 +1,6 @@
 import React from 'react';
+import semver from 'semver';
+import { constraintDateTypeSchema } from 'validationSchemas/constraints';
 
 export const numberValidatorGenerator = (
     value: any,
@@ -19,7 +21,6 @@ export const stringValidatorGenerator = (
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
-        console.log('Running validation');
         if (!Array.isArray(values)) {
             setError('Values must be a list of strings');
             return false;
@@ -33,8 +34,11 @@ export const semVerValidatorGenerator = (
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
+        if (!semver.valid(value)) {
+            setError('Value is not a valid semver');
+            return false;
+        }
         return true;
-        // Validate semver here
     };
 };
 
@@ -43,7 +47,12 @@ export const dateValidatorGenerator = (
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
+        const validationResult = constraintDateTypeSchema.validate(value);
+
+        if (validationResult.error) {
+            setError('Value must be a valid date matching RFC3339');
+            return false;
+        }
         return true;
-        // Validate date
     };
 };

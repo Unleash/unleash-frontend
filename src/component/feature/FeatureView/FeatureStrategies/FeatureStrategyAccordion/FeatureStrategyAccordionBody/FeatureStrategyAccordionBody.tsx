@@ -232,6 +232,7 @@ const FeatureStrategyAccordionBody: React.FC<
                 values: [],
                 value: '',
                 caseInsensitive: false,
+                inverted: false,
             },
             metadata: {
                 editing: true,

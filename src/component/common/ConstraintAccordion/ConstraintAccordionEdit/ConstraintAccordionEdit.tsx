@@ -9,6 +9,7 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
+import { cleanConstraint } from 'utils/cleanConstraint';
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
     handleCancel: () => void;
@@ -24,7 +25,7 @@ export const ConstraintAccordionEdit = ({
     handleSave,
 }: IConstraintAccordionEditProps) => {
     const [localConstraint, setLocalConstraint] = useState<IConstraint>(
-        cloneDeep(constraint)
+        cleanConstraint(cloneDeep(constraint))
     );
     const [expanded, setExpanded] = useState(false);
     const [action, setAction] = useState('');
@@ -35,6 +36,10 @@ export const ConstraintAccordionEdit = ({
         // animation to take effect and transition the expanded accordion in
         setExpanded(true);
     }, []);
+
+    useEffect(() => {
+        setLocalConstraint(localConstraint => cleanConstraint(localConstraint));
+    }, [localConstraint.operator, localConstraint.contextName]);
 
     const setContextName = (contextName: string) => {
         setLocalConstraint(prev => ({
@@ -63,6 +68,10 @@ export const ConstraintAccordionEdit = ({
 
     const setValue = (value: string) => {
         setLocalConstraint(prev => ({ ...prev, value }));
+    };
+
+    const setInvertedOperator = () => {
+        setLocalConstraint(prev => ({ ...prev, inverted: !prev.inverted }));
     };
 
     const setCaseInsensitive = () => {
@@ -110,6 +119,7 @@ export const ConstraintAccordionEdit = ({
                     setCaseInsensitive={setCaseInsensitive}
                     triggerTransition={triggerTransition}
                     setAction={setAction}
+                    setInvertedOperator={setInvertedOperator}
                 />
             </AccordionDetails>
         </Accordion>

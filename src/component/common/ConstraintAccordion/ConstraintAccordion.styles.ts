@@ -63,4 +63,15 @@ export const useStyles = makeStyles(theme => ({
         overflowY: 'scroll',
     },
     summary: { border: 'none', padding: '0.25rem 1rem' },
+    settingsParagraph: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0.5rem 0',
+    },
+    settingsIcon: {
+        height: '32.5px',
+        width: '32.5px',
+        marginRight: '0.5rem',
+        fill: theme.palette.grey[600],
+    },
 }));

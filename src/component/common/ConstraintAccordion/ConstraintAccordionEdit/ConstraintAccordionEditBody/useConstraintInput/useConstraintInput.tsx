@@ -7,7 +7,7 @@ import {
 } from 'constants/operators';
 import { IUnleashContextDefinition } from 'interfaces/context';
 import { IConstraint } from 'interfaces/strategy';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { exists } from 'utils/exists';
 import { oneOf } from 'utils/one-of';
 import { CaseInsensitive } from '../CaseInsensitive/CaseInsensitive';
@@ -35,6 +35,7 @@ interface IUseConstraintInputProps {
 interface IUseConstraintOutput {
     input: JSX.Element;
     validator: () => void;
+    setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const useConstraintInput = ({
@@ -59,8 +60,9 @@ export const useConstraintInput = ({
             setInput(
                 <RestrictiveLegalValues
                     legalValues={contextDefinition.legalValues || []}
-                    values={localConstraint.values}
+                    values={localConstraint.values || []}
                     setValues={setValues}
+                    error={error}
                 />
             );
         } else if (
@@ -77,8 +79,9 @@ export const useConstraintInput = ({
                     />
                     <RestrictiveLegalValues
                         legalValues={contextDefinition.legalValues || []}
-                        values={localConstraint.values}
+                        values={localConstraint.values || []}
                         setValues={setValues}
+                        error={error}
                     />
                 </>
             );
@@ -97,6 +100,7 @@ export const useConstraintInput = ({
                                 (value: string) => Number(value)
                             ) || []
                         }
+                        error={error}
                     />
                 </>
             );
@@ -111,6 +115,7 @@ export const useConstraintInput = ({
                         value={localConstraint.value}
                         type="semver"
                         legalValues={contextDefinition.legalValues || []}
+                        error={error}
                     />
                 </>
             );
@@ -119,14 +124,16 @@ export const useConstraintInput = ({
                 <DateSingleValue
                     value={localConstraint.value}
                     setValue={setValue}
+                    error={error}
                 />
             );
         } else if (oneOf(inOperators, localConstraint.operator)) {
             setInput(
                 <FreeTextInput
-                    values={localConstraint.values}
+                    values={localConstraint.values || []}
                     removeValue={removeValue}
                     setValues={setValues}
+                    error={error}
                 />
             );
         } else if (oneOf(stringOperators, localConstraint.operator)) {
@@ -140,9 +147,10 @@ export const useConstraintInput = ({
                         )}
                     />
                     <FreeTextInput
-                        values={localConstraint.values}
+                        values={localConstraint.values || []}
                         removeValue={removeValue}
                         setValues={setValues}
+                        error={error}
                     />
                 </>
             );
@@ -185,7 +193,10 @@ export const useConstraintInput = ({
 
             if (oneOf([...stringOperators, ...inOperators], operator)) {
                 setValidator(() =>
-                    stringValidatorGenerator(localConstraint.values, setError)
+                    stringValidatorGenerator(
+                        localConstraint.values || [],
+                        setError
+                    )
                 );
             }
 
@@ -223,5 +234,5 @@ export const useConstraintInput = ({
         resolveInputType();
     }, [contextDefinition, localConstraint, resolveInputType]);
 
-    return { input, validator };
+    return { input, validator, setError };
 };

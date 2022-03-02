@@ -1,4 +1,10 @@
 import { Chip, FormControlLabel, Switch } from '@material-ui/core';
+import {
+    ImportExport,
+    ImportExportOutlined,
+    TextFormat,
+    TextFormatOutlined,
+} from '@material-ui/icons';
 import { useState } from 'react';
 import { stringOperators } from '../../../../../constants/operators';
 
@@ -41,18 +47,22 @@ export const ConstraintAccordionViewBody = ({
             <ConditionallyRender
                 condition={oneOf(stringOperators, constraint.operator)}
                 show={
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                disabled
-                                checked={constraint.caseInsensitive}
-                                color="primary"
-                            />
-                        }
-                        label={'Case insensitive'}
-                    />
+                    <p className={styles.settingsParagraph}>
+                        <TextFormatOutlined className={styles.settingsIcon} />{' '}
+                        {constraint.caseInsensitive
+                            ? 'Case insensitive setting is active'
+                            : 'Case insensitive setting is not active'}
+                    </p>
                 }
             />
+
+            <p className={styles.settingsParagraph}>
+                <ImportExportOutlined className={styles.settingsIcon} />{' '}
+                {constraint.inverted
+                    ? 'Operator is inverted'
+                    : 'Operator is not inverted'}
+            </p>
+
             <ConditionallyRender
                 condition={Boolean(constraint?.values?.length)}
                 show={

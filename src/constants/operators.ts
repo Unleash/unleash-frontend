@@ -37,3 +37,11 @@ export const inOperators = [IN, NOT_IN];
 export const numOperators = [NUM_EQ, NUM_GT, NUM_GTE, NUM_LT, NUM_LTE];
 export const dateOperators = [DATE_AFTER, DATE_BEFORE];
 export const semVerOperators = [SEMVER_EQ, SEMVER_GT, SEMVER_LT];
+
+export const singleValueOperators = [
+    ...semVerOperators,
+    ...dateOperators,
+    ...numOperators,
+];
+
+export const multipleValueOperators = [...stringOperators, ...inOperators];

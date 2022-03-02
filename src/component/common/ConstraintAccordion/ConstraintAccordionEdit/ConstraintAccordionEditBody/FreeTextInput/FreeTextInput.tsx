@@ -1,4 +1,5 @@
 import { Button, Chip, TextField } from '@material-ui/core';
+import Input from 'component/common/Input/Input';
 import { getValueByPointer } from 'fast-json-patch';
 import { useState } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
@@ -8,12 +9,14 @@ interface IFreeTextInputProps {
     removeValue: (index: number) => void;
     setValues: (values: string[]) => void;
     beforeValues?: JSX.Element;
+    error: string;
 }
 
 export const FreeTextInput = ({
     values,
     removeValue,
     setValues,
+    error,
 }: IFreeTextInputProps) => {
     const [inputValues, setInputValues] = useState('');
 
@@ -46,11 +49,11 @@ export const FreeTextInput = ({
     return (
         <div>
             <ConstraintFormHeader style={{ marginBottom: 0 }}>
-                Set any number of values
+                Set values (maximum 100)
             </ConstraintFormHeader>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ minWidth: '300px' }}>
-                    <TextField
+                    <Input
                         label="Values"
                         name="values"
                         value={inputValues}
@@ -60,8 +63,8 @@ export const FreeTextInput = ({
                             width: '100%',
                             margin: '1rem 0',
                         }}
-                        variant="outlined"
-                        size="small"
+                        error={Boolean(error)}
+                        errorText={error}
                     />
                 </div>
                 <Button

@@ -41,7 +41,11 @@ export const ConstraintAccordionEditHeader = ({
     const styles = useStyles();
     const { context } = useUnleashContext();
 
-    /* Write comment if this works */
+    /* We need a special case to handle the currenTime context field. Since
+    this field will be the only one to allow DATE_BEFORE and DATE_AFTER operators
+    this will check if the context field is the current time context field AND check
+    if it is not already using one of the date operators (to not overwrite if there is existing
+    data). */
     useEffect(() => {
         if (
             localConstraint.contextName === CURRENT_TIME_CONTEXT_FIELD &&

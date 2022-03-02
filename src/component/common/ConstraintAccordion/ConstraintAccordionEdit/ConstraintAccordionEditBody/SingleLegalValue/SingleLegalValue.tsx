@@ -9,12 +9,14 @@ import {
 } from '@material-ui/core';
 import { ConstraintValueSearch } from '../../../ConstraintValueSearch/ConstraintValueSearch';
 import ConditionallyRender from '../../../../ConditionallyRender';
+import { useTheme } from '@material-ui/core/styles';
 
 interface ISingleLegalValueProps {
     setValue: (value: string) => void;
     value?: string;
     type: string;
     legalValues: string[];
+    error: string;
 }
 
 export const SingleLegalValue = ({
@@ -22,7 +24,9 @@ export const SingleLegalValue = ({
     value,
     type,
     legalValues,
+    error,
 }: ISingleLegalValueProps) => {
+    const theme = useTheme();
     const [filter, setFilter] = useState('');
     const renderRadioButtons = () => {
         return legalValues
@@ -65,6 +69,19 @@ export const SingleLegalValue = ({
                 }
                 elseShow={
                     <p>No valid legal values available for this operator.</p>
+                }
+            />
+            <ConditionallyRender
+                condition={Boolean(error)}
+                show={
+                    <p
+                        style={{
+                            fontSize: '0.9rem',
+                            color: theme.palette.error.main,
+                        }}
+                    >
+                        {error}
+                    </p>
                 }
             />
         </>

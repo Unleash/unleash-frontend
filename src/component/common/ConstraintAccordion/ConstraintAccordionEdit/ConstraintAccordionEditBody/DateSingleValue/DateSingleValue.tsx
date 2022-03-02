@@ -1,13 +1,18 @@
-import { TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 import { format } from 'date-fns';
+import Input from 'component/common/Input/Input';
 interface IDateSingleValueProps {
     setValue: (value: string) => void;
     value?: string;
+    error: string;
 }
 
-export const DateSingleValue = ({ setValue, value }: IDateSingleValueProps) => {
+export const DateSingleValue = ({
+    setValue,
+    value,
+    error,
+}: IDateSingleValueProps) => {
     const parseValue = (value?: string) => {
         if (!value) return;
         const date = new Date(value);
@@ -18,24 +23,24 @@ export const DateSingleValue = ({ setValue, value }: IDateSingleValueProps) => {
         if (!value) {
             setValue(new Date().toISOString());
         }
-    }, []);
+    }, [value, setValue]);
 
     return (
         <>
             <ConstraintFormHeader>Select a date</ConstraintFormHeader>
-            <TextField
+            <Input
                 id="date"
                 label="Date"
                 type="datetime-local"
-                value={parseValue(value)}
-                variant="outlined"
-                size="small"
+                value={parseValue(value) || ''}
                 onChange={e => {
                     setValue(new Date(e.target.value).toISOString());
                 }}
                 InputLabelProps={{
                     shrink: true,
                 }}
+                error={Boolean(error)}
+                errorText={error}
             />
         </>
     );
