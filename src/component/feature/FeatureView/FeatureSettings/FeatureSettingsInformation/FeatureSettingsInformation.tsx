@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import useFeature from '../../../../../hooks/api/getters/useFeature/useFeature';
 import PermissionIconButton from '../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from '../../../../providers/AccessProvider/permissions';
+import { useStyles } from './FeatureSettingsInformation.style';
 
 interface IFeatureSettingsInformationProps {
     projectId: string;
@@ -14,6 +15,7 @@ export const FeatureSettingsInformation = ({
     projectId,
     featureId,
 }: IFeatureSettingsInformationProps) => {
+    const styles = useStyles();
     const { feature } = useFeature(projectId, featureId);
     const history = useHistory();
 
@@ -23,8 +25,8 @@ export const FeatureSettingsInformation = ({
 
     return (
         <>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h5" component="div">
+            <div className={styles.container}>
+                <Typography className={styles.header}>
                     Feature information
                 </Typography>
                 <PermissionIconButton
@@ -38,23 +40,23 @@ export const FeatureSettingsInformation = ({
                 </PermissionIconButton>
             </div>
             <Typography>
-                Name:&nbsp;<strong>{feature?.name}</strong>
+                Name: <strong>{feature.name}</strong>
             </Typography>
             <Typography>
-                Description:&nbsp;
+                Description:{' '}
                 <strong>
-                    {feature?.description.length === 0
+                    {feature.description.length === 0
                         ? 'no description'
-                        : feature?.description}
+                        : feature.description}
                 </strong>
             </Typography>
             <Typography>
-                Type:&nbsp;<strong>{feature?.type}</strong>
+                Type: <strong>{feature.type}</strong>
             </Typography>
             <Typography>
-                Impression Data:&nbsp;
+                Impression Data:{' '}
                 <strong>
-                    {feature?.impressionData ? 'enabled' : 'disabled'}
+                    {feature.impressionData ? 'enabled' : 'disabled'}
                 </strong>
             </Typography>
         </>
