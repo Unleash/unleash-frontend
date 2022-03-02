@@ -61,7 +61,6 @@ export const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
-    const [code, setCode] = useState('');
 
     const isJSON = (input: string): boolean => {
         try {
@@ -390,20 +389,26 @@ export const AddVariant = ({
                         <ConditionallyRender
                             condition={payload.type === 'json'}
                             show={
-                                <CodeEditor
-                                    value={code}
-                                    language="json"
-                                    placeholder="Please enter JSON payload."
-                                    onChange={e => setCode(e.target.value)}
-                                    padding={15}
-                                    style={{
-                                        fontSize: 12,
-                                        backgroundColor: '#f5f5f5',
-                                        fontFamily:
-                                            'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                                        minHeight: 5,
-                                    }}
-                                />
+                                <>
+                                    <p style={{ color: 'red' }}>
+                                        {error.payload || ''}
+                                    </p>
+                                    <CodeEditor
+                                        name="value"
+                                        value={payload.value}
+                                        language="json"
+                                        placeholder="Please enter JSON payload."
+                                        onChange={onPayload}
+                                        padding={15}
+                                        style={{
+                                            fontSize: 12,
+                                            backgroundColor: '#f5f5f5',
+                                            fontFamily:
+                                                'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                            minHeight: 5,
+                                        }}
+                                    />
+                                </>
                             }
                             elseShow={
                                 <TextField
