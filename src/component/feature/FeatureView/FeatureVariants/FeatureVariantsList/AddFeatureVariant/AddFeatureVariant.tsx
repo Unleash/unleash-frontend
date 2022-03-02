@@ -9,24 +9,19 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
-
 import { weightTypes } from './enums';
-
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
-import ConditionallyRender from '../../../../../common/ConditionallyRender';
-import GeneralSelect from '../../../../../common/GeneralSelect/GeneralSelect';
-import { useCommonStyles } from '../../../../../../common.styles';
-import Dialogue from '../../../../../common/Dialogue';
-import { modalStyles, trim } from '../../../../../common/util';
-import PermissionSwitch from '../../../../../common/PermissionSwitch/PermissionSwitch';
-import { UPDATE_FEATURE_VARIANTS } from '../../../../../providers/AccessProvider/permissions';
-import useFeature from '../../../../../../hooks/api/getters/useFeature/useFeature';
+import ConditionallyRender from 'component/common/ConditionallyRender';
+import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
+import { useCommonStyles } from 'common.styles';
+import Dialogue from 'component/common/Dialogue';
+import { modalStyles, trim } from 'component/common/util';
+import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
+import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
+import useFeature from 'hooks/api/getters/useFeature/useFeature';
 import { useParams } from 'react-router-dom';
-import { IFeatureViewParams } from '../../../../../../interfaces/params';
-import {
-    IFeatureVariant,
-    IOverride,
-} from '../../../../../../interfaces/featureToggle';
+import { IFeatureViewParams } from 'interfaces/params';
+import { IFeatureVariant, IOverride } from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
@@ -49,7 +44,7 @@ interface IAddVariantProps {
     editing: boolean;
 }
 
-const AddVariant = ({
+export const AddVariant = ({
     showDialog,
     closeDialog,
     save,
@@ -67,15 +62,17 @@ const AddVariant = ({
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
-    const [code, setCode] = useState('');
 
-    const isJSON = () => {
+    const isJSON = (input: string): boolean => {
         try {
-            let parsedString = JSON.parse(code);
-            if (parsedString && typeof parsedString === 'object') {
-                return true;
-            }
-        } catch (e) {
+            JSON.parse(input);
+            return true;
+        } catch (e: unknown) {
+            setError({
+                payload: `The payload is not a valid JSON format: ${e
+                    .toString()
+                    .slice(24)}`,
+            });
             return false;
         }
     };
@@ -153,9 +150,7 @@ const AddVariant = ({
             return;
         }
 
-        if (payload.type === 'json' && !isJSON()) {
-            setError({ payload: 'The payload is not a valid JSON format' });
-            alert('The payload is not a valid JSON format')
+        if (payload.type === 'json' && !isJSON(payload.value)) {
             return;
         }
 
@@ -388,20 +383,26 @@ const AddVariant = ({
                         <ConditionallyRender
                             condition={payload.type === 'json'}
                             show={
-                                <CodeEditor
-                                    value={code}
-                                    language="json"
-                                    placeholder="Please enter JSON payload."
-                                    onChange={e => setCode(e.target.value)}
-                                    padding={15}
-                                    style={{
-                                        fontSize: 12,
-                                        backgroundColor: '#f5f5f5',
-                                        fontFamily:
-                                            'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                                        minHeight: 5,
-                                    }}
-                                />
+                                <>
+                                    <p style={{ color: 'red' }}>
+                                        {error.payload || ''}
+                                    </p>
+                                    <CodeEditor
+                                        name="value"
+                                        value={payload.value}
+                                        language="json"
+                                        placeholder="Please enter JSON payload."
+                                        onChange={onPayload}
+                                        padding={15}
+                                        style={{
+                                            fontSize: 12,
+                                            backgroundColor: '#f5f5f5',
+                                            fontFamily:
+                                                'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                            minHeight: 5,
+                                        }}
+                                    />
+                                </>
                             }
                             elseShow={
                                 <TextField
@@ -456,5 +457,3 @@ const AddVariant = ({
         </Dialogue>
     );
 };
-
-export default AddVariant;
