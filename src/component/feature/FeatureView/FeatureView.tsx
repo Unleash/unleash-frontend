@@ -18,6 +18,7 @@ import PermissionIconButton from '../../common/PermissionIconButton/PermissionIc
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
+import FeatureStrategies2 from './FeatureStrategies2/FeatureStrategies2';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
@@ -132,6 +133,14 @@ const FeatureView = () => {
         );
     };
 
+    // TEMPORARY UNTIL WE ROLLED OUT FULLY
+    const resolveFeatureStrategies = () => {
+        if (uiConfig.flags.CO) {
+            return FeatureStrategies2;
+        }
+        return FeatureStrategies;
+    };
+
     return (
         <ConditionallyRender
             condition={error === undefined}
@@ -211,7 +220,7 @@ const FeatureView = () => {
                     />
                     <Route
                         path={`/projects/:projectId/features/:featureId/strategies`}
-                        component={FeatureStrategies}
+                        component={resolveFeatureStrategies()}
                     />
                     <Route
                         path={`/projects/:projectId/features/:featureId/metrics`}
