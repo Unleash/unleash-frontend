@@ -21,6 +21,9 @@ export const useStyles = makeStyles(theme => ({
         borderRadius: '5px',
         margin: '1rem 0',
         backgroundColor: '#fff',
+        ['&:before']: {
+            height: 0,
+        },
     },
     operator: {
         border: `1px solid ${theme.palette.secondary.main}`,
@@ -75,5 +78,8 @@ export const useStyles = makeStyles(theme => ({
         width: '32.5px',
         marginRight: '0.5rem',
         fill: theme.palette.grey[600],
+    },
+    singleValueText: {
+        marginRight: '0.75rem',
     },
 }));

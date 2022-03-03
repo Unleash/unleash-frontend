@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -8,7 +9,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const ConstraintFormHeader: React.FC = ({ children, ...rest }) => {
+export const ConstraintFormHeader: React.FC<
+    React.HTMLAttributes<HTMLDivElement>
+> = ({ children, ...rest }) => {
     const styles = useStyles();
     return (
         <h3 className={styles.header} {...rest}>

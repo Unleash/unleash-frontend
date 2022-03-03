@@ -1,7 +1,6 @@
-import { Button, Chip, TextField } from '@material-ui/core';
+import { Button, Chip, makeStyles } from '@material-ui/core';
 import Input from 'component/common/Input/Input';
-import { getValueByPointer } from 'fast-json-patch';
-import React, { useState } from 'react';
+import React, { DetailedHTMLProps, useState } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface IFreeTextInputProps {
@@ -13,6 +12,18 @@ interface IFreeTextInputProps {
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const useStyles = makeStyles(() => ({
+    valueChip: { margin: '0 0.5rem 0.5rem 0' },
+    inputContainer: { display: 'flex', alignItems: 'center' },
+    inputInnerContainer: { minWidth: '300px' },
+    input: {
+        width: '100%',
+        margin: '1rem 0',
+    },
+    button: { marginLeft: '1rem' },
+    valuesContainer: { marginTop: '1rem' },
+}));
+
 export const FreeTextInput = ({
     values,
     removeValue,
@@ -21,26 +32,14 @@ export const FreeTextInput = ({
     setError,
 }: IFreeTextInputProps) => {
     const [inputValues, setInputValues] = useState('');
-    const [focused, setFocused] = useState(false);
+    const styles = useStyles();
 
-    const renderCurrentValues = () => {
-        return values.map((value, index) => {
-            return (
-                <Chip
-                    label={value}
-                    key={value}
-                    onDelete={() => removeValue(index)}
-                    style={{ margin: '0 0.5rem 0.5rem 0' }}
-                />
-            );
-        });
-    };
-
-    const handleAddValues = () => {
+    const addValues = () => {
         if (inputValues.length === 0) {
             setError('values can not be empty');
             return;
         }
+        setError('');
 
         if (inputValues.includes(',')) {
             const newValues = inputValues
@@ -60,37 +59,59 @@ export const FreeTextInput = ({
             <ConstraintFormHeader style={{ marginBottom: 0 }}>
                 Set values (maximum 100)
             </ConstraintFormHeader>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ minWidth: '300px' }}>
+            <div className={styles.inputContainer}>
+                <div className={styles.inputInnerContainer}>
                     <Input
                         label="Values"
                         name="values"
                         value={inputValues}
-                        onBlur={e => setFocused(false)}
                         onFocus={() => {
                             setError('');
-                            setFocused(true);
                         }}
                         onChange={e => setInputValues(e.target.value)}
                         placeholder="Enter comma separated values here"
-                        style={{
-                            width: '100%',
-                            margin: '1rem 0',
-                        }}
+                        className={styles.input}
                         error={Boolean(error)}
                         errorText={error}
                     />
                 </div>
                 <Button
-                    style={{ marginLeft: '1rem' }}
+                    className={styles.button}
                     variant="contained"
                     color="primary"
-                    onClick={() => handleAddValues()}
+                    onClick={() => addValues()}
                 >
                     Add values
                 </Button>
             </div>
-            <div style={{ marginTop: '1rem' }}>{renderCurrentValues()}</div>
+            <div className={styles.valuesContainer}>
+                <Values values={values} removeValue={removeValue} />
+            </div>
         </div>
+    );
+};
+
+interface IValuesProps {
+    values: string[];
+    removeValue: (index: number) => void;
+}
+
+const Values = ({ values, removeValue }: IValuesProps) => {
+    const styles = useStyles();
+    return (
+        <>
+            {values.map((value, index) => {
+                // Key is not ideal, but we don't have anything guaranteed to
+                // be unique here.
+                return (
+                    <Chip
+                        label={value}
+                        key={`${value}-${index}`}
+                        onDelete={() => removeValue(index)}
+                        className={styles.valueChip}
+                    />
+                );
+            })}
+        </>
     );
 };

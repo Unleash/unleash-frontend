@@ -49,7 +49,7 @@ export const ConstraintAccordionView = ({
                 />
             </AccordionSummary>
             <ConditionallyRender
-                condition={!nonExpandable}
+                condition={true}
                 show={
                     <AccordionDetails className={styles.accordionDetails}>
                         <ConstraintAccordionViewBody constraint={constraint} />

@@ -63,6 +63,7 @@ export const useConstraintInput = ({
                     values={localConstraint.values || []}
                     setValues={setValues}
                     error={error}
+                    setError={setError}
                 />
             );
         } else if (
@@ -82,6 +83,7 @@ export const useConstraintInput = ({
                         values={localConstraint.values || []}
                         setValues={setValues}
                         error={error}
+                        setError={setError}
                     />
                 </>
             );
@@ -101,6 +103,7 @@ export const useConstraintInput = ({
                             ) || []
                         }
                         error={error}
+                        setError={setError}
                     />
                 </>
             );
@@ -116,6 +119,7 @@ export const useConstraintInput = ({
                         type="semver"
                         legalValues={contextDefinition.legalValues || []}
                         error={error}
+                        setError={setError}
                     />
                 </>
             );
@@ -125,6 +129,7 @@ export const useConstraintInput = ({
                     value={localConstraint.value}
                     setValue={setValue}
                     error={error}
+                    setError={setError}
                 />
             );
         } else if (oneOf(inOperators, localConstraint.operator)) {
@@ -163,6 +168,7 @@ export const useConstraintInput = ({
                     value={localConstraint.value}
                     type="number"
                     error={error}
+                    setError={setError}
                 />
             );
         } else if (oneOf(semVerOperators, localConstraint.operator)) {
@@ -172,6 +178,7 @@ export const useConstraintInput = ({
                     value={localConstraint.value}
                     type="semver"
                     error={error}
+                    setError={setError}
                 />
             );
         }

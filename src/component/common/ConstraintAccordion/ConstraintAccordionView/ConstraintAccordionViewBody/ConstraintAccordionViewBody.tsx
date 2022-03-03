@@ -1,13 +1,8 @@
-import { Chip, FormControlLabel, Switch } from '@material-ui/core';
-import {
-    ImportExport,
-    ImportExportOutlined,
-    TextFormat,
-    TextFormatOutlined,
-} from '@material-ui/icons';
+import { Chip } from '@material-ui/core';
+import { ImportExportOutlined, TextFormatOutlined } from '@material-ui/icons';
+import { useCommonStyles } from 'common.styles';
 import { useState } from 'react';
 import { stringOperators } from '../../../../../constants/operators';
-
 import { IConstraint } from '../../../../../interfaces/strategy';
 import { oneOf } from '../../../../../utils/one-of';
 import ConditionallyRender from '../../../ConditionallyRender';
@@ -21,26 +16,7 @@ interface IConstraintAccordionViewBodyProps {
 export const ConstraintAccordionViewBody = ({
     constraint,
 }: IConstraintAccordionViewBodyProps) => {
-    const [filter, setFilter] = useState('');
     const styles = useStyles();
-
-    const renderConstraintValues = () => {
-        return constraint?.values
-            ?.filter(value => value.includes(filter))
-            .map((value, index) => (
-                <Chip
-                    key={`${value}-${index}`}
-                    label={value}
-                    className={styles.chip}
-                />
-            ));
-    };
-
-    const renderSingleValue = () => {
-        if (!Boolean(constraint.value)) return null;
-
-        return <Chip label={constraint.value} className={styles.chip} />;
-    };
 
     return (
         <div>
@@ -63,20 +39,57 @@ export const ConstraintAccordionViewBody = ({
                     : 'Operator is not inverted'}
             </p>
 
-            <ConditionallyRender
-                condition={Boolean(constraint?.values?.length)}
-                show={
-                    <ConstraintValueSearch
-                        filter={filter}
-                        setFilter={setFilter}
-                    />
-                }
-            />
-
             <div className={styles.valuesContainer}>
-                {renderConstraintValues()}
-                {renderSingleValue()}
+                <MultipleValues values={constraint.values} />
+                <SingleValue
+                    value={constraint.value}
+                    operator={constraint.operator}
+                />
             </div>
         </div>
+    );
+};
+
+interface ISingleValueProps {
+    value: string | undefined;
+    operator: string;
+}
+
+const SingleValue = ({ value, operator }: ISingleValueProps) => {
+    const styles = useStyles();
+    const commonStyles = useCommonStyles();
+    if (!value) return null;
+
+    return (
+        <div className={commonStyles.flexRow}>
+            <p className={styles.singleValueText}>Value must {operator}</p>{' '}
+            <Chip label={value} className={styles.chip} />
+        </div>
+    );
+};
+
+interface IMultipleValuesProps {
+    values: string[] | undefined;
+}
+
+const MultipleValues = ({ values }: IMultipleValuesProps) => {
+    const [filter, setFilter] = useState('');
+    const styles = useStyles();
+
+    if (!values || values.length === 0) return null;
+
+    return (
+        <>
+            <ConstraintValueSearch filter={filter} setFilter={setFilter} />
+            {values
+                .filter(value => value.includes(filter))
+                .map((value, index) => (
+                    <Chip
+                        key={`${value}-${index}`}
+                        label={value}
+                        className={styles.chip}
+                    />
+                ))}
+        </>
     );
 };

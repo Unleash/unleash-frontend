@@ -175,26 +175,15 @@ const FeatureStrategyAccordionBody: React.FC<
         }
         return localConstraints.map((localConstraint, index) => {
             return (
-                <>
-                    <ConstraintAccordion
-                        constraint={localConstraint.constraint}
-                        editing={localConstraint.metadata.editing}
-                        handleSave={handleSave(index)}
-                        handleEdit={() => handleEdit(index)}
-                        handleDelete={() => handleDelete(index)}
-                        handleCancel={() => handleCancel(index)}
-                    />
-                    {/* <Constraint
-                        constraint={constraint}
-                        editCallback={() => {
-                            setShowConstraints(true);
-                        }}
-                        deleteCallback={() => {
-                            removeConstraint(index);
-                        }}
-                        key={`${constraint.contextName}-${index}`}
-                    /> */}
-                </>
+                <ConstraintAccordion
+                    key={`${localConstraint.constraint.contextName}-${index}`}
+                    constraint={localConstraint.constraint}
+                    editing={localConstraint.metadata.editing}
+                    handleSave={handleSave(index)}
+                    handleEdit={() => handleEdit(index)}
+                    handleDelete={() => handleDelete(index)}
+                    handleCancel={() => handleCancel(index)}
+                />
             );
         });
     };

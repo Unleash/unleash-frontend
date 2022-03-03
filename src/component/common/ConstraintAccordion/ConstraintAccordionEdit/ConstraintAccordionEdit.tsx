@@ -123,10 +123,12 @@ export const ConstraintAccordionEdit = ({
     };
 
     const validateConstraintValues = () => {
-        if (
-            Boolean(localConstraint.values?.length > 0) ||
-            Boolean(localConstraint.value)
-        ) {
+        const hasValues =
+            Array.isArray(localConstraint.values) &&
+            Boolean(localConstraint.values.length > 0);
+        const hasValue = Boolean(localConstraint.value);
+
+        if (hasValues || hasValue) {
             setError('');
             return true;
         }

@@ -1,24 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    FormControlLabel,
-    Switch,
-} from '@material-ui/core';
-import useUnleashContext from '../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
+import { Button, FormControlLabel, Switch } from '@material-ui/core';
 import { IConstraint } from '../../../../../interfaces/strategy';
-import { CANCEL, SAVE } from '../ConstraintAccordionEdit';
+import { CANCEL } from '../ConstraintAccordionEdit';
 
-import { IUnleashContextDefinition } from 'interfaces/context';
-import { useConstraintInput } from './useConstraintInput/useConstraintInput';
-import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
-import { useParams } from 'react-router-dom';
-import { IFeatureViewParams } from 'interfaces/params';
-import { formatUnknownError } from 'utils/format-unknown-error';
 import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeader';
-import { useStyles } from '../../ConstraintAccordion.styles';
-import { ConstraintAccordionEditHeader } from '../ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
+import { useStyles } from './ConstraintAccordionEditBody.styles';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
@@ -38,46 +23,24 @@ export const ConstraintAccordionEditBody = ({
     setInvertedOperator,
     setAction,
 }: IConstraintAccordionBody) => {
-    const validateConstraintValues = () => {
-        if (
-            Boolean(localConstraint.values?.length > 0) ||
-            Boolean(localConstraint.value)
-        ) {
-            setError('');
-            return true;
-        }
-        setError('You must provide a value for the constraint');
-        return false;
-    };
+    const styles = useStyles();
 
     return (
         <>
-            <div style={{ padding: '1rem' }}>
+            <div className={styles.inputContainer}>
                 <InvertedOperator
                     inverted={Boolean(localConstraint.inverted)}
                     setInvertedOperator={setInvertedOperator}
                 />
                 {input}
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginTop: '1rem',
-                    borderTop: '1px solid #e0e0e0',
-                    width: '100%',
-                    padding: '1rem',
-                }}
-            >
-                <div style={{ marginLeft: 'auto' }}>
+            <div className={styles.buttonContainer}>
+                <div className={styles.innerButtonContainer}>
                     <Button
                         type="submit"
                         variant="contained"
                         color="primary"
-                        style={{
-                            marginRight: '0.5rem',
-                            minWidth: '125px',
-                        }}
+                        className={styles.leftButton}
                     >
                         Save
                     </Button>
@@ -86,10 +49,7 @@ export const ConstraintAccordionEditBody = ({
                             setAction(CANCEL);
                             triggerTransition();
                         }}
-                        style={{
-                            marginLeft: '0.5rem',
-                            minWidth: '125px',
-                        }}
+                        className={styles.rightButton}
                     >
                         Cancel
                     </Button>
@@ -104,7 +64,7 @@ interface IInvertedOperatorProps {
     setInvertedOperator: () => void;
 }
 
-export const InvertedOperator = ({
+const InvertedOperator = ({
     inverted,
     setInvertedOperator,
 }: IInvertedOperatorProps) => {

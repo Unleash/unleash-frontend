@@ -6,12 +6,14 @@ interface IDateSingleValueProps {
     setValue: (value: string) => void;
     value?: string;
     error: string;
+    setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const DateSingleValue = ({
     setValue,
     value,
     error,
+    setError,
 }: IDateSingleValueProps) => {
     const parseValue = (value?: string) => {
         if (!value) return;
@@ -34,6 +36,7 @@ export const DateSingleValue = ({
                 type="datetime-local"
                 value={parseValue(value) || ''}
                 onChange={e => {
+                    setError('');
                     setValue(new Date(e.target.value).toISOString());
                 }}
                 InputLabelProps={{

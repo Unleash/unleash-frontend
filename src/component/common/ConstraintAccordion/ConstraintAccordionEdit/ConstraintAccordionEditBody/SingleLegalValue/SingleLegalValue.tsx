@@ -9,7 +9,9 @@ import {
 } from '@material-ui/core';
 import { ConstraintValueSearch } from '../../../ConstraintValueSearch/ConstraintValueSearch';
 import ConditionallyRender from '../../../../ConditionallyRender';
-import { useTheme } from '@material-ui/core/styles';
+import { useCommonStyles } from 'common.styles';
+
+// Parent component
 
 interface ISingleLegalValueProps {
     setValue: (value: string) => void;
@@ -17,6 +19,7 @@ interface ISingleLegalValueProps {
     type: string;
     legalValues: string[];
     error: string;
+    setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const SingleLegalValue = ({
@@ -25,23 +28,10 @@ export const SingleLegalValue = ({
     type,
     legalValues,
     error,
+    setError,
 }: ISingleLegalValueProps) => {
-    const theme = useTheme();
     const [filter, setFilter] = useState('');
-    const renderRadioButtons = () => {
-        return legalValues
-            .filter(legalValue => legalValue.includes(filter))
-            .map((value, index) => {
-                return (
-                    <FormControlLabel
-                        key={`${value}-${index}`}
-                        value={value}
-                        control={<Radio />}
-                        label={value}
-                    />
-                );
-            });
-    };
+    const styles = useCommonStyles();
 
     return (
         <>
@@ -61,9 +51,15 @@ export const SingleLegalValue = ({
                             aria-label="selected-value"
                             name="selected"
                             value={value}
-                            onChange={e => setValue(e.target.value)}
+                            onChange={e => {
+                                setError('');
+                                setValue(e.target.value);
+                            }}
                         >
-                            {renderRadioButtons()}
+                            <RadioOptions
+                                legalValues={legalValues}
+                                filter={filter}
+                            />
                         </RadioGroup>
                     </FormControl>
                 }
@@ -73,17 +69,33 @@ export const SingleLegalValue = ({
             />
             <ConditionallyRender
                 condition={Boolean(error)}
-                show={
-                    <p
-                        style={{
-                            fontSize: '0.9rem',
-                            color: theme.palette.error.main,
-                        }}
-                    >
-                        {error}
-                    </p>
-                }
+                show={<p className={styles.error}>{error}</p>}
             />
+        </>
+    );
+};
+
+// Child components
+interface IRadioOptionsProps {
+    legalValues: string[];
+    filter: string;
+}
+
+const RadioOptions = ({ legalValues, filter }: IRadioOptionsProps) => {
+    return (
+        <>
+            {legalValues
+                .filter(legalValue => legalValue.includes(filter))
+                .map((value, index) => {
+                    return (
+                        <FormControlLabel
+                            key={`${value}-${index}`}
+                            value={value}
+                            control={<Radio />}
+                            label={value}
+                        />
+                    );
+                })}
         </>
     );
 };
