@@ -16,11 +16,12 @@ import { SAVE } from '../ConstraintAccordionEdit';
 import { resolveText } from './helpers';
 import { oneOf } from 'utils/one-of';
 import { useEffect } from 'react';
+import { Operator } from 'constants/operators';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
     setContextName: (contextName: string) => void;
-    setOperator: (operator: string) => void;
+    setOperator: (operator: Operator) => void;
     setLocalConstraint: React.Dispatch<React.SetStateAction<IConstraint>>;
     action: string;
     compact: boolean;
@@ -100,7 +101,7 @@ export const ConstraintAccordionEditHeader = ({
             value: unknown;
         }>
     ) => {
-        const operator = event.target.value as string;
+        const operator = event.target.value as Operator;
         if (oneOf(dateOperators, operator)) {
             setLocalConstraint(prev => ({
                 ...prev,
@@ -108,7 +109,7 @@ export const ConstraintAccordionEditHeader = ({
                 value: new Date().toISOString(),
             }));
         } else {
-            setOperator(operator as string);
+            setOperator(operator);
         }
     };
 

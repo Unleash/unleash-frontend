@@ -8,7 +8,7 @@ const VALUE = 'value';
 export const cleanConstraint = (constraint: IConstraint): IConstraint => {
     const constraintCopy: IConstraint = {
         contextName: '',
-        operator: '',
+        operator: 'IN',
     };
 
     if (oneOf(singleValueOperators, constraint.operator)) {

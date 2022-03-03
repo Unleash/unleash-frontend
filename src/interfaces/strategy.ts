@@ -1,3 +1,5 @@
+import { Operator } from 'constants/operators';
+
 export interface IFeatureStrategy {
     id: string;
     name: string;
@@ -19,7 +21,7 @@ export interface IConstraint {
     values?: string[];
     value?: string;
     caseInsensitive?: boolean;
-    operator: string;
+    operator: Operator;
     contextName: string;
     [index: string]: unknown;
 }

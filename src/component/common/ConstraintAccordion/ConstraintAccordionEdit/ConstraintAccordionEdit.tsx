@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 import { IUnleashContextDefinition } from 'interfaces/context';
 import { useConstraintInput } from './ConstraintAccordionEditBody/useConstraintInput/useConstraintInput';
+import { Operator } from 'constants/operators';
 
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
@@ -87,7 +88,7 @@ export const ConstraintAccordionEdit = ({
         }));
     }, []);
 
-    const setOperator = useCallback((operator: string) => {
+    const setOperator = useCallback((operator: Operator) => {
         setLocalConstraint(prev => ({
             ...prev,
             operator,
