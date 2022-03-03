@@ -15,10 +15,12 @@ interface IRestrictiveLegalValuesProps {
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type ValuesMap = { [key: string]: Boolean };
+interface IValuesMap {
+    [key: string]: boolean;
+}
 
-const createValuesMap = (values: string[]): ValuesMap => {
-    return values.reduce((result: ValuesMap, currentValue: string) => {
+const createValuesMap = (values: string[]): IValuesMap => {
+    return values.reduce((result: IValuesMap, currentValue: string) => {
         if (!result[currentValue]) {
             result[currentValue] = true;
         }
@@ -79,7 +81,7 @@ interface ILegalValueOptionsProps {
     legalValues: string[];
     filter: string;
     onChange: (legalValue: string) => void;
-    valuesMap: ValuesMap;
+    valuesMap: IValuesMap;
 }
 
 const LegalValueOptions = ({
