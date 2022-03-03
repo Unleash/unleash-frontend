@@ -20,8 +20,8 @@ import { useConstraintInput } from './ConstraintAccordionEditBody/useConstraintI
 
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
-    handleCancel: () => void;
-    handleSave: (constraint: IConstraint) => void;
+    onCancel: () => void;
+    onSave: (constraint: IConstraint) => void;
     compact: boolean;
 }
 
@@ -41,8 +41,8 @@ const resolveContextDefinition = (
 export const ConstraintAccordionEdit = ({
     constraint,
     compact,
-    handleCancel,
-    handleSave,
+    onCancel,
+    onSave,
 }: IConstraintAccordionEditProps) => {
     const [localConstraint, setLocalConstraint] = useState<IConstraint>(
         cleanConstraint(cloneDeep(constraint))
@@ -180,9 +180,9 @@ export const ConstraintAccordionEdit = ({
                 TransitionProps={{
                     onExited: () => {
                         if (action === CANCEL) {
-                            handleCancel();
+                            onCancel();
                         } else if (action === SAVE) {
-                            handleSave(localConstraint);
+                            onSave(localConstraint);
                         }
                     },
                 }}

@@ -50,8 +50,16 @@ export const useStyles = makeStyles(theme => ({
     },
     help: {
         fill: theme.palette.grey[600],
+        [theme.breakpoints.down(860)]: {
+            display: 'none',
+        },
     },
-    headerText: { maxWidth: '400px' },
+    headerText: {
+        maxWidth: '400px',
+        [theme.breakpoints.down(1260)]: {
+            display: 'none',
+        },
+    },
     headerSelect: { marginRight: '2rem', width: '200px' },
     chip: {
         margin: '0 0.5rem 0.5rem 0',
@@ -82,4 +90,5 @@ export const useStyles = makeStyles(theme => ({
     singleValueText: {
         marginRight: '0.75rem',
     },
+    form: { padding: 0, margin: 0, width: '100%' },
 }));

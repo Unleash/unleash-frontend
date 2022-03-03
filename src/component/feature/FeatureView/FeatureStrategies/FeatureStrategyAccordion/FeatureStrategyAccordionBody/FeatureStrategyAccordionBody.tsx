@@ -84,7 +84,7 @@ const FeatureStrategyAccordionBody: React.FC<
         return definition;
     };
 
-    const handleSave = (index: number) => (constraint: IConstraint) => {
+    const onSave = (index: number) => (constraint: IConstraint) => {
         // Update local state, then update the feature cache
         const newConstraints = cloneDeep(localConstraints);
         newConstraints[index] = { constraint, metadata: {} };
@@ -96,7 +96,7 @@ const FeatureStrategyAccordionBody: React.FC<
         updateConstraints(formattedConstraints);
     };
 
-    const handleEdit = (index: number) => {
+    const onEdit = (index: number) => {
         setLocalConstraints(prev => {
             const newArray = [...cloneDeep(prev)];
 
@@ -110,7 +110,7 @@ const FeatureStrategyAccordionBody: React.FC<
         });
     };
 
-    const handleDelete = (index: number) => {
+    const onDelete = (index: number) => {
         setLocalConstraints(prev => {
             const newArray = [...cloneDeep(prev)];
             newArray.splice(index, 1);
@@ -119,7 +119,7 @@ const FeatureStrategyAccordionBody: React.FC<
         });
     };
 
-    const handleCancel = (index: number) => {
+    const onCancel = (index: number) => {
         const constraint = localConstraints[index];
 
         if (constraint.metadata.new) {
@@ -165,10 +165,10 @@ const FeatureStrategyAccordionBody: React.FC<
                         key={`${localConstraint.constraint.contextName}-${index}-${localConstraint.constraint.operator}`}
                         constraint={localConstraint.constraint}
                         editing={localConstraint.metadata.editing}
-                        handleSave={handleSave(index)}
-                        handleEdit={() => handleEdit(index)}
-                        handleDelete={() => handleDelete(index)}
-                        handleCancel={() => handleCancel(index)}
+                        onSave={onSave(index)}
+                        onEdit={() => onEdit(index)}
+                        onDelete={() => onDelete(index)}
+                        onCancel={() => onCancel(index)}
                         environmentId={activeEnvironment.name}
                         compact={create}
                     />
@@ -234,24 +234,6 @@ const FeatureStrategyAccordionBody: React.FC<
                     </>
                 }
             />
-
-            {/* <Dialogue
-                title="Define constraints"
-                open={showConstraints}
-                onClick={saveConstraintsLocally}
-                primaryButtonText="Update constraints"
-                secondaryButtonText="Cancel"
-                onClose={closeConstraintDialog}
-                fullWidth
-                maxWidth="md"
-            >
-                <StrategyConstraints
-                    updateConstraints={updateConstraints}
-                    constraints={constraints || []}
-                    constraintError={constraintError}
-                    setConstraintError={setConstraintError}
-                />
-            </Dialogue> */}
 
             <Type
                 parameters={parameters}

@@ -9,10 +9,10 @@ interface IConstraintAccordionProps {
     editing: boolean;
     environmentId: string;
     constraint: IConstraint;
-    handleEdit: () => void;
-    handleCancel: () => void;
-    handleDelete: () => void;
-    handleSave: (constraint: IConstraint) => void;
+    onEdit: () => void;
+    onCancel: () => void;
+    onDelete: () => void;
+    onSave: (constraint: IConstraint) => void;
 }
 
 export const ConstraintAccordion = ({
@@ -20,10 +20,10 @@ export const ConstraintAccordion = ({
     compact = false,
     editing,
     environmentId,
-    handleEdit,
-    handleCancel,
-    handleDelete,
-    handleSave,
+    onEdit,
+    onCancel,
+    onDelete,
+    onSave,
 }: IConstraintAccordionProps) => {
     if (!constraint) return null;
 
@@ -33,17 +33,18 @@ export const ConstraintAccordion = ({
             show={
                 <ConstraintAccordionEdit
                     constraint={constraint}
-                    handleCancel={handleCancel}
-                    handleSave={handleSave}
+                    onCancel={onCancel}
+                    onSave={onSave}
                     compact={compact}
                 />
             }
             elseShow={
                 <ConstraintAccordionView
                     constraint={constraint}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
                     environmentId={environmentId}
+                    compact={compact}
                 />
             }
         />

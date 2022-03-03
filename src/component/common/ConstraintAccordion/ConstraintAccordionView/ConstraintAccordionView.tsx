@@ -20,15 +20,17 @@ import ConditionallyRender from '../../ConditionallyRender';
 interface IConstraintAccordionViewProps {
     environmentId: string;
     constraint: IConstraint;
-    handleDelete: () => void;
-    handleEdit: () => void;
+    onDelete: () => void;
+    onEdit: () => void;
+    compact: boolean;
 }
 
 export const ConstraintAccordionView = ({
+    compact,
     environmentId,
     constraint,
-    handleEdit,
-    handleDelete,
+    onEdit,
+    onDelete,
 }: IConstraintAccordionViewProps) => {
     const styles = useStyles();
 
@@ -44,10 +46,11 @@ export const ConstraintAccordionView = ({
                 expandIcon={<ExpandMore />}
             >
                 <ConstraintAccordionViewHeader
+                    compact={compact}
                     environmentId={environmentId}
                     constraint={constraint}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
                     nonExpandable={nonExpandable}
                 />
             </AccordionSummary>

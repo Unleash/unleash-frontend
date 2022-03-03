@@ -12,28 +12,32 @@ import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 
 interface IConstraintAccordionViewHeader {
+    compact: boolean;
     constraint: IConstraint;
-    handleDelete: () => void;
-    handleEdit: () => void;
+    onDelete: () => void;
+    onEdit: () => void;
     nonExpandable: boolean;
     environmentId: string;
 }
 
 export const ConstraintAccordionViewHeader = ({
+    compact,
     constraint,
-    handleEdit,
-    handleDelete,
+    onEdit,
+    onDelete,
     nonExpandable,
     environmentId,
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
 
+    const minWidthHeader = compact ? '75px' : '175px';
+
     return (
         <div className={styles.headerContainer}>
             <div className={styles.headerMetaInfo}>
                 <ConstraintIcon />
-                <div style={{ minWidth: '175px' }}>
+                <div style={{ minWidth: minWidthHeader }}>
                     <StringTruncator
                         text={constraint.contextName}
                         maxWidth="175px"
@@ -55,7 +59,7 @@ export const ConstraintAccordionViewHeader = ({
             </div>
             <div className={styles.headerActions}>
                 <PermissionIconButton
-                    onClick={() => handleEdit()}
+                    onClick={() => onEdit()}
                     permission={UPDATE_FEATURE_STRATEGY}
                     projectId={projectId}
                     environmentId={environmentId}
@@ -63,7 +67,7 @@ export const ConstraintAccordionViewHeader = ({
                     <Edit />
                 </PermissionIconButton>
                 <PermissionIconButton
-                    onClick={() => handleDelete()}
+                    onClick={() => onDelete()}
                     permission={UPDATE_FEATURE_STRATEGY}
                     projectId={projectId}
                     environmentId={environmentId}
