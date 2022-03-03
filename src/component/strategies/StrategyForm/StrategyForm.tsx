@@ -82,7 +82,6 @@ export const StrategyForm: React.FC<IStrategyFormProps> = ({
 
                 <StrategyParameters
                     input={params}
-                    count={params.length}
                     updateParameter={updateParameter}
                     setParams={setParams}
                     errors={errors}

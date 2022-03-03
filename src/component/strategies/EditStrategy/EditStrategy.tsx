@@ -37,7 +37,7 @@ export const EditStrategy = () => {
     const { updateStrategy, loading } = useStrategiesApi();
     const { refetchStrategies } = useStrategies();
 
-    const handleSubmit = async (e: Event) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         clearErrors();
         e.preventDefault();
         if (validateParams()) {

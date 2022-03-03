@@ -8,6 +8,7 @@ import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { CREATE_STRATEGY } from '../../providers/AccessProvider/permissions';
 import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import { formatUnknownError } from 'utils/format-unknown-error';
 
 export const CreateStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
@@ -30,7 +31,7 @@ export const CreateStrategy = () => {
     const { createStrategy, loading } = useStrategiesApi();
     const { refetchStrategies } = useStrategies();
 
-    const handleSubmit = async (e: Event) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         clearErrors();
         e.preventDefault();
         const validName = validateStrategyName();
@@ -47,8 +48,8 @@ export const CreateStrategy = () => {
                     confetti: true,
                     type: 'success',
                 });
-            } catch (e: any) {
-                setToastApiError(e.toString());
+            } catch (e: unknown) {
+                setToastApiError(formatUnknownError(e));
             }
         }
     };
