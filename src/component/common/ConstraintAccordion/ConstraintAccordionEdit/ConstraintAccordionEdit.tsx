@@ -198,6 +198,7 @@ export const ConstraintAccordionEdit = ({
                 <AccordionSummary className={styles.summary}>
                     <ConstraintAccordionEditHeader
                         localConstraint={localConstraint}
+                        setLocalConstraint={setLocalConstraint}
                         setContextName={setContextName}
                         setOperator={setOperator}
                         action={action}

@@ -21,6 +21,7 @@ interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
     setContextName: (contextName: string) => void;
     setOperator: (operator: string) => void;
+    setLocalConstraint: React.Dispatch<React.SetStateAction<IConstraint>>;
     action: string;
     compact: boolean;
 }
@@ -34,6 +35,7 @@ const CURRENT_TIME_CONTEXT_FIELD = 'currentTime';
 export const ConstraintAccordionEditHeader = ({
     compact,
     localConstraint,
+    setLocalConstraint,
     setContextName,
     setOperator,
     action,
@@ -51,14 +53,23 @@ export const ConstraintAccordionEditHeader = ({
             localConstraint.contextName === CURRENT_TIME_CONTEXT_FIELD &&
             !oneOf(dateOperators, localConstraint.operator)
         ) {
-            setOperator(DATE_BEFORE);
+            setLocalConstraint(prev => ({
+                ...prev,
+                operator: DATE_BEFORE,
+                value: new Date().toISOString(),
+            }));
         } else if (
             localConstraint.contextName !== CURRENT_TIME_CONTEXT_FIELD &&
             oneOf(dateOperators, localConstraint.operator)
         ) {
             setOperator(IN);
         }
-    }, [localConstraint.contextName, setOperator, localConstraint.operator]);
+    }, [
+        localConstraint.contextName,
+        setOperator,
+        localConstraint.operator,
+        setLocalConstraint,
+    ]);
 
     if (!context) return null;
     const constraintNameOptions = context.map(context => {
@@ -82,6 +93,24 @@ export const ConstraintAccordionEditHeader = ({
 
         return true;
     });
+
+    const onChange = (
+        event: React.ChangeEvent<{
+            name?: string;
+            value: unknown;
+        }>
+    ) => {
+        const operator = event.target.value as string;
+        if (oneOf(dateOperators, operator)) {
+            setLocalConstraint(prev => ({
+                ...prev,
+                operator: operator,
+                value: new Date().toISOString(),
+            }));
+        } else {
+            setOperator(operator as string);
+        }
+    };
 
     return (
         <div className={styles.headerContainer}>
@@ -112,12 +141,7 @@ export const ConstraintAccordionEditHeader = ({
                         label="Operator"
                         options={filteredOperators}
                         value={localConstraint.operator}
-                        onChange={(
-                            e: React.ChangeEvent<{
-                                name?: string;
-                                value: unknown;
-                            }>
-                        ) => setOperator(e.target.value as string)}
+                        onChange={onChange}
                         className={styles.headerSelect}
                     />
                 </div>
