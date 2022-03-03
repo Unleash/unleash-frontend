@@ -28,7 +28,8 @@ const Constraint = ({
     const { projectId } = useParams<IFeatureViewParams>();
 
     const classes = classnames(styles.constraint, {
-        [styles.column]: constraint.values.length > 2,
+        [styles.column]:
+            Array.isArray(constraint.values) && constraint.values.length > 2,
     });
 
     const editable = !!(deleteCallback && editCallback);
@@ -42,7 +43,7 @@ const Constraint = ({
                     maxWidth="none"
                 />
                 <span className={styles.values}>
-                    {constraint.values.join(', ')}
+                    {constraint?.values?.join(', ')}
                 </span>
             </div>
 

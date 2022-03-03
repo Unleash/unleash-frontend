@@ -23,6 +23,7 @@ import React from 'react';
 interface IFeatureStrategyAccordionProps {
     strategy: IFeatureStrategy;
     expanded?: boolean;
+    create?: boolean;
     parameters: IParameter;
     constraints: IConstraint[];
     setStrategyParams: (paremeters: IParameter, strategyId?: string) => any;
@@ -42,6 +43,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     setLocalConstraints,
     actions,
     children,
+    create = false,
     ...rest
 }) => {
     const smallScreen = useMediaQuery('(max-width:500px)');
@@ -93,6 +95,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                         setStrategyConstraints={setStrategyConstraints}
                         localConstraints={localConstraints}
                         setLocalConstraints={setLocalConstraints}
+                        create={create}
                     >
                         {children}
                     </FeatureStrategyAccordionBody>

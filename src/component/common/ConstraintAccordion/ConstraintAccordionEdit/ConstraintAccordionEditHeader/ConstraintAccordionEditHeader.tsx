@@ -24,6 +24,7 @@ interface IConstraintAccordionViewHeader {
     setContextName: (contextName: string) => void;
     setOperator: (operator: string) => void;
     action: string;
+    compact: boolean;
 }
 
 const constraintOperators = allOperators.map(operator => {
@@ -33,6 +34,7 @@ const constraintOperators = allOperators.map(operator => {
 const CURRENT_TIME_CONTEXT_FIELD = 'currentTime';
 
 export const ConstraintAccordionEditHeader = ({
+    compact,
     localConstraint,
     setContextName,
     setOperator,
@@ -121,12 +123,18 @@ export const ConstraintAccordionEditHeader = ({
                 />
             </div>
 
-            <p className={styles.headerText}>
-                {resolveText(
-                    localConstraint.operator,
-                    localConstraint.contextName
-                )}
-            </p>
+            <ConditionallyRender
+                condition={!compact}
+                show={
+                    <p className={styles.headerText}>
+                        {resolveText(
+                            localConstraint.operator,
+                            localConstraint.contextName
+                        )}
+                    </p>
+                }
+            />
+
             <ConditionallyRender
                 condition={action === SAVE}
                 show={<p className={styles.editingBadge}>Updating...</p>}

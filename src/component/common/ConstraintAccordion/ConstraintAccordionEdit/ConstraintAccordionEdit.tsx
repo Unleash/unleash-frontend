@@ -22,6 +22,7 @@ interface IConstraintAccordionEditProps {
     constraint: IConstraint;
     handleCancel: () => void;
     handleSave: (constraint: IConstraint) => void;
+    compact: boolean;
 }
 
 export const CANCEL = 'cancel';
@@ -39,6 +40,7 @@ const resolveContextDefinition = (
 
 export const ConstraintAccordionEdit = ({
     constraint,
+    compact,
     handleCancel,
     handleSave,
 }: IConstraintAccordionEditProps) => {
@@ -170,10 +172,7 @@ export const ConstraintAccordionEdit = ({
     }, [localConstraint.operator, localConstraint.contextName, setError]);
 
     return (
-        <form
-            onSubmit={onSubmit}
-            style={{ padding: 0, margin: 0, width: '100%' }}
-        >
+        <form onSubmit={onSubmit} className={styles.form}>
             <Accordion
                 style={{ boxShadow: 'none' }}
                 className={styles.accordion}
@@ -194,6 +193,7 @@ export const ConstraintAccordionEdit = ({
                         setContextName={setContextName}
                         setOperator={setOperator}
                         action={action}
+                        compact={compact}
                     />
                 </AccordionSummary>
 

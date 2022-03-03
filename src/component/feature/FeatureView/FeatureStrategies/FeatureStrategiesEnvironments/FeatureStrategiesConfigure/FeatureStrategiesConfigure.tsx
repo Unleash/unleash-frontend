@@ -149,6 +149,7 @@ const FeatureStrategiesConfigure = () => {
                         setLocalConstraints={setLocalConstraints}
                         setStrategyConstraints={setStrategyConstraints}
                         setStrategyParams={setStrategyParams}
+                        create
                     />
                 </div>
             </div>

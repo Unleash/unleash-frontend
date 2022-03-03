@@ -30,6 +30,7 @@ import { ConstraintAccordion } from '../../../../../common/ConstraintAccordion/C
 import cloneDeep from 'lodash.clonedeep';
 
 interface IFeatureStrategyAccordionBodyProps {
+    create: boolean;
     strategy: IFeatureStrategy;
     setStrategyParams: () => any;
     updateParameters: (field: string, value: any) => any;
@@ -44,9 +45,8 @@ const FeatureStrategyAccordionBody: React.FC<
     strategy,
     updateParameters,
     children,
-    constraints,
     updateConstraints,
-    setStrategyConstraints,
+    create,
     localConstraints,
     setLocalConstraints,
 }) => {
@@ -82,28 +82,6 @@ const FeatureStrategyAccordionBody: React.FC<
         );
 
         return definition;
-    };
-
-    const saveConstraintsLocally = () => {
-        let valid = true;
-
-        constraints.forEach((constraint, index) => {
-            const { values } = constraint;
-
-            if (values.length === 0) {
-                setConstraintError(prev => ({
-                    ...prev,
-                    [`${constraint.contextName}-${index}`]:
-                        'You need to specify at least one value',
-                }));
-                valid = false;
-            }
-        });
-
-        if (valid) {
-            setShowConstraints(false);
-            setStrategyConstraints(constraints);
-        }
     };
 
     const handleSave = (index: number) => (constraint: IConstraint) => {
@@ -173,34 +151,30 @@ const FeatureStrategyAccordionBody: React.FC<
                 </p>
             );
         }
-        return localConstraints.map((localConstraint, index) => {
-            return (
-                <ConstraintAccordion
-                    key={`${localConstraint.constraint.contextName}-${index}`}
-                    constraint={localConstraint.constraint}
-                    editing={localConstraint.metadata.editing}
-                    handleSave={handleSave(index)}
-                    handleEdit={() => handleEdit(index)}
-                    handleDelete={() => handleDelete(index)}
-                    handleCancel={() => handleCancel(index)}
-                />
-            );
-        });
-    };
 
-    const removeConstraint = (index: number) => {
-        const updatedConstraints = [...constraints];
-        updatedConstraints.splice(index, 1);
-
-        updateConstraints(updatedConstraints);
-    };
-
-    const closeConstraintDialog = () => {
-        setShowConstraints(false);
-        const filteredConstraints = constraints.filter(constraint => {
-            return constraint.values.length > 0;
-        });
-        updateConstraints(filteredConstraints);
+        return localConstraints.map(
+            (
+                localConstraint: {
+                    constraint: IConstraint;
+                    metadata: { new: boolean; editing: boolean };
+                },
+                index: number
+            ) => {
+                return (
+                    <ConstraintAccordion
+                        key={`${localConstraint.constraint.contextName}-${index}-${localConstraint.constraint.operator}`}
+                        constraint={localConstraint.constraint}
+                        editing={localConstraint.metadata.editing}
+                        handleSave={handleSave(index)}
+                        handleEdit={() => handleEdit(index)}
+                        handleDelete={() => handleDelete(index)}
+                        handleCancel={() => handleCancel(index)}
+                        environmentId={activeEnvironment.name}
+                        compact={create}
+                    />
+                );
+            }
+        );
     };
 
     const Type = resolveInputType();

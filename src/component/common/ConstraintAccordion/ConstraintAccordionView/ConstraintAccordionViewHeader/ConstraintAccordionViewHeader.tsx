@@ -6,12 +6,17 @@ import { IConstraint } from '../../../../../interfaces/strategy';
 
 import { useStyles } from '../../ConstraintAccordion.styles';
 import ConditionallyRender from '../../../ConditionallyRender';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
+import { useParams } from 'react-router-dom';
+import { IFeatureViewParams } from 'interfaces/params';
 
 interface IConstraintAccordionViewHeader {
     constraint: IConstraint;
     handleDelete: () => void;
     handleEdit: () => void;
     nonExpandable: boolean;
+    environmentId: string;
 }
 
 export const ConstraintAccordionViewHeader = ({
@@ -19,8 +24,10 @@ export const ConstraintAccordionViewHeader = ({
     handleEdit,
     handleDelete,
     nonExpandable,
+    environmentId,
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
+    const { projectId } = useParams<IFeatureViewParams>();
 
     return (
         <div className={styles.headerContainer}>
@@ -47,12 +54,22 @@ export const ConstraintAccordionViewHeader = ({
                 />
             </div>
             <div className={styles.headerActions}>
-                <IconButton onClick={() => handleEdit()}>
+                <PermissionIconButton
+                    onClick={() => handleEdit()}
+                    permission={UPDATE_FEATURE_STRATEGY}
+                    projectId={projectId}
+                    environmentId={environmentId}
+                >
                     <Edit />
-                </IconButton>
-                <IconButton onClick={() => handleDelete()}>
+                </PermissionIconButton>
+                <PermissionIconButton
+                    onClick={() => handleDelete()}
+                    permission={UPDATE_FEATURE_STRATEGY}
+                    projectId={projectId}
+                    environmentId={environmentId}
+                >
                     <Delete />
-                </IconButton>
+                </PermissionIconButton>
             </div>
         </div>
     );

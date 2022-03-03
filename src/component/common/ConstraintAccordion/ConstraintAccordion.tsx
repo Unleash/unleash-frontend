@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { IConstraint } from '../../../interfaces/strategy';
 import ConditionallyRender from '../ConditionallyRender';
 
@@ -6,17 +5,21 @@ import { ConstraintAccordionEdit } from './ConstraintAccordionEdit/ConstraintAcc
 import { ConstraintAccordionView } from './ConstraintAccordionView/ConstraintAccordionView';
 
 interface IConstraintAccordionProps {
+    compact: boolean;
     editing: boolean;
+    environmentId: string;
     constraint: IConstraint;
     handleEdit: () => void;
     handleCancel: () => void;
     handleDelete: () => void;
-    handleSave: () => void;
+    handleSave: (constraint: IConstraint) => void;
 }
 
 export const ConstraintAccordion = ({
     constraint,
+    compact = false,
     editing,
+    environmentId,
     handleEdit,
     handleCancel,
     handleDelete,
@@ -32,6 +35,7 @@ export const ConstraintAccordion = ({
                     constraint={constraint}
                     handleCancel={handleCancel}
                     handleSave={handleSave}
+                    compact={compact}
                 />
             }
             elseShow={
@@ -39,6 +43,7 @@ export const ConstraintAccordion = ({
                     constraint={constraint}
                     handleEdit={handleEdit}
                     handleDelete={handleDelete}
+                    environmentId={environmentId}
                 />
             }
         />
