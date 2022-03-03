@@ -23,6 +23,7 @@ import { IFeatureViewParams } from 'interfaces/params';
 import { IFeatureVariant, IOverride } from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
+import { useStyles } from './AddFeatureVariant.styles';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -53,6 +54,7 @@ export const AddVariant = ({
     title,
     editing,
 }: IAddVariantProps) => {
+    const styles = useStyles();
     const [data, setData] = useState<Record<string, string>>({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
     const [overrides, setOverrides] = useState<IOverride[]>([]);
@@ -62,7 +64,7 @@ export const AddVariant = ({
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
 
-    const isJSON = (input: string): boolean => {
+    const isValidJSON = (input: string): boolean => {
         try {
             JSON.parse(input);
             return true;
@@ -149,8 +151,7 @@ export const AddVariant = ({
             return;
         }
 
-        if (payload.type === 'json' && !isJSON(payload.value)) {
-            setError({ payload: 'Invalid JSON' });
+        if (payload.type === 'json' && !isValidJSON(payload.value)) {
             return;
         }
 
@@ -266,14 +267,12 @@ export const AddVariant = ({
                 onSubmit={submit}
                 className={commonStyles.contentSpacingY}
             >
-                <p style={{ color: 'red' }}>{error.general}</p>
+                <p className={styles.error}>{error.general}</p>
                 <TextField
                     label="Variant name"
                     autoFocus
                     name="name"
-                    placeholder=""
-                    className={commonStyles.fullWidth}
-                    style={{ maxWidth: '350px' }}
+                    className={styles.input}
                     helperText={error.name}
                     value={data.name || ''}
                     error={Boolean(error.name)}
@@ -294,11 +293,7 @@ export const AddVariant = ({
                             (!editing && variants.length > 0)
                         }
                         show={
-                            <Grid
-                                item
-                                md={12}
-                                style={{ marginBottom: '0.5rem' }}
-                            >
+                            <Grid item md={12} className={styles.grid}>
                                 <FormControl>
                                     <FormControlLabel
                                         control={
@@ -341,7 +336,7 @@ export const AddVariant = ({
                                             </InputAdornment>
                                         ),
                                     }}
-                                    style={{ marginRight: '0.8rem' }}
+                                    className={styles.weightInput}
                                     value={data.weight}
                                     error={Boolean(error.weight)}
                                     helperText={error.weight}
@@ -357,19 +352,13 @@ export const AddVariant = ({
                         }
                     />
                 </Grid>
-                <p style={{ marginBottom: '1rem' }}>
+                <p className={styles.label}>
                     <strong>Payload </strong>
                     <Tooltip
                         title="Passed to the variant object. Can be anything
                         (json, value, csv)"
                     >
-                        <Info
-                            style={{
-                                width: '18.5px',
-                                height: '18.5px',
-                                color: 'grey',
-                            }}
-                        />
+                        <Info className={styles.info} />
                     </Tooltip>
                 </p>
                 <Grid container>
@@ -378,11 +367,10 @@ export const AddVariant = ({
                             id="variant-payload-type"
                             name="type"
                             label="Type"
-                            className={commonStyles.fullWidth}
+                            className={styles.select}
                             value={payload.type}
                             options={payloadOptions}
                             onChange={onPayload}
-                            style={{ minWidth: '100px', width: '100%' }}
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
@@ -391,7 +379,6 @@ export const AddVariant = ({
                             error={Boolean(error.payload)}
                             helperText={error.payload}
                             multiline
-                            label="Value"
                             name="value"
                             className={commonStyles.fullWidth}
                             value={payload.value}
@@ -399,22 +386,21 @@ export const AddVariant = ({
                             variant="outlined"
                             size="small"
                             data-test={'VARIANT_PAYLOAD_VALUE'}
+                            placeholder={
+                                payload.type === 'json'
+                                    ? '{ "hello": "world" }'
+                                    : 'value'
+                            }
                         />
                     </Grid>
                 </Grid>
                 <ConditionallyRender
                     condition={overrides.length > 0}
                     show={
-                        <p style={{ marginBottom: '1rem' }}>
+                        <p className={styles.label}>
                             <strong>Overrides </strong>
                             <Tooltip title="Here you can specify which users should get this variant.">
-                                <Info
-                                    style={{
-                                        width: '18.5px',
-                                        height: '18.5px',
-                                        color: 'grey',
-                                    }}
-                                />
+                                <Info className={styles.info} />
                             </Tooltip>
                         </p>
                     }
@@ -431,7 +417,7 @@ export const AddVariant = ({
                     color="primary"
                 >
                     Add override
-                </Button>{' '}
+                </Button>
             </form>
         </Dialogue>
     );
