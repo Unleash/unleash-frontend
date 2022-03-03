@@ -3,7 +3,6 @@ import { IConstraint } from '../../../../interfaces/strategy';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
 import { ConstraintAccordionEditHeader } from './ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
-import cloneDeep from 'lodash.clonedeep';
 import {
     Accordion,
     AccordionDetails,
@@ -208,7 +207,7 @@ export const ConstraintAccordionEdit = ({
 
                 <AccordionDetails
                     className={styles.accordionDetails}
-                    style={{ padding: '0' }}
+                    style={{ padding: 0 }}
                 >
                     <ConstraintAccordionEditBody
                         localConstraint={localConstraint}

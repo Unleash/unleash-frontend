@@ -9,18 +9,18 @@ interface IDateSingleValueProps {
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const parseValue = (value?: string) => {
+    if (!value) return;
+    const date = new Date(value);
+    return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'kk:mm');
+};
+
 export const DateSingleValue = ({
     setValue,
     value,
     error,
     setError,
 }: IDateSingleValueProps) => {
-    const parseValue = (value?: string) => {
-        if (!value) return;
-        const date = new Date(value);
-        return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'kk:mm');
-    };
-
     useEffect(() => {
         if (!value) {
             setValue(new Date().toISOString());

@@ -24,7 +24,7 @@ export const CaseInsensitive = ({
                         color="primary"
                     />
                 }
-                label={'Case insensitive'}
+                label="Case insensitive"
             />
         </>
     );
