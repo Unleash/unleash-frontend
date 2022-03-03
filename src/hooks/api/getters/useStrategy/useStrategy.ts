@@ -1,8 +1,7 @@
 import useSWR, { mutate, SWRConfiguration } from 'swr';
-import { useEffect, useState } from 'react';
-import { formatApiPath } from '../../../../utils/format-path';
-import { IStrategy } from '../../../../interfaces/strategy';
+import { formatApiPath } from 'utils/format-path';
 import handleErrorResponses from '../httpErrorResponseHandler';
+import { defaultStrategy } from './defaultStrategy';
 
 const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
     const STRATEGY_CACHE_KEY = `api/admin/strategies/${strategyName}`;
@@ -14,22 +13,14 @@ const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
             .then(res => res.json());
     };
 
-    const { data, error } = useSWR<{ strategy: IStrategy }>(
-        STRATEGY_CACHE_KEY,
-        fetcher,
-        options
-    );
+    const { data, error } = useSWR(STRATEGY_CACHE_KEY, fetcher, options);
 
     const refetchStrategy = () => {
         mutate(STRATEGY_CACHE_KEY);
     };
 
     return {
-        strategy: data || {
-            name: '',
-            description: '',
-            parameters: [],
-        },
+        strategy: data || defaultStrategy,
         error,
         loading: !error && !data,
         refetchStrategy,

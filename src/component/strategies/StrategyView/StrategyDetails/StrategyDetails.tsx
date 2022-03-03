@@ -14,9 +14,8 @@ import { TogglesLinkList } from '../../TogglesLinkList/TogglesLinkList';
 import {
     ICustomStrategyParameter,
     IStrategy,
-} from '../../../../interfaces/strategy';
-import { IApplication } from '../../../../interfaces/application';
-import { IFeatureToggle } from 'interfaces/featureToggle';
+} from 'interfaces/strategy';
+import { IApplication } from 'interfaces/application';
 
 interface IStrategyDetailsProps {
     strategy: IStrategy;

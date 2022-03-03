@@ -1,15 +1,15 @@
 import { useHistory, useParams } from 'react-router-dom';
-import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
-import useToast from '../../../hooks/useToast';
-import FormTemplate from '../../common/FormTemplate/FormTemplate';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import useToast from 'hooks/useToast';
+import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { useStrategyForm } from '../hooks/useStrategyForm';
 import { StrategyForm } from '../StrategyForm/StrategyForm';
-import PermissionButton from '../../common/PermissionButton/PermissionButton';
-import { CREATE_STRATEGY } from '../../providers/AccessProvider/permissions';
-import useStrategiesApi from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
-import { formatUnknownError } from '../../../utils/format-unknown-error';
-import useStrategy from '../../../hooks/api/getters/useStrategy/useStrategy';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import { CREATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
+import useStrategiesApi from 'hooks/api/actions/useStrategiesApi/useStrategiesApi';
+import useStrategies from 'hooks/api/getters/useStrategies/useStrategies';
+import { formatUnknownError } from 'utils/format-unknown-error';
+import useStrategy from 'hooks/api/getters/useStrategy/useStrategy';
 
 export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();

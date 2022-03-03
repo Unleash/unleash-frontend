@@ -1,6 +1,6 @@
 import { ICustomStrategyParameter } from 'interfaces/strategy';
 import { useEffect, useState } from 'react';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import useStrategies from 'hooks/api/getters/useStrategies/useStrategies';
 
 export const useStrategyForm = (
     initialStrategyName: string = '',
@@ -15,14 +15,17 @@ export const useStrategyForm = (
 
     useEffect(() => {
         setStrategyName(initialStrategyName);
+        /* eslint-disable-next-line */
     }, [initialStrategyName]);
 
     useEffect(() => {
         setStrategyDesc(initialStrategyDesc);
+        /* eslint-disable-next-line */
     }, [initialStrategyDesc]);
 
     useEffect(() => {
         setParams(initialParams);
+        /* eslint-disable-next-line */
     }, [JSON.stringify(initialParams)]);
 
     const getStrategyPayload = () => {
