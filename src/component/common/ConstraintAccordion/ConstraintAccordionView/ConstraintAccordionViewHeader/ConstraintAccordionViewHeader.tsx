@@ -16,7 +16,7 @@ interface IConstraintAccordionViewHeaderProps {
     constraint: IConstraint;
     onDelete: () => void;
     onEdit: () => void;
-    nonExpandable: boolean;
+    singleValue: boolean;
     environmentId: string;
 }
 
@@ -25,7 +25,7 @@ export const ConstraintAccordionViewHeader = ({
     constraint,
     onEdit,
     onDelete,
-    nonExpandable,
+    singleValue,
     environmentId,
 }: IConstraintAccordionViewHeaderProps) => {
     const styles = useStyles();
@@ -50,7 +50,7 @@ export const ConstraintAccordionViewHeader = ({
                 </div>
                 <div className={styles.headerViewValuesContainer}>
                     <ConditionallyRender
-                        condition={nonExpandable}
+                        condition={singleValue}
                         show={<Chip label={constraint.value} />}
                         elseShow={
                             <p>
@@ -68,7 +68,7 @@ export const ConstraintAccordionViewHeader = ({
                     projectId={projectId}
                     environmentId={environmentId}
                 >
-                    <Edit />
+                    <Edit titleAccess="edit constraint" />
                 </PermissionIconButton>
                 <PermissionIconButton
                     onClick={() => onDelete()}
@@ -76,7 +76,7 @@ export const ConstraintAccordionViewHeader = ({
                     projectId={projectId}
                     environmentId={environmentId}
                 >
-                    <Delete />
+                    <Delete titleAccess="delete constraint" />
                 </PermissionIconButton>
             </div>
         </div>

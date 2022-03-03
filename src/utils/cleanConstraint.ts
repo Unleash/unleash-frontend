@@ -5,7 +5,9 @@ import { oneOf } from './one-of';
 const VALUES = 'values';
 const VALUE = 'value';
 
-export const cleanConstraint = (constraint: IConstraint): IConstraint => {
+export const cleanConstraint = (
+    constraint: Readonly<IConstraint>
+): IConstraint => {
     const constraintCopy: IConstraint = {
         contextName: '',
         operator: 'IN',

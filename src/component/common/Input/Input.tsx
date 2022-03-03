@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core';
+import { InputLabelProps, TextField } from '@material-ui/core';
 import { INPUT_ERROR_TEXT } from '../../../testIds';
 import { useStyles } from './Input.styles.ts';
 
@@ -14,7 +14,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     onBlur?: (e: any) => any;
     multiline?: boolean;
     rows?: number;
-    InputLabelProps?: Record<string, unknown>;
+    InputLabelProps?: Partial<InputLabelProps>;
 }
 
 const Input = ({

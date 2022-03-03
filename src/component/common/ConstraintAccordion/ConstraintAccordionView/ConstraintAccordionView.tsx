@@ -34,7 +34,7 @@ export const ConstraintAccordionView = ({
 }: IConstraintAccordionViewProps) => {
     const styles = useStyles();
 
-    const nonExpandable = oneOf(
+    const singleValue = oneOf(
         [...semVerOperators, ...numOperators, ...dateOperators],
         constraint.operator
     );
@@ -51,17 +51,13 @@ export const ConstraintAccordionView = ({
                     constraint={constraint}
                     onEdit={onEdit}
                     onDelete={onDelete}
-                    nonExpandable={nonExpandable}
+                    singleValue={singleValue}
                 />
             </AccordionSummary>
-            <ConditionallyRender
-                condition={true}
-                show={
-                    <AccordionDetails className={styles.accordionDetails}>
-                        <ConstraintAccordionViewBody constraint={constraint} />
-                    </AccordionDetails>
-                }
-            />
+
+            <AccordionDetails className={styles.accordionDetails}>
+                <ConstraintAccordionViewBody constraint={constraint} />
+            </AccordionDetails>
         </Accordion>
     );
 };
