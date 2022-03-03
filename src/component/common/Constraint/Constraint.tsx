@@ -43,7 +43,7 @@ const Constraint = ({
                     maxWidth="none"
                 />
                 <span className={styles.values}>
-                    {constraint?.values?.join(', ')}
+                    {constraint.values?.join(', ')}
                 </span>
             </div>
 
