@@ -155,6 +155,23 @@ const useProjectApi = () => {
         }
     };
 
+    const changeUserRole = async (
+        projectId: string,
+        roleId: number,
+        userId: number
+    ) => {
+        const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
+        const req = createRequest(path, { method: 'PUT' });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         createProject,
         validateId,
@@ -164,6 +181,7 @@ const useProjectApi = () => {
         removeEnvironmentFromProject,
         addUserToRole,
         removeUserFromRole,
+        changeUserRole,
         errors,
         loading,
         searchProjectUser,
