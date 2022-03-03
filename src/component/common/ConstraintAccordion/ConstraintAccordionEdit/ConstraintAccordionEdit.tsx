@@ -29,13 +29,22 @@ export const CANCEL = 'cancel';
 export const SAVE = 'save';
 
 const resolveContextDefinition = (
-    context: any[],
+    context: IUnleashContextDefinition[],
     contextName: string
 ): IUnleashContextDefinition => {
     const definition = context.find(
         contextDef => contextDef.name === contextName
     );
-    return definition;
+
+    return (
+        definition || {
+            name: '',
+            description: '',
+            createdAt: '',
+            sortOrder: 1,
+            stickiness: false,
+        }
+    );
 };
 
 export const ConstraintAccordionEdit = ({
@@ -45,7 +54,7 @@ export const ConstraintAccordionEdit = ({
     onSave,
 }: IConstraintAccordionEditProps) => {
     const [localConstraint, setLocalConstraint] = useState<IConstraint>(
-        cleanConstraint(cloneDeep(constraint))
+        cleanConstraint(constraint)
     );
 
     const { context } = useUnleashContext();
