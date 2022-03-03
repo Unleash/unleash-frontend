@@ -11,7 +11,7 @@ import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/perm
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 
-interface IConstraintAccordionViewHeader {
+interface IConstraintAccordionViewHeaderProps {
     compact: boolean;
     constraint: IConstraint;
     onDelete: () => void;
@@ -27,7 +27,7 @@ export const ConstraintAccordionViewHeader = ({
     onDelete,
     nonExpandable,
     environmentId,
-}: IConstraintAccordionViewHeader) => {
+}: IConstraintAccordionViewHeaderProps) => {
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
     const smallScreen = useMediaQuery(`(max-width:${790}px)`);
