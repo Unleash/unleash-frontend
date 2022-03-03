@@ -19,7 +19,7 @@ export const StrategyView = () => {
     const history = useHistory();
 
     const toggles = features.filter(toggle => {
-        return toggle?.strategies?.find(s => s.name === strategyName);
+        return toggle?.strategies?.find(s => s.name === name);
     });
 
     const strategy = strategies.find(n => n.name === name);
