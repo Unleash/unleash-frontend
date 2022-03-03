@@ -36,7 +36,8 @@ export const RestrictiveLegalValues = ({
     setError,
 }: IRestrictiveLegalValuesProps) => {
     const [filter, setFilter] = useState('');
-    const [valuesMap, setValuesMap] = useState(createValuesMap(values));
+    // Lazily initialise the values because there might be a lot of them.
+    const [valuesMap, setValuesMap] = useState(() => createValuesMap(values));
     const styles = useCommonStyles();
 
     useEffect(() => {

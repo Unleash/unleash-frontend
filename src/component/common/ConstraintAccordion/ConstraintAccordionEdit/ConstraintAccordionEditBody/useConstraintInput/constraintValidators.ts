@@ -3,7 +3,7 @@ import semver from 'semver';
 import { constraintDateTypeSchema } from 'validationSchemas/constraints';
 
 export const numberValidatorGenerator = (
-    value: any,
+    value: unknown,
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
