@@ -29,7 +29,7 @@ export const DateSingleValue = ({
                 id="date"
                 label="Date"
                 type="datetime-local"
-                value={parseValue(value) || ''}
+                value={parseValue(value)}
                 onChange={e => {
                     setError('');
                     setValue(new Date(e.target.value).toISOString());
