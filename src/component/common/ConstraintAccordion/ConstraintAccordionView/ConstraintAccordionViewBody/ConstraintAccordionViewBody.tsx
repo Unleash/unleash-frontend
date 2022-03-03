@@ -57,11 +57,10 @@ interface ISingleValueProps {
 
 const SingleValue = ({ value, operator }: ISingleValueProps) => {
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
     if (!value) return null;
 
     return (
-        <div className={commonStyles.flexRow}>
+        <div className={styles.singleValueView}>
             <p className={styles.singleValueText}>Value must {operator}</p>{' '}
             <Chip label={value} className={styles.chip} />
         </div>

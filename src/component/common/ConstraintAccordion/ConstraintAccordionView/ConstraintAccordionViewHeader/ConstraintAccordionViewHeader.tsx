@@ -1,5 +1,5 @@
 import StringTruncator from '../../../StringTruncator/StringTruncator';
-import { Chip, IconButton } from '@material-ui/core';
+import { Chip, useMediaQuery } from '@material-ui/core';
 import { ConstraintIcon } from '../../ConstraintIcon';
 import { Delete, Edit } from '@material-ui/icons';
 import { IConstraint } from '../../../../../interfaces/strategy';
@@ -30,13 +30,14 @@ export const ConstraintAccordionViewHeader = ({
 }: IConstraintAccordionViewHeader) => {
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
+    const smallScreen = useMediaQuery(`(max-width:${790}px)`);
 
-    const minWidthHeader = compact ? '75px' : '175px';
+    const minWidthHeader = compact || smallScreen ? '100px' : '175px';
 
     return (
         <div className={styles.headerContainer}>
+            <ConstraintIcon />
             <div className={styles.headerMetaInfo}>
-                <ConstraintIcon />
                 <div style={{ minWidth: minWidthHeader }}>
                     <StringTruncator
                         text={constraint.contextName}
@@ -47,15 +48,18 @@ export const ConstraintAccordionViewHeader = ({
                 <div style={{ minWidth: '220px' }}>
                     <p className={styles.operator}>{constraint.operator}</p>
                 </div>
-                <ConditionallyRender
-                    condition={nonExpandable}
-                    show={<Chip label={constraint.value} />}
-                    elseShow={
-                        <p>
-                            {constraint?.values?.length}+ values. Expand to view
-                        </p>
-                    }
-                />
+                <div className={styles.headerViewValuesContainer}>
+                    <ConditionallyRender
+                        condition={nonExpandable}
+                        show={<Chip label={constraint.value} />}
+                        elseShow={
+                            <p>
+                                {constraint?.values?.length}+ values. Expand to
+                                view
+                            </p>
+                        }
+                    />
+                </div>
             </div>
             <div className={styles.headerActions}>
                 <PermissionIconButton

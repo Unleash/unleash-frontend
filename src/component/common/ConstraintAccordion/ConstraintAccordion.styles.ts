@@ -10,6 +10,10 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: '2rem',
+        [theme.breakpoints.down(650)]: {
+            marginBottom: '1rem',
+            marginRight: 0,
+        },
     },
     constraintIcon: {
         fill: '#fff',
@@ -34,11 +38,25 @@ export const useStyles = makeStyles(theme => ({
         margin: '0rem 2rem',
         fontSize: theme.fontSizes.smallBody,
     },
-    headerMetaInfo: { display: 'flex', alignItems: 'center' },
+    headerMetaInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        [theme.breakpoints.down(710)]: { flexDirection: 'column' },
+    },
     headerContainer: {
         display: 'flex',
         alignItems: 'center',
         width: '100%',
+        [theme.breakpoints.down(650)]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+        },
+    },
+    headerViewValuesContainer: {
+        [theme.breakpoints.down(990)]: {
+            display: 'none',
+        },
     },
     editingBadge: {
         borderRadius: '25px',
@@ -47,6 +65,11 @@ export const useStyles = makeStyles(theme => ({
         color: '#fff',
         marginLeft: 'auto',
         fontSize: '0.9rem',
+        [theme.breakpoints.down(650)]: {
+            position: 'absolute',
+            right: 0,
+            top: '-10px',
+        },
     },
     help: {
         fill: theme.palette.grey[600],
@@ -60,11 +83,29 @@ export const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+    selectContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        [theme.breakpoints.down(770)]: {
+            flexDirection: 'column',
+        },
+    },
+    bottomSelect: {
+        [theme.breakpoints.down(770)]: {
+            marginTop: '1rem',
+        },
+    },
     headerSelect: { marginRight: '2rem', width: '200px' },
     chip: {
         margin: '0 0.5rem 0.5rem 0',
     },
-    headerActions: { marginLeft: 'auto' },
+    headerActions: {
+        marginLeft: 'auto',
+        [theme.breakpoints.down(660)]: {
+            marginLeft: '0',
+            marginTop: '0.5rem',
+        },
+    },
     accordionDetails: {
         borderTop: `1px solid ${theme.palette.grey[300]}`,
         display: 'flex',
@@ -87,8 +128,17 @@ export const useStyles = makeStyles(theme => ({
         marginRight: '0.5rem',
         fill: theme.palette.grey[600],
     },
+    singleValueView: {
+        display: 'flex',
+        alignItems: 'center',
+        [theme.breakpoints.down(600)]: { flexDirection: 'column' },
+    },
     singleValueText: {
         marginRight: '0.75rem',
+        [theme.breakpoints.down(600)]: {
+            marginBottom: '0.75rem',
+            marginRight: 0,
+        },
     },
     form: { padding: 0, margin: 0, width: '100%' },
 }));

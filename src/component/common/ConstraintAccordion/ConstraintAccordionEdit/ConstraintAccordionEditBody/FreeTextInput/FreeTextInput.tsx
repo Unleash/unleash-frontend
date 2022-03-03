@@ -12,15 +12,33 @@ interface IFreeTextInputProps {
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     valueChip: { margin: '0 0.5rem 0.5rem 0' },
-    inputContainer: { display: 'flex', alignItems: 'center' },
-    inputInnerContainer: { minWidth: '300px' },
+    inputContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        [theme.breakpoints.down(700)]: {
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+        },
+    },
+    inputInnerContainer: {
+        minWidth: '300px',
+        [theme.breakpoints.down(700)]: {
+            minWidth: '100%',
+        },
+    },
     input: {
         width: '100%',
         margin: '1rem 0',
     },
-    button: { marginLeft: '1rem' },
+    button: {
+        marginLeft: '1rem',
+        [theme.breakpoints.down(700)]: {
+            marginLeft: 0,
+            marginBottom: '0.5rem',
+        },
+    },
     valuesContainer: { marginTop: '1rem' },
 }));
 

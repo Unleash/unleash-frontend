@@ -1,5 +1,3 @@
-import { Select, MenuItem, IconButton } from '@material-ui/core';
-
 import { IConstraint } from '../../../../../interfaces/strategy';
 
 import { useStyles } from '../../ConstraintAccordion.styles';
@@ -88,39 +86,41 @@ export const ConstraintAccordionEditHeader = ({
     return (
         <div className={styles.headerContainer}>
             <ConstraintIcon />
-            <div>
-                <GeneralSelect
-                    id="context-field-select"
-                    name="contextName"
-                    label="Context Field"
-                    options={constraintNameOptions}
-                    value={localConstraint.contextName || ''}
-                    onChange={(
-                        e: React.ChangeEvent<{
-                            name?: string;
-                            value: unknown;
-                        }>
-                    ) => {
-                        setContextName(e.target.value as string);
-                    }}
-                    className={styles.headerSelect}
-                />
-            </div>
-            <div>
-                <GeneralSelect
-                    id="operator-select"
-                    name="operator"
-                    label="Operator"
-                    options={filteredOperators}
-                    value={localConstraint.operator}
-                    onChange={(
-                        e: React.ChangeEvent<{
-                            name?: string;
-                            value: unknown;
-                        }>
-                    ) => setOperator(e.target.value as string)}
-                    className={styles.headerSelect}
-                />
+            <div className={styles.selectContainer}>
+                <div>
+                    <GeneralSelect
+                        id="context-field-select"
+                        name="contextName"
+                        label="Context Field"
+                        options={constraintNameOptions}
+                        value={localConstraint.contextName || ''}
+                        onChange={(
+                            e: React.ChangeEvent<{
+                                name?: string;
+                                value: unknown;
+                            }>
+                        ) => {
+                            setContextName(e.target.value as string);
+                        }}
+                        className={styles.headerSelect}
+                    />
+                </div>
+                <div className={styles.bottomSelect}>
+                    <GeneralSelect
+                        id="operator-select"
+                        name="operator"
+                        label="Operator"
+                        options={filteredOperators}
+                        value={localConstraint.operator}
+                        onChange={(
+                            e: React.ChangeEvent<{
+                                name?: string;
+                                value: unknown;
+                            }>
+                        ) => setOperator(e.target.value as string)}
+                        className={styles.headerSelect}
+                    />
+                </div>
             </div>
 
             <ConditionallyRender
