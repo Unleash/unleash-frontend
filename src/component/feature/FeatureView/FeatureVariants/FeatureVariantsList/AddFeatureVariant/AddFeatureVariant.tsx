@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import {
     Button,
     FormControl,
@@ -12,7 +12,6 @@ import { Info } from '@material-ui/icons';
 import { weightTypes } from './enums';
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
 import ConditionallyRender from 'component/common/ConditionallyRender';
-import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useCommonStyles } from 'common.styles';
 import Dialogue from 'component/common/Dialogue';
 import { modalStyles, trim } from 'component/common/util';
@@ -23,7 +22,7 @@ import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 import { IFeatureVariant, IOverride } from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
-import CodeEditor from '@uiw/react-textarea-code-editor';
+import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -54,7 +53,7 @@ export const AddVariant = ({
     title,
     editing,
 }: IAddVariantProps) => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState<Record<string, string>>({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
     const [overrides, setOverrides] = useState<IOverride[]>([]);
     const [error, setError] = useState<Record<string, string>>({});
@@ -81,7 +80,7 @@ export const AddVariant = ({
         if (editVariant) {
             setData({
                 name: editVariant.name,
-                weight: editVariant.weight / 10,
+                weight: String(editVariant.weight / 10),
                 weightType: editVariant.weightType || weightTypes.VARIABLE,
                 stickiness: editVariant.stickiness,
             });
@@ -118,7 +117,9 @@ export const AddVariant = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editVariant]);
 
-    const setVariantValue = e => {
+    const setVariantValue = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const { name, value } = e.target;
         setData({
             ...data,
@@ -126,7 +127,7 @@ export const AddVariant = ({
         });
     };
 
-    const setVariantWeightType = e => {
+    const setVariantWeightType = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked, name } = e.target;
         const weightType = checked ? weightTypes.FIX : weightTypes.VARIABLE;
         setData({
@@ -135,7 +136,7 @@ export const AddVariant = ({
         });
     };
 
-    const submit = async e => {
+    const submit = async (e: React.FormEvent) => {
         setError({});
         e.preventDefault();
 
@@ -155,9 +156,9 @@ export const AddVariant = ({
         }
 
         try {
-            const variant = {
+            const variant: IFeatureVariant = {
                 name: data.name,
-                weight: data.weight * 10,
+                weight: Number(data.weight) * 10,
                 weightType: data.weightType,
                 stickiness: data.stickiness,
                 payload: payload.value ? payload : undefined,
@@ -172,24 +173,28 @@ export const AddVariant = ({
             clear();
             closeDialog();
         } catch (error) {
+            // @ts-expect-error
             if (error?.body?.details[0]?.message?.includes('duplicate value')) {
                 setError({ name: 'A variant with that name already exists.' });
             } else if (
+                // @ts-expect-error
                 error?.body?.details[0]?.message?.includes('must be a number')
             ) {
                 setError({ weight: 'Weight must be a number' });
             } else {
                 const msg =
+                    // @ts-expect-error
                     error?.body?.details[0]?.message || 'Could not add variant';
                 setError({ general: msg });
             }
         }
     };
 
-    const onPayload = (e: React.SyntheticEvent) => {
+    const onPayload = (e: ChangeEvent<{ name?: string; value: unknown }>) => {
         e.preventDefault();
         setPayload({
             ...payload,
+            // @ts-expect-error
             [e.target.name]: e.target.value,
         });
     };
@@ -200,18 +205,20 @@ export const AddVariant = ({
         closeDialog();
     };
 
-    const updateOverrideType = (index: number) => (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        setOverrides(
-            overrides.map((o, i) => {
-                if (i === index) {
-                    o[e.target.name] = e.target.value;
-                }
+    const updateOverrideType =
+        (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
+            e.preventDefault();
+            setOverrides(
+                overrides.map((o, i) => {
+                    if (i === index) {
+                        // @ts-expect-error
+                        o[e.target.name] = e.target.value;
+                    }
 
-                return o;
-            })
-        );
-    };
+                    return o;
+                })
+            );
+        };
 
     const updateOverrideValues = (index: number, values: string[]) => {
         setOverrides(
@@ -244,7 +251,6 @@ export const AddVariant = ({
     return (
         <Dialogue
             open={showDialog}
-            contentLabel="Add variant modal"
             style={modalStyles}
             onClose={onCancel}
             onClick={submit}
@@ -369,6 +375,7 @@ export const AddVariant = ({
                 <Grid container>
                     <Grid item md={2} sm={2} xs={4}>
                         <GeneralSelect
+                            id="variant-payload-type"
                             name="type"
                             label="Type"
                             className={commonStyles.fullWidth}
@@ -376,7 +383,6 @@ export const AddVariant = ({
                             options={payloadOptions}
                             onChange={onPayload}
                             style={{ minWidth: '100px', width: '100%' }}
-                            data-test={'VARIANT_PAYLOAD_TYPE'}
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>

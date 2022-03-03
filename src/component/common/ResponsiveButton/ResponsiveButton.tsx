@@ -9,10 +9,11 @@ interface IResponsiveButtonProps {
     onClick: () => void;
     tooltip?: string;
     disabled?: boolean;
-    permission?: string;
+    permission: string;
     projectId?: string;
     environmentId?: string;
     maxWidth: string;
+    className?: string;
 }
 
 const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
@@ -34,6 +35,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
             condition={smallScreen}
             show={
                 <PermissionIconButton
+                    // @ts-expect-error
                     disabled={disabled}
                     onClick={onClick}
                     permission={permission}
@@ -52,6 +54,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
                     permission={permission}
                     projectId={projectId}
                     color="primary"
+                    // @ts-expect-error
                     variant="contained"
                     disabled={disabled}
                     environmentId={environmentId}
