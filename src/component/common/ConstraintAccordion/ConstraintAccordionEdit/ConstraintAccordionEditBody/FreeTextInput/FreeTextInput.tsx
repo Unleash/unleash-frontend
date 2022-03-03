@@ -103,18 +103,24 @@ export const FreeTextInput = ({
                 </Button>
             </div>
             <div className={styles.valuesContainer}>
-                <Values values={values} removeValue={removeValue} />
+                <ConstraintValueChips
+                    values={values}
+                    removeValue={removeValue}
+                />
             </div>
         </div>
     );
 };
 
-interface IValuesProps {
+interface IConstraintValueChipsProps {
     values: string[];
     removeValue: (index: number) => void;
 }
 
-const Values = ({ values, removeValue }: IValuesProps) => {
+const ConstraintValueChips = ({
+    values,
+    removeValue,
+}: IConstraintValueChipsProps) => {
     const styles = useStyles();
     return (
         <>
