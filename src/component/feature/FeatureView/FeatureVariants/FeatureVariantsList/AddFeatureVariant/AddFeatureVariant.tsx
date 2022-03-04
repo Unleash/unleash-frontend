@@ -372,10 +372,8 @@ export const AddVariant = ({
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
                         <Input
-                            rows={payload.type === 'json' ? 10 : 0}
                             error={Boolean(error.payload)}
                             errorText={error.payload}
-                            multiline
                             name="value"
                             className={commonStyles.fullWidth}
                             value={payload.value}
