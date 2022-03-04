@@ -1,6 +1,6 @@
+import { isValid } from 'date-fns';
 import React from 'react';
 import semver from 'semver';
-import { constraintDateTypeSchema } from 'validationSchemas/constraints';
 
 export const numberValidatorGenerator = (
     value: unknown,
@@ -47,9 +47,7 @@ export const dateValidatorGenerator = (
     setError: React.Dispatch<React.SetStateAction<string>>
 ) => {
     return () => {
-        const validationResult = constraintDateTypeSchema.validate(value);
-
-        if (validationResult.error) {
+        if (isValid(value)) {
             setError('Value must be a valid date matching RFC3339');
             return false;
         }

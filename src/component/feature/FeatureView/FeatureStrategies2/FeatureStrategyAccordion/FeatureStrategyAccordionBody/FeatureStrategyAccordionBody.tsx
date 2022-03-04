@@ -115,6 +115,10 @@ const FeatureStrategyAccordionBody: React.FC<
             const newArray = [...cloneDeep(prev)];
             newArray.splice(index, 1);
 
+            const formattedConstraints = newArray.map(
+                constraintsObject => constraintsObject.constraint
+            );
+            updateConstraints(formattedConstraints);
             return newArray;
         });
     };
