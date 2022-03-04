@@ -15,12 +15,19 @@ const useFeatureStrategiesEnvironmentList = () => {
         useFeatureStrategyApi();
 
     const {
+        // @ts-expect-error
         setConfigureNewStrategy,
+        // @ts-expect-error
         configureNewStrategy,
+        // @ts-expect-error
         activeEnvironment,
+        // @ts-expect-error
         setExpandedSidebar,
+        // @ts-expect-error
         expandedSidebar,
+        // @ts-expect-error
         setFeatureCache,
+        // @ts-expect-error
         featureCache,
     } = useContext(FeatureStrategiesUIContext);
 
@@ -51,6 +58,7 @@ const useFeatureStrategiesEnvironmentList = () => {
 
     const updateStrategy = async (updatedStrategy: IFeatureStrategy) => {
         try {
+            // @ts-expect-error
             const updateStrategyPayload: IStrategyPayload = {
                 constraints: updatedStrategy.constraints,
                 parameters: updatedStrategy.parameters,
@@ -74,10 +82,12 @@ const useFeatureStrategiesEnvironmentList = () => {
             const feature = cloneDeep(featureCache);
 
             const environment = feature.environments.find(
+                // @ts-expect-error
                 env => env.name === activeEnvironment.name
             );
 
             const strategy = environment.strategies.find(
+                // @ts-expect-error
                 strategy => strategy.id === updatedStrategy.id
             );
 
@@ -86,6 +96,7 @@ const useFeatureStrategiesEnvironmentList = () => {
             history.replace(history.location.pathname);
             setFeatureCache(feature);
         } catch (e) {
+            // @ts-expect-error
             setToastApiError(e.message);
         }
     };
@@ -102,9 +113,11 @@ const useFeatureStrategiesEnvironmentList = () => {
 
             const feature = cloneDeep(featureCache);
             const environment = feature.environments.find(
+                // @ts-expect-error
                 env => env.name === environmentId
             );
             const strategyIdx = environment.strategies.findIndex(
+                // @ts-expect-error
                 strategy => strategy.id === strategyId
             );
 
@@ -119,6 +132,7 @@ const useFeatureStrategiesEnvironmentList = () => {
             });
             history.replace(history.location.pathname);
         } catch (e) {
+            // @ts-expect-error
             setToastApiError(e.message);
         }
     };

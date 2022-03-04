@@ -35,11 +35,17 @@ const FeatureStrategiesConfigure = () => {
     );
     const styles = useStyles();
     const {
+        // @ts-expect-error
         activeEnvironment,
+        // @ts-expect-error
         setConfigureNewStrategy,
+        // @ts-expect-error
         configureNewStrategy,
+        // @ts-expect-error
         setExpandedSidebar,
+        // @ts-expect-error
         featureCache,
+        // @ts-expect-error
         setFeatureCache,
     } = useContext(FeatureStrategiesUIContext);
 
@@ -66,6 +72,7 @@ const FeatureStrategiesConfigure = () => {
     const { addStrategyToFeature, loading } = useFeatureStrategyApi();
 
     const setStrategyConstraints = (constraints: IConstraint[]) => {
+        // @ts-expect-error
         setConfigureNewStrategy(prev => ({ ...prev, constraints }));
     };
 
@@ -86,6 +93,7 @@ const FeatureStrategiesConfigure = () => {
         const strategyPayload = {
             ...configureNewStrategy,
             constraints: localConstraints.map(
+                // @ts-expect-error
                 localConstraints => localConstraints.constraint
             ),
             parameters: strategyParams,
@@ -103,6 +111,7 @@ const FeatureStrategiesConfigure = () => {
 
             const feature = cloneDeep(featureCache);
             const environment = feature.environments.find(
+                // @ts-expect-error
                 env => env.name === activeEnvironment.name
             );
 
@@ -121,6 +130,7 @@ const FeatureStrategiesConfigure = () => {
             refetch();
             scrollToTop();
         } catch (e) {
+            // @ts-expect-error
             setToastApiError(e.message);
         }
     };
@@ -147,6 +157,7 @@ const FeatureStrategiesConfigure = () => {
                         parameters={strategyParams}
                         localConstraints={localConstraints}
                         setLocalConstraints={setLocalConstraints}
+                        // @ts-expect-error
                         setStrategyConstraints={setStrategyConstraints}
                         setStrategyParams={setStrategyParams}
                         create

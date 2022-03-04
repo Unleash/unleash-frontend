@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     listItem: {
@@ -13,6 +13,7 @@ export const useStyles = makeStyles(theme => ({
     },
     deprecated: {
         '& a': {
+            // @ts-expect-error
             color: theme.palette.links.deprecated,
         },
     },

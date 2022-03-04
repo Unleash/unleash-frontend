@@ -10,6 +10,7 @@ import {
     FLEXIBLE_STRATEGY_GROUP_ID,
     FLEXIBLE_STRATEGY_STICKINESS_ID,
 } from '../../../../../../testIds';
+import { IUnleashContextDefinition } from 'interfaces/context';
 
 const builtInStickinessOptions = [
     { key: 'default', label: 'default' },
@@ -21,7 +22,7 @@ const builtInStickinessOptions = [
 interface IFlexibleStrategyProps {
     parameters: IParameter;
     updateParameter: (field: string, value: any) => void;
-    context: any;
+    context: IUnleashContextDefinition[];
     editable: boolean;
 }
 

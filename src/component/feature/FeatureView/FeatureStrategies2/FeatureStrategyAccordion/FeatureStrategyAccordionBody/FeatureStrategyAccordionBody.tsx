@@ -7,7 +7,7 @@ import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashCon
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import GeneralStrategy from '../../common/GeneralStrategy/GeneralStrategy';
 import UserWithIdStrategy from '../../common/UserWithIdStrategy/UserWithId';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useUiConfig from '../../../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { C } from '../../../../../common/flags';
@@ -44,7 +44,9 @@ const FeatureStrategyAccordionBody: React.FC<
     children,
     updateConstraints,
     create,
+    // @ts-expect-error
     localConstraints,
+    // @ts-expect-error
     setLocalConstraints,
 }) => {
     const styles = useStyles();
@@ -52,7 +54,10 @@ const FeatureStrategyAccordionBody: React.FC<
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
     const { hasAccess } = useContext(AccessContext);
-    const { activeEnvironment } = useContext(FeatureStrategiesUIContext);
+    const {
+        // @ts-expect-error
+        activeEnvironment,
+    } = useContext(FeatureStrategiesUIContext);
 
     const { context } = useUnleashContext();
 
@@ -86,12 +91,14 @@ const FeatureStrategyAccordionBody: React.FC<
 
         setLocalConstraints(newConstraints);
         const formattedConstraints = newConstraints.map(
+            // @ts-expect-error
             constraintsObject => constraintsObject.constraint
         );
         updateConstraints(formattedConstraints);
     };
 
     const onEdit = (index: number) => {
+        // @ts-expect-error
         setLocalConstraints(prev => {
             const newArray = [...cloneDeep(prev)];
 
@@ -106,6 +113,7 @@ const FeatureStrategyAccordionBody: React.FC<
     };
 
     const onDelete = (index: number) => {
+        // @ts-expect-error
         setLocalConstraints(prev => {
             const newArray = [...cloneDeep(prev)];
             newArray.splice(index, 1);
@@ -122,6 +130,7 @@ const FeatureStrategyAccordionBody: React.FC<
         const constraint = localConstraints[index];
 
         if (constraint.metadata.new) {
+            // @ts-expect-error
             setLocalConstraints(prev => {
                 const newArray = [...cloneDeep(prev)];
                 newArray.splice(index, 1);
@@ -129,6 +138,7 @@ const FeatureStrategyAccordionBody: React.FC<
             });
             return;
         }
+        // @ts-expect-error
         setLocalConstraints(prev => {
             const newArray = [...cloneDeep(prev)];
 
@@ -183,6 +193,7 @@ const FeatureStrategyAccordionBody: React.FC<
     const ON = uiConfig.flags[C];
 
     const addConstraint = () => {
+        // @ts-expect-error
         setLocalConstraints(prev => [...prev, createConstraint()]);
     };
 
@@ -219,6 +230,7 @@ const FeatureStrategyAccordionBody: React.FC<
                         <PermissionButton
                             className={styles.addConstraintBtn}
                             onClick={addConstraint}
+                            // @ts-expect-error
                             variant={'text'}
                             data-test={ADD_CONSTRAINT_ID}
                             permission={[
@@ -236,7 +248,9 @@ const FeatureStrategyAccordionBody: React.FC<
 
             <Type
                 parameters={parameters}
+                // @ts-expect-error
                 updateParameter={updateParameters}
+                // @ts-expect-error
                 strategyDefinition={definition}
                 context={context}
                 editable={editable}

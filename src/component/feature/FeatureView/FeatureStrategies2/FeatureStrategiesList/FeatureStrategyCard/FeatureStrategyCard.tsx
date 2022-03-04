@@ -37,8 +37,14 @@ const FeatureStrategyCard = ({
     const { featureId, projectId } = useParams<IFeatureViewParams>();
     const { strategies } = useStrategies();
 
-    const { setConfigureNewStrategy, setExpandedSidebar, activeEnvironment } =
-        useContext(FeatureStrategiesUIContext);
+    const {
+        // @ts-expect-error
+        setConfigureNewStrategy,
+        // @ts-expect-error
+        setExpandedSidebar,
+        // @ts-expect-error
+        activeEnvironment,
+    } = useContext(FeatureStrategiesUIContext);
     const { hasAccess } = useContext(AccessContext);
     const handleClick = () => {
         const strategy = getStrategyObject(strategies, name, featureId);
@@ -81,11 +87,13 @@ const FeatureStrategyCard = ({
                                 {<Icon className={styles.icon} />}
                             </div>
                         </div>
+                        {/* @ts-expect-error */}
                         <div className={styles.rightSection}>
                             <PermissionIconButton
                                 className={styles.addButton}
                                 onClick={handleClick}
                                 data-test={`${ADD_NEW_STRATEGY_CARD_BUTTON_ID}-${
+                                    // @ts-expect-error
                                     index + 1
                                 }`}
                                 permission={CREATE_FEATURE_STRATEGY}

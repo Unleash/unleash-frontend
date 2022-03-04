@@ -38,18 +38,13 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
     const enabled = uiConfig.flags[C];
     const contextNames = contextFields.map(context => context.name);
 
-    const onClick = evt => {
-        evt.preventDefault();
-        addConstraint();
-    };
-
     const addConstraint = () => {
         const updatedConstraints = [...constraints];
         updatedConstraints.push(createConstraint());
         updateConstraints(updatedConstraints);
     };
 
-    const createConstraint = () => {
+    const createConstraint = (): IConstraint => {
         return {
             contextName: contextNames[0],
             operator: 'IN',
@@ -57,6 +52,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
         };
     };
 
+    // @ts-expect-error
     const removeConstraint = index => evt => {
         evt.preventDefault();
         const updatedConstraints = [...constraints];
@@ -65,6 +61,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
         updateConstraints(updatedConstraints);
     };
 
+    // @ts-expect-error
     const updateConstraint = index => (value, field) => {
         const updatedConstraints = [...constraints];
         const constraint = updatedConstraints[index];

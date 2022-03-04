@@ -25,6 +25,7 @@ const UserWithIdStrategy = ({
                 name="userIds"
                 list={list}
                 disabled={!editable}
+                // @ts-expect-error
                 setConfig={updateParameter}
             />
         </div>

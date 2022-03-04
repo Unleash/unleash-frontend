@@ -12,6 +12,7 @@ const useProductionGuardMarkup = ({
     onClose,
 }: IUseProductionGuardMarkupProps) => {
     return (
+        // @ts-expect-error
         <FeatureStrategiesProductionGuard
             primaryButtonText="Update strategy"
             show={show}

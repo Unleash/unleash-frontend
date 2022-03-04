@@ -53,7 +53,6 @@ const Constraint = ({
                     <div className={styles.btnContainer}>
                         <PermissionIconButton
                             onClick={editCallback}
-                            tooltip="Edit constraint"
                             permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >
@@ -62,7 +61,6 @@ const Constraint = ({
 
                         <PermissionIconButton
                             onClick={deleteCallback}
-                            tooltip="Delete constraint"
                             permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >

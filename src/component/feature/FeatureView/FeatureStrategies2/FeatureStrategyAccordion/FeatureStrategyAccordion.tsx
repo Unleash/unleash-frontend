@@ -39,7 +39,9 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
     parameters,
     constraints,
     setStrategyConstraints,
+    // @ts-expect-error
     localConstraints,
+    // @ts-expect-error
     setLocalConstraints,
     actions,
     children,
@@ -93,6 +95,7 @@ const FeatureStrategyAccordion: React.FC<IFeatureStrategyAccordionProps> = ({
                         updateConstraints={updateConstraints}
                         constraints={constraints}
                         setStrategyConstraints={setStrategyConstraints}
+                        // @ts-expect-error
                         localConstraints={localConstraints}
                         setLocalConstraints={setLocalConstraints}
                         create={create}

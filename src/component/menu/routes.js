@@ -15,11 +15,11 @@ import { P, C, E, EEA, RE } from '../common/flags';
 import { NewUser } from '../user/NewUser/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
-import ProjectListNew from '../project/ProjectList/ProjectList';
+import { ProjectListNew } from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
 import RedirectArchive from '../archive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
-import FeatureView from '../feature/FeatureView/FeatureView';
+import { FeatureView } from '../feature/FeatureView/FeatureView';
 import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
 import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
 import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
@@ -28,8 +28,8 @@ import EditUser from '../admin/users/EditUser/EditUser';
 import { CreateApiToken } from '../admin/api-token/CreateApiToken/CreateApiToken';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
-import CreateContext from '../context/CreateContext/CreateContext';
-import EditContext from '../context/EditContext/EditContext';
+import { CreateContext } from '../context/CreateContext/CreateContext';
+import { EditContext } from '../context/EditContext/EditContext';
 import EditTagType from '../tags/EditTagType/EditTagType';
 import CreateTagType from '../tags/CreateTagType/CreateTagType';
 import EditProject from '../project/Project/EditProject/EditProject';
@@ -95,7 +95,7 @@ export const routes = [
         menu: {},
     },
     {
-        path: '/projects/:projectId/features/:featureId/settings',
+        path: '/projects/:projectId/features/:featureId/edit',
         parent: '/projects',
         title: 'Edit Feature',
         component: EditFeature,

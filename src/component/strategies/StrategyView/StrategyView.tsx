@@ -20,7 +20,7 @@ export const StrategyView = () => {
     const { applications } = useApplications();
 
     const toggles = features.filter(toggle => {
-        return toggle?.strategies.findIndex(s => s.name === strategyName) > -1;
+        return toggle?.strategies?.find(s => s.name === strategyName);
     });
 
     const strategy = strategies.find(n => n.name === strategyName);
@@ -30,6 +30,7 @@ export const StrategyView = () => {
             label: 'Details',
             component: (
                 <StrategyDetails
+                    // @ts-expect-error
                     strategy={strategy}
                     toggles={toggles}
                     applications={applications}
@@ -38,6 +39,7 @@ export const StrategyView = () => {
         },
         {
             label: 'Edit',
+            // @ts-expect-error
             component: <StrategyForm strategy={strategy} editMode />,
         },
     ];
