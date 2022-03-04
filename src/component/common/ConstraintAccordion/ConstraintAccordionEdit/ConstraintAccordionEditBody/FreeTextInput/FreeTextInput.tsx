@@ -87,7 +87,7 @@ export const FreeTextInput = ({
                             setError('');
                         }}
                         onChange={e => setInputValues(e.target.value)}
-                        placeholder="Enter comma separated values here"
+                        placeholder="value1, value2, value3..."
                         className={styles.input}
                         error={Boolean(error)}
                         errorText={error}
