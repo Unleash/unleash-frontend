@@ -1,15 +1,13 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip, IconButtonProps } from '@material-ui/core';
 import React, { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
-interface IPermissionIconButtonProps
-    extends React.HTMLProps<HTMLButtonElement> {
+interface IPermissionIconButtonProps extends IconButtonProps {
     permission: string;
     Icon?: React.ElementType;
     onClick?: (e: any) => void;
     projectId?: string;
     environmentId?: string;
-    edge?: string;
     className?: string;
     title?: string;
 }
@@ -41,7 +39,6 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
     return (
         <Tooltip title={tooltipText} arrow>
             <span>
-                {/* @ts-expect-error */}
                 <IconButton onClick={onClick} disabled={!access} {...rest}>
                     {children}
                 </IconButton>

@@ -73,9 +73,7 @@ export const ProjectAccessListItem = ({
                     edge="end"
                     aria-label="delete"
                     title="Remove access"
-                    onClick={() => {
-                        handleRemoveAccess(user);
-                    }}
+                    onClick={() => handleRemoveAccess(user)}
                     disabled={access.users.length === 1}
                 >
                     <Delete />
