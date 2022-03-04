@@ -45,3 +45,16 @@ export interface ICustomStrategyParameter {
     required: boolean;
     type: string;
 }
+
+export interface ICustomStrategyPayload {
+    name: string;
+    description: string;
+    parameters: IParameter[];
+}
+
+export interface ICustomStrategy {
+    name: string;
+    description: string;
+    parameters: IParameter[];
+    editable: boolean;
+}

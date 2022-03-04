@@ -22,22 +22,21 @@ import {
     DELETE_STRATEGY,
     UPDATE_STRATEGY,
 } from '../../providers/AccessProvider/permissions';
-import ConditionallyRender from '../../common/ConditionallyRender/ConditionallyRender';
-import PageContent from '../../common/PageContent/PageContent';
-import HeaderTitle from '../../common/HeaderTitle';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import PageContent from 'component/common/PageContent/PageContent';
+import HeaderTitle from 'component/common/HeaderTitle';
 import { useStyles } from './StrategiesList.styles';
-import AccessContext from '../../../contexts/AccessContext';
-import Dialogue from '../../common/Dialogue';
-import { ADD_NEW_STRATEGY_ID } from '../../../testIds';
-import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
-import PermissionButton from '../../common/PermissionButton/PermissionButton';
-import { getHumanReadableStrategyName } from '../../../utils/strategy-names';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
-import useStrategiesApi, {
-    ICustomStrategyPayload,
-} from '../../../hooks/api/actions/useStrategiesApi/useStrategiesApi';
-import useToast from '../../../hooks/useToast';
-import { formatUnknownError } from '../../../utils/format-unknown-error';
+import AccessContext from 'contexts/AccessContext';
+import Dialogue from 'component/common/Dialogue';
+import { ADD_NEW_STRATEGY_ID } from 'testIds';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import { getHumanReadableStrategyName } from 'utils/strategy-names';
+import useStrategies from 'hooks/api/getters/useStrategies/useStrategies';
+import useStrategiesApi from 'hooks/api/actions/useStrategiesApi/useStrategiesApi';
+import useToast from 'hooks/useToast';
+import { formatUnknownError } from 'utils/format-unknown-error';
+import { ICustomStrategy } from 'interfaces/strategy';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -102,7 +101,7 @@ export const StrategiesList = () => {
         </Link>
     );
 
-    const onReactivateStrategy = (strategy: ICustomStrategyPayload) => {
+    const onReactivateStrategy = (strategy: ICustomStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really reactivate strategy?',
@@ -122,7 +121,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeprecateStrategy = (strategy: ICustomStrategyPayload) => {
+    const onDeprecateStrategy = (strategy: ICustomStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really deprecate strategy?',
@@ -142,7 +141,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const onDeleteStrategy = (strategy: ICustomStrategyPayload) => {
+    const onDeleteStrategy = (strategy: ICustomStrategy) => {
         setDialogueMetaData({
             show: true,
             title: 'Really delete strategy?',
@@ -162,7 +161,7 @@ export const StrategiesList = () => {
         });
     };
 
-    const reactivateButton = (strategy: ICustomStrategyPayload) => (
+    const reactivateButton = (strategy: ICustomStrategy) => (
         <Tooltip title="Reactivate activation strategy">
             <PermissionIconButton
                 onClick={() => onReactivateStrategy(strategy)}
@@ -173,7 +172,7 @@ export const StrategiesList = () => {
         </Tooltip>
     );
 
-    const deprecateButton = (strategy: ICustomStrategyPayload) => (
+    const deprecateButton = (strategy: ICustomStrategy) => (
         <ConditionallyRender
             condition={strategy.name === 'default'}
             show={
@@ -199,7 +198,7 @@ export const StrategiesList = () => {
         />
     );
 
-    const editButton = (strategy: ICustomStrategyPayload) => (
+    const editButton = (strategy: ICustomStrategy) => (
         <ConditionallyRender
             condition={strategy?.editable}
             show={
@@ -225,7 +224,7 @@ export const StrategiesList = () => {
         />
     );
 
-    const deleteButton = (strategy: ICustomStrategyPayload) => (
+    const deleteButton = (strategy: ICustomStrategy) => (
         <ConditionallyRender
             condition={strategy?.editable}
             show={

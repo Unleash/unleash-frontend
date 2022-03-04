@@ -1,12 +1,5 @@
-import { IParameter } from 'interfaces/strategy';
+import { ICustomStrategyPayload } from 'interfaces/strategy';
 import useAPI from '../useApi/useApi';
-
-export interface ICustomStrategyPayload {
-    editable: boolean;
-    name: string;
-    description: string;
-    parameters: IParameter[];
-}
 
 const useStrategiesApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
