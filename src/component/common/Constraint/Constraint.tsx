@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../interfaces/params';
 import { IConstraint } from '../../../interfaces/strategy';
-import FeatureStrategiesSeparator from '../../feature/FeatureView/FeatureStrategies/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
+import FeatureStrategiesSeparator from '../../feature/FeatureView/FeatureStrategies2/FeatureStrategiesEnvironments/FeatureStrategiesSeparator/FeatureStrategiesSeparator';
 import { UPDATE_FEATURE } from '../../providers/AccessProvider/permissions';
 import ConditionallyRender from '../ConditionallyRender';
 import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
@@ -53,20 +53,20 @@ const Constraint = ({
                     <div className={styles.btnContainer}>
                         <PermissionIconButton
                             onClick={editCallback}
-                            tooltip="Edit strategy"
+                            tooltip="Edit constraint"
                             permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >
-                            <Edit />
+                            <Edit titleAccess="Edit constraint" />
                         </PermissionIconButton>
 
                         <PermissionIconButton
                             onClick={deleteCallback}
-                            tooltip="Delete strategy"
+                            tooltip="Delete constraint"
                             permission={UPDATE_FEATURE}
                             projectId={projectId}
                         >
-                            <Delete />
+                            <Delete titleAccess="Delete constraint" />
                         </PermissionIconButton>
                     </div>
                 }
