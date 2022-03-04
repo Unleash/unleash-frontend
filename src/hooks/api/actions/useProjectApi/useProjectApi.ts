@@ -155,7 +155,7 @@ const useProjectApi = () => {
         }
     };
 
-    const changeUserRole = async (
+    const changeUserRole = (
         projectId: string,
         roleId: number,
         userId: number
@@ -163,13 +163,7 @@ const useProjectApi = () => {
         const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
         const req = createRequest(path, { method: 'PUT' });
 
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
+        return makeRequest(req.caller, req.id);
     };
 
     return {
