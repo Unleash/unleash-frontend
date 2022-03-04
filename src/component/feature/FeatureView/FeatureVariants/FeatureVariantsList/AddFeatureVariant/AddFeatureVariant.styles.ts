@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
     error: {
         color: theme.palette.error.main,
         fontSize: theme.fontSizes.smallBody,
-        position: 'relative'
+        position: 'relative',
     },
     input: {
         maxWidth: 350,
