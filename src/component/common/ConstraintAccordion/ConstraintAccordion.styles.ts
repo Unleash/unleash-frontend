@@ -114,7 +114,7 @@ export const useStyles = makeStyles(theme => ({
     valuesContainer: {
         padding: '1rem 0rem',
         maxHeight: '400px',
-        overflowY: 'scroll',
+        overflowY: 'auto',
     },
     summary: { border: 'none', padding: '0.25rem 1rem' },
     settingsParagraph: {
