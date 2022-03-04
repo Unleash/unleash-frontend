@@ -22,7 +22,7 @@ export const StrategyView = () => {
         return toggle?.strategies?.find(strategy => strategy.name === name);
     });
 
-    const strategy = strategies.find(n => n.name === name);
+    const strategy = strategies.find(strategy => strategy.name === name);
 
     const handleEdit = () => {
         history.push(`/strategies/${name}/edit`);
