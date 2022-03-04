@@ -167,7 +167,7 @@ export const ConstraintAccordionEditHeader = ({
             />
 
             <a
-                href="http://docs.getunleash.ai/"
+                href="https://docs.getunleash.io/advanced/strategy_constraints"
                 style={{ marginLeft: 'auto' }}
                 target="_blank"
                 rel="noopener noreferrer"
