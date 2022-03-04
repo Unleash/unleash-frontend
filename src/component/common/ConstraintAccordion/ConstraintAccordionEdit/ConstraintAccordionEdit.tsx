@@ -17,6 +17,7 @@ import { IFeatureViewParams } from 'interfaces/params';
 import { IUnleashContextDefinition } from 'interfaces/context';
 import { useConstraintInput } from './ConstraintAccordionEditBody/useConstraintInput/useConstraintInput';
 import { Operator } from 'constants/operators';
+import { ResolveInput } from './ConstraintAccordionEditBody/ResolveInput/ResolveInput';
 
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
@@ -171,13 +172,9 @@ export const ConstraintAccordionEdit = ({
         }
     };
 
-    const { input, validator, setError } = useConstraintInput({
+    const { input, validator, setError, error } = useConstraintInput({
         contextDefinition,
         localConstraint,
-        setValue,
-        setValues,
-        setCaseInsensitive,
-        removeValue,
     });
 
     useEffect(() => {
@@ -224,8 +221,19 @@ export const ConstraintAccordionEdit = ({
                         triggerTransition={triggerTransition}
                         setAction={setAction}
                         setInvertedOperator={setInvertedOperator}
-                        input={input}
-                    />
+                    >
+                        <ResolveInput
+                            setValues={setValues}
+                            setValue={setValue}
+                            setError={setError}
+                            localConstraint={localConstraint}
+                            input={input}
+                            error={error}
+                            contextDefinition={contextDefinition}
+                            removeValue={removeValue}
+                            setCaseInsensitive={setCaseInsensitive}
+                        />
+                    </ConstraintAccordionEditBody>
                 </AccordionDetails>
             </Accordion>
         </form>

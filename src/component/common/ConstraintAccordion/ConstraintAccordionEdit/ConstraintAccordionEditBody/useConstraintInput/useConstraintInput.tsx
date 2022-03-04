@@ -27,29 +27,26 @@ import {
 interface IUseConstraintInputProps {
     contextDefinition: IUnleashContextDefinition;
     localConstraint: IConstraint;
-    setValue: (value: string) => void;
-    setValues: (values: string[]) => void;
-    setCaseInsensitive: () => void;
-    removeValue: (index: number) => void;
 }
 
 interface IUseConstraintOutput {
-    input: JSX.Element;
+    input: Input;
+    error: string;
     validator: () => ConstraintValidatorOutput;
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const IN_OPERATORS_LEGAL_VALUES = 'IN_OPERATORS_LEGAL_VALUES';
-const STRING_OPERATORS_LEGAL_VALUES = 'STRING_OPERATORS_LEGAL_VALUES';
-const NUM_OPERATORS_LEGAL_VALUES = 'NUM_OPERATORS_LEGAL_VALUES';
-const SEMVER_OPERATORS_LEGAL_VALUES = 'SEMVER_OPERATORS_LEGAL_VALUES';
-const DATE_OPERATORS_SINGLE_VALUE = 'DATE_OPERATORS_SINGLE_VALUE';
-const IN_OPERATORS_FREETEXT = 'IN_OPERATORS_FREETEXT';
-const STRING_OPERATORS_FREETEXT = 'STRING_OPERATORS_FREETEXT';
-const NUM_OPERATORS_SINGLE_VALUE = 'NUM_OPERATORS_SINGLE_VALUE';
-const SEMVER_OPERATORS_SINGLE_VALUE = 'SEMVER_OPERATORS_SINGLE_VALUE';
+export const IN_OPERATORS_LEGAL_VALUES = 'IN_OPERATORS_LEGAL_VALUES';
+export const STRING_OPERATORS_LEGAL_VALUES = 'STRING_OPERATORS_LEGAL_VALUES';
+export const NUM_OPERATORS_LEGAL_VALUES = 'NUM_OPERATORS_LEGAL_VALUES';
+export const SEMVER_OPERATORS_LEGAL_VALUES = 'SEMVER_OPERATORS_LEGAL_VALUES';
+export const DATE_OPERATORS_SINGLE_VALUE = 'DATE_OPERATORS_SINGLE_VALUE';
+export const IN_OPERATORS_FREETEXT = 'IN_OPERATORS_FREETEXT';
+export const STRING_OPERATORS_FREETEXT = 'STRING_OPERATORS_FREETEXT';
+export const NUM_OPERATORS_SINGLE_VALUE = 'NUM_OPERATORS_SINGLE_VALUE';
+export const SEMVER_OPERATORS_SINGLE_VALUE = 'SEMVER_OPERATORS_SINGLE_VALUE';
 
-type Input =
+export type Input =
     | 'IN_OPERATORS_LEGAL_VALUES'
     | 'STRING_OPERATORS_LEGAL_VALUES'
     | 'NUM_OPERATORS_LEGAL_VALUES'
@@ -74,137 +71,12 @@ type Validator =
 export const useConstraintInput = ({
     contextDefinition,
     localConstraint,
-    setValue,
-    setValues,
-    setCaseInsensitive,
-    removeValue,
 }: IUseConstraintInputProps): IUseConstraintOutput => {
     const [input, setInput] = useState<Input>(IN_OPERATORS_LEGAL_VALUES);
     const [validator, setValidator] = useState<Validator>(
         STRING_ARRAY_VALIDATOR
     );
     const [error, setError] = useState('');
-
-    const resolveInput = () => {
-        switch (input) {
-            case IN_OPERATORS_LEGAL_VALUES:
-                return (
-                    <RestrictiveLegalValues
-                        legalValues={contextDefinition.legalValues || []}
-                        values={localConstraint.values || []}
-                        setValues={setValues}
-                        error={error}
-                        setError={setError}
-                    />
-                );
-            case STRING_OPERATORS_LEGAL_VALUES:
-                return (
-                    <>
-                        <CaseInsensitive
-                            setCaseInsensitive={setCaseInsensitive}
-                            caseInsensitive={Boolean(
-                                localConstraint.caseInsensitive
-                            )}
-                        />
-                        <RestrictiveLegalValues
-                            legalValues={contextDefinition.legalValues || []}
-                            values={localConstraint.values || []}
-                            setValues={setValues}
-                            error={error}
-                            setError={setError}
-                        />
-                    </>
-                );
-            case NUM_OPERATORS_LEGAL_VALUES:
-                return (
-                    <>
-                        <SingleLegalValue
-                            setValue={setValue}
-                            value={localConstraint.value}
-                            type="number"
-                            legalValues={
-                                contextDefinition.legalValues?.filter(
-                                    (value: string) => Number(value)
-                                ) || []
-                            }
-                            error={error}
-                            setError={setError}
-                        />
-                    </>
-                );
-            case SEMVER_OPERATORS_LEGAL_VALUES:
-                return (
-                    <>
-                        <SingleLegalValue
-                            setValue={setValue}
-                            value={localConstraint.value}
-                            type="semver"
-                            legalValues={contextDefinition.legalValues || []}
-                            error={error}
-                            setError={setError}
-                        />
-                    </>
-                );
-            case DATE_OPERATORS_SINGLE_VALUE:
-                return (
-                    <DateSingleValue
-                        value={localConstraint.value}
-                        setValue={setValue}
-                        error={error}
-                        setError={setError}
-                    />
-                );
-            case IN_OPERATORS_FREETEXT:
-                return (
-                    <FreeTextInput
-                        values={localConstraint.values || []}
-                        removeValue={removeValue}
-                        setValues={setValues}
-                        error={error}
-                        setError={setError}
-                    />
-                );
-            case STRING_OPERATORS_FREETEXT:
-                return (
-                    <>
-                        {' '}
-                        <CaseInsensitive
-                            setCaseInsensitive={setCaseInsensitive}
-                            caseInsensitive={Boolean(
-                                localConstraint.caseInsensitive
-                            )}
-                        />
-                        <FreeTextInput
-                            values={localConstraint.values || []}
-                            removeValue={removeValue}
-                            setValues={setValues}
-                            error={error}
-                            setError={setError}
-                        />
-                    </>
-                );
-            case NUM_OPERATORS_SINGLE_VALUE:
-                return (
-                    <SingleValue
-                        setValue={setValue}
-                        value={localConstraint.value}
-                        type="number"
-                        error={error}
-                        setError={setError}
-                    />
-                );
-            case SEMVER_OPERATORS_SINGLE_VALUE:
-                return (
-                    <SingleValue
-                        setValue={setValue}
-                        value={localConstraint.value}
-                        type="semver"
-                        error={error}
-                        setError={setError}
-                    />
-                );
-        }
-    };
 
     const resolveInputType = useCallback(() => {
         if (
@@ -287,5 +159,5 @@ export const useConstraintInput = ({
         resolveInputType();
     }, [contextDefinition, localConstraint, resolveInputType]);
 
-    return { input: resolveInput(), validator: resolveValidator(), setError };
+    return { input, error, validator: resolveValidator(), setError };
 };

@@ -4,6 +4,7 @@ import { CANCEL } from '../ConstraintAccordionEdit';
 
 import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeader';
 import { useStyles } from './ConstraintAccordionEditBody.styles';
+import { ResolveInput } from './ResolveInput/ResolveInput';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;
@@ -13,16 +14,17 @@ interface IConstraintAccordionBody {
     setAction: React.Dispatch<React.SetStateAction<string>>;
     setCaseInsensitive: () => void;
     setInvertedOperator: () => void;
-    input: JSX.Element;
 }
 
-export const ConstraintAccordionEditBody = ({
+export const ConstraintAccordionEditBody: React.FC<
+    IConstraintAccordionBody
+> = ({
     localConstraint,
-    input,
+    children,
     triggerTransition,
     setInvertedOperator,
     setAction,
-}: IConstraintAccordionBody) => {
+}) => {
     const styles = useStyles();
 
     return (
@@ -32,7 +34,7 @@ export const ConstraintAccordionEditBody = ({
                     inverted={Boolean(localConstraint.inverted)}
                     setInvertedOperator={setInvertedOperator}
                 />
-                {input}
+                {children}
             </div>
             <div className={styles.buttonContainer}>
                 <div className={styles.innerButtonContainer}>

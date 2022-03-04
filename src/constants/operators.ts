@@ -31,7 +31,7 @@ export const SEMVER_EQ = 'SEMVER_EQ';
 export const SEMVER_GT = 'SEMVER_GT';
 export const SEMVER_LT = 'SEMVER_LT';
 
-export const allOperators = [
+export const allOperators: Operator[] = [
     NOT_IN,
     IN,
     STR_ENDS_WITH,
@@ -49,16 +49,29 @@ export const allOperators = [
     SEMVER_LT,
 ];
 
-export const stringOperators = [STR_ENDS_WITH, STR_STARTS_WITH, STR_CONTAINS];
-export const inOperators = [IN, NOT_IN];
-export const numOperators = [NUM_EQ, NUM_GT, NUM_GTE, NUM_LT, NUM_LTE];
-export const dateOperators = [DATE_AFTER, DATE_BEFORE];
-export const semVerOperators = [SEMVER_EQ, SEMVER_GT, SEMVER_LT];
+export const stringOperators: Operator[] = [
+    STR_ENDS_WITH,
+    STR_STARTS_WITH,
+    STR_CONTAINS,
+];
+export const inOperators: Operator[] = [IN, NOT_IN];
+export const numOperators: Operator[] = [
+    NUM_EQ,
+    NUM_GT,
+    NUM_GTE,
+    NUM_LT,
+    NUM_LTE,
+];
+export const dateOperators: Operator[] = [DATE_AFTER, DATE_BEFORE];
+export const semVerOperators: Operator[] = [SEMVER_EQ, SEMVER_GT, SEMVER_LT];
 
-export const singleValueOperators = [
+export const singleValueOperators: Operator[] = [
     ...semVerOperators,
     ...dateOperators,
     ...numOperators,
 ];
 
-export const multipleValueOperators = [...stringOperators, ...inOperators];
+export const multipleValueOperators: Operator[] = [
+    ...stringOperators,
+    ...inOperators,
+];
