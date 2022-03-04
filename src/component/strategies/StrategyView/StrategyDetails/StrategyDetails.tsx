@@ -11,10 +11,7 @@ import { AppsLinkList } from '../../../common';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import styles from '../../strategies.module.scss';
 import { TogglesLinkList } from '../../TogglesLinkList/TogglesLinkList';
-import {
-    ICustomStrategyParameter,
-    IStrategy,
-} from 'interfaces/strategy';
+import { ICustomStrategyParameter, IStrategy } from 'interfaces/strategy';
 import { IApplication } from 'interfaces/application';
 
 interface IStrategyDetailsProps {
@@ -79,7 +76,12 @@ export const StrategyDetails = ({
                 <Grid item sm={12} md={12}>
                     <h6>Parameters</h6>
                     <hr />
-                    <List>{renderParameters(parameters)}</List>
+                    <List>
+                        {
+                            //@ts-expect-error
+                            renderParameters(parameters)
+                        }
+                    </List>
                 </Grid>
 
                 <Grid item sm={12} md={6}>

@@ -57,6 +57,7 @@ export const StrategyView = () => {
                 <Grid item xs={12} sm={12}>
                     <StrategyDetails
                         strategy={strategy}
+                        //@ts-expect-error
                         toggles={toggles}
                         applications={applications}
                     />

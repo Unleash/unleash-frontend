@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import classnames from 'classnames';
 import { Link, useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
@@ -202,6 +201,7 @@ export const StrategiesList = () => {
 
     const editButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
+            //@ts-expect-error
             condition={strategy?.editable}
             show={
                 <PermissionIconButton
@@ -228,6 +228,7 @@ export const StrategiesList = () => {
 
     const deleteButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
+            //@ts-expect-error
             condition={strategy?.editable}
             show={
                 <PermissionIconButton
@@ -251,14 +252,7 @@ export const StrategiesList = () => {
 
     const strategyList = () =>
         strategies.map(strategy => (
-            <ListItem
-                key={strategy.name}
-                classes={{
-                    root: classnames(styles.listItem, {
-                        [styles.deprecated]: strategy.deprecated,
-                    }),
-                }}
-            >
+            <ListItem key={strategy.name} className={styles.listItem}>
                 <ListItemAvatar>
                     <Extension style={{ color: '#0000008a' }} />
                 </ListItemAvatar>
