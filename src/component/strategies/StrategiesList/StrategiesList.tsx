@@ -189,7 +189,6 @@ export const StrategiesList = () => {
                     <PermissionIconButton
                         onClick={() => onDeprecateStrategy(strategy)}
                         permission={UPDATE_STRATEGY}
-                        tooltip={'Deprecate activation strategy'}
                     >
                         <Visibility />
                     </PermissionIconButton>

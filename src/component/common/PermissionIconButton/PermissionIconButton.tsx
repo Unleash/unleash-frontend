@@ -6,7 +6,6 @@ interface IPermissionIconButtonProps
     extends React.HTMLProps<HTMLButtonElement> {
     permission: string;
     Icon?: React.ElementType;
-    tooltip?: string;
     onClick?: (e: any) => void;
     projectId?: string;
     environmentId?: string;
@@ -18,7 +17,6 @@ interface IPermissionIconButtonProps
 const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
     permission,
     Icon,
-    tooltip,
     onClick,
     projectId,
     children,

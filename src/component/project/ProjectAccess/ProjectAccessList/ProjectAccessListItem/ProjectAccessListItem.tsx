@@ -77,11 +77,6 @@ export const ProjectAccessListItem = ({
                         handleRemoveAccess(user);
                     }}
                     disabled={access.users.length === 1}
-                    tooltip={
-                        access.users.length === 1
-                            ? 'A project must have at least one owner'
-                            : 'Remove access'
-                    }
                 >
                     <Delete />
                 </PermissionIconButton>
