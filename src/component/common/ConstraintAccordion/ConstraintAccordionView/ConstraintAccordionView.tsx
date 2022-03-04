@@ -15,7 +15,6 @@ import {
     numOperators,
     semVerOperators,
 } from '../../../../constants/operators';
-import ConditionallyRender from '../../ConditionallyRender';
 
 interface IConstraintAccordionViewProps {
     environmentId: string;

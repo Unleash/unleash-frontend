@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { IUnleashContextDefinition } from 'interfaces/context';
 import { IConstraint } from 'interfaces/strategy';
 import { CaseInsensitive } from '../CaseInsensitive/CaseInsensitive';

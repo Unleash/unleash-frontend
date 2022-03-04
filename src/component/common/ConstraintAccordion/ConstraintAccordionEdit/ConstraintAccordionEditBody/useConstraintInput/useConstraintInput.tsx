@@ -10,12 +10,7 @@ import { IConstraint } from 'interfaces/strategy';
 import React, { useCallback, useEffect, useState } from 'react';
 import { exists } from 'utils/exists';
 import { oneOf } from 'utils/one-of';
-import { CaseInsensitive } from '../CaseInsensitive/CaseInsensitive';
-import { DateSingleValue } from '../DateSingleValue/DateSingleValue';
-import { FreeTextInput } from '../FreeTextInput/FreeTextInput';
-import { RestrictiveLegalValues } from '../RestrictiveLegalValues/RestrictiveLegalValues';
-import { SingleLegalValue } from '../SingleLegalValue/SingleLegalValue';
-import { SingleValue } from '../SingleValue/SingleValue';
+
 import {
     numberValidatorGenerator,
     stringValidatorGenerator,

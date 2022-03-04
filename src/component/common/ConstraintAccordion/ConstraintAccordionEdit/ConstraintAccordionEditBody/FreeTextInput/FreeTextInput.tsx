@@ -1,6 +1,6 @@
 import { Button, Chip, makeStyles } from '@material-ui/core';
 import Input from 'component/common/Input/Input';
-import React, { DetailedHTMLProps, useState } from 'react';
+import React, { useState } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface IFreeTextInputProps {

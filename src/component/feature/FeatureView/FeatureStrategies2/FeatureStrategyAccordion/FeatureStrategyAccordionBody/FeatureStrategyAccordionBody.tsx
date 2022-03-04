@@ -7,13 +7,11 @@ import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashCon
 import useStrategies from '../../../../../../hooks/api/getters/useStrategies/useStrategies';
 import GeneralStrategy from '../../common/GeneralStrategy/GeneralStrategy';
 import UserWithIdStrategy from '../../common/UserWithIdStrategy/UserWithId';
-import StrategyConstraints from '../../common/StrategyConstraints/StrategyConstraints';
 import { useContext, useState } from 'react';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import useUiConfig from '../../../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { C } from '../../../../../common/flags';
 import { useStyles } from './FeatureStrategyAccordionBody.styles';
-import Dialogue from '../../../../../common/Dialogue';
 import DefaultStrategy from '../../common/DefaultStrategy/DefaultStrategy';
 import { ADD_CONSTRAINT_ID } from '../../../../../../testIds';
 import AccessContext from '../../../../../../contexts/AccessContext';
@@ -21,7 +19,6 @@ import {
     CREATE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
 } from '../../../../../providers/AccessProvider/permissions';
-import Constraint from '../../../../../common/Constraint/Constraint';
 import PermissionButton from '../../../../../common/PermissionButton/PermissionButton';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../../../../interfaces/params';
@@ -52,10 +49,8 @@ const FeatureStrategyAccordionBody: React.FC<
 }) => {
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
-    const [constraintError, setConstraintError] = useState({});
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
-    const [showConstraints, setShowConstraints] = useState(false);
     const { hasAccess } = useContext(AccessContext);
     const { activeEnvironment } = useContext(FeatureStrategiesUIContext);
 

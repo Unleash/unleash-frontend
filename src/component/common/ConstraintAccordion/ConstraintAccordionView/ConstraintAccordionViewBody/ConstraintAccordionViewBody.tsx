@@ -1,6 +1,5 @@
 import { Chip } from '@material-ui/core';
 import { ImportExportOutlined, TextFormatOutlined } from '@material-ui/icons';
-import { useCommonStyles } from 'common.styles';
 import { useState } from 'react';
 import { stringOperators } from '../../../../../constants/operators';
 import { IConstraint } from '../../../../../interfaces/strategy';

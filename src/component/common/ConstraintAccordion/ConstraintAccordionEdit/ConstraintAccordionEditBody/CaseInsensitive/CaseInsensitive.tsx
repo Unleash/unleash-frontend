@@ -1,4 +1,4 @@
-import { FormControlLabel, Checkbox, Switch } from '@material-ui/core';
+import { FormControlLabel, Switch } from '@material-ui/core';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface ICaseInsensitiveProps {

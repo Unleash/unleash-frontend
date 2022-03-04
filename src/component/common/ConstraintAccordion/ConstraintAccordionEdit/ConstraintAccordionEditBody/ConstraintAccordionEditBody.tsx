@@ -4,7 +4,6 @@ import { CANCEL } from '../ConstraintAccordionEdit';
 
 import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeader';
 import { useStyles } from './ConstraintAccordionEditBody.styles';
-import { ResolveInput } from './ResolveInput/ResolveInput';
 
 interface IConstraintAccordionBody {
     localConstraint: IConstraint;

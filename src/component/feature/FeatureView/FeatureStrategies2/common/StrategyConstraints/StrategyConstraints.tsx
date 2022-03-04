@@ -8,7 +8,6 @@ import { C } from '../../../../../common/flags';
 import useUnleashContext from '../../../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
 import StrategyConstraintInputField from './StrategyConstraintInputField';
 import { useEffect } from 'react';
-import { ConstraintAccordion } from '../../../../../common/ConstraintAccordion/ConstraintAccordion';
 
 interface IStrategyConstraintProps {
     constraints: IConstraint[];
