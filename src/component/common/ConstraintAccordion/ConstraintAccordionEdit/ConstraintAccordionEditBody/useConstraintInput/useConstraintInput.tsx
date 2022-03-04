@@ -21,6 +21,7 @@ import {
     stringValidatorGenerator,
     semVerValidatorGenerator,
     dateValidatorGenerator,
+    ConstraintValidatorOutput,
 } from './constraintValidators';
 
 interface IUseConstraintInputProps {
@@ -34,7 +35,7 @@ interface IUseConstraintInputProps {
 
 interface IUseConstraintOutput {
     input: JSX.Element;
-    validator: () => void;
+    validator: () => ConstraintValidatorOutput;
     setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -242,25 +243,13 @@ export const useConstraintInput = ({
     const resolveValidator = () => {
         switch (validator) {
             case NUMBER_VALIDATOR:
-                return numberValidatorGenerator(
-                    localConstraint.value,
-                    setError
-                );
+                return numberValidatorGenerator(localConstraint.value);
             case STRING_ARRAY_VALIDATOR:
-                return stringValidatorGenerator(
-                    localConstraint.values || [],
-                    setError
-                );
+                return stringValidatorGenerator(localConstraint.values || []);
             case SEMVER_VALIDATOR:
-                return semVerValidatorGenerator(
-                    localConstraint.value || '',
-                    setError
-                );
+                return semVerValidatorGenerator(localConstraint.value || '');
             case DATE_VALIDATOR:
-                return dateValidatorGenerator(
-                    localConstraint.value || '',
-                    setError
-                );
+                return dateValidatorGenerator(localConstraint.value || '');
         }
     };
 

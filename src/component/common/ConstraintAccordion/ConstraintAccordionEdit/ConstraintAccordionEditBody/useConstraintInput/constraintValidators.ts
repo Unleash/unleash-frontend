@@ -1,56 +1,41 @@
 import { isValid } from 'date-fns';
-import React from 'react';
 import semver from 'semver';
 
-export const numberValidatorGenerator = (
-    value: unknown,
-    setError: React.Dispatch<React.SetStateAction<string>>
-) => {
-    return () => {
+export type ConstraintValidatorOutput = [boolean, string];
+
+export const numberValidatorGenerator = (value: unknown) => {
+    return (): ConstraintValidatorOutput => {
         if (!Number(value)) {
-            setError('Value must be a number');
-            return false;
+            return [false, 'Value must be a number'];
         }
 
-        return true;
+        return [true, ''];
     };
 };
 
-export const stringValidatorGenerator = (
-    values: string[],
-    setError: React.Dispatch<React.SetStateAction<string>>
-) => {
-    return () => {
+export const stringValidatorGenerator = (values: string[]) => {
+    return (): ConstraintValidatorOutput => {
         if (!Array.isArray(values)) {
-            setError('Values must be a list of strings');
-            return false;
+            return [false, 'Values must be a list of strings'];
         }
-        return true;
+        return [true, ''];
     };
 };
 
-export const semVerValidatorGenerator = (
-    value: string,
-    setError: React.Dispatch<React.SetStateAction<string>>
-) => {
-    return () => {
+export const semVerValidatorGenerator = (value: string) => {
+    return (): ConstraintValidatorOutput => {
         if (!semver.valid(value)) {
-            setError('Value is not a valid semver');
-            return false;
+            return [false, 'Value is not a valid semver'];
         }
-        return true;
+        return [true, ''];
     };
 };
 
-export const dateValidatorGenerator = (
-    value: string,
-    setError: React.Dispatch<React.SetStateAction<string>>
-) => {
-    return () => {
+export const dateValidatorGenerator = (value: string) => {
+    return (): ConstraintValidatorOutput => {
         if (isValid(value)) {
-            setError('Value must be a valid date matching RFC3339');
-            return false;
+            return [false, 'Value must be a valid date matching RFC3339'];
         }
-        return true;
+        return [true, ''];
     };
 };

@@ -149,10 +149,15 @@ export const ConstraintAccordionEdit = ({
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const hasValues = validateConstraintValues();
+        if (!hasValues) return;
+        const [typeValidatorResult, err] = validator();
 
-        const frontendValidation = validateConstraintValues() && validator();
+        if (!typeValidatorResult) {
+            setError(err);
+        }
 
-        if (frontendValidation) {
+        if (typeValidatorResult) {
             try {
                 await validateConstraint(projectId, featureId, localConstraint);
 
