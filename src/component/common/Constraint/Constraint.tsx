@@ -1,5 +1,7 @@
 import { Delete, Edit } from '@material-ui/icons';
 import classnames from 'classnames';
+import { IN, NOT_IN } from 'constants/operators';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { useParams } from 'react-router';
 import { IFeatureViewParams } from '../../../interfaces/params';
 import { IConstraint } from '../../../interfaces/strategy';
@@ -24,6 +26,8 @@ const Constraint = ({
     className,
     ...rest
 }: IConstraintProps) => {
+    // CHANGEME - Feat: Constraint Operators
+    const { uiConfig } = useUiConfig();
     const styles = useStyles();
     const { projectId } = useParams<IFeatureViewParams>();
 
@@ -33,6 +37,12 @@ const Constraint = ({
     });
 
     const editable = !!(deleteCallback && editCallback);
+    // CHANGEME - Feat: Constraint Operators
+    // Disable the edit button for constraints that are using new operators if
+    // the new operators are not enabled
+    const operatorIsNew =
+        constraint.operator !== IN && constraint.operator !== NOT_IN;
+    const disabledEdit = !uiConfig.flags.CO && operatorIsNew;
 
     return (
         <div className={classes + ' ' + className} {...rest}>
@@ -55,6 +65,7 @@ const Constraint = ({
                             onClick={editCallback}
                             permission={UPDATE_FEATURE}
                             projectId={projectId}
+                            disabled={disabledEdit}
                         >
                             <Edit titleAccess="Edit constraint" />
                         </PermissionIconButton>
