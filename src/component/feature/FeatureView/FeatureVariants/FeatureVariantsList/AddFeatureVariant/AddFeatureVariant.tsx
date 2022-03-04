@@ -5,7 +5,6 @@ import {
     FormControlLabel,
     Grid,
     InputAdornment,
-    TextField,
     Tooltip,
 } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
@@ -24,6 +23,7 @@ import { IFeatureVariant, IOverride } from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useStyles } from './AddFeatureVariant.styles';
+import Input from 'component/common/Input/Input';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -150,8 +150,9 @@ export const AddVariant = ({
             setError(weightValidation);
             return;
         }
-
-        if (payload.type === 'json' && !isValidJSON(payload.value)) {
+        const validJSON =
+            payload.type === 'json' && !isValidJSON(payload.value);
+        if (validJSON) {
             return;
         }
 
@@ -268,17 +269,15 @@ export const AddVariant = ({
                 className={commonStyles.contentSpacingY}
             >
                 <p className={styles.error}>{error.general}</p>
-                <TextField
+                <Input
                     label="Variant name"
                     autoFocus
                     name="name"
                     className={styles.input}
-                    helperText={error.name}
+                    errorText={error.name}
                     value={data.name || ''}
                     error={Boolean(error.name)}
-                    variant="outlined"
                     required
-                    size="small"
                     type="name"
                     disabled={editing}
                     onChange={setVariantValue}
@@ -321,14 +320,12 @@ export const AddVariant = ({
                         condition={data.weightType === weightTypes.FIX}
                         show={
                             <Grid item md={4}>
-                                <TextField
+                                <Input
                                     id="weight"
                                     label="Weight"
                                     name="weight"
-                                    variant="outlined"
-                                    size="small"
-                                    placeholder=""
                                     data-test={'VARIANT_WEIGHT_INPUT'}
+                                    // @ts-expect-error
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="start">
@@ -339,7 +336,7 @@ export const AddVariant = ({
                                     className={styles.weightInput}
                                     value={data.weight}
                                     error={Boolean(error.weight)}
-                                    helperText={error.weight}
+                                    errorText={error.weight}
                                     type="number"
                                     disabled={!isFixWeight}
                                     onChange={e => {
@@ -374,23 +371,22 @@ export const AddVariant = ({
                         />
                     </Grid>
                     <Grid item md={8} sm={8} xs={6}>
-                        <TextField
+                        <Input
                             rows={payload.type === 'json' ? 10 : 0}
                             error={Boolean(error.payload)}
-                            helperText={error.payload}
+                            errorText={error.payload}
                             multiline
                             name="value"
                             className={commonStyles.fullWidth}
                             value={payload.value}
                             onChange={onPayload}
-                            variant="outlined"
-                            size="small"
                             data-test={'VARIANT_PAYLOAD_VALUE'}
                             placeholder={
                                 payload.type === 'json'
                                     ? '{ "hello": "world" }'
                                     : 'value'
                             }
+                            label="value"
                         />
                     </Grid>
                 </Grid>
