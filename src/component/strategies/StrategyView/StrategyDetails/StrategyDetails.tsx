@@ -7,17 +7,18 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Add, RadioButtonChecked } from '@material-ui/icons';
-import { AppsLinkList } from '../../../common';
-import ConditionallyRender from '../../../common/ConditionallyRender';
+import { AppsLinkList } from 'component/common';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import styles from '../../strategies.module.scss';
 import { TogglesLinkList } from '../../TogglesLinkList/TogglesLinkList';
-import { ICustomStrategyParameter, IStrategy } from 'interfaces/strategy';
+import { IParameter, IStrategy } from 'interfaces/strategy';
 import { IApplication } from 'interfaces/application';
+import { IFeatureToggle } from 'interfaces/featureToggle';
 
 interface IStrategyDetailsProps {
     strategy: IStrategy;
     applications: IApplication[];
-    toggles: [];
+    toggles: IFeatureToggle[];
 }
 
 export const StrategyDetails = ({
@@ -26,7 +27,7 @@ export const StrategyDetails = ({
     toggles,
 }: IStrategyDetailsProps) => {
     const { parameters = [] } = strategy;
-    const renderParameters = (params: ICustomStrategyParameter[]) => {
+    const renderParameters = (params: IParameter[]) => {
         if (params.length > 0) {
             return params.map(({ name, type, description, required }, i) => (
                 <ListItem key={`${name}-${i}`}>
@@ -76,12 +77,7 @@ export const StrategyDetails = ({
                 <Grid item sm={12} md={12}>
                     <h6>Parameters</h6>
                     <hr />
-                    <List>
-                        {
-                            //@ts-expect-error
-                            renderParameters(parameters)
-                        }
-                    </List>
+                    <List>{renderParameters(parameters)}</List>
                 </Grid>
 
                 <Grid item sm={12} md={6}>

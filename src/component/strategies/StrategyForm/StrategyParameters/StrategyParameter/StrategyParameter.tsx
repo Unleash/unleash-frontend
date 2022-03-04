@@ -1,9 +1,9 @@
 import { Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { useStyles } from './StrategyParameter.styles';
-import GeneralSelect from '../../../../common/GeneralSelect/GeneralSelect';
-import Input from '../../../../common/Input/Input';
-import ConditionallyRender from '../../../../common/ConditionallyRender';
+import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
+import Input from 'component/common/Input/Input';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import React from 'react';
 import { ICustomStrategyParameter } from 'interfaces/strategy';
 
@@ -57,7 +57,9 @@ export const StrategyParameter = ({
     errors,
 }: IStrategyParameterProps) => {
     const styles = useStyles();
-    const handleTypeChange = (event: { target: { value: any } }) => {
+    const handleTypeChange = (
+        event: React.ChangeEvent<{ name?: string; value: unknown }>
+    ) => {
         set({ type: event.target.value });
     };
 
@@ -118,7 +120,7 @@ export const StrategyParameter = ({
             <FormControlLabel
                 control={
                     <Checkbox
-                        checked={!!input.required}
+                        checked={Boolean(input.required)}
                         onChange={() => set({ required: !input.required })}
                     />
                 }

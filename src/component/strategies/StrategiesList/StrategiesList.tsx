@@ -201,7 +201,6 @@ export const StrategiesList = () => {
 
     const editButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
-            //@ts-expect-error
             condition={strategy?.editable}
             show={
                 <PermissionIconButton
@@ -228,7 +227,6 @@ export const StrategiesList = () => {
 
     const deleteButton = (strategy: ICustomStrategyPayload) => (
         <ConditionallyRender
-            //@ts-expect-error
             condition={strategy?.editable}
             show={
                 <PermissionIconButton

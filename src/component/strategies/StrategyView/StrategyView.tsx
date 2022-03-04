@@ -1,15 +1,15 @@
 import { Grid } from '@material-ui/core';
-import { UPDATE_STRATEGY } from '../../providers/AccessProvider/permissions';
-import PageContent from '../../common/PageContent/PageContent';
-import useStrategies from '../../../hooks/api/getters/useStrategies/useStrategies';
+import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
+import PageContent from 'component/common/PageContent/PageContent';
+import useStrategies from 'component/../hooks/api/getters/useStrategies/useStrategies';
 import { useHistory, useParams } from 'react-router-dom';
-import { useFeatures } from '../../../hooks/api/getters/useFeatures/useFeatures';
-import useApplications from '../../../hooks/api/getters/useApplications/useApplications';
+import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
+import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
-import HeaderTitle from '../../common/HeaderTitle';
-import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
+import HeaderTitle from 'component/common/HeaderTitle';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@material-ui/icons';
-import ConditionallyRender from '../../common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 
 export const StrategyView = () => {
     const { name } = useParams<{ name: string }>();
@@ -57,7 +57,6 @@ export const StrategyView = () => {
                 <Grid item xs={12} sm={12}>
                     <StrategyDetails
                         strategy={strategy}
-                        //@ts-expect-error
                         toggles={toggles}
                         applications={applications}
                     />

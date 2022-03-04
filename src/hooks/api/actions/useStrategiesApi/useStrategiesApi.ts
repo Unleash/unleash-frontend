@@ -2,6 +2,7 @@ import { IParameter } from 'interfaces/strategy';
 import useAPI from '../useApi/useApi';
 
 export interface ICustomStrategyPayload {
+    editable: boolean;
     name: string;
     description: string;
     parameters: IParameter[];
