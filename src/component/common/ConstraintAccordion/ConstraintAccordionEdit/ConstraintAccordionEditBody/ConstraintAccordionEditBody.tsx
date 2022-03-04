@@ -72,7 +72,8 @@ const InvertedOperator = ({
     return (
         <>
             <ConstraintFormHeader>
-                Should the operator be inverted?
+                Should the operator be negated? (this will make the operator do
+                the opposite)
             </ConstraintFormHeader>
             <FormControlLabel
                 style={{ display: 'block' }}

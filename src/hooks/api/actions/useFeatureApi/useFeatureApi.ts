@@ -30,7 +30,7 @@ const useFeatureApi = () => {
         featureName: string,
         constraint: IConstraint
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureName}/validate-constraint`;
+        const path = `api/admin/projects/${projectId}/features/${featureName}/constraint/validate`;
         const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify(constraint),

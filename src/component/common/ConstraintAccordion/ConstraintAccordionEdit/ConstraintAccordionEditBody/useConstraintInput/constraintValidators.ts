@@ -25,7 +25,7 @@ export const stringValidatorGenerator = (values: string[]) => {
 export const semVerValidatorGenerator = (value: string) => {
     return (): ConstraintValidatorOutput => {
         if (!semver.valid(value)) {
-            return [false, 'Value is not a valid semver'];
+            return [false, 'Value is not a valid semver. For example 1.2.4'];
         }
         return [true, ''];
     };
