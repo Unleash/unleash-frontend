@@ -34,7 +34,7 @@ import { formatUnknownError } from '../../../utils/format-unknown-error';
 
 export const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
-    const { feature, loading, error } = useFeature(projectId, featureId);
+    const { feature, loading, error, status } = useFeature(projectId, featureId);
     const { refetch: projectRefetch } = useProject(projectId);
     const [openTagDialog, setOpenTagDialog] = useState(false);
     const { a11yProps } = useTabs(0);
@@ -133,7 +133,8 @@ export const FeatureView = () => {
         );
     };
 
-    if (error) {
+    console.log(status)
+    if (status === 404) {
         return renderFeatureNotExist();
     }
     // CHANGEME - Feat: Constraint Operators
@@ -146,18 +147,25 @@ export const FeatureView = () => {
     };
 
     return (
-        <div ref={ref}>
-            <div className={styles.header}>
-                <div className={styles.innerContainer}>
-                    <div className={styles.toggleInfoContainer}>
-                        <h2 className={styles.featureViewHeader} data-loading>
-                            {feature.name}{' '}
-                        </h2>
-                        <ConditionallyRender
-                            condition={!smallScreen}
-                            show={<StatusChip stale={feature?.stale} />}
-                        />
-                    </div>
+        <ConditionallyRender
+            condition={error === undefined}
+            show={
+                <div ref={ref}>
+                    <div className={styles.header}>
+                        <div className={styles.innerContainer}>
+                            <div className={styles.toggleInfoContainer}>
+                                <h2
+                                    className={styles.featureViewHeader}
+                                    data-loading
+                                >
+                                    {feature.name}{' '}
+                                </h2>
+                                <ConditionallyRender
+                                    condition={!smallScreen}
+                                    show={<StatusChip stale={feature?.stale} />}
+                                />
+                            </div>
+
                             <div className={styles.actions}>
                                 <PermissionIconButton
                                     permission={CREATE_FEATURE}
@@ -244,51 +252,20 @@ export const FeatureView = () => {
                         secondaryButtonText="Cancel"
                         title="Archive feature toggle"
                     >
-                        {renderTabs()}
-                    </Tabs>
+                        Are you sure you want to archive this feature toggle?
+                    </Dialogue>
+                    <StaleDialog
+                        stale={feature.stale}
+                        open={openStaleDialog}
+                        setOpen={setOpenStaleDialog}
+                    />
+                    <AddTagDialog
+                        open={openTagDialog}
+                        setOpen={setOpenTagDialog}
+                    />
                 </div>
-            </div>
-            <Route
-                exact
-                path={`/projects/:projectId/features/:featureId`}
-                component={FeatureOverview}
-            />
-            <Route
-                path={`/projects/:projectId/features/:featureId/strategies`}
-                component={FeatureStrategies}
-            />
-            <Route
-                path={`/projects/:projectId/features/:featureId/metrics`}
-                component={FeatureMetrics}
-            />
-            <Route
-                path={`/projects/:projectId/features/:featureId/logs`}
-                component={FeatureLog}
-            />
-            <Route
-                path={`/projects/:projectId/features/:featureId/variants`}
-                component={FeatureVariants}
-            />
-            <Route
-                path={`/projects/:projectId/features/:featureId/settings`}
-                component={FeatureSettings}
-            />
-            <Dialogue
-                onClick={() => archiveToggle()}
-                open={showDelDialog}
-                onClose={handleCancel}
-                primaryButtonText="Archive toggle"
-                secondaryButtonText="Cancel"
-                title="Archive feature toggle"
-            >
-                Are you sure you want to archive this feature toggle?
-            </Dialogue>
-            <StaleDialog
-                stale={feature.stale}
-                open={openStaleDialog}
-                setOpen={setOpenStaleDialog}
-            />
-            <AddTagDialog open={openTagDialog} setOpen={setOpenTagDialog} />
-        </div>
+            }
+            elseShow={renderFeatureNotExist()}
+        />
     );
 };

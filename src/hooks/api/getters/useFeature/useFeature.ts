@@ -4,22 +4,22 @@ import { useState, useEffect } from 'react';
 import { formatApiPath } from '../../../../utils/format-path';
 import { IFeatureToggle } from '../../../../interfaces/featureToggle';
 import { defaultFeature } from './defaultFeature';
-import handleErrorResponses from '../httpErrorResponseHandler';
 
 const useFeature = (
     projectId: string,
     id: string,
     options: SWRConfiguration = {}
 ) => {
+    const [status, setStatus] = useState<number>();
     const fetcher = async () => {
         const path = formatApiPath(
             `api/admin/projects/${projectId}/features/${id}`
         );
-        return fetch(path, {
-            method: 'GET',
-        })
-            .then(handleErrorResponses('Feature toggle data'))
-            .then(res => res.json());
+        return fetch(path).then(async res => {
+            await setStatus(res.status);
+            console.log(status);
+            return res.json();
+        });
     };
 
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
@@ -41,6 +41,7 @@ const useFeature = (
     return {
         feature: data || defaultFeature,
         error,
+        status,
         loading,
         refetch,
         FEATURE_CACHE_KEY,
