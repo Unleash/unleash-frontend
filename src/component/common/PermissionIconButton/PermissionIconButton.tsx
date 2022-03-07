@@ -1,12 +1,9 @@
 import { IconButton, Tooltip } from '@material-ui/core';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import AccessContext from '../../../contexts/AccessContext';
 
 interface IPermissionIconButtonProps
-    extends React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLButtonElement>,
-        HTMLButtonElement
-    > {
+    extends React.HTMLProps<HTMLButtonElement> {
     permission: string;
     Icon?: React.ElementType;
     tooltip?: string;
@@ -39,13 +36,14 @@ const PermissionIconButton: React.FC<IPermissionIconButtonProps> = ({
         access = hasAccess(permission);
     }
 
-    const tooltipText = access
-        ? tooltip || ''
-        : "You don't have access to perform this operation";
+    const tooltipText = !access
+        ? "You don't have access to perform this operation"
+        : '';
 
     return (
         <Tooltip title={tooltipText} arrow>
             <span>
+                {/* @ts-expect-error */}
                 <IconButton onClick={onClick} disabled={!access} {...rest}>
                     {children}
                 </IconButton>

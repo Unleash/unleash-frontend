@@ -18,10 +18,11 @@ import PermissionIconButton from '../../common/PermissionIconButton/PermissionIc
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
+import FeatureStrategies2 from './FeatureStrategies2/FeatureStrategies2';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
-import FeatureSettings from './FeatureSettings/FeatureSettings';
+import { FeatureSettings } from './FeatureSettings/FeatureSettings';
 import useLoading from '../../../hooks/useLoading';
 import ConditionallyRender from '../../common/ConditionallyRender';
 import { getCreateTogglePath } from '../../../utils/route-path-helpers';
@@ -61,7 +62,7 @@ export const FeatureView = () => {
             setShowDelDialog(false);
             projectRefetch();
             history.push(`/projects/${projectId}`);
-        } catch (error) {
+        } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
             setShowDelDialog(false);
         }
@@ -135,6 +136,14 @@ export const FeatureView = () => {
     if (error) {
         return renderFeatureNotExist();
     }
+    // CHANGEME - Feat: Constraint Operators
+    // TEMPORARY UNTIL WE ROLLED OUT FULLY
+    const resolveFeatureStrategies = () => {
+        if (uiConfig.flags.CO) {
+            return FeatureStrategies2;
+        }
+        return FeatureStrategies;
+    };
 
     return (
         <div ref={ref}>
@@ -149,54 +158,91 @@ export const FeatureView = () => {
                             show={<StatusChip stale={feature?.stale} />}
                         />
                     </div>
-
-                    <div className={styles.actions}>
-                        <PermissionIconButton
-                            permission={CREATE_FEATURE}
-                            projectId={projectId}
-                            tooltip="Copy"
-                            data-loading
-                            component={Link}
-                            to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
-                        >
-                            <FileCopy titleAccess="Copy" />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            permission={DELETE_FEATURE}
-                            projectId={projectId}
-                            tooltip="Archive feature toggle"
-                            data-loading
-                            onClick={() => setShowDelDialog(true)}
-                        >
-                            <Archive titleAccess="Archive feature toggle" />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            onClick={() => setOpenStaleDialog(true)}
-                            permission={UPDATE_FEATURE}
-                            projectId={projectId}
-                            tooltip="Toggle stale status"
-                            data-loading
-                        >
-                            <WatchLater titleAccess="Toggle stale status" />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            onClick={() => setOpenTagDialog(true)}
-                            permission={UPDATE_FEATURE}
-                            projectId={projectId}
-                            tooltip="Add tag"
-                            data-loading
-                        >
-                            <Label titleAccess="Add tag" />
-                        </PermissionIconButton>
+                            <div className={styles.actions}>
+                                <PermissionIconButton
+                                    permission={CREATE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Copy"
+                                    data-loading
+                                    // @ts-expect-error
+                                    component={Link}
+                                    to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
+                                >
+                                    <FileCopy titleAccess="Copy" />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    permission={DELETE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Archive feature toggle"
+                                    data-loading
+                                    onClick={() => setShowDelDialog(true)}
+                                >
+                                    <Archive titleAccess="Archive feature toggle" />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    onClick={() => setOpenStaleDialog(true)}
+                                    permission={UPDATE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Toggle stale status"
+                                    data-loading
+                                >
+                                    <WatchLater titleAccess="Toggle stale status" />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    onClick={() => setOpenTagDialog(true)}
+                                    permission={UPDATE_FEATURE}
+                                    projectId={projectId}
+                                    tooltip="Add tag"
+                                    data-loading
+                                >
+                                    <Label titleAccess="Add tag" />
+                                </PermissionIconButton>
+                            </div>
+                        </div>
+                        <div className={styles.separator} />
+                        <div className={styles.tabContainer}>
+                            <Tabs
+                                value={history.location.pathname}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                className={styles.tabNavigation}
+                            >
+                                {renderTabs()}
+                            </Tabs>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.separator} />
-                <div className={styles.tabContainer}>
-                    <Tabs
-                        value={history.location.pathname}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        className={styles.tabNavigation}
+                    <Route
+                        exact
+                        path={`/projects/:projectId/features/:featureId`}
+                        component={FeatureOverview}
+                    />
+                    <Route
+                        path={`/projects/:projectId/features/:featureId/strategies`}
+                        component={resolveFeatureStrategies()}
+                    />
+                    <Route
+                        path={`/projects/:projectId/features/:featureId/metrics`}
+                        component={FeatureMetrics}
+                    />
+                    <Route
+                        path={`/projects/:projectId/features/:featureId/logs`}
+                        component={FeatureLog}
+                    />
+                    <Route
+                        path={`/projects/:projectId/features/:featureId/variants`}
+                        component={FeatureVariants}
+                    />
+                    <Route
+                        path={`/projects/:projectId/features/:featureId/settings`}
+                        component={FeatureSettings}
+                    />
+                    <Dialogue
+                        onClick={() => archiveToggle()}
+                        open={showDelDialog}
+                        onClose={handleCancel}
+                        primaryButtonText="Archive toggle"
+                        secondaryButtonText="Cancel"
+                        title="Archive feature toggle"
                     >
                         {renderTabs()}
                     </Tabs>
