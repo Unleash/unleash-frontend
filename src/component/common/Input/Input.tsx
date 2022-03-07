@@ -15,7 +15,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     onBlur?: (e: any) => any;
     multiline?: boolean;
     rows?: number;
-    InputProps?: Object;
+    InputProps?: Partial<InputProps>;
     InputLabelProps?: Partial<InputLabelProps>;
 }
 
