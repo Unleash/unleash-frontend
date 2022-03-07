@@ -124,7 +124,7 @@ const EnvironmentListItem = ({
     return (
         // @ts-expect-error
         <ListItem
-            style={{ position: 'relative', opacity }}
+            style={{ position: 'relative', opacity, color: '#817AFE' }}
             ref={ref}
             data-handler-id={handlerId}
         >
