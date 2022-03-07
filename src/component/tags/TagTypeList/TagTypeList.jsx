@@ -93,7 +93,10 @@ export const TagTypeList = () => {
 
     const renderTagType = tagType => {
         let link = (
-            <Link to={`/tag-types/edit/${tagType.name}`}>
+            <Link
+                to={`/tag-types/edit/${tagType.name}`}
+                style={{ color: '#817AFE' }}
+            >
                 <strong>{tagType.name}</strong>
             </Link>
         );
