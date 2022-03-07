@@ -123,5 +123,5 @@ const removeEmptyConstraints = (
 };
 
 const isEmptyConstraint = (constraint: IConstraint): boolean => {
-    return constraint.values.length === 0;
+    return !constraint.values || constraint.values.length === 0;
 };

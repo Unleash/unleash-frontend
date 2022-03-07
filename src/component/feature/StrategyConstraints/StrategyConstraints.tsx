@@ -38,7 +38,6 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
     const contextFields = context;
 
     const enabled = uiConfig.flags[C];
-    // @ts-expect-error
     const contextNames = contextFields.map(context => context.name);
 
     const onClick = (evt: React.SyntheticEvent) => {
@@ -52,7 +51,7 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
         updateConstraints(updatedConstraints);
     };
 
-    const createConstraint = () => {
+    const createConstraint = (): IConstraint => {
         return {
             contextName: contextNames[0],
             operator: 'IN',
@@ -72,7 +71,6 @@ const StrategyConstraints: React.FC<IStrategyConstraintProps> = ({
     const updateConstraint = (index: number) => (value, field) => {
         const updatedConstraints = cloneDeep(constraints);
         const constraint = updatedConstraints[index];
-        // @ts-expect-error
         constraint[field] = value;
         updateConstraints(updatedConstraints);
     };

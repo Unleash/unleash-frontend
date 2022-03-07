@@ -64,6 +64,15 @@ export const FeatureStrategyContainer = ({
         }
     };
 
+    // TODO(olav): Implement toggle for new constraint operators.
+    //
+    // const resolveFeatureStrategies = () => {
+    //     if (uiConfig.flags.CO) {
+    //         return FeatureStrategies2;
+    //     }
+    //     return FeatureStrategies;
+    // };
+
     return (
         <form className={styles.form} onSubmit={onSubmitOrProdGuard}>
             <h2 className={styles.title}>
