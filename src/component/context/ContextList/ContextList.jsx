@@ -19,7 +19,7 @@ import {
 import { Add, Album, Delete, Edit } from '@material-ui/icons';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useStyles } from './styles';
+import { useStyles } from './ContextList.styles';
 import ConfirmDialogue from '../../common/Dialogue';
 import AccessContext from '../../../contexts/AccessContext';
 import useUnleashContext from '../../../hooks/api/getters/useUnleashContext/useUnleashContext';
