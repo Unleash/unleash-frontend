@@ -1,3 +1,5 @@
+import { Operator } from 'constants/operators';
+
 export interface IFeatureStrategy {
     id: string;
     name: string;
@@ -15,9 +17,13 @@ export interface IStrategy {
 }
 
 export interface IConstraint {
-    values: string[];
-    operator: string;
+    inverted?: boolean;
+    values?: string[];
+    value?: string;
+    caseInsensitive?: boolean;
+    operator: Operator;
     contextName: string;
+    [index: string]: unknown;
 }
 
 export interface IParameter {
@@ -32,4 +38,23 @@ export interface IStrategyPayload {
     name?: string;
     constraints: IConstraint[];
     parameters: IParameter;
+}
+export interface ICustomStrategyParameter {
+    name: string;
+    description: string;
+    required: boolean;
+    type: string;
+}
+
+export interface ICustomStrategyPayload {
+    name: string;
+    description: string;
+    parameters: IParameter[];
+}
+
+export interface ICustomStrategy {
+    name: string;
+    description: string;
+    parameters: IParameter[];
+    editable: boolean;
 }
