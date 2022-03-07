@@ -21,6 +21,7 @@ import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
+import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
 
 interface IFeatureStrategyContainerProps {
     feature: IFeatureToggle;
@@ -64,14 +65,10 @@ export const FeatureStrategyContainer = ({
         }
     };
 
-    // TODO(olav): Implement toggle for new constraint operators.
-    //
-    // const resolveFeatureStrategies = () => {
-    //     if (uiConfig.flags.CO) {
-    //         return FeatureStrategies2;
-    //     }
-    //     return FeatureStrategies;
-    // };
+    // TODO(olav): Remove FeatureStrategyConstraints when the new constraints are released.
+    const FeatureStrategyConstraintsImplementation = uiConfig.flags.CO
+        ? FeatureStrategyConstraints2
+        : FeatureStrategyConstraints;
 
     return (
         <form className={styles.form} onSubmit={onSubmitOrProdGuard}>
@@ -89,7 +86,7 @@ export const FeatureStrategyContainer = ({
                 condition={Boolean(uiConfig.flags[C])}
                 show={
                     <div>
-                        <FeatureStrategyConstraints
+                        <FeatureStrategyConstraintsImplementation
                             projectId={feature.project}
                             environmentId={environmentId}
                             strategy={strategy}
