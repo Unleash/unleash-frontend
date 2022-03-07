@@ -15,6 +15,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     onBlur?: (e: any) => any;
     multiline?: boolean;
     rows?: number;
+    InputProps?: object;
 }
 
 const Input = ({
@@ -26,6 +27,7 @@ const Input = ({
     className,
     value,
     onChange,
+    InputProps,
     ...rest
 }: IInputProps) => {
     const styles = useStyles();
@@ -50,6 +52,7 @@ const Input = ({
                         root: styles.helperText,
                     },
                 }}
+                inputProps={InputProps}
                 {...rest}
             />
         </div>

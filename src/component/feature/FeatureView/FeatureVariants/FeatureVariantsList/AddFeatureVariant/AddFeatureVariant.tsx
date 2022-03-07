@@ -24,6 +24,7 @@ import cloneDeep from 'lodash.clonedeep';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useStyles } from './AddFeatureVariant.styles';
 import Input from 'component/common/Input/Input';
+import { formatUnknownError } from 'utils/format-unknown-error';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -173,19 +174,14 @@ export const AddVariant = ({
             await save(variant);
             clear();
             closeDialog();
-        } catch (error) {
-            // @ts-expect-error
-            if (error?.body?.details[0]?.message?.includes('duplicate value')) {
+        } catch (e: unknown) {
+            const error = formatUnknownError(e);
+            if (error.includes('duplicate value')) {
                 setError({ name: 'A variant with that name already exists.' });
-            } else if (
-                // @ts-expect-error
-                error?.body?.details[0]?.message?.includes('must be a number')
-            ) {
+            } else if (error.includes('must be a number')) {
                 setError({ weight: 'Weight must be a number' });
             } else {
-                const msg =
-                    // @ts-expect-error
-                    error?.body?.details[0]?.message || 'Could not add variant';
+                const msg = error || 'Could not add variant';
                 setError({ general: msg });
             }
         }
@@ -325,7 +321,6 @@ export const AddVariant = ({
                                     label="Weight"
                                     name="weight"
                                     data-test={'VARIANT_WEIGHT_INPUT'}
-                                    // @ts-expect-error
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="start">
