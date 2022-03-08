@@ -50,7 +50,7 @@ const Constraint = ({
                 <StringTruncator text={constraint.contextName} maxWidth="125" />
                 <StrategySeparator text={constraint.operator} maxWidth="none" />
                 <span className={styles.values}>
-                    {constraint.values?.join(', ')}
+                    {constraint.values?.join(', ') ?? constraint.value}
                 </span>
             </div>
 
