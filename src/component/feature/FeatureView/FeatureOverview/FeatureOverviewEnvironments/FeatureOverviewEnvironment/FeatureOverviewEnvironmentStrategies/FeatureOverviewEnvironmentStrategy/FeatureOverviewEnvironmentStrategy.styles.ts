@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         fill: theme.palette.grey[600],
     },
-    editStrategy: {
+    actions: {
         marginLeft: 'auto',
     },
     body: {

@@ -10,13 +10,17 @@ import PermissionButton from '../../../common/PermissionButton/PermissionButton'
 import { DELETE_FEATURE_STRATEGY } from '../../../providers/AccessProvider/permissions';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import { STRATEGY_FORM_REMOVE_ID } from 'testIds';
+import ConditionallyRender from 'component/common/ConditionallyRender';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import { Delete } from '@material-ui/icons';
 
 interface IFeatureStrategyRemoveProps {
     projectId: string;
     featureId: string;
     environmentId: string;
     strategyId: string;
-    disabled: boolean;
+    disabled?: boolean;
+    icon?: boolean;
 }
 
 export const FeatureStrategyRemove = ({
@@ -25,6 +29,7 @@ export const FeatureStrategyRemove = ({
     environmentId,
     strategyId,
     disabled,
+    icon,
 }: IFeatureStrategyRemoveProps) => {
     const [openDialogue, setOpenDialogue] = useState(false);
     const { deleteStrategyFromFeature } = useFeatureStrategyApi();
@@ -54,19 +59,37 @@ export const FeatureStrategyRemove = ({
 
     return (
         <>
-            <PermissionButton
-                type="button"
-                color="secondary"
-                variant="text"
-                onClick={() => setOpenDialogue(true)}
-                permission={DELETE_FEATURE_STRATEGY}
-                projectId={projectId}
-                environmentId={environmentId}
-                data-test={STRATEGY_FORM_REMOVE_ID}
-                disabled={disabled}
-            >
-                Delete strategy
-            </PermissionButton>
+            <ConditionallyRender
+                condition={Boolean(icon)}
+                show={
+                    <PermissionIconButton
+                        onClick={() => setOpenDialogue(true)}
+                        projectId={projectId}
+                        environmentId={environmentId}
+                        disabled={disabled}
+                        permission={DELETE_FEATURE_STRATEGY}
+                        data-test={STRATEGY_FORM_REMOVE_ID}
+                        type="button"
+                    >
+                        <Delete titleAccess="Delete strategy" />
+                    </PermissionIconButton>
+                }
+                elseShow={
+                    <PermissionButton
+                        onClick={() => setOpenDialogue(true)}
+                        projectId={projectId}
+                        environmentId={environmentId}
+                        disabled={disabled}
+                        permission={DELETE_FEATURE_STRATEGY}
+                        data-test={STRATEGY_FORM_REMOVE_ID}
+                        color="secondary"
+                        variant="text"
+                        type="button"
+                    >
+                        Delete strategy
+                    </PermissionButton>
+                }
+            />
             <Dialogue
                 title="Are you sure you want to delete this strategy?"
                 open={openDialogue}

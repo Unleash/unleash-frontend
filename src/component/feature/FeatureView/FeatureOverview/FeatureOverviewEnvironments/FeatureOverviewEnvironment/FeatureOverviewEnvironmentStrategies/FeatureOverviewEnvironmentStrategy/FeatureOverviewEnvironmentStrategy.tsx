@@ -12,6 +12,7 @@ import { UPDATE_FEATURE_STRATEGY } from '../../../../../../../providers/AccessPr
 import FeatureOverviewExecution from '../../../../FeatureOverviewExecution/FeatureOverviewExecution';
 import { useStyles } from './FeatureOverviewEnvironmentStrategy.styles';
 import { formatEditStrategyPath } from '../../../../../../FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
+import { FeatureStrategyRemove } from 'component/feature/FeatureStrategy/FeatureStrategyRemove/FeatureStrategyRemove';
 
 interface IFeatureOverviewEnvironmentStrategyProps {
     environmentId: string;
@@ -40,7 +41,14 @@ const FeatureOverviewEnvironmentStrategy = ({
             <div className={styles.header}>
                 <Icon className={styles.icon} />
                 {getHumanReadableStrategyName(strategy.name)}
-                <div className={styles.editStrategy}>
+                <div className={styles.actions}>
+                    <FeatureStrategyRemove
+                        projectId={projectId}
+                        featureId={featureId}
+                        environmentId={environmentId}
+                        strategyId={strategy.id}
+                        icon
+                    />
                     <PermissionIconButton
                         permission={UPDATE_FEATURE_STRATEGY}
                         environmentId={environmentId}
