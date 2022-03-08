@@ -28,18 +28,30 @@ export const FeatureStrategyConstraints2 = ({
     strategy,
     setStrategy,
 }: IFeatureStrategyConstraints2Props) => {
-    const [editIndex, setEditIndex] = useState<number>();
+    const [editIndexes, setEditIndexes] = useState<number[]>([]);
     const { context } = useUnleashContext();
 
-    const stopEditing = () => {
-        setEditIndex(undefined);
+    const stopEditingAll = () => {
+        setEditIndexes([]);
+    };
+
+    const startEditingIndex = (index: number) => {
+        setEditIndexes(prev => [...prev, index]);
+    };
+
+    const stopEditingIndex = (index: number) => {
+        setEditIndexes(prev => prev.filter(editIndex => editIndex !== index));
+    };
+
+    const isEditingIndex = (index: number) => {
+        return editIndexes.includes(index);
     };
 
     const onAddConstraint = () => {
         if (mode === 'create') {
             // When creating a new strategy, new constraints should start in edit mode.
             // When editing an existing strategy, new constraints should start closed.
-            setEditIndex(strategy.constraints?.length ?? 0);
+            startEditingIndex(strategy.constraints?.length ?? 0);
         }
         setStrategy(
             produce(draft => {
@@ -50,7 +62,7 @@ export const FeatureStrategyConstraints2 = ({
     };
 
     const onSaveConstraint = (index: number) => (constraint: IConstraint) => {
-        stopEditing();
+        stopEditingIndex(index);
         setStrategy(
             produce(draft => {
                 draft.constraints = draft.constraints ?? [];
@@ -60,7 +72,7 @@ export const FeatureStrategyConstraints2 = ({
     };
 
     const onRemoveConstraint = (index: number) => {
-        stopEditing();
+        stopEditingAll();
         setStrategy(
             produce(draft => {
                 draft.constraints?.splice(index, 1);
@@ -75,11 +87,11 @@ export const FeatureStrategyConstraints2 = ({
                     key={index}
                     environmentId={environmentId}
                     constraint={constraint}
-                    onEdit={setEditIndex.bind(null, index)}
-                    onCancel={stopEditing}
+                    onEdit={startEditingIndex.bind(null, index)}
+                    onCancel={stopEditingIndex.bind(null, index)}
                     onDelete={onRemoveConstraint.bind(null, index)}
                     onSave={onSaveConstraint(index)}
-                    editing={editIndex === index}
+                    editing={isEditingIndex(index)}
                     compact
                 />
             ))}
