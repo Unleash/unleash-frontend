@@ -1,4 +1,4 @@
-import { Settings } from '@material-ui/icons';
+import { Edit } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core/styles';
 import { Link, useParams } from 'react-router-dom';
 import { IFeatureViewParams } from '../../../../../../../../interfaces/params';
@@ -49,7 +49,7 @@ const FeatureOverviewEnvironmentStrategy = ({
                         component={Link}
                         to={editStrategyPath}
                     >
-                        <Settings titleAccess="Edit" />
+                        <Edit titleAccess="Edit" />
                     </PermissionIconButton>
                 </div>
             </div>
