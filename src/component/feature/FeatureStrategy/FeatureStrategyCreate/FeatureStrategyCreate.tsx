@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useRequiredQueryParam } from 'hooks/useRequiredQueryParam';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
@@ -18,7 +18,6 @@ import {
 } from '../FeatureStrategyEdit/FeatureStrategyEdit';
 import { getStrategyObject } from 'utils/get-strategy-object';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
-import AccessContext from 'contexts/AccessContext';
 import { CREATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 
 export const FeatureStrategyCreate = () => {
@@ -32,7 +31,6 @@ export const FeatureStrategyCreate = () => {
     const { addStrategyToFeature, loading } = useFeatureStrategyApi();
     const { feature, refetchFeature } = useFeature(projectId, featureId);
     const { setToastData, setToastApiError } = useToast();
-    const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const { unleashUrl } = uiConfig;
     const { push } = useHistory();
@@ -85,11 +83,7 @@ export const FeatureStrategyCreate = () => {
                 environmentId={environmentId}
                 onSubmit={onSubmit}
                 loading={loading}
-                hasAccess={hasAccess(
-                    CREATE_FEATURE_STRATEGY,
-                    projectId,
-                    environmentId
-                )}
+                permission={CREATE_FEATURE_STRATEGY}
             />
         </FormTemplate>
     );

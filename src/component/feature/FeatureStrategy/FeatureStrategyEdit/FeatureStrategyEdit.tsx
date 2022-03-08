@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import { FeatureStrategyForm } from 'component/feature/FeatureStrategy/FeatureStrategyForm/FeatureStrategyForm';
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import { IFeatureStrategy, IStrategyPayload } from 'interfaces/strategy';
 import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
-import AccessContext from 'contexts/AccessContext';
 
 export const FeatureStrategyEdit = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -23,7 +22,6 @@ export const FeatureStrategyEdit = () => {
     const { updateStrategyOnFeature, loading } = useFeatureStrategyApi();
     const { feature, refetchFeature } = useFeature(projectId, featureId);
     const { setToastData, setToastApiError } = useToast();
-    const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const { unleashUrl } = uiConfig;
     const { push } = useHistory();
@@ -84,11 +82,7 @@ export const FeatureStrategyEdit = () => {
                 environmentId={environmentId}
                 onSubmit={onSubmit}
                 loading={loading}
-                hasAccess={hasAccess(
-                    UPDATE_FEATURE_STRATEGY,
-                    projectId,
-                    environmentId
-                )}
+                permission={UPDATE_FEATURE_STRATEGY}
             />
         </FormTemplate>
     );

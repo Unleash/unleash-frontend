@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import {
     getFeatureStrategyIcon,
@@ -23,13 +23,15 @@ import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
 import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
 import { useConstraintsValidation } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/useConstraintsValidation';
+import AccessContext from 'contexts/AccessContext';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 
 interface IFeatureStrategyFormProps {
     feature: IFeatureToggle;
     environmentId: string;
+    permission: string;
     onSubmit: () => void;
     loading: boolean;
-    hasAccess: boolean;
     strategy: Partial<IFeatureStrategy>;
     setStrategy: React.Dispatch<
         React.SetStateAction<Partial<IFeatureStrategy>>
@@ -41,15 +43,16 @@ export const FeatureStrategyForm = ({
     strategy,
     setStrategy,
     environmentId,
+    permission,
     onSubmit,
     loading,
-    hasAccess,
 }: IFeatureStrategyFormProps) => {
     const styles = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);
     const StrategyIcon = getFeatureStrategyIcon(strategy.name ?? '');
     const strategyName = getHumanReadableStrategyName(strategy.name ?? '');
+    const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const { push } = useHistory();
 
@@ -108,7 +111,11 @@ export const FeatureStrategyForm = ({
             <FeatureStrategyType
                 strategy={strategy}
                 setStrategy={setStrategy}
-                hasAccess={hasAccess}
+                hasAccess={hasAccess(
+                    permission,
+                    feature.project,
+                    environmentId
+                )}
             />
             <div className={styles.buttons}>
                 <Button
@@ -138,7 +145,10 @@ export const FeatureStrategyForm = ({
                     loading={loading}
                     label="Save strategy"
                 />
-                <Button
+                <PermissionButton
+                    permission={permission}
+                    projectId={feature.project}
+                    environmentId={environmentId}
                     variant="contained"
                     color="primary"
                     type="submit"
@@ -146,7 +156,7 @@ export const FeatureStrategyForm = ({
                     data-test={STRATEGY_FORM_SUBMIT_ID}
                 >
                     Save strategy
-                </Button>
+                </PermissionButton>
             </div>
         </form>
     );
