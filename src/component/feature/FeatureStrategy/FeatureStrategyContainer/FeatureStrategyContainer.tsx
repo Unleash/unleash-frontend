@@ -109,15 +109,18 @@ export const FeatureStrategyContainer = ({
                 >
                     Cancel
                 </Button>
-                {strategy.id && (
-                    <FeatureStrategyRemove
-                        projectId={feature.project}
-                        featureId={feature.name}
-                        environmentId={environmentId}
-                        strategyId={strategy.id}
-                        disabled={loading}
-                    />
-                )}
+                <ConditionallyRender
+                    condition={Boolean(strategy.id)}
+                    show={
+                        <FeatureStrategyRemove
+                            projectId={feature.project}
+                            featureId={feature.name}
+                            environmentId={environmentId}
+                            strategyId={strategy.id!}
+                            disabled={loading}
+                        />
+                    }
+                />
                 <FeatureStrategyProdGuard
                     open={showProdGuard}
                     onClose={() => setShowProdGuard(false)}
