@@ -2,9 +2,7 @@ import { useStyles } from './SegmentListItem.styles';
 import { TableCell, TableRow, Typography } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { useHistory } from 'react-router-dom';
 
 interface ISegmentListItemProps {
     id: number;
@@ -21,7 +19,6 @@ export const SegmentListItem = ({
     createAt,
     createdBy,
 }: ISegmentListItemProps) => {
-    const history = useHistory();
     const styles = useStyles();
 
     return (
@@ -52,10 +49,7 @@ export const SegmentListItem = ({
                     <PermissionIconButton
                         data-loading
                         aria-label="Edit"
-                        // disabled={type === BUILTIN_ROLE_TYPE}
-                        onClick={() => {
-                            history.push(`/test`);
-                        }}
+                        onClick={() => {}}
                         permission={ADMIN}
                     >
                         <Edit />
@@ -63,11 +57,7 @@ export const SegmentListItem = ({
                     <PermissionIconButton
                         data-loading
                         aria-label="Remove segment"
-                        // disabled={type === BUILTIN_ROLE_TYPE}
-                        onClick={() => {
-                            // @ts-expect-error
-                            setCurrentRole({ id, name, description });
-                        }}
+                        onClick={() => {}}
                         permission={ADMIN}
                     >
                         <Delete />

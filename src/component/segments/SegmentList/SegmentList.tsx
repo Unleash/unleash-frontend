@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
     Table,
     TableBody,
@@ -11,57 +11,43 @@ import usePagination from 'hooks/usePagination';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { SegmentListItem } from './SegmentListItem/SegmentListItem';
-import useProjectRoles from 'hooks/api/getters/useProjectRoles/useProjectRoles';
-import useProjectRolesApi from 'hooks/api/actions/useProjectRolesApi/useProjectRolesApi';
-import useToast from 'hooks/useToast';
-import { formatUnknownError } from 'utils/format-unknown-error';
 import { ISegment } from 'interfaces/segment';
 
 const segments = [
     {
         id: 1,
-        name: 'Segment',
-        description: 'hre',
-        createdAt: 'test',
+        name: 'Segment 1',
+        description: 'hjghjgfghjghjfghj',
+        createdAt: 'date',
         createdBy: 'Youssef Khedher',
     },
     {
         id: 2,
-        name: 'Segment',
-        description: 'hre',
-        createdAt: 'test',
-        createdBy: 'Youssef Khedher',
+        name: 'Segment 2',
+        description: 'asfafsfsddfsafsd',
+        createdAt: 'date',
+        createdBy: 'Chris',
+    },
+    {
+        id: 3,
+        name: 'Segment 3',
+        description: 'hrdfsfsadadsdfsdfse',
+        createdAt: 'date',
+        createdBy: 'Olav',
+    },
+    {
+        id: 4,
+        name: 'Segment 4',
+        description: 'this is a description',
+        createdAt: 'date',
+        createdBy: 'Frederik',
     },
 ];
 
 export const SegmentsList = () => {
     const { hasAccess } = useContext(AccessContext);
-
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);
-    const { deleteRole } = useProjectRolesApi();
-    const { refetch } = useProjectRoles();
-    const [currentRole, setCurrentRole] = useState<ISegment | null>(null);
-    const [delDialog, setDelDialog] = useState(false);
-    const [confirmName, setConfirmName] = useState('');
-    const { setToastData, setToastApiError } = useToast();
-
-    const deleteProjectRole = async () => {
-        if (!currentRole?.id) return;
-        try {
-            await deleteRole(currentRole?.id);
-            refetch();
-            setToastData({
-                type: 'success',
-                title: 'Successfully deleted role',
-                text: 'Your role is now deleted',
-            });
-        } catch (error: unknown) {
-            setToastApiError(formatUnknownError(error));
-        }
-        setDelDialog(false);
-        setConfirmName('');
-    };
 
     const renderSegments = () => {
         return page.map((segment: ISegment) => {
@@ -73,7 +59,6 @@ export const SegmentsList = () => {
                     description={segment.description}
                     createAt={segment.createdAt}
                     createdBy={segment.createdBy}
-                    // setDelDialog={setDelDialog}
                 />
             );
         });
@@ -86,11 +71,10 @@ export const SegmentsList = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Project Role</TableCell>
+                        <TableCell>Name</TableCell>
                         <TableCell>Description</TableCell>
                         <TableCell>Created on</TableCell>
                         <TableCell>Created By</TableCell>
-
 
                         <TableCell align="right">
                             {hasAccess(ADMIN) ? 'Action' : ''}

@@ -46,7 +46,6 @@ import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
-import { SegmentList } from 'component/segments/SegmentList/SegmentList';
 import { Segment } from 'component/segments/Segments';
 
 export const routes = [
@@ -361,6 +360,18 @@ export const routes = [
         menu: { mobile: true, advanced: true },
     },
 
+    // Segments
+
+    {
+        path: '/segments',
+        title: 'Segments',
+        component: Segment,
+        hidden: false,
+        type: 'protected',
+        layout: 'main',
+        menu: { mobile: true, advanced: true },
+    },
+
     // History
     {
         path: '/history/:toggleName',
@@ -530,15 +541,6 @@ export const routes = [
         type: 'unprotected',
         layout: 'standalone',
         menu: {},
-    },
-    {
-        path: '/test',
-        title: 'Addons',
-        component: Segment,
-        hidden: false,
-        type: 'protected',
-        layout: 'main',
-        menu: { mobile: true, advanced: true },
     },
 ];
 
