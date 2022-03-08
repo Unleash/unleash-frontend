@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
-import { IUnleashContextDefinition } from 'interfaces/context';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import {
     CREATE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
 import { FeatureStrategyFormMode } from 'component/feature/FeatureStrategy/FeatureStrategyForm/FeatureStrategyForm';
+import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
 
 interface IFeatureStrategyConstraints2Props {
     mode: FeatureStrategyFormMode;
@@ -107,17 +107,4 @@ export const FeatureStrategyConstraints2 = ({
             </PermissionButton>
         </>
     );
-};
-
-const createEmptyConstraint = (
-    context: IUnleashContextDefinition[]
-): IConstraint => {
-    return {
-        contextName: context[0].name,
-        operator: 'IN',
-        values: [],
-        value: '',
-        caseInsensitive: false,
-        inverted: false,
-    };
 };
