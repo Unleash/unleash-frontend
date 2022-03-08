@@ -10,7 +10,7 @@ import AdminInvoice from '../admin/invoice/InvoiceAdminPage';
 import AdminUsers from '../admin/users/UsersAdmin';
 import { AuthSettings } from '../admin/auth/AuthSettings';
 import Login from '../user/Login/Login';
-import { P, C, E, EEA, RE } from '../common/flags';
+import { C, E, EEA, P, RE } from '../common/flags';
 import { NewUser } from '../user/NewUser/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
@@ -44,8 +44,6 @@ import { EditAddon } from '../addons/EditAddon/EditAddon';
 import { CopyFeatureToggle } from '../feature/CopyFeature/CopyFeature';
 import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
-import { FeatureStrategyCreate } from '../feature/FeatureStrategy/FeatureStrategyCreate/FeatureStrategyCreate';
-import { FeatureStrategyEdit } from '../feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
 
@@ -75,22 +73,6 @@ export const routes = [
         title: ':name',
         parent: '/archive',
         component: RedirectArchive,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:projectId/features/:featureId/strategies/create',
-        title: 'Create feature',
-        component: FeatureStrategyCreate,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:projectId/features/:featureId/strategies/edit',
-        title: 'Edit feature',
-        component: FeatureStrategyEdit,
         type: 'protected',
         layout: 'main',
         menu: {},

@@ -1,7 +1,7 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
-import { Link, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Route, useHistory, useParams, Switch } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from '../../../hooks/api/getters/useFeature/useFeature';
 import useProject from '../../../hooks/api/getters/useProject/useProject';
@@ -87,6 +87,10 @@ export const FeatureView = () => {
             name: 'Event log',
         },
     ];
+
+    const activeTab =
+        tabData.find(tab => tab.path === history.location.pathname) ??
+        tabData[0];
 
     const renderTabs = () => {
         return tabData.map((tab, index) => {
@@ -190,7 +194,7 @@ export const FeatureView = () => {
                         <div className={styles.separator} />
                         <div className={styles.tabContainer}>
                             <Tabs
-                                value={history.location.pathname}
+                                value={activeTab.path}
                                 indicatorColor="primary"
                                 textColor="primary"
                                 className={styles.tabNavigation}
@@ -199,27 +203,28 @@ export const FeatureView = () => {
                             </Tabs>
                         </div>
                     </div>
-                    <Route
-                        exact
-                        path={`/projects/:projectId/features/:featureId`}
-                        component={FeatureOverview}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/metrics`}
-                        component={FeatureMetrics}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/logs`}
-                        component={FeatureLog}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/variants`}
-                        component={FeatureVariants}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/settings`}
-                        component={FeatureSettings}
-                    />
+                    <Switch>
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/metrics`}
+                            component={FeatureMetrics}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/logs`}
+                            component={FeatureLog}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/variants`}
+                            component={FeatureVariants}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/settings`}
+                            component={FeatureSettings}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId`}
+                            component={FeatureOverview}
+                        />
+                    </Switch>
                     <Dialogue
                         onClick={() => archiveToggle()}
                         open={showDelDialog}

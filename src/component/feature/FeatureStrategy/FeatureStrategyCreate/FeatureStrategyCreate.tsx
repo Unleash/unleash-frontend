@@ -64,6 +64,7 @@ export const FeatureStrategyCreate = () => {
 
     return (
         <FormTemplate
+            modal
             title="Add feature strategy"
             description={featureStrategyHelp}
             documentationLink={featureStrategyDocsLink}

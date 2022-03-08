@@ -29,6 +29,11 @@ const EnvironmentStrategyDialog = ({
         'default'
     );
 
+    const onClick = () => {
+        onClose();
+        history.push(createStrategyPath);
+    };
+
     return (
         // @ts-expect-error
         <Dialogue
@@ -39,10 +44,11 @@ const EnvironmentStrategyDialog = ({
             primaryButtonText="Take me directly to add strategy"
             permissionButton={
                 <PermissionButton
+                    type="button"
                     permission={CREATE_FEATURE_STRATEGY}
                     projectId={projectId}
                     environmentId={environmentName}
-                    onClick={() => history.push(createStrategyPath)}
+                    onClick={onClick}
                 >
                     Take me directly to add strategy
                 </PermissionButton>

@@ -50,6 +50,7 @@ export const FeatureStrategyMenu = ({
                 open={isPopoverOpen}
                 anchorEl={anchor}
                 onClose={onClose}
+                onClick={onClose}
             >
                 <FeatureStrategyMenuCards
                     projectId={projectId}
