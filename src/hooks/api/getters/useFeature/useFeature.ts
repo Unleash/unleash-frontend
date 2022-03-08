@@ -15,9 +15,8 @@ const useFeature = (
         const path = formatApiPath(
             `api/admin/projects/${projectId}/features/${id}`
         );
-        return fetch(path).then(async res => {
-            await setStatus(res.status);
-            console.log(status);
+        return fetch(path).then(res => {
+            setStatus(res.status);
             return res.json();
         });
     };
