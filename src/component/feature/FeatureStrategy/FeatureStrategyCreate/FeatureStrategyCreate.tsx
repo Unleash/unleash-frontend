@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useRequiredQueryParam } from 'hooks/useRequiredQueryParam';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import { FeatureStrategyContainer } from '../FeatureStrategyContainer/FeatureStrategyContainer';
+import { FeatureStrategyForm } from 'component/feature/FeatureStrategy/FeatureStrategyForm/FeatureStrategyForm';
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import useFeatureStrategyApi from '../../../../hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
@@ -77,7 +77,7 @@ export const FeatureStrategyCreate = () => {
                 )
             }
         >
-            <FeatureStrategyContainer
+            <FeatureStrategyForm
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}

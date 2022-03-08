@@ -14,7 +14,7 @@ import {
     useFeatureStrategyProdGuard,
 } from '../FeatureStrategyProdGuard/FeatureStrategyProdGuard';
 import { IFeatureToggle } from 'interfaces/featureToggle';
-import { useStyles } from './FeatureStrategyContainer.styles';
+import { useStyles } from './FeatureStrategyForm.styles';
 import { formatFeaturePath } from '../FeatureStrategyEdit/FeatureStrategyEdit';
 import { useHistory } from 'react-router-dom';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
@@ -23,7 +23,7 @@ import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
 import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
 
-interface IFeatureStrategyContainerProps {
+interface IFeatureStrategyFormProps {
     feature: IFeatureToggle;
     environmentId: string;
     onSubmit: () => void;
@@ -35,7 +35,7 @@ interface IFeatureStrategyContainerProps {
     >;
 }
 
-export const FeatureStrategyContainer = ({
+export const FeatureStrategyForm = ({
     feature,
     strategy,
     setStrategy,
@@ -43,7 +43,7 @@ export const FeatureStrategyContainer = ({
     onSubmit,
     loading,
     editable,
-}: IFeatureStrategyContainerProps) => {
+}: IFeatureStrategyFormProps) => {
     const styles = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import { FeatureStrategyContainer } from '../FeatureStrategyContainer/FeatureStrategyContainer';
+import { FeatureStrategyForm } from 'component/feature/FeatureStrategy/FeatureStrategyForm/FeatureStrategyForm';
 import FormTemplate from '../../../common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import { useRequiredQueryParam } from 'hooks/useRequiredQueryParam';
@@ -76,7 +76,7 @@ export const FeatureStrategyEdit = () => {
                 )
             }
         >
-            <FeatureStrategyContainer
+            <FeatureStrategyForm
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}
