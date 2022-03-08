@@ -1,8 +1,8 @@
 import useSWR, { mutate, SWRConfiguration } from 'swr';
 import { useState, useEffect } from 'react';
 
-import { formatApiPath } from '../../../../utils/format-path';
-import { IFeatureToggle } from '../../../../interfaces/featureToggle';
+import { formatApiPath } from 'utils/format-path';
+import { IFeatureToggle } from 'interfaces/featureToggle';
 import { defaultFeature } from './defaultFeature';
 
 const useFeature = (
@@ -20,7 +20,7 @@ const useFeature = (
             // @ts-expect-error
             error.status = res.status;
             throw error;
-        } 
+        }
         return res.json();
     };
 
