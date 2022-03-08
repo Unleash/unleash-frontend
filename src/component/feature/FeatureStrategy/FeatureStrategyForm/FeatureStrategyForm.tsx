@@ -22,6 +22,7 @@ import ConditionallyRender from '../../../common/ConditionallyRender';
 import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
 import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
+import { useConstraintsValidation } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/useConstraintsValidation';
 
 interface IFeatureStrategyFormProps {
     feature: IFeatureToggle;
@@ -69,10 +70,19 @@ export const FeatureStrategyForm = ({
         }
     };
 
-    // TODO(olav): Remove FeatureStrategyConstraints when the new constraints are released.
+    const hasValidConstraints = useConstraintsValidation(
+        feature.project,
+        feature.name,
+        strategy.constraints
+    );
+
+    // TODO(olav): Remove uiConfig.flags.CO when new constraints are released.
     const FeatureStrategyConstraintsImplementation = uiConfig.flags.CO
         ? FeatureStrategyConstraints2
         : FeatureStrategyConstraints;
+    const disableSubmitButtonFromConstraints = uiConfig.flags.CO
+        ? !hasValidConstraints
+        : false;
 
     return (
         <form className={styles.form} onSubmit={onSubmitOrProdGuard}>
@@ -137,7 +147,7 @@ export const FeatureStrategyForm = ({
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || disableSubmitButtonFromConstraints}
                     data-test={STRATEGY_FORM_SUBMIT_ID}
                 >
                     Save strategy
