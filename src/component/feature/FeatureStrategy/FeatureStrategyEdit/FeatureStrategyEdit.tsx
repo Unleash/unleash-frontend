@@ -77,13 +77,14 @@ export const FeatureStrategyEdit = () => {
             }
         >
             <FeatureStrategyForm
+                mode="edit"
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}
                 environmentId={environmentId}
                 onSubmit={onSubmit}
                 loading={loading}
-                editable={hasAccess(
+                hasAccess={hasAccess(
                     UPDATE_FEATURE_STRATEGY,
                     projectId,
                     environmentId

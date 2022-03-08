@@ -78,13 +78,14 @@ export const FeatureStrategyCreate = () => {
             }
         >
             <FeatureStrategyForm
+                mode="create"
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}
                 environmentId={environmentId}
                 onSubmit={onSubmit}
                 loading={loading}
-                editable={hasAccess(
+                hasAccess={hasAccess(
                     CREATE_FEATURE_STRATEGY,
                     projectId,
                     environmentId

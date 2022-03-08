@@ -9,8 +9,10 @@ import {
     CREATE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
+import { FeatureStrategyFormMode } from 'component/feature/FeatureStrategy/FeatureStrategyForm/FeatureStrategyForm';
 
 interface IFeatureStrategyConstraints2Props {
+    mode: FeatureStrategyFormMode;
     projectId: string;
     environmentId: string;
     strategy: Partial<IFeatureStrategy>;
@@ -20,6 +22,7 @@ interface IFeatureStrategyConstraints2Props {
 }
 
 export const FeatureStrategyConstraints2 = ({
+    mode,
     projectId,
     environmentId,
     strategy,
@@ -33,6 +36,11 @@ export const FeatureStrategyConstraints2 = ({
     };
 
     const onAddConstraint = () => {
+        if (mode === 'create') {
+            // When creating a new strategy, new constraints should start in edit mode.
+            // When editing an existing strategy, new constraints should start closed.
+            setEditIndex(strategy.constraints?.length ?? 0);
+        }
         setStrategy(
             produce(draft => {
                 draft.constraints = draft.constraints ?? [];

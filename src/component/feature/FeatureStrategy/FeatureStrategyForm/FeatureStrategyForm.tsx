@@ -28,12 +28,15 @@ interface IFeatureStrategyFormProps {
     environmentId: string;
     onSubmit: () => void;
     loading: boolean;
-    editable: boolean;
+    hasAccess: boolean;
+    mode: FeatureStrategyFormMode;
     strategy: Partial<IFeatureStrategy>;
     setStrategy: React.Dispatch<
         React.SetStateAction<Partial<IFeatureStrategy>>
     >;
 }
+
+export type FeatureStrategyFormMode = 'create' | 'edit';
 
 export const FeatureStrategyForm = ({
     feature,
@@ -42,7 +45,8 @@ export const FeatureStrategyForm = ({
     environmentId,
     onSubmit,
     loading,
-    editable,
+    hasAccess,
+    mode,
 }: IFeatureStrategyFormProps) => {
     const styles = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
@@ -91,6 +95,7 @@ export const FeatureStrategyForm = ({
                             environmentId={environmentId}
                             strategy={strategy}
                             setStrategy={setStrategy}
+                            mode={mode}
                         />
                     </div>
                 }
@@ -98,7 +103,7 @@ export const FeatureStrategyForm = ({
             <FeatureStrategyType
                 strategy={strategy}
                 setStrategy={setStrategy}
-                editable={editable}
+                hasAccess={hasAccess}
             />
             <div className={styles.buttons}>
                 <Button

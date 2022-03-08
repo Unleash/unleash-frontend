@@ -9,7 +9,7 @@ import produce from 'immer';
 import React from 'react';
 
 interface IFeatureStrategyTypeProps {
-    editable: boolean;
+    hasAccess: boolean;
     strategy: Partial<IFeatureStrategy>;
     setStrategy: React.Dispatch<
         React.SetStateAction<Partial<IFeatureStrategy>>
@@ -17,7 +17,7 @@ interface IFeatureStrategyTypeProps {
 }
 
 export const FeatureStrategyType = ({
-    editable,
+    hasAccess,
     strategy,
     setStrategy,
 }: IFeatureStrategyTypeProps) => {
@@ -50,7 +50,7 @@ export const FeatureStrategyType = ({
                     context={context}
                     parameters={strategy.parameters ?? []}
                     updateParameter={updateParameter}
-                    editable={editable}
+                    editable={hasAccess}
                 />
             );
         case 'userWithId':
@@ -58,7 +58,7 @@ export const FeatureStrategyType = ({
                 <UserWithIdStrategy
                     parameters={strategy.parameters ?? []}
                     updateParameter={updateParameter}
-                    editable={editable}
+                    editable={hasAccess}
                 />
             );
         default:
@@ -67,7 +67,7 @@ export const FeatureStrategyType = ({
                     strategyDefinition={strategyDefinition}
                     parameters={strategy.parameters ?? []}
                     updateParameter={updateParameter}
-                    editable={editable}
+                    editable={hasAccess}
                 />
             );
     }
