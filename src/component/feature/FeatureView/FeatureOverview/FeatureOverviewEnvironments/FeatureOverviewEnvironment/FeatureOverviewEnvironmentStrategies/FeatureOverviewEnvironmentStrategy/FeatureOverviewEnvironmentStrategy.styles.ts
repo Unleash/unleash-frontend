@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
     container: {
         borderRadius: '12.5px',
         border: `1px solid ${theme.palette.grey[300]}`,
-        width: '250px',
+        width: '400px',
         margin: '0.3rem',
     },
     header: {
