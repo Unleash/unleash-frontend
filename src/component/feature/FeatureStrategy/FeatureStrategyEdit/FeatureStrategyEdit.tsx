@@ -78,7 +78,6 @@ export const FeatureStrategyEdit = () => {
             }
         >
             <FeatureStrategyForm
-                mode="edit"
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}

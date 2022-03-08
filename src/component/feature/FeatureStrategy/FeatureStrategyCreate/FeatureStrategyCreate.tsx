@@ -79,7 +79,6 @@ export const FeatureStrategyCreate = () => {
             }
         >
             <FeatureStrategyForm
-                mode="create"
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}

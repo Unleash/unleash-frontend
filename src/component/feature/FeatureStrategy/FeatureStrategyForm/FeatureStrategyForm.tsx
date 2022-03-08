@@ -30,14 +30,11 @@ interface IFeatureStrategyFormProps {
     onSubmit: () => void;
     loading: boolean;
     hasAccess: boolean;
-    mode: FeatureStrategyFormMode;
     strategy: Partial<IFeatureStrategy>;
     setStrategy: React.Dispatch<
         React.SetStateAction<Partial<IFeatureStrategy>>
     >;
 }
-
-export type FeatureStrategyFormMode = 'create' | 'edit';
 
 export const FeatureStrategyForm = ({
     feature,
@@ -47,7 +44,6 @@ export const FeatureStrategyForm = ({
     onSubmit,
     loading,
     hasAccess,
-    mode,
 }: IFeatureStrategyFormProps) => {
     const styles = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
@@ -105,7 +101,6 @@ export const FeatureStrategyForm = ({
                             environmentId={environmentId}
                             strategy={strategy}
                             setStrategy={setStrategy}
-                            mode={mode}
                         />
                     </div>
                 }
