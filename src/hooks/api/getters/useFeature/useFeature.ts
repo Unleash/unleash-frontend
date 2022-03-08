@@ -10,15 +10,18 @@ const useFeature = (
     id: string,
     options: SWRConfiguration = {}
 ) => {
-    const [status, setStatus] = useState<number>();
     const fetcher = async () => {
         const path = formatApiPath(
             `api/admin/projects/${projectId}/features/${id}`
         );
-        return fetch(path).then(res => {
-            setStatus(res.status);
-            return res.json();
-        });
+        const res = await fetch(path);
+        if (!res.ok) {
+            const error = new Error('An error occurred');
+            // @ts-expect-error
+            error.status = res.status;
+            throw error;
+        } 
+        return res.json();
     };
 
     const FEATURE_CACHE_KEY = `api/admin/projects/${projectId}/features/${id}`;
@@ -40,7 +43,6 @@ const useFeature = (
     return {
         feature: data || defaultFeature,
         error,
-        status,
         loading,
         refetch,
         FEATURE_CACHE_KEY,
