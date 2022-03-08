@@ -24,6 +24,7 @@ import { useStyles } from './FeatureOverviewEnvironment.styles';
 import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
+import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
 
 interface IStrategyIconObject {
     count: number;
@@ -104,6 +105,15 @@ const FeatureOverviewEnvironment = ({
                             />
                         </div>
                         <div className={styles.container}>
+                            <div className={styles.strategyMenu}>
+                                <FeatureStrategyMenu
+                                    label="Add strategy"
+                                    projectId={projectId}
+                                    featureId={featureId}
+                                    environmentId={env.name}
+                                    variant="text"
+                                />
+                            </div>
                             <ConditionallyRender
                                 condition={
                                     featureEnvironment?.strategies.length !== 0
@@ -144,7 +154,6 @@ const FeatureOverviewEnvironment = ({
                                 }
                             />
                         </div>
-
                         <ConditionallyRender
                             condition={!env.enabled}
                             show={

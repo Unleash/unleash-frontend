@@ -74,7 +74,7 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: '1rem',
     },
     strategyIconContainer: {
-        minWidth: '50px',
+        minWidth: '40px',
         marginRight: '5px',
         display: 'flex',
         justifyContent: 'center',
@@ -117,10 +117,13 @@ export const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         alignItems: 'center',
-        marginLeft: '1.3rem',
+        marginLeft: '1.8rem',
         [theme.breakpoints.down(560)]: {
             flexDirection: 'column',
             marginLeft: '0',
         },
+    },
+    strategyMenu: {
+        marginRight: '-.5rem',
     },
 }));

@@ -19,6 +19,7 @@ export interface IPermissionButtonProps
 const PermissionButton: React.FC<IPermissionButtonProps> = ({
     permission,
     tooltip,
+    variant = 'contained',
     color = 'primary',
     onClick,
     children,
@@ -68,7 +69,7 @@ const PermissionButton: React.FC<IPermissionButtonProps> = ({
                 <Button
                     onClick={onClick}
                     disabled={disabled || !access}
-                    variant="contained"
+                    variant={variant}
                     color={color}
                     {...rest}
                     endIcon={

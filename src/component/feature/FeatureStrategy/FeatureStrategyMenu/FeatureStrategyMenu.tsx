@@ -1,5 +1,7 @@
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
-import { useState } from 'react';
+import PermissionButton, {
+    IPermissionButtonProps,
+} from '../../../common/PermissionButton/PermissionButton';
+import React, { useState } from 'react';
 import { CREATE_FEATURE_STRATEGY } from '../../../providers/AccessProvider/permissions';
 import { Popover } from '@material-ui/core';
 import { FeatureStrategyMenuCards } from './FeatureStrategyMenuCards/FeatureStrategyMenuCards';
@@ -9,6 +11,7 @@ interface IFeatureStrategyMenuProps {
     projectId: string;
     featureId: string;
     environmentId: string;
+    variant?: IPermissionButtonProps['variant'];
 }
 
 export const FeatureStrategyMenu = ({
@@ -16,19 +19,29 @@ export const FeatureStrategyMenu = ({
     projectId,
     featureId,
     environmentId,
+    variant,
 }: IFeatureStrategyMenuProps) => {
-    const [anchor, setAnchor] = useState(null);
+    const [anchor, setAnchor] = useState<Element>();
     const isPopoverOpen = Boolean(anchor);
     const popoverId = isPopoverOpen ? 'FeatureStrategyMenuPopover' : undefined;
 
+    const onClose = () => {
+        setAnchor(undefined);
+    };
+
+    const onClick = (event: React.SyntheticEvent) => {
+        setAnchor(event.currentTarget);
+    };
+
     return (
-        <>
+        <div onClick={event => event.stopPropagation()}>
             <PermissionButton
                 permission={CREATE_FEATURE_STRATEGY}
                 projectId={projectId}
                 environmentId={environmentId}
-                onClick={event => setAnchor(event.currentTarget)}
+                onClick={onClick}
                 aria-describedby={popoverId}
+                variant={variant}
             >
                 {label}
             </PermissionButton>
@@ -36,7 +49,7 @@ export const FeatureStrategyMenu = ({
                 id={popoverId}
                 open={isPopoverOpen}
                 anchorEl={anchor}
-                onClose={() => setAnchor(null)}
+                onClose={onClose}
             >
                 <FeatureStrategyMenuCards
                     projectId={projectId}
@@ -44,6 +57,6 @@ export const FeatureStrategyMenu = ({
                     environmentId={environmentId}
                 />
             </Popover>
-        </>
+        </div>
     );
 };
