@@ -6,6 +6,7 @@ import {
     formatStrategyName,
 } from 'utils/strategy-names';
 import { formatCreateStrategyPath } from '../../FeatureStrategyCreate/FeatureStrategyCreate';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 
 interface IFeatureStrategyMenuCardProps {
     projectId: string;
@@ -37,9 +38,11 @@ export const FeatureStrategyMenuCard = ({
                 <StrategyIcon aria-hidden />
             </div>
             <div>
-                <div className={styles.name}>
-                    {strategy.displayName || strategyName}
-                </div>
+                <StringTruncator
+                    text={strategy.displayName || strategyName}
+                    className={styles.name}
+                    maxWidth="200"
+                />
                 <div className={styles.description}>{strategy.description}</div>
             </div>
         </Link>

@@ -19,6 +19,10 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.main,
     },
     name: {
+        display: 'block',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
         fontWeight: theme.fontWeight.thin,
     },
     buttons: {
