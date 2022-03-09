@@ -7,7 +7,10 @@ export const useConstraintsValidation = (
     featureId: string,
     constraints?: IConstraint[]
 ): boolean => {
-    const [valid, setValid] = useState(constraints?.length === 0);
+    // An empty list of constraints is valid. An undefined list is not.
+    // A non-empty list has to be checked by calling the backend.
+    const isEmptyList = Boolean(constraints && constraints.length === 0);
+    const [valid, setValid] = useState(isEmptyList);
     const { validateConstraint } = useFeatureApi();
 
     useEffect(() => {
