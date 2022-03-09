@@ -72,7 +72,7 @@ export const ConstraintAccordionEdit = ({
         // Setting expanded to true on mount will cause the accordion
         // animation to take effect and transition the expanded accordion in
         setExpanded(true);
-    }, []);
+    }, [constraint]);
 
     useEffect(() => {
         setContextDefinition(
