@@ -1,5 +1,5 @@
 import { IFeatureStrategy, IConstraint } from 'interfaces/strategy';
-import React, { useState } from 'react';
+import React from 'react';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -9,6 +9,7 @@ import {
     UPDATE_FEATURE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
 import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
+import { useWeakMap } from 'hooks/useWeakMap';
 
 interface IFeatureStrategyConstraints2Props {
     projectId: string;
@@ -19,56 +20,61 @@ interface IFeatureStrategyConstraints2Props {
     >;
 }
 
+// Extra form state for each constraint.
+interface IConstraintFormState {
+    // Is the constraint currently being edited?
+    editing?: boolean;
+    // Is the constraint new (not yet saved)?
+    unsaved?: boolean;
+}
+
 export const FeatureStrategyConstraints2 = ({
     projectId,
     environmentId,
     strategy,
     setStrategy,
 }: IFeatureStrategyConstraints2Props) => {
-    const [editIndexes, setEditIndexes] = useState<number[]>([]);
+    const state = useWeakMap<IConstraint, IConstraintFormState>();
     const { context } = useUnleashContext();
+    const { constraints = [] } = strategy;
 
-    const stopEditingAll = () => {
-        setEditIndexes([]);
+    const onEdit = (constraint: IConstraint) => {
+        state.set(constraint, { editing: true });
     };
 
-    const startEditingIndex = (index: number) => {
-        setEditIndexes(prev => [...prev, index]);
-    };
-
-    const stopEditingIndex = (index: number) => {
-        setEditIndexes(prev => prev.filter(editIndex => editIndex !== index));
-    };
-
-    const isEditingIndex = (index: number) => {
-        return editIndexes.includes(index);
-    };
-
-    const onAddConstraint = () => {
-        startEditingIndex(strategy.constraints?.length ?? 0);
+    const onAdd = () => {
+        const constraint = createEmptyConstraint(context);
+        state.set(constraint, { editing: true, unsaved: true });
         setStrategy(
             produce(draft => {
                 draft.constraints = draft.constraints ?? [];
-                draft.constraints.push(createEmptyConstraint(context));
+                draft.constraints.push(constraint);
             })
         );
     };
 
-    const onSaveConstraint = (index: number) => (constraint: IConstraint) => {
-        stopEditingIndex(index);
+    const onCancel = (index: number) => {
+        const constraint = constraints[index];
+        state.get(constraint)?.unsaved && onRemove(index);
+        state.set(constraint, {});
+    };
+
+    const onRemove = (index: number) => {
+        const constraint = constraints[index];
+        state.set(constraint, {});
+        setStrategy(
+            produce(draft => {
+                draft.constraints?.splice(index, 1);
+            })
+        );
+    };
+
+    const onSave = (index: number, constraint: IConstraint) => {
+        state.set(constraint, {});
         setStrategy(
             produce(draft => {
                 draft.constraints = draft.constraints ?? [];
                 draft.constraints[index] = constraint;
-            })
-        );
-    };
-
-    const onRemoveConstraint = (index: number) => {
-        stopEditingAll();
-        setStrategy(
-            produce(draft => {
-                draft.constraints?.splice(index, 1);
             })
         );
     };
@@ -80,17 +86,17 @@ export const FeatureStrategyConstraints2 = ({
                     key={index}
                     environmentId={environmentId}
                     constraint={constraint}
-                    onEdit={startEditingIndex.bind(null, index)}
-                    onCancel={stopEditingIndex.bind(null, index)}
-                    onDelete={onRemoveConstraint.bind(null, index)}
-                    onSave={onSaveConstraint(index)}
-                    editing={isEditingIndex(index)}
+                    onEdit={onEdit.bind(null, constraint)}
+                    onCancel={onCancel.bind(null, index, constraint)}
+                    onDelete={onRemove.bind(null, index, constraint)}
+                    onSave={onSave.bind(null, index)}
+                    editing={Boolean(state.get(constraint)?.editing)}
                     compact
                 />
             ))}
             <PermissionButton
                 type="button"
-                onClick={onAddConstraint}
+                onClick={onAdd}
                 variant="text"
                 permission={[UPDATE_FEATURE_STRATEGY, CREATE_FEATURE_STRATEGY]}
                 environmentId={environmentId}
