@@ -14,7 +14,11 @@ export const ConstraintFormHeader: React.FC<
 > = ({ children, ...rest }) => {
     const styles = useStyles();
     return (
-        <h3 className={styles.header} {...rest}>
+        <h3
+            className={styles.header}
+            {...rest}
+            style={{ marginBottom: '0.25rem' }}
+        >
             {children}
         </h3>
     );
