@@ -193,7 +193,9 @@ describe('feature', () => {
             }
         ).as('deleteStrategy');
 
-        cy.get('[data-test=STRATEGY_FORM_REMOVE_ID]').click();
+        cy.get(
+            '[data-test=SIDEBAR_MODAL_ID] [data-test=STRATEGY_FORM_REMOVE_ID]'
+        ).click();
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@deleteStrategy');
     });
