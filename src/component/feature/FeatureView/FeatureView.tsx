@@ -1,9 +1,9 @@
 import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
-import { Link, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Route, useHistory, useParams, Switch } from 'react-router-dom';
 import useFeatureApi from '../../../hooks/api/actions/useFeatureApi/useFeatureApi';
-import useFeature from '../../../hooks/api/getters/useFeature/useFeature';
+import { useFeature } from '../../../hooks/api/getters/useFeature/useFeature';
 import useProject from '../../../hooks/api/getters/useProject/useProject';
 import useTabs from '../../../hooks/useTabs';
 import useToast from '../../../hooks/useToast';
@@ -17,8 +17,6 @@ import Dialogue from '../../common/Dialogue';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
-import FeatureStrategies from './FeatureStrategies/FeatureStrategies';
-import FeatureStrategies2 from './FeatureStrategies2/FeatureStrategies2';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
 import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
@@ -77,11 +75,6 @@ export const FeatureView = () => {
             name: 'overview',
         },
         {
-            title: 'Strategies',
-            path: `${basePath}/strategies`,
-            name: 'strategies',
-        },
-        {
             title: 'Metrics',
             path: `${basePath}/metrics`,
             name: 'Metrics',
@@ -94,6 +87,10 @@ export const FeatureView = () => {
             name: 'Event log',
         },
     ];
+
+    const activeTab =
+        tabData.find(tab => tab.path === history.location.pathname) ??
+        tabData[0];
 
     const renderTabs = () => {
         return tabData.map((tab, index) => {
@@ -133,15 +130,6 @@ export const FeatureView = () => {
         );
     };
 
-    // CHANGEME - Feat: Constraint Operators
-    // TEMPORARY UNTIL WE ROLLED OUT FULLY
-    const resolveFeatureStrategies = () => {
-        if (uiConfig.flags.CO) {
-            return FeatureStrategies2;
-        }
-        return FeatureStrategies;
-    };
-
     return (
         <ConditionallyRender
             condition={error === undefined}
@@ -166,7 +154,6 @@ export const FeatureView = () => {
                                 <PermissionIconButton
                                     permission={CREATE_FEATURE}
                                     projectId={projectId}
-                                    tooltip="Copy"
                                     data-loading
                                     // @ts-expect-error
                                     component={Link}
@@ -177,7 +164,6 @@ export const FeatureView = () => {
                                 <PermissionIconButton
                                     permission={DELETE_FEATURE}
                                     projectId={projectId}
-                                    tooltip="Archive feature toggle"
                                     data-loading
                                     onClick={() => setShowDelDialog(true)}
                                 >
@@ -187,7 +173,6 @@ export const FeatureView = () => {
                                     onClick={() => setOpenStaleDialog(true)}
                                     permission={UPDATE_FEATURE}
                                     projectId={projectId}
-                                    tooltip="Toggle stale status"
                                     data-loading
                                 >
                                     <WatchLater titleAccess="Toggle stale status" />
@@ -196,7 +181,6 @@ export const FeatureView = () => {
                                     onClick={() => setOpenTagDialog(true)}
                                     permission={UPDATE_FEATURE}
                                     projectId={projectId}
-                                    tooltip="Add tag"
                                     data-loading
                                 >
                                     <Label titleAccess="Add tag" />
@@ -206,7 +190,7 @@ export const FeatureView = () => {
                         <div className={styles.separator} />
                         <div className={styles.tabContainer}>
                             <Tabs
-                                value={history.location.pathname}
+                                value={activeTab.path}
                                 indicatorColor="primary"
                                 textColor="primary"
                                 className={styles.tabNavigation}
@@ -215,31 +199,28 @@ export const FeatureView = () => {
                             </Tabs>
                         </div>
                     </div>
-                    <Route
-                        exact
-                        path={`/projects/:projectId/features/:featureId`}
-                        component={FeatureOverview}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/strategies`}
-                        component={resolveFeatureStrategies()}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/metrics`}
-                        component={FeatureMetrics}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/logs`}
-                        component={FeatureLog}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/variants`}
-                        component={FeatureVariants}
-                    />
-                    <Route
-                        path={`/projects/:projectId/features/:featureId/settings`}
-                        component={FeatureSettings}
-                    />
+                    <Switch>
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/metrics`}
+                            component={FeatureMetrics}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/logs`}
+                            component={FeatureLog}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/variants`}
+                            component={FeatureVariants}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId/settings`}
+                            component={FeatureSettings}
+                        />
+                        <Route
+                            path={`/projects/:projectId/features/:featureId`}
+                            component={FeatureOverview}
+                        />
+                    </Switch>
                     <Dialogue
                         onClick={() => archiveToggle()}
                         open={showDelDialog}
