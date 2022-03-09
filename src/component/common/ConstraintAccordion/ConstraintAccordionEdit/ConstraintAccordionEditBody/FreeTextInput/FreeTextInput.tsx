@@ -42,6 +42,8 @@ const useStyles = makeStyles(theme => ({
     valuesContainer: { marginTop: '1rem' },
 }));
 
+const ENTER = 'Enter';
+
 export const FreeTextInput = ({
     values,
     removeValue,
@@ -51,6 +53,14 @@ export const FreeTextInput = ({
 }: IFreeTextInputProps) => {
     const [inputValues, setInputValues] = useState('');
     const styles = useStyles();
+
+    const onKeyDown = (event: React.KeyboardEvent) => {
+        event.stopPropagation();
+
+        if (event.key === ENTER) {
+            addValues();
+        }
+    };
 
     const addValues = () => {
         if (inputValues.length === 0) {
@@ -73,7 +83,7 @@ export const FreeTextInput = ({
     };
 
     return (
-        <div>
+        <div onKeyDown={onKeyDown}>
             <ConstraintFormHeader style={{ marginBottom: 0 }}>
                 Set values (maximum 100)
             </ConstraintFormHeader>
