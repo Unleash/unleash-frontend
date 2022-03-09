@@ -117,7 +117,7 @@ export const useStyles = makeStyles(theme => ({
         maxHeight: '400px',
         overflowY: 'auto',
     },
-    summary: { border: 'none', padding: '0.25rem 1rem' },
+    summary: { border: 'none', padding: '0.25rem 1rem', height: '85px' },
     settingsParagraph: {
         display: 'flex',
         alignItems: 'center',
