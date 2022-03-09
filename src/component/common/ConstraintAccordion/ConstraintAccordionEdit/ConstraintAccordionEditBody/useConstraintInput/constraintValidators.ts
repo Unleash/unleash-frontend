@@ -5,7 +5,9 @@ export type ConstraintValidatorOutput = [boolean, string];
 
 export const numberValidatorGenerator = (value: unknown) => {
     return (): ConstraintValidatorOutput => {
-        if (!Number(value)) {
+        const converted = Number(value);
+
+        if (typeof converted !== 'number' || Number.isNaN(converted)) {
             return [false, 'Value must be a number'];
         }
 
@@ -24,9 +26,12 @@ export const stringValidatorGenerator = (values: string[]) => {
 
 export const semVerValidatorGenerator = (value: string) => {
     return (): ConstraintValidatorOutput => {
-        if (!semver.valid(value)) {
+        const cleanValue = semver.clean(value) === value;
+
+        if (!semver.valid(value) || !cleanValue) {
             return [false, 'Value is not a valid semver. For example 1.2.4'];
         }
+
         return [true, ''];
     };
 };
