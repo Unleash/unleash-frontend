@@ -15,40 +15,12 @@ import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { useStyles } from './SegmentList.styles';
+import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 
-const segments: any[] = [
-    // {
-    //     id: 1,
-    //     name: 'Segment 1',
-    //     description: 'hjghjgfghjghjfghj',
-    //     createdAt: 'date',
-    //     createdBy: 'Youssef Khedher',
-    // },
-    // {
-    //     id: 2,
-    //     name: 'Segment 2',
-    //     description: 'asfafsfsddfsafsd',
-    //     createdAt: 'date',
-    //     createdBy: 'Chris',
-    // },
-    // {
-    //     id: 3,
-    //     name: 'Segment 3',
-    //     description: 'hrdfsfsadadsdfsdfse',
-    //     createdAt: 'date',
-    //     createdBy: 'Olav',
-    // },
-    // {
-    //     id: 4,
-    //     name: 'Segment 4',
-    //     description: 'this is a description',
-    //     createdAt: 'date',
-    //     createdBy: 'Frederik',
-    // },
-];
 
 export const SegmentsList = () => {
     const { hasAccess } = useContext(AccessContext);
+    const { segments } = useSegments();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);
     const styles = useStyles();
@@ -61,7 +33,7 @@ export const SegmentsList = () => {
                     id={segment.id}
                     name={segment.name}
                     description={segment.description}
-                    createAt={segment.createdAt}
+                    createdAt={segment.createdAt}
                     createdBy={segment.createdBy}
                 />
             );
