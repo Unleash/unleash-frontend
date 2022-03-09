@@ -4,12 +4,8 @@ import AccessContext from 'contexts/AccessContext';
 import React, { useContext } from 'react';
 import ConditionallyRender from '../ConditionallyRender';
 
-export interface IPermissionButtonProps
-    extends React.HTMLProps<HTMLButtonElement> {
+export interface IPermissionButtonProps extends ButtonProps {
     permission: string | string[];
-    tooltip?: string;
-    variant?: ButtonProps['variant'];
-    color?: ButtonProps['color'];
     onClick?: (e: any) => void;
     disabled?: boolean;
     projectId?: string;
@@ -18,7 +14,6 @@ export interface IPermissionButtonProps
 
 const PermissionButton: React.FC<IPermissionButtonProps> = ({
     permission,
-    tooltip,
     variant = 'contained',
     color = 'primary',
     onClick,
@@ -65,7 +60,6 @@ const PermissionButton: React.FC<IPermissionButtonProps> = ({
     return (
         <Tooltip title={tooltipText} arrow>
             <span>
-                {/* @ts-expect-error */}
                 <Button
                     onClick={onClick}
                     disabled={disabled || !access}
