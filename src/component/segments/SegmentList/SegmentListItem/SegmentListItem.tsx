@@ -3,8 +3,8 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { formatDateYMD } from 'utils/format-date';
-import { useLocationSettings } from 'hooks/useLocationSettings';
+import TimeAgo from 'react-timeago';
+import { ISegment } from 'interfaces/segment';
 
 interface ISegmentListItemProps {
     id: number;
@@ -12,6 +12,8 @@ interface ISegmentListItemProps {
     description: string;
     createdAt: string;
     createdBy: string;
+    setCurrentSegment: React.Dispatch<React.SetStateAction<ISegment>>;
+    setDelDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SegmentListItem = ({
@@ -20,9 +22,10 @@ export const SegmentListItem = ({
     description,
     createdAt,
     createdBy,
+    setCurrentSegment,
+    setDelDialog,
 }: ISegmentListItemProps) => {
     const styles = useStyles();
-    const { locationSettings } = useLocationSettings();
 
     return (
         <>
@@ -39,7 +42,7 @@ export const SegmentListItem = ({
                 </TableCell>
                 <TableCell className={styles.leftTableCell}>
                     <Typography variant="body2" data-loading>
-                        {formatDateYMD(createdAt, locationSettings.locale)}
+                        <TimeAgo date={createdAt} live={false} />
                     </Typography>
                 </TableCell>
                 <TableCell className={styles.leftTableCell}>
@@ -60,7 +63,11 @@ export const SegmentListItem = ({
                     <PermissionIconButton
                         data-loading
                         aria-label="Remove segment"
-                        onClick={() => {}}
+                        onClick={() => {
+                            // @ts-expect-error
+                            setCurrentSegment({ id, name, description });
+                            setDelDialog(true);
+                        }}
                         permission={ADMIN}
                     >
                         <Delete />

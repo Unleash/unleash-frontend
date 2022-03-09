@@ -1,4 +1,4 @@
-import { IConstraint } from "./strategy";
+import { IConstraint } from './strategy';
 
 export interface ISegment {
     id: number;
@@ -6,5 +6,11 @@ export interface ISegment {
     description: string;
     createdAt: string;
     createdBy: string;
-    constraints: IConstraint[]
+    constraints: IConstraint[];
+}
+
+export interface ISegmentPayload {
+    name: string;
+    description: string;
+    constraints: IConstraint[];
 }

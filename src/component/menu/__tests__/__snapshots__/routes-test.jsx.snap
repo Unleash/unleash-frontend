@@ -313,6 +313,18 @@ Array [
   },
   Object {
     "component": [Function],
+    "hidden": false,
+    "layout": "main",
+    "menu": Object {
+      "advanced": true,
+      "mobile": true,
+    },
+    "path": "/segments",
+    "title": "Segments",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "layout": "main",
     "menu": Object {},
     "parent": "/history",

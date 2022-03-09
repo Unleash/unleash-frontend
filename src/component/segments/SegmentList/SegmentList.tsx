@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
     Table,
     TableBody,
@@ -16,14 +16,40 @@ import { ISegment } from 'interfaces/segment';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { useStyles } from './SegmentList.styles';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
-
+import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfirm';
+import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
+import useToast from 'hooks/useToast';
+import { formatUnknownError } from 'utils/format-unknown-error';
 
 export const SegmentsList = () => {
     const { hasAccess } = useContext(AccessContext);
-    const { segments } = useSegments();
+    const { segments, refetchSegments } = useSegments();
+    const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);
+    const [currentSegment, setCurrentSegment] = useState<ISegment | null>(null);
+    const [delDialog, setDelDialog] = useState(false);
+    const [confirmName, setConfirmName] = useState('');
+    const { setToastData, setToastApiError } = useToast();
+
     const styles = useStyles();
+
+    const onDeleteSegment = async () => {
+        if (!currentSegment?.id) return;
+        try {
+            await deleteSegment(currentSegment?.id);
+            refetchSegments();
+            setToastData({
+                type: 'success',
+                title: 'Successfully deleted segment',
+                text: 'Your segment is now deleted',
+            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
+        }
+        setDelDialog(false);
+        setConfirmName('');
+    };
 
     const renderSegments = () => {
         return page.map((segment: ISegment) => {
@@ -35,6 +61,9 @@ export const SegmentsList = () => {
                     description={segment.description}
                     createdAt={segment.createdAt}
                     createdBy={segment.createdBy}
+                    //@ts-expect-error
+                    setCurrentSegment={setCurrentSegment}
+                    setDelDialog={setDelDialog}
                 />
             );
         });
@@ -53,7 +82,6 @@ export const SegmentsList = () => {
                 </p>
                 <PermissionButton
                     onClick={() => {}}
-                    // @ts-expect-error
                     variant="outlined"
                     color="secondary"
                     className={styles.paramButton}
@@ -101,6 +129,15 @@ export const SegmentsList = () => {
                 />
             </Table>
             {segments.length === 0 && renderNoSegments()}
+            <SegmentDeleteConfirm
+                //@ts-expect-error
+                segment={currentSegment}
+                open={delDialog}
+                setDeldialogue={setDelDialog}
+                handleDeleteSegment={onDeleteSegment}
+                confirmName={confirmName}
+                setConfirmName={setConfirmName}
+            />
             <br />
         </div>
     );

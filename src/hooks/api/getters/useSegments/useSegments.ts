@@ -13,9 +13,7 @@ export interface UseSegmentsOutput {
     error?: Error;
 }
 
-export const useSegments = (
-    options?: SWRConfiguration
-): UseSegmentsOutput => {
+export const useSegments = (options?: SWRConfiguration): UseSegmentsOutput => {
     const { data, error } = useSWR<{ segments: ISegment[] }>(
         PATH,
         fetchSegments,
