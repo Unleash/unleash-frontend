@@ -19,7 +19,16 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         width: '2rem',
         height: 'auto',
-        fill: theme.palette.primary.main,
+        '& > svg': {
+            // Styling for SVG icons.
+            fill: theme.palette.primary.main,
+        },
+        '& > div': {
+            // Styling for the Rollout icon.
+            height: '1rem',
+            marginLeft: '-.75rem',
+            color: theme.palette.primary.main,
+        },
     },
     name: {
         fontWeight: theme.fontWeight.bold,

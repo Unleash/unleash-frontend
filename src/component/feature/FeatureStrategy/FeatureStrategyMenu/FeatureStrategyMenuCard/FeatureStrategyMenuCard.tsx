@@ -33,8 +33,8 @@ export const FeatureStrategyMenuCard = ({
 
     return (
         <Link to={createStrategyPath} className={styles.card}>
-            <div>
-                <StrategyIcon className={styles.icon} aria-hidden />
+            <div className={styles.icon}>
+                <StrategyIcon aria-hidden />
             </div>
             <div>
                 <div className={styles.name}>
