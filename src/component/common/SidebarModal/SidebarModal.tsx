@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Modal, Backdrop, Slide } from '@material-ui/core';
+import { Modal, Backdrop } from '@material-ui/core';
 import Fade from '@material-ui/core/Fade';
 import { useStyles } from 'component/common/SidebarModal/SidebarModal.styles';
 
@@ -30,15 +30,7 @@ export const SidebarModal = ({
             BackdropProps={{ timeout: TRANSITION_DURATION }}
         >
             <Fade timeout={TRANSITION_DURATION} in={open}>
-                <div>
-                    <Slide
-                        timeout={TRANSITION_DURATION}
-                        direction="left"
-                        in={open}
-                    >
-                        <div className={styles.modal}>{children}</div>
-                    </Slide>
-                </div>
+                <div className={styles.modal}>{children}</div>
             </Fade>
         </Modal>
     );
