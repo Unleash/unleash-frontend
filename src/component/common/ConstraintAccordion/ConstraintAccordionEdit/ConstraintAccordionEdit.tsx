@@ -184,7 +184,7 @@ export const ConstraintAccordionEdit = ({
     return (
         <div className={styles.form}>
             <Accordion
-                style={{ boxShadow: 'none' }}
+                style={{ boxShadow: 'none', backgroundColor: '#F6F6FA' }}
                 className={styles.accordion}
                 expanded={expanded}
                 TransitionProps={{
