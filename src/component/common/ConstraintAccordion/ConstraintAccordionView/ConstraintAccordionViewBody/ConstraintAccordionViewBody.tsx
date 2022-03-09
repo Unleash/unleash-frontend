@@ -37,7 +37,7 @@ export const ConstraintAccordionViewBody = ({
                 show={
                     <p className={styles.settingsParagraph}>
                         <ImportExportOutlined className={styles.settingsIcon} />{' '}
-                        Operator is inverted
+                        Operator is negated
                     </p>
                 }
             />

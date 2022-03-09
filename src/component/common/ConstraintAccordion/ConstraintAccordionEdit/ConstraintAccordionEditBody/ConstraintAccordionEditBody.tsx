@@ -88,7 +88,7 @@ const InvertedOperator = ({
                         color="primary"
                     />
                 }
-                label={'inverted'}
+                label={'negated'}
             />
         </>
     );
