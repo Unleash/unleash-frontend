@@ -31,10 +31,12 @@ import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from 'component/common/StatusChip/StatusChip';
 import { formatUnknownError } from 'utils/format-unknown-error';
+import { useFeaturesArchive } from 'hooks/api/getters/useFeaturesArchive/useFeaturesArchive';
 
 export const FeatureView = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature, loading, error } = useFeature(projectId, featureId);
+    const { archivedFeatures } = useFeaturesArchive();
     const { refetch: projectRefetch } = useProject(projectId);
     const [openTagDialog, setOpenTagDialog] = useState(false);
     const { a11yProps } = useTabs(0);
@@ -43,6 +45,10 @@ export const FeatureView = () => {
     const [showDelDialog, setShowDelDialog] = useState(false);
     const [openStaleDialog, setOpenStaleDialog] = useState(false);
     const smallScreen = useMediaQuery(`(max-width:${500}px)`);
+
+    const archived = archivedFeatures.some(
+        archivedFeature => archivedFeature.name === featureId
+    );
 
     const styles = useStyles();
     const history = useHistory();
@@ -133,8 +139,20 @@ export const FeatureView = () => {
         );
     };
 
-    if (error?.status === 404) {
+    if (error?.status === 404 && !archived) {
         return renderFeatureNotExist();
+    }
+    if (archived) {
+        return (
+            <div>
+                <p>
+                    The feature{' '}
+                    <strong className={styles.featureId}>{featureId}</strong> is
+                    archived. You can find it in the{' '}
+                    <Link to={'/archive'}>Archive List</Link>
+                </p>
+            </div>
+        );
     }
     // CHANGEME - Feat: Constraint Operators
     // TEMPORARY UNTIL WE ROLLED OUT FULLY
