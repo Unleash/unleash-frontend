@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import {
     getFeatureStrategyIcon,
-    getHumanReadableStrategyName,
+    formatStrategyName,
 } from 'utils/strategy-names';
 import { FeatureStrategyType } from '../FeatureStrategyType/FeatureStrategyType';
 import { FeatureStrategyRemove } from '../FeatureStrategyRemove/FeatureStrategyRemove';
@@ -51,7 +51,7 @@ export const FeatureStrategyForm = ({
     const [showProdGuard, setShowProdGuard] = useState(false);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);
     const StrategyIcon = getFeatureStrategyIcon(strategy.name ?? '');
-    const strategyName = getHumanReadableStrategyName(strategy.name ?? '');
+    const strategyName = formatStrategyName(strategy.name ?? '');
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const { push } = useHistory();

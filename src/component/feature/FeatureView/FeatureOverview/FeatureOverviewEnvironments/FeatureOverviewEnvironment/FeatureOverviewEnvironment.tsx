@@ -14,7 +14,7 @@ import { IFeatureViewParams } from '../../../../../../interfaces/params';
 import { getFeatureMetrics } from '../../../../../../utils/get-feature-metrics';
 import {
     getFeatureStrategyIcon,
-    getHumanReadableStrategyName,
+    formatStrategyName,
 } from '../../../../../../utils/strategy-names';
 import ConditionallyRender from '../../../../../common/ConditionallyRender';
 import DisabledIndicator from '../../../../../common/DisabledIndicator/DisabledIndicator';
@@ -128,7 +128,7 @@ const FeatureOverviewEnvironment = ({
                                             {getStrategyIcons()?.map(
                                                 ({ name, Icon }) => (
                                                     <Tooltip
-                                                        title={getHumanReadableStrategyName(
+                                                        title={formatStrategyName(
                                                             name
                                                         )}
                                                         arrow

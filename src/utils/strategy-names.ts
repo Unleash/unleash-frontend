@@ -5,14 +5,8 @@ import PieChart from '@material-ui/icons/PieChart';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { ElementType } from 'react';
 
-export const getHumanReadableStrategyName = (strategyName: string) => {
-    const humanReadableStrategy = nameMapping[strategyName];
-
-    if (humanReadableStrategy) {
-        return humanReadableStrategy.name;
-    }
-
-    return strategyName;
+export const formatStrategyName = (strategyName: string): string => {
+    return formattedStrategyNames[strategyName] ?? strategyName;
 };
 
 export const getFeatureStrategyIcon = (strategyName: string): ElementType => {
@@ -30,42 +24,13 @@ export const getFeatureStrategyIcon = (strategyName: string): ElementType => {
     }
 };
 
-const nameMapping: Record<string, { name: string; description: string }> = {
-    applicationHostname: {
-        name: 'Hosts',
-        description: 'Enable the feature for a specific set of hostnames',
-    },
-    default: {
-        name: 'Standard',
-        description:
-            'The standard strategy is strictly on / off for your entire userbase.',
-    },
-    flexibleRollout: {
-        name: 'Gradual rollout',
-        description:
-            'Roll out to a percentage of your userbase, and ensure that the experience is the same for the user on each visit.',
-    },
-    gradualRolloutRandom: {
-        name: 'Randomized',
-        description:
-            'Roll out to a percentage of your userbase and randomly enable the feature on a per request basis',
-    },
-    gradualRolloutSessionId: {
-        name: 'Sessions',
-        description:
-            'Roll out to a percentage of your userbase and configure stickiness based on sessionId',
-    },
-    gradualRolloutUserId: {
-        name: 'Users',
-        description:
-            'Roll out to a percentage of your userbase and configure stickiness based on userId',
-    },
-    remoteAddress: {
-        name: 'IPs',
-        description: 'Enable the feature for a specific set of IP addresses',
-    },
-    userWithId: {
-        name: 'UserIDs',
-        description: 'Enable the feature for a specific set of userIds',
-    },
+const formattedStrategyNames: Record<string, string> = {
+    applicationHostname: 'Hosts',
+    default: 'Standard',
+    flexibleRollout: 'Gradual rollout',
+    gradualRolloutRandom: 'Randomized',
+    gradualRolloutSessionId: 'Sessions',
+    gradualRolloutUserId: 'Users',
+    remoteAddress: 'IPs',
+    userWithId: 'UserIDs',
 };

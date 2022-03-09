@@ -5,7 +5,7 @@ import { IFeatureViewParams } from '../../../../../../../../interfaces/params';
 import { IFeatureStrategy } from '../../../../../../../../interfaces/strategy';
 import {
     getFeatureStrategyIcon,
-    getHumanReadableStrategyName,
+    formatStrategyName,
 } from '../../../../../../../../utils/strategy-names';
 import PermissionIconButton from '../../../../../../../common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE_STRATEGY } from '../../../../../../../providers/AccessProvider/permissions';
@@ -40,7 +40,7 @@ const FeatureOverviewEnvironmentStrategy = ({
         <div className={styles.container}>
             <div className={styles.header}>
                 <Icon className={styles.icon} />
-                {getHumanReadableStrategyName(strategy.name)}
+                {formatStrategyName(strategy.name)}
                 <div className={styles.actions}>
                     <FeatureStrategyRemove
                         projectId={projectId}

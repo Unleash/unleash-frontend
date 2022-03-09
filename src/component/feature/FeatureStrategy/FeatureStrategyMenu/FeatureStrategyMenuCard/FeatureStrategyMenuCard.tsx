@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './FeatureStrategyMenuCard.styles';
 import {
     getFeatureStrategyIcon,
-    getHumanReadableStrategyName,
+    formatStrategyName,
 } from 'utils/strategy-names';
 import { formatCreateStrategyPath } from '../../FeatureStrategyCreate/FeatureStrategyCreate';
 
@@ -22,7 +22,7 @@ export const FeatureStrategyMenuCard = ({
 }: IFeatureStrategyMenuCardProps) => {
     const styles = useStyles();
     const StrategyIcon = getFeatureStrategyIcon(strategy.name);
-    const strategyName = getHumanReadableStrategyName(strategy.name);
+    const strategyName = formatStrategyName(strategy.name);
 
     const createStrategyPath = formatCreateStrategyPath(
         projectId,
