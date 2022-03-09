@@ -98,11 +98,22 @@ export const SegmentsList = () => {
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableRow}>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Description</TableCell>
-                        <TableCell>Created on</TableCell>
-                        <TableCell>Created By</TableCell>
-                        <TableCell align="right">
+                        <TableCell classes={{ root: styles.cell }}>
+                            Name
+                        </TableCell>
+                        <TableCell classes={{ root: styles.cell }}>
+                            Description
+                        </TableCell>
+                        <TableCell classes={{ root: styles.cell }}>
+                            Created on
+                        </TableCell>
+                        <TableCell classes={{ root: styles.cell }}>
+                            Created By
+                        </TableCell>
+                        <TableCell
+                            align="right"
+                            classes={{ root: styles.cell }}
+                        >
                             {hasAccess(ADMIN) ? 'Actions' : ''}
                         </TableCell>
                     </TableRow>

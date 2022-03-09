@@ -13,6 +13,7 @@ export const useStyles = makeStyles(theme => ({
     },
     subtitle: {
         fontSize: theme.fontSizes.smallBody,
+        color: theme.palette.grey[600],
         maxWidth: 515,
         marginBottom: 20,
         wordBreak: 'break-all',
@@ -24,5 +25,8 @@ export const useStyles = makeStyles(theme => ({
     },
     paramButton: {
         color: theme.palette.primary.dark,
+    },
+    cell: {
+        borderBottom: 'none',
     },
 }));
