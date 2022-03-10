@@ -11,6 +11,7 @@ import { useStyles } from './FeatureOverviewExecution.styles';
 import FeatureOverviewExecutionChips from './FeatureOverviewExecutionChips/FeatureOverviewExecutionChips';
 import { useStrategies } from '../../../../../hooks/api/getters/useStrategies/useStrategies';
 import Constraint from '../../../../common/Constraint/Constraint';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 
 interface IFeatureOverviewExecutionProps {
     parameters: IParameter;
@@ -166,7 +167,10 @@ const FeatureOverviewExecution = ({
                     return (
                         <Fragment key={param.name}>
                             <p className={styles.text} key={param.name}>
-                                {param.name} must be{' '}
+                                <StringTruncator
+                                    maxWidth="150"
+                                    text={param.name}
+                                />{' '}
                                 {strategy.parameters[param.name]}
                             </p>
                             <ConditionallyRender
@@ -189,7 +193,11 @@ const FeatureOverviewExecution = ({
                             show={
                                 <>
                                     <p className={styles.text}>
-                                        {param.name} is set to {numValue}
+                                        <StringTruncator
+                                            maxWidth="150"
+                                            text={param.name}
+                                        />{' '}
+                                        is set to {numValue}
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
@@ -208,7 +216,11 @@ const FeatureOverviewExecution = ({
                             show={
                                 <>
                                     <p className={styles.text}>
-                                        {param.name} is set to {value}
+                                        <StringTruncator
+                                            maxWidth="150"
+                                            text={param.name}
+                                        />{' '}
+                                        is set to {value}
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
