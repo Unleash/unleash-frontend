@@ -7,6 +7,7 @@ import { SegmentsList } from './SegmentList/SegmentList';
 
 export const Segment = () => {
     const history = useHistory();
+
     return (
         <PageContent
             headerContent={
@@ -14,7 +15,9 @@ export const Segment = () => {
                     title="Segments"
                     actions={
                         <PermissionButton
-                            onClick={() => history.push('/test')}
+                            onClick={() => {
+                                history.push('/segments/create');
+                            }}
                             permission={ADMIN}
                         >
                             New Segment

@@ -47,6 +47,7 @@ import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/Feat
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
 import { Segment } from 'component/segments/Segments';
+import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 
 export const routes = [
     // Project
@@ -353,6 +354,15 @@ export const routes = [
 
     // Segments
 
+    {
+        path: '/segments/create',
+        title: 'Segments',
+        component: CreateSegment,
+        hidden: false,
+        type: 'protected',
+        layout: 'main',
+        menu: { mobile: true },
+    },
     {
         path: '/segments',
         title: 'Segments',

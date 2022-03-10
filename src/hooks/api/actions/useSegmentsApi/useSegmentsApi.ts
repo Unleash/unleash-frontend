@@ -1,3 +1,4 @@
+import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import { ISegmentPayload } from 'interfaces/segment';
 import useAPI from '../useApi/useApi';
 
@@ -5,10 +6,10 @@ export const useSegmentsApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
-
+    const { user } = useAuthUser();
     const PATH = 'api/admin/segments';
 
-    const createSegment = async (segment: ISegmentPayload, user: any) => {
+    const createSegment = async (segment: ISegmentPayload) => {
         const req = createRequest(PATH, {
             method: 'POST',
             body: JSON.stringify(segment),
