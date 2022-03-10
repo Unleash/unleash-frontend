@@ -11,6 +11,7 @@ import {
 import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
 import { useWeakMap } from 'hooks/useWeakMap';
 import { objectId } from 'utils/object-id';
+import { useStyles } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2.styles';
 
 interface IFeatureStrategyConstraints2Props {
     projectId: string;
@@ -38,6 +39,7 @@ export const FeatureStrategyConstraints2 = ({
     const state = useWeakMap<IConstraint, IConstraintFormState>();
     const { context } = useUnleashContext();
     const { constraints = [] } = strategy;
+    const styles = useStyles();
 
     const onEdit = (constraint: IConstraint) => {
         state.set(constraint, { editing: true });
@@ -85,7 +87,17 @@ export const FeatureStrategyConstraints2 = ({
     }
 
     return (
-        <>
+        <div className={styles.container}>
+            <PermissionButton
+                type="button"
+                onClick={onAdd}
+                variant="text"
+                permission={[UPDATE_FEATURE_STRATEGY, CREATE_FEATURE_STRATEGY]}
+                environmentId={environmentId}
+                projectId={projectId}
+            >
+                Add constraints
+            </PermissionButton>
             {strategy.constraints?.map((constraint, index) => (
                 <ConstraintAccordion
                     key={objectId(constraint)}
@@ -99,16 +111,6 @@ export const FeatureStrategyConstraints2 = ({
                     compact
                 />
             ))}
-            <PermissionButton
-                type="button"
-                onClick={onAdd}
-                variant="text"
-                permission={[UPDATE_FEATURE_STRATEGY, CREATE_FEATURE_STRATEGY]}
-                environmentId={environmentId}
-                projectId={projectId}
-            >
-                Add constraints
-            </PermissionButton>
-        </>
+        </div>
     );
 };
