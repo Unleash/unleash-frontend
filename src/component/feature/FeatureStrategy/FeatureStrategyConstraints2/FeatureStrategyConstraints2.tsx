@@ -10,6 +10,7 @@ import {
 } from 'component/providers/AccessProvider/permissions';
 import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
 import { useWeakMap } from 'hooks/useWeakMap';
+import { objectId } from 'utils/object-id';
 
 interface IFeatureStrategyConstraints2Props {
     projectId: string;
@@ -87,7 +88,7 @@ export const FeatureStrategyConstraints2 = ({
         <>
             {strategy.constraints?.map((constraint, index) => (
                 <ConstraintAccordion
-                    key={index}
+                    key={objectId(constraint)}
                     environmentId={environmentId}
                     constraint={constraint}
                     onEdit={onEdit.bind(null, constraint)}
