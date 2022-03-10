@@ -7,7 +7,6 @@ import { IFeatureToggle } from 'interfaces/featureToggle';
 
 interface IUseFeatureOutput {
     feature: IFeatureToggle;
-    featureCacheKey: string;
     refetchFeature: () => void;
     loading: boolean;
     status?: number;
@@ -40,7 +39,6 @@ export const useFeature = (
 
     return {
         feature: data?.body || emptyFeature,
-        featureCacheKey: path,
         refetchFeature,
         loading: !error && !data,
         status: data?.status,
