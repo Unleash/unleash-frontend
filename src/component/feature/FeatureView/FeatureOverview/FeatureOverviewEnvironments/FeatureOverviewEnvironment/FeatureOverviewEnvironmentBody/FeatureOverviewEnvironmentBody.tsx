@@ -37,14 +37,6 @@ const FeatureOverviewEnvironmentBody = ({
                     condition={featureEnvironment?.strategies.length > 0}
                     show={
                         <>
-                            <div className={styles.linkContainer}>
-                                <FeatureStrategyMenu
-                                    label="Add strategy"
-                                    projectId={projectId}
-                                    featureId={featureId}
-                                    environmentId={featureEnvironment.name}
-                                />
-                            </div>
                             <FeatureOverviewEnvironmentStrategies
                                 strategies={featureEnvironment?.strategies}
                                 environmentName={featureEnvironment.name}

@@ -17,9 +17,18 @@ export const numberValidatorGenerator = (value: unknown) => {
 
 export const stringValidatorGenerator = (values: string[]) => {
     return (): ConstraintValidatorOutput => {
+        const error: ConstraintValidatorOutput = [
+            false,
+            'Values must be a list of strings',
+        ];
         if (!Array.isArray(values)) {
-            return [false, 'Values must be a list of strings'];
+            return error;
         }
+
+        if (!values.every(value => typeof value === 'string')) {
+            return error;
+        }
+
         return [true, ''];
     };
 };
@@ -38,7 +47,7 @@ export const semVerValidatorGenerator = (value: string) => {
 
 export const dateValidatorGenerator = (value: string) => {
     return (): ConstraintValidatorOutput => {
-        if (isValid(value)) {
+        if (!isValid(new Date(value))) {
             return [false, 'Value must be a valid date matching RFC3339'];
         }
         return [true, ''];
