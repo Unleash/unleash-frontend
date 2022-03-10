@@ -41,7 +41,6 @@ export const CreateSegment = () => {
         e.preventDefault();
         clearErrors();
         try {
-            //@ts-expect-error
             await createSegment(getSegmentPayload());
             refetchSegments();
             history.push('/segments/');

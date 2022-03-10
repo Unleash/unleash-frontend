@@ -1,4 +1,3 @@
-import { IN } from 'constants/operators';
 import { IConstraint } from 'interfaces/strategy';
 import { useEffect, useState } from 'react';
 
