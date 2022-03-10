@@ -79,6 +79,10 @@ export const FeatureStrategyConstraints2 = ({
         );
     };
 
+    if (context.length === 0) {
+        return null;
+    }
+
     return (
         <>
             {strategy.constraints?.map((constraint, index) => (
