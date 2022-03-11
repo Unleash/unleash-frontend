@@ -25,6 +25,7 @@ import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/Fea
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
+import { FEATURE_ENVIRONMENT_ACCORDION } from 'testIds';
 
 interface IStrategyIconObject {
     count: number;
@@ -86,7 +87,10 @@ const FeatureOverviewEnvironment = ({
 
     return (
         <div className={styles.featureOverviewEnvironment}>
-            <Accordion style={{ boxShadow: 'none' }}>
+            <Accordion
+                style={{ boxShadow: 'none' }}
+                data-test={`${FEATURE_ENVIRONMENT_ACCORDION}_${env.name}`}
+            >
                 <AccordionSummary
                     className={styles.accordionHeader}
                     expandIcon={<ExpandMore />}
