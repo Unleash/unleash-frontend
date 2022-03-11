@@ -57,7 +57,11 @@ export const ConstraintAccordionViewHeader = ({
                     />
                 </div>
 
-                <div style={{ minWidth: '220px' }}>
+                <div style={{ minWidth: '220px', position: 'relative' }}>
+                    <ConditionallyRender
+                        condition={Boolean(constraint.inverted)}
+                        show={<div className={styles.negated}>NOT</div>}
+                    />
                     <p className={styles.operator}>{constraint.operator}</p>
                 </div>
                 <div className={styles.headerViewValuesContainer}>

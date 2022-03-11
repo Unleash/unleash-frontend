@@ -185,10 +185,11 @@ export const ConstraintAccordionEdit = ({
     return (
         <div className={styles.form}>
             <Accordion
-                classes={{
-                    root: styles.accordionRoot,
-                }}
                 className={classnames(styles.accordion, styles.accordionEdit)}
+                classes={{
+                    expanded: styles.accordionRoot,
+                }}
+                style={{ boxShadow: 'none' }}
                 expanded={expanded}
                 TransitionProps={{
                     onExited: () => {

@@ -21,6 +21,17 @@ export const useStyles = makeStyles(theme => ({
         height: '26px',
     },
     accordionRoot: { margin: 0, boxShadow: 'none' },
+    negated: {
+        position: 'absolute',
+        color: '#fff',
+        backgroundColor: theme.palette.primary.light,
+        padding: '0.1rem 0.2rem',
+        fontSize: '0.7rem',
+        fontWeight: 'bold',
+        top: '-15px',
+        left: '42px',
+        borderRadius: '3px',
+    },
     accordion: {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
