@@ -1,14 +1,23 @@
 import { useStyles } from './FormTemplate.styles';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Codebox from '../Codebox/Codebox';
-import { IconButton, useMediaQuery } from '@material-ui/core';
-import { FileCopy } from '@material-ui/icons';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Collapse,
+    Grow,
+    IconButton,
+    useMediaQuery,
+} from '@material-ui/core';
+import { FileCopy, Info } from '@material-ui/icons';
 import ConditionallyRender from '../ConditionallyRender';
 import Loader from '../Loader/Loader';
 import copy from 'copy-to-clipboard';
 import useToast from '../../../hooks/useToast';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { ReactComponent as MobileGuidanceBG } from '../../../assets/img/mobile-guidance-bg.svg';
 
 interface ICreateProps {
     title: string;
@@ -31,6 +40,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
     const { setToastData } = useToast();
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
+    const [open, setOpen] = useState(false);
 
     const copyCommand = () => {
         if (copy(formatApiCode())) {
@@ -56,24 +66,66 @@ const FormTemplate: React.FC<ICreateProps> = ({
         <section
             className={classNames(styles.container, modal && styles.modal)}
         >
-            <aside className={styles.sidebar}>
-                <h2 className={styles.title}>{title}</h2>
-                <p className={styles.description}>{description}</p>
+            <ConditionallyRender
+                condition={smallScreen}
+                show={
+                    <div style={{ position: 'relative' }}>
+                        <MobileGuidanceBG
+                            style={{
+                                position: 'absolute',
+                                right: '-3px',
+                                top: '-3px',
+                                width: '75px',
+                                height: '75px',
+                            }}
+                        />
+                        <IconButton
+                            style={{
+                                position: 'absolute',
+                                zIndex: 400,
+                                right: 0,
+                                clipPath:
+                                    'ellipse(50% 0, 100% 0, 100% 100%, 80% 100%, 52% 62%, 19% 45%, 0 0)',
+                            }}
+                            onClick={() => setOpen(prev => !prev)}
+                        >
+                            <Info style={{ fill: '#fff' }} />
+                        </IconButton>
 
-                <div className={styles.linkContainer}>
-                    <MenuBookIcon className={styles.linkIcon} />
-                    <a
-                        className={styles.documentationLink}
-                        href={documentationLink}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                    >
-                        Learn more
-                    </a>
-                </div>
+                        <MobileGuidance description={description} open={open} />
+                    </div>
+                }
+            />
+            <div className={styles.formContent}>
                 <ConditionallyRender
-                    condition={!smallScreen}
-                    show={
+                    condition={loading || false}
+                    show={<Loader />}
+                    elseShow={
+                        <>
+                            <h2 className={styles.title}>{title}</h2>
+                            {children}
+                        </>
+                    }
+                />{' '}
+            </div>
+            <ConditionallyRender
+                condition={!smallScreen}
+                show={
+                    <aside className={styles.sidebar}>
+                        <p className={styles.description}>{description}</p>
+
+                        <div className={styles.linkContainer}>
+                            <MenuBookIcon className={styles.linkIcon} />
+                            <a
+                                className={styles.documentationLink}
+                                href={documentationLink}
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                Learn more
+                            </a>
+                        </div>
+
                         <>
                             <h3 className={styles.subtitle}>
                                 API Command{' '}
@@ -83,17 +135,39 @@ const FormTemplate: React.FC<ICreateProps> = ({
                             </h3>
                             <Codebox text={formatApiCode()} />
                         </>
-                    }
-                />
-            </aside>
-            <div className={styles.formContent}>
-                <ConditionallyRender
-                    condition={loading || false}
-                    show={<Loader />}
-                    elseShow={<>{children}</>}
-                />{' '}
-            </div>
+                    </aside>
+                }
+            />
         </section>
+    );
+};
+
+interface IMobileGuidance {
+    description: string;
+    open: boolean;
+}
+
+const MobileGuidance = ({ description, open }: IMobileGuidance) => {
+    const styles = useStyles();
+
+    return (
+        <Collapse in={open} timeout={500}>
+            <aside className={styles.sidebar}>
+                <p className={styles.description}>{description}</p>
+
+                <div className={styles.linkContainer}>
+                    <MenuBookIcon className={styles.linkIcon} />
+                    <a
+                        className={styles.documentationLink}
+                        href={'test'}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                        Learn more
+                    </a>
+                </div>
+            </aside>
+        </Collapse>
     );
 };
 

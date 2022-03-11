@@ -28,8 +28,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     title: {
-        color: '#fff',
-        marginBottom: '1rem',
+        marginBottom: '1.5rem',
         fontWeight: 'normal',
     },
     subtitle: {
