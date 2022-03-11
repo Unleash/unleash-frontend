@@ -20,11 +20,13 @@ export const useStyles = makeStyles(theme => ({
         width: '26px',
         height: '26px',
     },
+    accordionRoot: { margin: 0, boxShadow: 'none' },
     accordion: {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
-        margin: '1rem 0',
         backgroundColor: '#fff',
+        margin: 0,
+
         ['&:before']: {
             height: 0,
         },
