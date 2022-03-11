@@ -1,4 +1,4 @@
-import { isValid } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 import semver from 'semver';
 
 export type ConstraintValidatorOutput = [boolean, string];
@@ -47,7 +47,7 @@ export const semVerValidatorGenerator = (value: string) => {
 
 export const dateValidatorGenerator = (value: string) => {
     return (): ConstraintValidatorOutput => {
-        if (!isValid(new Date(value))) {
+        if (!isValid(parseISO(value))) {
             return [false, 'Value must be a valid date matching RFC3339'];
         }
         return [true, ''];
