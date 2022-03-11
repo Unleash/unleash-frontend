@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import classnames from 'classnames';
 import { IConstraint } from '../../../../interfaces/strategy';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
@@ -72,7 +73,7 @@ export const ConstraintAccordionEdit = ({
         // Setting expanded to true on mount will cause the accordion
         // animation to take effect and transition the expanded accordion in
         setExpanded(true);
-    }, [constraint]);
+    }, []);
 
     useEffect(() => {
         setContextDefinition(
@@ -184,8 +185,8 @@ export const ConstraintAccordionEdit = ({
     return (
         <div className={styles.form}>
             <Accordion
-                style={{ boxShadow: 'none', backgroundColor: '#F6F6FA' }}
-                className={styles.accordion}
+                style={{ boxShadow: 'none' }}
+                className={classnames(styles.accordion, styles.accordionEdit)}
                 expanded={expanded}
                 TransitionProps={{
                     onExited: () => {

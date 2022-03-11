@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: theme.fontSizes.bodySize,
         fontWeight: 'normal',
         marginTop: '1rem',
+        marginBottom: '0.25rem',
     },
 }));
 
@@ -14,11 +15,7 @@ export const ConstraintFormHeader: React.FC<
 > = ({ children, ...rest }) => {
     const styles = useStyles();
     return (
-        <h3
-            className={styles.header}
-            {...rest}
-            style={{ marginBottom: '0.25rem' }}
-        >
+        <h3 className={styles.header} {...rest}>
             {children}
         </h3>
     );

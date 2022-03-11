@@ -1,46 +1,23 @@
 import { Tooltip } from '@material-ui/core';
-import { useCallback } from 'react';
 import ConditionallyRender from '../ConditionallyRender';
 
 interface IStringTruncatorProps {
     text: string;
     maxWidth: string;
     className?: string;
+    maxLength: number;
 }
 
 const StringTruncator = ({
     text,
     maxWidth,
+    maxLength,
     className,
     ...rest
 }: IStringTruncatorProps) => {
-    const calculateOverflowGenerator = useCallback(() => {
-        let calculated = false;
-        let clientWidth = 0;
-        let result = false;
-
-        return (): boolean => {
-            if (!calculated) {
-                const element = document.createElement('p');
-                element.innerHTML = text;
-                element.style.position = 'absolute';
-                element.style.left = '-10000px';
-
-                document.body.appendChild(element);
-                clientWidth = element.clientWidth;
-                document.body.removeChild(element);
-                calculated = true;
-                result = Number(maxWidth) <= clientWidth;
-            }
-            return result;
-        };
-    }, [text, maxWidth]);
-
-    const overflow = calculateOverflowGenerator();
-
     return (
         <ConditionallyRender
-            condition={overflow()}
+            condition={text.length > maxLength}
             show={
                 <Tooltip title={text} arrow>
                     <span
@@ -52,6 +29,7 @@ const StringTruncator = ({
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             display: 'inline-block',
+                            verticalAlign: 'middle',
                         }}
                         {...rest}
                     >

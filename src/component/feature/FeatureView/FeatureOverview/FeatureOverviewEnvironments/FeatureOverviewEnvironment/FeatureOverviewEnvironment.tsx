@@ -97,12 +97,15 @@ const FeatureOverviewEnvironment = ({
                                 enabled={env.enabled}
                                 className={styles.headerIcon}
                             />
-                            Feature toggle execution for&nbsp;
-                            <StringTruncator
-                                text={env.name}
-                                className={styles.truncator}
-                                maxWidth="100"
-                            />
+                            <p>
+                                Feature toggle execution for&nbsp;
+                                <StringTruncator
+                                    text={env.name}
+                                    className={styles.truncator}
+                                    maxWidth="100"
+                                    maxLength={15}
+                                />
+                            </p>
                         </div>
                         <div className={styles.container}>
                             <div className={styles.strategyMenu}>

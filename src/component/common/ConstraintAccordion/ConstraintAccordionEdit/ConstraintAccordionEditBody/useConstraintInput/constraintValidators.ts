@@ -35,9 +35,9 @@ export const stringValidatorGenerator = (values: string[]) => {
 
 export const semVerValidatorGenerator = (value: string) => {
     return (): ConstraintValidatorOutput => {
-        const cleanValue = semver.clean(value) === value;
+        const isCleanValue = semver.clean(value) === value;
 
-        if (!semver.valid(value) || !cleanValue) {
+        if (!semver.valid(value) || !isCleanValue) {
             return [false, 'Value is not a valid semver. For example 1.2.4'];
         }
 

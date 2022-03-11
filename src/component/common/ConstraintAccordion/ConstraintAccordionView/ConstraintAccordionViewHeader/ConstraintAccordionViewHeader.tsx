@@ -53,6 +53,7 @@ export const ConstraintAccordionViewHeader = ({
                     <StringTruncator
                         text={constraint.contextName}
                         maxWidth="175px"
+                        maxLength={25}
                     />
                 </div>
 

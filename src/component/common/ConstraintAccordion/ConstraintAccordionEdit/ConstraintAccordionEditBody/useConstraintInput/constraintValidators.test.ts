@@ -94,6 +94,8 @@ test('string validator should accept a list of strings', () => {
 });
 
 test('string validator should reject values that are not arrays', () => {
+    // Normally we don't allow this annotation, but here we are forcing a test case.
+    // @ts-expect-error
     const stringValidator = stringValidatorGenerator(4);
     const [result, err] = stringValidator();
 
@@ -102,6 +104,8 @@ test('string validator should reject values that are not arrays', () => {
 });
 
 test('string validator should reject arrays that are not arrays of strings', () => {
+    // Normally we don't allow this annotation, but here we are forcing a test case.
+    // @ts-expect-error
     const stringValidator = stringValidatorGenerator(['test', NaN, 5]);
     const [result, err] = stringValidator();
 

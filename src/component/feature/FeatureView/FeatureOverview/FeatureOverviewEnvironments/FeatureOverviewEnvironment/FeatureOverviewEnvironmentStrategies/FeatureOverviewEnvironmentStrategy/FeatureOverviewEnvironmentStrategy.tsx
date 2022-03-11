@@ -43,6 +43,7 @@ const FeatureOverviewEnvironmentStrategy = ({
                 <Icon className={styles.icon} />
                 <StringTruncator
                     maxWidth="150"
+                    maxLength={15}
                     text={formatStrategyName(strategy.name)}
                 />
                 <div className={styles.actions}>

@@ -67,7 +67,13 @@ const SingleValue = ({ value, operator }: ISingleValueProps) => {
         <div className={styles.singleValueView}>
             <p className={styles.singleValueText}>Value must {operator}</p>{' '}
             <Chip
-                label={<StringTruncator maxWidth="200" text={value} />}
+                label={
+                    <StringTruncator
+                        maxWidth="200"
+                        text={value}
+                        maxLength={25}
+                    />
+                }
                 className={styles.chip}
             />
         </div>
@@ -92,7 +98,13 @@ const MultipleValues = ({ values }: IMultipleValuesProps) => {
                 .map((value, index) => (
                     <Chip
                         key={`${value}-${index}`}
-                        label={<StringTruncator maxWidth="200" text={value} />}
+                        label={
+                            <StringTruncator
+                                maxWidth="200"
+                                text={value}
+                                maxLength={25}
+                            />
+                        }
                         className={styles.chip}
                     />
                 ))}

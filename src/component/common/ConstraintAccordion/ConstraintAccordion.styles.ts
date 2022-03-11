@@ -29,6 +29,9 @@ export const useStyles = makeStyles(theme => ({
             height: 0,
         },
     },
+    accordionEdit: {
+        backgroundColor: '#F6F6FA',
+    },
     operator: {
         border: `1px solid ${theme.palette.secondary.main}`,
         padding: '0.25rem 1rem',

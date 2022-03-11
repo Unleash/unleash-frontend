@@ -1,5 +1,6 @@
 import { Button, Chip, makeStyles } from '@material-ui/core';
 import Input from 'component/common/Input/Input';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import React, { useState } from 'react';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
@@ -83,13 +84,14 @@ export const FreeTextInput = ({
     };
 
     return (
-        <div onKeyDown={onKeyDown}>
+        <div>
             <ConstraintFormHeader style={{ marginBottom: 0 }}>
                 Set values (maximum 100)
             </ConstraintFormHeader>
             <div className={styles.inputContainer}>
                 <div className={styles.inputInnerContainer}>
                     <Input
+                        onKeyDown={onKeyDown}
                         label="Values"
                         name="values"
                         value={inputValues}
@@ -139,7 +141,13 @@ const ConstraintValueChips = ({
                 // be unique here.
                 return (
                     <Chip
-                        label={value}
+                        label={
+                            <StringTruncator
+                                text={value}
+                                maxLength={35}
+                                maxWidth="100"
+                            />
+                        }
                         key={`${value}-${index}`}
                         onDelete={() => removeValue(index)}
                         className={styles.valueChip}

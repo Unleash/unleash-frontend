@@ -168,6 +168,7 @@ const FeatureOverviewExecution = ({
                         <Fragment key={param.name}>
                             <p className={styles.text} key={param.name}>
                                 <StringTruncator
+                                    maxLength={15}
                                     maxWidth="150"
                                     text={param.name}
                                 />{' '}
@@ -195,6 +196,7 @@ const FeatureOverviewExecution = ({
                                     <p className={styles.text}>
                                         <StringTruncator
                                             maxWidth="150"
+                                            maxLength={15}
                                             text={param.name}
                                         />{' '}
                                         is set to {numValue}
@@ -217,6 +219,7 @@ const FeatureOverviewExecution = ({
                                 <>
                                     <p className={styles.text}>
                                         <StringTruncator
+                                            maxLength={15}
                                             maxWidth="150"
                                             text={param.name}
                                         />{' '}
