@@ -58,6 +58,17 @@ export const useStyles = makeStyles(theme => ({
             position: 'relative',
         },
     },
+    headerValuesContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    headerValues: {
+        fontSize: theme.fontSizes.smallBody,
+        color: theme.palette.primary.light,
+    },
+    headerValuesExpand: {
+        fontSize: theme.fontSizes.smallBody,
+    },
     headerViewValuesContainer: {
         [theme.breakpoints.down(990)]: {
             display: 'none',

@@ -8,7 +8,6 @@ import { IConstraint } from '../../../../interfaces/strategy';
 
 import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/ConstraintAccordionViewBody';
 import { ConstraintAccordionViewHeader } from './ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
-import { useStyles } from '../ConstraintAccordion.styles';
 import { oneOf } from '../../../../utils/one-of';
 import {
     dateOperators,
@@ -16,6 +15,7 @@ import {
     semVerOperators,
 } from '../../../../constants/operators';
 
+import { useStyles } from '../ConstraintAccordion.styles';
 interface IConstraintAccordionViewProps {
     environmentId: string;
     constraint: IConstraint;

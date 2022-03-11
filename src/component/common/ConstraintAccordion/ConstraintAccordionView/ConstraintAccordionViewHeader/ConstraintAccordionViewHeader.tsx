@@ -65,10 +65,14 @@ export const ConstraintAccordionViewHeader = ({
                         condition={singleValue}
                         show={<Chip label={constraint.value} />}
                         elseShow={
-                            <p>
-                                {constraint?.values?.length} values. Expand to
-                                view
-                            </p>
+                            <div className={styles.headerValuesContainer}>
+                                <p className={styles.headerValues}>
+                                    {constraint?.values?.length} values
+                                </p>
+                                <p className={styles.headerValuesExpand}>
+                                    Expand to view
+                                </p>
+                            </div>
                         }
                     />
                 </div>

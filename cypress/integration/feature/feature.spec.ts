@@ -191,7 +191,7 @@ describe('feature', () => {
             }
         ).as('deleteStrategy');
 
-        cy.get('[data-test=FEATURE_ACCORDION_ENVIRONMENT_development]').click();
+        cy.get('[data-test=FEATURE_ENVIRONMENT_ACCORDION_development]').click();
         cy.get('[data-test=STRATEGY_FORM_REMOVE_ID]').click();
         cy.get('[data-test=DIALOGUE_CONFIRM_ID]').click();
         cy.wait('@deleteStrategy');
