@@ -15,7 +15,7 @@ export const numberValidatorGenerator = (value: unknown) => {
     };
 };
 
-export const stringValidatorGenerator = (values: string[]) => {
+export const stringValidatorGenerator = (values: unknown) => {
     return (): ConstraintValidatorOutput => {
         const error: ConstraintValidatorOutput = [
             false,

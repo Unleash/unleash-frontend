@@ -141,9 +141,8 @@ const ProjectEnvironmentList = ({ projectId }: ProjectEnvironmentListProps) => {
                 />
             </code>
             {/* This is ugly - but regular {" "} doesn't work here*/}
-            &nbsp;
             <p>
-                environment is{' '}
+                &nbsp; environment is{' '}
                 <strong>{env.enabled ? 'enabled' : 'disabled'}</strong>
             </p>
         </div>

@@ -15,7 +15,7 @@ export const ConstraintFormHeader: React.FC<
 > = ({ children, ...rest }) => {
     const styles = useStyles();
     return (
-        <h3 className={styles.header} {...rest}>
+        <h3 {...rest} className={styles.header}>
             {children}
         </h3>
     );
