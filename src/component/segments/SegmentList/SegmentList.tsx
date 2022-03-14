@@ -20,9 +20,11 @@ import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfi
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
+import { useHistory } from 'react-router-dom';
 
 export const SegmentsList = () => {
     const { hasAccess } = useContext(AccessContext);
+    const history = useHistory();
     const { segments, refetchSegments } = useSegments();
     const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
@@ -81,7 +83,7 @@ export const SegmentsList = () => {
                     of constraints and can be reused.
                 </p>
                 <PermissionButton
-                    onClick={() => {}}
+                    onClick={() => {history.push('/segments/create')}}
                     variant="outlined"
                     color="secondary"
                     className={styles.paramButton}

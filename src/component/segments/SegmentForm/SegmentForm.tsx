@@ -1,5 +1,8 @@
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
+import Constraint from 'component/common/Constraint/Constraint';
 import Input from 'component/common/Input/Input';
+import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
 import { useStyles } from './SegmentForm.styles';
 
@@ -31,7 +34,7 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
     clearErrors,
 }) => {
     const styles = useStyles();
-
+    const { context } = useUnleashContext();
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <h3 className={styles.formHeader}>Segment information</h3>
@@ -53,6 +56,7 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                 <p className={styles.inputDescription}>
                     What is the segment description?
                 </p>
+                
                 <Input
                     className={styles.input}
                     label="Description (optional)"
@@ -65,6 +69,23 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                 <p className={styles.inputDescription}>
                     What is the segment description?
                 </p>
+                <div>
+                    <Autocomplete
+                        multiple
+                        id="tags-outlined"
+                        options={context}
+                        getOptionLabel={option => option.name}
+                        filterSelectedOptions
+                        defaultValue={[context[1]]}
+                        renderInput={params => (
+                            <TextField
+                                {...params}
+                                label="Context"
+                                placeholder="Select a context"
+                            />
+                        )}
+                    />
+                </div>
             </div>
             <div className={styles.buttonContainer}>
                 {children}
