@@ -1,21 +1,13 @@
 import { useStyles } from './FormTemplate.styles';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Codebox from '../Codebox/Codebox';
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Collapse,
-    Grow,
-    IconButton,
-    useMediaQuery,
-} from '@material-ui/core';
+import { Collapse, IconButton, useMediaQuery } from '@material-ui/core';
 import { FileCopy, Info } from '@material-ui/icons';
 import ConditionallyRender from '../ConditionallyRender';
 import Loader from '../Loader/Loader';
 import copy from 'copy-to-clipboard';
 import useToast from '../../../hooks/useToast';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { ReactComponent as MobileGuidanceBG } from '../../../assets/img/mobile-guidance-bg.svg';
 
@@ -27,6 +19,11 @@ interface ICreateProps {
     modal?: boolean;
     formatApiCode: () => string;
 }
+
+// Components in this file:
+// FormTemplate
+// MobileGuidance
+// Guidance
 
 const FormTemplate: React.FC<ICreateProps> = ({
     title,
@@ -40,7 +37,6 @@ const FormTemplate: React.FC<ICreateProps> = ({
     const { setToastData } = useToast();
     const styles = useStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
-    const [open, setOpen] = useState(false);
 
     const copyCommand = () => {
         if (copy(formatApiCode())) {
@@ -70,29 +66,10 @@ const FormTemplate: React.FC<ICreateProps> = ({
                 condition={smallScreen}
                 show={
                     <div style={{ position: 'relative' }}>
-                        <MobileGuidanceBG
-                            style={{
-                                position: 'absolute',
-                                right: '-3px',
-                                top: '-3px',
-                                width: '75px',
-                                height: '75px',
-                            }}
+                        <MobileGuidance
+                            description={description}
+                            documentationLink={documentationLink}
                         />
-                        <IconButton
-                            style={{
-                                position: 'absolute',
-                                zIndex: 400,
-                                right: 0,
-                                clipPath:
-                                    'ellipse(50% 0, 100% 0, 100% 100%, 80% 100%, 52% 62%, 19% 45%, 0 0)',
-                            }}
-                            onClick={() => setOpen(prev => !prev)}
-                        >
-                            <Info style={{ fill: '#fff' }} />
-                        </IconButton>
-
-                        <MobileGuidance description={description} open={open} />
                     </div>
                 }
             />
@@ -111,31 +88,18 @@ const FormTemplate: React.FC<ICreateProps> = ({
             <ConditionallyRender
                 condition={!smallScreen}
                 show={
-                    <aside className={styles.sidebar}>
-                        <p className={styles.description}>{description}</p>
-
-                        <div className={styles.linkContainer}>
-                            <MenuBookIcon className={styles.linkIcon} />
-                            <a
-                                className={styles.documentationLink}
-                                href={documentationLink}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                Learn more
-                            </a>
-                        </div>
-
-                        <>
-                            <h3 className={styles.subtitle}>
-                                API Command{' '}
-                                <IconButton onClick={copyCommand}>
-                                    <FileCopy className={styles.icon} />
-                                </IconButton>
-                            </h3>
-                            <Codebox text={formatApiCode()} />
-                        </>
-                    </aside>
+                    <Guidance
+                        description={description}
+                        documentationLink={documentationLink}
+                    >
+                        <h3 className={styles.subtitle}>
+                            API Command{' '}
+                            <IconButton onClick={copyCommand}>
+                                <FileCopy className={styles.icon} />
+                            </IconButton>
+                        </h3>
+                        <Codebox text={formatApiCode()} />
+                    </Guidance>
                 }
             />
         </section>
@@ -144,30 +108,65 @@ const FormTemplate: React.FC<ICreateProps> = ({
 
 interface IMobileGuidance {
     description: string;
-    open: boolean;
+    documentationLink: string;
 }
 
-const MobileGuidance = ({ description, open }: IMobileGuidance) => {
+const MobileGuidance = ({
+    description,
+    documentationLink,
+}: IMobileGuidance) => {
+    const [open, setOpen] = useState(false);
     const styles = useStyles();
 
     return (
-        <Collapse in={open} timeout={500}>
-            <aside className={styles.sidebar}>
-                <p className={styles.description}>{description}</p>
+        <>
+            <MobileGuidanceBG className={styles.mobileGuidanceBackground} />
+            <IconButton
+                className={styles.mobileGuidanceButton}
+                onClick={() => setOpen(prev => !prev)}
+            >
+                <Info className={styles.infoIcon} />
+            </IconButton>
+            <Collapse in={open} timeout={500}>
+                <Guidance
+                    description={description}
+                    documentationLink={documentationLink}
+                />
+            </Collapse>
+        </>
+    );
+};
 
-                <div className={styles.linkContainer}>
-                    <MenuBookIcon className={styles.linkIcon} />
-                    <a
-                        className={styles.documentationLink}
-                        href={'test'}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                    >
-                        Learn more
-                    </a>
-                </div>
-            </aside>
-        </Collapse>
+interface IGuidanceProps {
+    description: string;
+    documentationLink: string;
+}
+
+const Guidance: React.FC<IGuidanceProps> = ({
+    description,
+    children,
+    documentationLink,
+}) => {
+    const styles = useStyles();
+
+    return (
+        <aside className={styles.sidebar}>
+            <p className={styles.description}>{description}</p>
+
+            <div className={styles.linkContainer}>
+                <MenuBookIcon className={styles.linkIcon} />
+                <a
+                    className={styles.documentationLink}
+                    href={documentationLink}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    Learn more
+                </a>
+            </div>
+
+            {children}
+        </aside>
     );
 };
 

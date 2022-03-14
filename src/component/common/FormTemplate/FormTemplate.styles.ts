@@ -69,4 +69,19 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     icon: { fill: '#fff' },
+    mobileGuidanceBackground: {
+        position: 'absolute',
+        right: '-3px',
+        top: '-3px',
+        width: '75px',
+        height: '75px',
+    },
+    mobileGuidanceButton: {
+        position: 'absolute',
+        zIndex: 400,
+        right: 0,
+    },
+    infoIcon: {
+        fill: '#fff',
+    },
 }));
