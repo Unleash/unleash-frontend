@@ -12,7 +12,9 @@ interface ISegmentListItemProps {
     description: string;
     createdAt: string;
     createdBy: string;
-    setCurrentSegment: React.Dispatch<React.SetStateAction<ISegment | undefined>>;
+    setCurrentSegment: React.Dispatch<
+        React.SetStateAction<ISegment | undefined>
+    >;
     setDelDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

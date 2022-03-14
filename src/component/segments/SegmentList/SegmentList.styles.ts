@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    main:{
-        paddingBottom: '2rem'
+    main: {
+        paddingBottom: '2rem',
     },
     container: {
         display: 'flex',
