@@ -120,7 +120,9 @@ const MobileGuidance = ({
 
     return (
         <>
-            <MobileGuidanceBG className={styles.mobileGuidanceBackground} />
+            <div className={styles.mobileGuidanceBgContainer}>
+                <MobileGuidanceBG className={styles.mobileGuidanceBackground} />
+            </div>
             <IconButton
                 className={styles.mobileGuidanceButton}
                 onClick={() => setOpen(prev => !prev)}

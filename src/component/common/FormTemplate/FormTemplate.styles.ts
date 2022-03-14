@@ -69,6 +69,12 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     icon: { fill: '#fff' },
+    mobileGuidanceBgContainer: {
+        position: 'absolute',
+        right: '-3px',
+        top: '-3px',
+        backgroundColor: theme.palette.primary.light,
+    },
     mobileGuidanceBackground: {
         position: 'absolute',
         right: '-3px',
