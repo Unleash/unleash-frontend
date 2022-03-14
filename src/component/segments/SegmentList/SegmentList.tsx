@@ -9,11 +9,10 @@ import {
 } from '@material-ui/core';
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { UPDATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
-import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { useStyles } from './SegmentList.styles';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfirm';
@@ -43,7 +42,6 @@ export const SegmentsList = () => {
             setToastData({
                 type: 'success',
                 title: 'Successfully deleted segment',
-                text: 'Your segment is now deleted',
             });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
@@ -108,7 +106,7 @@ export const SegmentsList = () => {
                             align="right"
                             classes={{ root: styles.cell }}
                         >
-                            {hasAccess(ADMIN) ? 'Actions' : ''}
+                            {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
                         </TableCell>
                     </TableRow>
                 </TableHead>
