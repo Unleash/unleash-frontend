@@ -20,6 +20,7 @@ import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfi
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
+import { Link } from 'react-router-dom';
 
 export const SegmentsList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -27,7 +28,7 @@ export const SegmentsList = () => {
     const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);
-    const [currentSegment, setCurrentSegment] = useState<ISegment | null>(null);
+    const [currentSegment, setCurrentSegment] = useState<ISegment>();
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
     const { setToastData, setToastApiError } = useToast();
@@ -61,7 +62,6 @@ export const SegmentsList = () => {
                     description={segment.description}
                     createdAt={segment.createdAt}
                     createdBy={segment.createdBy}
-                    //@ts-expect-error
                     setCurrentSegment={setCurrentSegment}
                     setDelDialog={setDelDialog}
                 />
@@ -80,21 +80,15 @@ export const SegmentsList = () => {
                     exposed to your feature. The segment is often a collection
                     of constraints and can be reused.
                 </p>
-                <PermissionButton
-                    onClick={() => {}}
-                    variant="outlined"
-                    color="secondary"
-                    className={styles.paramButton}
-                    permission={ADMIN}
-                >
+                <Link to="/segments/create" className={styles.paramButton}>
                     Create your first segment
-                </PermissionButton>
+                </Link>
             </div>
         );
     };
 
     return (
-        <div>
+        <div className={styles.main}>
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableRow}>
@@ -129,15 +123,16 @@ export const SegmentsList = () => {
                 />
             </Table>
             {segments.length === 0 && renderNoSegments()}
-            <SegmentDeleteConfirm
-                //@ts-expect-error
-                segment={currentSegment}
-                open={delDialog}
-                setDeldialogue={setDelDialog}
-                handleDeleteSegment={onDeleteSegment}
-                confirmName={confirmName}
-                setConfirmName={setConfirmName}
-            />
+            {currentSegment && (
+                <SegmentDeleteConfirm
+                    segment={currentSegment}
+                    open={delDialog}
+                    setDeldialogue={setDelDialog}
+                    handleDeleteSegment={onDeleteSegment}
+                    confirmName={confirmName}
+                    setConfirmName={setConfirmName}
+                />
+            )}
             <br />
         </div>
     );
