@@ -10,6 +10,7 @@ import useToast from '../../../hooks/useToast';
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { ReactComponent as MobileGuidanceBG } from '../../../assets/img/mobile-guidance-bg.svg';
+import { useCommonStyles } from 'common.styles';
 
 interface ICreateProps {
     title: string;
@@ -36,6 +37,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
 }) => {
     const { setToastData } = useToast();
     const styles = useStyles();
+    const commonStyles = useCommonStyles();
     const smallScreen = useMediaQuery(`(max-width:${900}px)`);
 
     const copyCommand = () => {
@@ -65,7 +67,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
             <ConditionallyRender
                 condition={smallScreen}
                 show={
-                    <div style={{ position: 'relative' }}>
+                    <div className={commonStyles.relative}>
                         <MobileGuidance
                             description={description}
                             documentationLink={documentationLink}
