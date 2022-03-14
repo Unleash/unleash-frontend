@@ -5,7 +5,6 @@ import {
     formatStrategyName,
 } from 'utils/strategy-names';
 import { FeatureStrategyType } from '../FeatureStrategyType/FeatureStrategyType';
-import { FeatureStrategyRemove } from '../FeatureStrategyRemove/FeatureStrategyRemove';
 import { FeatureStrategyEnabled } from '../FeatureStrategyEnabled/FeatureStrategyEnabled';
 import { FeatureStrategyConstraints } from '../FeatureStrategyConstraints/FeatureStrategyConstraints';
 import { Button } from '@material-ui/core';
@@ -53,8 +52,13 @@ export const FeatureStrategyForm = ({
     const StrategyIcon = getFeatureStrategyIcon(strategy.name ?? '');
     const strategyName = formatStrategyName(strategy.name ?? '');
     const { hasAccess } = useContext(AccessContext);
-    const { uiConfig } = useUiConfig();
     const { push } = useHistory();
+
+    const {
+        uiConfig,
+        error: uiConfigError,
+        loading: uiConfigLoading,
+    } = useUiConfig();
 
     const onCancel = () => {
         push(formatFeaturePath(feature.project, feature.name));
@@ -74,6 +78,15 @@ export const FeatureStrategyForm = ({
         feature.name,
         strategy.constraints
     );
+
+    if (uiConfigError) {
+        throw uiConfigError;
+    }
+
+    // Wait for uiConfig to load for the correct uiConfig.flags.CO value.
+    if (uiConfigLoading) {
+        return null;
+    }
 
     // TODO(olav): Remove uiConfig.flags.CO when new constraints are released.
     const FeatureStrategyConstraintsImplementation = uiConfig.flags.CO
@@ -118,33 +131,6 @@ export const FeatureStrategyForm = ({
                 )}
             />
             <div className={styles.buttons}>
-                <Button
-                    type="button"
-                    color="secondary"
-                    onClick={onCancel}
-                    disabled={loading}
-                >
-                    Cancel
-                </Button>
-                <ConditionallyRender
-                    condition={Boolean(strategy.id)}
-                    show={
-                        <FeatureStrategyRemove
-                            projectId={feature.project}
-                            featureId={feature.name}
-                            environmentId={environmentId}
-                            strategyId={strategy.id!}
-                            disabled={loading}
-                        />
-                    }
-                />
-                <FeatureStrategyProdGuard
-                    open={showProdGuard}
-                    onClose={() => setShowProdGuard(false)}
-                    onClick={onSubmit}
-                    loading={loading}
-                    label="Save strategy"
-                />
                 <PermissionButton
                     permission={permission}
                     projectId={feature.project}
@@ -157,6 +143,22 @@ export const FeatureStrategyForm = ({
                 >
                     Save strategy
                 </PermissionButton>
+                <Button
+                    type="button"
+                    color="secondary"
+                    onClick={onCancel}
+                    disabled={loading}
+                >
+                    Cancel
+                </Button>
+
+                <FeatureStrategyProdGuard
+                    open={showProdGuard}
+                    onClose={() => setShowProdGuard(false)}
+                    onClick={onSubmit}
+                    loading={loading}
+                    label="Save strategy"
+                />
             </div>
         </form>
     );
