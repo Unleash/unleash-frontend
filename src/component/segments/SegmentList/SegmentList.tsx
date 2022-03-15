@@ -9,7 +9,10 @@ import {
 } from '@material-ui/core';
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
-import { UPDATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
+import {
+    ADMIN,
+    UPDATE_SEGMENT,
+} from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
@@ -19,9 +22,14 @@ import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfi
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import ConditionallyRender from 'component/common/ConditionallyRender';
+import HeaderTitle from 'component/common/HeaderTitle';
+import PageContent from 'component/common/PageContent';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 
 export const SegmentsList = () => {
+    const history = useHistory();
     const { hasAccess } = useContext(AccessContext);
     const { segments, refetchSegments } = useSegments();
     const { deleteSegment } = useSegmentsApi();
@@ -86,52 +94,75 @@ export const SegmentsList = () => {
     };
 
     return (
-        <div className={styles.main}>
-            <Table>
-                <TableHead>
-                    <TableRow className={styles.tableRow}>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Name
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Description
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Created on
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Created By
-                        </TableCell>
-                        <TableCell
-                            align="right"
-                            classes={{ root: styles.cell }}
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title="Segments"
+                    actions={
+                        <PermissionButton
+                            onClick={() => history.push('/segments/create')}
+                            permission={ADMIN}
                         >
-                            {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>{segments.length > 0 && renderSegments()}</TableBody>
+                            New Segment
+                        </PermissionButton>
+                    }
+                />
+            }
+        >
+            <div className={styles.main}>
+                <Table>
+                    <TableHead>
+                        <TableRow className={styles.tableRow}>
+                            <TableCell classes={{ root: styles.cell }}>
+                                Name
+                            </TableCell>
+                            <TableCell classes={{ root: styles.cell }}>
+                                Description
+                            </TableCell>
+                            <TableCell classes={{ root: styles.cell }}>
+                                Created on
+                            </TableCell>
+                            <TableCell classes={{ root: styles.cell }}>
+                                Created By
+                            </TableCell>
+                            <TableCell
+                                align="right"
+                                classes={{ root: styles.cell }}
+                            >
+                                {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <ConditionallyRender
+                            condition={segments.length > 0}
+                            show={renderSegments()}
+                        />
+                    </TableBody>
 
-                <PaginateUI
-                    pages={pages}
-                    pageIndex={pageIndex}
-                    setPageIndex={setPageIndex}
-                    nextPage={nextPage}
-                    prevPage={prevPage}
+                    <PaginateUI
+                        pages={pages}
+                        pageIndex={pageIndex}
+                        setPageIndex={setPageIndex}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                    />
+                </Table>
+                <ConditionallyRender
+                    condition={segments.length === 0}
+                    show={renderNoSegments()}
                 />
-            </Table>
-            {segments.length === 0 && renderNoSegments()}
-            {currentSegment && (
-                <SegmentDeleteConfirm
-                    segment={currentSegment}
-                    open={delDialog}
-                    setDeldialogue={setDelDialog}
-                    handleDeleteSegment={onDeleteSegment}
-                    confirmName={confirmName}
-                    setConfirmName={setConfirmName}
-                />
-            )}
-            <br />
-        </div>
+                {currentSegment && (
+                    <SegmentDeleteConfirm
+                        segment={currentSegment}
+                        open={delDialog}
+                        setDeldialogue={setDelDialog}
+                        handleDeleteSegment={onDeleteSegment}
+                        confirmName={confirmName}
+                        setConfirmName={setConfirmName}
+                    />
+                )}
+            </div>
+        </PageContent>
     );
 };

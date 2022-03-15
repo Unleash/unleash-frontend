@@ -46,7 +46,7 @@ import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
-import { Segment } from 'component/segments/Segments';
+import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 
 export const routes = [
     // Project
@@ -356,7 +356,7 @@ export const routes = [
     {
         path: '/segments',
         title: 'Segments',
-        component: Segment,
+        component: SegmentsList,
         hidden: false,
         type: 'protected',
         layout: 'main',
