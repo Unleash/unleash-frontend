@@ -56,7 +56,6 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                 <p className={styles.inputDescription}>
                     What is the segment description?
                 </p>
-                
                 <Input
                     className={styles.input}
                     label="Description (optional)"
@@ -69,23 +68,6 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                 <p className={styles.inputDescription}>
                     What is the segment description?
                 </p>
-                <div>
-                    <Autocomplete
-                        multiple
-                        id="tags-outlined"
-                        options={context}
-                        getOptionLabel={option => option.name}
-                        filterSelectedOptions
-                        defaultValue={[context[1]]}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                label="Context"
-                                placeholder="Select a context"
-                            />
-                        )}
-                    />
-                </div>
             </div>
             <div className={styles.buttonContainer}>
                 {children}

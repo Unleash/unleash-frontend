@@ -13,7 +13,6 @@ export const useSegmentsApi = () => {
         const req = createRequest(PATH, {
             method: 'POST',
             body: JSON.stringify(segment),
-            user: JSON.stringify(user),
         });
 
         return makeRequest(req.caller, req.id);
