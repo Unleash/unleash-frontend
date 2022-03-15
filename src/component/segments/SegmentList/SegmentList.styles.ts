@@ -31,5 +31,14 @@ export const useStyles = makeStyles(theme => ({
     },
     cell: {
         borderBottom: 'none',
+        display: 'table-cell',
+    },
+    firstHeader: {
+        borderTopLeftRadius: '5px',
+        borderBottomLeftRadius: '5px',
+    },
+    lastHeader: {
+        borderTopRightRadius: '5px',
+        borderBottomRightRadius: '5px',
     },
 }));

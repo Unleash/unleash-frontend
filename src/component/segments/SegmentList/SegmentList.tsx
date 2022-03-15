@@ -10,7 +10,7 @@ import {
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
 import {
-    ADMIN,
+    CREATE_SEGMENT,
     UPDATE_SEGMENT,
 } from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
@@ -101,7 +101,7 @@ export const SegmentsList = () => {
                     actions={
                         <PermissionButton
                             onClick={() => history.push('/segments/create')}
-                            permission={ADMIN}
+                            permission={CREATE_SEGMENT}
                         >
                             New Segment
                         </PermissionButton>
@@ -113,7 +113,10 @@ export const SegmentsList = () => {
                 <Table>
                     <TableHead>
                         <TableRow className={styles.tableRow}>
-                            <TableCell classes={{ root: styles.cell }}>
+                            <TableCell
+                                className={styles.firstHeader}
+                                classes={{ root: styles.cell }}
+                            >
                                 Name
                             </TableCell>
                             <TableCell classes={{ root: styles.cell }}>
@@ -128,6 +131,7 @@ export const SegmentsList = () => {
                             <TableCell
                                 align="right"
                                 classes={{ root: styles.cell }}
+                                className={styles.lastHeader}
                             >
                                 {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
                             </TableCell>
