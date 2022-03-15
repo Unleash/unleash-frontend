@@ -119,13 +119,22 @@ export const SegmentsList = () => {
                             >
                                 Name
                             </TableCell>
-                            <TableCell classes={{ root: styles.cell }}>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideSM}
+                            >
                                 Description
                             </TableCell>
-                            <TableCell classes={{ root: styles.cell }}>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideXS}
+                            >
                                 Created on
                             </TableCell>
-                            <TableCell classes={{ root: styles.cell }}>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideXS}
+                            >
                                 Created By
                             </TableCell>
                             <TableCell

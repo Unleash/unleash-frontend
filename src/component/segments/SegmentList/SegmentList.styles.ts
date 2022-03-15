@@ -41,4 +41,14 @@ export const useStyles = makeStyles(theme => ({
         borderTopRightRadius: '5px',
         borderBottomRightRadius: '5px',
     },
+    hideSM: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+    hideXS: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        },
+    },
 }));

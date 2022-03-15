@@ -36,17 +36,17 @@ export const SegmentListItem = ({
                     {name}
                 </Typography>
             </TableCell>
-            <TableCell className={styles.leftTableCell}>
+            <TableCell className={styles.descriptionCell}>
                 <Typography variant="body2" data-loading>
                     {description}
                 </Typography>
             </TableCell>
-            <TableCell className={styles.leftTableCell}>
+            <TableCell className={styles.createdAtCell}>
                 <Typography variant="body2" data-loading>
                     <TimeAgo date={createdAt} live={false} />
                 </Typography>
             </TableCell>
-            <TableCell className={styles.leftTableCell}>
+            <TableCell className={styles.createdAtCell}>
                 <Typography variant="body2" data-loading>
                     {createdBy}
                 </Typography>
