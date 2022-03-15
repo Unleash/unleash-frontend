@@ -68,7 +68,7 @@ const SingleValue = ({ value, operator }: ISingleValueProps) => {
 
     return (
         <div className={styles.singleValueView}>
-            <p className={styles.singleValueText}>Value must {operator}</p>{' '}
+            <p className={styles.singleValueText}>Value must be {operator}</p>{' '}
             <Chip
                 label={
                     <StringTruncator
