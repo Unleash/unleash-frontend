@@ -14,7 +14,12 @@ interface IFreeTextInputProps {
 }
 
 const useStyles = makeStyles(theme => ({
-    valueChip: { margin: '0 0.5rem 0.5rem 0' },
+    valueChip: {
+        margin: '0 0.5rem 0.5rem 0',
+    },
+    chipValue: {
+        whiteSpace: 'pre',
+    },
     inputContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -145,6 +150,7 @@ const ConstraintValueChips = ({
                                 text={value}
                                 maxLength={35}
                                 maxWidth="100"
+                                className={styles.chipValue}
                             />
                         }
                         key={`${value}-${index}`}
