@@ -79,9 +79,9 @@ export const FreeTextInput = ({
                 .split(',')
                 .filter(values => values)
                 .map(value => value.trim());
-            setValues([...values, ...newValues]);
+            setValues(uniqueValues([...values, ...newValues]));
         } else {
-            setValues([...values, inputValues.trim()]);
+            setValues(uniqueValues([...values, inputValues.trim()]));
         }
 
         setInputValues('');
@@ -161,4 +161,8 @@ const ConstraintValueChips = ({
             })}
         </>
     );
+};
+
+const uniqueValues = <T,>(values: T[]): T[] => {
+    return Array.from(new Set(values));
 };
