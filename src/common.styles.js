@@ -123,6 +123,25 @@ export const useCommonStyles = makeStyles(theme => ({
         opacity: '0',
         transition: 'transform 1.25s ease, opacity 1s ease',
     },
+    fadeInRight: {
+        opacity: '0',
+        position: 'fixed',
+        right: '0',
+        top: '0',
+        bottom: '0',
+        transform: 'translateX(100%)',
+        zIndex: 9999,
+    },
+    fadeInRightEnter: {
+        transform: 'translateX(0)',
+        opacity: '1',
+        transition: 'transform 0.6s ease, opacity 1s ease',
+    },
+    fadeInRightLeave: {
+        transform: 'translateX(100%)',
+        opacity: '0',
+        transition: 'transform 1.25s ease, opacity 1s ease',
+    },
     error: {
         fontSize: theme.fontSizes.smallBody,
         color: theme.palette.error.main,

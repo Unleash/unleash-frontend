@@ -30,6 +30,7 @@ interface IFeatureStrategyFormProps {
     environmentId: string;
     permission: string;
     onSubmit: () => void;
+    onCancel: () => void;
     loading: boolean;
     strategy: Partial<IFeatureStrategy>;
     setStrategy: React.Dispatch<
@@ -44,6 +45,7 @@ export const FeatureStrategyForm = ({
     environmentId,
     permission,
     onSubmit,
+    onCancel,
     loading,
 }: IFeatureStrategyFormProps) => {
     const styles = useStyles();
@@ -52,17 +54,12 @@ export const FeatureStrategyForm = ({
     const StrategyIcon = getFeatureStrategyIcon(strategy.name ?? '');
     const strategyName = formatStrategyName(strategy.name ?? '');
     const { hasAccess } = useContext(AccessContext);
-    const { push } = useHistory();
 
     const {
         uiConfig,
         error: uiConfigError,
         loading: uiConfigLoading,
     } = useUiConfig();
-
-    const onCancel = () => {
-        push(formatFeaturePath(feature.project, feature.name));
-    };
 
     const onSubmitOrProdGuard = async (event: React.FormEvent) => {
         event.preventDefault();

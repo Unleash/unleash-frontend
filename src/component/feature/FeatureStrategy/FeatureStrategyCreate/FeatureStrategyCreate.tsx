@@ -20,7 +20,13 @@ import { getStrategyObject } from 'utils/get-strategy-object';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { CREATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 
-export const FeatureStrategyCreate = () => {
+interface IFeatureStrategyCreateProps {
+    closeModal: (callback: () => void) => void;
+}
+
+export const FeatureStrategyCreate = ({
+    closeModal,
+}: IFeatureStrategyCreateProps) => {
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const environmentId = useRequiredQueryParam('environmentId');
@@ -54,10 +60,14 @@ export const FeatureStrategyCreate = () => {
                 confetti: true,
             });
             refetchFeature();
-            push(formatFeaturePath(projectId, featureId));
+            closeModal(() => push(formatFeaturePath(projectId, featureId)));
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         }
+    };
+
+    const onCancel = () => {
+        closeModal(() => push(formatFeaturePath(projectId, featureId)));
     };
 
     return (
@@ -84,6 +94,7 @@ export const FeatureStrategyCreate = () => {
                 onSubmit={onSubmit}
                 loading={loading}
                 permission={CREATE_FEATURE_STRATEGY}
+                onCancel={onCancel}
             />
         </FormTemplate>
     );

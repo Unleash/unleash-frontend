@@ -10,6 +10,8 @@ import {
     formatFeaturePath,
 } from 'component/feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { SlideInRoute } from 'component/common/SlideInRoute/SlideInRoute';
+import { SlideoutFormContainer } from 'component/common/SidebarModal/SlideoutFormContainer';
 
 const FeatureOverview = () => {
     const styles = useStyles();
@@ -30,15 +32,22 @@ const FeatureOverview = () => {
                 <FeatureOverviewEnvironments />
             </div>
             <Switch>
-                <Route path="/projects/:projectId/features/:featureId/strategies/create">
-                    <SidebarModal
-                        label="Create feature strategy"
-                        onClose={onSidebarClose}
-                        open
-                    >
-                        <FeatureStrategyCreate />
-                    </SidebarModal>
-                </Route>
+                <SlideInRoute
+                    path="/projects/:projectId/features/:featureId/strategies/create"
+                    renderComponent={(open, closeModal) => (
+                        <SlideoutFormContainer
+                            open={open}
+                            closeModal={closeModal}
+                        >
+                            <div style={{ maxWidth: '1500px' }}>
+                                <FeatureStrategyCreate
+                                    closeModal={closeModal}
+                                />
+                            </div>
+                        </SlideoutFormContainer>
+                    )}
+                />
+
                 <Route path="/projects/:projectId/features/:featureId/strategies/edit">
                     <SidebarModal
                         label="Edit feature strategy"

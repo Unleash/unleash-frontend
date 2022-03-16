@@ -83,6 +83,7 @@ export const FeatureStrategyEdit = () => {
                 onSubmit={onSubmit}
                 loading={loading}
                 permission={UPDATE_FEATURE_STRATEGY}
+                onCancel={() => {}}
             />
         </FormTemplate>
     );
