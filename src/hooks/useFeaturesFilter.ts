@@ -111,7 +111,6 @@ const filterFeatureByRegExp = (
     return feature.strategies.some(
         s =>
             regExp.test(s.name) ||
-            // @ts-expect-error
-            s.constraints.some(c => c.values.some(v => regExp.test(v)))
+            s.constraints.some(c => c.values?.some(v => regExp.test(v)))
     );
 };
