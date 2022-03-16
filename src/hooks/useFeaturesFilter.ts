@@ -109,7 +109,7 @@ const filterFeatureByRegExp = (
     }
 
     return feature.strategies.some(
-        s =>
+        strategy =>
             regExp.test(s.name) ||
             s.constraints.some(c => c.values?.some(v => regExp.test(v)))
     );
