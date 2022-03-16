@@ -111,6 +111,6 @@ const filterFeatureByRegExp = (
     return feature.strategies.some(
         strategy =>
             regExp.test(s.name) ||
-            s.constraints.some(c => c.values?.some(v => regExp.test(v)))
+            strategy.constraints.some(constraint => constraint.values?.some(value => regExp.test(value)))
     );
 };
