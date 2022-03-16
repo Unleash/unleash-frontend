@@ -134,6 +134,7 @@ export const useCommonStyles = makeStyles(theme => ({
     },
     fadeInRightEnter: {
         transform: 'translateX(0)',
+        overflowY: 'auto',
         opacity: '1',
         transition: 'transform 0.6s ease, opacity 1s ease',
     },
