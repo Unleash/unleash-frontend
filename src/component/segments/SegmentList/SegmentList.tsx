@@ -9,27 +9,34 @@ import {
 } from '@material-ui/core';
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import {
+    CREATE_SEGMENT,
+    UPDATE_SEGMENT,
+} from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
-import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { useStyles } from './SegmentList.styles';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfirm';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import ConditionallyRender from 'component/common/ConditionallyRender';
+import HeaderTitle from 'component/common/HeaderTitle';
+import PageContent from 'component/common/PageContent';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 
 export const SegmentsList = () => {
-    const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
+    const { hasAccess } = useContext(AccessContext);
     const { segments, refetchSegments } = useSegments();
     const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);
-    const [currentSegment, setCurrentSegment] = useState<ISegment | null>(null);
+    const [currentSegment, setCurrentSegment] = useState<ISegment>();
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
     const { setToastData, setToastApiError } = useToast();
@@ -44,7 +51,6 @@ export const SegmentsList = () => {
             setToastData({
                 type: 'success',
                 title: 'Successfully deleted segment',
-                text: 'Your segment is now deleted',
             });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
@@ -63,7 +69,6 @@ export const SegmentsList = () => {
                     description={segment.description}
                     createdAt={segment.createdAt}
                     createdBy={segment.createdBy}
-                    //@ts-expect-error
                     setCurrentSegment={setCurrentSegment}
                     setDelDialog={setDelDialog}
                 />
@@ -82,65 +87,96 @@ export const SegmentsList = () => {
                     exposed to your feature. The segment is often a collection
                     of constraints and can be reused.
                 </p>
-                <PermissionButton
-                    onClick={() => {history.push('/segments/create/part-one')}}
-                    variant="outlined"
-                    color="secondary"
-                    className={styles.paramButton}
-                    permission={ADMIN}
-                >
+                <Link to="/segments/create" className={styles.paramButton}>
                     Create your first segment
-                </PermissionButton>
+                </Link>
             </div>
         );
     };
 
     return (
-        <div>
-            <Table>
-                <TableHead>
-                    <TableRow className={styles.tableRow}>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Name
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Description
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Created on
-                        </TableCell>
-                        <TableCell classes={{ root: styles.cell }}>
-                            Created By
-                        </TableCell>
-                        <TableCell
-                            align="right"
-                            classes={{ root: styles.cell }}
+        <PageContent
+            headerContent={
+                <HeaderTitle
+                    title="Segments"
+                    actions={
+                        <PermissionButton
+                            onClick={() => history.push('/segments/create')}
+                            permission={CREATE_SEGMENT}
                         >
-                            {hasAccess(ADMIN) ? 'Actions' : ''}
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>{segments.length > 0 && renderSegments()}</TableBody>
-
-                <PaginateUI
-                    pages={pages}
-                    pageIndex={pageIndex}
-                    setPageIndex={setPageIndex}
-                    nextPage={nextPage}
-                    prevPage={prevPage}
+                            New Segment
+                        </PermissionButton>
+                    }
                 />
-            </Table>
-            {segments.length === 0 && renderNoSegments()}
-            <SegmentDeleteConfirm
-                //@ts-expect-error
-                segment={currentSegment}
-                open={delDialog}
-                setDeldialogue={setDelDialog}
-                handleDeleteSegment={onDeleteSegment}
-                confirmName={confirmName}
-                setConfirmName={setConfirmName}
-            />
-            <br />
-        </div>
+            }
+        >
+            <div className={styles.main}>
+                <Table>
+                    <TableHead>
+                        <TableRow className={styles.tableRow}>
+                            <TableCell
+                                className={styles.firstHeader}
+                                classes={{ root: styles.cell }}
+                            >
+                                Name
+                            </TableCell>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideSM}
+                            >
+                                Description
+                            </TableCell>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideXS}
+                            >
+                                Created on
+                            </TableCell>
+                            <TableCell
+                                classes={{ root: styles.cell }}
+                                className={styles.hideXS}
+                            >
+                                Created By
+                            </TableCell>
+                            <TableCell
+                                align="right"
+                                classes={{ root: styles.cell }}
+                                className={styles.lastHeader}
+                            >
+                                {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <ConditionallyRender
+                            condition={segments.length > 0}
+                            show={renderSegments()}
+                        />
+                    </TableBody>
+
+                    <PaginateUI
+                        pages={pages}
+                        pageIndex={pageIndex}
+                        setPageIndex={setPageIndex}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                    />
+                </Table>
+                <ConditionallyRender
+                    condition={segments.length === 0}
+                    show={renderNoSegments()}
+                />
+                {currentSegment && (
+                    <SegmentDeleteConfirm
+                        segment={currentSegment}
+                        open={delDialog}
+                        setDeldialogue={setDelDialog}
+                        handleDeleteSegment={onDeleteSegment}
+                        confirmName={confirmName}
+                        setConfirmName={setConfirmName}
+                    />
+                )}
+            </div>
+        </PageContent>
     );
 };

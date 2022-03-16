@@ -1,4 +1,3 @@
-import { Alert } from '@material-ui/lab';
 import React from 'react';
 import Dialogue from 'component/common/Dialogue';
 import Input from 'component/common/Input/Input';
@@ -43,8 +42,6 @@ export const SegmentDeleteConfirm = ({
             onClose={handleCancel}
             formId={formId}
         >
-            <Alert severity="error">Danger. TEXT HERE</Alert>
-
             <p className={styles.deleteParagraph}>
                 In order to delete this segment, please enter the name of the
                 segment in the textfield below: <strong>{segment?.name}</strong>

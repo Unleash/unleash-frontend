@@ -324,6 +324,7 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "SE",
     "hidden": false,
     "layout": "main",
     "menu": Object {

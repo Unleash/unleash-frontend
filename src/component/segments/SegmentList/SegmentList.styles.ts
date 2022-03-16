@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
+    main: {
+        paddingBottom: '2rem',
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',
@@ -28,5 +31,24 @@ export const useStyles = makeStyles(theme => ({
     },
     cell: {
         borderBottom: 'none',
+        display: 'table-cell',
+    },
+    firstHeader: {
+        borderTopLeftRadius: '5px',
+        borderBottomLeftRadius: '5px',
+    },
+    lastHeader: {
+        borderTopRightRadius: '5px',
+        borderBottomRightRadius: '5px',
+    },
+    hideSM: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+    hideXS: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        },
     },
 }));

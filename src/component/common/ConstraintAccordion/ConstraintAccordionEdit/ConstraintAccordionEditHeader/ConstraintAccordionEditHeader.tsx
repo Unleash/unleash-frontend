@@ -9,7 +9,7 @@ import ConditionallyRender from '../../../ConditionallyRender';
 import {
     allOperators,
     dateOperators,
-    DATE_BEFORE,
+    DATE_AFTER,
     IN,
 } from '../../../../../constants/operators';
 import { SAVE } from '../ConstraintAccordionEdit';
@@ -31,7 +31,7 @@ const constraintOperators = allOperators.map(operator => {
     return { key: operator, label: operator };
 });
 
-const CURRENT_TIME_CONTEXT_FIELD = 'currentTime';
+export const CURRENT_TIME_CONTEXT_FIELD = 'currentTime';
 
 export const ConstraintAccordionEditHeader = ({
     compact,
@@ -56,7 +56,7 @@ export const ConstraintAccordionEditHeader = ({
         ) {
             setLocalConstraint(prev => ({
                 ...prev,
-                operator: DATE_BEFORE,
+                operator: DATE_AFTER,
                 value: new Date().toISOString(),
             }));
         } else if (

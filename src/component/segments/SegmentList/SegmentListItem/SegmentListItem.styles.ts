@@ -13,4 +13,18 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         color: theme.palette.grey[600],
     },
+    descriptionCell: {
+        textAlign: 'left',
+        maxWidth: '300px',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+    createdAtCell: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        },
+        textAlign: 'left',
+        maxWidth: '300px',
+    },
 }));
