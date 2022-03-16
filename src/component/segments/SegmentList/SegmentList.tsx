@@ -83,7 +83,7 @@ export const SegmentsList = () => {
                     of constraints and can be reused.
                 </p>
                 <PermissionButton
-                    onClick={() => {history.push('/segments/create')}}
+                    onClick={() => {history.push('/segments/create/part-one')}}
                     variant="outlined"
                     color="secondary"
                     className={styles.paramButton}

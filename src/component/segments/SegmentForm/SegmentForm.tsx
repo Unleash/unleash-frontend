@@ -1,10 +1,12 @@
-import { Button, TextField } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Button } from '@material-ui/core';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import Constraint from 'component/common/Constraint/Constraint';
 import Input from 'component/common/Input/Input';
-import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import { useStyles } from './SegmentForm.styles';
+import { SegmentFormStepOne } from './SegmentFormStepOne/SegmentFormStepOne';
+import { SegmentFormStepTwo } from './SegmentFormStepTwo/SegmentFormStepTwo';
 
 interface ISegmentProps {
     name: string;
@@ -34,51 +36,38 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
     clearErrors,
 }) => {
     const styles = useStyles();
-    const { context } = useUnleashContext();
+    const history = useHistory();
+    const { pathname } = useLocation();
+    const FORMURLPART = pathname.substring(pathname.lastIndexOf('/') + 1);
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <h3 className={styles.formHeader}>Segment information</h3>
-
-            <div className={styles.container}>
-                <p className={styles.inputDescription}>
-                    What is the segment name?
-                </p>
-                <Input
-                    className={styles.input}
-                    label="Segment name*"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    error={Boolean(errors.name)}
-                    errorText={errors.name}
-                    onFocus={() => clearErrors()}
-                    autoFocus
-                />
-                <p className={styles.inputDescription}>
-                    What is the segment description?
-                </p>
-                <Input
-                    className={styles.input}
-                    label="Description (optional)"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    error={Boolean(errors.description)}
-                    errorText={errors.description}
-                    onFocus={() => clearErrors()}
-                />
-                <p className={styles.inputDescription}>
-                    What is the segment description?
-                </p>
-            </div>
-            <div className={styles.buttonContainer}>
-                {children}
-                <Button
-                    type="button"
-                    onClick={handleCancel}
-                    className={styles.cancelButton}
-                >
-                    Cancel
-                </Button>
-            </div>
+            <Route
+                path="/segments/create/part-one"
+                render={() => (
+                    <SegmentFormStepOne
+                        name={name}
+                        description={description}
+                        setName={setName}
+                        setDescription={setDescription}
+                        errors={errors}
+                        clearErrors={clearErrors}
+                    />
+                )}
+            />
+            <Route
+                path="/segments/create/part-two"
+                render={() => (
+                    <SegmentFormStepTwo
+                        name={name}
+                        description={description}
+                        setName={setName}
+                        setDescription={setDescription}
+                        errors={errors}
+                        clearErrors={clearErrors}
+                    />
+                )}
+            />
         </form>
     );
 };
