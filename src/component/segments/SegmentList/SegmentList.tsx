@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
-import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import {
     CREATE_SEGMENT,
     UPDATE_SEGMENT,

@@ -367,7 +367,7 @@ export const routes = [
     {
         path: '/segments',
         title: 'Segments',
-        component: Segment,
+        component: SegmentsList,
         path: '/segments',
         title: 'Segments',
         component: SegmentsList,
