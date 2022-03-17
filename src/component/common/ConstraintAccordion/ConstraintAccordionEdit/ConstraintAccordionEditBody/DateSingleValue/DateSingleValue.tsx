@@ -40,6 +40,7 @@ export const DateSingleValue = ({
                 }}
                 error={Boolean(error)}
                 errorText={error}
+                required
             />
         </>
     );
