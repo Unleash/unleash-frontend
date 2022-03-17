@@ -1,5 +1,5 @@
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import Input from 'component/common/Input/Input';
 interface IDateSingleValueProps {
     setValue: (value: string) => void;
@@ -31,7 +31,9 @@ export const DateSingleValue = ({
                 value={parseDateValue(value)}
                 onChange={e => {
                     setError('');
-                    setValue(new Date(e.target.value).toISOString());
+                    const parsedDate = parseValidDate(e.target.value);
+                    const dateString = parsedDate?.toISOString();
+                    dateString && setValue(dateString);
                 }}
                 InputLabelProps={{
                     shrink: true,
@@ -41,4 +43,12 @@ export const DateSingleValue = ({
             />
         </>
     );
+};
+
+const parseValidDate = (value: string): Date | undefined => {
+    const parsed = new Date(value);
+
+    if (isValid(parsed)) {
+        return parsed;
+    }
 };
