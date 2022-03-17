@@ -42,15 +42,12 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     const { context } = useUnleashContext();
     const [selectedContext, setSelectedContext] =
         useState<IUnleashContextDefinition[]>();
-    const [tempConstraint, setTempConstraint] = useState<IConstraint>();
+    const [tempConstraint, setTempConstraint] = useState();
+    //const constraint = createEmptyConstraint(context);
     const onChange = (_event: any, value: IUnleashContextDefinition[]) => {
         setSelectedContext(value);
-    };
-
-    const addConstraints = () => {
-        
-        // setTempConstraint(createConstraint(value[0].name));
-        // setConstraints(prev => [...prev, tempConstraint]);
+        const constraint = createConstraint(value[0].name);
+        setConstraints(prev => [...prev, constraint]);
     };
 
     return (
