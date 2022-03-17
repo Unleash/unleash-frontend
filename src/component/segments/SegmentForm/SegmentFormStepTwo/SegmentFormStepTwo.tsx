@@ -13,6 +13,7 @@ import { IUnleashContextDefinition } from 'interfaces/context';
 import { IConstraint } from 'interfaces/strategy';
 import { ChangeEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { objectId } from 'utils/object-id';
 import { useStyles } from './SegmentFormStepTwo.styles';
 
 interface ISegmentFormPartTwoProps {
@@ -49,6 +50,8 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
         const constraint = createConstraint(value[0].name);
         setConstraints(prev => [...prev, constraint]);
     };
+
+    console.log(constraints);
 
     return (
         <div className={styles.form}>
@@ -105,15 +108,21 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                     }
                 />
 
-                {constraints.map(constraint => (
+                {constraints.map((constraint, index) => (
                     <ConstraintAccordion
+                        key={objectId(constraint)}
                         compact={true}
                         editing={true}
                         environmentId={'production'}
                         constraint={constraint}
                         onCancel={() => console.log('cancel')}
                         onSave={newConstraint =>
-                            setConstraints(prev => [...prev, newConstraint])
+                            setConstraints(prev => {
+                                const updatedArray = [...prev];
+                                updatedArray[index] = constraint;
+
+                                return updatedArray;
+                            })
                         }
                         onEdit={() => console.log('edit')}
                         onDelete={() => console.log('delete')}
