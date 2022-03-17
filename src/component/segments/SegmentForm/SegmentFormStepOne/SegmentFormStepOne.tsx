@@ -27,6 +27,7 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
 
     return (
         <div className={styles.form}>
+            <h3 className={styles.formHeader}>Segment information</h3>
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
                     What is the segment name?
@@ -54,7 +55,6 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     onFocus={() => clearErrors()}
                 />
             </div>
-
             <div className={styles.buttonContainer}>
                 {/* {children} */}
                 <Button

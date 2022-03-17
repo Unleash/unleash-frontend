@@ -41,7 +41,6 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
     const FORMURLPART = pathname.substring(pathname.lastIndexOf('/') + 1);
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <h3 className={styles.formHeader}>Segment information</h3>
             <Route
                 path="/segments/create/part-one"
                 render={() => (
@@ -65,6 +64,8 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                         setDescription={setDescription}
                         errors={errors}
                         clearErrors={clearErrors}
+                        constraints={constraints}
+                        setConstraints={setConstraints}
                     />
                 )}
             />

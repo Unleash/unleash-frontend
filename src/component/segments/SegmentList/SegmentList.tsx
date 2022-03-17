@@ -100,7 +100,7 @@ export const SegmentsList = () => {
                     title="Segments"
                     actions={
                         <PermissionButton
-                            onClick={() => history.push('/segments/create')}
+                            onClick={() => history.push('/segments/create/part-one')}
                             permission={CREATE_SEGMENT}
                         >
                             New Segment

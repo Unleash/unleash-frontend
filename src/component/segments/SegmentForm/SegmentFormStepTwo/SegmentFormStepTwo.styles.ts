@@ -1,9 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    container: {
-        maxWidth: '400px',
-    },
+    container: {},
     form: {
         display: 'flex',
         flexDirection: 'column',
@@ -55,4 +53,18 @@ export const useStyles = makeStyles(theme => ({
         marginRight: 'auto',
         color: theme.palette.primary.light,
     },
+    addContextContainer: {
+        marginTop: '1rem'
+    },
+    addContextButton: {
+        color: theme.palette.primary.dark,
+        background: 'transparent',
+        boxShadow: 'none',
+        border: '1px solid',
+        '&:hover': {
+            background: 'transparent',
+            boxShadow: 'none',
+        },
+    },
+    divider: { borderStyle: 'solid', marginTop: '1rem !important' },
 }));
