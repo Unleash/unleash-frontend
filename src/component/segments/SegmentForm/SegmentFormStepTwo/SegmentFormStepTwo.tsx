@@ -1,6 +1,7 @@
 import { Button, TextField } from '@material-ui/core';
 import { Add, ArrowDropDown } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import Constraint from 'component/common/Constraint/Constraint';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
@@ -41,11 +42,15 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     const { context } = useUnleashContext();
     const [selectedContext, setSelectedContext] =
         useState<IUnleashContextDefinition[]>();
-    //const constraint = createEmptyConstraint(context);
+    const [tempConstraint, setTempConstraint] = useState<IConstraint>();
     const onChange = (_event: any, value: IUnleashContextDefinition[]) => {
         setSelectedContext(value);
-        const constraint = createConstraint(value[0].name);
-     //   setConstraints(prev => [...prev, constraint]);
+    };
+
+    const addConstraints = () => {
+        
+        // setTempConstraint(createConstraint(value[0].name));
+        // setConstraints(prev => [...prev, tempConstraint]);
     };
 
     return (
@@ -63,7 +68,6 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         id="tags-standard"
                         options={context}
                         getOptionLabel={option => option?.name}
-                        filterSelectedOptions
                         popupIcon={<ArrowDropDown />}
                         onChange={onChange}
                         renderInput={params => (
@@ -76,6 +80,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         )}
                     />
                 </div>
+
                 <div className={styles.addContextContainer}>
                     <p className={styles.inputDescription}>
                         Or create and add a new custom context field
@@ -90,7 +95,18 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                     </PermissionButton>
                 </div>
 
-                <hr className={styles.divider} />
+                <ConditionallyRender
+                    condition={constraints.length === 0}
+                    show={
+                        <div className={styles.noConstraintText}>
+                            <p className={styles.subtitle}>
+                                Start adding context fileds by selecting an
+                                option from above, or you can create a new
+                                context field and use it right away
+                            </p>
+                        </div>
+                    }
+                />
 
                 {constraints.map(constraint => (
                     <ConstraintAccordion
@@ -118,16 +134,14 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                 >
                     Back
                 </Button>
+                {children}
                 <Button
                     type="button"
-                    onClick={() => {
-                        history.push('/segments/create/part-two');
-                    }}
                     className={styles.cancelButton}
+                    onClick={() => {
+                        history.push('/segments');
+                    }}
                 >
-                    Next
-                </Button>
-                <Button type="button" className={styles.cancelButton}>
                     Cancel
                 </Button>
             </div>

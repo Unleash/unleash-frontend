@@ -18,6 +18,8 @@ export const useStyles = makeStyles(theme => ({
         marginTop: 'auto',
         display: 'flex',
         justifyContent: 'flex-end',
+        borderTop: `1px solid ${theme.palette.grey[300]}`,
+        paddingTop: 15,
     },
     cancelButton: {
         marginLeft: '1.5rem',
@@ -54,7 +56,9 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.light,
     },
     addContextContainer: {
-        marginTop: '1rem'
+        marginTop: '1rem',
+        borderBottom: `1px solid ${theme.palette.grey[300]}`,
+        paddingBottom: 20,
     },
     addContextButton: {
         color: theme.palette.primary.dark,
@@ -66,5 +70,23 @@ export const useStyles = makeStyles(theme => ({
             boxShadow: 'none',
         },
     },
-    divider: { borderStyle: 'solid', marginTop: '1rem !important' },
+    divider: {
+        borderStyle: 'solid',
+        borderColor: `${theme.palette.grey[300]}`,
+        marginTop: '1rem !important',
+    },
+    noConstraintText: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '5rem',
+    },
+    subtitle: {
+        fontSize: theme.fontSizes.bodySize,
+        color: theme.palette.grey[600],
+        maxWidth: 515,
+        marginBottom: 20,
+        wordBreak: 'break-word',
+        whiteSpace: 'normal',
+    },
 }));

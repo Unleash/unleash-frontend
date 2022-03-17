@@ -50,4 +50,21 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
+    stepsContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+        top: '-78px',
+        width: 153,
+        left: 243,
+        borderRadius: 10,
+        marginTop: 10,
+    },
+    stepsText: { marginRight: 15 },
+    emptyCircle: {
+        fill: theme.palette.primary.light,
+        fontSize: 17,
+    },
+    filledCircle: { fill: theme.palette.primary.main },
 }));

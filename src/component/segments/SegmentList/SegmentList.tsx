@@ -86,7 +86,7 @@ export const SegmentsList = () => {
                     exposed to your feature. The segment is often a collection
                     of constraints and can be reused.
                 </p>
-                <Link to="/segments/create" className={styles.paramButton}>
+                <Link to="/segments/create/part-one" className={styles.paramButton}>
                     Create your first segment
                 </Link>
             </div>
