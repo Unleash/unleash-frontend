@@ -2,16 +2,17 @@ import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 import { SplashPageEnvironments } from '../SplashPageEnvironments/SplashPageEnvironments';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import useSplashApi from 'hooks/api/actions/useSplashApi/useSplashApi';
+import { SplashPageOperators } from 'component/splash/SplashPageOperators/SplashPageOperators';
 import { useEffect } from 'react';
 import { useAuthSplash } from 'hooks/api/getters/useAuth/useAuthSplash';
 
 export type SplashId = typeof splashIds[number];
 
 // All known splash IDs.
-export const splashIds = ['environments'] as const;
+export const splashIds = ['environments', 'operators'] as const;
 
 // Active splash IDs that may be shown.
-export const activeSplashIds: SplashId[] = [];
+export const activeSplashIds: SplashId[] = ['operators'];
 
 export const SplashPage = () => {
     const splashId = useRequiredPathParam('splashId');
@@ -39,6 +40,9 @@ export const SplashPage = () => {
         <Switch>
             <Route path="/splash/environments">
                 <SplashPageEnvironments />
+            </Route>
+            <Route path="/splash/operators">
+                <SplashPageOperators />
             </Route>
             <Route>
                 <Redirect to="/" />

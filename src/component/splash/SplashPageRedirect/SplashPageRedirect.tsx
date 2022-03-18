@@ -41,5 +41,9 @@ const isSplashSeen = (splashId: SplashId, splash: IAuthSplash): boolean => {
 };
 
 const isSplashRelevant = (splashId: SplashId, flags: IFlags): boolean => {
+    if (splashId === 'operators') {
+        return Boolean(flags.C || flags.CO);
+    }
+
     return true;
 };
