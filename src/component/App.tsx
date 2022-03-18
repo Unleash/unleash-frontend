@@ -23,16 +23,6 @@ export const App = () => {
     const hasFetchedAuth = Boolean(authDetails || user);
     const showEnvSplash = isLoggedIn && splash?.environment === false;
 
-    const renderMainLayoutRoutes = () => {
-        return routes.filter(route => route.layout === 'main').map(renderRoute);
-    };
-
-    const renderStandaloneRoutes = () => {
-        return routes
-            .filter(route => route.layout === 'standalone')
-            .map(renderRoute);
-    };
-
     const isUnauthorized = (): boolean => {
         return !isLoggedIn;
     };
@@ -89,8 +79,7 @@ export const App = () => {
                                             component={Redirect}
                                             renderProps={{ to: '/features' }}
                                         />
-                                        {renderMainLayoutRoutes()}
-                                        {renderStandaloneRoutes()}
+                                        {routes.map(renderRoute)}
                                         <Route
                                             path="/404"
                                             component={NotFound}
