@@ -41,7 +41,7 @@ export const CreateContext = () => {
             try {
                 await createContext(payload);
                 refetchUnleashContext();
-                history.push('/context');
+                // history.push('/context');
                 setToastData({
                     title: 'Context created',
                     confetti: true,

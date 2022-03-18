@@ -17,7 +17,7 @@ import {
 
 import { useStyles } from '../ConstraintAccordion.styles';
 interface IConstraintAccordionViewProps {
-    environmentId: string;
+    environmentId?: string;
     constraint: IConstraint;
     onDelete: () => void;
     onEdit: () => void;

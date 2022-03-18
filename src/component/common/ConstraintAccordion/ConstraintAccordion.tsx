@@ -7,7 +7,7 @@ import { ConstraintAccordionView } from './ConstraintAccordionView/ConstraintAcc
 interface IConstraintAccordionProps {
     compact: boolean;
     editing: boolean;
-    environmentId: string;
+    environmentId?: string;
     constraint: IConstraint;
     onEdit: () => void;
     onCancel: () => void;

@@ -1,14 +1,6 @@
-import { Button } from '@material-ui/core';
-import {
-    FiberManualRecordOutlined,
-    FiberManualRecord,
-} from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender';
-import Constraint from 'component/common/Constraint/Constraint';
-import Input from 'component/common/Input/Input';
+import { FiberManualRecord } from '@material-ui/icons';
 import { IConstraint } from 'interfaces/strategy';
-import { Fragment } from 'react';
-import { Route, useHistory, useLocation } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
 import { useStyles } from './SegmentForm.styles';
 import { SegmentFormStepOne } from './SegmentFormStepOne/SegmentFormStepOne';
 import { SegmentFormStepTwo } from './SegmentFormStepTwo/SegmentFormStepTwo';
@@ -41,7 +33,6 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
     clearErrors,
 }) => {
     const styles = useStyles();
-    const history = useHistory();
     const { pathname } = useLocation();
     const FORMURLPART = pathname.substring(pathname.lastIndexOf('/') + 1);
 

@@ -58,10 +58,11 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
             <div className={styles.buttonContainer}>
                 <Button
                     type="button"
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                         history.push('/segments/create/part-two');
                     }}
-                    className={styles.cancelButton}
                     disabled={name.length === 0}
                 >
                     Next

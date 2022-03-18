@@ -1,19 +1,17 @@
 import { Button, TextField } from '@material-ui/core';
-import { Add, ArrowDropDown } from '@material-ui/icons';
+import { Add, ArrowDropDown, Search } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
 import ConditionallyRender from 'component/common/ConditionallyRender';
-import Constraint from 'component/common/Constraint/Constraint';
-import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
+import { CreateContext } from 'component/context/CreateContext/CreateContext';
 import { createConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createConstraint';
-import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
 import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permissions';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
-import { IUnleashContextDefinition } from 'interfaces/context';
 import { IConstraint } from 'interfaces/strategy';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { objectId } from 'utils/object-id';
+import { ConstraintsList } from './ConstraintsList';
 import { useStyles } from './SegmentFormStepTwo.styles';
 
 interface ISegmentFormPartTwoProps {
@@ -41,17 +39,20 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     const history = useHistory();
     const styles = useStyles();
     const { context } = useUnleashContext();
-    const [selectedContext, setSelectedContext] =
-        useState<IUnleashContextDefinition[]>();
-    const [tempConstraint, setTempConstraint] = useState();
-    //const constraint = createEmptyConstraint(context);
-    const onChange = (_event: any, value: IUnleashContextDefinition[]) => {
-        setSelectedContext(value);
-        const constraint = createConstraint(value[0].name);
-        setConstraints(prev => [...prev, constraint]);
-    };
+    const [open, setOpen] = useState(false);
+    const contextNames = context?.map(c => c.name) ?? [];
+    const selectedContextNames = constraints?.map(c => c.contextName) ?? [];
 
-    console.log(constraints);
+    const onChange = (_event: any, values: string[]) => {
+        if (values.length >= selectedContextNames.length) {
+            const constraint = createConstraint(values[values.length - 1]);
+            setConstraints(prev => [...prev, constraint]);
+        } else {
+            setConstraints(prev =>
+                prev.filter(c => values.some(value => c.contextName === value))
+            );
+        }
+    };
 
     return (
         <div className={styles.form}>
@@ -59,37 +60,53 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                 <h3 className={styles.formHeader}>
                     Select the context fileds you want to include in the segment
                 </h3>
-                <div>
+                <div className={styles.inputContainer}>
                     <p className={styles.inputDescription}>
                         Use a predefined context field
                     </p>
-                    <Autocomplete
-                        multiple
-                        id="tags-standard"
-                        options={context}
-                        getOptionLabel={option => option?.name}
-                        popupIcon={<ArrowDropDown />}
-                        onChange={onChange}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                variant="outlined"
-                                label="Select a context"
-                                placeholder="Select a context"
-                            />
-                        )}
-                    />
+                    <div className={styles.flexContainer}>
+                        <div className={styles.iconConatiner}>
+                            <Search />
+                        </div>
+                        <Autocomplete
+                            className={styles.autoComplete}
+                            classes={{ inputRoot: styles.inputRoot }}
+                            filterSelectedOptions
+                            multiple
+                            id="tags-standard"
+                            options={contextNames}
+                            value={selectedContextNames}
+                            popupIcon={<ArrowDropDown />}
+                            onChange={onChange}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    variant="outlined"
+                                    label="Select a context"
+                                    placeholder="Select a context"
+                                />
+                            )}
+                        />
+                    </div>
                 </div>
 
                 <div className={styles.addContextContainer}>
                     <p className={styles.inputDescription}>
                         Or create and add a new custom context field
                     </p>
+                    <SidebarModal
+                        label="Create feature strategy"
+                        onClose={() => setOpen(false)}
+                        open={open}
+                    >
+                        <CreateContext />
+                    </SidebarModal>
 
                     <PermissionButton
                         permission={CREATE_CONTEXT_FIELD}
                         className={styles.addContextButton}
                         startIcon={<Add />}
+                        onClick={() => setOpen(true)}
                     >
                         Add context field
                     </PermissionButton>
@@ -107,27 +124,12 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         </div>
                     }
                 />
-
-                {constraints.map((constraint, index) => (
-                    <ConstraintAccordion
-                        key={objectId(constraint)}
-                        compact={true}
-                        editing={true}
-                        environmentId={'production'}
-                        constraint={constraint}
-                        onCancel={() => console.log('cancel')}
-                        onSave={newConstraint =>
-                            setConstraints(prev => {
-                                const updatedArray = [...prev];
-                                updatedArray[index] = constraint;
-
-                                return updatedArray;
-                            })
-                        }
-                        onEdit={() => console.log('edit')}
-                        onDelete={() => console.log('delete')}
+                <div className={styles.constraintContainer}>
+                    <ConstraintsList
+                        constraints={constraints}
+                        setConstraints={setConstraints}
                     />
-                ))}
+                </div>
             </div>
 
             <div className={styles.buttonContainer}>

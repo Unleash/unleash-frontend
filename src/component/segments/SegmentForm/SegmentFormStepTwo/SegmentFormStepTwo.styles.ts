@@ -79,7 +79,7 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '5rem',
+        marginTop: '4rem',
     },
     subtitle: {
         fontSize: theme.fontSizes.bodySize,
@@ -88,5 +88,40 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: 20,
         wordBreak: 'break-word',
         whiteSpace: 'normal',
+    },
+    inputContainer: {
+        maxWidth: 530,
+    },
+    flexContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        background: theme.palette.grey[200],
+        height: 100,
+        maxWidth: 800,
+        padding: 20,
+        borderRadius: 12,
+    },
+    iconConatiner: {
+        background: theme.palette.primary.light,
+        height: 56,
+        display: 'flex',
+        alignItems: 'center',
+        width: 52,
+        justifyContent: 'center',
+        borderTopLeftRadius: 50,
+        borderBottomLeftRadius: 50,
+        color: '#fff',
+    },
+    autoComplete: {
+        flex: 1,
+        borderTopLeftRadius: 0,
+    },
+    inputRoot: {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+    },
+    constraintContainer: {
+        marginTop: '1rem',
+        marginBottom: '1rem',
     },
 }));

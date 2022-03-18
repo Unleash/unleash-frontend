@@ -20,7 +20,7 @@ interface IConstraintAccordionViewHeaderProps {
     onDelete: () => void;
     onEdit: () => void;
     singleValue: boolean;
-    environmentId: string;
+    environmentId?: string;
 }
 
 export const ConstraintAccordionViewHeader = ({
