@@ -5,6 +5,13 @@ Array [
   Object {
     "component": [Function],
     "menu": Object {},
+    "path": "/splash/:splashId",
+    "title": "Unleash",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "menu": Object {},
     "parent": "/projects",
     "path": "/projects/create",
     "title": "Create",

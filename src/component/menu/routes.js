@@ -47,10 +47,19 @@ import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/Feat
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
 import { SegmentsList } from '../segments/SegmentList/SegmentList';
+import { SplashPage } from '../splash/SplashPage/SplashPage';
 
 export const routes = [
-    // Project
+    // Splash
+    {
+        path: '/splash/:splashId',
+        title: 'Unleash',
+        component: SplashPage,
+        type: 'protected',
+        menu: {},
+    },
 
+    // Project
     {
         path: '/projects/create',
         parent: '/projects',
