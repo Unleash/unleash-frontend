@@ -10,7 +10,7 @@ import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permiss
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { ConstraintsList } from './ConstraintsList';
 import { useStyles } from './SegmentFormStepTwo.styles';
 
@@ -54,6 +54,9 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
         }
     };
 
+    if (!name) {
+        return <Redirect to="/segments/create/part-one" />;
+    }
     return (
         <div className={styles.form}>
             <div className={styles.container}>
@@ -100,8 +103,9 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         open={open}
                     >
                         <CreateContext
-                            onSubmit={() => {}}
+                            onSubmit={() => setOpen(false)}
                             onCancel={() => setOpen(false)}
+                            modal
                         />
                     </SidebarModal>
 

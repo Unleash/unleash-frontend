@@ -27,7 +27,6 @@ import EditUser from '../admin/users/EditUser/EditUser';
 import { CreateApiToken } from '../admin/api-token/CreateApiToken/CreateApiToken';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
 import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
-import { CreateContext } from '../context/CreateContext/CreateContext';
 import { EditContext } from '../context/EditContext/EditContext';
 import EditTagType from '../tags/EditTagType/EditTagType';
 import CreateTagType from '../tags/CreateTagType/CreateTagType';

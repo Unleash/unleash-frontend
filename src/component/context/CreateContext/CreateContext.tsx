@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { useContextForm } from '../hooks/useContextForm';
@@ -13,12 +12,16 @@ import { formatUnknownError } from 'utils/format-unknown-error';
 interface ICreateContextProps {
     onSubmit: () => void;
     onCancel: () => void;
+    modal?: boolean;
 }
 
-export const CreateContext = ({ onSubmit, onCancel }: ICreateContextProps) => {
+export const CreateContext = ({
+    onSubmit,
+    onCancel,
+    modal,
+}: ICreateContextProps) => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-    const history = useHistory();
     const {
         contextName,
         contextDesc,
@@ -39,6 +42,7 @@ export const CreateContext = ({ onSubmit, onCancel }: ICreateContextProps) => {
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
+        e.stopPropagation();
         const validName = await validateContext();
 
         if (validName) {
@@ -75,6 +79,7 @@ export const CreateContext = ({ onSubmit, onCancel }: ICreateContextProps) => {
             They can be used together with strategy constraints as part of the activation strategy evaluation."
             documentationLink="https://docs.getunleash.io/how-to/how-to-define-custom-context-fields"
             formatApiCode={formatApiCode}
+            modal={modal}
         >
             <ContextForm
                 errors={errors}
