@@ -95,11 +95,14 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         Or create and add a new custom context field
                     </p>
                     <SidebarModal
-                        label="Create feature strategy"
+                        label="Create new context"
                         onClose={() => setOpen(false)}
                         open={open}
                     >
-                        <CreateContext />
+                        <CreateContext
+                            onSubmit={() => {}}
+                            onCancel={() => setOpen(false)}
+                        />
                     </SidebarModal>
 
                     <PermissionButton

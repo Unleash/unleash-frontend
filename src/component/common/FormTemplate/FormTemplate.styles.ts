@@ -6,8 +6,6 @@ export const useStyles = makeStyles(theme => ({
         width: '100%',
         display: 'flex',
         margin: '0 auto',
-        borderRadius: '1rem',
-        overflow: 'hidden',
         [theme.breakpoints.down(900)]: {
             flexDirection: 'column',
         },
@@ -20,8 +18,12 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.light,
         padding: '2rem',
         width: '35%',
+        borderTopRightRadius: '1rem',
+        borderBottomRightRadius: '1rem',
         [theme.breakpoints.down(900)]: {
+            marginBottom: '2rem',
             width: '100%',
+            borderRadius: '1rem',
         },
         [theme.breakpoints.down(500)]: {
             padding: '2rem 1rem',
@@ -56,6 +58,9 @@ export const useStyles = makeStyles(theme => ({
         display: 'block',
     },
     formContent: {
+        borderTopLeftRadius: '1rem',
+        borderBottomLeftRadius: '1rem',
+        position: 'relative',
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
@@ -63,6 +68,7 @@ export const useStyles = makeStyles(theme => ({
         width: '65%',
         [theme.breakpoints.down(900)]: {
             width: '100%',
+            borderRadius: '1rem',
         },
         [theme.breakpoints.down(500)]: {
             padding: '2rem 1rem',
@@ -70,15 +76,19 @@ export const useStyles = makeStyles(theme => ({
     },
     icon: { fill: '#fff' },
     mobileGuidanceBgContainer: {
+        zIndex: 1,
         position: 'absolute',
-        right: '-3px',
-        top: '-3px',
-        backgroundColor: theme.palette.primary.light,
+        right: 0,
+        top: 0,
+        overflow: 'hidden',
+        width: '75px',
+        height: '75px',
+        borderTopRightRadius: '1rem',
     },
     mobileGuidanceBackground: {
         position: 'absolute',
-        right: '-3px',
-        top: '-3px',
+        right: 0,
+        top: 0,
         width: '75px',
         height: '75px',
     },

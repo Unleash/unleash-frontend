@@ -89,14 +89,11 @@ export const useStyles = makeStyles(theme => ({
         wordBreak: 'break-word',
         whiteSpace: 'normal',
     },
-    inputContainer: {
-        maxWidth: 530,
-    },
+    inputContainer: {},
     flexContainer: {
         display: 'flex',
         alignItems: 'center',
         background: theme.palette.grey[200],
-        height: 100,
         maxWidth: 800,
         padding: 20,
         borderRadius: 12,
@@ -111,14 +108,18 @@ export const useStyles = makeStyles(theme => ({
         borderTopLeftRadius: 50,
         borderBottomLeftRadius: 50,
         color: '#fff',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
     },
     autoComplete: {
         flex: 1,
-        borderTopLeftRadius: 0,
     },
     inputRoot: {
-        borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0,
+        [theme.breakpoints.up('sm')]: {
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+        },
     },
     constraintContainer: {
         marginTop: '1rem',

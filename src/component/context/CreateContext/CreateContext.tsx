@@ -10,7 +10,12 @@ import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashCon
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
 
-export const CreateContext = () => {
+interface ICreateContextProps {
+    onSubmit: () => void;
+    onCancel: () => void;
+}
+
+export const CreateContext = ({ onSubmit, onCancel }: ICreateContextProps) => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const history = useHistory();
@@ -41,12 +46,12 @@ export const CreateContext = () => {
             try {
                 await createContext(payload);
                 refetchUnleashContext();
-                // history.push('/context');
                 setToastData({
                     title: 'Context created',
                     confetti: true,
                     type: 'success',
                 });
+                onSubmit();
             } catch (error: unknown) {
                 setToastApiError(formatUnknownError(error));
             }
@@ -60,10 +65,6 @@ export const CreateContext = () => {
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getContextPayload(), undefined, 2)}'`;
-    };
-
-    const onCancel = () => {
-        history.goBack();
     };
 
     return (

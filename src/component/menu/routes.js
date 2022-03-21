@@ -48,6 +48,7 @@ import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
 import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
+import { CreateContextPage } from 'component/context/CreateContext/CreateContextPage';
 
 export const routes = [
     // Project
@@ -206,7 +207,7 @@ export const routes = [
         path: '/context/create',
         parent: '/context',
         title: 'Create',
-        component: CreateContext,
+        component: CreateContextPage,
         type: 'protected',
         layout: 'main',
         flag: C,
