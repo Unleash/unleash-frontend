@@ -93,11 +93,6 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
                     render={() => (
                         <SegmentFormStepTwo
                             name={name}
-                            description={description}
-                            setName={setName}
-                            setDescription={setDescription}
-                            errors={errors}
-                            clearErrors={clearErrors}
                             constraints={constraints}
                             setConstraints={setConstraints}
                         >

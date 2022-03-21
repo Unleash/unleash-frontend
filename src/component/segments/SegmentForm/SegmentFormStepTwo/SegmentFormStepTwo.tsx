@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { Add, ArrowDropDown, Search } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
@@ -16,41 +17,27 @@ import { useStyles } from './SegmentFormStepTwo.styles';
 
 interface ISegmentFormPartTwoProps {
     name: string;
-    description: string;
     constraints: IConstraint[];
-    setName: React.Dispatch<React.SetStateAction<string>>;
-    setDescription: React.Dispatch<React.SetStateAction<string>>;
     setConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
-    errors: { [key: string]: string };
-    clearErrors: () => void;
 }
 
 export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     children,
     name,
-    description,
     constraints,
-    setName,
-    setDescription,
     setConstraints,
-    errors,
-    clearErrors,
 }) => {
     const history = useHistory();
+
     const styles = useStyles();
     const { context } = useUnleashContext();
     const [open, setOpen] = useState(false);
     const contextNames = context?.map(c => c.name) ?? [];
-    const selectedContextNames = constraints?.map(c => c.contextName) ?? [];
 
     const onChange = (_event: any, values: string[]) => {
-        if (values.length >= selectedContextNames.length) {
+        if (values.length >= 1) {
             const constraint = createConstraint(values[values.length - 1]);
             setConstraints(prev => [...prev, constraint]);
-        } else {
-            setConstraints(prev =>
-                prev.filter(c => values.some(value => c.contextName === value))
-            );
         }
     };
 
@@ -63,7 +50,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                 <h3 className={styles.formHeader}>
                     Select the context fileds you want to include in the segment
                 </h3>
-                <div className={styles.inputContainer}>
+                <div>
                     <p className={styles.inputDescription}>
                         Use a predefined context field
                     </p>
@@ -74,11 +61,10 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         <Autocomplete
                             className={styles.autoComplete}
                             classes={{ inputRoot: styles.inputRoot }}
-                            filterSelectedOptions
                             multiple
                             id="tags-standard"
                             options={contextNames}
-                            value={selectedContextNames}
+                            value={[]}
                             popupIcon={<ArrowDropDown />}
                             onChange={onChange}
                             renderInput={params => (

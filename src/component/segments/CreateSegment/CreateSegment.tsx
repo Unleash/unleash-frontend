@@ -2,6 +2,7 @@ import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
+import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
@@ -28,6 +29,12 @@ export const CreateSegment = () => {
         errors,
         clearErrors,
     } = useSegmentForm();
+
+    const hasValidConstraints = useConstraintsValidation(
+        'default',
+        'test',
+        constraints
+    );
 
     const formatApiCode = () => {
         return `curl --location --request POST '${
@@ -81,7 +88,11 @@ export const CreateSegment = () => {
                 errors={errors}
                 clearErrors={clearErrors}
             >
-                <CreateButton name="segment" permission={ADMIN} />
+                <CreateButton
+                    name="segment"
+                    permission={ADMIN}
+                    disabled={!hasValidConstraints}
+                />
             </SegmentForm>
         </FormTemplate>
     );

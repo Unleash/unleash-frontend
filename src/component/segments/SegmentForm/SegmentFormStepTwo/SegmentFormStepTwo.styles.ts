@@ -89,7 +89,6 @@ export const useStyles = makeStyles(theme => ({
         wordBreak: 'break-word',
         whiteSpace: 'normal',
     },
-    inputContainer: {},
     flexContainer: {
         display: 'flex',
         alignItems: 'center',
@@ -108,18 +107,13 @@ export const useStyles = makeStyles(theme => ({
         borderTopLeftRadius: 50,
         borderBottomLeftRadius: 50,
         color: '#fff',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
     },
     autoComplete: {
         flex: 1,
     },
     inputRoot: {
-        [theme.breakpoints.up('sm')]: {
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-        },
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
     },
     constraintContainer: {
         marginTop: '1rem',

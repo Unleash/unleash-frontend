@@ -21,7 +21,7 @@ import ConditionallyRender from '../../../common/ConditionallyRender';
 import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
 import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
-import { useConstraintsValidation } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/useConstraintsValidation';
+import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import AccessContext from 'contexts/AccessContext';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 
