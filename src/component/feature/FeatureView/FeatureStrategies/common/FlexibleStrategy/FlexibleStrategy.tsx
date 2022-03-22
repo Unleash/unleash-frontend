@@ -44,7 +44,7 @@ const FlexibleStrategy = ({
         e: React.ChangeEvent<{}>,
         value: number | number[]
     ) => {
-        updateParameter('rollout', value);
+        updateParameter('rollout', value.toString());
     };
 
     const resolveStickiness = () =>
@@ -59,7 +59,8 @@ const FlexibleStrategy = ({
 
     const stickinessOptions = resolveStickiness();
 
-    const rollout = parameters.rollout !== undefined ? parameters.rollout : 100;
+    const rollout =
+        parameters.rollout !== undefined ? parameters.rollout : '100';
     const stickiness = parameters.stickiness;
     const groupId = parameters.groupId;
 
@@ -67,7 +68,7 @@ const FlexibleStrategy = ({
         <div>
             <RolloutSlider
                 name="Rollout"
-                value={1 * rollout}
+                value={parseInt(rollout)}
                 disabled={!editable}
                 onChange={updateRollout}
             />
