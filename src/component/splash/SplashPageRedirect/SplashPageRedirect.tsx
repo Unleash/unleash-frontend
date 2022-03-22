@@ -15,17 +15,20 @@ export const SplashPageRedirect = () => {
     const { uiConfig, loading } = useUiConfig();
 
     if (!splash || !uiConfig || loading) {
+        // Wait for everything to load.
         return null;
     }
 
     if (matchPath(pathname, { path: '/splash/:splashId' })) {
+        // We've already redirected to the splash page.
         return null;
     }
 
+    // Find the splash page to show (if any).
     const showSplashId = activeSplashIds.find(splashId => {
         return (
             isSplashRelevant(splashId, uiConfig.flags) &&
-            !isSplashSeen(splashId, splash)
+            !hasSeenSplashId(splashId, splash)
         );
     });
 
@@ -36,7 +39,7 @@ export const SplashPageRedirect = () => {
     return <Redirect to={`/splash/${showSplashId}`} />;
 };
 
-const isSplashSeen = (splashId: SplashId, splash: IAuthSplash): boolean => {
+const hasSeenSplashId = (splashId: SplashId, splash: IAuthSplash): boolean => {
     return Boolean(splash[splashId]);
 };
 

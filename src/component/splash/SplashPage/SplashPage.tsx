@@ -6,33 +6,34 @@ import { SplashPageOperators } from 'component/splash/SplashPageOperators/Splash
 import { useEffect } from 'react';
 import { useAuthSplash } from 'hooks/api/getters/useAuth/useAuthSplash';
 
-export type SplashId = typeof splashIds[number];
-
 // All known splash IDs.
 export const splashIds = ['environments', 'operators'] as const;
 
-// Active splash IDs that may be shown.
+// Active splash IDs that may be shown to the user.
 export const activeSplashIds: SplashId[] = ['operators'];
+
+export type SplashId = typeof splashIds[number];
 
 export const SplashPage = () => {
     const splashId = useRequiredPathParam('splashId');
-    const knownId = isKnownSplashId(splashId);
+    const isKnownId = isKnownSplashId(splashId);
     const { refetchSplash } = useAuthSplash();
     const { setSplashSeen } = useSplashApi();
 
     // Close the splash "modal" on escape.
     useNavigationOnKeydown('Escape', '/');
 
+    // Mark the splash ID as seen.
     useEffect(() => {
-        if (splashId && knownId) {
+        if (splashId && isKnownId) {
             setSplashSeen(splashId)
                 .then(() => refetchSplash())
                 .catch(console.warn);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [splashId, knownId]);
+    }, [splashId, isKnownId]);
 
-    if (!knownId) {
+    if (!isKnownId) {
         return null;
     }
 
@@ -67,5 +68,5 @@ const useNavigationOnKeydown = (key: string, path: string) => {
 };
 
 const isKnownSplashId = (value: string): value is SplashId => {
-    return (splashIds as unknown as string[]).includes(value);
+    return (splashIds as Readonly<string[]>).includes(value);
 };
