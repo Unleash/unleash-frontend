@@ -15,12 +15,13 @@ import {
 
 import useSort from '../../../hooks/useSort';
 
-import styles from './ReportToggleList.module.scss';
+import { useStyles } from './ReportToggleList.styles';
 
 /* FLAG TO TOGGLE UNFINISHED BULK ACTIONS FEATURE */
 const BULK_ACTIONS_ON = false;
 
 const ReportToggleList = ({ features, selectedProject }) => {
+    const styles = useStyles();
     const [checkAll, setCheckAll] = useState(false);
     const [localFeatures, setFeatures] = useState([]);
     const [sort, setSortData] = useSort();

@@ -14,7 +14,7 @@ import {
     REPORT,
 } from '../../constants';
 
-import styles from '../ReportToggleList.module.scss';
+import { useStyles } from '../ReportToggleList.styles';
 
 const ReportToggleListHeader = ({
     handleCheckAll,
@@ -22,6 +22,7 @@ const ReportToggleListHeader = ({
     setSortData,
     bulkActionsOn,
 }) => {
+    const styles = useStyles();
     const handleSort = type => {
         setSortData(prev => ({
             sortKey: type,
