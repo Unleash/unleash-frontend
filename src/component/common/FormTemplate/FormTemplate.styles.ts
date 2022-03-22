@@ -46,6 +46,8 @@ export const useStyles = makeStyles(theme => ({
     },
     description: {
         color: '#fff',
+        zIndex: 1,
+        position: 'relative',
     },
     linkContainer: {
         margin: '1.5rem 0',

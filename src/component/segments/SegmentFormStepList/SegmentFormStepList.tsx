@@ -1,6 +1,7 @@
 import { FiberManualRecord } from '@material-ui/icons';
 import { useStyles } from './SegmentFormStepList.styles';
 import React from 'react';
+import classNames from 'classnames';
 
 interface ISegmentFormStepListProps {
     total: number;
@@ -13,33 +14,22 @@ export const SegmentFormStepList: React.FC<ISegmentFormStepListProps> = ({
 }) => {
     const styles = useStyles();
 
-    const calculatePosition = () => {
-        return 20 * (current - 1);
-    };
-
-    const renderCircles = () => {
-        return (
-            <>
-                <FiberManualRecord className={styles.emptyCircle} />
-                <FiberManualRecord className={styles.emptyCircle} />
-                <FiberManualRecord
-                    style={{
-                        position: 'absolute',
-                        left: '102px',
-                        transition: 'transform 0.3s ease',
-                        transform: `translateX(${calculatePosition()}px)`,
-                    }}
-                    className={styles.filledCircle}
-                />
-            </>
-        );
-    };
     return (
-        <div className={styles.stepsContainer}>
-            <span className={styles.stepsText}>
-                Step {current} of {total}
-            </span>
-            {renderCircles()}
+        <div className={styles.container}>
+            <div className={styles.steps}>
+                <span className={styles.stepsText}>
+                    Step {current} of {total}
+                </span>
+                {Array.from({ length: total }).map((v, i) => (
+                    <FiberManualRecord
+                        key={i}
+                        className={classNames(
+                            styles.circle,
+                            i === current - 1 && styles.filledCircle
+                        )}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

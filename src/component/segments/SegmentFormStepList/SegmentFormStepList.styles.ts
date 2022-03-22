@@ -2,27 +2,33 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formTemplateSidebarWidth } from 'component/common/FormTemplate/FormTemplate.styles';
 
 export const useStyles = makeStyles(theme => ({
-    stepsContainer: {
-        width: 153,
+    container: {
         display: 'flex',
         position: 'absolute',
         alignItems: 'center',
-        borderRadius: 10,
         justifyContent: 'center',
-        top: 36,
+        top: 30,
         left: 0,
         right: formTemplateSidebarWidth,
-        margin: 'auto',
-        background: '#fff',
-        padding: '0.25rem',
         [theme.breakpoints.down(900)]: {
             right: 0,
         },
     },
-    stepsText: { marginRight: 15 },
-    emptyCircle: {
-        fill: theme.palette.primary.light,
-        fontSize: 17,
+    steps: {
+        position: 'relative',
+        borderRadius: 10,
+        background: '#fff',
+        padding: '0.6rem 1.5rem',
+        margin: 'auto',
+        display: 'flex',
+        alignItems: 'center',
     },
-    filledCircle: { fill: theme.palette.primary.main },
+    stepsText: { marginRight: 15, fontSize: theme.fontSizes.smallBody },
+    circle: {
+        fill: theme.palette.primary.main,
+        fontSize: 17,
+        opacity: 0.4,
+        transition: 'opacity 0.4s ease',
+    },
+    filledCircle: { opacity: 1, fontSize: 20 },
 }));

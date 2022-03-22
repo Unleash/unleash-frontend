@@ -109,73 +109,73 @@ export const SegmentsList = () => {
                 />
             }
         >
-            <div className={styles.main}>
-                <Table>
-                    <TableHead>
-                        <TableRow className={styles.tableRow}>
-                            <TableCell
-                                className={styles.firstHeader}
-                                classes={{ root: styles.cell }}
-                            >
-                                Name
-                            </TableCell>
-                            <TableCell
-                                classes={{ root: styles.cell }}
-                                className={styles.hideSM}
-                            >
-                                Description
-                            </TableCell>
-                            <TableCell
-                                classes={{ root: styles.cell }}
-                                className={styles.hideXS}
-                            >
-                                Created on
-                            </TableCell>
-                            <TableCell
-                                classes={{ root: styles.cell }}
-                                className={styles.hideXS}
-                            >
-                                Created By
-                            </TableCell>
-                            <TableCell
-                                align="right"
-                                classes={{ root: styles.cell }}
-                                className={styles.lastHeader}
-                            >
-                                {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <ConditionallyRender
-                            condition={segments.length > 0}
-                            show={renderSegments()}
-                        />
-                    </TableBody>
+            <Table>
+                <TableHead>
+                    <TableRow className={styles.tableRow}>
+                        <TableCell
+                            className={styles.firstHeader}
+                            classes={{ root: styles.cell }}
+                        >
+                            Name
+                        </TableCell>
+                        <TableCell
+                            classes={{ root: styles.cell }}
+                            className={styles.hideSM}
+                        >
+                            Description
+                        </TableCell>
+                        <TableCell
+                            classes={{ root: styles.cell }}
+                            className={styles.hideXS}
+                        >
+                            Created on
+                        </TableCell>
+                        <TableCell
+                            classes={{ root: styles.cell }}
+                            className={styles.hideXS}
+                        >
+                            Created By
+                        </TableCell>
+                        <TableCell
+                            align="right"
+                            classes={{ root: styles.cell }}
+                            className={styles.lastHeader}
+                        >
+                            {hasAccess(UPDATE_SEGMENT) ? 'Actions' : ''}
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <ConditionallyRender
+                        condition={segments.length > 0}
+                        show={renderSegments()}
+                    />
+                </TableBody>
+            </Table>
 
-                    <PaginateUI
-                        pages={pages}
-                        pageIndex={pageIndex}
-                        setPageIndex={setPageIndex}
-                        nextPage={nextPage}
-                        prevPage={prevPage}
-                    />
-                </Table>
-                <ConditionallyRender
-                    condition={segments.length === 0}
-                    show={renderNoSegments()}
+            <PaginateUI
+                pages={pages}
+                pageIndex={pageIndex}
+                setPageIndex={setPageIndex}
+                nextPage={nextPage}
+                prevPage={prevPage}
+                style={{ position: 'static', marginTop: '2rem' }}
+            />
+
+            <ConditionallyRender
+                condition={segments.length === 0}
+                show={renderNoSegments()}
+            />
+            {currentSegment && (
+                <SegmentDeleteConfirm
+                    segment={currentSegment}
+                    open={delDialog}
+                    setDeldialogue={setDelDialog}
+                    handleDeleteSegment={onDeleteSegment}
+                    confirmName={confirmName}
+                    setConfirmName={setConfirmName}
                 />
-                {currentSegment && (
-                    <SegmentDeleteConfirm
-                        segment={currentSegment}
-                        open={delDialog}
-                        setDeldialogue={setDelDialog}
-                        handleDeleteSegment={onDeleteSegment}
-                        confirmName={confirmName}
-                        setConfirmName={setConfirmName}
-                    />
-                )}
-            </div>
+            )}
         </PageContent>
     );
 };
