@@ -52,13 +52,10 @@ export const SplashPageOperators = () => {
                             </span>
                         </li>
                         <li>
+                            <span>Toggle features for numbers: </span>
                             <span>
-                                Toggle features for numbers:{' '}
-                                <strong>NUM_GT</strong>{' '}
-                            </span>
-                            <span>
-                                <strong>NUM_GTE</strong> <strong>NUM_LT</strong>{' '}
-                                <strong>NUM_LTE</strong>
+                                <strong>NUM_GT</strong> <strong>NUM_GTE</strong>{' '}
+                                <strong>NUM_LT</strong> <strong>NUM_LTE</strong>
                             </span>
                         </li>
                     </ul>

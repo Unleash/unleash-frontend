@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
     splashMainContainer: {
         backgroundColor: theme.palette.primary.light,
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
