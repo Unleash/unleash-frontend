@@ -13,16 +13,14 @@ export interface UseSegmentOutput {
 
 export const useSegment = (id: number): UseSegmentOutput => {
     const path = formatApiPath(`api/admin/segments/${id}`);
-    const { data, error } = useSWR<{ segment: ISegment }>(path, () =>
-        fetchSegment(path)
-    );
+    const { data, error } = useSWR<ISegment>(path, () => fetchSegment(path));
 
     const refetchSegment = useCallback(() => {
         mutate(path).catch(console.warn);
     }, [path]);
 
     return {
-        segment: data?.segment,
+        segment: data,
         refetchSegment,
         loading: !error && !data,
         error,

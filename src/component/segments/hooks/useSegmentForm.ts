@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 export const useSegmentForm = (
     initialName = '',
     initialDescription = '',
-    initialConstraints = []
+    initialConstraints: IConstraint[] = []
 ) => {
     const [name, setName] = useState(initialName);
     const [description, setDescription] = useState(initialDescription);

@@ -3,16 +3,21 @@ import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
+import { useSegment } from 'hooks/api/getters/useSegment/useSegment';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import useToast from 'hooks/useToast';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { formatUnknownError } from 'utils/format-unknown-error';
 import { useSegmentForm } from '../hooks/useSegmentForm';
 import { SegmentForm } from '../SegmentForm/SegmentForm';
 
 export const EditSegment = () => {
+    const segmentId = useRequiredPathParam('segmentId');
+    const { segment } = useSegment(Number(segmentId));
+    console.log(segment);
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
@@ -28,7 +33,13 @@ export const EditSegment = () => {
         getSegmentPayload,
         errors,
         clearErrors,
-    } = useSegmentForm();
+    } = useSegmentForm(
+        segment?.name,
+        segment?.description,
+        segment?.constraints
+    );
+
+    console.log(getSegmentPayload(), segment);
 
     const hasValidConstraints = useConstraintsValidation(
         'default',
@@ -39,7 +50,7 @@ export const EditSegment = () => {
     const formatApiCode = () => {
         return `curl --location --request PUT '${
             uiConfig.unleashUrl
-        }/api/admin/segments/${id}' \\
+        }/api/admin/segments/${segmentId}' \\
 --header 'Authorization: INSERT_API_KEY' \\
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getSegmentPayload(), undefined, 2)}'`;
@@ -68,7 +79,7 @@ export const EditSegment = () => {
     return (
         <FormTemplate
             loading={loading}
-            title="Create segment"
+            title="Edit segment"
             description="Segment makes it easy for you to define who should be exposed to your feature.
             The segment is often a collection of constraints and can be reused.
             Create a segment and use it when you configure an activation strategy on a feature toggle. "

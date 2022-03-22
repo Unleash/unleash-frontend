@@ -48,6 +48,7 @@ import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
 import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { CreateContextPage } from 'component/context/CreateContext/CreateContextPage';
+import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 
 export const routes = [
     // Project
@@ -362,6 +363,16 @@ export const routes = [
         type: 'protected',
         layout: 'main',
         menu: { mobile: true },
+        flag: SE,
+    },
+    {
+        path: '/segments/edit/:segmentId',
+        title: 'Segments',
+        component: EditSegment,
+        hidden: false,
+        type: 'protected',
+        layout: 'main',
+        menu: {},
         flag: SE,
     },
     {
