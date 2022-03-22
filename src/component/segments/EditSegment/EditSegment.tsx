@@ -24,7 +24,7 @@ export const EditSegment = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
-    const { createSegment, loading } = useSegmentsApi();
+    const { updateSegment, loading } = useSegmentsApi();
     const { refetchSegments } = useSegments();
 
     const {
@@ -55,20 +55,22 @@ export const EditSegment = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        clearErrors();
-        try {
-            await createSegment(getSegmentPayload());
-            refetchSegments();
-            history.push('/segments/');
-            setToastData({
-                title: 'Segment created',
-                text: 'Segment created successfully created',
-                confetti: true,
-                type: 'success',
-            });
-        } catch (error: unknown) {
-            setToastApiError(formatUnknownError(error));
+        if (segment) {
+            e.preventDefault();
+            clearErrors();
+            try {
+                await updateSegment({ id: segment.id, ...getSegmentPayload() });
+                refetchSegments();
+                history.push('/segments/');
+                setToastData({
+                    title: 'Segment created',
+                    text: 'Segment created successfully created',
+                    confetti: true,
+                    type: 'success',
+                });
+            } catch (error: unknown) {
+                setToastApiError(formatUnknownError(error));
+            }
         }
     };
 
