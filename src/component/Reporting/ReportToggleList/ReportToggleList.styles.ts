@@ -44,6 +44,7 @@ export const useStyles = makeStyles(theme => ({
         borderSpacing: '0 0.8rem',
         '& th': {
             textAlign: 'left',
+            cursor: 'pointer',
         },
     },
     expired: {
