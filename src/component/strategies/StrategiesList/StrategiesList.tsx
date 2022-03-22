@@ -163,12 +163,14 @@ export const StrategiesList = () => {
 
     const reactivateButton = (strategy: ICustomStrategy) => (
         <Tooltip title="Reactivate activation strategy">
-            <PermissionIconButton
-                onClick={() => onReactivateStrategy(strategy)}
-                permission={UPDATE_STRATEGY}
-            >
-                <VisibilityOff />
-            </PermissionIconButton>
+            <div>
+                <PermissionIconButton
+                    onClick={() => onReactivateStrategy(strategy)}
+                    permission={UPDATE_STRATEGY}
+                >
+                    <VisibilityOff titleAccess="Reactivate" />
+                </PermissionIconButton>
+            </div>
         </Tooltip>
     );
 
