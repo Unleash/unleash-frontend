@@ -328,6 +328,16 @@ Array [
     "flag": "SE",
     "hidden": false,
     "layout": "main",
+    "menu": Object {},
+    "path": "/segments/edit/:segmentId",
+    "title": "Segments",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "flag": "SE",
+    "hidden": false,
+    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
