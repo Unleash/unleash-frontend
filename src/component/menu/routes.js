@@ -354,7 +354,6 @@ export const routes = [
     },
 
     // Segments
-
     {
         path: '/segments/create',
         title: 'Segments',
@@ -362,7 +361,7 @@ export const routes = [
         hidden: false,
         type: 'protected',
         layout: 'main',
-        menu: { mobile: true },
+        menu: {},
         flag: SE,
     },
     {

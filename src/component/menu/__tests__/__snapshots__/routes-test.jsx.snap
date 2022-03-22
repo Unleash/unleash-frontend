@@ -316,9 +316,7 @@ Array [
     "flag": "SE",
     "hidden": false,
     "layout": "main",
-    "menu": Object {
-      "mobile": true,
-    },
+    "menu": Object {},
     "path": "/segments/create",
     "title": "Segments",
     "type": "protected",
