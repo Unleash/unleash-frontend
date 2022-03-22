@@ -49,17 +49,25 @@ import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { CreateContextPage } from 'component/context/CreateContext/CreateContextPage';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
+import { SplashPage } from '../splash/SplashPage/SplashPage';
 
 export const routes = [
-    // Project
+    // Splash
+    {
+        path: '/splash/:splashId',
+        title: 'Unleash',
+        component: SplashPage,
+        type: 'protected',
+        menu: {},
+    },
 
+    // Project
     {
         path: '/projects/create',
         parent: '/projects',
         title: 'Create',
         component: CreateProject,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -68,7 +76,6 @@ export const routes = [
         title: ':id',
         component: EditProject,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -77,7 +84,6 @@ export const routes = [
         parent: '/archive',
         component: RedirectArchive,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -86,7 +92,6 @@ export const routes = [
         title: 'Copy',
         component: CopyFeatureToggle,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -95,7 +100,6 @@ export const routes = [
         title: 'Edit Feature',
         component: EditFeature,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -104,7 +108,6 @@ export const routes = [
         title: 'FeatureView',
         component: FeatureView,
         type: 'protected',
-        layout: 'main',
         flags: E,
         menu: {},
     },
@@ -114,7 +117,6 @@ export const routes = [
         title: ':name',
         component: FeatureView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -123,7 +125,6 @@ export const routes = [
         title: 'Create feature toggle',
         component: CreateFeature,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -132,7 +133,6 @@ export const routes = [
         title: ':name',
         component: RedirectFeatureView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -142,7 +142,6 @@ export const routes = [
         component: Project,
         flag: P,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -152,7 +151,6 @@ export const routes = [
         component: Project,
         flag: P,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -160,7 +158,6 @@ export const routes = [
         title: 'Projects',
         component: ProjectListNew,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true },
     },
 
@@ -171,7 +168,6 @@ export const routes = [
         title: ':name',
         component: RedirectFeatureView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -179,7 +175,6 @@ export const routes = [
         title: 'Feature Toggles',
         component: FeatureToggleListContainer,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true },
     },
 
@@ -190,7 +185,6 @@ export const routes = [
         parent: '/applications',
         component: ApplicationEdit,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -198,7 +192,6 @@ export const routes = [
         title: 'Applications',
         component: ApplicationList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -209,7 +202,6 @@ export const routes = [
         title: 'Create',
         component: CreateContextPage,
         type: 'protected',
-        layout: 'main',
         flag: C,
         menu: {},
     },
@@ -219,7 +211,6 @@ export const routes = [
         title: ':name',
         component: EditContext,
         type: 'protected',
-        layout: 'main',
         flag: C,
         menu: {},
     },
@@ -229,7 +220,6 @@ export const routes = [
         component: ContextList,
         type: 'protected',
         flag: C,
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -240,7 +230,6 @@ export const routes = [
         parent: '/strategies',
         component: CreateStrategy,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -249,7 +238,6 @@ export const routes = [
         parent: '/strategies',
         component: EditStrategy,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -258,7 +246,6 @@ export const routes = [
         parent: '/strategies',
         component: StrategyView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -266,7 +253,6 @@ export const routes = [
         title: 'Strategies',
         component: StrategiesList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
     {
@@ -275,7 +261,6 @@ export const routes = [
         component: CreateEnvironment,
         parent: '/environments',
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -283,7 +268,6 @@ export const routes = [
         title: 'Edit',
         component: EditEnvironment,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -291,7 +275,6 @@ export const routes = [
         title: 'Environments',
         component: EnvironmentList,
         type: 'protected',
-        layout: 'main',
         flag: EEA,
         menu: { mobile: true, advanced: true },
     },
@@ -303,7 +286,6 @@ export const routes = [
         title: 'Create',
         component: CreateTagType,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -312,7 +294,6 @@ export const routes = [
         title: ':name',
         component: EditTagType,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -320,7 +301,6 @@ export const routes = [
         title: 'Tag types',
         component: TagTypeList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -331,7 +311,6 @@ export const routes = [
         title: 'Create',
         component: CreateAddon,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -340,7 +319,6 @@ export const routes = [
         title: 'Edit',
         component: EditAddon,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -349,7 +327,6 @@ export const routes = [
         component: AddonList,
         hidden: false,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -380,7 +357,6 @@ export const routes = [
         component: SegmentsList,
         hidden: false,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
         flag: SE,
     },
@@ -392,7 +368,6 @@ export const routes = [
         parent: '/history',
         component: FeatureEventHistoryPage,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -400,7 +375,6 @@ export const routes = [
         title: 'Event History',
         component: EventHistoryPage,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
 
@@ -410,7 +384,6 @@ export const routes = [
         title: 'Archived Toggles',
         component: ArchiveListContainer,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
 
@@ -421,7 +394,6 @@ export const routes = [
         title: 'API access',
         component: CreateApiToken,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -429,7 +401,6 @@ export const routes = [
         title: 'Create',
         component: CreateProjectRole,
         type: 'protected',
-        layout: 'main',
         menu: {},
         flag: RE,
     },
@@ -438,7 +409,6 @@ export const routes = [
         title: 'Edit',
         component: EditProjectRole,
         type: 'protected',
-        layout: 'main',
         menu: {},
         flag: RE,
     },
@@ -447,7 +417,6 @@ export const routes = [
         title: 'Edit',
         component: EditUser,
         type: 'protected',
-        layout: 'main',
         menu: {},
         hidden: true,
     },
@@ -457,7 +426,6 @@ export const routes = [
         title: 'API access',
         component: AdminApi,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
     {
@@ -466,7 +434,6 @@ export const routes = [
         title: 'Users',
         component: AdminUsers,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
     {
@@ -475,7 +442,6 @@ export const routes = [
         title: 'Users',
         component: CreateUser,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -484,7 +450,6 @@ export const routes = [
         title: 'Single Sign-On',
         component: AuthSettings,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
     {
@@ -493,7 +458,6 @@ export const routes = [
         component: AdminInvoice,
         hidden: true,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
     {
@@ -502,7 +466,6 @@ export const routes = [
         title: 'Project Roles',
         component: ProjectRoles,
         type: 'protected',
-        layout: 'main',
         flag: RE,
         menu: { adminSettings: true },
     },
@@ -512,7 +475,6 @@ export const routes = [
         component: Admin,
         hidden: false,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     /* If you update this route path, make sure you update the path in SWRProvider.tsx */
@@ -523,7 +485,6 @@ export const routes = [
         component: Login,
         type: 'unprotected',
         hidden: true,
-        layout: 'standalone',
         menu: {},
     },
     /* If you update this route path, make sure you update the path in SWRProvider.tsx */
@@ -533,7 +494,6 @@ export const routes = [
         hidden: true,
         component: NewUser,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
     /* If you update this route path, make sure you update the path in SWRProvider.tsx */
@@ -543,7 +503,6 @@ export const routes = [
         hidden: true,
         component: ResetPassword,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
     {
@@ -552,7 +511,6 @@ export const routes = [
         hidden: true,
         component: ForgottenPassword,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
 ];
