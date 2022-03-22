@@ -17,12 +17,12 @@ import { SegmentForm } from '../SegmentForm/SegmentForm';
 export const EditSegment = () => {
     const segmentId = useRequiredPathParam('segmentId');
     const { segment } = useSegment(Number(segmentId));
-    console.log(segment);
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
     const { createSegment, loading } = useSegmentsApi();
     const { refetchSegments } = useSegments();
+
     const {
         name,
         setName,
@@ -39,13 +39,7 @@ export const EditSegment = () => {
         segment?.constraints
     );
 
-    console.log(getSegmentPayload(), segment);
-
-    const hasValidConstraints = useConstraintsValidation(
-        'default',
-        'test',
-        constraints
-    );
+    const hasValidConstraints = useConstraintsValidation(constraints);
 
     const formatApiCode = () => {
         return `curl --location --request PUT '${

@@ -18,6 +18,7 @@ export const CreateSegment = () => {
     const history = useHistory();
     const { createSegment, loading } = useSegmentsApi();
     const { refetchSegments } = useSegments();
+
     const {
         name,
         setName,
@@ -30,11 +31,7 @@ export const CreateSegment = () => {
         clearErrors,
     } = useSegmentForm();
 
-    const hasValidConstraints = useConstraintsValidation(
-        'default',
-        'test',
-        constraints
-    );
+    const hasValidConstraints = useConstraintsValidation(constraints);
 
     const formatApiCode = () => {
         return `curl --location --request POST '${

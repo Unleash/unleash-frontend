@@ -48,6 +48,7 @@ export const FeatureStrategyForm = ({
 }: IFeatureStrategyFormProps) => {
     const styles = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
+    const hasValidConstraints = useConstraintsValidation(strategy.constraints);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);
     const StrategyIcon = getFeatureStrategyIcon(strategy.name ?? '');
     const strategyName = formatStrategyName(strategy.name ?? '');
@@ -72,12 +73,6 @@ export const FeatureStrategyForm = ({
             onSubmit();
         }
     };
-
-    const hasValidConstraints = useConstraintsValidation(
-        feature.project,
-        feature.name,
-        strategy.constraints
-    );
 
     if (uiConfigError) {
         throw uiConfigError;

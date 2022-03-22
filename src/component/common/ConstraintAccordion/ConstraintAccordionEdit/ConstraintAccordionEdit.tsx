@@ -160,8 +160,7 @@ export const ConstraintAccordionEdit = ({
 
         if (typeValidatorResult) {
             try {
-                await validateConstraint(projectId, featureId, localConstraint);
-
+                await validateConstraint(localConstraint);
                 setError('');
                 setAction(SAVE);
                 triggerTransition();
