@@ -11,7 +11,7 @@ import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashCon
 import { IConstraint } from 'interfaces/strategy';
 import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { useStyles } from './SegmentFormStepTwo.styles';
+import { useStyles } from 'component/segments/SegmentFormStepTwo/SegmentFormStepTwo.styles';
 import {
     ConstraintAccordionList,
     IConstraintAccordionListRef,

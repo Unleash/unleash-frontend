@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import Input from 'component/common/Input/Input';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useStyles } from './SegmentFormStepOne.styles';
+import { useStyles } from 'component/segments/SegmentFormStepOne/SegmentFormStepOne.styles';
 
 interface ISegmentFormPartOneProps {
     name: string;
