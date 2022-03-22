@@ -79,7 +79,7 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '4rem',
+        marginTop: '6rem',
     },
     subtitle: {
         fontSize: theme.fontSizes.bodySize,
@@ -88,6 +88,7 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: 20,
         wordBreak: 'break-word',
         whiteSpace: 'normal',
+        textAlign: 'center',
     },
     flexContainer: {
         display: 'flex',

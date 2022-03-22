@@ -34,6 +34,7 @@ export const FeatureStrategyConstraintsCO = ({
             environmentId={environmentId}
             constraints={constraints}
             setConstraints={setConstraints}
+            showCreateButton
         />
     );
 };

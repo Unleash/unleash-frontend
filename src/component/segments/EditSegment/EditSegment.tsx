@@ -1,6 +1,5 @@
-import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { UPDATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import { useSegment } from 'hooks/api/getters/useSegment/useSegment';
@@ -17,6 +16,7 @@ import {
     segmentsFormDocsLink,
     segmentsFormDescription,
 } from 'component/segments/CreateSegment/CreateSegment';
+import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
 
 export const EditSegment = () => {
     const segmentId = useRequiredPathParam('segmentId');
@@ -59,23 +59,17 @@ export const EditSegment = () => {
             e.preventDefault();
             clearErrors();
             try {
-                await updateSegment({ id: segment.id, ...getSegmentPayload() });
+                await updateSegment(segment.id, getSegmentPayload());
                 refetchSegments();
                 history.push('/segments/');
                 setToastData({
-                    title: 'Segment created',
-                    text: 'Segment created successfully created',
-                    confetti: true,
+                    title: 'Segment updated',
                     type: 'success',
                 });
             } catch (error: unknown) {
                 setToastApiError(formatUnknownError(error));
             }
         }
-    };
-
-    const handleCancel = () => {
-        history.goBack();
     };
 
     return (
@@ -89,20 +83,18 @@ export const EditSegment = () => {
         >
             <SegmentForm
                 handleSubmit={handleSubmit}
-                handleCancel={handleCancel}
                 name={name}
                 setName={setName}
                 description={description}
                 setDescription={setDescription}
                 constraints={constraints}
                 setConstraints={setConstraints}
-                mode="Create"
+                mode="Edit"
                 errors={errors}
                 clearErrors={clearErrors}
             >
-                <CreateButton
-                    name="segment"
-                    permission={ADMIN}
+                <UpdateButton
+                    permission={UPDATE_SEGMENT}
                     disabled={!hasValidConstraints}
                 />
             </SegmentForm>

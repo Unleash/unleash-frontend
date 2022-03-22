@@ -1,7 +1,4 @@
-import {
-    ICreateSegmentPayload,
-    IUpdateSegmentPayload,
-} from 'interfaces/segment';
+import { ISegmentPayload } from 'interfaces/segment';
 import useAPI from '../useApi/useApi';
 
 export const useSegmentsApi = () => {
@@ -10,7 +7,7 @@ export const useSegmentsApi = () => {
     });
     const PATH = 'api/admin/segments';
 
-    const createSegment = async (segment: ICreateSegmentPayload) => {
+    const createSegment = async (segment: ISegmentPayload) => {
         const req = createRequest(PATH, {
             method: 'POST',
             body: JSON.stringify(segment),
@@ -19,8 +16,8 @@ export const useSegmentsApi = () => {
         return makeRequest(req.caller, req.id);
     };
 
-    const updateSegment = async (segment: IUpdateSegmentPayload) => {
-        const req = createRequest(`${PATH}/${segment.id}`, {
+    const updateSegment = async (id: number, segment: ISegmentPayload) => {
+        const req = createRequest(`${PATH}/${id}`, {
             method: 'PUT',
             body: JSON.stringify(segment),
         });

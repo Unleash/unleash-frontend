@@ -86,10 +86,7 @@ export const SegmentsList = () => {
                     exposed to your feature. The segment is often a collection
                     of constraints and can be reused.
                 </p>
-                <Link
-                    to="/segments/create/part-one"
-                    className={styles.paramButton}
-                >
+                <Link to="/segments/create" className={styles.paramButton}>
                     Create your first segment
                 </Link>
             </div>
@@ -103,9 +100,7 @@ export const SegmentsList = () => {
                     title="Segments"
                     actions={
                         <PermissionButton
-                            onClick={() =>
-                                history.push('/segments/create/part-one')
-                            }
+                            onClick={() => history.push('/segments/create')}
                             permission={CREATE_SEGMENT}
                         >
                             New Segment

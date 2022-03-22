@@ -9,12 +9,7 @@ export interface ISegment {
     constraints: IConstraint[];
 }
 
-export type ICreateSegmentPayload = Pick<
+export type ISegmentPayload = Pick<
     ISegment,
     'name' | 'description' | 'constraints'
->;
-
-export type IUpdateSegmentPayload = Pick<
-    ISegment,
-    'id' | 'name' | 'description' | 'constraints'
 >;

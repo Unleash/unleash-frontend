@@ -10,24 +10,25 @@ import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permiss
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
 import { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useStyles } from 'component/segments/SegmentFormStepTwo/SegmentFormStepTwo.styles';
 import {
     ConstraintAccordionList,
     IConstraintAccordionListRef,
 } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
+import { SegmentFormStep } from '../SegmentForm/SegmentForm';
 
 interface ISegmentFormPartTwoProps {
-    name: string;
     constraints: IConstraint[];
     setConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
+    setCurrentStep: React.Dispatch<React.SetStateAction<SegmentFormStep>>;
 }
 
 export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     children,
-    name,
     constraints,
     setConstraints,
+    setCurrentStep,
 }) => {
     const constraintsAccordionListRef = useRef<IConstraintAccordionListRef>();
     const history = useHistory();
@@ -42,10 +43,6 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
             constraintsAccordionListRef.current?.addConstraint(value);
         }
     };
-
-    if (!name) {
-        return <Redirect to="/segments/create/part-one" />;
-    }
 
     return (
         <div className={styles.form}>
@@ -132,9 +129,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
             <div className={styles.buttonContainer}>
                 <Button
                     type="button"
-                    onClick={() => {
-                        history.push('/segments/create/part-one');
-                    }}
+                    onClick={() => setCurrentStep(1)}
                     className={styles.backButton}
                 >
                     Back

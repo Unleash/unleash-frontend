@@ -3,6 +3,7 @@ import Input from 'component/common/Input/Input';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from 'component/segments/SegmentFormStepOne/SegmentFormStepOne.styles';
+import { SegmentFormStep } from '../SegmentForm/SegmentForm';
 
 interface ISegmentFormPartOneProps {
     name: string;
@@ -11,6 +12,7 @@ interface ISegmentFormPartOneProps {
     setDescription: React.Dispatch<React.SetStateAction<string>>;
     errors: { [key: string]: string };
     clearErrors: () => void;
+    setCurrentStep: React.Dispatch<React.SetStateAction<SegmentFormStep>>;
 }
 
 export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
@@ -21,6 +23,7 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
     setDescription,
     errors,
     clearErrors,
+    setCurrentStep,
 }) => {
     const history = useHistory();
     const styles = useStyles();
@@ -60,9 +63,7 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     type="button"
                     variant="contained"
                     color="primary"
-                    onClick={() => {
-                        history.push('/segments/create/part-two');
-                    }}
+                    onClick={() => setCurrentStep(2)}
                     disabled={name.length === 0}
                 >
                     Next

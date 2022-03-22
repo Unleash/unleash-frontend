@@ -1,6 +1,6 @@
 import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { CREATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
@@ -51,17 +51,12 @@ export const CreateSegment = () => {
             history.push('/segments/');
             setToastData({
                 title: 'Segment created',
-                text: 'Segment created successfully created',
                 confetti: true,
                 type: 'success',
             });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         }
-    };
-
-    const handleCancel = () => {
-        history.goBack();
     };
 
     return (
@@ -75,7 +70,6 @@ export const CreateSegment = () => {
         >
             <SegmentForm
                 handleSubmit={handleSubmit}
-                handleCancel={handleCancel}
                 name={name}
                 setName={setName}
                 description={description}
@@ -88,7 +82,7 @@ export const CreateSegment = () => {
             >
                 <CreateButton
                     name="segment"
-                    permission={ADMIN}
+                    permission={CREATE_SEGMENT}
                     disabled={!hasValidConstraints}
                 />
             </SegmentForm>
