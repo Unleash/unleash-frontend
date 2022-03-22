@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { formTemplateSidebarWidth } from 'component/common/FormTemplate/FormTemplate.styles';
 
 export const useStyles = makeStyles(theme => ({
     stepsContainer: {
@@ -8,12 +9,15 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         borderRadius: 10,
         justifyContent: 'center',
-        top: -14,
+        top: 36,
         left: 0,
-        right: 0,
+        right: formTemplateSidebarWidth,
         margin: 'auto',
         background: '#fff',
         padding: '0.25rem',
+        [theme.breakpoints.down(900)]: {
+            right: 0,
+        },
     },
     stepsText: { marginRight: 15 },
     emptyCircle: {

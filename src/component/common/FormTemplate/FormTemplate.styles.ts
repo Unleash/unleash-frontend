@@ -1,13 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+export const formTemplateSidebarWidth = '27.5rem';
+
 export const useStyles = makeStyles(theme => ({
     container: {
         minHeight: '80vh',
         width: '100%',
         display: 'flex',
         margin: '0 auto',
+        borderRadius: '1rem',
+        overflow: 'hidden',
         [theme.breakpoints.down(900)]: {
             flexDirection: 'column',
+            minHeight: 0,
         },
     },
     modal: {
@@ -17,13 +22,11 @@ export const useStyles = makeStyles(theme => ({
     sidebar: {
         backgroundColor: theme.palette.primary.light,
         padding: '2rem',
-        width: '35%',
-        borderTopRightRadius: '1rem',
-        borderBottomRightRadius: '1rem',
+        flexGrow: 0,
+        flexShrink: 0,
+        width: formTemplateSidebarWidth,
         [theme.breakpoints.down(900)]: {
-            marginBottom: '2rem',
             width: '100%',
-            borderRadius: '1rem',
         },
         [theme.breakpoints.down(500)]: {
             padding: '2rem 1rem',
@@ -58,17 +61,13 @@ export const useStyles = makeStyles(theme => ({
         display: 'block',
     },
     formContent: {
-        borderTopLeftRadius: '1rem',
-        borderBottomLeftRadius: '1rem',
-        position: 'relative',
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
         padding: '2rem',
-        width: '65%',
+        flexGrow: 1,
         [theme.breakpoints.down(900)]: {
             width: '100%',
-            borderRadius: '1rem',
         },
         [theme.breakpoints.down(500)]: {
             padding: '2rem 1rem',
@@ -78,17 +77,10 @@ export const useStyles = makeStyles(theme => ({
     mobileGuidanceBgContainer: {
         zIndex: 1,
         position: 'absolute',
-        right: 0,
-        top: 0,
-        overflow: 'hidden',
-        width: '75px',
-        height: '75px',
-        borderTopRightRadius: '1rem',
+        right: -3,
+        top: -3,
     },
     mobileGuidanceBackground: {
-        position: 'absolute',
-        right: 0,
-        top: 0,
         width: '75px',
         height: '75px',
     },
