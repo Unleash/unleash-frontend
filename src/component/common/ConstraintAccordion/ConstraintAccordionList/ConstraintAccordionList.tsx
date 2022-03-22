@@ -1,5 +1,5 @@
-import { IFeatureStrategy, IConstraint } from 'interfaces/strategy';
-import React from 'react';
+import { IConstraint } from 'interfaces/strategy';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -8,52 +8,55 @@ import {
     CREATE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
-import { createEmptyConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createEmptyConstraint';
 import { useWeakMap } from 'hooks/useWeakMap';
 import { objectId } from 'utils/object-id';
-import { useStyles } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2.styles';
+import { useStyles } from './ConstraintAccordionList.styles';
+import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 
-interface IFeatureStrategyConstraints2Props {
-    projectId: string;
-    environmentId: string;
-    strategy: Partial<IFeatureStrategy>;
-    setStrategy: React.Dispatch<
-        React.SetStateAction<Partial<IFeatureStrategy>>
-    >;
+interface IConstraintAccordionListProps {
+    projectId?: string;
+    environmentId?: string;
+    constraints: IConstraint[];
+    setConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
+}
+
+// Ref methods exposed by this component.
+export interface IConstraintAccordionListRef {
+    addConstraint: (contextName: string) => void;
 }
 
 // Extra form state for each constraint.
-interface IConstraintFormState {
+interface IConstraintAccordionListItemState {
     // Is the constraint currently being edited?
     editing?: boolean;
     // Is the constraint new (not yet saved)?
     unsaved?: boolean;
 }
 
-export const FeatureStrategyConstraints2 = ({
-    projectId,
-    environmentId,
-    strategy,
-    setStrategy,
-}: IFeatureStrategyConstraints2Props) => {
-    const state = useWeakMap<IConstraint, IConstraintFormState>();
+export const ConstraintAccordionList = forwardRef<
+    IConstraintAccordionListRef | undefined,
+    IConstraintAccordionListProps
+>(({ projectId, environmentId, constraints, setConstraints }, ref) => {
+    const state = useWeakMap<IConstraint, IConstraintAccordionListItemState>();
     const { context } = useUnleashContext();
-    const { constraints = [] } = strategy;
     const styles = useStyles();
+
+    const addConstraint = (contextName: string) => {
+        const constraint = createEmptyConstraint(contextName);
+        state.set(constraint, { editing: true, unsaved: true });
+        setConstraints(prev => [...prev, constraint]);
+    };
+
+    useImperativeHandle(ref, () => ({
+        addConstraint,
+    }));
+
+    const onAdd = () => {
+        addConstraint(context[0].name);
+    };
 
     const onEdit = (constraint: IConstraint) => {
         state.set(constraint, { editing: true });
-    };
-
-    const onAdd = () => {
-        const constraint = createEmptyConstraint(context);
-        state.set(constraint, { editing: true, unsaved: true });
-        setStrategy(
-            produce(draft => {
-                draft.constraints = draft.constraints ?? [];
-                draft.constraints.push(constraint);
-            })
-        );
     };
 
     const onCancel = (index: number) => {
@@ -65,19 +68,18 @@ export const FeatureStrategyConstraints2 = ({
     const onRemove = (index: number) => {
         const constraint = constraints[index];
         state.set(constraint, {});
-        setStrategy(
+        setConstraints(
             produce(draft => {
-                draft.constraints?.splice(index, 1);
+                draft.splice(index, 1);
             })
         );
     };
 
     const onSave = (index: number, constraint: IConstraint) => {
         state.set(constraint, {});
-        setStrategy(
+        setConstraints(
             produce(draft => {
-                draft.constraints = draft.constraints ?? [];
-                draft.constraints[index] = constraint;
+                draft[index] = constraint;
             })
         );
     };
@@ -98,7 +100,7 @@ export const FeatureStrategyConstraints2 = ({
             >
                 Add constraint
             </PermissionButton>
-            {strategy.constraints?.map((constraint, index) => (
+            {constraints.map((constraint, index) => (
                 <ConstraintAccordion
                     key={objectId(constraint)}
                     environmentId={environmentId}
@@ -113,4 +115,4 @@ export const FeatureStrategyConstraints2 = ({
             ))}
         </div>
     );
-};
+});

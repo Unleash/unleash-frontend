@@ -20,10 +20,10 @@ import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import { C } from '../../../common/flags';
 import { STRATEGY_FORM_SUBMIT_ID } from 'testIds';
-import { FeatureStrategyConstraints2 } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/FeatureStrategyConstraints2';
 import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import AccessContext from 'contexts/AccessContext';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import { FeatureStrategyConstraintsCO } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints/FeatureStrategyConstraintsCO';
 
 interface IFeatureStrategyFormProps {
     feature: IFeatureToggle;
@@ -83,9 +83,9 @@ export const FeatureStrategyForm = ({
         return null;
     }
 
-    // TODO(olav): Remove uiConfig.flags.CO when new constraints are released.
+    // TODO(olav): Remove FeatureStrategyConstraints when CO is out.
     const FeatureStrategyConstraintsImplementation = uiConfig.flags.CO
-        ? FeatureStrategyConstraints2
+        ? FeatureStrategyConstraintsCO
         : FeatureStrategyConstraints;
     const disableSubmitButtonFromConstraints = uiConfig.flags.CO
         ? !hasValidConstraints

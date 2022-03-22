@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { Add, ArrowDropDown, Search } from '@material-ui/icons';
 import { Autocomplete } from '@material-ui/lab';
@@ -6,14 +6,16 @@ import ConditionallyRender from 'component/common/ConditionallyRender';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
 import { CreateContext } from 'component/context/CreateContext/CreateContext';
-import { createConstraint } from 'component/feature/FeatureStrategy/FeatureStrategyConstraints2/createConstraint';
 import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permissions';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
 import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { ConstraintsList } from './ConstraintsList';
 import { useStyles } from './SegmentFormStepTwo.styles';
+import {
+    ConstraintAccordionList,
+    IConstraintAccordionListRef,
+} from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
 
 interface ISegmentFormPartTwoProps {
     name: string;
@@ -27,6 +29,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     constraints,
     setConstraints,
 }) => {
+    const constraintsAccordionListRef = useRef<IConstraintAccordionListRef>();
     const history = useHistory();
 
     const styles = useStyles();
@@ -34,16 +37,16 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     const [open, setOpen] = useState(false);
     const contextNames = context?.map(c => c.name) ?? [];
 
-    const onChange = (_event: any, values: string[]) => {
-        if (values.length >= 1) {
-            const constraint = createConstraint(values[values.length - 1]);
-            setConstraints(prev => [...prev, constraint]);
+    const onChange = (_event: any, [value]: string[]) => {
+        if (value) {
+            constraintsAccordionListRef.current?.addConstraint(value);
         }
     };
 
     if (!name) {
         return <Redirect to="/segments/create/part-one" />;
     }
+
     return (
         <div className={styles.form}>
             <div className={styles.container}>
@@ -110,7 +113,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                     show={
                         <div className={styles.noConstraintText}>
                             <p className={styles.subtitle}>
-                                Start adding context fileds by selecting an
+                                Start adding context fields by selecting an
                                 option from above, or you can create a new
                                 context field and use it right away
                             </p>
@@ -118,7 +121,8 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                     }
                 />
                 <div className={styles.constraintContainer}>
-                    <ConstraintsList
+                    <ConstraintAccordionList
+                        ref={constraintsAccordionListRef}
                         constraints={constraints}
                         setConstraints={setConstraints}
                     />
