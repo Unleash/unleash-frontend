@@ -46,6 +46,7 @@ export const useStyles = makeStyles(theme => ({
     },
     link: {
         textDecoration: 'none',
-        color: 'inherit',
+        color: theme.palette.primary.main,
+        fontWeight: theme.fontWeight.bold,
     },
 }));
