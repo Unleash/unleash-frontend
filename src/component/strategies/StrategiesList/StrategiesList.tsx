@@ -181,7 +181,7 @@ export const StrategiesList = () => {
                 <Tooltip title="You cannot deprecate the default strategy">
                     <div>
                         <IconButton disabled>
-                            <Visibility />
+                            <Visibility titleAccess="Deprecate strategy" />
                         </IconButton>
                     </div>
                 </Tooltip>
@@ -192,7 +192,7 @@ export const StrategiesList = () => {
                         onClick={() => onDeprecateStrategy(strategy)}
                         permission={UPDATE_STRATEGY}
                     >
-                        <Visibility />
+                        <Visibility titleAccess="Deprecate strategy" />
                     </PermissionIconButton>
                 </div>
             }
