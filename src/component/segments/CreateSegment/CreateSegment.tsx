@@ -41,6 +41,7 @@ export const CreateSegment = () => {
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getSegmentPayload(), undefined, 2)}'`;
     };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         clearErrors();
@@ -58,6 +59,7 @@ export const CreateSegment = () => {
             setToastApiError(formatUnknownError(error));
         }
     };
+
     const handleCancel = () => {
         history.goBack();
     };
@@ -66,10 +68,8 @@ export const CreateSegment = () => {
         <FormTemplate
             loading={loading}
             title="Create segment"
-            description="Segment makes it easy for you to define who should be exposed to your feature.
-            The segment is often a collection of constraints and can be reused.
-            Create a segment and use it when you configure an activation strategy on a feature toggle. "
-            documentationLink="https://docs.getunleash.io/how-to/how-to-create-and-assign-custom-project-roles"
+            description={segmentsFormDescription}
+            documentationLink={segmentsFormDocsLink}
             formatApiCode={formatApiCode}
         >
             <SegmentForm
@@ -94,3 +94,12 @@ export const CreateSegment = () => {
         </FormTemplate>
     );
 };
+
+export const segmentsFormDescription = `
+    Segments make it easy for you to define which of your users should get access to a feature.
+    A segment is a reusable collection of constraints.
+    You can create and apply a segment when configuring activation strategies for a feature toggle or at any time from the segments page in the navigation menu.
+`;
+
+// TODO(olav): Update link when the segments docs are ready.
+export const segmentsFormDocsLink = 'https://docs.getunleash.io';

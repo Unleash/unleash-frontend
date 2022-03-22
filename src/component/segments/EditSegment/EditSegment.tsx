@@ -13,6 +13,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import { formatUnknownError } from 'utils/format-unknown-error';
 import { useSegmentForm } from '../hooks/useSegmentForm';
 import { SegmentForm } from '../SegmentForm/SegmentForm';
+import {
+    segmentsFormDocsLink,
+    segmentsFormDescription,
+} from 'component/segments/CreateSegment/CreateSegment';
 
 export const EditSegment = () => {
     const segmentId = useRequiredPathParam('segmentId');
@@ -49,6 +53,7 @@ export const EditSegment = () => {
 --header 'Content-Type: application/json' \\
 --data-raw '${JSON.stringify(getSegmentPayload(), undefined, 2)}'`;
     };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         clearErrors();
@@ -66,6 +71,7 @@ export const EditSegment = () => {
             setToastApiError(formatUnknownError(error));
         }
     };
+
     const handleCancel = () => {
         history.goBack();
     };
@@ -74,10 +80,8 @@ export const EditSegment = () => {
         <FormTemplate
             loading={loading}
             title="Edit segment"
-            description="Segment makes it easy for you to define who should be exposed to your feature.
-            The segment is often a collection of constraints and can be reused.
-            Create a segment and use it when you configure an activation strategy on a feature toggle. "
-            documentationLink="https://docs.getunleash.io/how-to/how-to-create-and-assign-custom-project-roles"
+            description={segmentsFormDescription}
+            documentationLink={segmentsFormDocsLink}
             formatApiCode={formatApiCode}
         >
             <SegmentForm
