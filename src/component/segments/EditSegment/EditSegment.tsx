@@ -82,6 +82,7 @@ export const EditSegment = () => {
             title="Edit segment"
             description={segmentsFormDescription}
             documentationLink={segmentsFormDocsLink}
+            documentationLinkLabel="More about segments"
             formatApiCode={formatApiCode}
         >
             <SegmentForm

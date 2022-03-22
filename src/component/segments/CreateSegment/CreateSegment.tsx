@@ -70,6 +70,7 @@ export const CreateSegment = () => {
             title="Create segment"
             description={segmentsFormDescription}
             documentationLink={segmentsFormDocsLink}
+            documentationLinkLabel="More about segments"
             formatApiCode={formatApiCode}
         >
             <SegmentForm
