@@ -28,7 +28,7 @@ const useFeatureApi = () => {
     const validateConstraint = async (
         constraint: IConstraint
     ): Promise<void> => {
-        const path = `api/admin/validation/constraint`;
+        const path = `api/admin/constraints/validate`;
         const req = createRequest(path, {
             method: 'POST',
             body: JSON.stringify(constraint),
