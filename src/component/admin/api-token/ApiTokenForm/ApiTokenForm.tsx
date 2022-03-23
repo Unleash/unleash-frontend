@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React from 'react';
-import useEnvironments from '../../../../hooks/api/getters/useEnvironments/useEnvironments';
+import { useEnvironments } from '../../../../hooks/api/getters/useEnvironments/useEnvironments';
 import useProjects from '../../../../hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from '../../../common/GeneralSelect/GeneralSelect';
 import Input from '../../../common/Input/Input';
