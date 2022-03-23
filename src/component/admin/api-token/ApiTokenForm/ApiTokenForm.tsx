@@ -10,11 +10,11 @@ interface IApiTokenFormProps {
     username: string;
     type: string;
     project: string;
-    environment: string;
+    environment?: string;
     setTokenType: (value: string) => void;
     setUsername: React.Dispatch<React.SetStateAction<string>>;
     setProject: React.Dispatch<React.SetStateAction<string>>;
-    setEnvironment: React.Dispatch<React.SetStateAction<string>>;
+    setEnvironment: React.Dispatch<React.SetStateAction<string | undefined>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
