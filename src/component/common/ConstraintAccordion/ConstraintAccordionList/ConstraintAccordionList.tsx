@@ -29,10 +29,10 @@ export interface IConstraintAccordionListRef {
 
 // Extra form state for each constraint.
 interface IConstraintAccordionListItemState {
+    // Is the constraint new (never been saved)?
+    new?: boolean;
     // Is the constraint currently being edited?
     editing?: boolean;
-    // Is the constraint new (not yet saved)?
-    unsaved?: boolean;
 }
 
 export const ConstraintAccordionList = forwardRef<
@@ -58,7 +58,7 @@ export const ConstraintAccordionList = forwardRef<
 
         const addConstraint = (contextName: string) => {
             const constraint = createEmptyConstraint(contextName);
-            state.set(constraint, { editing: true, unsaved: true });
+            state.set(constraint, { editing: true, new: true });
             setConstraints(prev => [...prev, constraint]);
         };
 
@@ -76,7 +76,7 @@ export const ConstraintAccordionList = forwardRef<
 
         const onCancel = (index: number) => {
             const constraint = constraints[index];
-            state.get(constraint)?.unsaved && onRemove(index);
+            state.get(constraint)?.new && onRemove(index);
             state.set(constraint, {});
         };
 
