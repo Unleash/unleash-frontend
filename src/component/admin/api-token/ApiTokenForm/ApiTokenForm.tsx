@@ -54,13 +54,15 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
             title: i.name,
         })
     );
+
     const selectableEnvs =
         type === TYPE_ADMIN
             ? [{ key: '*', label: 'ALL' }]
-            : environments.map(i => ({
-                  key: i.name,
-                  label: i.name,
-                  title: i.name,
+            : environments.map(environment => ({
+                  key: environment.name,
+                  label: environment.name,
+                  title: environment.name,
+                  disabled: !environment.enabled,
               }));
 
     return (
