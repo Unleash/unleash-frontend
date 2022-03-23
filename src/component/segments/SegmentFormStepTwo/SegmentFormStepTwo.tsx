@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
-import { Button, TextField } from '@material-ui/core';
-import { Add, ArrowDropDown, Search } from '@material-ui/icons';
-import { Autocomplete } from '@material-ui/lab';
+import React, { useRef, useState } from 'react';
+import { Button } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
@@ -9,7 +8,6 @@ import { CreateContext } from 'component/context/CreateContext/CreateContext';
 import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permissions';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from 'component/segments/SegmentFormStepTwo/SegmentFormStepTwo.styles';
 import {
@@ -17,6 +15,10 @@ import {
     IConstraintAccordionListRef,
 } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
 import { SegmentFormStep } from '../SegmentForm/SegmentForm';
+import {
+    AutocompleteBox,
+    IAutocompleteBoxOption,
+} from 'component/common/AutocompleteBox/AutocompleteBox';
 
 interface ISegmentFormPartTwoProps {
     constraints: IConstraint[];
@@ -32,51 +34,34 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
 }) => {
     const constraintsAccordionListRef = useRef<IConstraintAccordionListRef>();
     const history = useHistory();
-
     const styles = useStyles();
-    const { context } = useUnleashContext();
+    const { context = [] } = useUnleashContext();
     const [open, setOpen] = useState(false);
-    const contextNames = context?.map(c => c.name) ?? [];
 
-    const onChange = (_event: any, [value]: string[]) => {
-        if (value) {
-            constraintsAccordionListRef.current?.addConstraint(value);
-        }
+    const autocompleteOptions = context.map(c => ({
+        value: c.name,
+        label: c.name,
+    }));
+
+    const onChange = ([option]: IAutocompleteBoxOption[]) => {
+        constraintsAccordionListRef.current?.addConstraint(option.value);
     };
 
     return (
         <div className={styles.form}>
             <div className={styles.container}>
                 <h3 className={styles.formHeader}>
-                    Select the context fileds you want to include in the segment
+                    Select the context fields you want to include in the segment
                 </h3>
                 <div>
                     <p className={styles.inputDescription}>
                         Use a predefined context field
                     </p>
-                    <div className={styles.flexContainer}>
-                        <div className={styles.iconConatiner}>
-                            <Search />
-                        </div>
-                        <Autocomplete
-                            className={styles.autoComplete}
-                            classes={{ inputRoot: styles.inputRoot }}
-                            multiple
-                            id="tags-standard"
-                            options={contextNames}
-                            value={[]}
-                            popupIcon={<ArrowDropDown />}
-                            onChange={onChange}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    label="Select a context"
-                                    placeholder="Select a context"
-                                />
-                            )}
-                        />
-                    </div>
+                    <AutocompleteBox
+                        label="Select a context"
+                        options={autocompleteOptions}
+                        onChange={onChange}
+                    />
                 </div>
 
                 <div className={styles.addContextContainer}>

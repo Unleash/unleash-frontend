@@ -90,32 +90,6 @@ export const useStyles = makeStyles(theme => ({
         whiteSpace: 'normal',
         textAlign: 'center',
     },
-    flexContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        background: theme.palette.grey[200],
-        maxWidth: 800,
-        padding: 20,
-        borderRadius: 12,
-    },
-    iconConatiner: {
-        background: theme.palette.primary.light,
-        height: 56,
-        display: 'flex',
-        alignItems: 'center',
-        width: 52,
-        justifyContent: 'center',
-        borderTopLeftRadius: 50,
-        borderBottomLeftRadius: 50,
-        color: '#fff',
-    },
-    autoComplete: {
-        flex: 1,
-    },
-    inputRoot: {
-        borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0,
-    },
     constraintContainer: {
         marginTop: '1rem',
         marginBottom: '1rem',
