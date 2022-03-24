@@ -150,7 +150,6 @@ export const SegmentsList = () => {
                     />
                 </TableBody>
             </Table>
-
             <PaginateUI
                 pages={pages}
                 pageIndex={pageIndex}
@@ -159,19 +158,21 @@ export const SegmentsList = () => {
                 prevPage={prevPage}
                 style={{ position: 'static', marginTop: '2rem' }}
             />
-
             <ConditionallyRender
                 condition={segments.length === 0}
                 show={renderNoSegments()}
             />
-            {currentSegment && (
-                <SegmentDelete
-                    segment={currentSegment}
-                    open={delDialog}
-                    setDeldialogue={setDelDialog}
-                    handleDeleteSegment={onDeleteSegment}
-                />
-            )}
+            <ConditionallyRender
+                condition={Boolean(currentSegment)}
+                show={() => (
+                    <SegmentDelete
+                        segment={currentSegment!}
+                        open={delDialog}
+                        setDeldialogue={setDelDialog}
+                        handleDeleteSegment={onDeleteSegment}
+                    />
+                )}
+            />
         </PageContent>
     );
 };
