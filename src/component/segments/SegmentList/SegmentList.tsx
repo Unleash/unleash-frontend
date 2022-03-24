@@ -31,7 +31,7 @@ import PermissionButton from 'component/common/PermissionButton/PermissionButton
 export const SegmentsList = () => {
     const history = useHistory();
     const { hasAccess } = useContext(AccessContext);
-    const { segments, refetchSegments } = useSegments();
+    const { segments = [], refetchSegments } = useSegments();
     const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(segments, 10);

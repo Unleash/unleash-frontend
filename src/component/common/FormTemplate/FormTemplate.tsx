@@ -35,7 +35,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
     const { setToastData } = useToast();
     const styles = useStyles();
     const commonStyles = useCommonStyles();
-    const smallScreen = useMediaQuery(`(max-width:${899}px)`);
+    const smallScreen = useMediaQuery(`(max-width:${1099}px)`);
 
     const copyCommand = () => {
         if (copy(formatApiCode())) {

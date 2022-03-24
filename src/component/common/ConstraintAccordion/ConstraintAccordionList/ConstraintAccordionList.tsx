@@ -119,7 +119,7 @@ export const ConstraintAccordionList = forwardRef<
                             environmentId={environmentId}
                             projectId={projectId}
                         >
-                            Add constraint
+                            Add custom constraint
                         </PermissionButton>
                     }
                 />

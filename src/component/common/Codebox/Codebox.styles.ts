@@ -13,8 +13,7 @@ export const useStyles = makeStyles(theme => ({
         margin: 0,
         wordBreak: 'break-all',
         color: '#fff',
-        whiteSpace: 'pre-wrap',
-        fontSize: theme.fontSizes.smallBody,
+        fontSize: 14,
     },
     icon: {
         fill: '#fff',

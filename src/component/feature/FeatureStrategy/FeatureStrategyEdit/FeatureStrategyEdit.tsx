@@ -11,6 +11,10 @@ import { useHistory } from 'react-router-dom';
 import useToast from '../../../../hooks/useToast';
 import { IFeatureStrategy, IStrategyPayload } from 'interfaces/strategy';
 import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
+import { ISegment } from 'interfaces/segment';
+import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
+import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
+import { formatStrategyName } from 'utils/strategy-names';
 
 export const FeatureStrategyEdit = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -19,8 +23,11 @@ export const FeatureStrategyEdit = () => {
     const strategyId = useRequiredQueryParam('strategyId');
 
     const [strategy, setStrategy] = useState<Partial<IFeatureStrategy>>({});
+    const [segments, setSegments] = useState<ISegment[]>([]);
     const { updateStrategyOnFeature, loading } = useFeatureStrategyApi();
+    const { segments: savedStrategySegments } = useSegments(strategyId);
     const { feature, refetchFeature } = useFeature(projectId, featureId);
+    const { setStrategySegments } = useSegmentsApi();
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const { unleashUrl } = uiConfig;
@@ -33,6 +40,11 @@ export const FeatureStrategyEdit = () => {
         setStrategy(prev => ({ ...prev, ...savedStrategy }));
     }, [strategyId, feature]);
 
+    useEffect(() => {
+        // Fill in the selected segments once they've been fetched.
+        savedStrategySegments && setSegments(savedStrategySegments);
+    }, [savedStrategySegments]);
+
     const onSubmit = async () => {
         try {
             await updateStrategyOnFeature(
@@ -41,6 +53,10 @@ export const FeatureStrategyEdit = () => {
                 environmentId,
                 strategyId,
                 createStrategyPayload(strategy)
+            );
+            await setStrategySegments(
+                strategyId,
+                segments.map(s => s.id)
             );
             setToastData({
                 title: 'Strategy updated',
@@ -62,7 +78,7 @@ export const FeatureStrategyEdit = () => {
     return (
         <FormTemplate
             modal
-            title="Edit feature strategy"
+            title={formatStrategyName(strategy.name ?? '')}
             description={featureStrategyHelp}
             documentationLink={featureStrategyDocsLink}
             formatApiCode={() =>
@@ -79,6 +95,8 @@ export const FeatureStrategyEdit = () => {
                 feature={feature}
                 strategy={strategy}
                 setStrategy={setStrategy}
+                segments={segments}
+                setSegments={setSegments}
                 environmentId={environmentId}
                 onSubmit={onSubmit}
                 loading={loading}

@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
         margin: '0 auto',
         borderRadius: '1rem',
         overflow: 'hidden',
-        [theme.breakpoints.down(900)]: {
+        [theme.breakpoints.down(1100)]: {
             flexDirection: 'column',
             minHeight: 0,
         },
@@ -25,7 +25,7 @@ export const useStyles = makeStyles(theme => ({
         flexGrow: 0,
         flexShrink: 0,
         width: formTemplateSidebarWidth,
-        [theme.breakpoints.down(900)]: {
+        [theme.breakpoints.down(1100)]: {
             width: '100%',
         },
         [theme.breakpoints.down(500)]: {
@@ -66,9 +66,12 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
-        padding: '2rem',
+        padding: '3rem',
         flexGrow: 1,
-        [theme.breakpoints.down(900)]: {
+        [theme.breakpoints.down(1200)]: {
+            padding: '2rem',
+        },
+        [theme.breakpoints.down(1100)]: {
             width: '100%',
         },
         [theme.breakpoints.down(500)]: {

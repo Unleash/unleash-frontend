@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
         top: 30,
         left: 0,
         right: formTemplateSidebarWidth,
-        [theme.breakpoints.down(900)]: {
+        [theme.breakpoints.down(1100)]: {
             right: 0,
         },
     },
