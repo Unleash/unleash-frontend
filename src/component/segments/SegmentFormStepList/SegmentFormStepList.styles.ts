@@ -23,12 +23,18 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
-    stepsText: { marginRight: 15, fontSize: theme.fontSizes.smallBody },
+    stepsText: {
+        marginRight: 15,
+        fontSize: theme.fontSizes.smallBody,
+    },
     circle: {
         fill: theme.palette.primary.main,
         fontSize: 17,
         opacity: 0.4,
         transition: 'opacity 0.4s ease',
     },
-    filledCircle: { opacity: 1, fontSize: 20 },
+    filledCircle: {
+        opacity: 1,
+        fontSize: 20,
+    },
 }));

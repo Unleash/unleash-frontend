@@ -14,18 +14,23 @@ export const SegmentFormStepList: React.FC<ISegmentFormStepListProps> = ({
 }) => {
     const styles = useStyles();
 
+    // Create a list with all the step numbers, e.g. [1, 2, 3].
+    const steps: number[] = Array.from({ length: total }).map((_, i) => {
+        return i + 1;
+    });
+
     return (
         <div className={styles.container}>
             <div className={styles.steps}>
                 <span className={styles.stepsText}>
                     Step {current} of {total}
                 </span>
-                {Array.from({ length: total }).map((v, i) => (
+                {steps.map(step => (
                     <FiberManualRecord
-                        key={i}
+                        key={step}
                         className={classNames(
                             styles.circle,
-                            i === current - 1 && styles.filledCircle
+                            step === current && styles.filledCircle
                         )}
                     />
                 ))}
