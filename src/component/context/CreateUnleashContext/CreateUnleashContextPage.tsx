@@ -1,10 +1,10 @@
 import { useHistory } from 'react-router-dom';
-import { CreateContext } from './CreateContext';
+import { CreateUnleashContext } from 'component/context/CreateUnleashContext/CreateUnleashContext';
 
-export const CreateContextPage = () => {
+export const CreateUnleashContextPage = () => {
     const { push, goBack } = useHistory();
     return (
-        <CreateContext
+        <CreateUnleashContext
             onSubmit={() => push('/context')}
             onCancel={() => goBack()}
         />

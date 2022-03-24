@@ -4,7 +4,7 @@ import { Add } from '@material-ui/icons';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
-import { CreateContext } from 'component/context/CreateContext/CreateContext';
+import { CreateUnleashContext } from 'component/context/CreateUnleashContext/CreateUnleashContext';
 import { CREATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permissions';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { IConstraint } from 'interfaces/strategy';
@@ -73,7 +73,7 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         onClose={() => setOpen(false)}
                         open={open}
                     >
-                        <CreateContext
+                        <CreateUnleashContext
                             onSubmit={() => setOpen(false)}
                             onCancel={() => setOpen(false)}
                             modal

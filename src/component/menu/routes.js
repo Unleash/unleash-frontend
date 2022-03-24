@@ -45,11 +45,11 @@ import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
 import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
 import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
 import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
-import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
-import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
-import { CreateContextPage } from 'component/context/CreateContext/CreateContextPage';
-import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SplashPage } from '../splash/SplashPage/SplashPage';
+import { CreateUnleashContextPage } from '../context/CreateUnleashContext/CreateUnleashContextPage';
+import { CreateSegment } from '../segments/CreateSegment/CreateSegment';
+import { EditSegment } from '../segments/EditSegment/EditSegment';
+import { SegmentsList } from '../segments/SegmentList/SegmentList';
 
 export const routes = [
     // Splash
@@ -200,7 +200,7 @@ export const routes = [
         path: '/context/create',
         parent: '/context',
         title: 'Create',
-        component: CreateContextPage,
+        component: CreateUnleashContextPage,
         type: 'protected',
         flag: C,
         menu: {},

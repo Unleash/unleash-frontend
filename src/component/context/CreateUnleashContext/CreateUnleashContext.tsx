@@ -15,7 +15,7 @@ interface ICreateContextProps {
     modal?: boolean;
 }
 
-export const CreateContext = ({
+export const CreateUnleashContext = ({
     onSubmit,
     onCancel,
     modal,
