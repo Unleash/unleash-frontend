@@ -11,9 +11,6 @@ export const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         gap: '0.5rem',
     },
-    segment: {
-        display: 'inline-block',
-    },
     and: {
         color: theme.palette.grey[600],
         fontSize: theme.fontSizes.smallerBody,

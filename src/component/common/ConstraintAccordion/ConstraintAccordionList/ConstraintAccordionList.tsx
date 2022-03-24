@@ -18,13 +18,13 @@ interface IConstraintAccordionListProps {
     projectId?: string;
     environmentId?: string;
     constraints: IConstraint[];
-    setConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
+    setConstraints?: React.Dispatch<React.SetStateAction<IConstraint[]>>;
     showCreateButton?: boolean;
 }
 
 // Ref methods exposed by this component.
 export interface IConstraintAccordionListRef {
-    addConstraint: (contextName: string) => void;
+    addConstraint?: (contextName: string) => void;
 }
 
 // Extra form state for each constraint.
@@ -56,47 +56,57 @@ export const ConstraintAccordionList = forwardRef<
         const { context } = useUnleashContext();
         const styles = useStyles();
 
-        const addConstraint = (contextName: string) => {
-            const constraint = createEmptyConstraint(contextName);
-            state.set(constraint, { editing: true, new: true });
-            setConstraints(prev => [...prev, constraint]);
-        };
+        const addConstraint =
+            setConstraints &&
+            ((contextName: string) => {
+                const constraint = createEmptyConstraint(contextName);
+                state.set(constraint, { editing: true, new: true });
+                setConstraints(prev => [...prev, constraint]);
+            });
 
         useImperativeHandle(ref, () => ({
             addConstraint,
         }));
 
-        const onAdd = () => {
-            addConstraint(context[0].name);
-        };
+        const onAdd =
+            addConstraint &&
+            (() => {
+                addConstraint(context[0].name);
+            });
 
-        const onEdit = (constraint: IConstraint) => {
-            state.set(constraint, { editing: true });
-        };
+        const onEdit =
+            setConstraints &&
+            ((constraint: IConstraint) => {
+                state.set(constraint, { editing: true });
+            });
+
+        const onRemove =
+            setConstraints &&
+            ((index: number) => {
+                const constraint = constraints[index];
+                state.set(constraint, {});
+                setConstraints(
+                    produce(draft => {
+                        draft.splice(index, 1);
+                    })
+                );
+            });
+
+        const onSave =
+            setConstraints &&
+            ((index: number, constraint: IConstraint) => {
+                state.set(constraint, {});
+                setConstraints(
+                    produce(draft => {
+                        draft[index] = constraint;
+                    })
+                );
+            });
 
         const onCancel = (index: number) => {
             const constraint = constraints[index];
-            state.get(constraint)?.new && onRemove(index);
+            state.get(constraint)?.new && onRemove?.(index);
             state.set(constraint, {});
-        };
-
-        const onRemove = (index: number) => {
-            const constraint = constraints[index];
-            state.set(constraint, {});
-            setConstraints(
-                produce(draft => {
-                    draft.splice(index, 1);
-                })
-            );
-        };
-
-        const onSave = (index: number, constraint: IConstraint) => {
-            state.set(constraint, {});
-            setConstraints(
-                produce(draft => {
-                    draft[index] = constraint;
-                })
-            );
         };
 
         if (context.length === 0) {
@@ -106,7 +116,7 @@ export const ConstraintAccordionList = forwardRef<
         return (
             <div className={styles.container}>
                 <ConditionallyRender
-                    condition={Boolean(showCreateButton)}
+                    condition={Boolean(showCreateButton && setConstraints)}
                     show={
                         <PermissionButton
                             type="button"
@@ -128,10 +138,10 @@ export const ConstraintAccordionList = forwardRef<
                         key={objectId(constraint)}
                         environmentId={environmentId}
                         constraint={constraint}
-                        onEdit={onEdit.bind(null, constraint)}
-                        onCancel={onCancel.bind(null, index, constraint)}
-                        onDelete={onRemove.bind(null, index, constraint)}
-                        onSave={onSave.bind(null, index)}
+                        onEdit={onEdit && onEdit.bind(null, constraint)}
+                        onCancel={onCancel.bind(null, index)}
+                        onDelete={onRemove && onRemove.bind(null, index)}
+                        onSave={onSave && onSave.bind(null, index)}
                         editing={Boolean(state.get(constraint)?.editing)}
                         compact
                     />

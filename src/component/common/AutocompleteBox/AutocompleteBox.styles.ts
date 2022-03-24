@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
         borderRadius: '1rem',
     },
     icon: {
-        background: theme.palette.primary.light,
+        background: theme.palette.primary.main,
         height: 56,
         display: 'flex',
         alignItems: 'center',
