@@ -119,7 +119,10 @@ export const FeatureStrategyForm = ({
                     />
                 }
             />
-            <hr className={styles.hr} />
+            <ConditionallyRender
+                condition={Boolean(uiConfig.flags.SE || uiConfig.flags.C)}
+                show={<hr className={styles.hr} />}
+            />
             <FeatureStrategyType
                 strategy={strategy}
                 setStrategy={setStrategy}
