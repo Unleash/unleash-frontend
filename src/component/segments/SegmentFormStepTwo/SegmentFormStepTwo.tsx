@@ -50,12 +50,13 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
     return (
         <div className={styles.form}>
             <div className={styles.container}>
-                <h3 className={styles.formHeader}>
-                    Select the context fields you want to include in the segment
-                </h3>
                 <div>
                     <p className={styles.inputDescription}>
-                        Use a predefined context field
+                        Select the context fields you want to include in the
+                        segment.
+                    </p>
+                    <p className={styles.inputDescription}>
+                        Use a predefined context field:
                     </p>
                     <AutocompleteBox
                         label="Select a context"
@@ -63,10 +64,9 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                         onChange={onChange}
                     />
                 </div>
-
                 <div className={styles.addContextContainer}>
                     <p className={styles.inputDescription}>
-                        Or create and add a new custom context field
+                        ...or add a new context field:
                     </p>
                     <SidebarModal
                         label="Create new context"
@@ -79,7 +79,6 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
                             modal
                         />
                     </SidebarModal>
-
                     <PermissionButton
                         permission={CREATE_CONTEXT_FIELD}
                         className={styles.addContextButton}

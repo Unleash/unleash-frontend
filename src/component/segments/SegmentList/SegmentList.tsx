@@ -75,9 +75,9 @@ export const SegmentsList = () => {
 
     const renderNoSegments = () => {
         return (
-            <div className={styles.container}>
+            <div className={styles.empty}>
                 <Typography className={styles.title}>
-                    There are no segments created yet.
+                    No segments yet!
                 </Typography>
                 <p className={styles.subtitle}>
                     Segment makes it easy for you to define who should be

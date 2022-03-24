@@ -1,15 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
-    container: {
+    empty: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '5rem',
+        marginBlock: '5rem',
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,
-        marginBottom: 12,
+        marginBottom: '1.25rem',
     },
     subtitle: {
         fontSize: theme.fontSizes.smallBody,
@@ -24,7 +24,9 @@ export const useStyles = makeStyles(theme => ({
         borderRadius: '8px',
     },
     paramButton: {
-        color: theme.palette.primary.dark,
+        textDecoration: 'none',
+        color: theme.palette.primary.main,
+        fontWeight: theme.fontWeight.bold,
     },
     cell: {
         borderBottom: 'none',

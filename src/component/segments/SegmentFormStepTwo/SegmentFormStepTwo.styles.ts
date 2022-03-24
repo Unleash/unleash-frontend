@@ -26,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.light,
     },
     inputDescription: {
-        marginBottom: '0.5rem',
+        marginBottom: '1rem',
     },
     formHeader: {
         fontWeight: 'normal',
@@ -58,7 +58,7 @@ export const useStyles = makeStyles(theme => ({
     addContextContainer: {
         marginTop: '1rem',
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
-        paddingBottom: 20,
+        paddingBottom: '2rem',
     },
     addContextButton: {
         color: theme.palette.primary.dark,
@@ -91,7 +91,6 @@ export const useStyles = makeStyles(theme => ({
         textAlign: 'center',
     },
     constraintContainer: {
-        marginTop: '1rem',
-        marginBottom: '1rem',
+        marginBlock: '2rem',
     },
 }));
