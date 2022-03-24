@@ -16,6 +16,7 @@ export const FeatureStrategySegmentList = ({
 }: IFeatureStrategySegmentListProps) => {
     const styles = useStyles();
     const [preview, setPreview] = useState<ISegment>();
+    const lastSegmentIndex = segments.length - 1;
 
     if (segments.length === 0) {
         return null;
@@ -33,7 +34,7 @@ export const FeatureStrategySegmentList = ({
                             setPreview={setPreview}
                         />
                         <ConditionallyRender
-                            condition={i < segments.length - 1}
+                            condition={i < lastSegmentIndex}
                             show={<span className={styles.and}>AND</span>}
                         />
                     </Fragment>
