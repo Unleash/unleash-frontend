@@ -18,7 +18,6 @@ import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
 import { useStyles } from './SegmentList.styles';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
-import { SegmentDeleteConfirm } from '../SegmentDeleteConfirm/SegmentDeleteConfirm';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/format-unknown-error';
@@ -27,6 +26,7 @@ import ConditionallyRender from 'component/common/ConditionallyRender';
 import HeaderTitle from 'component/common/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
+import { SegmentDelete } from '../SegmentDelete/SegmentDelete';
 
 export const SegmentsList = () => {
     const history = useHistory();
@@ -37,7 +37,6 @@ export const SegmentsList = () => {
         usePagination(segments, 10);
     const [currentSegment, setCurrentSegment] = useState<ISegment>();
     const [delDialog, setDelDialog] = useState(false);
-    const [confirmName, setConfirmName] = useState('');
     const { setToastData, setToastApiError } = useToast();
 
     const styles = useStyles();
@@ -55,7 +54,6 @@ export const SegmentsList = () => {
             setToastApiError(formatUnknownError(error));
         }
         setDelDialog(false);
-        setConfirmName('');
     };
 
     const renderSegments = () => {
@@ -167,13 +165,11 @@ export const SegmentsList = () => {
                 show={renderNoSegments()}
             />
             {currentSegment && (
-                <SegmentDeleteConfirm
+                <SegmentDelete
                     segment={currentSegment}
                     open={delDialog}
                     setDeldialogue={setDelDialog}
                     handleDeleteSegment={onDeleteSegment}
-                    confirmName={confirmName}
-                    setConfirmName={setConfirmName}
                 />
             )}
         </PageContent>
