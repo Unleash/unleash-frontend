@@ -12,6 +12,7 @@ export const useStyles = makeStyles(theme => ({
     code: {
         margin: 0,
         wordBreak: 'break-all',
+        whiteSpace: 'pre-wrap',
         color: '#fff',
         fontSize: 14,
     },

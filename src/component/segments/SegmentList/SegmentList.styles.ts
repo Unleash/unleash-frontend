@@ -16,8 +16,7 @@ export const useStyles = makeStyles(theme => ({
         color: theme.palette.grey[600],
         maxWidth: 515,
         marginBottom: 20,
-        wordBreak: 'break-all',
-        whiteSpace: 'normal',
+        textAlign: 'center',
     },
     tableRow: {
         background: '#F6F6FA',
