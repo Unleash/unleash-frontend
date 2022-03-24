@@ -34,8 +34,12 @@ export const FeatureStrategySegment = ({
     }));
 
     const onChange = ([option]: IAutocompleteBoxOption[]) => {
-        const selected = allSegments.find(s => String(s.id) === option.value);
-        selected && setSelectedSegments(prev => [...prev, selected]);
+        const selectedSegment = allSegments.find(segment => {
+            return String(segment.id) === option.value;
+        });
+        if (selectedSegment) {
+            setSelectedSegments(prev => [...prev, selectedSegment]);
+        }
     };
 
     return (
