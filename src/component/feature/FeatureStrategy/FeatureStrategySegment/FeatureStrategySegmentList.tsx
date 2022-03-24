@@ -40,6 +40,10 @@ export const FeatureStrategySegmentList = ({
                 ))}
             </div>
             <ConditionallyRender
+                condition={Boolean(preview && preview.constraints.length === 0)}
+                show={() => <p>This segment has no constraints.</p>}
+            />
+            <ConditionallyRender
                 condition={Boolean(preview)}
                 show={() => (
                     <ConstraintAccordionList
