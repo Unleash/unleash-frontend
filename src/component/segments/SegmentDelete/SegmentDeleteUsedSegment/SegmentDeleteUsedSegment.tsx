@@ -26,15 +26,15 @@ export const SegmentDeleteUsedSegment = ({
     console.log(strategies);
     return (
         <Dialogue
-            title="You can't delete a used segment"
+            title="You can't delete a segment that's currently in use"
             open={open}
             primaryButtonText="OK"
             onClick={handleCancel}
             hideSecondaryButton
         >
             <p>
-                The following features are using <strong>{segment.name}</strong>{' '}
-                in their strategies:
+                The following feature toggles are using the{' '}
+                <strong>{segment.name}</strong> segment for their strategies:
             </p>
             <ul>
                 {strategies?.map(strategy => (
