@@ -37,13 +37,14 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                 </p>
                 <Input
                     className={styles.input}
-                    label="Segment name*"
+                    label="Segment name"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
                     autoFocus
+                    required
                 />
                 <p className={styles.inputDescription}>
                     What is the segment description?
