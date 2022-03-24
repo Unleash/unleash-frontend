@@ -60,7 +60,7 @@ export const EditSegment = () => {
             clearErrors();
             try {
                 await updateSegment(segment.id, getSegmentPayload());
-                refetchSegments();
+                await refetchSegments();
                 history.push('/segments/');
                 setToastData({
                     title: 'Segment updated',

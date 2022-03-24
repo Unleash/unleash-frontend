@@ -45,7 +45,7 @@ export const SegmentsList = () => {
         if (!currentSegment?.id) return;
         try {
             await deleteSegment(currentSegment?.id);
-            refetchSegments();
+            await refetchSegments();
             setToastData({
                 type: 'success',
                 title: 'Successfully deleted segment',

@@ -47,7 +47,7 @@ export const CreateSegment = () => {
         clearErrors();
         try {
             await createSegment(getSegmentPayload());
-            refetchSegments();
+            await refetchSegments();
             history.push('/segments/');
             setToastData({
                 title: 'Segment created',

@@ -1,4 +1,4 @@
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import { useCallback } from 'react';
 import { formatApiPath } from 'utils/format-path';
 import handleErrorResponses from '../httpErrorResponseHandler';
@@ -14,13 +14,16 @@ export interface UseSegmentsOutput {
 }
 
 export const useSegments = (strategyId?: string): UseSegmentsOutput => {
-    const path = formatSegmentsPath(strategyId);
     const { uiConfig } = useUiConfig();
-    const { data, error } = useSWR([strategyId, uiConfig.flags], fetchSegments);
+
+    const { data, error, mutate } = useSWR(
+        [strategyId, uiConfig.flags],
+        fetchSegments
+    );
 
     const refetchSegments = useCallback(() => {
-        mutate(path).catch(console.warn);
-    }, [path]);
+        mutate().catch(console.warn);
+    }, [mutate]);
 
     return {
         segments: data,
