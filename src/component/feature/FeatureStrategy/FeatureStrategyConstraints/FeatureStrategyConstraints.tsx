@@ -1,6 +1,6 @@
 import { IConstraint, IFeatureStrategy } from 'interfaces/strategy';
-import Constraint from '../../../common/Constraint/Constraint';
-import Dialogue from '../../../common/Dialogue/Dialogue';
+import Constraint from 'component/common/Constraint/Constraint';
+import Dialogue from 'component/common/Dialogue/Dialogue';
 import React, { useState } from 'react';
 import StrategyConstraints from '../../StrategyConstraints/StrategyConstraints';
 import { List, ListItem } from '@material-ui/core';
@@ -8,8 +8,8 @@ import produce from 'immer';
 import {
     CREATE_FEATURE_STRATEGY,
     UPDATE_FEATURE_STRATEGY,
-} from '../../../providers/AccessProvider/permissions';
-import PermissionButton from '../../../common/PermissionButton/PermissionButton';
+} from 'component/providers/AccessProvider/permissions';
+import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 
 interface IFeatureStrategyConstraintsProps {
     projectId: string;

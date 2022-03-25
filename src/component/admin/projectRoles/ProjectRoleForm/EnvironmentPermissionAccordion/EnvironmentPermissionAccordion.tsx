@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 import {
     IPermission,
     IProjectEnvironmentPermissions,
-} from '../../../../../interfaces/project';
-import StringTruncator from '../../../../common/StringTruncator/StringTruncator';
+} from 'interfaces/project';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { ICheckedPermission } from '../../hooks/useProjectRoleForm';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
 

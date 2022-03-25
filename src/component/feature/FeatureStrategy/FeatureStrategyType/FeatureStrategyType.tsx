@@ -4,7 +4,7 @@ import FlexibleStrategy from '../../StrategyTypes/FlexibleStrategy/FlexibleStrat
 import UserWithIdStrategy from '../../StrategyTypes/UserWithIdStrategy/UserWithId';
 import GeneralStrategy from '../../StrategyTypes/GeneralStrategy/GeneralStrategy';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
-import useUnleashContext from '../../../../hooks/api/getters/useUnleashContext/useUnleashContext';
+import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import produce from 'immer';
 import React from 'react';
 

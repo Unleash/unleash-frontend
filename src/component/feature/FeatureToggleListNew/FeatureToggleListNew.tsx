@@ -9,15 +9,15 @@ import {
 import classnames from 'classnames';
 import { useStyles } from './FeatureToggleListNew.styles';
 import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleListNewItem';
-import usePagination from '../../../hooks/usePagination';
+import usePagination from 'hooks/usePagination';
 
 import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
 import {
     IFeatureToggle,
     IFeatureToggleListItem,
-} from '../../../interfaces/featureToggle';
-import PaginateUI from '../../common/PaginateUI/PaginateUI';
-import StringTruncator from '../../common/StringTruncator/StringTruncator';
+} from 'interfaces/featureToggle';
+import PaginateUI from 'component/common/PaginateUI/PaginateUI';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
