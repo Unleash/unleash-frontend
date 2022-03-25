@@ -5,6 +5,7 @@ import { ISegment } from 'interfaces/segment';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { Link } from 'react-router-dom';
 import { formatEditStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
+import { formatStrategyName } from 'utils/strategy-names';
 
 interface ISegmentDeleteUsedSegmentProps {
     segment: ISegment;
@@ -20,10 +21,11 @@ export const SegmentDeleteUsedSegment = ({
     strategies,
 }: ISegmentDeleteUsedSegmentProps) => {
     const styles = useStyles();
+
     const handleCancel = () => {
         setDeldialogue(false);
     };
-    console.log(strategies);
+
     return (
         <Dialogue
             title="You can't delete a segment that's currently in use"
@@ -50,11 +52,20 @@ export const SegmentDeleteUsedSegment = ({
                             rel="noopener noreferrer"
                             className={styles.link}
                         >
-                            {strategy.featureName!}
+                            {strategy.featureName!}{' '}
+                            {formatStrategyNameParens(strategy)}
                         </Link>
                     </li>
                 ))}
             </ul>
         </Dialogue>
     );
+};
+
+const formatStrategyNameParens = (strategy: IFeatureStrategy): string => {
+    if (!strategy.strategyName) {
+        return '';
+    }
+
+    return `(${formatStrategyName(strategy.strategyName)})`;
 };
