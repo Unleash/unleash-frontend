@@ -10,7 +10,6 @@ import classnames from 'classnames';
 import { useStyles } from './FeatureToggleListNew.styles';
 import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleListNewItem';
 import usePagination from 'hooks/usePagination';
-
 import loadingFeatures from './FeatureToggleListNewItem/loadingFeatures';
 import {
     IFeatureToggle,
@@ -18,6 +17,7 @@ import {
 } from 'interfaces/featureToggle';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
+import { createGlobalStateHook } from 'hooks/useGlobalState';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
@@ -66,17 +66,24 @@ const sortList = (list, sortOpt) => {
     return list;
 };
 
+interface ISortedState {
+    field: string;
+    type: string;
+    direction: number;
+}
+
+const useFeatureToggLeProjectSort = createGlobalStateHook<ISortedState>(
+    'useFeatureToggLeProjectSort',
+    { field: 'name', type: 'string', direction: 0 }
+);
+
 const FeatureToggleListNew = ({
     features,
     loading,
     projectId,
 }: IFeatureToggleListNewProps) => {
     const styles = useStyles();
-    const [sortOpt, setSortOpt] = useState({
-        field: 'name',
-        type: 'string',
-        direction: 0,
-    });
+    const [sortOpt, setSortOpt] = useFeatureToggLeProjectSort();
     const [sortedFeatures, setSortedFeatures] = useState(
         sortList([...features], sortOpt)
     );
