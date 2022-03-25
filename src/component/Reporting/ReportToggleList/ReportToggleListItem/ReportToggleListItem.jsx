@@ -22,7 +22,7 @@ import {
 } from '../../../../constants/featureToggleTypes';
 
 import { useStyles } from '../ReportToggleList.styles';
-import { getTogglePath } from '../../../../utils/route-path-helpers';
+import { getTogglePath } from '../../../../utils/routePathHelpers';
 
 const ReportToggleListItem = ({
     name,
