@@ -54,10 +54,12 @@ export const FeatureStrategyEdit = () => {
                 strategyId,
                 createStrategyPayload(strategy)
             );
-            await setStrategySegments(
+            await setStrategySegments({
+                environmentId,
+                projectId,
                 strategyId,
-                segments.map(s => s.id)
-            );
+                segmentIds: segments.map(s => s.id),
+            });
             setToastData({
                 title: 'Strategy updated',
                 type: 'success',
