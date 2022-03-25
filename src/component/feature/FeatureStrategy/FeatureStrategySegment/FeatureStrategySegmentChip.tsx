@@ -4,6 +4,7 @@ import { ISegment } from 'interfaces/segment';
 import { Clear, VisibilityOff, Visibility } from '@material-ui/icons';
 import { useStyles } from './FeatureStrategySegmentChip.styles';
 import ConditionallyRender from 'component/common/ConditionallyRender';
+import { constraintAccordionListId } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
 
 interface IFeatureStrategySegmentListProps {
     segment: ISegment;
@@ -66,6 +67,8 @@ export const FeatureStrategySegmentChip = ({
                 type="button"
                 onClick={onTogglePreview}
                 className={styles.button}
+                aria-expanded={segment === preview}
+                aria-controls={constraintAccordionListId}
             >
                 {togglePreviewIcon}
             </button>

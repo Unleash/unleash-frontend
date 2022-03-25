@@ -35,6 +35,8 @@ interface IConstraintAccordionListItemState {
     editing?: boolean;
 }
 
+export const constraintAccordionListId = 'constraintAccordionListId';
+
 export const ConstraintAccordionList = forwardRef<
     IConstraintAccordionListRef | undefined,
     IConstraintAccordionListProps
@@ -114,7 +116,7 @@ export const ConstraintAccordionList = forwardRef<
         }
 
         return (
-            <div className={styles.container}>
+            <div className={styles.container} id={constraintAccordionListId}>
                 <ConditionallyRender
                     condition={Boolean(showCreateButton && setConstraints)}
                     show={
