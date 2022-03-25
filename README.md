@@ -51,5 +51,3 @@ You may also need to test that a feature works against the enterprise version of
 yarn run start:enterprise
 yarn run e2e
 ```
-
-Note that we've used some waits in some of the end to end tests and this can cause issues running againsts the Heroku instance if you have a poor connection to the hosted server. The wait timeout is defined as a variable in cypress/integration/feature-toggle/feature.spec.js and can be modified locally for your needs.
