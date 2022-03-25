@@ -1,18 +1,19 @@
 import { Card, Menu, MenuItem } from '@material-ui/core';
-import { Dispatch, SetStateAction } from 'react';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Dialogue from '../../common/Dialogue';
-import useProjectApi from '../../../hooks/api/actions/useProjectApi/useProjectApi';
-import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
+import Dialogue from 'component/common/Dialogue';
+import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
+import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@material-ui/icons';
-import { getProjectEditPath } from '../../../utils/route-path-helpers';
-import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from '../../../store/project/actions';
+import { getProjectEditPath } from 'utils/route-path-helpers';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import useToast from 'hooks/useToast';
+import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
+import { formatUnknownError } from 'utils/format-unknown-error';
+
 interface IProjectCardProps {
     name: string;
     featureCount: number;
@@ -20,23 +21,15 @@ interface IProjectCardProps {
     memberCount: number;
     id: string;
     onHover: () => void;
-    setToastData: Dispatch<
-        SetStateAction<{
-            show: boolean;
-            type: string;
-            text: string;
-        }>
-    >;
 }
 
-const ProjectCard = ({
+export const ProjectCard = ({
     name,
     featureCount,
     health,
     memberCount,
     onHover,
     id,
-    setToastData,
 }: IProjectCardProps) => {
     const styles = useStyles();
     const { refetch: refetchProjectOverview } = useProjects();
@@ -44,16 +37,35 @@ const ProjectCard = ({
     const [showDelDialog, setShowDelDialog] = useState(false);
     const { deleteProject } = useProjectApi();
     const history = useHistory();
+    const { setToastData, setToastApiError } = useToast();
 
+    // @ts-expect-error
     const handleClick = e => {
         e.preventDefault();
         setAnchorEl(e.currentTarget);
     };
 
+    const onRemoveProject = async (e: Event) => {
+        e.preventDefault();
+        try {
+            await deleteProject(id);
+            refetchProjectOverview();
+            setToastData({
+                title: 'Deleted project',
+                type: 'success',
+                text: 'Successfully deleted project',
+            });
+        } catch (e: unknown) {
+            setToastApiError(formatUnknownError(e));
+        }
+        setShowDelDialog(false);
+        setAnchorEl(null);
+    };
+
     return (
         <Card className={styles.projectCard} onMouseEnter={onHover}>
             <div className={styles.header} data-loading>
-                <h2 className={styles.title}>{name}</h2>
+                <div className={styles.title}>{name}</div>
 
                 <PermissionIconButton
                     permission={UPDATE_PROJECT}
@@ -71,6 +83,7 @@ const ProjectCard = ({
                     anchorEl={anchorEl}
                     style={{ top: '40px', left: '-60px' }}
                     onClose={e => {
+                        // @ts-expect-error
                         e.preventDefault();
                         setAnchorEl(null);
                     }}
@@ -78,7 +91,6 @@ const ProjectCard = ({
                     <MenuItem
                         onClick={e => {
                             e.preventDefault();
-
                             history.push(getProjectEditPath(id));
                         }}
                     >
@@ -122,31 +134,9 @@ const ProjectCard = ({
             </div>
             <Dialogue
                 open={showDelDialog}
-                onClick={e => {
-                    e.preventDefault();
-                    deleteProject(id)
-                        .then(() => {
-                            setToastData({
-                                show: true,
-                                type: 'success',
-                                text: 'Successfully deleted project',
-                            });
-                            refetchProjectOverview();
-                        })
-                        .catch(e => {
-                            setToastData({
-                                show: true,
-                                type: 'error',
-                                text: e.toString(),
-                            });
-                        })
-                        .finally(() => {
-                            setShowDelDialog(false);
-                            setAnchorEl(null);
-                        });
-                }}
-                onClose={e => {
-                    e.preventDefault();
+                // @ts-expect-error
+                onClick={onRemoveProject}
+                onClose={() => {
                     setAnchorEl(null);
                     setShowDelDialog(false);
                 }}
@@ -155,5 +145,3 @@ const ProjectCard = ({
         </Card>
     );
 };
-
-export default ProjectCard;

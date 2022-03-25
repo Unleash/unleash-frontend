@@ -1,5 +1,4 @@
 import { useHistory, useParams } from 'react-router';
-import { useCommonStyles } from '../../../common.styles';
 import useProject from '../../../hooks/api/getters/useProject/useProject';
 import useLoading from '../../../hooks/useLoading';
 import ApiError from '../../common/ApiError/ApiError';
@@ -12,21 +11,19 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import { useEffect } from 'react';
 import useTabs from '../../../hooks/useTabs';
 import TabPanel from '../../common/TabNav/TabPanel';
-import ProjectAccess from '../access-container';
-import EditProject from '../edit-project-container';
+import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
-import { UPDATE_PROJECT } from '../../../store/project/actions';
 import PermissionIconButton from '../../common/PermissionIconButton/PermissionIconButton';
+import { UPDATE_PROJECT } from '../../providers/AccessProvider/permissions';
 
 const Project = () => {
     const { id, activeTab } = useParams<{ id: string; activeTab: string }>();
     const params = useQueryParams();
     const { project, error, loading, refetch } = useProject(id);
     const ref = useLoading(loading);
-    const { toast, setToastData } = useToast();
-    const commonStyles = useCommonStyles();
+    const { setToastData } = useToast();
     const styles = useStyles();
     const history = useHistory();
 
@@ -48,7 +45,7 @@ const Project = () => {
         },
         {
             title: 'Access',
-            component: <ProjectAccess projectId={id} />,
+            component: <ProjectAccess />,
             path: `${basePath}/access`,
             name: 'access',
         },
@@ -57,19 +54,6 @@ const Project = () => {
             component: <ProjectEnvironment projectId={id} />,
             path: `${basePath}/environments`,
             name: 'environments',
-        },
-        {
-            title: 'Settings',
-            // @ts-ignore (fix later)
-            component: (
-                <EditProject
-                    projectId={id}
-                    history={history}
-                    title="Edit project"
-                />
-            ),
-            path: `${basePath}/settings`,
-            name: 'settings',
         },
     ];
 
@@ -80,12 +64,12 @@ const Project = () => {
         if (created || edited) {
             const text = created ? 'Project created' : 'Project updated';
             setToastData({
-                show: true,
                 type: 'success',
-                text,
+                title: text,
             });
         }
 
+        // @ts-expect-error
         tabData.filter(tab => !tab.disabled);
 
         /* eslint-disable-next-line */
@@ -101,15 +85,6 @@ const Project = () => {
 
         /* eslint-disable-next-line */
     }, []);
-
-    const goToTabWithName = (name: string) => {
-        const index = tabData.findIndex(t => t.name === name);
-        if (index >= 0) {
-            const tab = tabData[index];
-            history.push(tab.path);
-            setActiveTab(index);
-        }
-    };
 
     const renderTabs = () => {
         return tabData.map((tab, index) => {
@@ -145,15 +120,14 @@ const Project = () => {
                 <div className={styles.innerContainer}>
                     <h2
                         data-loading
-                        className={commonStyles.title}
+                        className={styles.title}
                         style={{ margin: 0 }}
                     >
-                        Project: {project?.name}{' '}
+                        <div className={styles.titleText}>{project?.name}</div>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
-                            tooltip={'Edit description'}
                             projectId={project?.id}
-                            onClick={() => goToTabWithName('settings')}
+                            onClick={() => history.push(`/projects/${id}/edit`)}
                             data-loading
                         >
                             <Edit />
@@ -186,7 +160,6 @@ const Project = () => {
                 </div>
             </div>
             {renderTabContent()}
-            {toast}
         </div>
     );
 };

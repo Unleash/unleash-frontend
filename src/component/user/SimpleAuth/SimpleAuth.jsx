@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
-
 import styles from './SimpleAuth.module.scss';
+import { useHistory } from 'react-router-dom';
+import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
+import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from '../../../testIds';
+import useToast from '../../../hooks/useToast';
+import { formatUnknownError } from '../../../utils/format-unknown-error';
 
-const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
+const SimpleAuth = ({ authDetails, redirect }) => {
     const [email, setEmail] = useState('');
+    const { refetchUser } = useAuthUser();
+    const { emailAuth } = useAuthApi();
+    const history = useHistory();
+    const { setToastApiError } = useToast();
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
-        const user = { email };
-        const path = evt.target.action;
 
-        insecureLogin(path, user).then(() => history.push(`/`));
+        try {
+            await emailAuth(authDetails.path, email);
+            refetchUser();
+            history.push(redirect);
+        } catch (error) {
+            setToastApiError(formatUnknownError(error));
+        }
     };
 
     const handleChange = e => {
@@ -21,7 +34,7 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} action={authDetails.path}>
+        <form onSubmit={handleSubmit}>
             <div className={styles.container}>
                 <p>{authDetails.message}</p>
                 <p>
@@ -45,6 +58,7 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
                     name="email"
                     required
                     type="email"
+                    data-test={LOGIN_EMAIL_ID}
                 />
                 <br />
 
@@ -53,8 +67,8 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        data-test="login-submit"
                         className={styles.button}
+                        data-test={LOGIN_BUTTON}
                     >
                         Sign in
                     </Button>
@@ -66,8 +80,7 @@ const SimpleAuth = ({ insecureLogin, history, authDetails }) => {
 
 SimpleAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    insecureLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    redirect: PropTypes.string.isRequired,
 };
 
 export default SimpleAuth;

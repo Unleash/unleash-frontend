@@ -4,7 +4,13 @@ exports[`returns all baseRoutes 1`] = `
 Array [
   Object {
     "component": [Function],
-    "layout": "main",
+    "menu": Object {},
+    "path": "/splash/:splashId",
+    "title": "Unleash",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {},
     "parent": "/projects",
     "path": "/projects/create",
@@ -13,7 +19,14 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "menu": Object {},
+    "parent": "/projects",
+    "path": "/projects/:id/edit",
+    "title": ":id",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {},
     "parent": "/archive",
     "path": "/projects/:id/archived",
@@ -22,7 +35,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects/:id/features/:name/:activeTab",
     "path": "/projects/:id/features/:name/:activeTab/copy",
@@ -31,26 +43,23 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
-    "parent": "/projects/:id/features/:name/:activeTab",
-    "path": "/projects/:id/features2/:name/:activeTab/copy",
-    "title": "Copy",
+    "parent": "/projects",
+    "path": "/projects/:projectId/features/:featureId/edit",
+    "title": "Edit Feature",
     "type": "protected",
   },
   Object {
     "component": [Function],
     "flags": "E",
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects",
-    "path": "/projects/:projectId/features2/:featureId",
-    "title": "FeatureView2",
+    "path": "/projects/:projectId/features/:featureId",
+    "title": "FeatureView",
     "type": "protected",
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects",
     "path": "/projects/:id/features/:name/:activeTab",
@@ -59,35 +68,23 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects/:id/features",
-    "path": "/projects/:projectId/create-toggle2",
+    "path": "/projects/:projectId/create-toggle",
     "title": "Create feature toggle",
     "type": "protected",
   },
   Object {
     "component": [Function],
-    "layout": "main",
-    "menu": Object {},
-    "parent": "/projects",
-    "path": "/projects/:projectId/create-toggle",
-    "title": "Create",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/features",
-    "path": "/projects/:projectId/features/:name",
+    "path": "/projects/:projectId/features2/:name",
     "title": ":name",
     "type": "protected",
   },
   Object {
     "component": [Function],
     "flag": "P",
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects",
     "path": "/projects/:id/:activeTab",
@@ -97,7 +94,6 @@ Array [
   Object {
     "component": [Function],
     "flag": "P",
-    "layout": "main",
     "menu": Object {},
     "parent": "/projects",
     "path": "/projects/:id",
@@ -106,7 +102,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "mobile": true,
     },
@@ -116,7 +111,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/features",
     "path": "/features/:activeTab/:name",
@@ -125,7 +119,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "mobile": true,
     },
@@ -135,7 +128,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/applications",
     "path": "/applications/:name",
@@ -144,7 +136,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -155,7 +146,7 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "flag": "C",
     "menu": Object {},
     "parent": "/context",
     "path": "/context/create",
@@ -164,7 +155,7 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "flag": "C",
     "menu": Object {},
     "parent": "/context",
     "path": "/context/edit/:name",
@@ -174,7 +165,6 @@ Array [
   Object {
     "component": [Function],
     "flag": "C",
-    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -185,7 +175,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/strategies",
     "path": "/strategies/create",
@@ -194,16 +183,22 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/strategies",
-    "path": "/strategies/:activeTab/:strategyName",
-    "title": ":strategyName",
+    "path": "/strategies/:name/edit",
+    "title": ":name",
     "type": "protected",
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "menu": Object {},
+    "parent": "/strategies",
+    "path": "/strategies/:name",
+    "title": ":name",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -214,7 +209,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/environments",
     "path": "/environments/create",
@@ -223,8 +217,14 @@ Array [
   },
   Object {
     "component": [Function],
+    "menu": Object {},
+    "path": "/environments/:id",
+    "title": "Edit",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "flag": "EEA",
-    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -235,7 +235,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/tag-types",
     "path": "/tag-types/create",
@@ -244,7 +243,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/tag-types",
     "path": "/tag-types/edit/:name",
@@ -253,7 +251,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -264,35 +261,23 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
-    "parent": "/tags",
-    "path": "/tags/create",
+    "parent": "/addons",
+    "path": "/addons/create/:providerId",
     "title": "Create",
     "type": "protected",
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "parent": "/addons",
-    "path": "/addons/create/:provider",
-    "title": "Create",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
-    "layout": "main",
-    "menu": Object {},
-    "parent": "/addons",
-    "path": "/addons/edit/:id",
+    "path": "/addons/edit/:addonId",
     "title": "Edit",
     "type": "protected",
   },
   Object {
     "component": [Function],
     "hidden": false,
-    "layout": "main",
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -303,7 +288,18 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "flag": "SE",
+    "hidden": false,
+    "menu": Object {
+      "advanced": true,
+      "mobile": true,
+    },
+    "path": "/segments",
+    "title": "Segments",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {},
     "parent": "/history",
     "path": "/history/:toggleName",
@@ -312,7 +308,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "adminSettings": true,
     },
@@ -322,16 +317,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
-    "menu": Object {},
-    "parent": "/archive",
-    "path": "/projects/:id/archived/:name/:activeTab",
-    "title": ":name",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
-    "layout": "main",
     "menu": Object {},
     "path": "/archive",
     "title": "Archived Toggles",
@@ -339,7 +324,30 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
+    "menu": Object {},
+    "parent": "/admin",
+    "path": "/admin/api/create-token",
+    "title": "API access",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "flag": "RE",
+    "menu": Object {},
+    "path": "/admin/create-project-role",
+    "title": "Create",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
+    "flag": "RE",
+    "menu": Object {},
+    "path": "/admin/roles/:id/edit",
+    "title": "Edit",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {
       "advanced": true,
       "mobile": true,
@@ -351,7 +359,6 @@ Array [
   },
   Object {
     "component": [Function],
-    "layout": "main",
     "menu": Object {
       "adminSettings": true,
     },
@@ -361,13 +368,15 @@ Array [
     "type": "protected",
   },
   Object {
-    "component": Object {
-      "$$typeof": Symbol(react.memo),
-      "WrappedComponent": [Function],
-      "compare": null,
-      "type": [Function],
-    },
-    "layout": "main",
+    "component": [Function],
+    "menu": Object {},
+    "parent": "/admin",
+    "path": "/admin/create-user",
+    "title": "Users",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "menu": Object {
       "adminSettings": true,
     },
@@ -378,8 +387,18 @@ Array [
   },
   Object {
     "component": [Function],
+    "flag": "RE",
+    "menu": Object {
+      "adminSettings": true,
+    },
+    "parent": "/admin",
+    "path": "/admin/roles",
+    "title": "Project Roles",
+    "type": "protected",
+  },
+  Object {
+    "component": [Function],
     "hidden": false,
-    "layout": "main",
     "menu": Object {},
     "path": "/admin",
     "title": "Admin",

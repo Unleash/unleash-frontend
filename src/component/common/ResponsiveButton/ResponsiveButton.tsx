@@ -2,25 +2,27 @@ import { useMediaQuery } from '@material-ui/core';
 import ConditionallyRender from '../ConditionallyRender';
 import PermissionButton from '../PermissionButton/PermissionButton';
 import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
+import React from 'react';
 
 interface IResponsiveButtonProps {
     Icon: React.ElementType;
     onClick: () => void;
-    tooltip?: string;
     disabled?: boolean;
-    permission?: string;
+    permission: string;
     projectId?: string;
+    environmentId?: string;
     maxWidth: string;
+    className?: string;
 }
 
 const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
     Icon,
     onClick,
     maxWidth,
-    tooltip,
     disabled = false,
     children,
     permission,
+    environmentId,
     projectId,
     ...rest
 }) => {
@@ -35,6 +37,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
                     onClick={onClick}
                     permission={permission}
                     projectId={projectId}
+                    environmentId={environmentId}
                     data-loading
                     {...rest}
                 >
@@ -49,6 +52,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
                     color="primary"
                     variant="contained"
                     disabled={disabled}
+                    environmentId={environmentId}
                     data-loading
                     {...rest}
                 >

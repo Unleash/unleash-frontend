@@ -1,41 +1,52 @@
-import { USER_CACHE_KEY } from '../../../hooks/api/getters/useUser/useUser';
 import { mutate, SWRConfig, useSWRConfig } from 'swr';
 import { useHistory } from 'react-router';
-import { IToast } from '../../../hooks/useToast';
+import useToast from '../../../hooks/useToast';
+import { formatApiPath } from '../../../utils/format-path';
+import React from 'react';
+import { USER_ENDPOINT_PATH } from '../../../hooks/api/getters/useAuth/useAuthEndpoint';
 
 interface ISWRProviderProps {
-    setToastData: (toastData: IToast) => void;
     isUnauthorized: () => boolean;
 }
 
+const INVALID_TOKEN_ERROR = 'InvalidTokenError';
+
 const SWRProvider: React.FC<ISWRProviderProps> = ({
     children,
-    setToastData,
     isUnauthorized,
 }) => {
     const { cache } = useSWRConfig();
     const history = useHistory();
+    const { setToastApiError } = useToast();
 
+    // @ts-expect-error
     const handleFetchError = error => {
         if (error.status === 401) {
-            cache.clear();
             const path = location.pathname;
+            // Only populate user with authDetails if 401 and
+            // error is not invalid token
+            if (error?.info?.name !== INVALID_TOKEN_ERROR) {
+                mutate(USER_ENDPOINT_PATH, { ...error.info }, false);
+            }
 
-            mutate(USER_CACHE_KEY, { ...error.info }, false);
-            if (path === '/login') {
+            if (
+                path === formatApiPath('login') ||
+                path === formatApiPath('new-user') ||
+                path === formatApiPath('reset-password') ||
+                path === formatApiPath('forgotten-password')
+            ) {
                 return;
             }
+
+            // @ts-expect-error
+            cache.clear();
 
             history.push('/login');
             return;
         }
 
         if (!isUnauthorized()) {
-            setToastData({
-                show: true,
-                type: 'error',
-                text: error.message,
-            });
+            setToastApiError(error.message);
         }
     };
 

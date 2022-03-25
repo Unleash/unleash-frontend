@@ -12,17 +12,22 @@ import DividerText from '../../common/DividerText/DividerText';
 import { Alert } from '@material-ui/lab';
 import {
     LOGIN_BUTTON,
-    LOGIN_PASSWORD_ID,
     LOGIN_EMAIL_ID,
+    LOGIN_PASSWORD_ID,
 } from '../../../testIds';
+import PasswordField from '../../common/PasswordField/PasswordField';
+import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
 
-const PasswordAuth = ({ authDetails, passwordLogin }) => {
+const PasswordAuth = ({ authDetails, redirect }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
     const history = useHistory();
+    const { refetchUser } = useAuthUser();
     const params = useQueryParams();
     const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
+    const { passwordAuth } = useAuthApi();
     const [errors, setErrors] = useState({
         usernameError: '',
         passwordError: '',
@@ -48,13 +53,10 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
             return;
         }
 
-        const user = { username, password };
-        const path = evt.target.action;
-
         try {
-            await passwordLogin(path, user);
-
-            history.push(`/`);
+            await passwordAuth(authDetails.path, username, password);
+            refetchUser();
+            history.push(redirect);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {
                 setErrors(prev => ({
@@ -80,9 +82,9 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
         return (
             <ConditionallyRender
-                condition={!authDetails.disableDefault}
+                condition={!authDetails.defaultHidden}
                 show={
-                    <form onSubmit={handleSubmit} action={authDetails.path}>
+                    <form onSubmit={handleSubmit}>
                         <ConditionallyRender
                             condition={apiError}
                             show={
@@ -109,22 +111,19 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
                                 value={username}
                                 error={!!usernameError}
                                 helperText={usernameError}
-                                variant="outlined"
                                 autoComplete="true"
-                                size="small"
                                 data-test={LOGIN_EMAIL_ID}
+                                variant="outlined"
+                                size="small"
                             />
-                            <TextField
+                            <PasswordField
                                 label="Password"
                                 onChange={evt => setPassword(evt.target.value)}
                                 name="password"
-                                type="password"
                                 value={password}
                                 error={!!passwordError}
                                 helperText={passwordError}
-                                variant="outlined"
                                 autoComplete="true"
-                                size="small"
                                 data-test={LOGIN_PASSWORD_ID}
                             />
                             <Button
@@ -146,7 +145,10 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
     const renderWithOptions = options => (
         <>
             <AuthOptions options={options} />
-            <DividerText text="Or signin with username" />
+            <ConditionallyRender
+                condition={!authDetails.defaultHidden}
+                show={<DividerText text="Or sign in with username" />}
+            />
             {renderLoginForm()}
         </>
     );
@@ -166,8 +168,7 @@ const PasswordAuth = ({ authDetails, passwordLogin }) => {
 
 PasswordAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    passwordLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    redirect: PropTypes.string.isRequired,
 };
 
 export default PasswordAuth;

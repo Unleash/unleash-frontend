@@ -1,5 +1,7 @@
-import { TextField } from '@material-ui/core';
-import { useStyles } from './Input.styles.ts';
+import { InputLabelProps, InputProps, TextField } from '@material-ui/core';
+import { INPUT_ERROR_TEXT } from '../../../testIds';
+import { useStyles } from './Input.styles';
+import React from 'react';
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -11,6 +13,10 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     onChange: (e: any) => any;
     onFocus?: (e: any) => any;
     onBlur?: (e: any) => any;
+    multiline?: boolean;
+    rows?: number;
+    InputProps?: Partial<InputProps>;
+    InputLabelProps?: Partial<InputLabelProps>;
 }
 
 const Input = ({
@@ -22,12 +28,14 @@ const Input = ({
     className,
     value,
     onChange,
+    InputProps,
     ...rest
 }: IInputProps) => {
     const styles = useStyles();
     return (
         <div className={styles.inputContainer} data-loading>
             <TextField
+                // @ts-expect-error
                 size="small"
                 variant="outlined"
                 label={label}
@@ -39,6 +47,8 @@ const Input = ({
                 value={value}
                 onChange={onChange}
                 FormHelperTextProps={{
+                    // @ts-expect-error
+                    ['data-test']: INPUT_ERROR_TEXT,
                     classes: {
                         root: styles.helperText,
                     },

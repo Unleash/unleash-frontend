@@ -1,16 +1,15 @@
-import { IFeatureToggleDTO } from '../../../../interfaces/featureToggle';
+import { IFeatureTogglePayload } from '../../../../interfaces/featureToggle';
 import { ITag } from '../../../../interfaces/tags';
 import useAPI from '../useApi/useApi';
 import { Operation } from 'fast-json-patch';
+import { IConstraint } from 'interfaces/strategy';
 
 const useFeatureApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
         propagateErrors: true,
     });
 
-    const validateFeatureToggleName = async (
-        name: string,
-    ) => {
+    const validateFeatureToggleName = async (name: string) => {
         const path = `api/admin/features/validate`;
         const req = createRequest(path, {
             method: 'POST',
@@ -26,10 +25,29 @@ const useFeatureApi = () => {
         }
     };
 
+    const validateConstraint = async (
+        projectId: string,
+        featureName: string,
+        constraint: IConstraint
+    ) => {
+        const path = `api/admin/projects/${projectId}/features/${featureName}/constraint/validate`;
+        const req = createRequest(path, {
+            method: 'POST',
+            body: JSON.stringify(constraint),
+        });
+
+        try {
+            const res = await makeRequest(req.caller, req.id);
+
+            return res;
+        } catch (e) {
+            throw e;
+        }
+    };
 
     const createFeatureToggle = async (
         projectId: string,
-        featureToggle: IFeatureToggleDTO,
+        featureToggle: IFeatureTogglePayload
     ) => {
         const path = `api/admin/projects/${projectId}/features`;
         const req = createRequest(path, {
@@ -183,7 +201,11 @@ const useFeatureApi = () => {
         }
     };
 
-    const patchFeatureVariants = async (projectId: string, featureId: string, patchPayload: Operation[]) => {
+    const patchFeatureVariants = async (
+        projectId: string,
+        featureId: string,
+        patchPayload: Operation[]
+    ) => {
         const path = `api/admin/projects/${projectId}/features/${featureId}/variants`;
         const req = createRequest(path, {
             method: 'PATCH',
@@ -220,6 +242,7 @@ const useFeatureApi = () => {
 
     return {
         validateFeatureToggleName,
+        validateConstraint,
         createFeatureToggle,
         changeFeatureProject,
         errors,

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
     BAD_REQUEST,
     FORBIDDEN,
@@ -12,30 +12,20 @@ import {
     ForbiddenError,
     headers,
     NotFoundError,
-} from '../../../../store/api-helper';
+} from '../../../../utils/api-utils';
 import { formatApiPath } from '../../../../utils/format-path';
 
+type ApiErrorHandler = (
+    setErrors: Dispatch<SetStateAction<{}>>,
+    res: Response,
+    requestId: string
+) => void;
+
 interface IUseAPI {
-    handleBadRequest?: (
-        setErrors?: Dispatch<SetStateAction<{}>>,
-        res?: Response,
-        requestId?: string
-    ) => void;
-    handleNotFound?: (
-        setErrors?: Dispatch<SetStateAction<{}>>,
-        res?: Response,
-        requestId?: string
-    ) => void;
-    handleUnauthorized?: (
-        setErrors?: Dispatch<SetStateAction<{}>>,
-        res?: Response,
-        requestId?: string
-    ) => void;
-    handleForbidden?: (
-        setErrors?: Dispatch<SetStateAction<{}>>,
-        res?: Response,
-        requestId?: string
-    ) => void;
+    handleBadRequest?: ApiErrorHandler;
+    handleNotFound?: ApiErrorHandler;
+    handleUnauthorized?: ApiErrorHandler;
+    handleForbidden?: ApiErrorHandler;
     propagateErrors?: boolean;
 }
 
@@ -46,7 +36,7 @@ const useAPI = ({
     handleUnauthorized,
     propagateErrors = false,
 }: IUseAPI) => {
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
 
     const defaultOptions: RequestInit = {
@@ -55,13 +45,14 @@ const useAPI = ({
     };
 
     const makeRequest = async (
-        apiCaller: any,
-        requestId?: string,
-        loading: boolean = true
+        apiCaller: () => Promise<Response>,
+        requestId: string,
+        loadingOn: boolean = true
     ): Promise<Response> => {
-        if (loading) {
+        if (loadingOn) {
             setLoading(true);
         }
+
         try {
             const res = await apiCaller();
             setLoading(false);
@@ -96,7 +87,7 @@ const useAPI = ({
         };
     };
 
-    const handleResponses = async (res: Response, requestId?: string) => {
+    const handleResponses = async (res: Response, requestId: string) => {
         if (res.status === BAD_REQUEST) {
             if (handleBadRequest) {
                 return handleBadRequest(setErrors, res, requestId);
@@ -146,7 +137,7 @@ const useAPI = ({
 
         if (res.status === FORBIDDEN) {
             if (handleForbidden) {
-                return handleForbidden(setErrors);
+                return handleForbidden(setErrors, res, requestId);
             } else {
                 setErrors(prev => ({
                     ...prev,
@@ -162,14 +153,19 @@ const useAPI = ({
 
         if (res.status > 399) {
             const response = await res.json();
-
-            if (response?.details?.length > 0) {
+            if (response?.details?.length > 0 && propagateErrors) {
                 const error = response.details[0];
                 if (propagateErrors) {
-                    throw new Error(error.message);
+                    throw new Error(error.message || error.msg);
                 }
                 return error;
             }
+
+            if (response?.length > 0 && propagateErrors) {
+                const error = response[0];
+                throw new Error(error.message || error.msg);
+            }
+
             if (propagateErrors) {
                 throw new Error('Action could not be performed');
             }

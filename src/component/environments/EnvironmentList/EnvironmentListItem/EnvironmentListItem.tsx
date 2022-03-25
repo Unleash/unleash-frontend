@@ -24,12 +24,13 @@ import {
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
 import DisabledIndicator from '../../../common/DisabledIndicator/DisabledIndicator';
+import StringTruncator from '../../../common/StringTruncator/StringTruncator';
+import { useHistory } from 'react-router-dom';
 
 interface IEnvironmentListItemProps {
     env: IEnvironment;
     setSelectedEnv: React.Dispatch<React.SetStateAction<IEnvironment>>;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
-    setEditEnvironment: React.Dispatch<React.SetStateAction<boolean>>;
     setToggleDialog: React.Dispatch<React.SetStateAction<boolean>>;
     index: number;
     moveListItem: (dragIndex: number, hoverIndex: number) => IEnvironment[];
@@ -50,8 +51,8 @@ const EnvironmentListItem = ({
     moveListItem,
     moveListItemApi,
     setToggleDialog,
-    setEditEnvironment,
 }: IEnvironmentListItemProps) => {
+    const history = useHistory();
     const ref = useRef<HTMLDivElement>(null);
     const ACCEPT_TYPE = 'LIST_ITEM';
     const [{ isDragging }, drag] = useDrag({
@@ -121,6 +122,7 @@ const EnvironmentListItem = ({
     }
 
     return (
+        // @ts-expect-error
         <ListItem
             style={{ position: 'relative', opacity }}
             ref={ref}
@@ -132,7 +134,13 @@ const EnvironmentListItem = ({
             <ListItemText
                 primary={
                     <>
-                        <strong>{env.name}</strong>
+                        <strong>
+                            <StringTruncator
+                                text={env.name}
+                                maxWidth={'125'}
+                                maxLength={25}
+                            />
+                        </strong>
                         <ConditionallyRender
                             condition={!env.enabled}
                             show={<DisabledIndicator />}
@@ -144,9 +152,11 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title="Drag to reorder">
-                        <IconButton>
-                            <DragIndicator />
-                        </IconButton>
+                        <div>
+                            <IconButton>
+                                <DragIndicator titleAccess="Drag" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -154,16 +164,16 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title={`${tooltipText} environment`}>
-                        <IconButton
-                            aria-label="disable"
-                            disabled={env.protected}
-                            onClick={() => {
-                                setSelectedEnv(env);
-                                setToggleDialog(prev => !prev);
-                            }}
-                        >
-                            <OfflineBolt />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                onClick={() => {
+                                    setSelectedEnv(env);
+                                    setToggleDialog(prev => !prev);
+                                }}
+                            >
+                                <OfflineBolt titleAccess="Toggle" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -171,16 +181,16 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title="Update environment">
-                        <IconButton
-                            aria-label="update"
-                            disabled={env.protected}
-                            onClick={() => {
-                                setSelectedEnv(env);
-                                setEditEnvironment(prev => !prev);
-                            }}
-                        >
-                            <Edit />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                disabled={env.protected}
+                                onClick={() => {
+                                    history.push(`/environments/${env.name}`);
+                                }}
+                            >
+                                <Edit titleAccess="Edit" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -188,16 +198,17 @@ const EnvironmentListItem = ({
                 condition={hasAccess(DELETE_ENVIRONMENT)}
                 show={
                     <Tooltip title="Delete environment">
-                        <IconButton
-                            aria-label="delete"
-                            disabled={env.protected}
-                            onClick={() => {
-                                setDeldialogue(true);
-                                setSelectedEnv(env);
-                            }}
-                        >
-                            <Delete />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                disabled={env.protected}
+                                onClick={() => {
+                                    setDeldialogue(true);
+                                    setSelectedEnv(env);
+                                }}
+                            >
+                                <Delete titleAccess="Delete" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />

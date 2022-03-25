@@ -1,30 +1,25 @@
-import { useEffect } from 'react';
-
-import AuthenticationContainer from '../Authentication';
 import ConditionallyRender from '../../common/ConditionallyRender';
-
 import { useStyles } from './Login.styles';
 import useQueryParams from '../../../hooks/useQueryParams';
 import ResetPasswordSuccess from '../common/ResetPasswordSuccess/ResetPasswordSuccess';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 import { DEMO_TYPE } from '../../../constants/authTypes';
-import useUser from '../../../hooks/api/getters/useUser/useUser';
-import { useHistory } from 'react-router';
+import Authentication from '../Authentication/Authentication';
+import { useAuthDetails } from '../../../hooks/api/getters/useAuth/useAuthDetails';
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
     const styles = useStyles();
-    const { permissions, authDetails } = useUser();
+    const { authDetails } = useAuthDetails();
+    const { user } = useAuthUser();
     const query = useQueryParams();
-    const history = useHistory();
-
-    useEffect(() => {
-        if (permissions?.length > 0) {
-            history.push('features');
-        }
-        /* eslint-disable-next-line */
-    }, [permissions.length]);
-
     const resetPassword = query.get('reset') === 'true';
+    const redirect = query.get('redirect') || '/';
+
+    if (user) {
+        return <Redirect to={redirect} />;
+    }
 
     return (
         <StandaloneLayout>
@@ -42,7 +37,7 @@ const Login = () => {
                     condition={resetPassword}
                     show={<ResetPasswordSuccess />}
                 />
-                <AuthenticationContainer history={history} />
+                <Authentication redirect={redirect} />
             </div>
         </StandaloneLayout>
     );

@@ -1,55 +1,32 @@
-import { connect } from 'react-redux';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
-
-import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
+import ConditionallyRender from './common/ConditionallyRender';
+import Feedback from './common/Feedback/Feedback';
 import LayoutPicker from './layout/LayoutPicker/LayoutPicker';
-
-import { routes } from './menu/routes';
-
-import styles from './styles.module.scss';
-
-import IAuthStatus from '../interfaces/user';
-import { useEffect } from 'react';
+import Loader from './common/Loader/Loader';
 import NotFound from './common/NotFound/NotFound';
-import Feedback from './common/Feedback';
-import useToast from '../hooks/useToast';
+import ProtectedRoute from './common/ProtectedRoute/ProtectedRoute';
 import SWRProvider from './providers/SWRProvider/SWRProvider';
+import ToastRenderer from './common/ToastRenderer/ToastRenderer';
+import styles from './styles.module.scss';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { routes } from './menu/routes';
+import { useAuthDetails } from 'hooks/api/getters/useAuth/useAuthDetails';
+import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
+import { SplashPageRedirect } from 'component/splash/SplashPageRedirect/SplashPageRedirect';
 
-interface IAppProps extends RouteComponentProps {
-    user: IAuthStatus;
-    fetchUiBootstrap: any;
-    feedback: any;
-}
+export const App = () => {
+    const { authDetails } = useAuthDetails();
+    const { user } = useAuthUser();
+    const isLoggedIn = Boolean(user?.id);
+    const hasFetchedAuth = Boolean(authDetails || user);
 
-const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
-    const { toast, setToastData } = useToast();
-    useEffect(() => {
-        fetchUiBootstrap();
-        /* eslint-disable-next-line */
-    }, [user.authDetails?.type]);
-
-    const renderMainLayoutRoutes = () => {
-        return routes.filter(route => route.layout === 'main').map(renderRoute);
-    };
-
-    const renderStandaloneRoutes = () => {
-        return routes
-            .filter(route => route.layout === 'standalone')
-            .map(renderRoute);
-    };
-
-    const isUnauthorized = () => {
-        // authDetails only exists if the user is not logged in.
-        //if (user?.permissions.length === 0) return true;
-        return user?.authDetails !== undefined;
+    const isUnauthorized = (): boolean => {
+        return !isLoggedIn;
     };
 
     // Change this to IRoute once snags with HashRouter and TS is worked out
     const renderRoute = (route: any) => {
         if (route.type === 'protected') {
             const unauthorized = isUnauthorized();
-
             return (
                 <ProtectedRoute
                     key={route.path}
@@ -67,7 +44,7 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
                     <route.component
                         {...props}
                         isUnauthorized={isUnauthorized}
-                        authDetails={user.authDetails}
+                        authDetails={authDetails}
                     />
                 )}
             />
@@ -75,40 +52,32 @@ const App = ({ location, user, fetchUiBootstrap, feedback }: IAppProps) => {
     };
 
     return (
-        <SWRProvider
-            setToastData={setToastData}
-            isUnauthorized={isUnauthorized}
-        >
-            {' '}
-            <div className={styles.container}>
-                <LayoutPicker location={location}>
-                    <Switch>
-                        <ProtectedRoute
-                            exact
-                            path="/"
-                            unauthorized={isUnauthorized()}
-                            component={Redirect}
-                            renderProps={{ to: '/features' }}
-                        />
-                        {renderMainLayoutRoutes()}
-                        {renderStandaloneRoutes()}
-                        <Route path="/404" component={NotFound} />
-                        <Redirect to="/404" />
-                    </Switch>
-                    <Feedback
-                        feedbackId="pnps"
-                        openUrl="http://feedback.unleash.run"
-                    />
-                </LayoutPicker>
-                {toast}
-            </div>
+        <SWRProvider isUnauthorized={isUnauthorized}>
+            <ConditionallyRender
+                condition={!hasFetchedAuth}
+                show={<Loader />}
+                elseShow={
+                    <div className={styles.container}>
+                        <ToastRenderer />
+                        <LayoutPicker>
+                            <Switch>
+                                <ProtectedRoute
+                                    exact
+                                    path="/"
+                                    unauthorized={isUnauthorized()}
+                                    component={Redirect}
+                                    renderProps={{ to: '/features' }}
+                                />
+                                {routes.map(renderRoute)}
+                                <Route path="/404" component={NotFound} />
+                                <Redirect to="/404" />
+                            </Switch>
+                            <Feedback openUrl="http://feedback.unleash.run" />
+                            <SplashPageRedirect />
+                        </LayoutPicker>
+                    </div>
+                }
+            />
         </SWRProvider>
     );
 };
-// Set state to any for now, to avoid typing up entire state object while converting to tsx.
-const mapStateToProps = (state: any) => ({
-    user: state.user.toJS(),
-    feedback: state.feedback,
-});
-
-export default connect(mapStateToProps)(App);

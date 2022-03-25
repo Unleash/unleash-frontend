@@ -1,48 +1,64 @@
-import CreateFeatureToggle from '../../page/features/create';
-import CopyFeatureToggle from '../../page/features/copy';
-import ViewFeatureToggle from '../../page/features/show';
-import Features from '../../page/features';
-import CreateStrategies from '../../page/strategies/create';
-import StrategyView from '../../page/strategies/show';
-import Strategies from '../../page/strategies';
-import HistoryPage from '../../page/history';
-import HistoryTogglePage from '../../page/history/toggle';
-import ShowArchive from '../../page/archive/show';
-import Archive from '../../page/archive';
-import Applications from '../../page/applications';
-import ApplicationView from '../../page/applications/view';
-import ContextFields from '../../page/context';
-import CreateContextField from '../../page/context/create';
-import EditContextField from '../../page/context/edit';
-import CreateProject from '../../page/project/create';
-import ListTagTypes from '../../page/tag-types';
-import CreateTagType from '../../page/tag-types/create';
-import EditTagType from '../../page/tag-types/edit';
-import ListTags from '../../page/tags';
-import CreateTag from '../../page/tags/create';
-import Addons from '../../page/addons';
-import AddonsCreate from '../../page/addons/create';
-import AddonsEdit from '../../page/addons/edit';
-import Admin from '../../page/admin';
-import AdminApi from '../../page/admin/api';
-import AdminUsers from '../../page/admin/users';
-import AdminInvoice from '../../page/admin/invoice';
-import AdminAuth from '../../page/admin/auth';
+import { FeatureToggleListContainer } from '../feature/FeatureToggleList/FeatureToggleListContainer';
+import { StrategyView } from '../strategies/StrategyView/StrategyView';
+import { StrategiesList } from '../strategies/StrategiesList/StrategiesList';
+import { ArchiveListContainer } from '../archive/ArchiveListContainer';
+import { TagTypeList } from '../tags/TagTypeList/TagTypeList';
+import { AddonList } from '../addons/AddonList/AddonList';
+import Admin from '../admin';
+import AdminApi from '../admin/api';
+import AdminInvoice from '../admin/invoice/InvoiceAdminPage';
+import AdminUsers from '../admin/users/UsersAdmin';
+import { AuthSettings } from '../admin/auth/AuthSettings';
 import Login from '../user/Login/Login';
-import { P, C, E, EEA } from '../common/flags';
-import NewUser from '../user/NewUser';
+import { C, E, EEA, P, RE, SE } from '../common/flags';
+import { NewUser } from '../user/NewUser/NewUser';
 import ResetPassword from '../user/ResetPassword/ResetPassword';
 import ForgottenPassword from '../user/ForgottenPassword/ForgottenPassword';
-import ProjectListNew from '../project/ProjectList/ProjectList';
+import { ProjectListNew } from '../project/ProjectList/ProjectList';
 import Project from '../project/Project/Project';
-import RedirectFeatureViewPage from '../../page/features/redirect';
-import RedirectArchive from '../feature/RedirectArchive/RedirectArchive';
+import RedirectArchive from '../archive/RedirectArchive';
 import EnvironmentList from '../environments/EnvironmentList/EnvironmentList';
+import { FeatureView } from '../feature/FeatureView/FeatureView';
+import ProjectRoles from '../admin/project-roles/ProjectRoles/ProjectRoles';
+import CreateProjectRole from '../admin/project-roles/CreateProjectRole/CreateProjectRole';
+import EditProjectRole from '../admin/project-roles/EditProjectRole/EditProjectRole';
+import CreateUser from '../admin/users/CreateUser/CreateUser';
+import EditUser from '../admin/users/EditUser/EditUser';
+import { CreateApiToken } from '../admin/api-token/CreateApiToken/CreateApiToken';
 import CreateEnvironment from '../environments/CreateEnvironment/CreateEnvironment';
-import FeatureView2 from '../feature/FeatureView2/FeatureView2';
-import FeatureCreate from '../feature/FeatureCreate/FeatureCreate';
+import EditEnvironment from '../environments/EditEnvironment/EditEnvironment';
+import { CreateContext } from '../context/CreateContext/CreateContext';
+import { EditContext } from '../context/EditContext/EditContext';
+import EditTagType from '../tags/EditTagType/EditTagType';
+import CreateTagType from '../tags/CreateTagType/CreateTagType';
+import EditProject from '../project/Project/EditProject/EditProject';
+import CreateProject from '../project/Project/CreateProject/CreateProject';
+import CreateFeature from '../feature/CreateFeature/CreateFeature';
+import EditFeature from '../feature/EditFeature/EditFeature';
+import { ApplicationEdit } from '../application/ApplicationEdit/ApplicationEdit';
+import { ApplicationList } from '../application/ApplicationList/ApplicationList';
+import ContextList from '../context/ContextList/ContextList';
+import RedirectFeatureView from '../feature/RedirectFeatureView/RedirectFeatureView';
+import { CreateAddon } from '../addons/CreateAddon/CreateAddon';
+import { EditAddon } from '../addons/EditAddon/EditAddon';
+import { CopyFeatureToggle } from '../feature/CopyFeature/CopyFeature';
+import { EventHistoryPage } from '../history/EventHistoryPage/EventHistoryPage';
+import { FeatureEventHistoryPage } from '../history/FeatureEventHistoryPage/FeatureEventHistoryPage';
+import { CreateStrategy } from '../strategies/CreateStrategy/CreateStrategy';
+import { EditStrategy } from '../strategies/EditStrategy/EditStrategy';
+import { SegmentsList } from '../segments/SegmentList/SegmentList';
+import { SplashPage } from '../splash/SplashPage/SplashPage';
 
 export const routes = [
+    // Splash
+    {
+        path: '/splash/:splashId',
+        title: 'Unleash',
+        component: SplashPage,
+        type: 'protected',
+        menu: {},
+    },
+
     // Project
     {
         path: '/projects/create',
@@ -50,7 +66,14 @@ export const routes = [
         title: 'Create',
         component: CreateProject,
         type: 'protected',
-        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:id/edit',
+        parent: '/projects',
+        title: ':id',
+        component: EditProject,
+        type: 'protected',
         menu: {},
     },
     {
@@ -59,7 +82,6 @@ export const routes = [
         parent: '/archive',
         component: RedirectArchive,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -68,25 +90,22 @@ export const routes = [
         title: 'Copy',
         component: CopyFeatureToggle,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
-        path: '/projects/:id/features2/:name/:activeTab/copy',
-        parent: '/projects/:id/features/:name/:activeTab',
-        title: 'Copy',
-        component: CopyFeatureToggle,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:projectId/features2/:featureId',
+        path: '/projects/:projectId/features/:featureId/edit',
         parent: '/projects',
-        title: 'FeatureView2',
-        component: FeatureView2,
+        title: 'Edit Feature',
+        component: EditFeature,
         type: 'protected',
-        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/projects/:projectId/features/:featureId',
+        parent: '/projects',
+        title: 'FeatureView',
+        component: FeatureView,
+        type: 'protected',
         flags: E,
         menu: {},
     },
@@ -94,36 +113,24 @@ export const routes = [
         path: '/projects/:id/features/:name/:activeTab',
         parent: '/projects',
         title: ':name',
-        component: ViewFeatureToggle,
+        component: FeatureView,
         type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/projects/:projectId/create-toggle2',
-        parent: '/projects/:id/features',
-        title: 'Create feature toggle',
-        component: FeatureCreate,
-        type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/projects/:projectId/create-toggle',
-        parent: '/projects',
-        title: 'Create',
-        component: CreateFeatureToggle,
+        parent: '/projects/:id/features',
+        title: 'Create feature toggle',
+        component: CreateFeature,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
-        path: '/projects/:projectId/features/:name',
+        path: '/projects/:projectId/features2/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -133,7 +140,6 @@ export const routes = [
         component: Project,
         flag: P,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -143,7 +149,6 @@ export const routes = [
         component: Project,
         flag: P,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -151,7 +156,6 @@ export const routes = [
         title: 'Projects',
         component: ProjectListNew,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true },
     },
 
@@ -160,17 +164,15 @@ export const routes = [
         path: '/features/:activeTab/:name',
         parent: '/features',
         title: ':name',
-        component: RedirectFeatureViewPage,
+        component: RedirectFeatureView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/features',
         title: 'Feature Toggles',
-        component: Features,
+        component: FeatureToggleListContainer,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true },
     },
 
@@ -179,17 +181,15 @@ export const routes = [
         path: '/applications/:name',
         title: ':name',
         parent: '/applications',
-        component: ApplicationView,
+        component: ApplicationEdit,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/applications',
         title: 'Applications',
-        component: Applications,
+        component: ApplicationList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -198,27 +198,26 @@ export const routes = [
         path: '/context/create',
         parent: '/context',
         title: 'Create',
-        component: CreateContextField,
+        component: CreateContext,
         type: 'protected',
-        layout: 'main',
+        flag: C,
         menu: {},
     },
     {
         path: '/context/edit/:name',
         parent: '/context',
         title: ':name',
-        component: EditContextField,
+        component: EditContext,
         type: 'protected',
-        layout: 'main',
+        flag: C,
         menu: {},
     },
     {
         path: '/context',
         title: 'Context Fields',
-        component: ContextFields,
+        component: ContextList,
         type: 'protected',
         flag: C,
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
 
@@ -227,26 +226,31 @@ export const routes = [
         path: '/strategies/create',
         title: 'Create',
         parent: '/strategies',
-        component: CreateStrategies,
+        component: CreateStrategy,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
-        path: '/strategies/:activeTab/:strategyName',
-        title: ':strategyName',
+        path: '/strategies/:name/edit',
+        title: ':name',
+        parent: '/strategies',
+        component: EditStrategy,
+        type: 'protected',
+        menu: {},
+    },
+    {
+        path: '/strategies/:name',
+        title: ':name',
         parent: '/strategies',
         component: StrategyView,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/strategies',
         title: 'Strategies',
-        component: Strategies,
+        component: StrategiesList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
     {
@@ -255,7 +259,13 @@ export const routes = [
         component: CreateEnvironment,
         parent: '/environments',
         type: 'protected',
-        layout: 'main',
+        menu: {},
+    },
+    {
+        path: '/environments/:id',
+        title: 'Edit',
+        component: EditEnvironment,
+        type: 'protected',
         menu: {},
     },
     {
@@ -263,7 +273,6 @@ export const routes = [
         title: 'Environments',
         component: EnvironmentList,
         type: 'protected',
-        layout: 'main',
         flag: EEA,
         menu: { mobile: true, advanced: true },
     },
@@ -275,7 +284,6 @@ export const routes = [
         title: 'Create',
         component: CreateTagType,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
@@ -284,63 +292,52 @@ export const routes = [
         title: ':name',
         component: EditTagType,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/tag-types',
         title: 'Tag types',
-        component: ListTagTypes,
+        component: TagTypeList,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
-    },
-    {
-        path: '/tags/create',
-        parent: '/tags',
-        title: 'Create',
-        component: CreateTag,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
-        path: '/tags',
-        title: 'Tags',
-        component: ListTags,
-        hidden: true,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
     },
 
     // Addons
     {
-        path: '/addons/create/:provider',
+        path: '/addons/create/:providerId',
         parent: '/addons',
         title: 'Create',
-        component: AddonsCreate,
+        component: CreateAddon,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
-        path: '/addons/edit/:id',
+        path: '/addons/edit/:addonId',
         parent: '/addons',
         title: 'Edit',
-        component: AddonsEdit,
+        component: EditAddon,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/addons',
         title: 'Addons',
-        component: Addons,
+        component: AddonList,
         hidden: false,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
+    },
+
+    // Segments
+
+    {
+        path: '/segments',
+        title: 'Segments',
+        component: SegmentsList,
+        hidden: false,
+        type: 'protected',
+        menu: { mobile: true, advanced: true },
+        flag: SE,
     },
 
     // History
@@ -348,47 +345,66 @@ export const routes = [
         path: '/history/:toggleName',
         title: ':toggleName',
         parent: '/history',
-        component: HistoryTogglePage,
+        component: FeatureEventHistoryPage,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
     {
         path: '/history',
         title: 'Event History',
-        component: HistoryPage,
+        component: EventHistoryPage,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
 
     // Archive
     {
-        path: '/projects/:id/archived/:name/:activeTab',
-        title: ':name',
-        parent: '/archive',
-        component: ShowArchive,
-        type: 'protected',
-        layout: 'main',
-        menu: {},
-    },
-    {
         path: '/archive',
         title: 'Archived Toggles',
-        component: Archive,
+        component: ArchiveListContainer,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
 
     // Admin
+    {
+        path: '/admin/api/create-token',
+        parent: '/admin',
+        title: 'API access',
+        component: CreateApiToken,
+        type: 'protected',
+        menu: {},
+    },
+    {
+        path: '/admin/create-project-role',
+        title: 'Create',
+        component: CreateProjectRole,
+        type: 'protected',
+        menu: {},
+        flag: RE,
+    },
+    {
+        path: '/admin/roles/:id/edit',
+        title: 'Edit',
+        component: EditProjectRole,
+        type: 'protected',
+        menu: {},
+        flag: RE,
+    },
+    {
+        path: '/admin/users/:id/edit',
+        title: 'Edit',
+        component: EditUser,
+        type: 'protected',
+        menu: {},
+        hidden: true,
+    },
     {
         path: '/admin/api',
         parent: '/admin',
         title: 'API access',
         component: AdminApi,
         type: 'protected',
-        layout: 'main',
         menu: { mobile: true, advanced: true },
     },
     {
@@ -397,16 +413,22 @@ export const routes = [
         title: 'Users',
         component: AdminUsers,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
+    },
+    {
+        path: '/admin/create-user',
+        parent: '/admin',
+        title: 'Users',
+        component: CreateUser,
+        type: 'protected',
+        menu: {},
     },
     {
         path: '/admin/auth',
         parent: '/admin',
         title: 'Single Sign-On',
-        component: AdminAuth,
+        component: AuthSettings,
         type: 'protected',
-        layout: 'main',
         menu: { adminSettings: true },
     },
     {
@@ -415,7 +437,15 @@ export const routes = [
         component: AdminInvoice,
         hidden: true,
         type: 'protected',
-        layout: 'main',
+        menu: { adminSettings: true },
+    },
+    {
+        path: '/admin/roles',
+        parent: '/admin',
+        title: 'Project Roles',
+        component: ProjectRoles,
+        type: 'protected',
+        flag: RE,
         menu: { adminSettings: true },
     },
     {
@@ -424,43 +454,43 @@ export const routes = [
         component: Admin,
         hidden: false,
         type: 'protected',
-        layout: 'main',
         menu: {},
     },
+
+    /* If you update this route path, make sure you update the path in SWRProvider.tsx */
     {
         path: '/login',
         title: 'Log in',
         component: Login,
         type: 'unprotected',
         hidden: true,
-        layout: 'standalone',
         menu: {},
     },
+    /* If you update this route path, make sure you update the path in SWRProvider.tsx */
     {
         path: '/new-user',
         title: 'New user',
         hidden: true,
         component: NewUser,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
+    /* If you update this route path, make sure you update the path in SWRProvider.tsx */
     {
         path: '/reset-password',
-        title: 'reset-password',
+        title: 'Reset password',
         hidden: true,
         component: ResetPassword,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
+    /* If you update this route path, make sure you update the path in SWRProvider.tsx */
     {
         path: '/forgotten-password',
-        title: 'reset-password',
+        title: 'Forgotten password',
         hidden: true,
         component: ForgottenPassword,
         type: 'unprotected',
-        layout: 'standalone',
         menu: {},
     },
 ];

@@ -8,7 +8,6 @@ import { useCommonStyles } from '../../../../common.styles';
 import useUiConfig from '../../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from '../../../common/PercentageCircle/PercentageCircle';
 import PermissionIconButton from '../../../common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from '../../../../store/project/actions';
 import ConditionallyRender from '../../../common/ConditionallyRender';
 import {
     Accordion,
@@ -16,13 +15,14 @@ import {
     AccordionDetails,
     AccordionSummary,
 } from '@material-ui/core';
+import { UPDATE_PROJECT } from '../../../providers/AccessProvider/permissions';
 
 interface IProjectInfoProps {
     id: string;
     memberCount: number;
     featureCount: number;
     health: number;
-    description: string;
+    description?: string;
 }
 
 const ProjectInfo = ({
@@ -42,20 +42,21 @@ const ProjectInfo = ({
     }
 
     const LONG_DESCRIPTION = 100;
+    const isShortDescription =
+        !description || description.length < LONG_DESCRIPTION;
 
     const permissionButtonClass = classnames({
-        [styles.permissionButtonShortDesc]:
-            description.length < LONG_DESCRIPTION,
+        [styles.permissionButtonShortDesc]: isShortDescription,
     });
     const permissionButton = (
         <PermissionIconButton
             permission={UPDATE_PROJECT}
-            tooltip={'Edit description'}
             projectId={id}
+            // @ts-expect-error
             component={Link}
             className={permissionButtonClass}
             data-loading
-            to={`/projects/${id}/settings`}
+            to={`/projects/${id}/edit`}
         >
             <Edit />
         </PermissionIconButton>
@@ -70,9 +71,7 @@ const ProjectInfo = ({
                             condition={Boolean(description)}
                             show={
                                 <ConditionallyRender
-                                    condition={
-                                        description.length < LONG_DESCRIPTION
-                                    }
+                                    condition={isShortDescription}
                                     show={
                                         <p
                                             data-loading
@@ -113,7 +112,7 @@ const ProjectInfo = ({
                             }
                         />
                         <ConditionallyRender
-                            condition={description.length < LONG_DESCRIPTION}
+                            condition={isShortDescription}
                             show={permissionButton}
                         />
                     </div>

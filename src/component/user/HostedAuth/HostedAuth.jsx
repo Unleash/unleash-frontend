@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
@@ -9,12 +9,22 @@ import useQueryParams from '../../../hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from '../../common/DividerText/DividerText';
 import ConditionallyRender from '../../common/ConditionallyRender';
+import PasswordField from '../../common/PasswordField/PasswordField';
+import { useAuthApi } from '../../../hooks/api/actions/useAuthApi/useAuthApi';
+import { useAuthUser } from '../../../hooks/api/getters/useAuth/useAuthUser';
+import {
+    LOGIN_BUTTON,
+    LOGIN_EMAIL_ID,
+    LOGIN_PASSWORD_ID,
+} from '../../../testIds';
 
-const HostedAuth = ({ authDetails, passwordLogin }) => {
+const HostedAuth = ({ authDetails, redirect }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
+    const { refetchUser } = useAuthUser();
     const history = useHistory();
     const params = useQueryParams();
+    const { passwordAuth } = useAuthApi();
     const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({
@@ -42,12 +52,10 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
             return;
         }
 
-        const user = { username, password };
-        const path = evt.target.action;
-
         try {
-            await passwordLogin(path, user);
-            history.push(`/`);
+            await passwordAuth(authDetails.path, username, password);
+            refetchUser();
+            history.push(redirect);
         } catch (error) {
             if (error.statusCode === 404 || error.statusCode === 400) {
                 setErrors(prev => ({
@@ -80,9 +88,9 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
             />
 
             <ConditionallyRender
-                condition={!authDetails.disableDefault}
+                condition={!authDetails.defaultHidden}
                 show={
-                    <form onSubmit={handleSubmit} action={authDetails.path}>
+                    <form onSubmit={handleSubmit}>
                         <Typography
                             variant="subtitle2"
                             className={styles.apiError}
@@ -105,17 +113,16 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
                                 helperText={usernameError}
                                 variant="outlined"
                                 size="small"
+                                data-test={LOGIN_EMAIL_ID}
                             />
-                            <TextField
+                            <PasswordField
                                 label="Password"
                                 onChange={evt => setPassword(evt.target.value)}
                                 name="password"
-                                type="password"
                                 value={password}
                                 error={!!passwordError}
                                 helperText={passwordError}
-                                variant="outlined"
-                                size="small"
+                                data-test={LOGIN_PASSWORD_ID}
                             />
                             <Grid container>
                                 <Button
@@ -123,6 +130,7 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
                                     color="primary"
                                     type="submit"
                                     className={styles.button}
+                                    data-test={LOGIN_BUTTON}
                                 >
                                     Sign in
                                 </Button>
@@ -137,8 +145,7 @@ const HostedAuth = ({ authDetails, passwordLogin }) => {
 
 HostedAuth.propTypes = {
     authDetails: PropTypes.object.isRequired,
-    passwordLogin: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    redirect: PropTypes.string.isRequired,
 };
 
 export default HostedAuth;

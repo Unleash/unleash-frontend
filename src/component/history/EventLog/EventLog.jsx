@@ -1,33 +1,27 @@
 import { List, Switch, FormControlLabel } from '@material-ui/core';
 import PropTypes from 'prop-types';
-
-import { formatFullDateTimeWithLocale } from '../../common/util';
-
 import EventJson from './EventJson/EventJson';
 import PageContent from '../../common/PageContent/PageContent';
 import HeaderTitle from '../../common/HeaderTitle';
 import EventCard from './EventCard/EventCard';
-
 import { useStyles } from './EventLog.styles.js';
+import { formatDateYMDHMS } from '../../../utils/format-date';
 
 const EventLog = ({
-    updateSetting,
     title,
     history,
-    settings,
+    eventSettings,
+    setEventSettings,
+    locationSettings,
     displayInline,
-    location,
-    hideName,
 }) => {
     const styles = useStyles();
     const toggleShowDiff = () => {
-        updateSetting('showData', !settings.showData);
+        setEventSettings({ showData: !eventSettings.showData });
     };
     const formatFulldateTime = v => {
-        return formatFullDateTimeWithLocale(v, location.locale);
+        return formatDateYMDHMS(v, locationSettings.locale);
     };
-
-    const showData = settings.showData;
 
     if (!history || history.length < 0) {
         return null;
@@ -44,7 +38,7 @@ const EventLog = ({
         </div>
     );
 
-    if (showData) {
+    if (eventSettings.showData) {
         entries = history.map(entry => (
             <EventJson key={`log${entry.id}`} entry={entry} />
         ));
@@ -63,7 +57,7 @@ const EventLog = ({
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={showData}
+                                    checked={eventSettings.showData}
                                     onChange={toggleShowDiff}
                                     color="primary"
                                 />
@@ -82,12 +76,12 @@ const EventLog = ({
 };
 
 EventLog.propTypes = {
-    updateSettings: PropTypes.func,
+    history: PropTypes.array,
+    eventSettings: PropTypes.object.isRequired,
+    setEventSettings: PropTypes.func.isRequired,
+    locationSettings: PropTypes.object.isRequired,
     title: PropTypes.string,
-    settings: PropTypes.object,
     displayInline: PropTypes.bool,
-    location: PropTypes.object,
-    hideName: PropTypes.bool,
 };
 
 export default EventLog;

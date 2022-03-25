@@ -1,13 +1,11 @@
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
-
-import StrategiesListComponent from '../StrategiesList/StrategiesList';
+import { StrategiesList } from '../StrategiesList/StrategiesList';
 import renderer from 'react-test-renderer';
 import theme from '../../../themes/main-theme';
 import AccessProvider from '../../providers/AccessProvider/AccessProvider';
-import { createFakeStore } from '../../../accessStoreFake';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
+import UIProvider from '../../providers/UIProvider/UIProvider';
 
 test('renders correctly with one strategy', () => {
     const strategy = {
@@ -17,16 +15,17 @@ test('renders correctly with one strategy', () => {
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
-                <AccessProvider store={createFakeStore()}>
-                    <StrategiesListComponent
-                        strategies={[strategy]}
-                        fetchStrategies={jest.fn()}
-                        removeStrategy={jest.fn()}
-                        deprecateStrategy={jest.fn()}
-                        reactivateStrategy={jest.fn()}
-                        history={{}}
-                    />
-                </AccessProvider>
+                <UIProvider>
+                    <AccessProvider permissions={[{ permission: ADMIN }]}>
+                        <StrategiesList
+                            strategies={[strategy]}
+                            fetchStrategies={jest.fn()}
+                            removeStrategy={jest.fn()}
+                            deprecateStrategy={jest.fn()}
+                            reactivateStrategy={jest.fn()}
+                        />
+                    </AccessProvider>
+                </UIProvider>
             </ThemeProvider>
         </MemoryRouter>
     );
@@ -42,18 +41,17 @@ test('renders correctly with one strategy without permissions', () => {
     const tree = renderer.create(
         <MemoryRouter>
             <ThemeProvider theme={theme}>
-                <AccessProvider
-                    store={createFakeStore([{ permission: ADMIN }])}
-                >
-                    <StrategiesListComponent
-                        strategies={[strategy]}
-                        fetchStrategies={jest.fn()}
-                        removeStrategy={jest.fn()}
-                        deprecateStrategy={jest.fn()}
-                        reactivateStrategy={jest.fn()}
-                        history={{}}
-                    />
-                </AccessProvider>
+                <UIProvider>
+                    <AccessProvider permissions={[{ permission: ADMIN }]}>
+                        <StrategiesList
+                            strategies={[strategy]}
+                            fetchStrategies={jest.fn()}
+                            removeStrategy={jest.fn()}
+                            deprecateStrategy={jest.fn()}
+                            reactivateStrategy={jest.fn()}
+                        />
+                    </AccessProvider>
+                </UIProvider>
             </ThemeProvider>
         </MemoryRouter>
     );

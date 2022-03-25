@@ -11,14 +11,27 @@ export const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '0.1rem 0.5rem',
-        border: `1px solid ${theme.palette.grey[300]}`,
-        borderRadius: '5px',
         fontSize: theme.fontSizes.smallBody,
         backgroundColor: theme.palette.grey[200],
         margin: '0.5rem 0',
+        position: 'relative',
+        borderRadius: '5px',
+    },
+    constraintBtn: {
+        color: theme.palette.primary.main,
+        fontWeight: 'normal',
+        marginBottom: '0.5rem',
+    },
+    btnContainer: {
+        position: 'absolute',
+        top: '6px',
+        right: 0,
     },
     column: {
         flexDirection: 'column',
     },
-    values: { marginLeft: '1.5rem' },
+    values: {
+        marginLeft: '1.5rem',
+        whiteSpace: 'pre-wrap',
+    },
 }));
