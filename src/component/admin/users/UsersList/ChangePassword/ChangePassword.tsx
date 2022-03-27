@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classnames from 'classnames';
 import { Avatar, TextField, Typography } from '@material-ui/core';
 import { trim } from 'component/common/util';
-import { modalStyles } from '../../util';
+import { modalStyles } from 'component/admin/users/util';
 import Dialogue from 'component/common/Dialogue/Dialogue';
 import PasswordChecker from 'component/user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
 import { useCommonStyles } from 'common.styles';

@@ -5,8 +5,8 @@ import useToggleFeatureByEnv from 'hooks/api/actions/useToggleFeatureByEnv/useTo
 import { IEnvironments } from 'interfaces/featureToggle';
 import useToast from 'hooks/useToast';
 import { getTogglePath } from 'utils/routePathHelpers';
-import FeatureStatus from '../../FeatureView/FeatureStatus/FeatureStatus';
-import FeatureType from '../../FeatureView/FeatureType/FeatureType';
+import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
+import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import classNames from 'classnames';
 import CreatedAt from './CreatedAt';
 import useProject from 'hooks/api/getters/useProject/useProject';

@@ -12,7 +12,7 @@ import {
     IProjectEnvironmentPermissions,
 } from 'interfaces/project';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
-import { ICheckedPermission } from '../../hooks/useProjectRoleForm';
+import { ICheckedPermission } from 'component/admin/projectRoles/hooks/useProjectRoleForm';
 import { useStyles } from './EnvironmentPermissionAccordion.styles';
 
 type PermissionMap = { [key: string]: boolean };

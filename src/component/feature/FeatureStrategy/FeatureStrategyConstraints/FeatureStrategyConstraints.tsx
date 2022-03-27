@@ -2,7 +2,7 @@ import { IConstraint, IFeatureStrategy } from 'interfaces/strategy';
 import Constraint from 'component/common/Constraint/Constraint';
 import Dialogue from 'component/common/Dialogue/Dialogue';
 import React, { useState } from 'react';
-import StrategyConstraints from '../../StrategyConstraints/StrategyConstraints';
+import StrategyConstraints from 'component/feature/StrategyConstraints/StrategyConstraints';
 import { List, ListItem } from '@material-ui/core';
 import produce from 'immer';
 import {
