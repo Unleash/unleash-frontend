@@ -25,7 +25,7 @@ const EditProject = () => {
         setProjectDesc,
         getProjectPayload,
         clearErrors,
-        validateIdUniqueness,
+        validateProjectId,
         validateName,
         errors,
     } = useProjectForm(id, project.name, project.description);
@@ -87,7 +87,7 @@ const EditProject = () => {
                 setProjectDesc={setProjectDesc}
                 mode="Edit"
                 clearErrors={clearErrors}
-                validateIdUniqueness={validateIdUniqueness}
+                validateProjectId={validateProjectId}
             >
                 <UpdateButton permission={UPDATE_PROJECT} />
             </ProjectForm>

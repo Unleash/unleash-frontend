@@ -16,7 +16,7 @@ interface IProjectForm {
     errors: { [key: string]: string };
     mode: 'Create' | 'Edit';
     clearErrors: () => void;
-    validateIdUniqueness: () => void;
+    validateProjectId: () => void;
 }
 
 const ProjectForm: React.FC<IProjectForm> = ({
@@ -31,7 +31,7 @@ const ProjectForm: React.FC<IProjectForm> = ({
     setProjectDesc,
     errors,
     mode,
-    validateIdUniqueness,
+    validateProjectId,
     clearErrors,
 }) => {
     const styles = useStyles();
@@ -44,15 +44,16 @@ const ProjectForm: React.FC<IProjectForm> = ({
                 </p>
                 <Input
                     className={styles.input}
-                    label="Project Id*"
+                    label="Project Id"
                     value={projectId}
                     onChange={e => setProjectId(trim(e.target.value))}
                     error={Boolean(errors.id)}
                     errorText={errors.id}
                     onFocus={() => clearErrors()}
-                    onBlur={validateIdUniqueness}
+                    onBlur={validateProjectId}
                     disabled={mode === 'Edit'}
                     autoFocus
+                    required
                 />
 
                 <p className={styles.inputDescription}>
@@ -60,12 +61,13 @@ const ProjectForm: React.FC<IProjectForm> = ({
                 </p>
                 <Input
                     className={styles.input}
-                    label="Project name*"
+                    label="Project name"
                     value={projectName}
                     onChange={e => setProjectName(e.target.value)}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
+                    required
                 />
 
                 <p className={styles.inputDescription}>
