@@ -9,7 +9,7 @@ import {
     UPDATE_FEATURE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
 import { useWeakMap } from 'hooks/useWeakMap';
-import { objectId } from 'utils/object-id';
+import { objectId } from 'utils/objectId';
 import { useStyles } from './ConstraintAccordionList.styles';
 import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 import ConditionallyRender from 'component/common/ConditionallyRender';

@@ -21,7 +21,7 @@ import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { CREATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import { ISegment } from 'interfaces/segment';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
-import { formatStrategyName } from 'utils/strategy-names';
+import { formatStrategyName } from 'utils/strategyNames';
 
 export const FeatureStrategyCreate = () => {
     const projectId = useRequiredPathParam('projectId');

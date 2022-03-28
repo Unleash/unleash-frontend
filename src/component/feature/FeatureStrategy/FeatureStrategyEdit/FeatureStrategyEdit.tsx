@@ -14,7 +14,7 @@ import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/perm
 import { ISegment } from 'interfaces/segment';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
-import { formatStrategyName } from 'utils/strategy-names';
+import { formatStrategyName } from 'utils/strategyNames';
 
 export const FeatureStrategyEdit = () => {
     const projectId = useRequiredPathParam('projectId');

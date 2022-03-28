@@ -5,7 +5,7 @@ import { ISegment } from 'interfaces/segment';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { Link } from 'react-router-dom';
 import { formatEditStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
-import { formatStrategyName } from 'utils/strategy-names';
+import { formatStrategyName } from 'utils/strategyNames';
 
 interface ISegmentDeleteUsedSegmentProps {
     segment: ISegment;

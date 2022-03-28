@@ -1,7 +1,7 @@
 import { dateOperators } from 'constants/operators';
 import { IConstraint } from 'interfaces/strategy';
-import { oneOf } from 'utils/one-of';
-import { operatorsForContext } from 'utils/operator-utils';
+import { oneOf } from 'utils/oneOf';
+import { operatorsForContext } from 'utils/operatorUtils';
 
 export const createEmptyConstraint = (contextName: string): IConstraint => {
     const operator = operatorsForContext(contextName)[0];
