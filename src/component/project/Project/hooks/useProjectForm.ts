@@ -47,6 +47,11 @@ const useProjectForm = (
                     ...prev,
                     id: 'A project with this id already exists',
                 }));
+            } else {
+                setErrors(prev => ({
+                    ...prev,
+                    id: e.toString(),
+                }));
             }
             return false;
         }

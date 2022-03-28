@@ -44,7 +44,7 @@ const ProjectForm: React.FC<IProjectForm> = ({
                 </p>
                 <Input
                     className={styles.input}
-                    label="Project Id"
+                    label="Project Id*"
                     value={projectId}
                     onChange={e => setProjectId(trim(e.target.value))}
                     error={Boolean(errors.id)}
@@ -60,7 +60,7 @@ const ProjectForm: React.FC<IProjectForm> = ({
                 </p>
                 <Input
                     className={styles.input}
-                    label="Project name"
+                    label="Project name*"
                     value={projectName}
                     onChange={e => setProjectName(e.target.value)}
                     error={Boolean(errors.name)}
