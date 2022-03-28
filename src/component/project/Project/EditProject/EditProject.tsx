@@ -27,7 +27,6 @@ const EditProject = () => {
         clearErrors,
         validateIdUniqueness,
         validateName,
-        validateProjectId,
         errors,
     } = useProjectForm(id, project.name, project.description);
 
@@ -48,9 +47,8 @@ const EditProject = () => {
         const payload = getProjectPayload();
 
         const validName = validateName();
-        const validId = validateProjectId();
 
-        if (validName && validId) {
+        if (validName) {
             try {
                 await editProject(id, payload);
                 refetch();

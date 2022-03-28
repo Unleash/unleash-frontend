@@ -57,14 +57,6 @@ const useProjectForm = (
         }
     };
 
-    const validateProjectId = () => {
-        if (projectId.length === 0) {
-            setErrors(prev => ({ ...prev, id: 'id can not be empty.' }));
-            return false;
-        }
-        return true;
-    };
-
     const validateName = () => {
         if (projectName.length === 0) {
             setErrors(prev => ({ ...prev, name: 'Name can not be empty.' }));
@@ -87,7 +79,6 @@ const useProjectForm = (
         setProjectDesc,
         getProjectPayload,
         validateName,
-        validateProjectId,
         validateIdUniqueness,
         clearErrors,
         errors,
