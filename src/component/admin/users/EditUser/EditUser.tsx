@@ -1,7 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom';
 import UserForm from '../UserForm/UserForm';
 import useAddUserForm from '../hooks/useAddUserForm';
-import { scrollToTop } from '../../../common/util';
+import { scrollToTop } from 'component/common/util';
 import { useEffect } from 'react';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
@@ -11,7 +11,7 @@ import useAdminUsersApi from 'hooks/api/actions/useAdminUsersApi/useAdminUsersAp
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useUserInfo from 'hooks/api/getters/useUserInfo/useUserInfo';
 import useToast from 'hooks/useToast';
-import { formatUnknownError } from 'utils/format-unknown-error';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 const EditUser = () => {
     useEffect(() => {

@@ -4,16 +4,16 @@ import {
     AccordionDetails,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { IConstraint } from '../../../../interfaces/strategy';
+import { IConstraint } from 'interfaces/strategy';
 
 import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/ConstraintAccordionViewBody';
 import { ConstraintAccordionViewHeader } from './ConstraintAccordionViewHeader/ConstraintAccordionViewHeader';
-import { oneOf } from '../../../../utils/one-of';
+import { oneOf } from 'utils/oneOf';
 import {
     dateOperators,
     numOperators,
     semVerOperators,
-} from '../../../../constants/operators';
+} from 'constants/operators';
 
 import { useStyles } from '../ConstraintAccordion.styles';
 interface IConstraintAccordionViewProps {

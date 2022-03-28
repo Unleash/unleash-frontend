@@ -5,15 +5,15 @@ import {
     NOT_FOUND,
     OK,
     UNAUTHORIZED,
-} from '../../../../constants/statusCodes';
+} from 'constants/statusCodes';
 import {
     AuthenticationError,
     BadRequestError,
     ForbiddenError,
     headers,
     NotFoundError,
-} from '../../../../utils/api-utils';
-import { formatApiPath } from '../../../../utils/format-path';
+} from 'utils/apiUtils';
+import { formatApiPath } from 'utils/formatPath';
 
 type ApiErrorHandler = (
     setErrors: Dispatch<SetStateAction<{}>>,

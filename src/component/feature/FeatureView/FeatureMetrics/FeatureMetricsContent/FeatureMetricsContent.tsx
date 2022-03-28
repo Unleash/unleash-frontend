@@ -1,10 +1,10 @@
 import { FeatureMetricsTable } from '../FeatureMetricsTable/FeatureMetricsTable';
-import { IFeatureMetricsRaw } from '../../../../../interfaces/featureToggle';
+import { IFeatureMetricsRaw } from 'interfaces/featureToggle';
 import { FeatureMetricsStatsRaw } from '../FeatureMetricsStats/FeatureMetricsStatsRaw';
 import { FeatureMetricsChart } from '../FeatureMetricsChart/FeatureMetricsChart';
 import { FeatureMetricsEmpty } from '../FeatureMetricsEmpty/FeatureMetricsEmpty';
 import { Box } from '@material-ui/core';
-import theme from '../../../../../themes/main-theme';
+import theme from 'themes/mainTheme';
 
 interface IFeatureMetricsContentProps {
     metrics: IFeatureMetricsRaw[];

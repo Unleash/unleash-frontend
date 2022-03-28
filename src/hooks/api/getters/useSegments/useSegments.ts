@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { useCallback } from 'react';
-import { formatApiPath } from 'utils/format-path';
+import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import { ISegment } from 'interfaces/segment';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';

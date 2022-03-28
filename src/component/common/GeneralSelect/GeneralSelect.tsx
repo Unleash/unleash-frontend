@@ -1,12 +1,13 @@
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { SELECT_ITEM_ID } from '../../../testIds';
+import { SELECT_ITEM_ID } from 'testIds';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 
 export interface ISelectOption {
     key: string;
     title?: string;
     label?: string;
+    disabled?: boolean;
 }
 
 export interface ISelectMenuProps {
@@ -52,6 +53,7 @@ const GeneralSelect: React.FC<ISelectMenuProps> = ({
                 value={option.key}
                 title={option.title || ''}
                 data-test={`${SELECT_ITEM_ID}-${option.label}`}
+                disabled={option.disabled}
             >
                 {option.label}
             </MenuItem>

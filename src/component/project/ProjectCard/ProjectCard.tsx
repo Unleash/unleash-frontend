@@ -1,18 +1,18 @@
 import { Card, Menu, MenuItem } from '@material-ui/core';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { ReactComponent as ProjectIcon } from '../../../assets/icons/projectIcon.svg';
+import { ReactComponent as ProjectIcon } from 'assets/icons/projectIcon.svg';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Dialogue from 'component/common/Dialogue';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@material-ui/icons';
-import { getProjectEditPath } from 'utils/route-path-helpers';
+import { getProjectEditPath } from 'utils/routePathHelpers';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import useToast from 'hooks/useToast';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { formatUnknownError } from 'utils/format-unknown-error';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 interface IProjectCardProps {
     name: string;

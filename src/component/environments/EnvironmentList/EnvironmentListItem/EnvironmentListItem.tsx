@@ -12,19 +12,19 @@ import {
     Edit,
     OfflineBolt,
 } from '@material-ui/icons';
-import ConditionallyRender from '../../../common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 
-import { IEnvironment } from '../../../../interfaces/environments';
+import { IEnvironment } from 'interfaces/environments';
 import React, { useContext, useRef } from 'react';
-import AccessContext from '../../../../contexts/AccessContext';
+import AccessContext from 'contexts/AccessContext';
 import {
     DELETE_ENVIRONMENT,
     UPDATE_ENVIRONMENT,
-} from '../../../providers/AccessProvider/permissions';
+} from 'component/providers/AccessProvider/permissions';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import DisabledIndicator from '../../../common/DisabledIndicator/DisabledIndicator';
-import StringTruncator from '../../../common/StringTruncator/StringTruncator';
+import DisabledIndicator from 'component/common/DisabledIndicator/DisabledIndicator';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useHistory } from 'react-router-dom';
 
 interface IEnvironmentListItemProps {
@@ -152,9 +152,11 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title="Drag to reorder">
-                        <IconButton>
-                            <DragIndicator />
-                        </IconButton>
+                        <div>
+                            <IconButton>
+                                <DragIndicator titleAccess="Drag" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -162,15 +164,16 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title={`${tooltipText} environment`}>
-                        <IconButton
-                            aria-label="disable"
-                            onClick={() => {
-                                setSelectedEnv(env);
-                                setToggleDialog(prev => !prev);
-                            }}
-                        >
-                            <OfflineBolt />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                onClick={() => {
+                                    setSelectedEnv(env);
+                                    setToggleDialog(prev => !prev);
+                                }}
+                            >
+                                <OfflineBolt titleAccess="Toggle" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -178,15 +181,16 @@ const EnvironmentListItem = ({
                 condition={updatePermission}
                 show={
                     <Tooltip title="Update environment">
-                        <IconButton
-                            aria-label="update"
-                            disabled={env.protected}
-                            onClick={() => {
-                                history.push(`/environments/${env.name}`);
-                            }}
-                        >
-                            <Edit />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                disabled={env.protected}
+                                onClick={() => {
+                                    history.push(`/environments/${env.name}`);
+                                }}
+                            >
+                                <Edit titleAccess="Edit" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />
@@ -194,16 +198,17 @@ const EnvironmentListItem = ({
                 condition={hasAccess(DELETE_ENVIRONMENT)}
                 show={
                     <Tooltip title="Delete environment">
-                        <IconButton
-                            aria-label="delete"
-                            disabled={env.protected}
-                            onClick={() => {
-                                setDeldialogue(true);
-                                setSelectedEnv(env);
-                            }}
-                        >
-                            <Delete />
-                        </IconButton>
+                        <div>
+                            <IconButton
+                                disabled={env.protected}
+                                onClick={() => {
+                                    setDeldialogue(true);
+                                    setSelectedEnv(env);
+                                }}
+                            >
+                                <Delete titleAccess="Delete" />
+                            </IconButton>
+                        </div>
                     </Tooltip>
                 }
             />

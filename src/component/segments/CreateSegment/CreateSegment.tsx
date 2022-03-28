@@ -8,7 +8,7 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { formatUnknownError } from 'utils/format-unknown-error';
+import { formatUnknownError } from 'utils/formatUnknownError';
 import { useSegmentForm } from '../hooks/useSegmentForm';
 import { SegmentForm } from '../SegmentForm/SegmentForm';
 

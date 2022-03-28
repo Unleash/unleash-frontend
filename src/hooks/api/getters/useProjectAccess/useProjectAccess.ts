@@ -1,8 +1,8 @@
 import useSWR, { mutate, SWRConfiguration } from 'swr';
 import { useState, useEffect } from 'react';
-import { formatApiPath } from '../../../../utils/format-path';
+import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
-import { IProjectRole } from '../../../../interfaces/role';
+import { IProjectRole } from 'interfaces/role';
 
 export interface IProjectAccessUser {
     id: number;

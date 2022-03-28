@@ -1,8 +1,8 @@
 import useSWR, { mutate, SWRConfiguration } from 'swr';
 import { useState, useEffect } from 'react';
 
-import { formatApiPath } from '../../../../utils/format-path';
-import { IEnvironment } from '../../../../interfaces/environments';
+import { formatApiPath } from 'utils/formatPath';
+import { IEnvironment } from 'interfaces/environments';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import { defaultEnvironment } from './defaultEnvironment';
 

@@ -2,30 +2,27 @@ import React from 'react';
 import { Checkbox } from '@material-ui/core';
 import UnfoldMoreOutlinedIcon from '@material-ui/icons/UnfoldMoreOutlined';
 import PropTypes from 'prop-types';
-
-import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
-
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     NAME,
     LAST_SEEN,
     CREATED,
     EXPIRED,
     STATUS,
-    REPORT,
-} from '../../constants';
-
-import styles from '../ReportToggleList.module.scss';
+} from 'component/Reporting/constants';
+import { useStyles } from '../ReportToggleList.styles';
 
 const ReportToggleListHeader = ({
     handleCheckAll,
     checkAll,
-    setSortData,
+    setSort,
     bulkActionsOn,
 }) => {
+    const styles = useStyles();
     const handleSort = type => {
-        setSortData(prev => ({
-            sortKey: type,
-            ascending: !prev.ascending,
+        setSort(prev => ({
+            type,
+            desc: !prev.desc,
         }));
     };
 
@@ -94,7 +91,7 @@ const ReportToggleListHeader = ({
                 <th
                     role="button"
                     tabIndex={0}
-                    onClick={() => handleSort(REPORT)}
+                    onClick={() => handleSort(EXPIRED)}
                 >
                     Report
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -106,7 +103,7 @@ const ReportToggleListHeader = ({
 
 ReportToggleListHeader.propTypes = {
     checkAll: PropTypes.bool.isRequired,
-    setSortData: PropTypes.func.isRequired,
+    setSort: PropTypes.func.isRequired,
     bulkActionsOn: PropTypes.bool.isRequired,
     handleCheckAll: PropTypes.func.isRequired,
 };

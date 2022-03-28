@@ -1,5 +1,5 @@
 import { useHistory, useParams } from 'react-router-dom';
-import { UPDATE_TAG_TYPE } from '../../providers/AccessProvider/permissions';
+import { UPDATE_TAG_TYPE } from 'component/providers/AccessProvider/permissions';
 import useTagTypeForm from '../TagTypeForm/useTagTypeForm';
 import TagForm from '../TagTypeForm/TagTypeForm';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
@@ -8,7 +8,7 @@ import useTagType from 'hooks/api/getters/useTagType/useTagType';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
-import { formatUnknownError } from 'utils/format-unknown-error';
+import { formatUnknownError } from 'utils/formatUnknownError';
 const EditTagType = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();

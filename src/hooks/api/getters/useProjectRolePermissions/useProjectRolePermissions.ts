@@ -1,12 +1,12 @@
 import useSWR, { mutate, SWRConfiguration } from 'swr';
 import { useState, useEffect } from 'react';
-import { formatApiPath } from '../../../../utils/format-path';
+import { formatApiPath } from 'utils/formatPath';
 
 import {
     IProjectEnvironmentPermissions,
     IProjectRolePermissions,
     IPermission,
-} from '../../../../interfaces/project';
+} from 'interfaces/project';
 import handleErrorResponses from '../httpErrorResponseHandler';
 
 interface IUseProjectRolePermissions {

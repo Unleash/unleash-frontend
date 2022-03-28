@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, FormControlLabel, Grid, Switch } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import PageContent from '../../../common/PageContent/PageContent';
-import AccessContext from '../../../../contexts/AccessContext';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
-import useAuthSettings from '../../../../hooks/api/getters/useAuthSettings/useAuthSettings';
+import PageContent from 'component/common/PageContent/PageContent';
+import AccessContext from 'contexts/AccessContext';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import useAuthSettings from 'hooks/api/getters/useAuthSettings/useAuthSettings';
 import useAuthSettingsApi, {
     ISimpleAuthSettings,
-} from '../../../../hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
-import useToast from '../../../../hooks/useToast';
-import { formatUnknownError } from '../../../../utils/format-unknown-error';
+} from 'hooks/api/actions/useAuthSettingsApi/useAuthSettingsApi';
+import useToast from 'hooks/useToast';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 export const PasswordAuth = () => {
     const { setToastData, setToastApiError } = useToast();

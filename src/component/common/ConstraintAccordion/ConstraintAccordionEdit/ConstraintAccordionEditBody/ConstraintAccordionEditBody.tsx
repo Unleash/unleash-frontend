@@ -1,5 +1,5 @@
 import { Button, FormControlLabel, Switch } from '@material-ui/core';
-import { IConstraint } from '../../../../../interfaces/strategy';
+import { IConstraint } from 'interfaces/strategy';
 import { CANCEL } from '../ConstraintAccordionEdit';
 
 import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeader';
@@ -7,7 +7,7 @@ import { useStyles } from './ConstraintAccordionEditBody.styles';
 import React from 'react';
 import { newOperators } from 'constants/operators';
 import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
-import { oneOf } from 'utils/one-of';
+import { oneOf } from 'utils/oneOf';
 import { OperatorUpgradeAlert } from 'component/common/OperatorUpgradeAlert/OperatorUpgradeAlert';
 
 interface IConstraintAccordionBody {

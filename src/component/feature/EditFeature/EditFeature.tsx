@@ -1,4 +1,4 @@
-import FormTemplate from '../../common/FormTemplate/FormTemplate';
+import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { useHistory, useParams } from 'react-router-dom';
 import FeatureForm from '../FeatureForm/FeatureForm';
 import useFeatureForm from '../hooks/useFeatureForm';
@@ -10,7 +10,7 @@ import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { IFeatureViewParams } from 'interfaces/params';
-import { formatUnknownError } from 'utils/format-unknown-error';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 const EditFeature = () => {
     const { setToastData, setToastApiError } = useToast();

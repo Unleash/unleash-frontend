@@ -2,15 +2,15 @@ import { useContext, useState } from 'react';
 import { Button, IconButton } from '@material-ui/core';
 import classnames from 'classnames';
 import CloseIcon from '@material-ui/icons/Close';
-import { ReactComponent as Logo } from '../../../assets/icons/logo-plain.svg';
-import { useCommonStyles } from '../../../common.styles';
+import { ReactComponent as Logo } from 'assets/icons/logoPlain.svg';
+import { useCommonStyles } from 'common.styles';
 import { useStyles } from './Feedback.styles';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from '../ConditionallyRender';
-import { formatApiPath } from '../../../utils/format-path';
-import UIContext from '../../../contexts/UIContext';
+import { formatApiPath } from 'utils/formatPath';
+import UIContext from 'contexts/UIContext';
 import { PNPS_FEEDBACK_ID, showPnpsFeedback } from '../util';
-import { useAuthFeedback } from '../../../hooks/api/getters/useAuth/useAuthFeedback';
+import { useAuthFeedback } from 'hooks/api/getters/useAuth/useAuthFeedback';
 
 interface IFeedbackProps {
     openUrl: string;

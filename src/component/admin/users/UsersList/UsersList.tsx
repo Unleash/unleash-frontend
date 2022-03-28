@@ -9,24 +9,26 @@ import {
 } from '@material-ui/core';
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
-import ConditionallyRender from '../../../common/ConditionallyRender/ConditionallyRender';
-import AccessContext from '../../../../contexts/AccessContext';
-import { ADMIN } from '../../../providers/AccessProvider/permissions';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import AccessContext from 'contexts/AccessContext';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
-import useUsers from '../../../../hooks/api/getters/useUsers/useUsers';
-import useAdminUsersApi from '../../../../hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
+import useUsers from 'hooks/api/getters/useUsers/useUsers';
+import useAdminUsersApi from 'hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 import UserListItem from './UserListItem/UserListItem';
 import loadingData from './loadingData';
-import useLoading from '../../../../hooks/useLoading';
-import usePagination from '../../../../hooks/usePagination';
-import PaginateUI from '../../../common/PaginateUI/PaginateUI';
-import { IUser } from '../../../../interfaces/user';
-import IRole from '../../../../interfaces/role';
-import useToast from '../../../../hooks/useToast';
-import { useLocationSettings } from '../../../../hooks/useLocationSettings';
-import { formatUnknownError } from '../../../../utils/format-unknown-error';
+import useLoading from 'hooks/useLoading';
+import usePagination from 'hooks/usePagination';
+import PaginateUI from 'component/common/PaginateUI/PaginateUI';
+import { IUser } from 'interfaces/user';
+import IRole from 'interfaces/role';
+import useToast from 'hooks/useToast';
+import { useLocationSettings } from 'hooks/useLocationSettings';
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { useStyles } from './UserListItem/UserListItem.styles';
 
 const UsersList = () => {
+    const styles = useStyles();
     const { users, roles, refetch, loading } = useUsers();
     const { setToastData, setToastApiError } = useToast();
     const {
@@ -133,13 +135,17 @@ const UsersList = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Created</TableCell>
+                        <TableCell className={styles.hideXS}></TableCell>
+                        <TableCell className={styles.hideSM}>Created</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Username</TableCell>
-                        <TableCell align="center">Role</TableCell>
+                        <TableCell className={styles.hideSM}>
+                            Username
+                        </TableCell>
+                        <TableCell align="center" className={styles.hideXS}>
+                            Role
+                        </TableCell>
                         <TableCell align="right">
-                            {hasAccess(ADMIN) ? 'Action' : ''}
+                            {hasAccess(ADMIN) ? 'Actions' : ''}
                         </TableCell>
                     </TableRow>
                 </TableHead>
