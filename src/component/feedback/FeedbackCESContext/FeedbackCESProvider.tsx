@@ -21,17 +21,11 @@ interface IFeedbackProviderProps {
 
 export const FeedbackCESProvider = ({ children }: IFeedbackProviderProps) => {
     const [state, setState] = useState<IFeedbackCESState>();
-    const [seen, setSeen] = useFeedbackCESSeen();
+    const { isSeen, setSeen } = useFeedbackCESSeen();
     const enabled = useFeedbackCESEnabled();
 
-    // Store new feedback paths as seen in localStorage.
     useEffect(() => {
-        if (state) {
-            setSeen(prev => ({
-                ...prev,
-                [state.path]: true,
-            }));
-        }
+        state && setSeen(state);
     }, [state, setSeen]);
 
     // Set a new feedback state iff the path is unseen and CES is enabled.
@@ -39,10 +33,10 @@ export const FeedbackCESProvider = ({ children }: IFeedbackProviderProps) => {
         value => {
             setState(prev => {
                 const next = value instanceof Function ? value(prev) : value;
-                return !next || seen[next.path] || !enabled ? undefined : next;
+                return !enabled || !next || isSeen(next) ? undefined : next;
             });
         },
-        [enabled, seen]
+        [enabled, isSeen]
     );
 
     const hideFeedbackCES = useCallback(() => {

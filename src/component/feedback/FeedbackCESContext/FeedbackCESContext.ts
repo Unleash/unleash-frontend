@@ -10,7 +10,7 @@ export interface IFeedbackCESContext {
 }
 
 export interface IFeedbackCESState {
-    path: string;
+    path: `/${string}`;
     title: string;
     text: string;
 }
