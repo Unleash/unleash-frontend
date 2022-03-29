@@ -1,7 +1,7 @@
 import { IFeedbackCESForm } from 'component/feedback/FeedbackCES/FeedbackCESForm';
 
 interface IFeedbackEndpointRequestBody {
-    source?: 'docs' | 'app' | 'app:segments';
+    source: 'app' | 'app:segments';
     data: {
         score: number;
         comment?: string;
