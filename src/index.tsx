@@ -9,7 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StylesProvider } from '@material-ui/core/styles';
 import mainTheme from 'themes/mainTheme';
 import { App } from 'component/App';
-import ScrollToTop from 'component/scrollToTop';
+import { ScrollTop } from 'component/common/ScrollTop/ScrollTop';
 import AccessProvider from 'component/providers/AccessProvider/AccessProvider';
 import { getBasePath } from 'utils/formatPath';
 import { FeedbackCESProvider } from 'component/feedback/FeedbackCESContext/FeedbackCESProvider';
@@ -24,9 +24,8 @@ ReactDOM.render(
                         <StylesProvider injectFirst>
                             <FeedbackCESProvider>
                                 <CssBaseline />
-                                <ScrollToTop>
-                                    <Route path="/" component={App} />
-                                </ScrollToTop>
+                                <ScrollTop />
+                                <Route path="/" component={App} />
                             </FeedbackCESProvider>
                         </StylesProvider>
                     </ThemeProvider>
