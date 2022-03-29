@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import './app.css';
+import 'themes/app.css';
 
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
