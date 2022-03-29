@@ -30,7 +30,6 @@ export const FeedbackCESScore = ({ form, setForm }: IFeedbackCESScoreProps) => {
                         name="score"
                         value={score}
                         checked={form.score === score}
-                        className="screen-reader-only"
                         onChange={onScoreChange}
                     />
                     <span>{score}</span>

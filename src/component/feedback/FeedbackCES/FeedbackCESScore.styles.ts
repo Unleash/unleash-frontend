@@ -20,9 +20,13 @@ export const useStyles = makeStyles(theme => ({
     },
     scoreValue: {
         '& input': {
-            width: 0,
-            height: 0,
-            opacity: 0,
+            clip: 'rect(0 0 0 0)',
+            clipPath: 'inset(50%)',
+            overflow: 'hidden',
+            position: 'absolute',
+            whiteSpace: 'nowrap',
+            width: 1,
+            height: 1,
         },
         '& span': {
             display: 'grid',
