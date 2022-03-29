@@ -30,7 +30,6 @@ export const FeedbackCES = ({ state }: IFeedbackCESProps) => {
         <Modal
             open={Boolean(state)}
             onClose={hideFeedbackCES}
-            disableEscapeKeyDown
             aria-label={state?.title}
         >
             <div className={styles.overlay}>
