@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import classnames from 'classnames';
-import { useCommonStyles } from 'common.styles';
+import { useCommonStyles } from 'themes/commonStyles';
 import { ReactComponent as GoogleSvg } from 'assets/icons/google.svg';
 import LockRounded from '@material-ui/icons/LockRounded';
 import ConditionallyRender from 'component/common/ConditionallyRender';

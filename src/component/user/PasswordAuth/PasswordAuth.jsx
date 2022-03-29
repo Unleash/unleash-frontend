@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import { useHistory } from 'react-router';
-import { useCommonStyles } from 'common.styles';
+import { useCommonStyles } from 'themes/commonStyles';
 import { useStyles } from './PasswordAuth.styles';
 import useQueryParams from 'hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';

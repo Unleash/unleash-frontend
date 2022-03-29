@@ -6,7 +6,7 @@ import { Delete } from '@material-ui/icons';
 
 import InputListField from 'component/common/InputListField';
 import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useCommonStyles } from 'common.styles';
+import { useCommonStyles } from 'themes/commonStyles';
 import { useStyles } from './StrategyConstraintInputField.styles';
 import { CONSTRAINT_AUTOCOMPLETE_ID } from 'testIds';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';

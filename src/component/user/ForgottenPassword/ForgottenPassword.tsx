@@ -3,7 +3,7 @@ import { AlertTitle, Alert } from '@material-ui/lab';
 import classnames from 'classnames';
 import { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useCommonStyles } from 'common.styles';
+import { useCommonStyles } from 'themes/commonStyles';
 import useLoading from 'hooks/useLoading';
 import { FORGOTTEN_PASSWORD_FIELD } from 'testIds';
 import { formatApiPath } from 'utils/formatPath';

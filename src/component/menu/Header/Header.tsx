@@ -13,7 +13,7 @@ import { ReactComponent as UnleashLogo } from 'assets/img/logoDarkWithText.svg';
 
 import { useStyles } from './Header.styles';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { useCommonStyles } from 'common.styles';
+import { useCommonStyles } from 'themes/commonStyles';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { IPermission } from 'interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
