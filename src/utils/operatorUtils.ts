@@ -21,3 +21,25 @@ export const operatorsForContext = (contextName: string): Operator[] => {
         return true;
     });
 };
+
+export const formatOperatorName = (operator: Operator): string => {
+    return formattedOperators[operator] ?? operator;
+};
+
+const formattedOperators: Record<string, string> = {
+    NOT_IN: 'NOT INCLUDE',
+    IN: 'INCLUDE',
+    STR_ENDS_WITH: 'STRING ENDS WITH',
+    STR_STARTS_WITH: 'NOT INCLUDE',
+    STR_CONTAINS: 'NOT INCLUDE',
+    NUM_EQ: 'NOT INCLUDE',
+    NUM_GT: 'NOT INCLUDE',
+    NUM_GTE: 'NOT INCLUDE',
+    NUM_LT: 'NOT INCLUDE',
+    NUM_LTE: 'NOT INCLUDE',
+    DATE_AFTER: 'NOT INCLUDE',
+    DATE_BEFORE: 'NOT INCLUDE',
+    SEMVER_EQ: 'NOT INCLUDE',
+    SEMVER_GT: 'NOT INCLUDE',
+    SEMVER_LT: 'NOT INCLUDE',
+};

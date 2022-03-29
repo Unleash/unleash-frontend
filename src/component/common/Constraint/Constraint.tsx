@@ -13,6 +13,7 @@ import StringTruncator from '../StringTruncator/StringTruncator';
 import { useStyles } from './Constraint.styles';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatConstraintValuesOrValue } from 'component/common/Constraint/formatConstraintValue';
+import { formatOperatorName } from 'utils/operatorUtils';
 
 interface IConstraintProps {
     constraint: IConstraint;
@@ -55,7 +56,10 @@ const Constraint = ({
                     maxWidth="125"
                     maxLength={25}
                 />
-                <StrategySeparator text={constraint.operator} maxWidth="none" />
+                <StrategySeparator
+                    text={formatOperatorName(constraint.operator)}
+                    maxWidth="none"
+                />
                 <span className={styles.values}>
                     {formatConstraintValuesOrValue(
                         constraint,
