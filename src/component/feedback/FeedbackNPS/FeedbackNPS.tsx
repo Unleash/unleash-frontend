@@ -8,7 +8,10 @@ import { useStyles } from 'component/feedback/FeedbackNPS/FeedbackNPS.styles';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import UIContext from 'contexts/UIContext';
-import { PNPS_FEEDBACK_ID, showPnpsFeedback } from './showPnpsFeedback';
+import {
+    PNPS_FEEDBACK_ID,
+    showNPSFeedback,
+} from 'component/feedback/FeedbackNPS/showNPSFeedback';
 import { useAuthFeedback } from 'hooks/api/getters/useAuth/useAuthFeedback';
 import { useAuthFeedbackApi } from 'hooks/api/actions/useAuthFeedbackApi/useAuthFeedbackApi';
 
@@ -51,7 +54,7 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
         }, 100);
     };
 
-    if (!showPnpsFeedback(feedback)) {
+    if (!showNPSFeedback(feedback)) {
         return null;
     }
 
