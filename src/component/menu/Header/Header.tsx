@@ -17,7 +17,7 @@ import { useCommonStyles } from 'themes/commonStyles';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { IPermission } from 'interfaces/user';
 import NavigationMenu from './NavigationMenu/NavigationMenu';
-import { getRoutes } from '../routes';
+import { getRoutes } from 'component/menu/routes';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { filterByFlags } from 'component/common/util';
 import { useAuthPermissions } from 'hooks/api/getters/useAuth/useAuthPermissions';

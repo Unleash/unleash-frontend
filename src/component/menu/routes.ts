@@ -50,8 +50,27 @@ import { CreateUnleashContextPage } from 'component/context/CreateUnleashContext
 import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
+import { FunctionComponent } from 'react';
 
-export const routes = [
+interface Route {
+    path: string;
+    title: string;
+    type: string;
+    layout?: string;
+    parent?: string;
+    flag?: string;
+    flags?: string;
+    hidden?: Boolean;
+    component: FunctionComponent;
+
+    menu: {
+        mobile?: boolean;
+        advanced?: boolean;
+        adminSettings?: boolean;
+    };
+}
+
+export const routes: Route[] = [
     // Splash
     {
         path: '/splash/:splashId',
@@ -516,7 +535,8 @@ export const routes = [
     },
 ];
 
-export const getRoute = path => routes.find(route => route.path === path);
+export const getRoute = (path: string) =>
+    routes.find(route => route.path === path);
 
 export const baseRoutes = routes.filter(route => !route.hidden);
 
