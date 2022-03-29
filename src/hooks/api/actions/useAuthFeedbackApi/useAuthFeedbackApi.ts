@@ -1,15 +1,11 @@
 import { formatApiPath } from 'utils/formatPath';
 import { useCallback } from 'react';
 import { useAuthFeedback } from 'hooks/api/getters/useAuth/useAuthFeedback';
-
-interface IFeedback {
-    feedbackId: string;
-    neverShow?: boolean;
-}
+import { IAuthFeedback } from 'hooks/api/getters/useAuth/useAuthEndpoint';
 
 interface IUseAuthFeedbackApi {
-    createFeedback: (feedback: IFeedback) => Promise<void>;
-    updateFeedback: (feedback: IFeedback) => Promise<void>;
+    createFeedback: (feedback: IAuthFeedback) => Promise<void>;
+    updateFeedback: (feedback: IAuthFeedback) => Promise<void>;
 }
 
 export const useAuthFeedbackApi = (): IUseAuthFeedbackApi => {
@@ -17,7 +13,7 @@ export const useAuthFeedbackApi = (): IUseAuthFeedbackApi => {
     const path = formatApiPath('api/admin/feedback');
 
     const createFeedback = useCallback(
-        async (feedback: IFeedback): Promise<void> => {
+        async (feedback: IAuthFeedback): Promise<void> => {
             await sendFeedback('POST', path, feedback);
             await refetchFeedback();
         },
@@ -25,7 +21,7 @@ export const useAuthFeedbackApi = (): IUseAuthFeedbackApi => {
     );
 
     const updateFeedback = useCallback(
-        async (feedback: IFeedback): Promise<void> => {
+        async (feedback: IAuthFeedback): Promise<void> => {
             const pathWithId = `${path}/${feedback.feedbackId}`;
             await sendFeedback('PUT', pathWithId, feedback);
             await refetchFeedback();
@@ -42,7 +38,7 @@ export const useAuthFeedbackApi = (): IUseAuthFeedbackApi => {
 const sendFeedback = async (
     method: 'PUT' | 'POST',
     path: string,
-    feedback: IFeedback
+    feedback: IAuthFeedback
 ): Promise<void> => {
     await fetch(path, {
         method,
