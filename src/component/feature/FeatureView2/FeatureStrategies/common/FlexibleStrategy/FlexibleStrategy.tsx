@@ -42,7 +42,7 @@ const FlexibleStrategy = ({
         e: React.ChangeEvent<{}>,
         value: number | number[]
     ) => {
-        updateParameter('rollout', value);
+        updateParameter('rollout', value.toString());
     };
 
     const resolveStickiness = () =>
@@ -65,7 +65,7 @@ const FlexibleStrategy = ({
         <div>
             <RolloutSlider
                 name="Rollout"
-                value={1 * rollout}
+                value={parseInt(rollout)}
                 onChange={updateRollout}
             />
 
