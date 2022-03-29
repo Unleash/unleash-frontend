@@ -150,3 +150,12 @@ p {
         --drawer-padding: 0.75rem 1.25rem;
     }
 }
+
+.screen-reader-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
