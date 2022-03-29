@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { INVALID_TOKEN_BUTTON } from 'testIds';
+import { INVALID_TOKEN_BUTTON } from 'utils/testIds';
 import { useCommonStyles } from 'themes/commonStyles';
 import classnames from 'classnames';
 

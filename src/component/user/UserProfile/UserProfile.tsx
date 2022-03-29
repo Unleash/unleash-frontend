@@ -7,7 +7,7 @@ import { useCommonStyles } from 'themes/commonStyles';
 import UserProfileContent from './UserProfileContent/UserProfileContent';
 import { IUser } from 'interfaces/user';
 import { ILocationSettings } from 'hooks/useLocationSettings';
-import { HEADER_USER_AVATAR } from 'testIds';
+import { HEADER_USER_AVATAR } from 'utils/testIds';
 
 interface IUserProfileProps {
     profile: IUser;

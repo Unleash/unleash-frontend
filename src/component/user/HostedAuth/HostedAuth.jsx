@@ -12,7 +12,7 @@ import ConditionallyRender from 'component/common/ConditionallyRender';
 import PasswordField from 'component/common/PasswordField/PasswordField';
 import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
-import { LOGIN_BUTTON, LOGIN_EMAIL_ID, LOGIN_PASSWORD_ID } from 'testIds';
+import { LOGIN_BUTTON, LOGIN_EMAIL_ID, LOGIN_PASSWORD_ID } from 'utils/testIds';
 
 const HostedAuth = ({ authDetails, redirect }) => {
     const commonStyles = useCommonStyles();
