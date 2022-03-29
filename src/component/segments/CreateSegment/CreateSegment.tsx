@@ -58,6 +58,7 @@ export const CreateSegment = () => {
             });
             showFeedbackCES({
                 title: 'How easy was it to create a segment?',
+                text: 'Please help us understand how we can improve segments',
                 path: '/segments/create',
             });
         } catch (error: unknown) {

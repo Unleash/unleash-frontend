@@ -58,7 +58,7 @@ export const FeedbackCESForm = ({ state, onClose }: IFeedbackCESFormProps) => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Please help us to improve:</h1>
+            <h1 className={styles.title}>Please help us improve</h1>
             <form
                 className={styles.form}
                 onSubmit={onSubmit}
@@ -68,8 +68,7 @@ export const FeedbackCESForm = ({ state, onClose }: IFeedbackCESFormProps) => {
                 <FeedbackCESScore form={form} setForm={setForm} />
                 <div hidden={!form.score}>
                     <label htmlFor="comment" className={styles.textLabel}>
-                        Anything you would like to add? We appreciate any
-                        feedback.
+                        {state.text}
                     </label>
                     <TextField
                         value={form.comment ?? ''}

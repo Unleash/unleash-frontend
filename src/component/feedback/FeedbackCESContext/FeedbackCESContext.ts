@@ -12,6 +12,7 @@ export interface IFeedbackCESContext {
 export interface IFeedbackCESState {
     path: string;
     title: string;
+    text: string;
 }
 
 const showFeedbackCESPlaceholder = () => {
