@@ -4,19 +4,19 @@ import classnames from 'classnames';
 import CloseIcon from '@material-ui/icons/Close';
 import { ReactComponent as Logo } from 'assets/icons/logoPlain.svg';
 import { useCommonStyles } from 'common.styles';
-import { useStyles } from './Feedback.styles';
-import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
-import ConditionallyRender from '../ConditionallyRender';
+import { useStyles } from 'component/feedback/FeedbackNPS/FeedbackNPS.styles';
+import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 import { formatApiPath } from 'utils/formatPath';
 import UIContext from 'contexts/UIContext';
-import { PNPS_FEEDBACK_ID, showPnpsFeedback } from '../util';
+import { PNPS_FEEDBACK_ID, showPnpsFeedback } from './showPnpsFeedback';
 import { useAuthFeedback } from 'hooks/api/getters/useAuth/useAuthFeedback';
 
-interface IFeedbackProps {
+interface IFeedbackNPSProps {
     openUrl: string;
 }
 
-const Feedback = ({ openUrl }: IFeedbackProps) => {
+export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
     const { showFeedback, setShowFeedback } = useContext(UIContext);
     const { feedback, refetchFeedback } = useAuthFeedback();
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
@@ -152,5 +152,3 @@ const Feedback = ({ openUrl }: IFeedbackProps) => {
         </AnimateOnMount>
     );
 };
-
-export default Feedback;
