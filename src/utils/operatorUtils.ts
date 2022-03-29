@@ -26,7 +26,7 @@ export const formatOperatorName = (operator: Operator): string => {
     return formattedOperators[operator] ?? operator;
 };
 
-const formattedOperators: Record<string, string> = {
+const formattedOperators: Record<Operator, string> = {
     NOT_IN: 'NOT INCLUDE',
     IN: 'INCLUDE',
     STR_ENDS_WITH: 'STRING ENDS WITH',
