@@ -12,7 +12,6 @@ export const FeedbackCESScore = ({ form, setForm }: IFeedbackCESScoreProps) => {
     const styles = useStyles();
 
     const onScoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.persist();
         setForm(
             produce(draft => {
                 draft.score = Number(event.target.value);

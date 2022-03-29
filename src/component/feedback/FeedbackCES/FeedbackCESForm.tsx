@@ -28,7 +28,6 @@ export const FeedbackCESForm = ({ state, onClose }: IFeedbackCESFormProps) => {
     });
 
     const onCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        event.persist();
         setForm(
             produce(draft => {
                 draft.comment = event.target.value;
