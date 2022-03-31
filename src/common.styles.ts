@@ -24,14 +24,14 @@ export const useCommonStyles = makeStyles(theme => ({
     },
     divider: {
         margin: '1rem 0',
-        //@ts-expect-error
+        // @ts-expect-error
         backgroundColor: theme.palette.division.main,
         height: '3px',
         width: '100%',
     },
     largeDivider: {
         margin: '2rem 0',
-        //@ts-expect-error
+        // @ts-expect-error
         backgroundColor: theme.palette.division.main,
         height: '3px',
         width: '100%',
