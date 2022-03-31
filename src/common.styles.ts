@@ -114,7 +114,7 @@ export const useCommonStyles = makeStyles(theme => ({
         right: '40px',
         top: '40px',
         transform: 'translateY(-400px)',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             right: 20,
             left: 10,
             top: 40,
