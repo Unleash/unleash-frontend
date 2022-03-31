@@ -10,7 +10,7 @@ import AdminInvoice from 'component/admin/invoice/InvoiceAdminPage';
 import AdminUsers from 'component/admin/users/UsersAdmin';
 import { AuthSettings } from 'component/admin/auth/AuthSettings';
 import Login from 'component/user/Login/Login';
-import { C, E, EEA, P, RE, SE } from 'component/common/flags';
+import { C, EEA, P, RE, SE } from 'component/common/flags';
 import { NewUser } from 'component/user/NewUser/NewUser';
 import ResetPassword from 'component/user/ResetPassword/ResetPassword';
 import ForgottenPassword from 'component/user/ForgottenPassword/ForgottenPassword';
@@ -59,7 +59,6 @@ interface Route {
     layout?: string;
     parent?: string;
     flag?: string;
-    flags?: string;
     hidden?: Boolean;
     component: FunctionComponent;
 
@@ -127,7 +126,6 @@ export const routes: Route[] = [
         title: 'FeatureView',
         component: FeatureView,
         type: 'protected',
-        flags: E,
         menu: {},
     },
     {
