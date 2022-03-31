@@ -14,11 +14,8 @@ export const ScrollTop = (): null => {
 };
 
 const noScrollPaths = [
-    '/features/metrics',
-    '/features/variants',
-    '/features/strategies',
-    '/logs',
     '/admin/api',
     '/admin/users',
     '/admin/auth',
+    '/admin/roles',
 ];
