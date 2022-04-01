@@ -39,7 +39,6 @@ const FeatureOverviewExecution = ({
                 return (
                     <Fragment key={`${constraint.contextName}-${index}`}>
                         <Constraint constraint={constraint} />
-
                         <StrategySeparator text="AND" />
                     </Fragment>
                 );
@@ -62,7 +61,7 @@ const FeatureOverviewExecution = ({
                 case 'Rollout':
                     return (
                         <Fragment key={key}>
-                            <p className={styles.text}>
+                            <p>
                                 {parameters[key]}% of your base{' '}
                                 {constraints.length > 0
                                     ? 'who match constraints'
@@ -145,7 +144,7 @@ const FeatureOverviewExecution = ({
                 case 'percentage':
                     return (
                         <Fragment key={param?.name}>
-                            <p className={styles.text}>
+                            <p>
                                 {strategy?.parameters[param.name]}% of your base{' '}
                                 {constraints?.length > 0
                                     ? 'who match constraints'
@@ -165,7 +164,7 @@ const FeatureOverviewExecution = ({
                 case 'boolean':
                     return (
                         <Fragment key={param.name}>
-                            <p className={styles.text} key={param.name}>
+                            <p key={param.name}>
                                 <StringTruncator
                                     maxLength={15}
                                     maxWidth="150"
@@ -192,7 +191,7 @@ const FeatureOverviewExecution = ({
                             key={param.name}
                             show={
                                 <>
-                                    <p className={styles.text}>
+                                    <p>
                                         <StringTruncator
                                             maxWidth="150"
                                             maxLength={15}
@@ -216,7 +215,7 @@ const FeatureOverviewExecution = ({
                             key={param.name}
                             show={
                                 <>
-                                    <p className={styles.text}>
+                                    <p>
                                         <StringTruncator
                                             maxLength={15}
                                             maxWidth="150"

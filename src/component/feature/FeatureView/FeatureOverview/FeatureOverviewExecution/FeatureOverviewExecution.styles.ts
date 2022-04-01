@@ -29,10 +29,4 @@ export const useStyles = makeStyles(theme => ({
         overflow: 'hidden',
         maxWidth: '50%',
     },
-    text: {
-        textAlign: 'center',
-        margin: '0.2rem 0 0.5rem',
-        display: 'flex',
-        alignItems: 'center',
-    },
 }));
