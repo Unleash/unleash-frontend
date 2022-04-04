@@ -11,7 +11,7 @@ import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/perm
 import { useParams } from 'react-router-dom';
 import { IFeatureViewParams } from 'interfaces/params';
 import React from 'react';
-import { formatConstraintValue } from 'component/common/Constraint/formatConstraintValue';
+import { formatConstraintValue } from 'utils/formatConstraintValue';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { ConstraintOperator } from 'component/common/ConstraintAccordion/ConstraintOperator/ConstraintOperator';
 

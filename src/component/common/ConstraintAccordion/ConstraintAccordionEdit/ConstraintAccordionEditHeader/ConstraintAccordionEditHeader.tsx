@@ -16,7 +16,7 @@ import { ConstraintOperatorSelect } from 'component/common/ConstraintAccordion/C
 import {
     operatorsForContext,
     CURRENT_TIME_CONTEXT_FIELD,
-} from 'utils/operatorUtils';
+} from 'utils/operatorsForContext';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
