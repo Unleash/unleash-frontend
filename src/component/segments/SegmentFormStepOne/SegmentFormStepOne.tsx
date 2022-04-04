@@ -41,7 +41,6 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     onChange={e => setName(e.target.value)}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
-                    onFocus={() => clearErrors()}
                     autoFocus
                     required
                 />
@@ -55,7 +54,6 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     onChange={e => setDescription(e.target.value)}
                     error={Boolean(errors.description)}
                     errorText={errors.description}
-                    onFocus={() => clearErrors()}
                 />
             </div>
             <div className={styles.buttonContainer}>
@@ -64,7 +62,7 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     variant="contained"
                     color="primary"
                     onClick={() => setCurrentStep(2)}
-                    disabled={name.length === 0}
+                    disabled={name.length === 0 || Boolean(errors.name)}
                 >
                     Next
                 </Button>
