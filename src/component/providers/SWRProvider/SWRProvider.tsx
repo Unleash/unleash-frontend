@@ -30,10 +30,10 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
             }
 
             if (
-                path === formatApiPath('login') ||
-                path === formatApiPath('new-user') ||
-                path === formatApiPath('reset-password') ||
-                path === formatApiPath('forgotten-password')
+                path === formatApiPath('/login') ||
+                path === formatApiPath('/new-user') ||
+                path === formatApiPath('/reset-password') ||
+                path === formatApiPath('/forgotten-password')
             ) {
                 return;
             }

@@ -37,7 +37,7 @@ export const formatApiPath = (path: string) => {
     if (basePath) {
         return `${basePath}/${path}`;
     }
-    return `/${path}`;
+    return path;
 };
 
 export const formatAssetPath = (path: string) => {
