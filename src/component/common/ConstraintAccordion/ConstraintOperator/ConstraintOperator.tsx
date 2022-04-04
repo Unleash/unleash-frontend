@@ -1,5 +1,5 @@
 import { IConstraint } from 'interfaces/strategy';
-import { formatConstraintOperator } from 'component/common/ConstraintAccordion/ConstraintOperator/formatConstraintOperator';
+import { formatOperatorDescription } from 'component/common/ConstraintAccordion/ConstraintOperator/formatOperatorDescription';
 import { useStyles } from 'component/common/ConstraintAccordion/ConstraintOperator/ConstraintOperator.styles';
 
 interface IConstraintOperatorProps {
@@ -12,7 +12,7 @@ export const ConstraintOperator = ({
     const styles = useStyles();
 
     const operatorName = constraint.operator;
-    const operatorText = formatConstraintOperator(constraint.operator);
+    const operatorText = formatOperatorDescription(constraint.operator);
 
     const notLabel = constraint.inverted && (
         <div className={styles.not}>
