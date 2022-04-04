@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select, SelectProps } from '@material-ui/core';
 import { SELECT_ITEM_ID } from 'utils/testIds';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 
@@ -10,18 +10,13 @@ export interface ISelectOption {
     disabled?: boolean;
 }
 
-export interface ISelectMenuProps {
-    name: string;
-    id: string;
+export interface ISelectMenuProps extends SelectProps {
     value?: string;
     label?: string;
-    autoFocus?: boolean;
     options: ISelectOption[];
-    style?: object;
     onChange?: OnGeneralSelectChange;
     disabled?: boolean;
     fullWidth?: boolean;
-    className?: string;
     classes?: any;
     defaultValue?: string;
 }
@@ -37,10 +32,8 @@ const GeneralSelect: React.FC<ISelectMenuProps> = ({
     label = '',
     options,
     onChange,
-    defaultValue,
     id,
     disabled = false,
-    autoFocus,
     className,
     classes,
     fullWidth,
@@ -68,13 +61,11 @@ const GeneralSelect: React.FC<ISelectMenuProps> = ({
         >
             <InputLabel htmlFor={id}>{label}</InputLabel>
             <Select
-                defaultValue={defaultValue}
                 name={name}
                 disabled={disabled}
                 onChange={onChange}
                 className={className}
                 label={label}
-                autoFocus={autoFocus}
                 id={id}
                 value={value}
                 IconComponent={KeyboardArrowDownOutlined}
