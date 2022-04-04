@@ -36,10 +36,12 @@ export const useStyles = makeStyles(theme => ({
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
         backgroundColor: '#fff',
+        boxShadow: 'none',
         margin: 0,
-
-        ['&:before']: {
-            height: 0,
+    },
+    accordionRoot: {
+        '&:before': {
+            opacity: '0 !important',
         },
     },
     accordionEdit: {
