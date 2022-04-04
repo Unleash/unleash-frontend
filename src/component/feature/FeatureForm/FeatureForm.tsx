@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { useStyles } from './FeatureForm.styles';
 import FeatureTypeSelect from '../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
-import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from 'testIds';
+import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from 'utils/testIds';
 import useFeatureTypes from 'hooks/api/getters/useFeatureTypes/useFeatureTypes';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import { projectFilterGenerator } from 'utils/projectFilterGenerator';
@@ -140,7 +140,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     data-test={CF_DESC_ID}
                     onChange={e => setDescription(e.target.value)}
                 />
-                <FormControl>
+                <FormControl className={styles.input}>
                     <Typography
                         variant="subtitle1"
                         className={styles.roleSubtitle}
