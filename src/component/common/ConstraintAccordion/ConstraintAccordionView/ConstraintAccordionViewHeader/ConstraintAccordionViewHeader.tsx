@@ -13,6 +13,7 @@ import { IFeatureViewParams } from 'interfaces/params';
 import React from 'react';
 import { formatConstraintValue } from 'component/common/Constraint/formatConstraintValue';
 import { useLocationSettings } from 'hooks/useLocationSettings';
+import { ConstraintOperator } from 'component/common/ConstraintAccordion/ConstraintOperator/ConstraintOperator';
 
 interface IConstraintAccordionViewHeaderProps {
     compact: boolean;
@@ -63,13 +64,8 @@ export const ConstraintAccordionViewHeader = ({
                         maxLength={25}
                     />
                 </div>
-
-                <div style={{ minWidth: '220px', position: 'relative' }}>
-                    <ConditionallyRender
-                        condition={Boolean(constraint.inverted)}
-                        show={<div className={styles.negated}>NOT</div>}
-                    />
-                    <p className={styles.operator}>{constraint.operator}</p>
+                <div className={styles.headerConstraintContainer}>
+                    <ConstraintOperator constraint={constraint} />
                 </div>
                 <div className={styles.headerViewValuesContainer}>
                     <ConditionallyRender
@@ -85,7 +81,10 @@ export const ConstraintAccordionViewHeader = ({
                         elseShow={
                             <div className={styles.headerValuesContainer}>
                                 <p className={styles.headerValues}>
-                                    {constraint?.values?.length} values
+                                    {constraint?.values?.length}{' '}
+                                    {constraint?.values?.length === 1
+                                        ? 'value'
+                                        : 'values'}
                                 </p>
                                 <p className={styles.headerValuesExpand}>
                                     Expand to view
