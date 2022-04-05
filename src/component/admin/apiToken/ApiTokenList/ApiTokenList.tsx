@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { FC, Fragment, useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
@@ -32,6 +32,7 @@ import { Alert } from '@material-ui/lab';
 import copy from 'copy-to-clipboard';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
+import ProjectsList from './ProjectsList';
 
 interface IApiToken {
     createdAt: Date;
@@ -90,14 +91,6 @@ export const ApiTokenList = () => {
         });
     };
 
-    const renderProject = (projectId: string) => {
-        if (!projectId || projectId === '*') {
-            return projectId;
-        } else {
-            return <Link to={`/projects/${projectId}`}>{projectId}</Link>;
-        }
-    };
-
     const renderApiTokens = (tokens: IApiToken[]) => {
         return (
             <Table size="small">
@@ -119,7 +112,7 @@ export const ApiTokenList = () => {
                                     <TableCell
                                         className={`${styles.center} ${styles.hideXS}`}
                                     >
-                                        Project
+                                        Projects
                                     </TableCell>
                                     <TableCell
                                         className={`${styles.center} ${styles.hideXS}`}
@@ -170,7 +163,10 @@ export const ApiTokenList = () => {
                                             <TableCell
                                                 className={`${styles.center} ${styles.hideXS}`}
                                             >
-                                                {item.project && renderProject(item.project)}
+                                                <ProjectsList
+                                                    project={item.project}
+                                                    projects={item.projects}
+                                                />
                                             </TableCell>
                                             <TableCell
                                                 className={`${styles.center} ${styles.hideXS}`}
@@ -182,8 +178,11 @@ export const ApiTokenList = () => {
                                                 <br />
                                                 <b>Env:</b> {item.environment}
                                                 <br />
-                                                <b>Project:</b>{' '}
-                                                {item.project && renderProject(item.project)}
+                                                <b>Projects:</b>{' '}
+                                                <ProjectsList
+                                                    project={item.project}
+                                                    projects={item.projects}
+                                                />
                                             </TableCell>
                                         </>
                                     }
