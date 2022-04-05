@@ -4,12 +4,8 @@ export type IApiTokenCreate = {
     username: string;
     type: string;
     environment?: string;
-} & (
-    | {
-          project: string;
-      }
-    | { projects: string[] }
-);
+    projects: string[];
+};
 
 const useApiTokensApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({

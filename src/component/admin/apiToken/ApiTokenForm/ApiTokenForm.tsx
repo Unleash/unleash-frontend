@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React from 'react';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
-// import useProjects from 'hooks/api/getters/useProjects/useProjects';
+import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './ApiTokenForm.styles';
@@ -10,86 +10,37 @@ import SelectProjectInput from './SelectProjectInput';
 interface IApiTokenFormProps {
     username: string;
     type: string;
-    project: string | string[];
+    projects: string[];
     environment?: string;
     setTokenType: (value: string) => void;
     setUsername: React.Dispatch<React.SetStateAction<string>>;
-    setProject: React.Dispatch<React.SetStateAction<string | string[]>>;
+    setProjects: React.Dispatch<React.SetStateAction<string[]>>;
     setEnvironment: React.Dispatch<React.SetStateAction<string | undefined>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
     mode: 'Create' | 'Edit';
-    clearErrors: () => void;
+    clearErrors: (error?: 'username' | 'projects') => void;
 }
 const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     children,
     username,
     type,
-    project,
+    projects,
     environment,
     setUsername,
     setTokenType,
-    setProject,
+    setProjects,
     setEnvironment,
     handleSubmit,
     handleCancel,
     errors,
     clearErrors,
-    mode,
 }) => {
     const TYPE_ADMIN = 'ADMIN';
     const styles = useStyles();
     const { environments } = useEnvironments();
-    // const { projects: availableProjects } = useProjects();
-    const availableProjects = [
-        // FIXME: remove mock
-        {
-            name: 'Default',
-            id: 'default',
-            description: 'Default project',
-            health: 100,
-            featureCount: '0',
-            memberCount: 1,
-            updatedAt: '2022-04-04T20:57:49.610Z',
-        },
-        {
-            name: 'Something',
-            id: 'something',
-            description: 'Some project',
-            health: 100,
-            featureCount: '0',
-            memberCount: 1,
-            updatedAt: '2022-04-04T21:57:49.610Z',
-        },
-        {
-            name: 'Example project',
-            id: 'example',
-            description: 'Example project',
-            health: 100,
-            featureCount: '0',
-            memberCount: 1,
-            updatedAt: '2022-04-04T21:57:49.610Z',
-        },
-        {
-            name: 'Another project',
-            id: 'another',
-            description: 'Another project',
-            health: 100,
-            featureCount: '0',
-            memberCount: 1,
-            updatedAt: '2022-04-04T21:57:49.610Z',
-        },
-        {
-            name: 'Last one',
-            id: 'last',
-            description: 'Last project',
-            health: 100,
-            featureCount: '0',
-            memberCount: 1,
-            updatedAt: '2022-04-04T21:57:49.610Z',
-        },
-    ];
+    const { projects: availableProjects } = useProjects();
 
     const selectableTypes = [
         { key: 'CLIENT', label: 'Client', title: 'Client SDK token' },
@@ -125,7 +76,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                     label="Username"
                     error={errors.username !== undefined}
                     errorText={errors.username}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors('username')}
                     autoFocus
                 />
                 <p className={styles.inputDescription}>
@@ -147,7 +98,10 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                 <SelectProjectInput
                     disabled={type === TYPE_ADMIN}
                     options={selectableProjects}
-                    // FIXME: value & onChange
+                    defaultValue={projects}
+                    onChange={setProjects}
+                    error={errors?.projects}
+                    onFocus={() => clearErrors('projects')}
                 />
                 <p className={styles.inputDescription}>
                     Which environment should the token have access to?

@@ -39,7 +39,7 @@ interface IApiToken {
     secret: string;
     type: string;
     project?: string;
-    projects?: string | string[]; // FIXME: check type
+    projects?: string | string[];
     environment: string;
 }
 

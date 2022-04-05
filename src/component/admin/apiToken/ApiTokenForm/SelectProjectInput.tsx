@@ -1,11 +1,5 @@
 import React, { FC, useState } from 'react';
-import {
-    Checkbox,
-    FormControlLabel,
-    TextField,
-    Box,
-    Typography,
-} from '@material-ui/core';
+import { Checkbox, FormControlLabel, TextField, Box } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -19,38 +13,49 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const SelectProjectInput: FC<{
     disabled?: boolean;
     options: IAutocompleteBoxOption[];
+    defaultValue: string[];
+    onChange: (value: string[]) => void;
+    onFocus?: () => void;
+    error?: string;
 }> = ({
     options,
-    // defaultValue,
-    // onChange,
+    defaultValue = [wildcard],
+    onChange,
     disabled,
-    ...rest
+    error,
+    onFocus,
 }) => {
-    const [project, setProject] = useState<string[]>([wildcard]);
-    const [isWildcardSelected, selectWildcard] = useState(true);
+    const [projects, setProjects] = useState<string[]>(
+        typeof defaultValue === 'string' ? [defaultValue] : defaultValue
+    );
+    const [isWildcardSelected, selectWildcard] = useState(
+        typeof defaultValue === 'string' || defaultValue.includes(wildcard)
+    );
 
     return (
         <Box sx={{ mt: -1, mb: 3 }}>
-            <Box sx={{ my: 2, ml: 2 }}>
+            <Box sx={{ mt: 2, mb: 1, ml: 2 }}>
                 <FormControlLabel
                     disabled={disabled}
                     control={
                         <Checkbox
                             checked={disabled || isWildcardSelected}
                             onChange={e => {
-                                selectWildcard(e.target.checked);
+                                if (e.target.checked) {
+                                    selectWildcard(true);
+                                    onChange([wildcard]);
+                                } else {
+                                    selectWildcard(false);
+                                    onChange(
+                                        projects.includes(wildcard)
+                                            ? []
+                                            : projects
+                                    );
+                                }
                             }}
-                            name="checkedA"
                         />
                     }
-                    label={
-                        <Box>
-                            <Typography>ALL</Typography>
-                            <Typography variant="body2" color="textSecondary">
-                                Current and future projects
-                            </Typography>
-                        </Box>
-                    }
+                    label="ALL current and future projects"
                 />
             </Box>
             <Autocomplete
@@ -62,12 +67,12 @@ const SelectProjectInput: FC<{
                 getOptionLabel={(option: IAutocompleteBoxOption) =>
                     option.label
                 }
-                style={{ width: '100%' }}
+                style={{ width: '100%' }} // FIXME: style
                 renderOption={(
                     option: IAutocompleteBoxOption,
                     { selected }
                 ) => (
-                    <React.Fragment>
+                    <>
                         <Checkbox
                             icon={icon}
                             checkedIcon={checkedIcon}
@@ -75,25 +80,30 @@ const SelectProjectInput: FC<{
                             checked={selected}
                         />
                         {option.label}
-                    </React.Fragment>
+                    </>
                 )}
                 renderInput={params => (
                     <TextField
                         {...params}
+                        error={!!error}
+                        helperText={error}
                         variant="outlined"
                         label="Projects"
                         placeholder="Select one or more projects"
+                        onFocus={onFocus}
                     />
                 )}
                 value={
                     isWildcardSelected || disabled
                         ? options
                         : options.filter((option: IAutocompleteBoxOption) =>
-                              project.includes(option.value)
+                              projects.includes(option.value)
                           )
                 }
                 onChange={(_, input) => {
-                    setProject(input.map(({ value }) => value));
+                    const state = input.map(({ value }) => value);
+                    setProjects(state);
+                    onChange(state);
                 }}
             />
         </Box>
