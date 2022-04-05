@@ -1,8 +1,15 @@
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-import { Operator } from 'constants/operators';
+import {
+    Operator,
+    stringOperators,
+    semVerOperators,
+    dateOperators,
+    numOperators,
+} from 'constants/operators';
 import React, { useState, ChangeEvent } from 'react';
 import { formatOperatorDescription } from 'component/common/ConstraintAccordion/ConstraintOperator/formatOperatorDescription';
 import { useStyles } from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect.styles';
+import classNames from 'classnames';
 
 interface IConstraintOperatorSelectProps {
     options: Operator[];
@@ -50,7 +57,13 @@ export const ConstraintOperatorSelect = ({
                 renderValue={renderValue}
             >
                 {options.map(operator => (
-                    <MenuItem key={operator} value={operator}>
+                    <MenuItem
+                        key={operator}
+                        value={operator}
+                        className={classNames(
+                            isSeparatorOption(operator) && styles.separator
+                        )}
+                    >
                         <div className={styles.optionContainer}>
                             <div className={styles.label}>{operator}</div>
                             <div className={styles.description}>
@@ -62,4 +75,18 @@ export const ConstraintOperatorSelect = ({
             </Select>
         </FormControl>
     );
+};
+
+// Check if an operator should have a separator border above itself.
+const isSeparatorOption = (operator: Operator): boolean => {
+    const groups = [
+        stringOperators,
+        numOperators,
+        dateOperators,
+        semVerOperators,
+    ];
+
+    return groups.some(group => {
+        return group[0] === operator;
+    });
 };
