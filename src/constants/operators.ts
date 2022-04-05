@@ -35,8 +35,8 @@ export const allOperators: Operator[] = [
     IN,
     NOT_IN,
     STR_CONTAINS,
-    STR_ENDS_WITH,
     STR_STARTS_WITH,
+    STR_ENDS_WITH,
     NUM_EQ,
     NUM_GT,
     NUM_GTE,
@@ -50,11 +50,13 @@ export const allOperators: Operator[] = [
 ];
 
 export const stringOperators: Operator[] = [
-    STR_ENDS_WITH,
-    STR_STARTS_WITH,
     STR_CONTAINS,
+    STR_STARTS_WITH,
+    STR_ENDS_WITH,
 ];
+
 export const inOperators: Operator[] = [IN, NOT_IN];
+
 export const numOperators: Operator[] = [
     NUM_EQ,
     NUM_GT,
@@ -62,7 +64,9 @@ export const numOperators: Operator[] = [
     NUM_LT,
     NUM_LTE,
 ];
-export const dateOperators: Operator[] = [DATE_AFTER, DATE_BEFORE];
+
+export const dateOperators: Operator[] = [DATE_BEFORE, DATE_AFTER];
+
 export const semVerOperators: Operator[] = [SEMVER_EQ, SEMVER_GT, SEMVER_LT];
 
 export const singleValueOperators: Operator[] = [

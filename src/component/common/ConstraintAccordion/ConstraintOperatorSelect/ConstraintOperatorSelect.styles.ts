@@ -19,4 +19,19 @@ export const useStyles = makeStyles(theme => ({
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
     },
+    separator: {
+        position: 'relative',
+        overflow: 'visible',
+        marginTop: '1rem',
+        '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: '-0.5rem',
+            left: 0,
+            right: 0,
+            borderTop: '1px solid',
+            borderTopColor: theme.palette.grey[300],
+        },
+    },
 }));
