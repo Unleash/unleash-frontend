@@ -1,110 +1,102 @@
-import React, { FC } from 'react';
-import { KeyboardArrowDownOutlined } from '@material-ui/icons';
+import React, { FC, useState } from 'react';
 import {
     Checkbox,
-    FormControl,
-    InputLabel,
-    ListItemText,
-    MenuItem,
-    Select,
     FormControlLabel,
+    TextField,
+    Box,
+    Typography,
 } from '@material-ui/core';
-import {
-    ISelectMenuProps,
-    ISelectOption,
-} from 'component/common/GeneralSelect/GeneralSelect';
+import { Autocomplete } from '@material-ui/lab';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
 
 const wildcard = '*';
 
-const SelectProjectInput: FC<ISelectMenuProps> = ({
-    classes,
-    fullWidth,
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+const SelectProjectInput: FC<{
+    disabled?: boolean;
+    options: IAutocompleteBoxOption[];
+}> = ({
     options,
-    defaultValue,
-    onChange,
+    // defaultValue,
+    // onChange,
+    disabled,
     ...rest
 }) => {
-    const [project, setProject] = React.useState<string[]>([wildcard]);
-    const isWildcardSelected = project.includes(wildcard);
-
-    const handleChange = (
-        event: React.ChangeEvent<{
-            name?: string | undefined;
-            value: any;
-        }>
-    ) => {
-        const {
-            target: { value },
-        } = event;
-
-        setProject(typeof value === 'string' ? value.split(',') : value);
-    };
+    const [project, setProject] = useState<string[]>([wildcard]);
+    const [isWildcardSelected, selectWildcard] = useState(true);
 
     return (
-        <>
-            {(!isWildcardSelected || true) && (
-                <FormControl
-                    variant="outlined"
-                    size="small"
-                    classes={classes}
-                    fullWidth={fullWidth}
-                    disabled={isWildcardSelected}
-                >
-                    <InputLabel htmlFor="projects">
-                        Selected projects
-                    </InputLabel>
-                    <Select
-                        name="projects"
-                        onChange={handleChange}
-                        label="Selected projects"
-                        id="projects"
-                        multiple
-                        value={isWildcardSelected ? [] : project}
-                        IconComponent={KeyboardArrowDownOutlined}
-                        renderValue={selected =>
-                            options // start with original options, because 'selected' doesn't preserve order
-                                .filter(({ key }) =>
-                                    (selected as string[]).includes(key)
-                                )
-                                .map(
-                                    (value: ISelectOption) =>
-                                        value?.label ||
-                                        value?.title ||
-                                        value?.key
-                                )
-                                .join(', ')
-                        }
-                        {...rest}
-                    >
-                        {options.map(option => (
-                            <MenuItem
-                                key={option.key}
-                                value={option.key}
-                                title={option.title || ''}
-                                disabled={option.disabled}
-                            >
-                                <Checkbox
-                                    checked={project.indexOf(option.key) > -1}
-                                />
-                                <ListItemText primary={option.title} />
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            )}
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={isWildcardSelected}
-                        onChange={e => {
-                            setProject(e.target.checked ? [wildcard] : []);
-                        }}
-                        name="checkedA"
-                    />
+        <Box sx={{ mt: -1, mb: 3 }}>
+            <Box sx={{ my: 2, ml: 2 }}>
+                <FormControlLabel
+                    disabled={disabled}
+                    control={
+                        <Checkbox
+                            checked={disabled || isWildcardSelected}
+                            onChange={e => {
+                                selectWildcard(e.target.checked);
+                            }}
+                            name="checkedA"
+                        />
+                    }
+                    label={
+                        <Box>
+                            <Typography>ALL</Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                Current and future projects
+                            </Typography>
+                        </Box>
+                    }
+                />
+            </Box>
+            <Autocomplete
+                disabled={disabled || isWildcardSelected}
+                multiple
+                limitTags={2}
+                options={options}
+                disableCloseOnSelect
+                getOptionLabel={(option: IAutocompleteBoxOption) =>
+                    option.label
                 }
-                label="Allow all current and future projects"
+                style={{ width: '100%' }}
+                renderOption={(
+                    option: IAutocompleteBoxOption,
+                    { selected }
+                ) => (
+                    <React.Fragment>
+                        <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                        />
+                        {option.label}
+                    </React.Fragment>
+                )}
+                renderInput={params => (
+                    <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Projects"
+                        placeholder="Select one or more projects"
+                    />
+                )}
+                value={
+                    isWildcardSelected || disabled
+                        ? options
+                        : options.filter((option: IAutocompleteBoxOption) =>
+                              project.includes(option.value)
+                          )
+                }
+                onChange={(_, input) => {
+                    setProject(input.map(({ value }) => value));
+                }}
             />
-        </>
+        </Box>
     );
 };
 

@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React from 'react';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
-import useProjects from 'hooks/api/getters/useProjects/useProjects';
+// import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './ApiTokenForm.styles';
@@ -42,7 +42,8 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     const styles = useStyles();
     const { environments } = useEnvironments();
     // const { projects: availableProjects } = useProjects();
-    const availableProjects = [ // FIXME: remove mock
+    const availableProjects = [
+        // FIXME: remove mock
         {
             name: 'Default',
             id: 'default',
@@ -62,9 +63,27 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
             updatedAt: '2022-04-04T21:57:49.610Z',
         },
         {
-            name: 'Space',
-            id: 'space',
-            description: 'Space project',
+            name: 'Example project',
+            id: 'example',
+            description: 'Example project',
+            health: 100,
+            featureCount: '0',
+            memberCount: 1,
+            updatedAt: '2022-04-04T21:57:49.610Z',
+        },
+        {
+            name: 'Another project',
+            id: 'another',
+            description: 'Another project',
+            health: 100,
+            featureCount: '0',
+            memberCount: 1,
+            updatedAt: '2022-04-04T21:57:49.610Z',
+        },
+        {
+            name: 'Last one',
+            id: 'last',
+            description: 'Last project',
             health: 100,
             featureCount: '0',
             memberCount: 1,
@@ -78,9 +97,8 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     ];
 
     const selectableProjects = availableProjects.map(i => ({
-        key: i.id,
+        value: i.id,
         label: i.name,
-        title: i.name,
     }));
 
     const selectableEnvs =
@@ -129,7 +147,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                 <SelectProjectInput
                     disabled={type === TYPE_ADMIN}
                     options={selectableProjects}
-                    className={styles.selectInput}
+                    // FIXME: value & onChange
                 />
                 <p className={styles.inputDescription}>
                     Which environment should the token have access to?
