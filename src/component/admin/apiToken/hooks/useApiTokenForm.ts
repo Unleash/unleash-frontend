@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
+import { IApiTokenCreate } from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
 
 export const useApiTokenForm = () => {
     const { environments } = useEnvironments();
@@ -7,7 +8,7 @@ export const useApiTokenForm = () => {
 
     const [username, setUsername] = useState('');
     const [type, setType] = useState('CLIENT');
-    const [project, setProject] = useState('*');
+    const [project, setProject] = useState<string | string[]>('*');
     const [environment, setEnvironment] = useState<string>();
     const [errors, setErrors] = useState({});
 
@@ -26,14 +27,12 @@ export const useApiTokenForm = () => {
         }
     };
 
-    const getApiTokenPayload = () => {
-        return {
-            username: username,
-            type: type,
-            project: project,
-            environment: environment,
-        };
-    };
+    const getApiTokenPayload = (): IApiTokenCreate => ({
+        username,
+        type,
+        environment,
+        ...(typeof project === 'string' ? { project } : { projects: project }),
+    });
 
     const isValid = () => {
         if (!username) {

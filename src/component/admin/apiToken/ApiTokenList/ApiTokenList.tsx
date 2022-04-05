@@ -38,7 +38,8 @@ interface IApiToken {
     username: string;
     secret: string;
     type: string;
-    project: string;
+    project?: string;
+    projects?: string | string[]; // FIXME: check type
     environment: string;
 }
 
@@ -169,7 +170,7 @@ export const ApiTokenList = () => {
                                             <TableCell
                                                 className={`${styles.center} ${styles.hideXS}`}
                                             >
-                                                {renderProject(item.project)}
+                                                {item.project && renderProject(item.project)}
                                             </TableCell>
                                             <TableCell
                                                 className={`${styles.center} ${styles.hideXS}`}
@@ -182,7 +183,7 @@ export const ApiTokenList = () => {
                                                 <b>Env:</b> {item.environment}
                                                 <br />
                                                 <b>Project:</b>{' '}
-                                                {renderProject(item.project)}
+                                                {item.project && renderProject(item.project)}
                                             </TableCell>
                                         </>
                                     }

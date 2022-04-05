@@ -6,14 +6,15 @@ import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './ApiTokenForm.styles';
+import SelectProjectInput from './SelectProjectInput';
 interface IApiTokenFormProps {
     username: string;
     type: string;
-    project: string;
+    project: string | string[];
     environment?: string;
     setTokenType: (value: string) => void;
     setUsername: React.Dispatch<React.SetStateAction<string>>;
-    setProject: React.Dispatch<React.SetStateAction<string>>;
+    setProject: React.Dispatch<React.SetStateAction<string | string[]>>;
     setEnvironment: React.Dispatch<React.SetStateAction<string | undefined>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
@@ -40,20 +41,47 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     const TYPE_ADMIN = 'ADMIN';
     const styles = useStyles();
     const { environments } = useEnvironments();
-    const { projects } = useProjects();
+    // const { projects: availableProjects } = useProjects();
+    const availableProjects = [ // FIXME: remove mock
+        {
+            name: 'Default',
+            id: 'default',
+            description: 'Default project',
+            health: 100,
+            featureCount: '0',
+            memberCount: 1,
+            updatedAt: '2022-04-04T20:57:49.610Z',
+        },
+        {
+            name: 'Something',
+            id: 'something',
+            description: 'Some project',
+            health: 100,
+            featureCount: '0',
+            memberCount: 1,
+            updatedAt: '2022-04-04T21:57:49.610Z',
+        },
+        {
+            name: 'Space',
+            id: 'space',
+            description: 'Space project',
+            health: 100,
+            featureCount: '0',
+            memberCount: 1,
+            updatedAt: '2022-04-04T21:57:49.610Z',
+        },
+    ];
 
     const selectableTypes = [
         { key: 'CLIENT', label: 'Client', title: 'Client SDK token' },
         { key: 'ADMIN', label: 'Admin', title: 'Admin API token' },
     ];
 
-    const selectableProjects = [{ id: '*', name: 'ALL' }, ...projects].map(
-        i => ({
-            key: i.id,
-            label: i.name,
-            title: i.name,
-        })
-    );
+    const selectableProjects = availableProjects.map(i => ({
+        key: i.id,
+        label: i.name,
+        title: i.name,
+    }));
 
     const selectableEnvs =
         type === TYPE_ADMIN
@@ -98,13 +126,9 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                 <p className={styles.inputDescription}>
                     Which project do you want to give access to?
                 </p>
-                <GeneralSelect
+                <SelectProjectInput
                     disabled={type === TYPE_ADMIN}
-                    value={project}
                     options={selectableProjects}
-                    onChange={e => setProject(e.target.value as string)}
-                    label="Project"
-                    IconComponent={KeyboardArrowDownOutlined}
                     className={styles.selectInput}
                 />
                 <p className={styles.inputDescription}>
