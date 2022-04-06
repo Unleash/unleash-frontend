@@ -1,5 +1,11 @@
 import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select, SelectProps } from '@material-ui/core';
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectProps,
+} from '@material-ui/core';
 import { SELECT_ITEM_ID } from 'utils/testIds';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 
@@ -11,7 +17,9 @@ export interface ISelectOption {
 }
 
 export interface ISelectMenuProps extends SelectProps {
-    value?: string | string[];
+    name: string;
+    id: string;
+    value?: string;
     label?: string;
     options: ISelectOption[];
     onChange?: OnGeneralSelectChange;
