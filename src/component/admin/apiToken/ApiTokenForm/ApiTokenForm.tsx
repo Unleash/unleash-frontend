@@ -6,7 +6,7 @@ import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './ApiTokenForm.styles';
-import { SelectProjectInput } from './SelectProjectInput';
+import { SelectProjectInput } from './SelectProjectInput/SelectProjectInput';
 import { ApiTokenFormErrorType } from '../hooks/useApiTokenForm';
 interface IApiTokenFormProps {
     username: string;

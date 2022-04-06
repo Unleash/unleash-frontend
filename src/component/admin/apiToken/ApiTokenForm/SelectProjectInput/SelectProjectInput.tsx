@@ -1,6 +1,5 @@
-import React, { Fragment, useMemo, useState, ChangeEvent } from 'react';
+import React, { Fragment, useState, ChangeEvent, VFC } from 'react';
 import {
-    Link,
     Checkbox,
     FormControlLabel,
     TextField,
@@ -9,33 +8,37 @@ import {
 } from '@material-ui/core';
 import {
     Autocomplete,
+    AutocompleteRenderGroupParams,
     AutocompleteRenderInputParams,
     AutocompleteRenderOptionState,
 } from '@material-ui/lab';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
-import { useStyles } from './ApiTokenForm.styles';
+import { useStyles } from '../ApiTokenForm.styles';
+import { SelectAllButton } from './SelectAllButton/SelectAllButton';
 
 const ALL_PROJECTS = '*';
 
 // Fix for shadow under Autocomplete - match with Select input
 const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
 
-export const SelectProjectInput = ({
-    options,
-    defaultValue = [ALL_PROJECTS],
-    onChange,
-    disabled,
-    error,
-    onFocus,
-}: {
+interface ISelectProjectInputProps {
     disabled?: boolean;
     options: IAutocompleteBoxOption[];
     defaultValue: string[];
     onChange: (value: string[]) => void;
     onFocus?: () => void;
     error?: string;
+}
+
+export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
+    options,
+    defaultValue = [ALL_PROJECTS],
+    onChange,
+    disabled,
+    error,
+    onFocus,
 }) => {
     const styles = useStyles();
     const [projects, setProjects] = useState<string[]>(
@@ -44,23 +47,7 @@ export const SelectProjectInput = ({
     const [isWildcardSelected, selectWildcard] = useState(
         typeof defaultValue === 'string' || defaultValue.includes(ALL_PROJECTS)
     );
-    const selectAllButton = useMemo(() => {
-        const isAllSelected = projects.length === options.length;
-        const toggleSelection = () => {
-            setProjects(isAllSelected ? [] : options.map(({ value }) => value));
-        };
-
-        return (
-            <Box sx={{ ml: 3.5, my: 0.5 }}>
-                <Link
-                    onClick={toggleSelection}
-                    className={styles.selectOptionsLink}
-                >
-                    {isAllSelected ? 'Deselect all' : 'Select all'}
-                </Link>
-            </Box>
-        );
-    }, [projects.length, options, styles.selectOptionsLink]);
+    const isAllSelected = projects.length === options.length;
 
     const onAllProjectsChange = (
         e: ChangeEvent<HTMLInputElement>,
@@ -88,6 +75,20 @@ export const SelectProjectInput = ({
             />
             {option.label}
         </>
+    );
+
+    const renderGroup = ({ key, children }: AutocompleteRenderGroupParams) => (
+        <Fragment key={key}>
+            <SelectAllButton
+                isAllSelected={isAllSelected}
+                onClick={() => {
+                    setProjects(
+                        isAllSelected ? [] : options.map(({ value }) => value)
+                    );
+                }}
+            />
+            {children}
+        </Fragment>
     );
 
     const renderInput = (params: AutocompleteRenderInputParams) => (
@@ -124,12 +125,7 @@ export const SelectProjectInput = ({
                 disableCloseOnSelect
                 getOptionLabel={({ label }) => label}
                 groupBy={() => 'Select/Deselect all'}
-                renderGroup={({ key, children }) => (
-                    <Fragment key={key}>
-                        {selectAllButton}
-                        {children}
-                    </Fragment>
-                )}
+                renderGroup={renderGroup}
                 fullWidth
                 PaperComponent={CustomPaper}
                 renderOption={renderOption}
