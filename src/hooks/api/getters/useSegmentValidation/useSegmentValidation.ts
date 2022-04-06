@@ -1,23 +1,32 @@
 import { useEffect, useState } from 'react';
 import { formatApiPath } from 'utils/formatPath';
 
-export const useSegmentValidation = (name: string): string | undefined => {
+export const useSegmentValidation = (
+    name: string,
+    initialName: string
+): string | undefined => {
     const [error, setError] = useState<string>();
+    const nameHasChanged = name !== initialName;
 
     useEffect(() => {
         setError(undefined);
-        fetch(formatApiPath('api/admin/segments/validate'), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name }),
-        })
-            .then(parseValidationResponse)
-            .then(setError)
-            .catch(() => setError(undefined));
-    }, [name]);
+        if (name && nameHasChanged) {
+            fetchNewNameValidation(name)
+                .then(parseValidationResponse)
+                .then(setError)
+                .catch(() => setError(undefined));
+        }
+    }, [name, nameHasChanged]);
 
     return error;
 };
+
+const fetchNewNameValidation = (name: string): Promise<Response> =>
+    fetch(formatApiPath('api/admin/segments/validate'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+    });
 
 const parseValidationResponse = async (
     res: Response

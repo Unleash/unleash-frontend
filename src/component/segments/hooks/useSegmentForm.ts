@@ -12,7 +12,7 @@ export const useSegmentForm = (
     const [constraints, setConstraints] =
         useState<IConstraint[]>(initialConstraints);
     const [errors, setErrors] = useState({});
-    const nameError = useSegmentValidation(name);
+    const nameError = useSegmentValidation(name, initialName);
 
     useEffect(() => {
         setName(initialName);
@@ -30,9 +30,9 @@ export const useSegmentForm = (
     useEffect(() => {
         setErrors(errors => ({
             ...errors,
-            name: name ? nameError : undefined,
+            name: nameError,
         }));
-    }, [nameError, name]);
+    }, [nameError]);
 
     const getSegmentPayload = () => {
         return {
