@@ -17,8 +17,7 @@ export interface ISelectOption {
 }
 
 export interface ISelectMenuProps extends SelectProps {
-    name: string;
-    id: string;
+    name?: string;
     value?: string;
     label?: string;
     options: ISelectOption[];

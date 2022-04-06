@@ -1,11 +1,11 @@
 import useAPI from '../useApi/useApi';
 
-export type IApiTokenCreate = {
+export interface IApiTokenCreate {
     username: string;
     type: string;
     environment?: string;
     projects: string[];
-};
+}
 
 const useApiTokensApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
