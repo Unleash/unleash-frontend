@@ -129,7 +129,6 @@ export const TagTypeList = () => {
                 <ListItemText primary={link} secondary={tagType.description} />
                 <PermissionIconButton
                     permission={UPDATE_TAG_TYPE}
-                    // @ts-expect-error
                     component={Link}
                     to={`/tag-types/edit/${tagType.name}`}
                 >
