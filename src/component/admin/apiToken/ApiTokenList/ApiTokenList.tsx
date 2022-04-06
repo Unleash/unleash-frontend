@@ -1,5 +1,5 @@
-import { FC, Fragment, useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Fragment, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Button,
     IconButton,

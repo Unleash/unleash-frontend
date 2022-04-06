@@ -90,6 +90,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                     id="api_key_type"
                     name="type"
                     IconComponent={KeyboardArrowDownOutlined}
+                    fullWidth
                     className={styles.selectInput}
                 />
                 <p className={styles.inputDescription}>
@@ -115,6 +116,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                     id="api_key_environment"
                     name="environment"
                     IconComponent={KeyboardArrowDownOutlined}
+                    fullWidth
                     className={styles.selectInput}
                 />
             </div>

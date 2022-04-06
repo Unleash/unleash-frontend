@@ -1,14 +1,25 @@
-import React, { FC, useState } from 'react';
-import { Checkbox, FormControlLabel, TextField, Box } from '@material-ui/core';
+import React, { Fragment, FC, useMemo, useState } from 'react';
+import {
+    Link,
+    Checkbox,
+    FormControlLabel,
+    TextField,
+    Box,
+    Paper,
+} from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
+import { useStyles } from './ApiTokenForm.styles';
 
-const wildcard = '*';
+const ALL_PROJECTS = '*';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+// Fix for shadow under Autocomplete - match with Select input
+const CustomPaper: FC = ({ ...props }) => <Paper elevation={8} {...props} />;
 
 const SelectProjectInput: FC<{
     disabled?: boolean;
@@ -19,22 +30,42 @@ const SelectProjectInput: FC<{
     error?: string;
 }> = ({
     options,
-    defaultValue = [wildcard],
+    defaultValue = [ALL_PROJECTS],
     onChange,
     disabled,
     error,
     onFocus,
 }) => {
+    const styles = useStyles();
     const [projects, setProjects] = useState<string[]>(
         typeof defaultValue === 'string' ? [defaultValue] : defaultValue
     );
     const [isWildcardSelected, selectWildcard] = useState(
-        typeof defaultValue === 'string' || defaultValue.includes(wildcard)
+        typeof defaultValue === 'string' || defaultValue.includes(ALL_PROJECTS)
     );
+    const selectAllButton = useMemo(() => {
+        const isAllSelected = projects.length === options.length;
+        return (
+            <Box sx={{ ml: 3.5, my: 0.5 }}>
+                <Link
+                    onClick={() => {
+                        setProjects(
+                            isAllSelected
+                                ? []
+                                : options.map(({ value }) => value)
+                        );
+                    }}
+                    className={styles.selectOptionsLink}
+                >
+                    {isAllSelected ? 'Deselect all' : 'Select all'}
+                </Link>
+            </Box>
+        );
+    }, [projects.length, options, styles.selectOptionsLink]);
 
     return (
         <Box sx={{ mt: -1, mb: 3 }}>
-            <Box sx={{ mt: 2, mb: 1, ml: 2 }}>
+            <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
                 <FormControlLabel
                     disabled={disabled}
                     control={
@@ -43,11 +74,11 @@ const SelectProjectInput: FC<{
                             onChange={e => {
                                 if (e.target.checked) {
                                     selectWildcard(true);
-                                    onChange([wildcard]);
+                                    onChange([ALL_PROJECTS]);
                                 } else {
                                     selectWildcard(false);
                                     onChange(
-                                        projects.includes(wildcard)
+                                        projects.includes(ALL_PROJECTS)
                                             ? []
                                             : projects
                                     );
@@ -64,10 +95,16 @@ const SelectProjectInput: FC<{
                 limitTags={2}
                 options={options}
                 disableCloseOnSelect
-                getOptionLabel={(option: IAutocompleteBoxOption) =>
-                    option.label
-                }
-                style={{ width: '100%' }} // FIXME: style
+                getOptionLabel={({ label }: IAutocompleteBoxOption) => label}
+                groupBy={() => 'Select/Deselect all'}
+                renderGroup={({ key, children }) => (
+                    <Fragment key={key}>
+                        {selectAllButton}
+                        {children}
+                    </Fragment>
+                )}
+                fullWidth
+                PaperComponent={CustomPaper}
                 renderOption={(
                     option: IAutocompleteBoxOption,
                     { selected }
@@ -76,8 +113,8 @@ const SelectProjectInput: FC<{
                         <Checkbox
                             icon={icon}
                             checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
                             checked={selected}
+                            className={styles.selectOptionCheckbox}
                         />
                         {option.label}
                     </>
