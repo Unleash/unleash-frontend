@@ -1,36 +1,28 @@
-import { useContext } from 'react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Button, IconButton, Tooltip } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Add } from '@material-ui/icons';
 import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
-import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import AccessContext from 'contexts/AccessContext';
-import { getCreateTogglePath } from 'utils/routePathHelpers';
 import { NAVIGATE_TO_CREATE_FEATURE } from 'utils/testIds';
-import {
-    resolveFilteredProjectId,
-    IFeaturesFilter,
-} from 'hooks/useFeaturesFilter';
-import { IFlags } from 'interfaces/uiConfig';
+import { IFeaturesFilter } from 'hooks/useFeaturesFilter';
+import { useCreateFeaturePath } from 'component/feature/CreateFeatureButton/useCreateFeaturePath';
 
-interface IFeatureToggleListCreateProps {
+interface ICreateFeatureButtonProps {
     loading: boolean;
-    flags: IFlags;
     filter: IFeaturesFilter;
 }
 
-export const FeatureToggleListCreate = ({
+export const CreateFeatureButton = ({
     loading,
-    flags,
     filter,
-}: IFeatureToggleListCreateProps) => {
-    const { hasAccess } = useContext(AccessContext);
+}: ICreateFeatureButtonProps) => {
     const smallScreen = useMediaQuery('(max-width:800px)');
+    const createFeature = useCreateFeaturePath(filter);
 
-    const resolvedProject = resolveFilteredProjectId(filter);
-    const createURL = getCreateTogglePath(resolvedProject, flags.E);
+    if (!createFeature) {
+        return null;
+    }
 
     return (
         <ConditionallyRender
@@ -39,9 +31,9 @@ export const FeatureToggleListCreate = ({
                 <Tooltip title="Create feature toggle">
                     <IconButton
                         component={Link}
-                        to={createURL}
+                        to={createFeature.path}
                         data-test={NAVIGATE_TO_CREATE_FEATURE}
-                        disabled={!hasAccess(CREATE_FEATURE, resolvedProject)}
+                        disabled={!createFeature.access}
                     >
                         <Add titleAccess="New" />
                     </IconButton>
@@ -49,12 +41,12 @@ export const FeatureToggleListCreate = ({
             }
             elseShow={
                 <Button
-                    to={createURL}
+                    to={createFeature.path}
                     color="primary"
                     variant="contained"
                     component={Link}
                     data-test={NAVIGATE_TO_CREATE_FEATURE}
-                    disabled={!hasAccess(CREATE_FEATURE, resolvedProject)}
+                    disabled={!createFeature.access}
                     className={classnames({ skeleton: loading })}
                 >
                     New feature toggle

@@ -14,9 +14,8 @@ import loadingFeatures from './loadingFeatures';
 import AccessContext from 'contexts/AccessContext';
 import { useStyles } from './styles';
 import ListPlaceholder from 'component/common/ListPlaceholder/ListPlaceholder';
-import { getCreateTogglePath } from 'utils/routePathHelpers';
-import { resolveFilteredProjectId } from 'hooks/useFeaturesFilter';
-import { FeatureToggleListCreate } from './FeatureToggleListCreate/FeatureToggleListCreate';
+import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
+import { useCreateFeaturePath } from '../CreateFeatureButton/useCreateFeaturePath';
 
 const FeatureToggleList = ({
     features,
@@ -30,6 +29,7 @@ const FeatureToggleList = ({
     setSort,
 }) => {
     const { hasAccess } = useContext(AccessContext);
+    const createFeature = useCreateFeaturePath(filter);
     const styles = useStyles();
     const smallScreen = useMediaQuery('(max-width:800px)');
     const mobileView = useMediaQuery('(max-width:600px)');
@@ -38,9 +38,6 @@ const FeatureToggleList = ({
         const query = v && typeof v === 'string' ? v.trim() : '';
         setFilter(prev => ({ ...prev, query }));
     };
-
-    const resolvedProjectId = resolveFilteredProjectId(filter);
-    const createURL = getCreateTogglePath(resolvedProjectId, flags.E);
 
     const renderFeatures = () => {
         features.forEach(e => {
@@ -81,11 +78,15 @@ const FeatureToggleList = ({
                             </ListItem>
                         }
                         elseShow={
-                            <ListPlaceholder
-                                text="No features available. Get started by adding a
-                                new feature toggle."
-                                link={createURL}
-                                linkText="Add your first toggle"
+                            <ConditionallyRender
+                                condition={Boolean(createFeature?.access)}
+                                show={() => (
+                                    <ListPlaceholder
+                                        text="No features available. Get started by adding a new feature toggle."
+                                        link={createFeature.path}
+                                        linkText="Add your first toggle"
+                                    />
+                                )}
                             />
                         }
                     />
@@ -141,10 +142,9 @@ const FeatureToggleList = ({
                                 <ConditionallyRender
                                     condition={!archive}
                                     show={
-                                        <FeatureToggleListCreate
+                                        <CreateFeatureButton
                                             filter={filter}
                                             loading={loading}
-                                            flags={flags}
                                         />
                                     }
                                 />
