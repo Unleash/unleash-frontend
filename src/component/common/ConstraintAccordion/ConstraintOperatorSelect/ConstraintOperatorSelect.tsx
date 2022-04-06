@@ -61,7 +61,7 @@ export const ConstraintOperatorSelect = ({
                         key={operator}
                         value={operator}
                         className={classNames(
-                            isSeparatorOption(operator) && styles.separator
+                            needSeparatorAbove(operator) && styles.separator
                         )}
                     >
                         <div className={styles.optionContainer}>
@@ -77,8 +77,7 @@ export const ConstraintOperatorSelect = ({
     );
 };
 
-// Check if an operator should have a separator border above itself.
-const isSeparatorOption = (operator: Operator): boolean => {
+const needSeparatorAbove = (operator: Operator): boolean => {
     const groups = [
         stringOperators,
         numOperators,
