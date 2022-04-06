@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { IApiTokenCreate } from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
 
-type ErrorType = 'username' | 'projects';
+export type ApiTokenFormErrorType = 'username' | 'projects';
 
 export const useApiTokenForm = () => {
     const { environments } = useEnvironments();
@@ -12,9 +12,9 @@ export const useApiTokenForm = () => {
     const [type, setType] = useState('CLIENT');
     const [projects, setProjects] = useState<string[]>(['*']);
     const [environment, setEnvironment] = useState<string>();
-    const [errors, setErrors] = useState<Partial<Record<ErrorType, string>>>(
-        {}
-    );
+    const [errors, setErrors] = useState<
+        Partial<Record<ApiTokenFormErrorType, string>>
+    >({});
 
     useEffect(() => {
         setEnvironment(type === 'ADMIN' ? '*' : initialEnvironment);
@@ -39,7 +39,7 @@ export const useApiTokenForm = () => {
     });
 
     const isValid = () => {
-        const newErrors: Partial<Record<ErrorType, string>> = {};
+        const newErrors: Partial<Record<ApiTokenFormErrorType, string>> = {};
         if (!username) {
             newErrors['username'] = 'Username is required';
         }
@@ -51,7 +51,7 @@ export const useApiTokenForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const clearErrors = (error?: ErrorType) => {
+    const clearErrors = (error?: ApiTokenFormErrorType) => {
         if (error) {
             const newErrors = { ...errors };
             delete newErrors[error];

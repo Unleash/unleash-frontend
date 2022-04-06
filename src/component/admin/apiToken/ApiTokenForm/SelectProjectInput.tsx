@@ -1,4 +1,4 @@
-import React, { Fragment, FC, useMemo, useState } from 'react';
+import React, { Fragment, useMemo, useState, ChangeEvent } from 'react';
 import {
     Link,
     Checkbox,
@@ -7,7 +7,11 @@ import {
     Box,
     Paper,
 } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import {
+    Autocomplete,
+    AutocompleteRenderInputParams,
+    AutocompleteRenderOptionState,
+} from '@material-ui/lab';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
@@ -15,26 +19,23 @@ import { useStyles } from './ApiTokenForm.styles';
 
 const ALL_PROJECTS = '*';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
 // Fix for shadow under Autocomplete - match with Select input
-const CustomPaper: FC = ({ ...props }) => <Paper elevation={8} {...props} />;
+const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
 
-const SelectProjectInput: FC<{
-    disabled?: boolean;
-    options: IAutocompleteBoxOption[];
-    defaultValue: string[];
-    onChange: (value: string[]) => void;
-    onFocus?: () => void;
-    error?: string;
-}> = ({
+export const SelectProjectInput = ({
     options,
     defaultValue = [ALL_PROJECTS],
     onChange,
     disabled,
     error,
     onFocus,
+}: {
+    disabled?: boolean;
+    options: IAutocompleteBoxOption[];
+    defaultValue: string[];
+    onChange: (value: string[]) => void;
+    onFocus?: () => void;
+    error?: string;
 }) => {
     const styles = useStyles();
     const [projects, setProjects] = useState<string[]>(
@@ -45,16 +46,14 @@ const SelectProjectInput: FC<{
     );
     const selectAllButton = useMemo(() => {
         const isAllSelected = projects.length === options.length;
+        const toggleSelection = () => {
+            setProjects(isAllSelected ? [] : options.map(({ value }) => value));
+        };
+
         return (
             <Box sx={{ ml: 3.5, my: 0.5 }}>
                 <Link
-                    onClick={() => {
-                        setProjects(
-                            isAllSelected
-                                ? []
-                                : options.map(({ value }) => value)
-                        );
-                    }}
+                    onClick={toggleSelection}
                     className={styles.selectOptionsLink}
                 >
                     {isAllSelected ? 'Deselect all' : 'Select all'}
@@ -62,6 +61,46 @@ const SelectProjectInput: FC<{
             </Box>
         );
     }, [projects.length, options, styles.selectOptionsLink]);
+
+    const onAllProjectsChange = (
+        e: ChangeEvent<HTMLInputElement>,
+        checked: boolean
+    ) => {
+        if (checked) {
+            selectWildcard(true);
+            onChange([ALL_PROJECTS]);
+        } else {
+            selectWildcard(false);
+            onChange(projects.includes(ALL_PROJECTS) ? [] : projects);
+        }
+    };
+
+    const renderOption = (
+        option: IAutocompleteBoxOption,
+        { selected }: AutocompleteRenderOptionState
+    ) => (
+        <>
+            <Checkbox
+                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                checkedIcon={<CheckBoxIcon fontSize="small" />}
+                checked={selected}
+                className={styles.selectOptionCheckbox}
+            />
+            {option.label}
+        </>
+    );
+
+    const renderInput = (params: AutocompleteRenderInputParams) => (
+        <TextField
+            {...params}
+            error={!!error}
+            helperText={error}
+            variant="outlined"
+            label="Projects"
+            placeholder="Select one or more projects"
+            onFocus={onFocus}
+        />
+    );
 
     return (
         <Box sx={{ mt: -1, mb: 3 }}>
@@ -71,19 +110,7 @@ const SelectProjectInput: FC<{
                     control={
                         <Checkbox
                             checked={disabled || isWildcardSelected}
-                            onChange={e => {
-                                if (e.target.checked) {
-                                    selectWildcard(true);
-                                    onChange([ALL_PROJECTS]);
-                                } else {
-                                    selectWildcard(false);
-                                    onChange(
-                                        projects.includes(ALL_PROJECTS)
-                                            ? []
-                                            : projects
-                                    );
-                                }
-                            }}
+                            onChange={onAllProjectsChange}
                         />
                     }
                     label="ALL current and future projects"
@@ -95,7 +122,7 @@ const SelectProjectInput: FC<{
                 limitTags={2}
                 options={options}
                 disableCloseOnSelect
-                getOptionLabel={({ label }: IAutocompleteBoxOption) => label}
+                getOptionLabel={({ label }) => label}
                 groupBy={() => 'Select/Deselect all'}
                 renderGroup={({ key, children }) => (
                     <Fragment key={key}>
@@ -105,35 +132,12 @@ const SelectProjectInput: FC<{
                 )}
                 fullWidth
                 PaperComponent={CustomPaper}
-                renderOption={(
-                    option: IAutocompleteBoxOption,
-                    { selected }
-                ) => (
-                    <>
-                        <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            checked={selected}
-                            className={styles.selectOptionCheckbox}
-                        />
-                        {option.label}
-                    </>
-                )}
-                renderInput={params => (
-                    <TextField
-                        {...params}
-                        error={!!error}
-                        helperText={error}
-                        variant="outlined"
-                        label="Projects"
-                        placeholder="Select one or more projects"
-                        onFocus={onFocus}
-                    />
-                )}
+                renderOption={renderOption}
+                renderInput={renderInput}
                 value={
                     isWildcardSelected || disabled
                         ? options
-                        : options.filter((option: IAutocompleteBoxOption) =>
+                        : options.filter(option =>
                               projects.includes(option.value)
                           )
                 }
@@ -146,5 +150,3 @@ const SelectProjectInput: FC<{
         </Box>
     );
 };
-
-export default SelectProjectInput;

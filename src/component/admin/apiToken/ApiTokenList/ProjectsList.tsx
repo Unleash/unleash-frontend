@@ -1,9 +1,12 @@
-import React, { FC, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const ProjectsList: FC<{ project?: string; projects?: string | string[] }> = ({
+export const ProjectsList = ({
     projects,
     project,
+}: {
+    project?: string;
+    projects?: string | string[];
 }) => {
     let fields = projects && Array.isArray(projects) ? projects : [project];
 
@@ -22,4 +25,3 @@ const ProjectsList: FC<{ project?: string; projects?: string | string[] }> = ({
         </>
     );
 };
-export default ProjectsList;

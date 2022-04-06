@@ -6,7 +6,8 @@ import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './ApiTokenForm.styles';
-import SelectProjectInput from './SelectProjectInput';
+import { SelectProjectInput } from './SelectProjectInput';
+import { ApiTokenFormErrorType } from '../hooks/useApiTokenForm';
 interface IApiTokenFormProps {
     username: string;
     type: string;
@@ -20,8 +21,9 @@ interface IApiTokenFormProps {
     handleCancel: () => void;
     errors: { [key: string]: string };
     mode: 'Create' | 'Edit';
-    clearErrors: (error?: 'username' | 'projects') => void;
+    clearErrors: (error?: ApiTokenFormErrorType) => void;
 }
+
 const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     children,
     username,

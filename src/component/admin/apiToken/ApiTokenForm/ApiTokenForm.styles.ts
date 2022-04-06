@@ -48,5 +48,5 @@ export const useStyles = makeStyles(theme => ({
     },
     selectOptionCheckbox: {
         marginRight: '0.2rem',
-    }
+    },
 }));
