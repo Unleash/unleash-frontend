@@ -35,5 +35,4 @@ test('should render password auth', async () => {
     );
 
     await screen.findByTestId(INVALID_TOKEN_BUTTON);
-    expect(document.body).toMatchSnapshot();
 });

@@ -12,5 +12,4 @@ test('should render password auth', async () => {
     );
 
     await screen.findByTestId(FORGOTTEN_PASSWORD_FIELD);
-    expect(document.body).toMatchSnapshot();
 });

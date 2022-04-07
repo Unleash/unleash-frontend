@@ -44,7 +44,6 @@ test('should render password auth', async () => {
     await screen.findByTestId(LOGIN_PASSWORD_ID);
     await screen.findByTestId(LOGIN_EMAIL_ID);
     await screen.findByTestId(LOGIN_BUTTON);
-    expect(document.body).toMatchSnapshot();
 });
 
 test('should not render password auth if defaultHidden is true', async () => {
@@ -66,7 +65,6 @@ test('should not render password auth if defaultHidden is true', async () => {
     expect(screen.queryByTestId(LOGIN_EMAIL_ID)).toBeNull();
     expect(screen.queryByTestId(LOGIN_PASSWORD_ID)).toBeNull();
     expect(screen.queryByTestId(LOGIN_BUTTON)).toBeNull();
-    expect(document.body).toMatchSnapshot();
 });
 
 test('should render demo auth', async () => {
@@ -88,7 +86,6 @@ test('should render demo auth', async () => {
     expect(screen.getByTestId(LOGIN_EMAIL_ID)).not.toBeNull();
     expect(screen.queryByTestId(LOGIN_PASSWORD_ID)).toBeNull();
     expect(screen.getByTestId(LOGIN_BUTTON)).not.toBeNull();
-    expect(document.body).toMatchSnapshot();
 });
 
 test('should render email auth', async () => {
@@ -110,7 +107,6 @@ test('should render email auth', async () => {
     expect(screen.getByTestId(LOGIN_EMAIL_ID)).not.toBeNull();
     expect(screen.queryByTestId(LOGIN_PASSWORD_ID)).toBeNull();
     expect(screen.getByTestId(LOGIN_BUTTON)).not.toBeNull();
-    expect(document.body).toMatchSnapshot();
 });
 
 test('should render Google auth', async () => {
@@ -148,5 +144,4 @@ const testSSOAuthOption = async (authOption: string) => {
     expect(screen.queryByTestId(LOGIN_EMAIL_ID)).toBeNull();
     expect(screen.queryByTestId(LOGIN_PASSWORD_ID)).toBeNull();
     expect(screen.queryByTestId(LOGIN_BUTTON)).toBeNull();
-    expect(document.body).toMatchSnapshot();
 };
