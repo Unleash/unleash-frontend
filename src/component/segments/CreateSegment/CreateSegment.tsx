@@ -12,6 +12,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useSegmentForm } from '../hooks/useSegmentForm';
 import { SegmentForm } from '../SegmentForm/SegmentForm';
 import { feedbackCESContext } from 'component/feedback/FeedbackCESContext/FeedbackCESContext';
+import { SEGMENT_CREATE_BTN_ID } from 'utils/testIds';
 
 export const CreateSegment = () => {
     const { uiConfig } = useUiConfig();
@@ -91,6 +92,7 @@ export const CreateSegment = () => {
                     name="segment"
                     permission={CREATE_SEGMENT}
                     disabled={!hasValidConstraints}
+                    data-test={SEGMENT_CREATE_BTN_ID}
                 />
             </SegmentForm>
         </FormTemplate>

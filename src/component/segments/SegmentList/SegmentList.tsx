@@ -27,6 +27,7 @@ import HeaderTitle from 'component/common/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SegmentDelete } from '../SegmentDelete/SegmentDelete';
+import { NAVIGATE_TO_CREATE_SEGMENT } from 'utils/testIds';
 
 export const SegmentsList = () => {
     const history = useHistory();
@@ -100,6 +101,7 @@ export const SegmentsList = () => {
                         <PermissionButton
                             onClick={() => history.push('/segments/create')}
                             permission={CREATE_SEGMENT}
+                            data-test={NAVIGATE_TO_CREATE_SEGMENT}
                         >
                             New Segment
                         </PermissionButton>

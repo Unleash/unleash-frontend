@@ -17,6 +17,7 @@ import {
     segmentsFormDescription,
 } from 'component/segments/CreateSegment/CreateSegment';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
+import { SEGMENT_SAVE_BTN_ID } from 'utils/testIds';
 
 export const EditSegment = () => {
     const segmentId = useRequiredPathParam('segmentId');
@@ -96,6 +97,7 @@ export const EditSegment = () => {
                 <UpdateButton
                     permission={UPDATE_SEGMENT}
                     disabled={!hasValidConstraints}
+                    data-test={SEGMENT_SAVE_BTN_ID}
                 />
             </SegmentForm>
         </FormTemplate>
