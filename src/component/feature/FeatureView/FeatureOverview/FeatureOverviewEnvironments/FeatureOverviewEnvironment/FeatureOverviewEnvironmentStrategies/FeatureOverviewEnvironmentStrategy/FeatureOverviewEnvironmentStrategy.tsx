@@ -51,7 +51,6 @@ const FeatureOverviewEnvironmentStrategy = ({
                         permission={UPDATE_FEATURE_STRATEGY}
                         environmentId={environmentId}
                         projectId={projectId}
-                        // @ts-expect-error
                         component={Link}
                         to={editStrategyPath}
                     >
@@ -66,7 +65,6 @@ const FeatureOverviewEnvironmentStrategy = ({
                     />
                 </div>
             </div>
-
             <div className={styles.body}>
                 <FeatureOverviewExecution
                     parameters={parameters}

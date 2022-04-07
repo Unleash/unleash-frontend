@@ -50,26 +50,9 @@ import { CreateUnleashContextPage } from 'component/context/CreateUnleashContext
 import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
-import { FunctionComponent } from 'react';
+import { IRoute } from 'interfaces/route';
 
-interface Route {
-    path: string;
-    title: string;
-    type: string;
-    layout?: string;
-    parent?: string;
-    flag?: string;
-    hidden?: Boolean;
-    component: FunctionComponent;
-
-    menu: {
-        mobile?: boolean;
-        advanced?: boolean;
-        adminSettings?: boolean;
-    };
-}
-
-export const routes: Route[] = [
+export const routes: IRoute[] = [
     // Splash
     {
         path: '/splash/:splashId',
@@ -462,6 +445,15 @@ export const routes: Route[] = [
         menu: {},
     },
     {
+        path: '/admin/roles',
+        parent: '/admin',
+        title: 'Project Roles',
+        component: ProjectRoles,
+        type: 'protected',
+        flag: RE,
+        menu: { adminSettings: true },
+    },
+    {
         path: '/admin/auth',
         parent: '/admin',
         title: 'Single Sign-On',
@@ -475,15 +467,6 @@ export const routes: Route[] = [
         component: AdminInvoice,
         hidden: true,
         type: 'protected',
-        menu: { adminSettings: true },
-    },
-    {
-        path: '/admin/roles',
-        parent: '/admin',
-        title: 'Project Roles',
-        component: ProjectRoles,
-        type: 'protected',
-        flag: RE,
         menu: { adminSettings: true },
     },
     {

@@ -27,6 +27,7 @@ import HeaderTitle from 'component/common/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SegmentDelete } from '../SegmentDelete/SegmentDelete';
+import { SegmentDocsWarning } from 'component/segments/SegmentDocs/SegmentDocs';
 import { NAVIGATE_TO_CREATE_SEGMENT } from 'utils/testIds';
 
 export const SegmentsList = () => {
@@ -109,6 +110,9 @@ export const SegmentsList = () => {
                 />
             }
         >
+            <div className={styles.docs}>
+                <SegmentDocsWarning />
+            </div>
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableRow}>
