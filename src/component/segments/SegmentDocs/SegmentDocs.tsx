@@ -14,7 +14,7 @@ export const SegmentDocsWarning = () => {
                 Segments is an experimental feature available to select users.
             </p>
             <p className={styles.paragraph}>
-                This feature is currently in development and future versions may
+                This feature is currently in development. Future versions may
                 require to update your SDKs.
             </p>
             <p className={styles.paragraph}>
