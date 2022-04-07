@@ -23,9 +23,9 @@ describe('auth', () => {
         }).as('passwordLogin');
 
         cy.wait(1000);
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').type('admin');
-        cy.get('[data-test="LOGIN_PASSWORD_ID"]').type('unleash4all');
-        cy.get("[data-test='LOGIN_BUTTON']").click();
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').type('admin');
+        cy.get('[data-testid="LOGIN_PASSWORD_ID"]').type('unleash4all');
+        cy.get("[data-testid='LOGIN_BUTTON']").click();
     });
 
     it('renders does not render password login if defaultHidden is true', () => {
@@ -41,8 +41,8 @@ describe('auth', () => {
         });
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
-        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_PASSWORD_ID"]').should('not.exist');
     });
 
     it('renders google auth when options are specified', () => {
@@ -66,10 +66,10 @@ describe('auth', () => {
         });
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
-        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_PASSWORD_ID"]').should('not.exist');
 
-        cy.get('[data-test="SSO_LOGIN_BUTTON-google"]')
+        cy.get('[data-testid="SSO_LOGIN_BUTTON-google"]')
             .should('exist')
             .should('have.attr', 'href', ssoPath);
     });
@@ -95,10 +95,10 @@ describe('auth', () => {
         });
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
-        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_PASSWORD_ID"]').should('not.exist');
 
-        cy.get('[data-test="SSO_LOGIN_BUTTON-oidc"]')
+        cy.get('[data-testid="SSO_LOGIN_BUTTON-oidc"]')
             .should('exist')
             .should('have.attr', 'href', ssoPath);
     });
@@ -124,10 +124,10 @@ describe('auth', () => {
         });
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').should('not.exist');
-        cy.get('[data-test="LOGIN_PASSWORD_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').should('not.exist');
+        cy.get('[data-testid="LOGIN_PASSWORD_ID"]').should('not.exist');
 
-        cy.get('[data-test="SSO_LOGIN_BUTTON-saml"]')
+        cy.get('[data-testid="SSO_LOGIN_BUTTON-saml"]')
             .should('exist')
             .should('have.attr', 'href', ssoPath);
     });
@@ -145,7 +145,9 @@ describe('auth', () => {
         });
 
         cy.visit('/forgotten-password');
-        cy.get('[data-test="FORGOTTEN_PASSWORD_FIELD"').type('me@myemail.com');
+        cy.get('[data-testid="FORGOTTEN_PASSWORD_FIELD"').type(
+            'me@myemail.com'
+        );
     });
 
     it('renders demo auth correctly', () => {
@@ -167,8 +169,8 @@ describe('auth', () => {
         }).as('passwordLogin');
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').type(email);
-        cy.get("[data-test='LOGIN_BUTTON']").click();
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').type(email);
+        cy.get("[data-testid='LOGIN_BUTTON']").click();
     });
 
     it('renders email auth correctly', () => {
@@ -190,12 +192,12 @@ describe('auth', () => {
         }).as('passwordLogin');
 
         cy.visit('/');
-        cy.get('[data-test="LOGIN_EMAIL_ID"]').type(email);
-        cy.get("[data-test='LOGIN_BUTTON']").click();
+        cy.get('[data-testid="LOGIN_EMAIL_ID"]').type(email);
+        cy.get("[data-testid='LOGIN_BUTTON']").click();
     });
 
     it('renders invalid token page when token is invalid', () => {
         cy.visit('/new-user?token=hellotokenworld');
-        cy.get('[data-test="INVALID_TOKEN_BUTTON"]').should('be.visible');
+        cy.get('[data-testid="INVALID_TOKEN_BUTTON"]').should('be.visible');
     });
 });
