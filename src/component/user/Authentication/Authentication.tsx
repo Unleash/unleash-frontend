@@ -14,16 +14,20 @@ import useQueryParams from 'hooks/useQueryParams';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
 import { useAuthDetails } from 'hooks/api/getters/useAuth/useAuthDetails';
+import { AUTH_PAGE_ID } from 'utils/testIds';
 
 interface IAuthenticationProps {
     redirect: string;
 }
+
 const Authentication = ({ redirect }: IAuthenticationProps) => {
     const { authDetails } = useAuthDetails();
     const params = useQueryParams();
-
     const error = params.get('errorMsg');
-    if (!authDetails) return null;
+
+    if (!authDetails) {
+        return null;
+    }
 
     let content;
     if (authDetails.type === PASSWORD_TYPE) {
@@ -53,8 +57,9 @@ const Authentication = ({ redirect }: IAuthenticationProps) => {
     } else {
         content = <AuthenticationCustomComponent authDetails={authDetails} />;
     }
+
     return (
-        <>
+        <div data-testid={AUTH_PAGE_ID}>
             <div style={{ maxWidth: '350px' }}>
                 <ConditionallyRender
                     condition={Boolean(error)}
@@ -62,7 +67,7 @@ const Authentication = ({ redirect }: IAuthenticationProps) => {
                 />
             </div>
             {content}
-        </>
+        </div>
     );
 };
 
