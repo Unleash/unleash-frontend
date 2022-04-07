@@ -17,7 +17,7 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
-          env: AUTH_USER=test@unleash-e2e.com
+          env: AUTH_USER=admin,AUTH_PASSWORD=unleash4all
           config: baseUrl=${{ github.event.deployment_status.target_url }}
           record: true
           spec: cypress/integration/segments/segments.spec.ts
