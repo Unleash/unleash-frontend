@@ -12,6 +12,10 @@ export const ProjectsList: VFC<IProjectsListProps> = ({
 }) => {
     let fields = projects && Array.isArray(projects) ? projects : [project];
 
+    if (fields.length === 0) {
+        return <>*</>;
+    }
+
     return (
         <>
             {fields.map((item, index) => (

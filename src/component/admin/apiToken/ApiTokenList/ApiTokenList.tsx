@@ -32,7 +32,7 @@ import { Alert } from '@material-ui/lab';
 import copy from 'copy-to-clipboard';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
-import { ProjectsList } from './ProjectsList';
+import { ProjectsList } from './ProjectsList/ProjectsList';
 
 interface IApiToken {
     createdAt: Date;
