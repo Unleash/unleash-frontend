@@ -59,15 +59,15 @@ const Authentication = ({ redirect }: IAuthenticationProps) => {
     }
 
     return (
-        <div data-testid={AUTH_PAGE_ID}>
-            <div style={{ maxWidth: '350px' }}>
+        <>
+            <div style={{ maxWidth: '350px' }} data-testid={AUTH_PAGE_ID}>
                 <ConditionallyRender
                     condition={Boolean(error)}
                     show={<Alert severity="error">{error}</Alert>}
                 />
             </div>
             {content}
-        </div>
+        </>
     );
 };
 
