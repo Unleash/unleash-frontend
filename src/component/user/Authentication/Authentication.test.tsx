@@ -1,6 +1,5 @@
 import Authentication from 'component/user/Authentication/Authentication';
 import { render, screen } from '@testing-library/react';
-import { setupServer } from 'msw/node';
 import {
     LOGIN_PASSWORD_ID,
     LOGIN_EMAIL_ID,
@@ -9,24 +8,13 @@ import {
     SSO_LOGIN_BUTTON,
 } from 'utils/testIds';
 import React from 'react';
-import { TestContext, mswPathResponse } from 'utils/testUtils';
+import { TestContext } from 'utils/testContext';
+import { testServerSetup, testServerRoute } from 'utils/testServer';
 
-const server = setupServer();
-
-beforeAll(() => {
-    server.listen();
-});
-
-afterAll(() => {
-    server.close();
-});
-
-afterEach(() => {
-    server.resetHandlers();
-});
+const server = testServerSetup();
 
 test('should render password auth', async () => {
-    mswPathResponse(server, '*', {
+    testServerRoute(server, '*', {
         defaultHidden: false,
         message: 'You must sign in in order to use Unleash',
         path: '/auth/simple/login',
@@ -47,7 +35,7 @@ test('should render password auth', async () => {
 });
 
 test('should not render password auth if defaultHidden is true', async () => {
-    mswPathResponse(server, '*', {
+    testServerRoute(server, '*', {
         defaultHidden: true,
         message: 'You must sign in in order to use Unleash',
         path: '/auth/simple/login',
@@ -68,7 +56,7 @@ test('should not render password auth if defaultHidden is true', async () => {
 });
 
 test('should render demo auth', async () => {
-    mswPathResponse(server, '*', {
+    testServerRoute(server, '*', {
         defaultHidden: false,
         message: 'You must sign in in order to use Unleash',
         path: '/auth/demo/login',
@@ -89,7 +77,7 @@ test('should render demo auth', async () => {
 });
 
 test('should render email auth', async () => {
-    mswPathResponse(server, '*', {
+    testServerRoute(server, '*', {
         defaultHidden: false,
         message: 'You must sign in in order to use Unleash',
         path: '/auth/unsecure/login',
@@ -125,7 +113,7 @@ const testSSOAuthOption = async (authOption: string) => {
     const path = `/auth/${authOption}/login`;
     const testId = `${SSO_LOGIN_BUTTON}-${authOption}`;
 
-    mswPathResponse(server, '*', {
+    testServerRoute(server, '*', {
         defaultHidden: true,
         message: 'You must sign in in order to use Unleash',
         options: [{ type: authOption, message: '...', path: path }],

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { FORGOTTEN_PASSWORD_FIELD } from 'utils/testIds';
 import React from 'react';
-import { TestContext } from 'utils/testUtils';
+import { TestContext } from 'utils/testContext';
 import ForgottenPassword from 'component/user/ForgottenPassword/ForgottenPassword';
 
 test('should render password auth', async () => {

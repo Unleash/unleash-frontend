@@ -1,28 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { setupServer } from 'msw/node';
 import { INVALID_TOKEN_BUTTON } from 'utils/testIds';
 import React from 'react';
-import { TestContext, mswPathResponse } from 'utils/testUtils';
+import { TestContext } from 'utils/testContext';
 import ResetPassword from 'component/user/ResetPassword/ResetPassword';
 import { MemoryRouter } from 'react-router-dom';
 import { INVALID_TOKEN_ERROR } from 'hooks/api/getters/useResetPassword/useResetPassword';
+import { testServerSetup, testServerRoute } from 'utils/testServer';
 
-const server = setupServer();
-
-beforeAll(() => {
-    server.listen();
-});
-
-afterAll(() => {
-    server.close();
-});
-
-afterEach(() => {
-    server.resetHandlers();
-});
+const server = testServerSetup();
 
 test('should render password auth', async () => {
-    mswPathResponse(server, '/auth/reset/validate', {
+    testServerRoute(server, '/auth/reset/validate', {
         name: INVALID_TOKEN_ERROR,
     });
 
