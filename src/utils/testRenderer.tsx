@@ -1,10 +1,10 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
 
-export const render = async (
+export const render = (
     ui: JSX.Element,
     {
-        route = '/list',
+        route = '/',
         ...renderOptions
     }: { route?: string } & Omit<RenderOptions, 'queries'> = {}
 ) => {

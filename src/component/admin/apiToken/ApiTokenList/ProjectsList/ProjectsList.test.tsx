@@ -5,7 +5,7 @@ import { ProjectsList } from './ProjectsList';
 
 describe('ProjectsList', () => {
     it('should prioritize new "projects" array over deprecated "project"', async () => {
-        await render(
+        render(
             <ProjectsList
                 project="project"
                 projects={['project1', 'project2']}
@@ -21,7 +21,7 @@ describe('ProjectsList', () => {
     });
 
     it('should render correctly with single "project"', async () => {
-        await render(<ProjectsList project="project" />);
+        render(<ProjectsList project="project" />);
 
         const links = await screen.findAllByRole('link');
         expect(links).toHaveLength(1);
@@ -29,21 +29,19 @@ describe('ProjectsList', () => {
     });
 
     it('should have comma between project links', async () => {
-        const { container } = await render(
-            <ProjectsList projects={['a', 'b']} />
-        );
+        const { container } = render(<ProjectsList projects={['a', 'b']} />);
 
         expect(container.textContent).toContain(', ');
     });
 
     it('should render asterisk if no projects are passed', async () => {
-        const { container } = await render(<ProjectsList />);
+        const { container } = render(<ProjectsList />);
 
         expect(container.textContent).toEqual('*');
     });
 
     it('should render asterisk if empty projects array is passed', async () => {
-        const { container } = await render(<ProjectsList projects={[]} />);
+        const { container } = render(<ProjectsList projects={[]} />);
 
         expect(container.textContent).toEqual('*');
     });
