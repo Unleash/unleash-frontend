@@ -23,7 +23,7 @@ const ALL_PROJECTS = '*';
 // Fix for shadow under Autocomplete - match with Select input
 const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
 
-interface ISelectProjectInputProps {
+export interface ISelectProjectInputProps {
     disabled?: boolean;
     options: IAutocompleteBoxOption[];
     defaultValue: string[];
@@ -100,14 +100,18 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
             label="Projects"
             placeholder="Select one or more projects"
             onFocus={onFocus}
+            data-testid="select-input"
         />
     );
 
     return (
         <Box sx={{ mt: -1, mb: 3 }}>
-            <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
+            <Box
+                sx={{ mt: 1, mb: 0.25, ml: 1.5 }}
+            >
                 <FormControlLabel
                     disabled={disabled}
+                    data-testid="select-all-projects"
                     control={
                         <Checkbox
                             checked={disabled || isWildcardSelected}
