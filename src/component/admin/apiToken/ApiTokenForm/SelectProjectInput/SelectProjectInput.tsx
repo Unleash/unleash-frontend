@@ -106,9 +106,7 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
 
     return (
         <Box sx={{ mt: -1, mb: 3 }}>
-            <Box
-                sx={{ mt: 1, mb: 0.25, ml: 1.5 }}
-            >
+            <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
                 <FormControlLabel
                     disabled={disabled}
                     data-testid="select-all-projects"
