@@ -12,14 +12,8 @@ const onFocus = jest.fn();
 
 const mockProps: ISelectProjectInputProps = {
     options: [
-        {
-            label: 'Project1',
-            value: 'project1',
-        },
-        {
-            label: 'Project2',
-            value: 'project2',
-        },
+        { label: 'Project1', value: 'project1' },
+        { label: 'Project2', value: 'project2' },
     ],
     defaultValue: ['*'],
     onChange,

@@ -24,7 +24,7 @@ export const ProjectsList: VFC<IProjectsListProps> = ({
     return (
         <>
             {fields.map((item, index) => (
-                <Fragment key={item || '*'}>
+                <Fragment key={item}>
                     {index > 0 && ', '}
                     {!item || item === '*' ? (
                         '*'
