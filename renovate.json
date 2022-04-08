@@ -6,5 +6,10 @@
       "matchPackagePatterns": ["*"],
       "automerge": true
     }
+  ],
+  "draftPR": true,
+  "timezone": "Europe/Oslo",
+  "schedule": [
+    "before 8am on Friday"
   ]
 }
