@@ -7,7 +7,8 @@ import ConditionallyRender from 'component/common/ConditionallyRender';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { Alert } from '@material-ui/lab';
 import HeaderTitle from 'component/common/HeaderTitle';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { Search, FilterList } from '@material-ui/icons';
 import { useStyles } from './UserAdmin.styles';
 import { useHistory } from 'react-router-dom';
 
@@ -28,15 +29,36 @@ const UsersAdmin = () => {
                             <ConditionallyRender
                                 condition={hasAccess(ADMIN)}
                                 show={
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() =>
-                                            history.push('/admin/create-user')
-                                        }
-                                    >
-                                        New user
-                                    </Button>
+                                    <>
+                                        <IconButton // TODO: Consider moving these actions to a new component. Maybe TableActions or something.
+                                            aria-label="Search users"
+                                            title="Search users"
+                                            onClick={() => {}}
+                                        >
+                                            <Search />
+                                        </IconButton>
+                                        <IconButton
+                                            aria-label="Filter users"
+                                            title="Filter users"
+                                            onClick={() => {}}
+                                        >
+                                            <FilterList />
+                                        </IconButton>
+                                        <div
+                                            className={styles.verticalSeparator}
+                                        ></div>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() =>
+                                                history.push(
+                                                    '/admin/create-user'
+                                                )
+                                            }
+                                        >
+                                            New user
+                                        </Button>
+                                    </>
                                 }
                                 elseShow={
                                     <small>

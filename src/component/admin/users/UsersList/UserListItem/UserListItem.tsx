@@ -5,6 +5,7 @@ import {
     TableRow,
     Typography,
 } from '@material-ui/core';
+import classnames from 'classnames';
 import { Delete, Edit, Lock } from '@material-ui/icons';
 import { SyntheticEvent, useContext } from 'react';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
@@ -37,32 +38,35 @@ const UserListItem = ({
 
     return (
         <TableRow key={user.id} className={styles.tableRow}>
-            <TableCell className={styles.hideXS}>
-                <Avatar
-                    data-loading
-                    alt={user.name}
-                    src={user.imageUrl}
-                    title={`${user.name || user.email || user.username} (id: ${
-                        user.id
-                    })`}
-                />
-            </TableCell>
             <TableCell className={styles.hideSM}>
                 <span data-loading>
                     {formatDateYMD(user.createdAt, locationSettings.locale)}
                 </span>
+            </TableCell>
+            <TableCell align="center" className={styles.hideXS}>
+                <Avatar
+                    data-loading
+                    alt={user.name}
+                    src={user.imageUrl}
+                    className={styles.marginAuto}
+                    title={`${user.name || user.email || user.username} (id: ${
+                        user.id
+                    })`}
+                />
             </TableCell>
             <TableCell className={styles.leftTableCell}>
                 <Typography variant="body2" data-loading>
                     {user.name}
                 </Typography>
             </TableCell>
-            <TableCell className={`${styles.leftTableCell} ${styles.hideSM}`}>
+            <TableCell
+                className={classnames(styles.leftTableCell, styles.hideSM)}
+            >
                 <Typography variant="body2" data-loading>
                     {user.username || user.email}
                 </Typography>
             </TableCell>
-            <TableCell align="center" className={styles.hideXS}>
+            <TableCell className={styles.hideXS}>
                 <Typography variant="body2" data-loading>
                     {renderRole(user.rootRole)}
                 </Typography>
@@ -70,7 +74,10 @@ const UserListItem = ({
             <ConditionallyRender
                 condition={hasAccess(ADMIN)}
                 show={
-                    <TableCell align="right">
+                    <TableCell
+                        align="center"
+                        className={styles.shrinkTableCell}
+                    >
                         <IconButton
                             data-loading
                             aria-label="Edit"

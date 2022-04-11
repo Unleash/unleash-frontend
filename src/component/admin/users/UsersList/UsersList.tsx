@@ -7,6 +7,12 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
+import {
+    UnfoldMoreOutlined,
+    KeyboardArrowDown,
+    KeyboardArrowUp,
+} from '@material-ui/icons'; // TODO: Move this inside TableCellSortable component
+import classnames from 'classnames';
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
 import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -26,6 +32,8 @@ import useToast from 'hooks/useToast';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useStyles } from './UserListItem/UserListItem.styles';
+import { useUsersFilter } from 'hooks/useUsersFilter';
+import { useUsersSort } from 'hooks/useUsersSort';
 
 const UsersList = () => {
     const styles = useStyles();
@@ -49,8 +57,10 @@ const UsersList = () => {
     const [inviteLink, setInviteLink] = useState('');
     const [delUser, setDelUser] = useState<IUser>();
     const ref = useLoading(loading);
+    const { filtered, filter, setFilter } = useUsersFilter(users);
+    const { sorted, sort, setSort } = useUsersSort(filtered);
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(users, 50);
+        usePagination(sorted, 50);
 
     const closeDelDialog = () => {
         setDelDialog(false);
@@ -134,17 +144,57 @@ const UsersList = () => {
         <div ref={ref}>
             <Table>
                 <TableHead>
-                    <TableRow>
-                        <TableCell className={styles.hideXS}></TableCell>
-                        <TableCell className={styles.hideSM}>Created</TableCell>
-                        <TableCell>Name</TableCell>
+                    <TableRow className={styles.tableCellHeader}>
+                        <TableCell // TODO: Create a TableCellSortable component?
+                            className={classnames(
+                                styles.hideSM,
+                                styles.shrinkTableCell,
+                                'tableCellHeaderSortable'
+                            )}
+                            onClick={() =>
+                                setSort(prev => ({
+                                    desc: !Boolean(prev.desc),
+                                    type: 'created',
+                                }))
+                            }
+                        >
+                            Created on
+                            <UnfoldMoreOutlined />
+                        </TableCell>
+                        <TableCell align="center" className={styles.hideXS}>
+                            Avatar
+                        </TableCell>
+                        <TableCell
+                            className="tableCellHeaderSortable"
+                            onClick={() =>
+                                setSort(prev => ({
+                                    desc: !Boolean(prev.desc),
+                                    type: 'created',
+                                }))
+                            }
+                        >
+                            Name
+                            <UnfoldMoreOutlined />
+                        </TableCell>
                         <TableCell className={styles.hideSM}>
                             Username
                         </TableCell>
-                        <TableCell align="center" className={styles.hideXS}>
+                        <TableCell
+                            className={classnames(
+                                styles.hideXS,
+                                'tableCellHeaderSortable'
+                            )}
+                            onClick={() =>
+                                setSort(prev => ({
+                                    desc: !Boolean(prev.desc),
+                                    type: 'role',
+                                }))
+                            }
+                        >
                             Role
+                            <UnfoldMoreOutlined />
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                             {hasAccess(ADMIN) ? 'Actions' : ''}
                         </TableCell>
                     </TableRow>
