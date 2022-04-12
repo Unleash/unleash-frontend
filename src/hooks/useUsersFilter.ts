@@ -58,4 +58,4 @@ const filterUsersByQuery = (users: IUser[], filter: IUsersFilter): IUser[] => {
 };
 
 const filterUserByRegExp = (user: IUser, regExp: RegExp): boolean =>
-    regExp.test(user.name) || regExp.test(user.username!);
+    regExp.test(user.name) || regExp.test(user.username ?? user.email);

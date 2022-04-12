@@ -25,6 +25,10 @@ export const useStyles = makeStyles(theme => ({
             },
         },
     },
+    errorMessage: {
+        textAlign: 'center',
+        marginTop: '20vh',
+    },
     leftTableCell: {
         textAlign: 'left',
     },

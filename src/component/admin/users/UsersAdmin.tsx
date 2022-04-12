@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import UsersList from './UsersList/UsersList';
 import AdminMenu from '../menu/AdminMenu';
 import PageContent from 'component/common/PageContent/PageContent';
@@ -13,6 +13,7 @@ import { useStyles } from './UserAdmin.styles';
 import { useHistory } from 'react-router-dom';
 
 const UsersAdmin = () => {
+    const [search, setSearch] = useState('');
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
     const styles = useStyles();
@@ -29,8 +30,13 @@ const UsersAdmin = () => {
                             <ConditionallyRender
                                 condition={hasAccess(ADMIN)}
                                 show={
-                                    <>
-                                        <TableActions />
+                                    <div className={styles.tableActions}>
+                                        <TableActions
+                                            search={search}
+                                            onSearch={search =>
+                                                setSearch(search)
+                                            }
+                                        />
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -42,7 +48,7 @@ const UsersAdmin = () => {
                                         >
                                             New user
                                         </Button>
-                                    </>
+                                    </div>
                                 }
                                 elseShow={
                                     <small>
@@ -56,7 +62,7 @@ const UsersAdmin = () => {
             >
                 <ConditionallyRender
                     condition={hasAccess(ADMIN)}
-                    show={<UsersList />}
+                    show={<UsersList search={search} />}
                     elseShow={
                         <Alert severity="error">
                             You need instance admin to access this section.

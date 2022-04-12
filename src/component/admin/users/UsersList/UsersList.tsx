@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
     Table,
     TableBody,
@@ -26,12 +26,16 @@ import IRole from 'interfaces/role';
 import useToast from 'hooks/useToast';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { useStyles } from './UserListItem/UserListItem.styles';
 import { useUsersFilter } from 'hooks/useUsersFilter';
 import { useUsersSort } from 'hooks/useUsersSort';
 import { TableCellSortable } from 'component/common/Table/TableCellSortable/TableCellSortable';
+import { useStyles } from './UserListItem/UserListItem.styles';
 
-const UsersList = () => {
+interface IUsersListProps {
+    search: string;
+}
+
+const UsersList = ({ search }: IUsersListProps) => {
     const styles = useStyles();
     const { users, roles, refetch, loading } = useUsers();
     const { setToastData, setToastApiError } = useToast();
@@ -53,10 +57,14 @@ const UsersList = () => {
     const [inviteLink, setInviteLink] = useState('');
     const [delUser, setDelUser] = useState<IUser>();
     const ref = useLoading(loading);
-    const { filtered, filter, setFilter } = useUsersFilter(users);
+    const { filtered, setFilter } = useUsersFilter(users);
     const { sorted, sort, setSort } = useUsersSort(filtered);
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
         usePagination(sorted, 50);
+
+    useEffect(() => {
+        setFilter(filter => ({ ...filter, query: search }));
+    }, [search, setFilter]);
 
     const closeDelDialog = () => {
         setDelDialog(false);
@@ -190,6 +198,14 @@ const UsersList = () => {
                     prevPage={prevPage}
                 />
             </Table>
+            <ConditionallyRender
+                condition={!pages.length && search.length > 0}
+                show={
+                    <p className={styles.errorMessage}>
+                        There are no results for "{search}"
+                    </p>
+                }
+            />
             <br />
 
             <ConfirmUserAdded

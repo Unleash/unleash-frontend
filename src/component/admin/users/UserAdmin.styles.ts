@@ -6,4 +6,12 @@ export const useStyles = makeStyles(() => ({
         minHeight: '50vh',
         position: 'relative',
     },
+    tableActions: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        '&>button': {
+            flexShrink: 0,
+        },
+    },
 }));
