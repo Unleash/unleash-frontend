@@ -23,6 +23,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen-lockfile
+    - run: yarn install --frozen-lockfile --ignore-scripts
+    - run: yarn build
     - run: yarn run test
     - run: yarn run fmt:check
