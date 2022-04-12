@@ -123,6 +123,7 @@ const UsersList = ({ search }: IUsersListProps) => {
                     openDelDialog={openDelDialog}
                     locationSettings={locationSettings}
                     renderRole={renderRole}
+                    search={search}
                 />
             ));
         }
@@ -137,6 +138,7 @@ const UsersList = ({ search }: IUsersListProps) => {
                     openDelDialog={openDelDialog}
                     locationSettings={locationSettings}
                     renderRole={renderRole}
+                    search={search}
                 />
             );
         });

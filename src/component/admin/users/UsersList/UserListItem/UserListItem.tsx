@@ -13,10 +13,11 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { IUser } from 'interfaces/user';
-import { useStyles } from './UserListItem.styles';
 import { useHistory } from 'react-router-dom';
 import { ILocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
+import Highlighter from 'react-highlight-words';
+import { useStyles } from './UserListItem.styles';
 
 interface IUserListItemProps {
     user: IUser;
@@ -24,6 +25,7 @@ interface IUserListItemProps {
     openPwDialog: (user: IUser) => (e: SyntheticEvent) => void;
     openDelDialog: (user: IUser) => (e: SyntheticEvent) => void;
     locationSettings: ILocationSettings;
+    search: string;
 }
 
 const UserListItem = ({
@@ -32,6 +34,7 @@ const UserListItem = ({
     openDelDialog,
     openPwDialog,
     locationSettings,
+    search,
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
@@ -57,14 +60,34 @@ const UserListItem = ({
             </TableCell>
             <TableCell className={styles.leftTableCell}>
                 <Typography variant="body2" data-loading>
-                    {user.name}
+                    <ConditionallyRender
+                        condition={Boolean(search)}
+                        show={
+                            <Highlighter
+                                searchWords={[search]}
+                                autoEscape
+                                textToHighlight={user.name ?? ''}
+                            />
+                        }
+                        elseShow={user.name}
+                    />
                 </Typography>
             </TableCell>
             <TableCell
                 className={classnames(styles.leftTableCell, styles.hideSM)}
             >
                 <Typography variant="body2" data-loading>
-                    {user.username || user.email}
+                    <ConditionallyRender
+                        condition={Boolean(search)}
+                        show={
+                            <Highlighter
+                                searchWords={[search]}
+                                autoEscape
+                                textToHighlight={user.username || user.email}
+                            />
+                        }
+                        elseShow={user.username || user.email}
+                    />
                 </Typography>
             </TableCell>
             <TableCell className={styles.hideXS}>
