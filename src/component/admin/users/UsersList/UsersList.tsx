@@ -7,11 +7,6 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import {
-    UnfoldMoreOutlined,
-    KeyboardArrowDown,
-    KeyboardArrowUp,
-} from '@material-ui/icons'; // TODO: Move this inside TableCellSortable component
 import classnames from 'classnames';
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
@@ -34,6 +29,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useStyles } from './UserListItem/UserListItem.styles';
 import { useUsersFilter } from 'hooks/useUsersFilter';
 import { useUsersSort } from 'hooks/useUsersSort';
+import { TableCellSortable } from 'component/common/Table/TableCellSortable/TableCellSortable';
 
 const UsersList = () => {
     const styles = useStyles();
@@ -145,55 +141,41 @@ const UsersList = () => {
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableCellHeader}>
-                        <TableCell // TODO: Create a TableCellSortable component?
+                        <TableCellSortable
                             className={classnames(
                                 styles.hideSM,
-                                styles.shrinkTableCell,
-                                'tableCellHeaderSortable'
+                                styles.shrinkTableCell
                             )}
-                            onClick={() =>
-                                setSort(prev => ({
-                                    desc: !Boolean(prev.desc),
-                                    type: 'created',
-                                }))
-                            }
+                            name="created"
+                            sort={sort}
+                            setSort={setSort}
                         >
                             Created on
-                            <UnfoldMoreOutlined />
-                        </TableCell>
+                        </TableCellSortable>
                         <TableCell align="center" className={styles.hideXS}>
                             Avatar
                         </TableCell>
-                        <TableCell
-                            className="tableCellHeaderSortable"
-                            onClick={() =>
-                                setSort(prev => ({
-                                    desc: !Boolean(prev.desc),
-                                    type: 'created',
-                                }))
-                            }
+                        <TableCellSortable
+                            name="name"
+                            sort={sort}
+                            setSort={setSort}
                         >
                             Name
-                            <UnfoldMoreOutlined />
-                        </TableCell>
+                        </TableCellSortable>
                         <TableCell className={styles.hideSM}>
                             Username
                         </TableCell>
-                        <TableCell
+                        <TableCellSortable
                             className={classnames(
                                 styles.hideXS,
-                                'tableCellHeaderSortable'
+                                styles.shrinkTableCell
                             )}
-                            onClick={() =>
-                                setSort(prev => ({
-                                    desc: !Boolean(prev.desc),
-                                    type: 'role',
-                                }))
-                            }
+                            name="role"
+                            sort={sort}
+                            setSort={setSort}
                         >
                             Role
-                            <UnfoldMoreOutlined />
-                        </TableCell>
+                        </TableCellSortable>
                         <TableCell align="center">
                             {hasAccess(ADMIN) ? 'Actions' : ''}
                         </TableCell>

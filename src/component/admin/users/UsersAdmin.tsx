@@ -7,8 +7,8 @@ import ConditionallyRender from 'component/common/ConditionallyRender';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { Alert } from '@material-ui/lab';
 import HeaderTitle from 'component/common/HeaderTitle';
-import { Button, IconButton } from '@material-ui/core';
-import { Search, FilterList } from '@material-ui/icons';
+import { TableActions } from 'component/common/Table/TableActions/TableActions';
+import { Button } from '@material-ui/core';
 import { useStyles } from './UserAdmin.styles';
 import { useHistory } from 'react-router-dom';
 
@@ -30,23 +30,7 @@ const UsersAdmin = () => {
                                 condition={hasAccess(ADMIN)}
                                 show={
                                     <>
-                                        <IconButton // TODO: Consider moving these actions to a new component. Maybe TableActions or something.
-                                            aria-label="Search users"
-                                            title="Search users"
-                                            onClick={() => {}}
-                                        >
-                                            <Search />
-                                        </IconButton>
-                                        <IconButton
-                                            aria-label="Filter users"
-                                            title="Filter users"
-                                            onClick={() => {}}
-                                        >
-                                            <FilterList />
-                                        </IconButton>
-                                        <div
-                                            className={styles.verticalSeparator}
-                                        ></div>
+                                        <TableActions />
                                         <Button
                                             variant="contained"
                                             color="primary"

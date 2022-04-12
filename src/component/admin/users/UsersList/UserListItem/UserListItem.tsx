@@ -3,6 +3,7 @@ import {
     IconButton,
     TableCell,
     TableRow,
+    Tooltip,
     Typography,
 } from '@material-ui/core';
 import classnames from 'classnames';
@@ -78,32 +79,35 @@ const UserListItem = ({
                         align="center"
                         className={styles.shrinkTableCell}
                     >
-                        <IconButton
-                            data-loading
-                            aria-label="Edit"
-                            title="Edit"
-                            onClick={() =>
-                                history.push(`/admin/users/${user.id}/edit`)
-                            }
-                        >
-                            <Edit />
-                        </IconButton>
-                        <IconButton
-                            data-loading
-                            aria-label="Change password"
-                            title="Change password"
-                            onClick={openPwDialog(user)}
-                        >
-                            <Lock />
-                        </IconButton>
-                        <IconButton
-                            data-loading
-                            aria-label="Remove user"
-                            title="Remove user"
-                            onClick={openDelDialog(user)}
-                        >
-                            <Delete />
-                        </IconButton>
+                        <Tooltip title="Edit user" arrow>
+                            <IconButton
+                                data-loading
+                                aria-label="Edit user"
+                                onClick={() =>
+                                    history.push(`/admin/users/${user.id}/edit`)
+                                }
+                            >
+                                <Edit />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Change password" arrow>
+                            <IconButton
+                                data-loading
+                                aria-label="Change password"
+                                onClick={openPwDialog(user)}
+                            >
+                                <Lock />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Remove user" arrow>
+                            <IconButton
+                                data-loading
+                                aria-label="Remove user"
+                                onClick={openDelDialog(user)}
+                            >
+                                <Delete />
+                            </IconButton>
+                        </Tooltip>
                     </TableCell>
                 }
                 elseShow={<TableCell />}
