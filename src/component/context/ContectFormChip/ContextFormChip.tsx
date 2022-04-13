@@ -1,5 +1,6 @@
 import { useStyles } from 'component/context/ContectFormChip/ContextFormChip.styles';
 import { Cancel } from '@material-ui/icons';
+import ConditionallyRender from 'component/common/ConditionallyRender';
 
 interface IContextFormChipProps {
     label: string;
@@ -18,9 +19,12 @@ export const ContextFormChip = ({
         <li className={styles.container}>
             <div>
                 <div className={styles.label}>{label}</div>
-                {description && (
-                    <div className={styles.description}>{description}</div>
-                )}
+                <ConditionallyRender
+                    condition={Boolean(description)}
+                    show={() => (
+                        <div className={styles.description}>{description}</div>
+                    )}
+                />
             </div>
             <button onClick={onRemove} className={styles.button}>
                 <Cancel titleAccess="Remove" />
