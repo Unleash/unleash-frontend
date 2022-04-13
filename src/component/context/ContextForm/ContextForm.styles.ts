@@ -22,7 +22,7 @@ export const useStyles = makeStyles(theme => ({
     tagContainer: {
         display: 'grid',
         gridTemplateColumns: '1fr auto',
-        gap: '1rem',
+        gap: '0.5rem',
         marginBottom: '1rem',
     },
     tagInput: {
