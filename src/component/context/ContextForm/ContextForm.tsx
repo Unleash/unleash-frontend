@@ -20,7 +20,7 @@ interface IContextForm {
     onCancel: () => void;
     errors: { [key: string]: string };
     mode: 'Create' | 'Edit';
-    clearErrors: () => void;
+    clearErrors: (key?: string) => void;
     validateContext?: () => void;
     setErrors: React.Dispatch<React.SetStateAction<Object>>;
 }
@@ -117,7 +117,7 @@ export const ContextForm: React.FC<IContextForm> = ({
                     onChange={e => setContextName(e.target.value.trim())}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
-                    onFocus={() => clearErrors()}
+                    onFocus={() => clearErrors('name')}
                     onBlur={validateContext}
                     autoFocus
                 />

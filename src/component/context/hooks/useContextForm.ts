@@ -67,8 +67,12 @@ export const useContextForm = (
         }
     };
 
-    const clearErrors = () => {
-        setErrors({});
+    const clearErrors = (key?: string) => {
+        if (key) {
+            setErrors(prev => ({ ...prev, [key]: undefined }));
+        } else {
+            setErrors({});
+        }
     };
 
     return {
