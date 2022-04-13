@@ -171,6 +171,7 @@ export const ContextForm: React.FC<IContextForm> = ({
                         onClick={addLegalValue}
                         variant="outlined"
                         color="primary"
+                        disabled={!value.trim() || isDuplicateValue}
                     >
                         Add
                     </Button>
