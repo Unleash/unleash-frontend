@@ -50,6 +50,8 @@ export const ContextForm: React.FC<IContextForm> = ({
     const [valueDesc, setValueDesc] = useState('');
     const [valueFocused, setValueFocused] = useState(false);
 
+    const isMissingValue = valueDesc.trim() && !value.trim();
+
     const isDuplicateValue = legalValues.some(legalValue => {
         return legalValue.value.trim() === value.trim();
     });
@@ -57,9 +59,13 @@ export const ContextForm: React.FC<IContextForm> = ({
     useEffect(() => {
         setErrors(prev => ({
             ...prev,
-            tag: isDuplicateValue ? 'Duplicate value' : undefined,
+            tag: isMissingValue
+                ? 'Value cannot be empty'
+                : isDuplicateValue
+                ? 'Duplicate value'
+                : undefined,
         }));
-    }, [setErrors, isDuplicateValue]);
+    }, [setErrors, isMissingValue, isDuplicateValue]);
 
     const onSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
