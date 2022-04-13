@@ -52,7 +52,7 @@ const UserListItem = ({
                     data-loading
                     alt={user.name}
                     src={user.imageUrl}
-                    className={styles.marginAuto}
+                    className={styles.avatar}
                     title={`${user.name || user.email || user.username} (id: ${
                         user.id
                     })`}

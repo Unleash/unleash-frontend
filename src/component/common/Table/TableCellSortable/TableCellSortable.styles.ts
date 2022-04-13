@@ -5,15 +5,21 @@ export const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         '&:hover': {
             backgroundColor: '#e6e6e9', // Should be a variable similar to theme.palette.grey[70] TODO: fix this color
+            '& > svg': {
+                color: '#000',
+            },
         },
-        '&>svg': {
-            fontSize: '17px',
+        '& > svg': {
+            fontSize: '18px',
             verticalAlign: 'middle',
             color: '#78787A',
-            marginLeft: '2px',
+            marginLeft: '4px',
         },
-    },
-    tableCellHeaderSortableSorted: {
-        fontWeight: 'bold',
+        '&.sorted': {
+            fontWeight: 'bold',
+            '& > svg': {
+                color: '#000',
+            },
+        },
     },
 }));

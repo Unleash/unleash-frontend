@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     tableRow: {
-        '&>td': {
+        '& > td': {
             padding: '4px 16px',
             borderColor: '#EAEAED',
         },
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     tableCellHeader: {
-        '&>th': {
+        '& > th': {
             backgroundColor: '#F2F2F5', // Should be a variable similar to theme.palette.grey[200] / theme.palette.grey[20]
             fontWeight: 'normal',
             border: 0,
@@ -36,7 +36,9 @@ export const useStyles = makeStyles(theme => ({
         whiteSpace: 'nowrap',
         width: '0.1%',
     },
-    marginAuto: {
+    avatar: {
+        width: '32px',
+        height: '32px',
         margin: 'auto',
     },
     hideSM: {

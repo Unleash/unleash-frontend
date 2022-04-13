@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { Search, FilterList } from '@material-ui/icons';
+import { Search } from '@material-ui/icons';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { TableSearchField } from 'component/common/Table/TableActions/TableSearchField/TableSearchField';
@@ -13,28 +13,36 @@ interface ITableActionsProps {
 
 export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
     const [searchExpanded, setSearchExpanded] = useState(false);
+    const [animating, setAnimating] = useState(false);
 
     const styles = useStyles();
 
+    const onBlur = (clear = false) => {
+        if (!search || clear) {
+            setSearchExpanded(false);
+        }
+    };
+
     return (
         <>
+            <AnimateOnMount
+                mounted={searchExpanded}
+                start={styles.fieldWidth}
+                enter={styles.fieldWidthEnter}
+                leave={styles.fieldWidthLeave}
+                onStart={() => setAnimating(true)}
+                onEnd={() => setAnimating(false)}
+            >
+                <TableSearchField
+                    value={search}
+                    onChange={onSearch}
+                    placeholder="Search users..."
+                    onBlur={onBlur}
+                />
+            </AnimateOnMount>
             <ConditionallyRender
-                condition={searchExpanded}
+                condition={!searchExpanded && !animating}
                 show={
-                    <AnimateOnMount
-                        mounted={searchExpanded}
-                        start={styles.fieldWidth}
-                        enter={styles.fieldWidthEnter}
-                        leave={styles.fieldWidthLeave}
-                    >
-                        <TableSearchField
-                            value={search}
-                            onChange={onSearch}
-                            placeholder="Search users..."
-                        />
-                    </AnimateOnMount>
-                }
-                elseShow={
                     <Tooltip title="Search users" arrow>
                         <IconButton
                             aria-label="Search users"
@@ -45,12 +53,6 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
                     </Tooltip>
                 }
             />
-
-            <Tooltip title="Filter users" arrow>
-                <IconButton aria-label="Filter users" onClick={() => {}}>
-                    <FilterList />
-                </IconButton>
-            </Tooltip>
             <div className={styles.verticalSeparator}></div>
         </>
     );

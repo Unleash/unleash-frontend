@@ -9,6 +9,7 @@ interface ITableSearchFieldProps {
     onChange: (value: string) => void;
     className?: string;
     placeholder?: string;
+    onBlur?: (clear?: boolean) => void;
 }
 
 export const TableSearchField = ({
@@ -16,23 +17,40 @@ export const TableSearchField = ({
     onChange,
     className,
     placeholder,
+    onBlur,
 }: ITableSearchFieldProps) => {
     const styles = useStyles();
     const placeholderText = placeholder ?? 'Search...';
 
     return (
         <div className={styles.container}>
-            <div className={classnames(styles.search, className)}>
-                <Search className={styles.searchIcon} />
+            <div
+                className={classnames(
+                    styles.search,
+                    className,
+                    'search-container'
+                )}
+            >
+                <Search
+                    className={classnames(styles.searchIcon, 'search-icon')}
+                />
                 <InputBase
                     autoFocus
                     placeholder={placeholderText}
-                    classes={{ root: styles.inputRoot }}
+                    classes={{
+                        root: classnames(styles.inputRoot, 'input-container'),
+                    }}
                     inputProps={{ 'aria-label': placeholderText }}
                     value={value}
                     onChange={e => onChange(e.target.value)}
+                    onBlur={() => onBlur?.()}
                 />
-                <div className={styles.clearContainer}>
+                <div
+                    className={classnames(
+                        styles.clearContainer,
+                        'clear-container'
+                    )}
+                >
                     <ConditionallyRender
                         condition={Boolean(value)}
                         show={
@@ -40,7 +58,10 @@ export const TableSearchField = ({
                                 <IconButton
                                     size="small"
                                     aria-label="Clear search query"
-                                    onClick={() => onChange('')}
+                                    onClick={() => {
+                                        onChange('');
+                                        onBlur?.(true);
+                                    }}
                                 >
                                     <Close className={styles.clearIcon} />
                                 </IconButton>

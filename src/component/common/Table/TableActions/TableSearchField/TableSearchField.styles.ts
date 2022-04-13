@@ -19,8 +19,8 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             width: '100%',
         },
-        '&:focus-within': {
-            border: `1px solid ${theme.palette.primary.light}`,
+        '&.search-container:focus-within': {
+            borderColor: theme.palette.primary.light,
         },
     },
     searchIcon: {

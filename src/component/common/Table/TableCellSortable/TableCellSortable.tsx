@@ -34,9 +34,9 @@ export const TableCellSortable = ({
     return (
         <TableCell
             className={classnames(
+                className,
                 styles.tableCellHeaderSortable,
-                sort.type === name && styles.tableCellHeaderSortableSorted,
-                className
+                sort.type === name && 'sorted'
             )}
             onClick={() =>
                 setSort(prev => ({
