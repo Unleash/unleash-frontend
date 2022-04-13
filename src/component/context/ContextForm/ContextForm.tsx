@@ -1,9 +1,8 @@
 import Input from 'component/common/Input/Input';
 import { TextField, Button, Switch, Typography } from '@material-ui/core';
 import { useStyles } from './ContextForm.styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Add } from '@material-ui/icons';
-import { trim } from 'component/common/util';
 import { ILegalValue } from 'interfaces/context';
 import { ContextFormChip } from 'component/context/ContectFormChip/ContextFormChip';
 import { ContextFormChipList } from 'component/context/ContectFormChip/ContextFormChipList';
@@ -49,20 +48,32 @@ export const ContextForm: React.FC<IContextForm> = ({
     const styles = useStyles();
     const [value, setValue] = useState('');
     const [valueDesc, setValueDesc] = useState('');
-    const [focused, setFocused] = useState(false);
+    const [valueFocused, setValueFocused] = useState(false);
 
-    const submit = (event: React.SyntheticEvent) => {
+    const isDuplicateValue = legalValues.some(legalValue => {
+        return legalValue.value.trim() === value.trim();
+    });
+
+    useEffect(() => {
+        setErrors(prev => ({
+            ...prev,
+            tag: isDuplicateValue ? 'Duplicate value' : undefined,
+        }));
+    }, [setErrors, isDuplicateValue]);
+
+    const onSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        if (focused) return;
         handleSubmit(event);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === ENTER && focused) {
-            addLegalValue();
-            return;
-        } else if (event.key === ENTER) {
-            handleSubmit(event);
+    const onKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === ENTER) {
+            event.preventDefault();
+            if (valueFocused) {
+                addLegalValue();
+            } else {
+                handleSubmit(event);
+            }
         }
     };
 
@@ -71,23 +82,14 @@ export const ContextForm: React.FC<IContextForm> = ({
     };
 
     const addLegalValue = () => {
-        clearErrors();
-
-        const nextValue: ILegalValue = {
-            value: trim(value),
-            description: trim(valueDesc),
+        const next: ILegalValue = {
+            value: value.trim(),
+            description: valueDesc.trim(),
         };
-
-        const isDuplicateValue = legalValues.some(legalValue => {
-            return legalValue.value === nextValue.value;
-        });
-
-        if (isDuplicateValue) {
-            setErrors(prev => ({ ...prev, tag: 'Duplicate value' }));
-        } else if (nextValue.value) {
-            setLegalValues(prev => [...prev, nextValue].sort(sortLegalValues));
+        if (next.value && !isDuplicateValue) {
             setValue('');
             setValueDesc('');
+            setLegalValues(prev => [...prev, next].sort(sortLegalValues));
         }
     };
 
@@ -96,7 +98,7 @@ export const ContextForm: React.FC<IContextForm> = ({
     };
 
     return (
-        <form onSubmit={submit} className={styles.form}>
+        <form onSubmit={onSubmit} className={styles.form}>
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
                     What is your context name?
@@ -106,7 +108,7 @@ export const ContextForm: React.FC<IContextForm> = ({
                     label="Context name"
                     value={contextName}
                     disabled={mode === 'Edit'}
-                    onChange={e => setContextName(trim(e.target.value))}
+                    onChange={e => setContextName(e.target.value.trim())}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
@@ -140,9 +142,9 @@ export const ContextForm: React.FC<IContextForm> = ({
                         variant="outlined"
                         size="small"
                         onChange={e => setValue(e.target.value)}
-                        onKeyPress={e => handleKeyDown(e)}
-                        onBlur={() => setFocused(false)}
-                        onFocus={() => setFocused(true)}
+                        onKeyPress={e => onKeyDown(e)}
+                        onBlur={() => setValueFocused(false)}
+                        onFocus={() => setValueFocused(true)}
                         inputProps={{ maxLength: 100 }}
                     />
                     <TextField
@@ -152,9 +154,9 @@ export const ContextForm: React.FC<IContextForm> = ({
                         variant="outlined"
                         size="small"
                         onChange={e => setValueDesc(e.target.value)}
-                        onKeyPress={e => handleKeyDown(e)}
-                        onBlur={() => setFocused(false)}
-                        onFocus={() => setFocused(true)}
+                        onKeyPress={e => onKeyDown(e)}
+                        onBlur={() => setValueFocused(false)}
+                        onFocus={() => setValueFocused(true)}
                         inputProps={{ maxLength: 100 }}
                     />
                     <Button
