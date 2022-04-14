@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { Typography } from '@material-ui/core';
-import ConditionallyRender from '../ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 import { useStyles } from './styles';
 import { usePageTitle } from 'hooks/usePageTitle';

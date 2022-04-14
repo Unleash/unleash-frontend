@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Checkbox } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
 import {
     pluralize,

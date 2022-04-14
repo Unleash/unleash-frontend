@@ -1,6 +1,6 @@
 import PageContent from 'component/common/PageContent/PageContent';
 import HeaderTitle from 'component/common/HeaderTitle';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_CONTEXT_FIELD,
     DELETE_CONTEXT_FIELD,
@@ -20,7 +20,7 @@ import { Add, Album, Delete, Edit } from '@material-ui/icons';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useStyles } from './styles';
-import ConfirmDialogue from 'component/common/Dialogue';
+import { Dialogue as ConfirmDialogue } from 'component/common/Dialogue/Dialogue';
 import AccessContext from 'contexts/AccessContext';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import useContextsApi from 'hooks/api/actions/useContextsApi/useContextsApi';

@@ -15,7 +15,7 @@ import {
 import { Apps } from '@material-ui/icons';
 
 import styles from './common.module.scss';
-import ConditionallyRender from './ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from './ConditionallyRender/ConditionallyRender';
 
 export { styles };
 

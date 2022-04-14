@@ -11,7 +11,7 @@ import { FileCopy } from '@material-ui/icons';
 import { styles as commonStyles } from 'component/common';
 import styles from './CopyFeature.module.scss';
 import { trim } from 'component/common/util';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Alert } from '@material-ui/lab';
 import { getTogglePath } from 'utils/routePathHelpers';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';

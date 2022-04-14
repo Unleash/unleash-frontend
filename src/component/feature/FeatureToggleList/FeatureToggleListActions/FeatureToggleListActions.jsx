@@ -7,7 +7,7 @@ import ProjectSelect from 'component/common/ProjectSelect/ProjectSelect';
 import { useStyles } from './styles';
 import useLoading from 'hooks/useLoading';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { createFeaturesFilterSortOptions } from 'hooks/useFeaturesSort';
 
 const sortOptions = createFeaturesFilterSortOptions();

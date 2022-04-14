@@ -6,7 +6,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import { ReactComponent as LogoIcon } from 'assets/icons/logoBg.svg';
 import NavigationLink from '../NavigationLink/NavigationLink';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { getBasePath } from 'utils/formatPath';
 import { IFlags } from 'interfaces/uiConfig';
 import { IRoute } from 'interfaces/route';

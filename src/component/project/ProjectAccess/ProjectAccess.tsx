@@ -10,7 +10,7 @@ import { IProjectViewParams } from 'interfaces/params';
 import usePagination from 'hooks/usePagination';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import useToast from 'hooks/useToast';
-import ConfirmDialogue from 'component/common/Dialogue';
+import { Dialogue as ConfirmDialogue } from 'component/common/Dialogue/Dialogue';
 import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';

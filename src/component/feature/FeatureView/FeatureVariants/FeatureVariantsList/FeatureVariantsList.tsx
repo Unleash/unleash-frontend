@@ -19,7 +19,7 @@ import { IFeatureViewParams } from 'interfaces/params';
 import AccessContext from 'contexts/AccessContext';
 import FeatureVariantListItem from './FeatureVariantsListItem/FeatureVariantsListItem';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { IFeatureVariant } from 'interfaces/featureToggle';

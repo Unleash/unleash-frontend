@@ -3,7 +3,7 @@ import { Paper, MenuItem } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ReportToggleListItem from './ReportToggleListItem/ReportToggleListItem';
 import ReportToggleListHeader from './ReportToggleListHeader/ReportToggleListHeader';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import DropdownMenu from 'component/common/DropdownMenu/DropdownMenu';
 import {
     getObjectProperties,

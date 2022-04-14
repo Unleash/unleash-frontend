@@ -6,7 +6,7 @@ import { Chip, ListItem, Tooltip } from '@material-ui/core';
 import { Undo } from '@material-ui/icons';
 import TimeAgo from 'react-timeago';
 import StatusChip from 'component/common/StatusChip/StatusChip';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import { styles as commonStyles } from 'component/common';
 import { useStyles } from './styles';

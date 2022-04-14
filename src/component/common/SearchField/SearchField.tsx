@@ -4,7 +4,7 @@ import { debounce } from 'debounce';
 import { InputBase, Chip } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from 'component/common/SearchField/styles';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface ISearchFieldProps {
     updateValue: React.Dispatch<React.SetStateAction<string>>;

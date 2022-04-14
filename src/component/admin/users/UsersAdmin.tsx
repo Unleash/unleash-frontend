@@ -3,7 +3,7 @@ import UsersList from './UsersList/UsersList';
 import AdminMenu from '../menu/AdminMenu';
 import PageContent from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import HeaderTitle from 'component/common/HeaderTitle';
 import { TableActions } from 'component/common/Table/TableActions/TableActions';

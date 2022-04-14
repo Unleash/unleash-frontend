@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Checkbox } from '@material-ui/core';
 import { useCommonStyles } from 'themes/commonStyles';
 import { ConstraintValueSearch } from 'component/common/ConstraintAccordion/ConstraintValueSearch/ConstraintValueSearch';

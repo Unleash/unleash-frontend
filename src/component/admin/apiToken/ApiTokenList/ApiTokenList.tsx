@@ -19,7 +19,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { DELETE_API_TOKEN } from 'component/providers/AccessProvider/permissions';
 import Secret from './secret';
 import { Delete, FileCopy } from '@material-ui/icons';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import copy from 'copy-to-clipboard';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';

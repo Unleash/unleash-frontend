@@ -9,11 +9,12 @@ import {
     Typography,
 } from '@material-ui/core';
 import { Link as LinkIcon } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { UPDATE_APPLICATION } from 'component/providers/AccessProvider/permissions';
 import { ApplicationView } from '../ApplicationView/ApplicationView';
 import { ApplicationUpdate } from '../ApplicationUpdate/ApplicationUpdate';
-import Dialogue from 'component/common/Dialogue';
+import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PageContent from 'component/common/PageContent';
 import HeaderTitle from 'component/common/HeaderTitle';
 import AccessContext from 'contexts/AccessContext';
@@ -25,7 +26,6 @@ import useToast from 'hooks/useToast';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { formatDateYMD } from 'utils/formatDate';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
 
 export const ApplicationEdit = () => {
     const history = useHistory();
