@@ -41,6 +41,18 @@ export const useStyles = makeStyles(theme => ({
         height: '32px',
         margin: 'auto',
     },
+    firstColumnSM: {
+        [theme.breakpoints.down('sm')]: {
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
+        },
+    },
+    firstColumnXS: {
+        [theme.breakpoints.down('xs')]: {
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
+        },
+    },
     hideSM: {
         [theme.breakpoints.down('sm')]: {
             display: 'none',
