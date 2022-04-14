@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { ReactNode, VFC } from 'react';
+import { Link } from 'react-router-dom';
 import { Divider, Drawer, List } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import { Link } from 'react-router-dom';
-import styles from './drawer.module.scss';
 import { ReactComponent as LogoIcon } from 'assets/icons/logoBg.svg';
-import NavigationLink from './Header/NavigationLink/NavigationLink';
+import NavigationLink from '../NavigationLink/NavigationLink';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import { getBasePath } from 'utils/formatPath';
+import { IFlags } from 'interfaces/uiConfig';
+import { IRoute } from 'interfaces/route';
+import styles from './DrawerMenu.module.scss'; // FIXME: useStyle - theme
 
-export const DrawerMenu = ({
+interface IDrawerMenuProps {
+    title?: string;
+    open?: boolean;
+    toggleDrawer: () => void;
+    admin?: boolean;
+    links: Array<{
+        value: string;
+        icon: string | ReactNode;
+        href: string;
+        title: string;
+    }>;
+    flags?: IFlags;
+    routes: {
+        mainNavRoutes: IRoute[];
+        mobileRoutes: IRoute[];
+        adminRoutes: IRoute[];
+    };
+}
+
+export const DrawerMenu: VFC<IDrawerMenuProps> = ({
     links = [],
     title = 'Unleash',
     flags = {},
     open = false,
     toggleDrawer,
-    admin,
+    admin = false,
     routes,
 }) => {
     const renderLinks = () => {
@@ -110,12 +130,4 @@ export const DrawerMenu = ({
             </nav>
         </Drawer>
     );
-};
-
-DrawerMenu.propTypes = {
-    links: PropTypes.array,
-    title: PropTypes.string,
-    flags: PropTypes.object,
-    open: PropTypes.bool,
-    toggleDrawer: PropTypes.func,
 };

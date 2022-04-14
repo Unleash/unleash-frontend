@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 
-import Footer from '../Footer/Footer';
+import Footer from './Footer';
 import theme from 'themes/mainTheme';
 
 test('should render DrawerMenu', () => {

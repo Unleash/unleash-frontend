@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-no-target-blank */
 
+import { VFC } from 'react';
 import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { ApiDetails } from './ApiDetails/ApiDetails';
 import { useStyles } from './Footer.styles';
 import { FooterTitle } from './FooterTitle';
 
-export const Footer = () => {
+export const Footer: VFC = () => {
     const styles = useStyles();
     const { uiConfig } = useUiConfig();
 
@@ -32,7 +33,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/node_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Node.js
@@ -45,7 +45,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/java_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Java
@@ -58,7 +57,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/go_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Go
@@ -71,7 +69,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/ruby_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Ruby
@@ -84,7 +81,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/python_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Python
@@ -97,7 +93,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/dot_net_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     .NET
@@ -110,7 +105,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/php_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     PHP
@@ -123,7 +117,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     All SDKs
@@ -143,7 +136,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/unleash-proxy"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Unleash Proxy
@@ -156,7 +148,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/proxy-javascript"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     JavaScript SDK
@@ -169,7 +160,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/proxy-react"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     React SDK
@@ -182,7 +172,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/proxy-ios"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     iOS SDK
@@ -195,7 +184,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://docs.getunleash.io/sdks/android_proxy_sdk"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Android SDK
@@ -215,7 +203,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://www.getunleash.io/"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     getunleash.io
@@ -228,7 +215,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://twitter.com/getunleash"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Twitter
@@ -241,7 +227,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://www.linkedin.com/company/getunleash"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     LinkedIn
@@ -254,7 +239,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://github.com/Unleash/unleash"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     GitHub
@@ -267,7 +251,6 @@ export const Footer = () => {
                                             primary={
                                                 <a
                                                     href="https://slack.unleash.run"
-                                                    className={styles.link}
                                                     target="_blank"
                                                 >
                                                     Slack Community
