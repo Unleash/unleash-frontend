@@ -21,7 +21,7 @@ import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
 import { FeatureSettings } from './FeatureSettings/FeatureSettings';
 import useLoading from 'hooks/useLoading';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from 'component/common/StatusChip/StatusChip';

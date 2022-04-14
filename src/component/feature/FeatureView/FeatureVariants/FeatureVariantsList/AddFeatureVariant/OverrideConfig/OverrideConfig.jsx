@@ -6,7 +6,7 @@ import { useStyles } from './OverrideConfig.styles';
 import { Autocomplete } from '@material-ui/lab';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useCommonStyles } from 'themes/commonStyles';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import InputListField from 'component/common/InputListField.jsx';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 

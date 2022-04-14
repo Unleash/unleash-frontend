@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { weightTypes } from './enums';
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useCommonStyles } from 'themes/commonStyles';
 import Dialogue from 'component/common/Dialogue';
 import { modalStyles, trim } from 'component/common/util';

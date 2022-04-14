@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './ProjectEnvironment.styles';
 
 import useLoading from 'hooks/useLoading';

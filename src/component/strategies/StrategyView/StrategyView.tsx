@@ -9,7 +9,7 @@ import { StrategyDetails } from './StrategyDetails/StrategyDetails';
 import HeaderTitle from 'component/common/HeaderTitle';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const StrategyView = () => {
     const { name } = useParams<{ name: string }>();

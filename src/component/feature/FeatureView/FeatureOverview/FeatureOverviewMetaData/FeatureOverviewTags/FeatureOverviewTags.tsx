@@ -15,7 +15,7 @@ import Dialogue from 'component/common/Dialogue';
 import { ITag } from 'interfaces/tags';
 import useToast from 'hooks/useToast';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { formatUnknownError } from 'utils/formatUnknownError';
 

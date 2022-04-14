@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { Link, useHistory } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PROJECTFILTERING } from 'component/common/flags';
 import HeaderTitle from 'component/common/HeaderTitle';
 import PageContent from 'component/common/PageContent';

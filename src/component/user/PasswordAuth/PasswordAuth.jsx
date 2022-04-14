@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { Button, TextField } from '@material-ui/core';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from 'themes/commonStyles';
 import { useStyles } from './PasswordAuth.styles';

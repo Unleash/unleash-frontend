@@ -6,7 +6,7 @@ import { SearchField } from 'component/common/SearchField/SearchField';
 import PageContent from 'component/common/PageContent/PageContent';
 import HeaderTitle from 'component/common/HeaderTitle';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const ApplicationList = () => {
     const { applications, loading } = useApplications();

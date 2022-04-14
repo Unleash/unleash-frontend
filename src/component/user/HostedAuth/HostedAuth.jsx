@@ -8,7 +8,7 @@ import { useStyles } from './HostedAuth.styles';
 import useQueryParams from 'hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from 'component/common/DividerText/DividerText';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import PasswordField from 'component/common/PasswordField/PasswordField';
 import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';

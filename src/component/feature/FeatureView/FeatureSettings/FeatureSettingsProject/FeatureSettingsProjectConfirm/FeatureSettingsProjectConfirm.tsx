@@ -3,7 +3,7 @@ import { Check, Error, Cloud } from '@material-ui/icons';
 import { useState, useEffect } from 'react';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import { IFeatureEnvironment, IFeatureToggle } from 'interfaces/featureToggle';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
 import Dialogue from 'component/common/Dialogue';
 import { useStyles } from './FeatureSettingsProjectConfirm.styles';
 
