@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import {
+    Box,
     IconButton,
     Table,
     TableBody,
@@ -17,7 +18,6 @@ import useApiTokensApi from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
 import ApiError from 'component/common/ApiError/ApiError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { DELETE_API_TOKEN } from 'component/providers/AccessProvider/permissions';
-import Secret from './secret';
 import { Delete, FileCopy } from '@material-ui/icons';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import copy from 'copy-to-clipboard';
@@ -182,7 +182,13 @@ export const ApiTokenList = () => {
                                     }
                                 />
                                 <TableCell className={styles.hideMD}>
-                                    <Secret value={item.secret} />
+                                    <Box
+                                        component="span"
+                                        display="inline-block"
+                                        width="250px"
+                                    >
+                                        ************************************
+                                    </Box>
                                 </TableCell>
                                 <TableCell className={styles.actionsContainer}>
                                     <Tooltip title="Copy token">

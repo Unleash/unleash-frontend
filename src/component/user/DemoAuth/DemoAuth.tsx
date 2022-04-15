@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { ChangeEventHandler, FormEventHandler, useState, VFC } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import styles from './DemoAuth.module.scss';
 import { ReactComponent as Logo } from 'assets/img/logo.svg';
@@ -9,15 +8,21 @@ import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { IAuthEndpointDetailsResponse } from 'hooks/api/getters/useAuth/useAuthEndpoint';
 
-const DemoAuth = ({ authDetails, redirect }) => {
+interface IDemoAuthProps {
+    authDetails: IAuthEndpointDetailsResponse;
+    redirect: string;
+}
+
+const DemoAuth: VFC<IDemoAuthProps> = ({ authDetails, redirect }) => {
     const [email, setEmail] = useState('');
     const history = useHistory();
     const { refetchUser } = useAuthUser();
     const { emailAuth } = useAuthApi();
     const { setToastApiError } = useToast();
 
-    const handleSubmit = async evt => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async evt => {
         evt.preventDefault();
 
         try {
@@ -29,7 +34,7 @@ const DemoAuth = ({ authDetails, redirect }) => {
         }
     };
 
-    const handleChange = e => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
         const value = e.target.value;
         setEmail(value);
     };
@@ -88,11 +93,6 @@ const DemoAuth = ({ authDetails, redirect }) => {
             </div>
         </form>
     );
-};
-
-DemoAuth.propTypes = {
-    authDetails: PropTypes.object.isRequired,
-    redirect: PropTypes.string.isRequired,
 };
 
 export default DemoAuth;

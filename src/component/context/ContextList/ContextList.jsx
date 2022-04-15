@@ -1,5 +1,5 @@
 import PageContent from 'component/common/PageContent/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_CONTEXT_FIELD,

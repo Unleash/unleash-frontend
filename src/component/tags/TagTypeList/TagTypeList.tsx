@@ -10,7 +10,7 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { Add, Delete, Edit, Label } from '@material-ui/icons';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PageContent from 'component/common/PageContent/PageContent';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {

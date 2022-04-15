@@ -1,14 +1,23 @@
-import React from 'react';
+import { ReactNode, VFC } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 
 import { Typography } from '@material-ui/core';
+import { Variant } from '@material-ui/core/styles/createTypography';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 import { useStyles } from './styles';
 import { usePageTitle } from 'hooks/usePageTitle';
 
-const HeaderTitle = ({
+interface IHeaderTitleProps {
+    title: ReactNode;
+    subtitle?: string;
+    variant?: 'inherit' | Variant;
+    loading?: boolean;
+    actions?: ReactNode;
+    className?: string;
+}
+
+export const HeaderTitle: VFC<IHeaderTitleProps> = ({
     title,
     actions,
     subtitle,
@@ -34,19 +43,9 @@ const HeaderTitle = ({
             </div>
 
             <ConditionallyRender
-                condition={actions}
+                condition={!!actions}
                 show={<div className={styles.headerActions}>{actions}</div>}
             />
         </div>
     );
-};
-
-export default HeaderTitle;
-
-HeaderTitle.propTypes = {
-    title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-    subtitle: PropTypes.string,
-    variant: PropTypes.string,
-    loading: PropTypes.bool,
-    actions: PropTypes.element,
 };

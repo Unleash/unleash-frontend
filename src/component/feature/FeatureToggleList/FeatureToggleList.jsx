@@ -9,7 +9,7 @@ import { SearchField } from 'component/common/SearchField/SearchField';
 import FeatureToggleListActions from './FeatureToggleListActions';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PageContent from 'component/common/PageContent/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import loadingFeatures from './loadingFeatures';
 import AccessContext from 'contexts/AccessContext';
 import { useStyles } from './styles';

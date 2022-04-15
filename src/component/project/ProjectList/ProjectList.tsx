@@ -11,7 +11,7 @@ import loadingData from './loadingData';
 import useLoading from 'hooks/useLoading';
 import PageContent from 'component/common/PageContent';
 import AccessContext from 'contexts/AccessContext';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { CREATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { Add } from '@material-ui/icons';

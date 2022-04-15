@@ -1,34 +1,42 @@
-import { useState } from 'react';
+import { FormEventHandler, useState, VFC } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from 'themes/commonStyles';
-import { useStyles } from './HostedAuth.styles';
+import { useStyles } from './PasswordAuth.styles';
 import useQueryParams from 'hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from 'component/common/DividerText/DividerText';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Alert } from '@material-ui/lab';
+import { LOGIN_BUTTON, LOGIN_EMAIL_ID, LOGIN_PASSWORD_ID } from 'utils/testIds';
 import PasswordField from 'component/common/PasswordField/PasswordField';
 import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
-import { LOGIN_BUTTON, LOGIN_EMAIL_ID, LOGIN_PASSWORD_ID } from 'utils/testIds';
+import { IAuthEndpointDetailsResponse } from 'hooks/api/getters/useAuth/useAuthEndpoint';
+import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from 'constants/statusCodes';
 
-const HostedAuth = ({ authDetails, redirect }) => {
+interface IPasswordAuthProps {
+    authDetails: IAuthEndpointDetailsResponse;
+    redirect: string;
+}
+
+const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
     const commonStyles = useCommonStyles();
     const styles = useStyles();
-    const { refetchUser } = useAuthUser();
     const history = useHistory();
+    const { refetchUser } = useAuthUser();
     const params = useQueryParams();
-    const { passwordAuth } = useAuthApi();
     const [username, setUsername] = useState(params.get('email') || '');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({
-        usernameError: '',
-        passwordError: '',
-    });
+    const { passwordAuth } = useAuthApi();
+    const [errors, setErrors] = useState<{
+        usernameError?: string;
+        passwordError?: string;
+        apiError?: string;
+    }>({});
 
-    const handleSubmit = async evt => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async evt => {
         evt.preventDefault();
 
         if (!username) {
@@ -52,14 +60,21 @@ const HostedAuth = ({ authDetails, redirect }) => {
             await passwordAuth(authDetails.path, username, password);
             refetchUser();
             history.push(redirect);
-        } catch (error) {
-            if (error.statusCode === 404 || error.statusCode === 400) {
+        } catch (error: any) {
+            if (
+                error?.statusCode === NOT_FOUND ||
+                error?.statusCode === BAD_REQUEST
+            ) {
                 setErrors(prev => ({
                     ...prev,
                     apiError: 'Invalid login details',
                 }));
                 setPassword('');
                 setUsername('');
+            } else if (error?.statusCode === UNAUTHORIZED) {
+                setErrors({
+                    apiError: 'Invalid password and username combination.',
+                });
             } else {
                 setErrors({
                     apiError: 'Unknown error while trying to authenticate.',
@@ -68,31 +83,26 @@ const HostedAuth = ({ authDetails, redirect }) => {
         }
     };
 
-    const { usernameError, passwordError, apiError } = errors;
-    const { options = [] } = authDetails;
+    const renderLoginForm = () => {
+        const { usernameError, passwordError, apiError } = errors;
 
-    return (
-        <>
-            <ConditionallyRender
-                condition={options.length > 0}
-                show={
-                    <>
-                        <AuthOptions options={options} />
-                        <DividerText text="or signin with username" />
-                    </>
-                }
-            />
-
+        return (
             <ConditionallyRender
                 condition={!authDetails.defaultHidden}
                 show={
                     <form onSubmit={handleSubmit}>
-                        <Typography
-                            variant="subtitle2"
-                            className={styles.apiError}
-                        >
-                            {apiError}
-                        </Typography>
+                        <ConditionallyRender
+                            condition={Boolean(apiError)}
+                            show={
+                                <Alert
+                                    severity="error"
+                                    className={styles.apiError}
+                                >
+                                    {apiError}
+                                </Alert>
+                            }
+                        />
+
                         <div
                             className={classnames(
                                 styles.contentContainer,
@@ -108,9 +118,11 @@ const HostedAuth = ({ authDetails, redirect }) => {
                                 value={username}
                                 error={!!usernameError}
                                 helperText={usernameError}
+                                autoComplete="true"
+                                data-testid={LOGIN_EMAIL_ID}
                                 variant="outlined"
                                 size="small"
-                                data-testid={LOGIN_EMAIL_ID}
+                                autoFocus
                             />
                             <PasswordField
                                 label="Password"
@@ -120,30 +132,47 @@ const HostedAuth = ({ authDetails, redirect }) => {
                                 value={password}
                                 error={!!passwordError}
                                 helperText={passwordError}
+                                autoComplete="true"
                                 data-testid={LOGIN_PASSWORD_ID}
                             />
-                            <Grid container>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    className={styles.button}
-                                    data-testid={LOGIN_BUTTON}
-                                >
-                                    Sign in
-                                </Button>
-                            </Grid>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                style={{ width: '150px', margin: '1rem auto' }}
+                                data-testid={LOGIN_BUTTON}
+                            >
+                                Sign in
+                            </Button>
                         </div>
                     </form>
                 }
+            />
+        );
+    };
+
+    const { options = [] } = authDetails;
+
+    return (
+        <>
+            <ConditionallyRender
+                condition={options.length > 0}
+                show={
+                    <>
+                        <AuthOptions options={options} />
+                        <ConditionallyRender
+                            condition={!authDetails.defaultHidden}
+                            show={
+                                <DividerText text="Or sign in with username" />
+                            }
+                        />
+                        {renderLoginForm()}
+                    </>
+                }
+                elseShow={renderLoginForm()}
             />
         </>
     );
 };
 
-HostedAuth.propTypes = {
-    authDetails: PropTypes.object.isRequired,
-    redirect: PropTypes.string.isRequired,
-};
-
-export default HostedAuth;
+export default PasswordAuth;

@@ -8,7 +8,7 @@ import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PROJECTFILTERING } from 'component/common/flags';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import FeatureToggleListNew from 'component/feature/FeatureToggleListNew/FeatureToggleListNew';

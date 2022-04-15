@@ -13,7 +13,7 @@ import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissio
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PageContent from 'component/common/PageContent/PageContent';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import HeaderTitle from 'component/common/HeaderTitle/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
 const CreateEnvironment = () => {

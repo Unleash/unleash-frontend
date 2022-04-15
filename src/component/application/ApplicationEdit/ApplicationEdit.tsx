@@ -16,7 +16,7 @@ import { ApplicationUpdate } from '../ApplicationUpdate/ApplicationUpdate';
 import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PageContent from 'component/common/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import AccessContext from 'contexts/AccessContext';
 import useApplicationsApi from 'hooks/api/actions/useApplicationsApi/useApplicationsApi';
 import useApplication from 'hooks/api/getters/useApplication/useApplication';

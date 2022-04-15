@@ -15,7 +15,7 @@ import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 
 export const ProjectAccess = () => {

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { ChangeEventHandler, FormEventHandler, useState, VFC } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import styles from './SimpleAuth.module.scss';
 import { useHistory } from 'react-router-dom';
@@ -8,15 +7,21 @@ import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import { LOGIN_BUTTON, LOGIN_EMAIL_ID } from 'utils/testIds';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { IAuthEndpointDetailsResponse } from 'hooks/api/getters/useAuth/useAuthEndpoint';
 
-const SimpleAuth = ({ authDetails, redirect }) => {
+interface ISimpleAuthProps {
+    authDetails: IAuthEndpointDetailsResponse;
+    redirect: string;
+}
+
+const SimpleAuth: VFC<ISimpleAuthProps> = ({ authDetails, redirect }) => {
     const [email, setEmail] = useState('');
     const { refetchUser } = useAuthUser();
     const { emailAuth } = useAuthApi();
     const history = useHistory();
     const { setToastApiError } = useToast();
 
-    const handleSubmit = async evt => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async evt => {
         evt.preventDefault();
 
         try {
@@ -28,7 +33,7 @@ const SimpleAuth = ({ authDetails, redirect }) => {
         }
     };
 
-    const handleChange = e => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
         const value = e.target.value;
         setEmail(value);
     };
@@ -78,11 +83,6 @@ const SimpleAuth = ({ authDetails, redirect }) => {
             </div>
         </form>
     );
-};
-
-SimpleAuth.propTypes = {
-    authDetails: PropTypes.object.isRequired,
-    redirect: PropTypes.string.isRequired,
 };
 
 export default SimpleAuth;

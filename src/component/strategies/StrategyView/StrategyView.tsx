@@ -6,7 +6,7 @@ import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@material-ui/icons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
