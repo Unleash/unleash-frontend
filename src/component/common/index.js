@@ -114,37 +114,6 @@ IconLink.propTypes = {
     icon: PropTypes.object,
 };
 
-export const DropdownButton = ({
-    label,
-    id,
-    className = styles.dropdownButton,
-    title,
-    icon,
-    startIcon,
-    style,
-    ...rest
-}) => (
-    <Button
-        id={id}
-        className={className}
-        title={title}
-        style={style}
-        {...rest}
-        startIcon={startIcon}
-        endIcon={<Icon>{icon}</Icon>}
-    >
-        {label}
-    </Button>
-);
-
-DropdownButton.propTypes = {
-    label: PropTypes.string,
-    style: PropTypes.object,
-    id: PropTypes.string,
-    title: PropTypes.string,
-    icon: PropTypes.object,
-    startIcon: PropTypes.object,
-};
 
 export const MenuItemWithIcon = React.forwardRef(
     ({ icon: IconComponent, label, disabled, ...menuItemProps }, ref) => (

@@ -1,11 +1,6 @@
-import PageContent from 'component/common/PageContent/PageContent';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import {
-    CREATE_CONTEXT_FIELD,
-    DELETE_CONTEXT_FIELD,
-    UPDATE_CONTEXT_FIELD,
-} from 'component/providers/AccessProvider/permissions';
+import { useContext, useState, VFC } from 'react';
+import { Add, Album, Delete, Edit } from '@material-ui/icons';
+import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
     IconButton,
@@ -16,30 +11,38 @@ import {
     Tooltip,
     useMediaQuery,
 } from '@material-ui/core';
-import { Add, Album, Delete, Edit } from '@material-ui/icons';
-import { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useStyles } from './styles';
+import PageContent from 'component/common/PageContent/PageContent';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import {
+    CREATE_CONTEXT_FIELD,
+    DELETE_CONTEXT_FIELD,
+    UPDATE_CONTEXT_FIELD,
+} from 'component/providers/AccessProvider/permissions';
 import { Dialogue as ConfirmDialogue } from 'component/common/Dialogue/Dialogue';
 import AccessContext from 'contexts/AccessContext';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import useContextsApi from 'hooks/api/actions/useContextsApi/useContextsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useStyles } from './styles';
 
-const ContextList = () => {
+const ContextList: VFC = () => {
     const { hasAccess } = useContext(AccessContext);
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const smallScreen = useMediaQuery('(max-width:700px)');
-    const [name, setName] = useState();
+    const [name, setName] = useState<string>();
     const { context, refetchUnleashContext } = useUnleashContext();
     const { removeContext } = useContextsApi();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
     const styles = useStyles();
 
-    const onDeleteContext = async name => {
+    const onDeleteContext = async () => {
         try {
+            if (name === undefined) {
+                throw new Error();
+            }
             await removeContext(name);
             refetchUnleashContext();
             setToastData({
@@ -133,6 +136,7 @@ const ContextList = () => {
             }
         />
     );
+
     return (
         <PageContent
             headerContent={
@@ -151,7 +155,7 @@ const ContextList = () => {
             </List>
             <ConfirmDialogue
                 open={showDelDialogue}
-                onClick={() => onDeleteContext(name)}
+                onClick={() => onDeleteContext()}
                 onClose={() => {
                     setName(undefined);
                     setShowDelDialogue(false);
