@@ -16,7 +16,7 @@ import { IUser } from 'interfaces/user';
 import { useHistory } from 'react-router-dom';
 import { ILocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
-import Highlighter from 'react-highlight-words';
+import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { useStyles } from './UserListItem.styles';
 
 interface IUserListItemProps {
@@ -60,34 +60,16 @@ const UserListItem = ({
             </TableCell>
             <TableCell className={styles.leftTableCell}>
                 <Typography variant="body2" data-loading>
-                    <ConditionallyRender
-                        condition={Boolean(search)}
-                        show={
-                            <Highlighter
-                                searchWords={[search]}
-                                autoEscape
-                                textToHighlight={user.name ?? ''}
-                            />
-                        }
-                        elseShow={user.name}
-                    />
+                    <Highlighter search={search}>{user.name}</Highlighter>
                 </Typography>
             </TableCell>
             <TableCell
                 className={classnames(styles.leftTableCell, styles.hideSM)}
             >
                 <Typography variant="body2" data-loading>
-                    <ConditionallyRender
-                        condition={Boolean(search)}
-                        show={
-                            <Highlighter
-                                searchWords={[search]}
-                                autoEscape
-                                textToHighlight={user.username || user.email}
-                            />
-                        }
-                        elseShow={user.username || user.email}
-                    />
+                    <Highlighter search={search}>
+                        {user.username || user.email}
+                    </Highlighter>
                 </Typography>
             </TableCell>
             <TableCell className={styles.hideXS}>
