@@ -109,6 +109,6 @@ const sortByRole = (
 };
 
 const getRoleName = (roleId: number, roles: Readonly<IRole[]>) => {
-    const role = roles.find((r: IRole) => r.id === roleId);
+    const role = roles.find((role: IRole) => role.id === roleId);
     return role ? role.name : '';
 };
