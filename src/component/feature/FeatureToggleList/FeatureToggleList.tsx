@@ -1,26 +1,58 @@
-import { useContext } from 'react';
-import PropTypes from 'prop-types';
+import { Dispatch, SetStateAction, useContext, VFC } from 'react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { List, ListItem } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FeatureToggleListItem from './FeatureToggleListItem';
+import { IFeatureToggle } from 'interfaces/featureToggle';
+import { IFlags } from 'interfaces/uiConfig';
 import { SearchField } from 'component/common/SearchField/SearchField';
-import FeatureToggleListActions from './FeatureToggleListActions';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PageContent from 'component/common/PageContent/PageContent';
 import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import loadingFeatures from './loadingFeatures';
 import AccessContext from 'contexts/AccessContext';
-import { useStyles } from './styles';
 import ListPlaceholder from 'component/common/ListPlaceholder/ListPlaceholder';
+import { IFeaturesFilter } from 'hooks/useFeaturesFilter';
+import { FeatureToggleListItem } from './FeatureToggleListItem/FeatureToggleListItem';
+import { FeatureToggleListActions } from './FeatureToggleListActions/FeatureToggleListActions';
 import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
 import { useCreateFeaturePath } from '../CreateFeatureButton/useCreateFeaturePath';
+import { IFeaturesSort } from 'hooks/useFeaturesSort';
+import { useStyles } from './styles';
 
-const FeatureToggleList = ({
+interface IFeatureToggleListProps {
+    features: IFeatureToggle[];
+    loading?: boolean;
+    flags?: IFlags;
+    filter: IFeaturesFilter;
+    setFilter: Dispatch<SetStateAction<IFeaturesFilter>>;
+    sort: IFeaturesSort;
+    setSort: Dispatch<SetStateAction<IFeaturesSort>>;
+    onRevive?: (feature: string) => void;
+    isArchive?: boolean;
+}
+
+const loadingFeaturesPlaceholder: IFeatureToggle[] = Array(10)
+    .fill({
+        createdAt: '2021-03-19T09:16:21.329Z',
+        description: ' ',
+        enabled: true,
+        lastSeenAt: '2021-03-24T10:46:38.036Z',
+        name: '',
+        project: 'default',
+        stale: true,
+        strategies: [],
+        variants: [],
+        type: 'release',
+        archived: false,
+        environments: [],
+        impressionData: false,
+    })
+    .map((feature, index) => ({ ...feature, name: `${index}` })); // ID for React key
+
+export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
     features,
-    revive,
-    archive,
+    onRevive,
+    isArchive,
     loading,
     flags,
     filter,
@@ -34,22 +66,18 @@ const FeatureToggleList = ({
     const smallScreen = useMediaQuery('(max-width:800px)');
     const mobileView = useMediaQuery('(max-width:600px)');
 
-    const setFilterQuery = v => {
+    const setFilterQuery = (v: string) => {
         const query = v && typeof v === 'string' ? v.trim() : '';
-        setFilter(prev => ({ ...prev, query }));
+        return setFilter(prev => ({ ...prev, query }));
     };
 
     const renderFeatures = () => {
-        features.forEach(e => {
-            e.reviveName = e.name;
-        });
-
         if (loading) {
-            return loadingFeatures.map(feature => (
+            return loadingFeaturesPlaceholder.map(feature => (
                 <FeatureToggleListItem
                     key={feature.name}
                     feature={feature}
-                    revive={revive}
+                    onRevive={onRevive}
                     hasAccess={hasAccess}
                     className={'skeleton'}
                     flags={flags}
@@ -64,14 +92,14 @@ const FeatureToggleList = ({
                     <FeatureToggleListItem
                         key={feature.name}
                         feature={feature}
-                        revive={revive}
+                        onRevive={onRevive}
                         hasAccess={hasAccess}
                         flags={flags}
                     />
                 ))}
                 elseShow={
                     <ConditionallyRender
-                        condition={archive}
+                        condition={!!isArchive}
                         show={
                             <ListItem className={styles.emptyStateListItem}>
                                 No archived features.
@@ -83,7 +111,7 @@ const FeatureToggleList = ({
                                 show={() => (
                                     <ListPlaceholder
                                         text="No features available. Get started by adding a new feature toggle."
-                                        link={createFeature.path}
+                                        link={createFeature?.path}
                                         linkText="Add your first toggle"
                                     />
                                 )}
@@ -99,12 +127,12 @@ const FeatureToggleList = ({
         ? ` (${features.length} matches)`
         : '';
 
-    const headerTitle = archive
-        ? `Archived feature toggles${searchResultsHeader}`
-        : `Feature toggles${searchResultsHeader}`;
+    const headerTitle = isArchive
+        ? `Archived Features ${searchResultsHeader}`
+        : `Features ${searchResultsHeader}`;
 
     return (
-        <div className={styles.featureContainer}>
+        <div>
             <div className={styles.searchBarContainer}>
                 <SearchField
                     initialValue={filter.query}
@@ -115,7 +143,7 @@ const FeatureToggleList = ({
                     })}
                 />
                 <ConditionallyRender
-                    condition={!mobileView && !archive}
+                    condition={!mobileView && !isArchive}
                     show={<Link to="/archive">Archive</Link>}
                 />
             </div>
@@ -140,11 +168,11 @@ const FeatureToggleList = ({
                                     }
                                 />
                                 <ConditionallyRender
-                                    condition={!archive}
+                                    condition={!isArchive}
                                     show={
                                         <CreateFeatureButton
                                             filter={filter}
-                                            loading={loading}
+                                            loading={!!loading}
                                         />
                                     }
                                 />
@@ -158,17 +186,3 @@ const FeatureToggleList = ({
         </div>
     );
 };
-
-FeatureToggleList.propTypes = {
-    features: PropTypes.array.isRequired,
-    revive: PropTypes.func,
-    loading: PropTypes.bool,
-    archive: PropTypes.bool,
-    flags: PropTypes.object,
-    filter: PropTypes.object.isRequired,
-    setFilter: PropTypes.func.isRequired,
-    sort: PropTypes.object.isRequired,
-    setSort: PropTypes.func.isRequired,
-};
-
-export default FeatureToggleList;

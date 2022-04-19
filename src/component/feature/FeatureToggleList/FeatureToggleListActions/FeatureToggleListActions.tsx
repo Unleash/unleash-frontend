@@ -1,34 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import { Dispatch, MouseEventHandler, SetStateAction, VFC } from 'react';
 import { MenuItem, Typography } from '@material-ui/core';
 import DropdownMenu from 'component/common/DropdownMenu/DropdownMenu';
 import ProjectSelect from 'component/common/ProjectSelect/ProjectSelect';
-import { useStyles } from './styles';
 import useLoading from 'hooks/useLoading';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { createFeaturesFilterSortOptions } from 'hooks/useFeaturesSort';
+import {
+    createFeaturesFilterSortOptions,
+    FeaturesSortType,
+    IFeaturesSort,
+} from 'hooks/useFeaturesSort';
+import { useStyles } from './styles';
+import { IFeaturesFilter } from 'hooks/useFeaturesFilter';
 
 const sortOptions = createFeaturesFilterSortOptions();
 
-const FeatureToggleListActions = ({
+interface IFeatureToggleListActionsProps {
+    filter: IFeaturesFilter;
+    setFilter: Dispatch<SetStateAction<IFeaturesFilter>>;
+    sort: IFeaturesSort;
+    setSort: Dispatch<SetStateAction<IFeaturesSort>>;
+    loading?: boolean;
+}
+
+export const FeatureToggleListActions: VFC<IFeatureToggleListActionsProps> = ({
     filter,
     setFilter,
     sort,
     setSort,
-    loading,
+    loading = false,
 }) => {
     const styles = useStyles();
     const { uiConfig } = useUiConfig();
     const ref = useLoading(loading);
 
-    const handleSort = e => {
-        const type = e.target.getAttribute('data-target')?.trim();
-        type && setSort(prev => ({ ...prev, type }));
+    const handleSort: MouseEventHandler = e => {
+        const type = (e.target as Element)
+            .getAttribute('data-target')
+            ?.trim() as FeaturesSortType;
+        if (type) {
+            setSort(prev => ({ ...prev, type }));
+        }
     };
 
-    const isDisabled = s => s === sort.type;
     const selectedOption =
         sortOptions.find(o => o.type === sort.type) || sortOptions[0];
 
@@ -37,7 +51,7 @@ const FeatureToggleListActions = ({
             <MenuItem
                 style={{ fontSize: '14px' }}
                 key={option.type}
-                disabled={isDisabled(option.type)}
+                disabled={option.type === sort.type}
                 data-target={option.type}
             >
                 {option.name}
@@ -55,7 +69,6 @@ const FeatureToggleListActions = ({
                 callback={handleSort}
                 renderOptions={renderSortingOptions}
                 title="Sort by"
-                className=""
                 style={{ textTransform: 'lowercase', fontWeight: 'normal' }}
                 data-loading
             />
@@ -67,10 +80,11 @@ const FeatureToggleListActions = ({
                         updateCurrentProject={project =>
                             setFilter(prev => ({ ...prev, project }))
                         }
-                        style={{
-                            textTransform: 'lowercase',
-                            fontWeight: 'normal',
-                        }}
+                        // FIXME: add styles
+                        // style={{
+                        //     textTransform: 'lowercase',
+                        //     fontWeight: 'normal',
+                        // }}
                         data-loading
                     />
                 }
@@ -78,14 +92,3 @@ const FeatureToggleListActions = ({
         </div>
     );
 };
-
-FeatureToggleListActions.propTypes = {
-    filter: PropTypes.object,
-    setFilter: PropTypes.func,
-    sort: PropTypes.object,
-    setSort: PropTypes.func,
-    toggleMetrics: PropTypes.func,
-    loading: PropTypes.bool,
-};
-
-export default FeatureToggleListActions;

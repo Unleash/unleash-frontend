@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 
-import FeatureToggleListItem from './index';
+import { FeatureToggleListItem } from './FeatureToggleListItem';
 import renderer from 'react-test-renderer';
 
 import theme from 'themes/mainTheme';
@@ -16,13 +16,20 @@ test('renders correctly with one feature', () => {
         project: 'default',
         strategies: [
             {
+                id: '0',
                 name: 'gradualRolloutRandom',
+                constraints: [],
                 parameters: {
                     percentage: 50,
                 },
             },
         ],
         createdAt: '2018-02-04T20:27:52.127Z',
+        archived: false,
+        environments: [],
+        type: '',
+        variants: [],
+        impressionData: false,
     };
     const tree = renderer.create(
         <MemoryRouter>
@@ -45,15 +52,23 @@ test('renders correctly with one feature without permission', () => {
         description: "another's description",
         enabled: false,
         stale: false,
+        project: 'default',
         strategies: [
             {
+                id: '0',
                 name: 'gradualRolloutRandom',
+                constraints: [],
                 parameters: {
                     percentage: 50,
                 },
             },
         ],
         createdAt: '2018-02-04T20:27:52.127Z',
+        archived: false,
+        environments: [],
+        type: '',
+        variants: [],
+        impressionData: false,
     };
     const tree = renderer.create(
         <MemoryRouter>

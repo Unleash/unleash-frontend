@@ -7,7 +7,7 @@ import { useStyles } from 'component/common/SearchField/styles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface ISearchFieldProps {
-    updateValue: React.Dispatch<React.SetStateAction<string>>;
+    updateValue: (value: string) => void;
     initialValue?: string;
     className?: string;
     showValueChip?: boolean;

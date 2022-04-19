@@ -201,7 +201,7 @@ exports[`renders correctly with one feature without permission 1`] = `
   >
     <a
       className="listLink truncate"
-      href="/projects/undefined/features/Another"
+      href="/projects/default/features/Another"
       onClick={[Function]}
     >
       <span
@@ -243,7 +243,7 @@ exports[`renders correctly with one feature without permission 1`] = `
   >
     <a
       className="makeStyles-disabledLink-7"
-      href="/projects/undefined"
+      href="/projects/default"
       onClick={[Function]}
       style={
         Object {
@@ -261,11 +261,13 @@ exports[`renders correctly with one feature without permission 1`] = `
             "marginLeft": "8px",
           }
         }
-        title="Project: undefined"
+        title="Project: default"
       >
         <span
           className="MuiChip-label"
-        />
+        >
+          default
+        </span>
       </div>
     </a>
   </span>

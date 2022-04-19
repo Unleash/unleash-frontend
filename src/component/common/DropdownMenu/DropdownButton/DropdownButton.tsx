@@ -1,7 +1,7 @@
 import { VFC } from 'react';
 import { Button, ButtonProps, Icon } from '@material-ui/core';
 
-// DropdownButton.propTypes = {
+// DropdownButton.propTypes = { // FIXME: cleanup
 //     label: PropTypes.string,
 //     style: PropTypes.object,
 //     id: PropTypes.string,
