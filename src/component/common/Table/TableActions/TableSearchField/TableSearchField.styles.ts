@@ -14,13 +14,14 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.searchField.main,
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '25px',
-        padding: '0.25rem 0.5rem',
+        padding: '3px 5px 3px 12px',
         maxWidth: '450px',
         [theme.breakpoints.down('xs')]: {
             width: '100%',
         },
         '&.search-container:focus-within': {
             borderColor: theme.palette.primary.light,
+            boxShadow: '0px 2px 4px rgba(129, 122, 254, 0.2)', // TODO: add to palette
         },
     },
     searchIcon: {
@@ -29,9 +30,13 @@ export const useStyles = makeStyles(theme => ({
     },
     clearContainer: {
         width: '30px',
+        '& > button': {
+            padding: '7px',
+        },
     },
     clearIcon: {
         color: theme.palette.grey[600],
+        fontSize: '18px',
     },
     inputRoot: {
         width: '100%',

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
     fieldWidth: {
-        width: '45px',
+        width: '49px',
         '& .search-icon': {
             marginRight: 0,
         },
@@ -19,7 +19,6 @@ export const useStyles = makeStyles(theme => ({
     },
     fieldWidthEnter: {
         width: '100%',
-        marginRight: '12px',
         transition: 'all 0.6s',
         '& .search-icon': {
             marginRight: '8px',
@@ -37,8 +36,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     fieldWidthLeave: {
-        width: '45px',
-        marginRight: 0,
+        width: '49px',
         transition: 'all 0.6s',
         '& .search-icon': {
             marginRight: 0,
