@@ -4,21 +4,21 @@ export const useStyles = makeStyles(theme => ({
     tableCellHeaderSortable: {
         cursor: 'pointer',
         '&:hover': {
-            backgroundColor: '#e6e6e9', // Should be a variable similar to theme.palette.grey[70] TODO: fix this color
+            backgroundColor: theme.v2.palette.grey[40],
             '& > svg': {
-                color: '#000',
+                color: theme.v2.palette.grey[90],
             },
         },
         '& > svg': {
-            fontSize: '18px',
+            fontSize: theme.v2.fontSizes.headerIcon,
             verticalAlign: 'middle',
-            color: '#78787A',
+            color: theme.v2.palette.grey[70],
             marginLeft: '4px',
         },
         '&.sorted': {
             fontWeight: 'bold',
             '& > svg': {
-                color: '#000',
+                color: theme.v2.palette.grey[90],
             },
         },
     },

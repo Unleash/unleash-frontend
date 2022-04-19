@@ -52,7 +52,7 @@ export const useStyles = makeStyles(theme => ({
     },
     verticalSeparator: {
         height: '100%',
-        backgroundColor: '#BDBDBF',
+        backgroundColor: theme.v2.palette.grey[50],
         width: '1px',
         display: 'inline-block',
         marginLeft: '16px',

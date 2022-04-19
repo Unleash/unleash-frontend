@@ -4,15 +4,15 @@ export const useStyles = makeStyles(theme => ({
     tableRow: {
         '& > td': {
             padding: '4px 16px',
-            borderColor: '#EAEAED',
+            borderColor: theme.v2.palette.grey[30],
         },
         '&:hover': {
-            backgroundColor: '#F7F7FA', // Should be a variable similar to theme.palette.grey[200] / theme.palette.grey[10]
+            backgroundColor: theme.v2.palette.grey[10],
         },
     },
     tableCellHeader: {
         '& > th': {
-            backgroundColor: '#F2F2F5', // Should be a variable similar to theme.palette.grey[200] / theme.palette.grey[20]
+            backgroundColor: theme.v2.palette.grey[20],
             fontWeight: 'normal',
             border: 0,
             '&:first-child': {

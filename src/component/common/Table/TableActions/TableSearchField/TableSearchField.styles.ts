@@ -10,8 +10,7 @@ export const useStyles = makeStyles(theme => ({
     search: {
         display: 'flex',
         alignItems: 'center',
-        // @ts-expect-error
-        backgroundColor: theme.palette.searchField.main,
+        backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '25px',
         padding: '3px 5px 3px 12px',
@@ -21,7 +20,7 @@ export const useStyles = makeStyles(theme => ({
         },
         '&.search-container:focus-within': {
             borderColor: theme.palette.primary.light,
-            boxShadow: '0px 2px 4px rgba(129, 122, 254, 0.2)', // TODO: add to palette
+            boxShadow: theme.v2.boxShadows.primary,
         },
     },
     searchIcon: {
