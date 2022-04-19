@@ -47,7 +47,7 @@ const filterUsersByQuery = (users: IUser[], filter: IUsersFilter): IUser[] => {
     // Return all users if it can't be parsed.
     try {
         const regExp = new RegExp(filter.query, 'i');
-        return users.filter(f => filterUserByRegExp(f, regExp));
+        return users.filter(user => filterUserByRegExp(user, regExp));
     } catch (err) {
         if (err instanceof SyntaxError) {
             return users;
