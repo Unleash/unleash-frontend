@@ -162,7 +162,13 @@ const UsersList = ({ search }: IUsersListProps) => {
                         >
                             Created on
                         </TableCellSortable>
-                        <TableCell align="center" className={classnames(styles.hideXS, styles.firstColumnSM)}>
+                        <TableCell
+                            align="center"
+                            className={classnames(
+                                styles.hideXS,
+                                styles.firstColumnSM
+                            )}
+                        >
                             Avatar
                         </TableCell>
                         <TableCellSortable

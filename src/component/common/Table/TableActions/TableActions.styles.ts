@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         },
         '& input::placeholder': {
             color: 'transparent',
-            transition: 'all 0.6s',
+            transition: 'color 0.6s',
         },
         '& input:focus-within::placeholder': {
             color: theme.palette.text.primary,
@@ -19,17 +19,17 @@ export const useStyles = makeStyles(theme => ({
     },
     fieldWidthEnter: {
         width: '100%',
-        transition: 'all 0.6s',
+        transition: 'width 0.6s',
         '& .search-icon': {
             marginRight: '8px',
         },
         '& .input-container': {
             width: '100%',
-            transition: 'all 0.6s',
+            transition: 'width 0.6s',
         },
         '& .clear-container': {
             width: '30px',
-            transition: 'all 0.6s',
+            transition: 'width 0.6s',
         },
         '& .search-container': {
             borderColor: theme.palette.grey[300],
@@ -37,14 +37,14 @@ export const useStyles = makeStyles(theme => ({
     },
     fieldWidthLeave: {
         width: '49px',
-        transition: 'all 0.6s',
+        transition: 'width 0.6s',
         '& .search-icon': {
             marginRight: 0,
-            transition: 'all 0.6s',
+            transition: 'margin-right 0.6s',
         },
         '& .input-container, .clear-container': {
             width: 0,
-            transition: 'all 0.6s',
+            transition: 'width 0.6s',
         },
         '& .search-container': {
             borderColor: 'transparent',
