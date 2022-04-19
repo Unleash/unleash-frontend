@@ -2,14 +2,14 @@ import { openApiAdmin } from 'utils/openapiClient';
 import { FeatureSchema } from 'openapi';
 import { useApiGetter } from 'hooks/api/getters/useApiGetter/useApiGetter';
 
-export interface UseFeaturesArchiveOutput {
+export interface IUseFeaturesArchiveOutput {
     archivedFeatures?: FeatureSchema[];
     refetchArchived: () => void;
     loading: boolean;
     error?: Error;
 }
 
-export const useFeaturesArchive = (): UseFeaturesArchiveOutput => {
+export const useFeaturesArchive = (): IUseFeaturesArchiveOutput => {
     const { data, refetch, loading, error } = useApiGetter(
         'apiAdminArchiveFeaturesGet',
         () => openApiAdmin.apiAdminArchiveFeaturesGet()
