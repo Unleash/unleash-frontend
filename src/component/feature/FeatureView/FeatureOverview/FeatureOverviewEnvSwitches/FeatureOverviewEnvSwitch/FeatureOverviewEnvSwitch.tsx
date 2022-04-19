@@ -91,7 +91,7 @@ const FeatureOverviewEnvSwitch = ({
     );
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <label style={{ display: 'flex', alignItems: 'center' }}>
             <PermissionSwitch
                 permission={UPDATE_FEATURE_ENVIRONMENT}
                 projectId={projectId}
@@ -100,7 +100,7 @@ const FeatureOverviewEnvSwitch = ({
                 environmentId={env.name}
             />
             {content}
-        </div>
+        </label>
     );
 };
 
