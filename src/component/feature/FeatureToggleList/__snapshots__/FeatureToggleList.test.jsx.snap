@@ -66,11 +66,11 @@ exports[`renders correctly with one feature 1`] = `
           className=""
           data-loading={true}
         >
-          <h2
-            className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h2"
+          <h1
+            className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h1"
           >
             Features 
-          </h2>
+          </h1>
         </div>
         <div
           className="makeStyles-headerActions-16"
@@ -237,11 +237,11 @@ exports[`renders correctly with one feature without permissions 1`] = `
           className=""
           data-loading={true}
         >
-          <h2
-            className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h2"
+          <h1
+            className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h1"
           >
             Features 
-          </h2>
+          </h1>
         </div>
         <div
           className="makeStyles-headerActions-16"
