@@ -51,7 +51,7 @@ export const DrawerMenu = ({
             anchor="left"
             onClose={toggleDrawer}
         >
-            <div className={styles.drawerContainer}>
+            <nav id="header-drawer" className={styles.drawerContainer}>
                 <div>
                     <Link
                         to="/"
@@ -107,7 +107,7 @@ export const DrawerMenu = ({
                         Sign out
                     </a>
                 </div>
-            </div>
+            </nav>
         </Drawer>
     );
 };
