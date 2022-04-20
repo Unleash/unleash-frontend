@@ -10,6 +10,7 @@ import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { UPDATE_FEATURE_ENVIRONMENT } from 'component/providers/AccessProvider/permissions';
 import React from 'react';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useStyles } from './FeatureOverviewEnvSwitch.styles';
 
 interface IFeatureOverviewEnvSwitchProps {
     env: IFeatureEnvironment;
@@ -29,6 +30,7 @@ const FeatureOverviewEnvSwitch = ({
         useFeatureApi();
     const { refetchFeature } = useFeature(projectId, featureId);
     const { setToastData, setToastApiError } = useToast();
+    const styles = useStyles();
 
     const handleToggleEnvironmentOn = async () => {
         try {
@@ -91,7 +93,7 @@ const FeatureOverviewEnvSwitch = ({
     );
 
     return (
-        <label style={{ display: 'flex', alignItems: 'center' }}>
+        <label className={styles.label}>
             <PermissionSwitch
                 permission={UPDATE_FEATURE_ENVIRONMENT}
                 projectId={projectId}
