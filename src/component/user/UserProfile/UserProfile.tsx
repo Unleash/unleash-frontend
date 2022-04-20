@@ -69,7 +69,7 @@ const UserProfile = ({
                     disableRipple
                 >
                     <Avatar
-                        alt="user image"
+                        alt="Your Gravatar"
                         src={imageUrl}
                         data-testid={HEADER_USER_AVATAR}
                     />
