@@ -8,6 +8,7 @@ import UserProfileContent from './UserProfileContent/UserProfileContent';
 import { IUser } from 'interfaces/user';
 import { ILocationSettings } from 'hooks/useLocationSettings';
 import { HEADER_USER_AVATAR } from 'utils/testIds';
+import unknownUser from 'assets/icons/unknownUser.png';
 
 interface IUserProfileProps {
     profile: IUser;
@@ -53,7 +54,7 @@ const UserProfile = ({
     }, [locationSettings]);
 
     const email = profile ? profile.email : '';
-    const imageUrl = email ? profile.imageUrl : 'unknown-user.png';
+    const imageUrl = email ? profile.imageUrl : unknownUser;
 
     return (
         <ClickAwayListener onClickAway={() => setShowProfile(false)}>
