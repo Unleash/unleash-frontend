@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApiDetails } from '../Footer/ApiDetails/ApiDetails';
+import { ApiDetails } from 'component/menu/Footer/ApiDetails/ApiDetails';
 import { render } from 'utils/testRenderer';
 
 test('renders correctly with empty version', () => {
