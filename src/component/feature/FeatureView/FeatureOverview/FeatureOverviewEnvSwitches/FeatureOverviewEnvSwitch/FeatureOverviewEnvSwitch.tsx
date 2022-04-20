@@ -93,16 +93,18 @@ const FeatureOverviewEnvSwitch = ({
     );
 
     return (
-        <label className={styles.label}>
-            <PermissionSwitch
-                permission={UPDATE_FEATURE_ENVIRONMENT}
-                projectId={projectId}
-                checked={env.enabled}
-                onChange={toggleEnvironment}
-                environmentId={env.name}
-            />
-            {content}
-        </label>
+        <div>
+            <label className={styles.label}>
+                <PermissionSwitch
+                    permission={UPDATE_FEATURE_ENVIRONMENT}
+                    projectId={projectId}
+                    checked={env.enabled}
+                    onChange={toggleEnvironment}
+                    environmentId={env.name}
+                />
+                {content}
+            </label>
+        </div>
     );
 };
 
