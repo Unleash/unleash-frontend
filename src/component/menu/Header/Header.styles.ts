@@ -84,4 +84,7 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         color: theme.palette.grey[600],
     },
+    wideButton: {
+        borderRadius: 100,
+    },
 }));

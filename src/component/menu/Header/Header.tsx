@@ -137,8 +137,12 @@ const Header = () => {
                                         onClick={e =>
                                             setAnchorEl(e.currentTarget)
                                         }
+                                        className={styles.wideButton}
                                     >
                                         <SettingsIcon />
+                                        <KeyboardArrowDown
+                                            className={styles.icon}
+                                        />
                                     </IconButton>
                                 </Tooltip>
                             }
