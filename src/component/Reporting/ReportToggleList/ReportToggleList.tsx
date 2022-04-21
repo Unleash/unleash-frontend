@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, VFC } from 'react';
 import { Paper, MenuItem } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import ReportToggleListItem from './ReportToggleListItem/ReportToggleListItem';
-import ReportToggleListHeader from './ReportToggleListHeader/ReportToggleListHeader';
+import { useFeaturesSort } from 'hooks/useFeaturesSort';
+import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import DropdownMenu from 'component/common/DropdownMenu/DropdownMenu';
 import {
@@ -10,16 +9,26 @@ import {
     getCheckedState,
     applyCheckedToFeatures,
 } from '../utils';
+import { ReportToggleListItem } from './ReportToggleListItem/ReportToggleListItem';
+import { ReportToggleListHeader } from './ReportToggleListHeader/ReportToggleListHeader';
 import { useStyles } from './ReportToggleList.styles';
-import { useFeaturesSort } from 'hooks/useFeaturesSort';
 
 /* FLAG TO TOGGLE UNFINISHED BULK ACTIONS FEATURE */
 const BULK_ACTIONS_ON = false;
 
-const ReportToggleList = ({ features, selectedProject }) => {
+interface IReportToggleListProps {
+    selectedProject: string;
+    features: IFeatureToggleListItem[];
+}
+
+export const ReportToggleList: VFC<IReportToggleListProps> = ({
+    features,
+    selectedProject,
+}) => {
     const styles = useStyles();
     const [checkAll, setCheckAll] = useState(false);
-    const [localFeatures, setFeatures] = useState([]);
+    const [localFeatures, setFeatures] = useState<IFeatureToggleListItem[]>([]);
+    // @ts-expect-error
     const { setSort, sorted } = useFeaturesSort(localFeatures);
 
     useEffect(() => {
@@ -32,10 +41,12 @@ const ReportToggleList = ({ features, selectedProject }) => {
                 'stale',
                 'type'
             ),
+            // @ts-expect-error
             checked: getCheckedState(feature.name, features),
             setFeatures,
         }));
 
+        // @ts-expect-error
         setFeatures(formattedFeatures);
     }, [features, selectedProject]);
 
@@ -50,6 +61,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
 
     const renderListRows = () =>
         sorted.map(feature => (
+            // @ts-expect-error
             <ReportToggleListItem
                 key={feature.name}
                 {...feature}
@@ -59,9 +71,11 @@ const ReportToggleList = ({ features, selectedProject }) => {
         ));
 
     const renderBulkActionsMenu = () => (
+        // @ts-expect-error
         <DropdownMenu
             id="bulk-actions"
             label="Bulk actions"
+            callback={() => {}}
             renderOptions={() => (
                 <>
                     <MenuItem>Mark toggles as stale</MenuItem>
@@ -85,6 +99,7 @@ const ReportToggleList = ({ features, selectedProject }) => {
                     <ReportToggleListHeader
                         handleCheckAll={handleCheckAll}
                         checkAll={checkAll}
+                        // @ts-expect-error
                         setSort={setSort}
                         bulkActionsOn={BULK_ACTIONS_ON}
                     />
@@ -95,10 +110,3 @@ const ReportToggleList = ({ features, selectedProject }) => {
         </Paper>
     );
 };
-
-ReportToggleList.propTypes = {
-    selectedProject: PropTypes.string.isRequired,
-    features: PropTypes.array.isRequired,
-};
-
-export default ReportToggleList;

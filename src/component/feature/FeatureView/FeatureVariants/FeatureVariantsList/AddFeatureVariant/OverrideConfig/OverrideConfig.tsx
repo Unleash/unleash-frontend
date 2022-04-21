@@ -50,7 +50,8 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
         <>
             {overrides.map((o, i) => {
                 const definition = context.find(c => c.name === o.contextName);
-                const legalValues = definition?.legalValues || [];
+                const legalValues =
+                    definition?.legalValues?.map(({ value }) => value) || [];
                 const filteredValues = o.values.filter(v =>
                     legalValues.includes(v)
                 );
@@ -72,15 +73,11 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                 classes={{
                                     root: classnames(commonStyles.fullWidth),
                                 }}
-                                onChange={event => {
-                                    event.preventDefault();
-                                    const { value } = event.target;
-                                    if (typeof value === 'string') {
-                                        overridesDispatch({
-                                            type: 'UPDATE_TYPE_AT',
-                                            payload: [i, value],
-                                        });
-                                    }
+                                onChange={(value: string) => {
+                                    overridesDispatch({
+                                        type: 'UPDATE_TYPE_AT',
+                                        payload: [i, value],
+                                    });
                                 }}
                             />
                         </Grid>
@@ -96,7 +93,7 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                         getOptionSelected={(option, value) => {
                                             return option === value;
                                         }}
-                                        options={legalValues as string[]}
+                                        options={legalValues}
                                         onChange={updateSelectValues(i)}
                                         getOptionLabel={option => option}
                                         defaultValue={filteredValues}

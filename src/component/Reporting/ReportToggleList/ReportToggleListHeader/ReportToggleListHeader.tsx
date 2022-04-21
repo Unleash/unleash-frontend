@@ -1,25 +1,27 @@
-import React from 'react';
+import { Dispatch, SetStateAction, VFC } from 'react';
 import { Checkbox } from '@material-ui/core';
 import UnfoldMoreOutlinedIcon from '@material-ui/icons/UnfoldMoreOutlined';
-import PropTypes from 'prop-types';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import {
-    NAME,
-    LAST_SEEN,
-    CREATED,
-    EXPIRED,
-    STATUS,
-} from 'component/Reporting/constants';
+import { ReportingSortType } from 'component/Reporting/constants';
 import { useStyles } from '../ReportToggleList.styles';
 
-const ReportToggleListHeader = ({
+interface IReportToggleListHeaderProps {
+    checkAll: boolean;
+    setSort: Dispatch<
+        SetStateAction<{ type: ReportingSortType; desc?: boolean }>
+    >;
+    bulkActionsOn: boolean;
+    handleCheckAll: () => void;
+}
+
+export const ReportToggleListHeader: VFC<IReportToggleListHeaderProps> = ({
     handleCheckAll,
     checkAll,
     setSort,
     bulkActionsOn,
 }) => {
     const styles = useStyles();
-    const handleSort = type => {
+    const handleSort = (type: ReportingSortType) => {
         setSort(prev => ({
             type,
             desc: !prev.desc,
@@ -47,7 +49,7 @@ const ReportToggleListHeader = ({
                     role="button"
                     tabIndex={0}
                     style={{ width: '150px' }}
-                    onClick={() => handleSort(NAME)}
+                    onClick={() => handleSort('name')}
                 >
                     Name
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -56,7 +58,7 @@ const ReportToggleListHeader = ({
                     role="button"
                     className={styles.hideColumnLastSeen}
                     tabIndex={0}
-                    onClick={() => handleSort(LAST_SEEN)}
+                    onClick={() => handleSort('last-seen')}
                 >
                     Last seen
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -65,7 +67,7 @@ const ReportToggleListHeader = ({
                     role="button"
                     tabIndex={0}
                     className={styles.hideColumn}
-                    onClick={() => handleSort(CREATED)}
+                    onClick={() => handleSort('created')}
                 >
                     Created
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -74,7 +76,7 @@ const ReportToggleListHeader = ({
                     role="button"
                     tabIndex={0}
                     className={styles.hideColumn}
-                    onClick={() => handleSort(EXPIRED)}
+                    onClick={() => handleSort('expired')}
                 >
                     Expired
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -83,7 +85,7 @@ const ReportToggleListHeader = ({
                     role="button"
                     tabIndex={0}
                     className={styles.hideColumnStatus}
-                    onClick={() => handleSort(STATUS)}
+                    onClick={() => handleSort('status')}
                 >
                     Status
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -91,7 +93,7 @@ const ReportToggleListHeader = ({
                 <th
                     role="button"
                     tabIndex={0}
-                    onClick={() => handleSort(EXPIRED)}
+                    onClick={() => handleSort('expired')}
                 >
                     Report
                     <UnfoldMoreOutlinedIcon className={styles.sortIcon} />
@@ -100,12 +102,3 @@ const ReportToggleListHeader = ({
         </thead>
     );
 };
-
-ReportToggleListHeader.propTypes = {
-    checkAll: PropTypes.bool.isRequired,
-    setSort: PropTypes.func.isRequired,
-    bulkActionsOn: PropTypes.bool.isRequired,
-    handleCheckAll: PropTypes.func.isRequired,
-};
-
-export default ReportToggleListHeader;
