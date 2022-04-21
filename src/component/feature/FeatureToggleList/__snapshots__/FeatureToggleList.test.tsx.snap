@@ -243,7 +243,11 @@ exports[`FeatureToggleList renders correctly with one feature without permission
       class="makeStyles-searchBarContainer-31"
     >
       <form
+<<<<<<< HEAD
         class="makeStyles-container-34"
+=======
+        class="makeStyles-container-33"
+>>>>>>> fix: update refectored components after rebase
         role="search"
       >
         <div
@@ -293,7 +297,11 @@ exports[`FeatureToggleList renders correctly with one feature without permission
             data-loading="true"
           >
             <h1
+<<<<<<< HEAD
               class="MuiTypography-root makeStyles-headerTitle-43 MuiTypography-h1"
+=======
+              class="MuiTypography-root makeStyles-headerTitle-42 MuiTypography-h1"
+>>>>>>> fix: update refectored components after rebase
             >
               Features 
             </h1>

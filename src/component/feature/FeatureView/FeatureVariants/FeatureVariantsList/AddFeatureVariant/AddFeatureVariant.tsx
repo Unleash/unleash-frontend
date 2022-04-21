@@ -192,12 +192,7 @@ export const AddVariant = ({
 
     const onPayload = (name: string) => (value: string) => {
         setError({ payload: '' });
-        if (name) {
-            setPayload(prev => ({
-                ...prev,
-                [name]: value,
-            }));
-        }
+        setPayload({ ...payload, [name]: value });
     };
 
     const onCancel = (e: React.SyntheticEvent) => {

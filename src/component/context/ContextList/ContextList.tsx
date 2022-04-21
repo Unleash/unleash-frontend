@@ -82,6 +82,7 @@ const ContextList: VFC = () => {
                     show={
                         <Tooltip title="Edit context field">
                             <IconButton
+                                aria-label="edit"
                                 onClick={() =>
                                     history.push(`/context/edit/${field.name}`)
                                 }
@@ -96,6 +97,7 @@ const ContextList: VFC = () => {
                     show={
                         <Tooltip title="Delete context field">
                             <IconButton
+                                aria-label="delete"
                                 onClick={() => {
                                     setName(field.name);
                                     setShowDelDialogue(true);
