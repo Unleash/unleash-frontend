@@ -77,6 +77,7 @@ const CreateProjectRole = () => {
             customised to limit access
             to resources within a project"
             documentationLink="https://docs.getunleash.io/how-to/how-to-create-and-assign-custom-project-roles"
+            documentationLinkLabel="More about project roles"
             formatApiCode={formatApiCode}
         >
             <ProjectRoleForm

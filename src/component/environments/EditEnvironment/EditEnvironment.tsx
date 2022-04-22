@@ -73,6 +73,7 @@ const EditEnvironment = () => {
             enabling the feature toggle in the
             production environment."
             documentationLink="https://docs.getunleash.io/user_guide/environments"
+            documentationLinkLabel="More about environments"
             formatApiCode={formatApiCode}
         >
             <EnvironmentForm

@@ -79,6 +79,7 @@ export const CreateApiToken = () => {
             title="Create Api Token"
             description="In order to connect to Unleash clients will need an API token to grant access. A client SDK will need to token with 'client privileges', which allows them to fetch feature toggle configuration and post usage metrics back."
             documentationLink="https://docs.getunleash.io/user_guide/api-token"
+            documentationLinkLabel="More about API tokens"
             formatApiCode={formatApiCode}
         >
             <ApiTokenForm
