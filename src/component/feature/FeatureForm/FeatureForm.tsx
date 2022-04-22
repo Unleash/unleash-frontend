@@ -142,6 +142,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                         variant="subtitle1"
                         className={styles.roleSubtitle}
                         data-loading
+                        component="h2"
                     >
                         Impression Data
                     </Typography>

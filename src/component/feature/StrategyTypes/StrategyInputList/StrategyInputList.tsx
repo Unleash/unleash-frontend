@@ -67,7 +67,9 @@ const StrategyInputList = ({
 
     return (
         <div>
-            <Typography variant="subtitle2">List of {name}</Typography>
+            <Typography variant="subtitle2" component="h2">
+                List of {name}
+            </Typography>
             <div
                 style={{
                     display: 'flex',
