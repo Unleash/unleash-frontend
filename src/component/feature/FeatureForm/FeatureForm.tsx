@@ -79,6 +79,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     disabled={mode === 'Edit'}
                     className={styles.input}
                     label="Name"
+                    id="feature-toggle-name"
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}

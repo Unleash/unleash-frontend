@@ -133,6 +133,7 @@ const FlexibleStrategy = ({
                 </Typography>
                 <Input
                     label="groupId"
+                    id="groupId-input"
                     value={groupId || ''}
                     disabled={!editable}
                     onChange={e => onUpdate('groupId')(e, e.target.value)}

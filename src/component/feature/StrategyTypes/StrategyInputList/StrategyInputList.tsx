@@ -93,6 +93,7 @@ const StrategyInputList = ({
                             name={`input_field`}
                             variant="outlined"
                             label="Add items"
+                            id="input-add-items"
                             value={input}
                             size="small"
                             placeholder=""
