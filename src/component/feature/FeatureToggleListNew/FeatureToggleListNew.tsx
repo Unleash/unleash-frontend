@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
     Table,
     TableBody,
@@ -18,6 +18,7 @@ import {
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { createGlobalStateHook } from 'hooks/useGlobalState';
+import { AnnouncerContext } from 'component/common/Announcer/AnnouncerContext/AnnouncerContext';
 interface IFeatureToggleListNewProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
@@ -83,6 +84,7 @@ const FeatureToggleListNew = ({
     projectId,
 }: IFeatureToggleListNewProps) => {
     const styles = useStyles();
+    const { setAnnouncement } = useContext(AnnouncerContext);
     const [sortOpt, setSortOpt] = useFeatureToggLeProjectSort();
     const [sortedFeatures, setSortedFeatures] = useState(
         sortList([...features], sortOpt)
@@ -116,6 +118,12 @@ const FeatureToggleListNew = ({
         setSortOpt(newSortOpt);
         setSortedFeatures(sortList([...features], newSortOpt));
         setPageIndex(0);
+
+        setAnnouncement(
+            `Sorted table by ${field}, ${
+                sortOpt.direction ? 'ascending' : 'descending'
+            }`
+        );
     };
 
     const getEnvironments = () => {

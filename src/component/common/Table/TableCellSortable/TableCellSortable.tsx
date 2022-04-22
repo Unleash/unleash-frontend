@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { TableCell } from '@material-ui/core';
 import classnames from 'classnames';
 import {
@@ -9,6 +9,7 @@ import {
 import { IUsersSort, UsersSortType } from 'hooks/useUsersSort';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import { useStyles } from 'component/common/Table/TableCellSortable/TableCellSortable.styles';
+import { AnnouncerContext } from 'component/common/Announcer/AnnouncerContext/AnnouncerContext';
 
 // Add others as needed, e.g. UsersSortType | FeaturesSortType
 type SortType = UsersSortType;
@@ -29,6 +30,7 @@ export const TableCellSortable = ({
     setSort,
     children,
 }: ITableCellSortableProps) => {
+    const { setAnnouncement } = useContext(AnnouncerContext);
     const styles = useStyles();
 
     const ariaSort =
@@ -49,6 +51,9 @@ export const TableCellSortable = ({
             desc: !Boolean(prev.desc),
             type: name,
         }));
+        setAnnouncement(
+            `Sorted table by ${name}, ${sort.desc ? 'ascending' : 'descending'}`
+        );
     };
 
     return (
