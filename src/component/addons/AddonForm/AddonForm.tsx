@@ -1,8 +1,15 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import {
+    useState,
+    useEffect,
+    ChangeEvent,
+    VFC,
+    ChangeEventHandler,
+    FormEventHandler,
+} from 'react';
 import { TextField, FormControlLabel, Switch, Button } from '@material-ui/core';
 import { styles as commonStyles } from 'component/common';
 import { trim } from 'component/common/util';
+import { IAddon, IAddonProvider } from 'interfaces/addons';
 import { AddonParameters } from './AddonParameters/AddonParameters';
 import { AddonEvents } from './AddonEvents/AddonEvents';
 import cloneDeep from 'lodash.clonedeep';
@@ -17,16 +24,41 @@ const useStyles = makeStyles(theme => ({
         marginRight: '1.5rem',
     },
     formSection: { padding: '10px 28px' },
+    buttonsSection: {
+        padding: '10px 28px',
+        '& > *': {
+            marginRight: theme.spacing(1),
+        },
+    },
 }));
 
-export const AddonForm = ({ editMode, provider, addon, fetch }) => {
+interface IAddonFormProps {
+    provider?: IAddonProvider;
+    addon: IAddon;
+    fetch: () => void;
+    editMode: boolean;
+}
+
+export const AddonForm: VFC<IAddonFormProps> = ({
+    editMode,
+    provider,
+    addon: initialValues,
+    fetch,
+}) => {
     const { createAddon, updateAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
     const styles = useStyles();
 
-    const [config, setConfig] = useState(addon);
-    const [errors, setErrors] = useState({
+    const [formValues, setFormValues] = useState(initialValues);
+    const [errors, setErrors] = useState<{
+        containsErrors: boolean;
+        parameters: Record<string, string>;
+        events?: string;
+        general?: string;
+        description?: string;
+    }>({
+        containsErrors: false,
         parameters: {},
     });
     const submitText = editMode ? 'Update' : 'Create';
@@ -38,68 +70,79 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
     }, [fetch, provider]); // empty array => fetch only first time
 
     useEffect(() => {
-        setConfig({ ...addon });
+        setFormValues({ ...initialValues });
         /* eslint-disable-next-line */
-    }, [addon.description, addon.provider]);
+    }, [initialValues.description, initialValues.provider]);
 
     useEffect(() => {
-        if (provider && !config.provider) {
-            setConfig({ ...addon, provider: provider.name });
+        if (provider && !formValues.provider) {
+            setFormValues({ ...initialValues, provider: provider.name });
         }
-    }, [provider, addon, config.provider]);
+    }, [provider, initialValues, formValues.provider]);
 
-    const setFieldValue = field => evt => {
-        evt.preventDefault();
-        const newConfig = { ...config };
-        newConfig[field] = evt.target.value;
-        setConfig(newConfig);
+    const setFieldValue =
+        (field: string): ChangeEventHandler<HTMLInputElement> =>
+        event => {
+            event.preventDefault();
+            setFormValues({ ...formValues, [field]: event.target.value });
+        };
+
+    const onEnabled = (
+        event: ChangeEvent<HTMLInputElement>,
+        enabled: boolean
+    ) => {
+        event.preventDefault();
+        // const enabled = !config.enabled; // FIXME: checkbox is working
+        setFormValues({ ...formValues, enabled });
     };
 
-    const onEnabled = evt => {
-        evt.preventDefault();
-        const enabled = !config.enabled;
-        setConfig({ ...config, enabled });
-    };
+    const setParameterValue =
+        (param: string): ChangeEventHandler<HTMLInputElement> =>
+        event => {
+            event.preventDefault();
+            setFormValues({
+                ...formValues,
+                parameters: {
+                    ...formValues.parameters,
+                    [param]: event.target.value,
+                },
+            });
+        };
 
-    const setParameterValue = param => evt => {
-        evt.preventDefault();
-        const newConfig = { ...config };
-        newConfig.parameters[param] = evt.target.value;
-        setConfig(newConfig);
-    };
-
-    const setEventValue = name => evt => {
-        const newConfig = { ...config };
-        if (evt.target.checked) {
-            newConfig.events.push(name);
-        } else {
-            newConfig.events = newConfig.events.filter(e => e !== name);
-        }
-        setConfig(newConfig);
-        setErrors({ ...errors, events: undefined });
-    };
+    const setEventValue =
+        (name: string) => (event: ChangeEvent<HTMLInputElement>) => {
+            const newConfig = { ...formValues };
+            if (event.target.checked) {
+                newConfig.events.push(name);
+            } else {
+                newConfig.events = newConfig.events.filter(e => e !== name);
+            }
+            setFormValues(newConfig);
+            setErrors({ ...errors, events: undefined });
+        };
 
     const onCancel = () => {
         history.goBack();
     };
 
-    const onSubmit = async evt => {
-        evt.preventDefault();
+    const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
+        event.preventDefault();
         if (!provider) return;
 
         const updatedErrors = cloneDeep(errors);
         updatedErrors.containsErrors = false;
 
         // Validations
-        if (config.events.length === 0) {
+        if (formValues.events.length === 0) {
             updatedErrors.events = 'You must listen to at least one event';
             updatedErrors.containsErrors = true;
         }
 
-        provider.parameters.forEach(p => {
-            const value = trim(config.parameters[p.name]);
-            if (p.required && !value) {
-                updatedErrors.parameters[p.name] = 'This field is required';
+        provider.parameters.forEach(parameterConfig => {
+            const value = trim(formValues.parameters[parameterConfig.name]);
+            if (parameterConfig.required && !value) {
+                updatedErrors.parameters[parameterConfig.name] =
+                    'This field is required';
                 updatedErrors.containsErrors = true;
             }
         });
@@ -111,14 +154,14 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
 
         try {
             if (editMode) {
-                await updateAddon(config);
+                await updateAddon(formValues);
                 history.push('/addons');
                 setToastData({
                     type: 'success',
                     title: 'Addon updated successfully',
                 });
             } else {
-                await createAddon(config);
+                await createAddon(formValues);
                 history.push('/addons');
                 setToastData({
                     type: 'success',
@@ -127,10 +170,12 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
                 });
             }
         } catch (e) {
-            setToastApiError({
-                text: e.toString(),
+            setToastApiError((e as Error)?.toString());
+            setErrors({
+                parameters: {},
+                general: (e as Error)?.message,
+                containsErrors: true,
             });
-            setErrors({ parameters: {}, general: e.message });
         }
     };
 
@@ -138,7 +183,7 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
         name,
         description,
         documentationUrl = 'https://unleash.github.io/docs/addons',
-    } = provider ? provider : {};
+    } = provider ? provider : ({} as IAddonProvider);
 
     return (
         <PageContent headerContent={`Configure ${name} addon`}>
@@ -155,7 +200,7 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
                         size="small"
                         label="Provider"
                         name="provider"
-                        value={config.provider}
+                        value={formValues.provider}
                         disabled
                         variant="outlined"
                         className={styles.nameInput}
@@ -163,24 +208,25 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
                     <FormControlLabel
                         control={
                             <Switch
-                                checked={config.enabled}
+                                checked={formValues.enabled}
                                 onChange={onEnabled}
                             />
                         }
-                        label={config.enabled ? 'Enabled' : 'Disabled'}
+                        label={formValues.enabled ? 'Enabled' : 'Disabled'}
                     />
                 </section>
                 <section className={styles.formSection}>
                     <TextField
                         size="small"
                         style={{ width: '80%' }}
-                        rows={4}
+                        minRows={4}
                         multiline
                         label="Description"
                         name="description"
                         placeholder=""
-                        value={config.description}
-                        error={errors.description}
+                        value={formValues.description}
+                        error={!!errors.description}
+                        helperText={errors.description}
                         onChange={setFieldValue('description')}
                         variant="outlined"
                     />
@@ -188,7 +234,7 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
                 <section className={styles.formSection}>
                     <AddonEvents
                         provider={provider}
-                        checkedEvents={config.events}
+                        checkedEvents={formValues.events}
                         setEventValue={setEventValue}
                         error={errors.events}
                     />
@@ -196,13 +242,13 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
                 <section className={styles.formSection}>
                     <AddonParameters
                         provider={provider}
-                        config={config}
-                        errors={errors}
+                        config={formValues}
+                        parametersErrors={errors.parameters}
                         editMode={editMode}
                         setParameterValue={setParameterValue}
                     />
                 </section>
-                <section className={styles.formSection}>
+                <section className={styles.buttonsSection}>
                     <Button type="submit" color="primary" variant="contained">
                         {submitText}
                     </Button>
@@ -213,13 +259,4 @@ export const AddonForm = ({ editMode, provider, addon, fetch }) => {
             </form>
         </PageContent>
     );
-};
-
-AddonForm.propTypes = {
-    provider: PropTypes.object,
-    addon: PropTypes.object.isRequired,
-    fetch: PropTypes.func.isRequired,
-    submit: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
-    editMode: PropTypes.bool.isRequired,
 };

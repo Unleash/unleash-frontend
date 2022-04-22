@@ -114,7 +114,6 @@ IconLink.propTypes = {
     icon: PropTypes.object,
 };
 
-
 export const MenuItemWithIcon = React.forwardRef(
     ({ icon: IconComponent, label, disabled, ...menuItemProps }, ref) => (
         <MenuItem
