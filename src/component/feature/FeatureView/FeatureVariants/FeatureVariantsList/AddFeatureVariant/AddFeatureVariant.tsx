@@ -5,9 +5,7 @@ import {
     FormControlLabel,
     Grid,
     InputAdornment,
-    Tooltip,
 } from '@material-ui/core';
-import { Info } from '@material-ui/icons';
 import { weightTypes } from './enums';
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
 import ConditionallyRender from 'component/common/ConditionallyRender';
@@ -26,6 +24,7 @@ import { useStyles } from './AddFeatureVariant.styles';
 import Input from 'component/common/Input/Input';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
+import { HelpIcon } from 'component/common/HelpIcon/HelpIcon';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -346,12 +345,7 @@ export const AddVariant = ({
                 </Grid>
                 <p className={styles.label}>
                     <strong>Payload </strong>
-                    <Tooltip
-                        title="Passed to the variant object. Can be anything
-                        (json, value, csv)"
-                    >
-                        <Info className={styles.info} />
-                    </Tooltip>
+                    <HelpIcon tooltip="Passed along with the the variant object." />
                 </p>
                 <Grid container>
                     <Grid item md={2} sm={2} xs={4}>
@@ -389,9 +383,7 @@ export const AddVariant = ({
                     show={
                         <p className={styles.label}>
                             <strong>Overrides </strong>
-                            <Tooltip title="Here you can specify which users should get this variant.">
-                                <Info className={styles.info} />
-                            </Tooltip>
+                            <HelpIcon tooltip="Here you can specify which users should get this variant." />
                         </p>
                     }
                 />
