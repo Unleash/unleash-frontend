@@ -31,10 +31,10 @@ export const NavigationMenu = ({
                 return (
                     <MenuItem
                         key={option.path}
-                        className={styles.navMenuLink}
                         component={Link}
                         to={option.path}
                         onClick={handleClose}
+                        classes={{ root: styles.navMenuLink }}
                     >
                         <span className={styles.menuItemBox} />
                         {option.title}

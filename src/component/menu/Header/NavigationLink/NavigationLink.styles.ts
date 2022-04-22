@@ -23,6 +23,6 @@ export const useStyles = makeStyles(theme => ({
         color: '#000',
         height: '100%',
         width: '100%',
-        padding: '0.5rem 1rem !important',
+        padding: '0.5rem 1rem',
     },
 }));
