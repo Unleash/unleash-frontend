@@ -5,6 +5,7 @@ import {
     VFC,
     ChangeEventHandler,
     FormEventHandler,
+    MouseEventHandler,
 } from 'react';
 import { TextField, FormControlLabel, Switch, Button } from '@material-ui/core';
 import { styles as commonStyles } from 'component/common';
@@ -87,13 +88,9 @@ export const AddonForm: VFC<IAddonFormProps> = ({
             setFormValues({ ...formValues, [field]: event.target.value });
         };
 
-    const onEnabled = (
-        event: ChangeEvent<HTMLInputElement>,
-        enabled: boolean
-    ) => {
+    const onEnabled: MouseEventHandler = event => {
         event.preventDefault();
-        // const enabled = !config.enabled; // FIXME: checkbox is working
-        setFormValues({ ...formValues, enabled });
+        setFormValues(({ enabled }) => ({ ...formValues, enabled: !enabled }));
     };
 
     const setParameterValue =
@@ -209,7 +206,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         control={
                             <Switch
                                 checked={formValues.enabled}
-                                onChange={onEnabled}
+                                onClick={onEnabled}
                             />
                         }
                         label={formValues.enabled ? 'Enabled' : 'Disabled'}
