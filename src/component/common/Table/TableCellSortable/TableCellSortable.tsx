@@ -31,21 +31,31 @@ export const TableCellSortable = ({
 }: ITableCellSortableProps) => {
     const styles = useStyles();
 
+    const ariaSort =
+        sort.type === name
+            ? sort.desc
+                ? 'descending'
+                : 'ascending'
+            : undefined;
+
+    const cellClassName = classnames(
+        className,
+        styles.tableCellHeaderSortable,
+        sort.type === name && 'sorted'
+    );
+
+    const onSortClick = () => {
+        setSort(prev => ({
+            desc: !Boolean(prev.desc),
+            type: name,
+        }));
+    };
+
     return (
-        <TableCell
-            className={classnames(
-                className,
-                styles.tableCellHeaderSortable,
-                sort.type === name && 'sorted'
-            )}
-            onClick={() =>
-                setSort(prev => ({
-                    desc: !Boolean(prev.desc),
-                    type: name,
-                }))
-            }
-        >
-            {children}
+        <TableCell aria-sort={ariaSort} className={cellClassName}>
+            <button className={styles.sortButton} onClick={onSortClick}>
+                {children}
+            </button>
             <ConditionallyRender
                 condition={sort.type === name}
                 show={
