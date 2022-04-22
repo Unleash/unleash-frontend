@@ -268,6 +268,7 @@ export const AddVariant = ({
                     label="Variant name"
                     autoFocus
                     name="name"
+                    id="variant-name"
                     className={styles.input}
                     errorText={error.name}
                     value={data.name || ''}
@@ -317,7 +318,7 @@ export const AddVariant = ({
                             <Grid item md={4}>
                                 <Input
                                     id="weight"
-                                    label="Weight"
+                                    label="Variant weight"
                                     name="weight"
                                     data-testid={'VARIANT_WEIGHT_INPUT'}
                                     InputProps={{
@@ -368,7 +369,9 @@ export const AddVariant = ({
                         <Input
                             error={Boolean(error.payload)}
                             errorText={error.payload}
-                            name="value"
+                            name="variant-payload-value"
+                            id="variant-payload-value"
+                            label="Value"
                             className={commonStyles.fullWidth}
                             value={payload.value}
                             onChange={e => onPayload('value')(e.target.value)}
@@ -376,9 +379,8 @@ export const AddVariant = ({
                             placeholder={
                                 payload.type === 'json'
                                     ? '{ "hello": "world" }'
-                                    : 'value'
+                                    : ''
                             }
-                            label="value"
                         />
                     </Grid>
                 </Grid>
