@@ -82,7 +82,7 @@ const CreateUser = () => {
             description="In order to get access to Unleash needs to have an Unleash root role as Admin, Editor or Viewer.
             You can also add the user to projects as member or owner in the specific projects."
             documentationLink="https://docs.getunleash.io/user_guide/rbac#standard-roles"
-            documentationLinkLabel="More about user management"
+            documentationLinkLabel="User management documentation"
             formatApiCode={formatApiCode}
         >
             <UserForm

@@ -172,4 +172,4 @@ export const featureStrategyHelp = `
 export const featureStrategyDocsLink =
     'https://docs.getunleash.io/user_guide/activation_strategy';
 
-export const featureStrategyDocsLinkLabel = 'More about strategies';
+export const featureStrategyDocsLinkLabel = 'Strategies documentation';
