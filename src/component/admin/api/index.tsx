@@ -1,7 +1,7 @@
-import { ApiTokenList } from '../apiToken/ApiTokenList/ApiTokenList';
 import AdminMenu from '../menu/AdminMenu';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
+import { ApiTokenPage } from 'component/admin/apiToken/ApiTokenPage/ApiTokenPage';
 import { useContext } from 'react';
 
 const ApiPage = () => {
@@ -10,7 +10,7 @@ const ApiPage = () => {
     return (
         <div>
             <ConditionallyRender condition={isAdmin} show={<AdminMenu />} />
-            <ApiTokenList />
+            <ApiTokenPage />
         </div>
     );
 };
