@@ -6,11 +6,15 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import PageContent from 'component/common/PageContent';
 import HeaderTitle from 'component/common/HeaderTitle';
 import ConditionallyRender from 'component/common/ConditionallyRender';
-import { CREATE_API_TOKEN } from 'component/providers/AccessProvider/permissions';
+import {
+    CREATE_API_TOKEN,
+    READ_API_TOKEN,
+} from 'component/providers/AccessProvider/permissions';
 import { useStyles } from './ApiTokenPage.styles';
 import { CREATE_API_TOKEN_BUTTON } from 'utils/testIds';
 import { Alert } from '@material-ui/lab';
 import { ApiTokenList } from 'component/admin/apiToken/ApiTokenList/ApiTokenList';
+import { AdminAlert } from 'component/common/AdminAlert/AdminAlert';
 
 export const ApiTokenPage = () => {
     const styles = useStyles();
@@ -63,7 +67,11 @@ export const ApiTokenPage = () => {
                     {uiConfig.unleashUrl}/api/
                 </pre>
             </Alert>
-            <ApiTokenList />
+            <ConditionallyRender
+                condition={hasAccess(READ_API_TOKEN)}
+                show={() => <ApiTokenList />}
+                elseShow={() => <AdminAlert />}
+            />
         </PageContent>
     );
 };
