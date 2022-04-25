@@ -1,25 +1,12 @@
-import { VFC } from 'react';
+import { ReactNode, VFC } from 'react';
 import { Button, ButtonProps, Icon } from '@material-ui/core';
-
-// DropdownButton.propTypes = { // FIXME: cleanup
-//     label: PropTypes.string,
-//     style: PropTypes.object,
-//     id: PropTypes.string,
-//     title: PropTypes.string,
-//     icon: PropTypes.object,
-//     startIcon: PropTypes.object,
-// };
-
-// .dropdownButton {
-//     font-weight: normal;
-// }
 
 interface IDropdownButtonProps {
     label: string;
     id?: string;
     title?: ButtonProps['title'];
-    // icon?: ButtonProps['icon']; // FIXME: icon
-    icon?: any;
+    className?: string;
+    icon?: ReactNode;
     startIcon?: ButtonProps['startIcon'];
     style?: ButtonProps['style'];
     onClick: ButtonProps['onClick'];
@@ -28,7 +15,6 @@ interface IDropdownButtonProps {
 export const DropdownButton: VFC<IDropdownButtonProps> = ({
     label,
     id,
-    // className = styles.dropdownButton,
     title,
     icon,
     startIcon,
@@ -37,7 +23,6 @@ export const DropdownButton: VFC<IDropdownButtonProps> = ({
 }) => (
     <Button
         id={id}
-        // className={className}
         title={title}
         style={style}
         {...rest}

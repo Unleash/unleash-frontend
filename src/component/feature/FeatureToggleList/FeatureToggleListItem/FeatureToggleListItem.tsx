@@ -8,7 +8,6 @@ import { IAccessContext } from 'contexts/AccessContext';
 import StatusChip from 'component/common/StatusChip/StatusChip';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import { styles as commonStyles } from 'component/common'; // FIXME: remove
 import { IFeatureToggle } from 'interfaces/featureToggle';
 import { IFlags } from 'interfaces/uiConfig';
 import { getTogglePath } from 'utils/routePathHelpers';
@@ -16,6 +15,7 @@ import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureSt
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import { styles as commonStyles } from 'component/common'; // FIXME: remove
 import { useStyles } from './styles'; // FIXME: cleanup
 
 interface IFeatureToggleListItemProps {
@@ -142,7 +142,6 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                         <Chip
                             color="primary"
                             variant="outlined"
-                            // className={styles.typeChip} // FIXME: cleanup
                             style={{ marginLeft: '8px', cursor: 'pointer' }}
                             title={`Project: ${project}`}
                             label={project}

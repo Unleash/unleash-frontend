@@ -71,7 +71,6 @@ export const ReportToggleList: VFC<IReportToggleListProps> = ({
         ));
 
     const renderBulkActionsMenu = () => (
-        // @ts-expect-error
         <DropdownMenu
             id="bulk-actions"
             label="Bulk actions"

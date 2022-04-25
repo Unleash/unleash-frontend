@@ -9,10 +9,10 @@ import { Menu } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import { DropdownButton } from './DropdownButton/DropdownButton';
 
-interface IDropdownMenuProps {
+export interface IDropdownMenuProps {
     renderOptions: () => ReactNode;
     id: string;
-    title: string;
+    title?: string;
     callback: MouseEventHandler;
     icon?: ReactNode;
     label: string;

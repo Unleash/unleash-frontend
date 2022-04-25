@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useMemo, VFC } from 'react';
-import { MenuItem } from '@material-ui/core';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import { MenuItem, Typography } from '@material-ui/core';
+import DropdownMenu, { IDropdownMenuProps } from '../DropdownMenu/DropdownMenu';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import { IProjectCard } from 'interfaces/project';
 
@@ -11,7 +11,7 @@ interface IProjectSelectProps {
     updateCurrentProject: (id: string) => void;
 }
 
-const ProjectSelect: VFC<IProjectSelectProps> = ({
+const ProjectSelect: VFC<IProjectSelectProps & Partial<IDropdownMenuProps>> = ({
     currentProjectId,
     updateCurrentProject,
     ...rest
@@ -49,9 +49,8 @@ const ProjectSelect: VFC<IProjectSelectProps> = ({
             disabled={currentProject === ALL_PROJECTS}
             data-target={ALL_PROJECTS.id}
             key={ALL_PROJECTS.id}
-            style={{ fontSize: '14px' }} // FIXME: style
         >
-            {ALL_PROJECTS.name}
+            <Typography variant="body2">{ALL_PROJECTS.name}</Typography>
         </MenuItem>,
         ...projects.map(project =>
             renderProjectItem(currentProjectId, project)
