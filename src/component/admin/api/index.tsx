@@ -1,15 +1,18 @@
 import AdminMenu from '../menu/AdminMenu';
 import ConditionallyRender from 'component/common/ConditionallyRender';
-import AccessContext from 'contexts/AccessContext';
 import { ApiTokenPage } from 'component/admin/apiToken/ApiTokenPage/ApiTokenPage';
-import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ApiPage = () => {
-    const { isAdmin } = useContext(AccessContext);
+    const { pathname } = useLocation();
+    const showAdminMenu = pathname.includes('/admin/');
 
     return (
         <div>
-            <ConditionallyRender condition={isAdmin} show={<AdminMenu />} />
+            <ConditionallyRender
+                condition={showAdminMenu}
+                show={<AdminMenu />}
+            />
             <ApiTokenPage />
         </div>
     );
