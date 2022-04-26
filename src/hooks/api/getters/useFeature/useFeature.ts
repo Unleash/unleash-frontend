@@ -1,4 +1,4 @@
-import useSWR, { mutate, SWRConfiguration } from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 import { useCallback } from 'react';
 import { emptyFeature } from './emptyFeature';
 import handleErrorResponses from '../httpErrorResponseHandler';
@@ -25,15 +25,15 @@ export const useFeature = (
 ): IUseFeatureOutput => {
     const path = formatFeatureApiPath(projectId, featureId);
 
-    const { data, error } = useSWR<IFeatureResponse>(
+    const { data, error, mutate } = useSWR<IFeatureResponse>(
         ['useFeature', path],
         () => featureFetcher(path),
         options
     );
 
     const refetchFeature = useCallback(() => {
-        mutate(path).catch(console.warn);
-    }, [path]);
+        mutate().catch(console.warn);
+    }, [mutate]);
 
     return {
         feature: data?.body || emptyFeature,

@@ -1,4 +1,3 @@
-import { mutate } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 import { useCallback } from 'react';
 import { emptyFeature } from './emptyFeature';
@@ -18,14 +17,14 @@ export const useFeatureImmutable = (
 ): IUseFeatureOutput => {
     const path = formatFeatureApiPath(projectId, featureId);
 
-    const { data, error } = useSWRImmutable<IFeatureResponse>(
+    const { data, error, mutate } = useSWRImmutable<IFeatureResponse>(
         ['useFeatureImmutable', path],
         () => featureFetcher(path)
     );
 
     const refetchFeature = useCallback(() => {
-        mutate(path).catch(console.warn);
-    }, [path]);
+        mutate().catch(console.warn);
+    }, [mutate]);
 
     return {
         feature: data?.body || emptyFeature,
