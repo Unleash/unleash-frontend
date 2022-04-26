@@ -51,6 +51,7 @@ import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { IRoute } from 'interfaces/route';
+import { ExampleTable } from 'component/common/SortableTable/ExampleTable';
 
 export const routes: IRoute[] = [
     // Splash
@@ -58,6 +59,15 @@ export const routes: IRoute[] = [
         path: '/splash/:splashId',
         title: 'Unleash',
         component: SplashPage,
+        type: 'protected',
+        menu: {},
+    },
+
+    // Example table
+    {
+        path: '/example-table',
+        title: 'Unleash',
+        component: ExampleTable,
         type: 'protected',
         menu: {},
     },
