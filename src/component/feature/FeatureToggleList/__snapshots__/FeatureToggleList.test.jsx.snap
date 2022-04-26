@@ -361,6 +361,8 @@ Array [
     className="makeStyles-container-18"
     data-testid="ANNOUNCER_ELEMENT_TEST_ID"
     role="status"
-  />,
+  >
+    Navigated to Feature toggles
+  </div>,
 ]
 `;

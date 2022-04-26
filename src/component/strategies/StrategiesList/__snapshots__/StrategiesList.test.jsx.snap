@@ -275,7 +275,9 @@ Array [
     className="makeStyles-container-11"
     data-testid="ANNOUNCER_ELEMENT_TEST_ID"
     role="status"
-  />,
+  >
+    Navigated to Strategies
+  </div>,
 ]
 `;
 
@@ -554,6 +556,8 @@ Array [
     className="makeStyles-container-11"
     data-testid="ANNOUNCER_ELEMENT_TEST_ID"
     role="status"
-  />,
+  >
+    Navigated to Strategies
+  </div>,
 ]
 `;
