@@ -70,7 +70,7 @@ exports[`renders correctly with one feature 1`] = `
           <h1
             className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h1"
           >
-            Features 
+            Feature toggles
           </h1>
         </div>
         <div
@@ -242,7 +242,7 @@ exports[`renders correctly with one feature without permissions 1`] = `
           <h1
             className="MuiTypography-root makeStyles-headerTitle-15 MuiTypography-h1"
           >
-            Features 
+            Feature toggles
           </h1>
         </div>
         <div
