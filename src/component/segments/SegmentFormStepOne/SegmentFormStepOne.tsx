@@ -46,7 +46,6 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
                     onChange={e => setName(e.target.value)}
                     error={Boolean(errors.name)}
                     errorText={errors.name}
-                    autoFocus
                     required
                     data-testid={SEGMENT_NAME_ID}
                 />

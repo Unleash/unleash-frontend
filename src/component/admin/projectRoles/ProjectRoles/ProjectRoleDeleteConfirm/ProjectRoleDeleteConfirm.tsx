@@ -56,7 +56,6 @@ const ProjectRoleDeleteConfirm = ({
 
             <form id={formId}>
                 <Input
-                    autoFocus
                     onChange={handleChange}
                     value={confirmName}
                     label="Role name"

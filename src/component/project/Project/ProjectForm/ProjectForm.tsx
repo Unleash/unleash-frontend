@@ -52,7 +52,6 @@ const ProjectForm: React.FC<IProjectForm> = ({
                     onFocus={() => clearErrors()}
                     onBlur={validateProjectId}
                     disabled={mode === 'Edit'}
-                    autoFocus
                     required
                 />
 

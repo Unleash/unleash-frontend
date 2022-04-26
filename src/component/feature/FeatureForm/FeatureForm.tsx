@@ -75,7 +75,6 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
                     What would you like to call your toggle?
                 </p>
                 <Input
-                    autoFocus
                     disabled={mode === 'Edit'}
                     className={styles.input}
                     label="Name"

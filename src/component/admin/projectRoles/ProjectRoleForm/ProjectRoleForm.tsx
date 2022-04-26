@@ -141,7 +141,6 @@ const ProjectRoleForm: React.FC<IProjectRoleForm> = ({
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
                     onBlur={validateNameUniqueness}
-                    autoFocus
                 />
 
                 <p className={styles.inputDescription}>

@@ -119,7 +119,6 @@ export const ContextForm: React.FC<IContextForm> = ({
                     errorText={errors.name}
                     onFocus={() => clearErrors('name')}
                     onBlur={validateContext}
-                    autoFocus
                 />
                 <p className={styles.inputDescription}>
                     What is this context for?

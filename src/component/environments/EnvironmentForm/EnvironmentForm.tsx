@@ -51,7 +51,6 @@ const EnvironmentForm: React.FC<IEnvironmentForm> = ({
                     onFocus={() => clearErrors()}
                     onBlur={validateEnvironmentName}
                     disabled={mode === 'Edit'}
-                    autoFocus
                 />
 
                 <p className={styles.inputDescription}>

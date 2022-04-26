@@ -58,7 +58,6 @@ export const StrategyForm: React.FC<IStrategyFormProps> = ({
                 </p>
                 <Input
                     disabled={mode === 'Edit'}
-                    autoFocus
                     className={styles.input}
                     label="Strategy name*"
                     value={strategyName}
