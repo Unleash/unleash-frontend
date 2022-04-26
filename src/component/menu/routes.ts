@@ -51,6 +51,7 @@ import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { IRoute } from 'interfaces/route';
+import { Experiment } from 'component/Experiment/Experiment';
 
 export const routes: IRoute[] = [
     // Splash
@@ -512,6 +513,15 @@ export const routes: IRoute[] = [
         hidden: true,
         component: ForgottenPassword,
         type: 'unprotected',
+        menu: {},
+    },
+
+    {
+        path: '/test',
+        title: 'Test',
+        hidden: false,
+        type: 'protected',
+        component: Experiment,
         menu: {},
     },
 ];

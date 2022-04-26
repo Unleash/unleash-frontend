@@ -423,5 +423,13 @@ Array [
     "title": "Admin",
     "type": "protected",
   },
+  Object {
+    "component": [Function],
+    "hidden": false,
+    "menu": Object {},
+    "path": "/test",
+    "title": "Test",
+    "type": "protected",
+  },
 ]
 `;
