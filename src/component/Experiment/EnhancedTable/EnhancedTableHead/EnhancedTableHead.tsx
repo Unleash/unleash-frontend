@@ -1,6 +1,6 @@
-import { ChangeEventHandler, MouseEvent } from 'react';
+// import { ChangeEventHandler, MouseEvent } from 'react';
 import {
-    Checkbox,
+    // Checkbox,
     // createStyles,
     // makeStyles,
     TableCell,
@@ -9,7 +9,9 @@ import {
     // TableSortLabel,
     // Theme,
 } from '@material-ui/core';
-import { Order } from '../utils';
+import { useStyles } from 'component/admin/users/UsersList/UserListItem/UserListItem.styles'; // FIXME: move
+import { ComponentProps } from 'react';
+// import { Order } from '../utils';
 
 // const useStyles = makeStyles((theme: Theme) =>
 //     createStyles({
@@ -27,23 +29,31 @@ import { Order } from '../utils';
 //     })
 // );
 
-interface IEnhancedTableHeadProps<T extends Record<any, any>> {
-    numSelected: number;
-    onRequestSort: (event: MouseEvent<unknown>, property: keyof T) => void;
-    onSelectAllClick: ChangeEventHandler<HTMLInputElement>;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
+// interface IEnhancedTableHeadProps<T extends Record<any, any>> {
+interface IEnhancedTableHeadProps {
+    // numSelected: number;
+    // onRequestSort: (event: MouseEvent<unknown>, property: keyof T) => void;
+    // onSelectAllClick: ChangeEventHandler<HTMLInputElement>;
+    // order: Order;
+    // orderBy: string;
+    // rowCount: number;
+    columns: {
+        field?: string;
+        label?: string;
+        align: ComponentProps<typeof TableCell>['align'];
+    }[];
 }
 
-export const EnhancedTableHead = <T,>({
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-}: IEnhancedTableHeadProps<T>) => {
+export const EnhancedTableHead = ({
+    // onSelectAllClick,
+    // order,
+    // orderBy,
+    // numSelected,
+    // rowCount,
+    // onRequestSort,
+    columns,
+}: IEnhancedTableHeadProps) => {
+    const styles = useStyles();
     // const styles = useStyles();
     // const createSortHandler =
     //     (property: keyof T) => (event: MouseEvent<unknown>) => {
@@ -52,8 +62,23 @@ export const EnhancedTableHead = <T,>({
 
     return (
         <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
+            <TableRow className={styles.tableCellHeader}>
+                {columns.map(column => {
+                    return (
+                        <TableCell
+                            align={column.align}
+                            // className={classnames(
+                            //     styles.hideXS,
+                            //     styles.firstColumnSM
+                            // )}
+                        >
+                            {column.label !== undefined
+                                ? column.label
+                                : column.field}
+                        </TableCell>
+                    );
+                })}
+                {/* <TableCell padding="checkbox">
                     <Checkbox
                         indeterminate={
                             numSelected > 0 && numSelected < rowCount
@@ -62,7 +87,7 @@ export const EnhancedTableHead = <T,>({
                         onChange={onSelectAllClick}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                     />
-                </TableCell>
+                </TableCell> */}
                 {/* {headCells.map(headCell => (
                     <TableCell
                         key={headCell.id}

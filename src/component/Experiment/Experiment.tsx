@@ -30,7 +30,9 @@ export const Experiment: VFC<IExperimentProps> = () => {
                 { field: 'project', label: 'Project ID' },
                 { field: 'stale', label: 'Status', render: StatusCell },
             ]}
-            isSelectable
+            // loadingData={[]}
+            // loadingDataLength={10}
+            // isSelectable
         />
     );
 };

@@ -18,7 +18,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 // import { getComparator, Order, stableSort } from './utils';
 import { TopTableToolbar } from './TopTableToolbar/TopTableToolbar';
-// import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
+import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
 
 // interface Data {
 //     calories: number;
@@ -150,8 +150,6 @@ export const EnhancedTable = <T,>({
         [data, dataKey, columns]
     );
 
-    console.log({ data, rows });
-
     // const handleRequestSort = (
     //     event: MouseEvent<unknown>,
     //     property: keyof T
@@ -205,14 +203,19 @@ export const EnhancedTable = <T,>({
                         size="medium"
                         aria-label="enhanced table"
                     >
-                        {/* <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        /> */}
+                        <EnhancedTableHead
+                            columns={columns.map(({ field, label, align }) => ({
+                                field: field as string,
+                                label,
+                                align,
+                            }))}
+                            // numSelected={selected.length}
+                            // order={order}
+                            // orderBy={orderBy}
+                            // onSelectAllClick={handleSelectAllClick}
+                            // onRequestSort={handleRequestSort}
+                            // rowCount={rows.length}
+                        />
                         <TableBody>
                             {/* // TODO: sort/filter hook? */}
                             {/* {stableSort(
