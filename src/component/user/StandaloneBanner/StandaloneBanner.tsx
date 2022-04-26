@@ -20,7 +20,6 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
             from={theme.palette.primary.main}
             // @ts-expect-error
             to={theme.palette.login.gradient.bottom}
-            // @ts-expect-error
             className={styles.gradient}
         >
             <div className={styles.container}>
