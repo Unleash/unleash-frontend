@@ -36,7 +36,7 @@ const DemoAuth = ({ authDetails, redirect }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Logo className={styles.logo} />
+            <Logo className={styles.logo} aria-label="Unleash logo" />
             <div className={styles.container}>
                 <h2>Access the Unleash demo instance</h2>
                 <p>No further data or Credit Card required</p>

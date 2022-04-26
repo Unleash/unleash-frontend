@@ -34,8 +34,18 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
             <div className={styles.logoContainer}>
                 <ConditionallyRender
                     condition={smallScreen}
-                    show={<LogoWithText className={styles.logo} />}
-                    elseShow={<Logo className={styles.logo} />}
+                    show={
+                        <LogoWithText
+                            className={styles.logo}
+                            aria-label="Unleash logo"
+                        />
+                    }
+                    elseShow={
+                        <Logo
+                            className={styles.logo}
+                            aria-label="Unleash logo"
+                        />
+                    }
                 />
             </div>
         </Gradient>
