@@ -50,6 +50,7 @@ const DemoAuth = ({ authDetails, redirect }) => {
                         variant="outlined"
                         label="Email"
                         name="email"
+                        id="email"
                         data-testid={LOGIN_EMAIL_ID}
                         required
                         type="email"

@@ -56,6 +56,7 @@ const SimpleAuth = ({ authDetails, redirect }) => {
                     variant="outlined"
                     label="Email"
                     name="email"
+                    id="email"
                     required
                     type="email"
                     data-testid={LOGIN_EMAIL_ID}
