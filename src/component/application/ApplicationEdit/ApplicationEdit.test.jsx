@@ -2,14 +2,14 @@ import { ApplicationEdit } from './ApplicationEdit';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import AccessProvider from 'component/providers/AccessProvider/AccessProvider';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
 import { ThemeProvider } from 'themes/ThemeProvider';
+import { AccessProviderMock } from 'component/providers/AccessProvider/AccessProviderMock';
 
 test('renders correctly if no application', () => {
     const tree = renderer
         .create(
-            <AccessProvider permissions={[{ permission: ADMIN }]}>
+            <AccessProviderMock permissions={[{ permission: ADMIN }]}>
                 <ThemeProvider>
                     <UIProvider>
                         <MemoryRouter initialEntries={['/test']}>
@@ -22,7 +22,7 @@ test('renders correctly if no application', () => {
                         </MemoryRouter>
                     </UIProvider>
                 </ThemeProvider>
-            </AccessProvider>
+            </AccessProviderMock>
         )
         .toJSON();
 
@@ -35,7 +35,9 @@ test('renders correctly without permission', () => {
             <MemoryRouter>
                 <ThemeProvider>
                     <UIProvider>
-                        <AccessProvider permissions={[{ permission: ADMIN }]}>
+                        <AccessProviderMock
+                            permissions={[{ permission: ADMIN }]}
+                        >
                             <ApplicationEdit
                                 fetchApplication={() => Promise.resolve({})}
                                 storeApplicationMetaData={jest.fn()}
@@ -81,7 +83,7 @@ test('renders correctly without permission', () => {
                                 }}
                                 locationSettings={{ locale: 'en-GB' }}
                             />
-                        </AccessProvider>
+                        </AccessProviderMock>
                     </UIProvider>
                 </ThemeProvider>
             </MemoryRouter>
@@ -97,7 +99,9 @@ test('renders correctly with permissions', () => {
             <MemoryRouter>
                 <ThemeProvider>
                     <UIProvider>
-                        <AccessProvider permissions={[{ permission: ADMIN }]}>
+                        <AccessProviderMock
+                            permissions={[{ permission: ADMIN }]}
+                        >
                             <ApplicationEdit
                                 fetchApplication={() => Promise.resolve({})}
                                 storeApplicationMetaData={jest.fn()}
@@ -143,7 +147,7 @@ test('renders correctly with permissions', () => {
                                 }}
                                 locationSettings={{ locale: 'en-GB' }}
                             />
-                        </AccessProvider>
+                        </AccessProviderMock>
                     </UIProvider>
                 </ThemeProvider>
             </MemoryRouter>

@@ -36,7 +36,7 @@ describe('SelectProjectInput', () => {
         expect(checkbox).toBeChecked();
 
         const selectInputContainer = screen.getByTestId('select-input');
-        const input = within(selectInputContainer).getByRole('textbox');
+        const input = within(selectInputContainer).getByRole('combobox');
         expect(input).toBeDisabled();
     });
 
@@ -72,7 +72,7 @@ describe('SelectProjectInput', () => {
         expect(checkbox).not.toBeChecked();
 
         const selectInputContainer = screen.getByTestId('select-input');
-        const input = within(selectInputContainer).getByRole('textbox');
+        const input = within(selectInputContainer).getByRole('combobox');
         expect(input).toBeEnabled();
     });
 

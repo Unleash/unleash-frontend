@@ -1,11 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { StrategiesList } from './StrategiesList';
 import renderer from 'react-test-renderer';
-import AccessProvider from 'component/providers/AccessProvider/AccessProvider';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
 import { AnnouncerProvider } from 'component/common/Announcer/AnnouncerProvider/AnnouncerProvider';
 import { ThemeProvider } from 'themes/ThemeProvider';
+import { AccessProviderMock } from 'component/providers/AccessProvider/AccessProviderMock';
 
 test('renders correctly', () => {
     const tree = renderer.create(
@@ -13,9 +13,11 @@ test('renders correctly', () => {
             <ThemeProvider>
                 <AnnouncerProvider>
                     <UIProvider>
-                        <AccessProvider permissions={[{ permission: ADMIN }]}>
+                        <AccessProviderMock
+                            permissions={[{ permission: ADMIN }]}
+                        >
                             <StrategiesList />
-                        </AccessProvider>
+                        </AccessProviderMock>
                     </UIProvider>
                 </AnnouncerProvider>
             </ThemeProvider>

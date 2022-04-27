@@ -8,7 +8,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ThemeProvider } from 'themes/ThemeProvider';
 import { App } from 'component/App';
 import { ScrollTop } from 'component/common/ScrollTop/ScrollTop';
-import AccessProvider from 'component/providers/AccessProvider/AccessProvider';
+import { AccessProvider } from 'component/providers/AccessProvider/AccessProvider';
 import { getBasePath } from 'utils/formatPath';
 import { FeedbackCESProvider } from 'component/feedback/FeedbackCESContext/FeedbackCESProvider';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
