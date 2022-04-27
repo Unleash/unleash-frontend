@@ -116,7 +116,7 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
                                 type="string"
                                 onChange={evt => setUsername(evt.target.value)}
                                 value={username}
-                                error={!!usernameError}
+                                error={Boolean(usernameError)}
                                 helperText={usernameError}
                                 variant="outlined"
                                 size="small"
@@ -128,7 +128,7 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
                                 name="password"
                                 id="password"
                                 value={password}
-                                error={!!passwordError}
+                                error={Boolean(passwordError)}
                                 helperText={passwordError}
                                 data-testid={LOGIN_PASSWORD_ID}
                             />

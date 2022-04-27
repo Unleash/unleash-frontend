@@ -8,6 +8,7 @@ import {
     MouseEventHandler,
 } from 'react';
 import { TextField, FormControlLabel, Switch, Button } from '@material-ui/core';
+import produce from 'immer';
 import { styles as commonStyles } from 'component/common';
 import { trim } from 'component/common/util';
 import { IAddon, IAddonProvider } from 'interfaces/addons';
@@ -19,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
 import { makeStyles } from '@material-ui/core/styles';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 const useStyles = makeStyles(theme => ({
     nameInput: {
@@ -97,13 +99,11 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         (param: string): ChangeEventHandler<HTMLInputElement> =>
         event => {
             event.preventDefault();
-            setFormValues({
-                ...formValues,
-                parameters: {
-                    ...formValues.parameters,
-                    [param]: event.target.value,
-                },
-            });
+            setFormValues(
+                produce(draft => {
+                    draft.parameters[param] = event.target.value;
+                })
+            );
         };
 
     const setEventValue =
@@ -166,11 +166,12 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                     title: 'Addon created successfully',
                 });
             }
-        } catch (e) {
-            setToastApiError((e as Error)?.toString());
+        } catch (error) {
+            const message = formatUnknownError(error);
+            setToastApiError(message);
             setErrors({
                 parameters: {},
-                general: (e as Error)?.message,
+                general: message,
                 containsErrors: true,
             });
         }
@@ -180,7 +181,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         name,
         description,
         documentationUrl = 'https://unleash.github.io/docs/addons',
-    } = provider ? provider : ({} as IAddonProvider);
+    } = provider ? provider : ({} as Partial<IAddonProvider>);
 
     return (
         <PageContent headerContent={`Configure ${name} addon`}>
@@ -222,7 +223,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         name="description"
                         placeholder=""
                         value={formValues.description}
-                        error={!!errors.description}
+                        error={Boolean(errors.description)}
                         helperText={errors.description}
                         onChange={setFieldValue('description')}
                         variant="outlined"

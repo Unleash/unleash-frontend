@@ -29,7 +29,7 @@ interface IDialogue {
 export const Dialogue: React.FC<IDialogue> = ({
     children,
     open,
-    onClick = () => {},
+    onClick,
     onClose,
     title,
     primaryButtonText,
@@ -44,7 +44,9 @@ export const Dialogue: React.FC<IDialogue> = ({
     const handleClick = formId
         ? (e: React.SyntheticEvent) => {
               e.preventDefault();
-              onClick(e);
+              if (onClick) {
+                  onClick(e);
+              }
           }
         : onClick;
     return (

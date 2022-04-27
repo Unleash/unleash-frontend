@@ -43,7 +43,7 @@ export const HeaderTitle: VFC<IHeaderTitleProps> = ({
             </div>
 
             <ConditionallyRender
-                condition={!!actions}
+                condition={Boolean(actions)}
                 show={<div className={styles.headerActions}>{actions}</div>}
             />
         </div>

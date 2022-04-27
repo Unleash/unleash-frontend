@@ -107,7 +107,7 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
     const renderInput = (params: AutocompleteRenderInputParams) => (
         <TextField
             {...params}
-            error={!!error}
+            error={Boolean(error)}
             helperText={error}
             variant="outlined"
             label="Projects"

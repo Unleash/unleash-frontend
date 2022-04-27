@@ -68,7 +68,7 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
 
     const setFilterQuery = (v: string) => {
         const query = v && typeof v === 'string' ? v.trim() : '';
-        return setFilter(prev => ({ ...prev, query }));
+        setFilter(prev => ({ ...prev, query }));
     };
 
     const renderFeatures = () => {
@@ -99,7 +99,7 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
                 ))}
                 elseShow={
                     <ConditionallyRender
-                        condition={!!isArchive}
+                        condition={Boolean(isArchive)}
                         show={
                             <ListItem className={styles.emptyStateListItem}>
                                 No archived features.
@@ -172,7 +172,7 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
                                     show={
                                         <CreateFeatureButton
                                             filter={filter}
-                                            loading={!!loading}
+                                            loading={Boolean(loading)}
                                         />
                                     }
                                 />

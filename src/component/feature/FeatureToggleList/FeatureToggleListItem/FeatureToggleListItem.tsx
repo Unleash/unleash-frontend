@@ -95,7 +95,15 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                 {/* <span className={styles.listItemToggle}></span> */}
                                 <span></span>
                                 <small>
-                                    <TimeAgo date={createdAt} live={false} />
+                                    <ConditionallyRender
+                                        condition={Boolean(createdAt)}
+                                        show={
+                                            <TimeAgo
+                                                date={createdAt}
+                                                live={false}
+                                            />
+                                        }
+                                    />
                                 </small>
                                 <div>
                                     <span className={commonStyles.truncate}>
@@ -114,7 +122,15 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                 {/* <span className={styles.listItemToggle}></span> */}
                                 <span></span>
                                 <small>
-                                    <TimeAgo date={createdAt} live={false} />
+                                    <ConditionallyRender
+                                        condition={Boolean(createdAt)}
+                                        show={
+                                            <TimeAgo
+                                                date={createdAt}
+                                                live={false}
+                                            />
+                                        }
+                                    />
                                 </small>
                                 <div>
                                     <span className={commonStyles.truncate}>
@@ -131,7 +147,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                         commonStyles.hideLt920
                     )}
                 >
-                    <StatusChip stale={stale} showActive={false} />
+                    <StatusChip stale={Boolean(stale)} showActive={false} />
                     <Link
                         to={`/projects/${project}`}
                         style={{ textDecoration: 'none' }}

@@ -214,7 +214,7 @@ const ProjectEnvironmentList = ({
                             />
                             <EnvironmentDisableConfirm
                                 env={selectedEnv}
-                                open={!!selectedEnv}
+                                open={Boolean(selectedEnv)}
                                 handleDisableEnvironment={
                                     handleDisableEnvironment
                                 }

@@ -80,7 +80,6 @@ export const FeatureToggleListActions: VFC<IFeatureToggleListActionsProps> = ({
                         updateCurrentProject={project =>
                             setFilter(prev => ({ ...prev, project }))
                         }
-                        // FIXME: styles
                         style={{
                             textTransform: 'lowercase',
                             fontWeight: 'normal',

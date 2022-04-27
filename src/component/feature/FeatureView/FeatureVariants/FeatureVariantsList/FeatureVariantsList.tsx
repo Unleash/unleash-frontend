@@ -165,7 +165,7 @@ const FeatureOverviewVariants = () => {
     };
 
     const removeVariant = async (name: string) => {
-        let updatedVariants = variants.filter(v => v.name !== name);
+        let updatedVariants = variants.filter(value => value.name !== name);
         try {
             await updateVariants(
                 updatedVariants,

@@ -46,7 +46,7 @@ export const AddonParameter = ({
                     shrink: true,
                 }}
                 value={value}
-                error={!!error}
+                error={Boolean(error)}
                 onChange={setParameterValue(definition.name)}
                 variant="outlined"
                 helperText={definition.description}

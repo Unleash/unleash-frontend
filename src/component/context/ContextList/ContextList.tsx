@@ -82,7 +82,6 @@ const ContextList: VFC = () => {
                     show={
                         <Tooltip title="Edit context field">
                             <IconButton
-                                aria-label="edit"
                                 onClick={() =>
                                     history.push(`/context/edit/${field.name}`)
                                 }
@@ -157,7 +156,7 @@ const ContextList: VFC = () => {
             </List>
             <ConfirmDialogue
                 open={showDelDialogue}
-                onClick={() => onDeleteContext()}
+                onClick={onDeleteContext}
                 onClose={() => {
                     setName(undefined);
                     setShowDelDialogue(false);

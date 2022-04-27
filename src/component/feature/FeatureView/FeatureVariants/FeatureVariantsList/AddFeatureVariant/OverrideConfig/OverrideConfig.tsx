@@ -25,9 +25,9 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
     const commonStyles = useCommonStyles();
 
     const { context } = useUnleashContext();
-    const contextNames = context.map(c => ({
-        key: c.name,
-        label: c.name,
+    const contextNames = context.map(({ name }) => ({
+        key: name,
+        label: name,
     }));
 
     const updateValues = (index: number) => (values: string[]) => {
@@ -48,16 +48,22 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
 
     return (
         <>
-            {overrides.map((o, i) => {
-                const definition = context.find(c => c.name === o.contextName);
+            {overrides.map((override, index) => {
+                const definition = context.find(
+                    c => c.name === override.contextName
+                );
                 const legalValues =
                     definition?.legalValues?.map(({ value }) => value) || [];
-                const filteredValues = o.values.filter(v =>
-                    legalValues.includes(v)
+                const filteredValues = override.values.filter(value =>
+                    legalValues.includes(value)
                 );
 
                 return (
-                    <Grid container key={`override=${i}`} alignItems="center">
+                    <Grid
+                        container
+                        key={`override=${index}`}
+                        alignItems="center"
+                    >
                         <Grid
                             item
                             md={3}
@@ -68,7 +74,7 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                             <GeneralSelect
                                 name="contextName"
                                 label="Context Field"
-                                value={o.contextName}
+                                value={override.contextName}
                                 options={contextNames}
                                 classes={{
                                     root: classnames(commonStyles.fullWidth),
@@ -76,25 +82,25 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                 onChange={(value: string) => {
                                     overridesDispatch({
                                         type: 'UPDATE_TYPE_AT',
-                                        payload: [i, value],
+                                        payload: [index, value],
                                     });
                                 }}
                             />
                         </Grid>
                         <Grid md={7} sm={7} xs={6} item>
                             <ConditionallyRender
-                                condition={
-                                    !!(legalValues && legalValues.length > 0)
-                                }
+                                condition={Boolean(
+                                    legalValues && legalValues.length > 0
+                                )}
                                 show={
                                     <Autocomplete
                                         multiple
-                                        id={`override-select-${i}`}
+                                        id={`override-select-${index}`}
                                         getOptionSelected={(option, value) => {
                                             return option === value;
                                         }}
                                         options={legalValues}
-                                        onChange={updateSelectValues(i)}
+                                        onChange={updateSelectValues(index)}
                                         getOptionLabel={option => option}
                                         defaultValue={filteredValues}
                                         value={filteredValues}
@@ -116,8 +122,8 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                         label="Values (v1, v2, ...)"
                                         name="values"
                                         placeholder=""
-                                        values={o.values}
-                                        updateValues={updateValues(i)}
+                                        values={override.values}
+                                        updateValues={updateValues(index)}
                                     />
                                 }
                             />
@@ -129,7 +135,7 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                         event.preventDefault();
                                         overridesDispatch({
                                             type: 'REMOVE',
-                                            payload: i,
+                                            payload: index,
                                         });
                                     }}
                                 >

@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 import { styles as commonStyles } from 'component/common';
+import { formatUnknownError } from 'utils/formatUnknownError';
 import styles from './CopyFeature.module.scss';
 import { trim } from 'component/common/util';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -56,7 +57,7 @@ export const CopyFeatureToggle = () => {
 
             setNameError(undefined);
         } catch (error) {
-            setNameError((error as Error)?.message);
+            setNameError(formatUnknownError(error));
         }
     };
 
@@ -74,7 +75,7 @@ export const CopyFeatureToggle = () => {
             });
             history.push(getTogglePath(projectId, newToggleName as string));
         } catch (error) {
-            setApiError((error as Error).toString());
+            setApiError(formatUnknownError(error));
         }
     };
 
@@ -89,7 +90,7 @@ export const CopyFeatureToggle = () => {
                 <h1>Copy&nbsp;{copyToggleName}</h1>
             </div>
             <ConditionallyRender
-                condition={!!apiError}
+                condition={Boolean(apiError)}
                 show={<Alert severity="error">{apiError}</Alert>}
             />
             <section className={styles.content}>

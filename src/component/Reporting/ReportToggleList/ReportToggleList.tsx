@@ -74,7 +74,6 @@ export const ReportToggleList: VFC<IReportToggleListProps> = ({
         <DropdownMenu
             id="bulk-actions"
             label="Bulk actions"
-            callback={() => {}}
             renderOptions={() => (
                 <>
                     <MenuItem>Mark toggles as stale</MenuItem>

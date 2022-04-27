@@ -13,7 +13,7 @@ export interface IDropdownMenuProps {
     renderOptions: () => ReactNode;
     id: string;
     title?: string;
-    callback: MouseEventHandler;
+    callback?: MouseEventHandler;
     icon?: ReactNode;
     label: string;
     startIcon?: ReactNode;

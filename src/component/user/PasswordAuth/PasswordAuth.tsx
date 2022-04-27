@@ -116,7 +116,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                                 type="string"
                                 onChange={evt => setUsername(evt.target.value)}
                                 value={username}
-                                error={!!usernameError}
+                                error={Boolean(usernameError)}
                                 helperText={usernameError}
                                 autoComplete="true"
                                 data-testid={LOGIN_EMAIL_ID}
@@ -130,7 +130,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                                 name="password"
                                 id="password"
                                 value={password}
-                                error={!!passwordError}
+                                error={Boolean(passwordError)}
                                 helperText={passwordError}
                                 autoComplete="true"
                                 data-testid={LOGIN_PASSWORD_ID}

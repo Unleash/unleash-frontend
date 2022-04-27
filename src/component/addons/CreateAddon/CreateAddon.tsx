@@ -14,7 +14,7 @@ export const DEFAULT_DATA = {
     enabled: true,
     parameters: {},
     events: [],
-} as unknown as IAddon;
+} as unknown as IAddon; // TODO: improve type
 
 export const CreateAddon = () => {
     const { providerId } = useParams<IAddonCreateParams>();
