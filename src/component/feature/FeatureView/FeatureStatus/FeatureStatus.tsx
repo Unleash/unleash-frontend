@@ -104,7 +104,7 @@ const FeatureStatus = ({
                     toolTip="No usage reported from connected applications"
                     color={getColor()}
                 >
-                    <span style={{ fontSize: '1.4rem' }}>&ndash;</span>
+                    <span style={{ fontSize: '1.4rem' }}>⊕</span>
                 </Wrapper>
             }
         />
