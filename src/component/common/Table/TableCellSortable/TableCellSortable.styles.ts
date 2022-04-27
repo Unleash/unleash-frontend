@@ -23,7 +23,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     sortButton: {
-        all: 'unset',
+        fontWeight: 'bold',
         '&:focus-visible, &:active': {
             outline: 'revert',
         },

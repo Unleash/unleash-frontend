@@ -2,23 +2,21 @@ import deepClone from 'lodash.clonedeep';
 import { useEffect, useState } from 'react';
 
 const sortPresetFunctions = {
-    string: (a: string, b: string): number => 0, // FIXME: implement
+    string: (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0),
     number: (a: number, b: number): number => a - b,
-    date: (a: Date, b: Date): number => 0, // FIXME: implement
+    date: (a: Date, b: Date): number => a.getTime() - b.getTime(),
 };
 
-const sort = <T extends string>(
+const sort = <T extends Record<string, any>, K extends string>(
     columns: Partial<
         Record<
-            T,
-            | true
-            | keyof typeof sortPresetFunctions
-            | ((a: Record<T, unknown>, b: Record<T, unknown>) => number)
+            K,
+            true | keyof typeof sortPresetFunctions | ((a: T, b: T) => number)
         >
     >,
-    field: T,
+    field: K,
     order: 'asc' | 'desc' = 'asc',
-    data: Record<string, unknown>[]
+    data: T[]
 ) => {
     if (!field) return data;
 
@@ -42,31 +40,33 @@ const sort = <T extends string>(
 
     return data.sort((a, b) => {
         if (order === 'desc') {
-            // @ts-expect-error cannot infer sortPresetFunctions
+            // @ts-expect-error -- cannot infer sortPresetFunctions
             return sortPreset(b[field], a[field]);
         }
-        // @ts-expect-error cannot infer sortPresetFunctions
+        // @ts-expect-error -- cannot infer sortPresetFunctions
         return sortPreset(a[field], b[field]);
     });
 };
 
-export const useSort = <T extends string>(
-    data: Record<T | string, unknown>[],
-    columns: Partial<
-        Record<
-            T,
-            | true
-            | keyof typeof sortPresetFunctions
-            | ((a: Record<T, unknown>, b: Record<T, unknown>) => number)
-        >
-    >,
+export const useSort = <T extends Record<string, any>, K extends string>(
+    data: T[],
+    columns:
+        | Partial<
+              Record<
+                  keyof T,
+                  | true
+                  | keyof typeof sortPresetFunctions
+                  | ((a: T, b: T) => number)
+              >
+          >
+        | Record<K, (a: T, b: T) => number>,
     defaultSort?: {
-        field: T;
+        field: K;
         order?: 'asc' | 'desc';
     }
 ) => {
     const [sortState, setSortState] = useState(defaultSort);
-    const [stableSortedData, setStableSortedData] = useState<typeof data>([]);
+    const [stableSortedData, setStableSortedData] = useState<T[]>([]);
 
     useEffect(() => {
         setStableSortedData(

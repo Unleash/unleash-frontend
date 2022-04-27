@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { TableCell } from '@material-ui/core';
+import { TableCell, Typography } from '@material-ui/core';
 import classnames from 'classnames';
 import {
     UnfoldMoreOutlined,
@@ -15,7 +15,7 @@ interface ITableColumnHeaderProps {
     isSortable?: boolean;
     field: string;
     sortOrder?: 'asc' | 'desc';
-    onSort: () => void;
+    onSort?: () => void;
 }
 
 export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
@@ -36,13 +36,15 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
         : undefined;
 
     const onSortClick = () => {
-        onSort();
-        setAnnouncement(
-            // TODO: improve ARIA label
-            `Sorted table by ${field}, ${
-                sortOrder === 'desc' ? 'ascending' : 'descending'
-            }`
-        );
+        if (onSort) {
+            onSort();
+            setAnnouncement(
+                // TODO: improve ARIA label
+                `Sorted table by ${field}, ${
+                    sortOrder === 'desc' ? 'ascending' : 'descending'
+                }`
+            );
+        }
     };
 
     return (
@@ -53,17 +55,20 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
                 styles.tableCellHeaderSortable,
                 isSortable && 'sorted'
             )}
+            onClick={onSortClick}
         >
             <ConditionallyRender
                 condition={Boolean(isSortable)}
                 show={
                     <>
-                        <button
-                            className={styles.sortButton}
-                            onClick={onSortClick}
+                        <Typography
+                            className={classnames(
+                                sortOrder && styles.sortButton
+                            )}
+                            component="span"
                         >
                             {children}
-                        </button>
+                        </Typography>
 
                         <ConditionallyRender
                             condition={Boolean(sortOrder)}
