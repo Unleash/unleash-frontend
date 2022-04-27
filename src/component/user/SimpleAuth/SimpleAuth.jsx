@@ -60,6 +60,7 @@ const SimpleAuth = ({ authDetails, redirect }) => {
                     required
                     type="email"
                     data-testid={LOGIN_EMAIL_ID}
+                    autoFocus
                 />
                 <br />
 

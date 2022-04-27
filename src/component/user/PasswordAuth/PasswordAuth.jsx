@@ -112,6 +112,7 @@ const PasswordAuth = ({ authDetails, redirect }) => {
                                 data-testid={LOGIN_EMAIL_ID}
                                 variant="outlined"
                                 size="small"
+                                autoFocus
                             />
                             <PasswordField
                                 label="Password"
