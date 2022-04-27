@@ -1,17 +1,19 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 import { useSort } from './useSort';
 
 const data = [
-    { name: 'John', age: 20 },
-    { name: 'Jane', age: 22 },
-    { name: 'Joe', age: 18 },
+    { name: 'Anna', age: 20 },
+    { name: 'Bob', age: 22 },
+    { name: 'Charlie', age: 18 },
 ];
 
 describe('useSort', () => {
-    it('should return the same data if default filter is not provided', () => {
+    it('should return the same data if default filter is not provided', async () => {
         const { result } = renderHook(() =>
             useSort(data, [{ field: 'age', sort: 'number' }])
         );
+
         expect(result.current.data).toEqual(data);
     });
 
@@ -26,9 +28,9 @@ describe('useSort', () => {
         });
 
         expect(result.current.data).toEqual([
-            { name: 'Joe', age: 18 },
-            { name: 'John', age: 20 },
-            { name: 'Jane', age: 22 },
+            { name: 'Charlie', age: 18 },
+            { name: 'Anna', age: 20 },
+            { name: 'Bob', age: 22 },
         ]);
     });
 
@@ -42,9 +44,25 @@ describe('useSort', () => {
         });
 
         expect(result.current.data).toEqual([
-            { name: 'Jane', age: 22 },
-            { name: 'John', age: 20 },
-            { name: 'Joe', age: 18 },
+            { name: 'Bob', age: 22 },
+            { name: 'Anna', age: 20 },
+            { name: 'Charlie', age: 18 },
         ]);
+    });
+
+    it('allows to change data', () => {
+        const { result, rerender } = renderHook(() =>
+            useSort(data, [{ field: 'age', sort: 'number' }])
+        );
+
+        rerender([
+            [
+                { name: 'Anna', age: 25 },
+                { name: 'Bob', age: 21 },
+            ],
+            [{ field: 'age', sort: 'number' }],
+        ]);
+
+        expect(result.current.data).toHaveLength(2);
     });
 });

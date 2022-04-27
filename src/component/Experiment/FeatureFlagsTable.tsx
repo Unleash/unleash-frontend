@@ -1,9 +1,19 @@
 import { VFC } from 'react';
-import { Box, makeStyles, Paper, Table } from '@material-ui/core';
+import {
+    Box,
+    makeStyles,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+} from '@material-ui/core';
 import { FeatureSchema } from 'openapi';
 import { TableToolbar } from './TableToolbar/TableToolbar';
 import { TableColumnHeader } from './TableColumnHeader/TableColumnHeader';
 import { TableHeader } from './TableHeader/TableHeader';
+import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
+import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -23,8 +33,9 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
     const styles = useStyles();
 
     const columns = [
-        { field: 'name', header: 'Feature toggle name' },
         { field: 'lastSeenAt', header: 'Seen', sort: false },
+        { field: 'type', header: 'Type', sort: false },
+        { field: 'name', header: 'Feature toggle name' },
         { field: 'createdAt', header: 'Created on' },
         { field: 'project', header: 'Project ID' },
         { field: 'stale', header: 'Status' },
@@ -45,7 +56,8 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                             <TableColumnHeader
                                 key={field}
                                 field={field}
-                                isSortable={sortColumn}
+                                // isSortable={sortColumn}
+                                isSortable={true}
                                 sortOrder={
                                     sort.field === field
                                         ? sort.direction
@@ -57,6 +69,24 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                             </TableColumnHeader>
                         ))}
                     </TableHeader>
+                    <TableBody>
+                        {data.map(({ name, lastSeenAt, type }) => (
+                            <TableRow key={name}>
+                                <TableCell>
+                                    <FeatureStatus
+                                        lastSeenAt={`${lastSeenAt}`}
+                                        tooltipPlacement="left"
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <FeatureType type={type ?? ''} />
+                                </TableCell>
+                                <TableCell>{name}</TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
             </Box>
         </Paper>
