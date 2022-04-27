@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { TopTableToolbar } from './TopTableToolbar/TopTableToolbar';
+import { TableToolbar } from '../TableToolbar/TableToolbar';
 import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -100,7 +100,7 @@ export const EnhancedTable = <T,>({
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <TopTableToolbar rows={rows} />
+                <TableToolbar />
                 <TableContainer>
                     <Table
                         className={classes.table}

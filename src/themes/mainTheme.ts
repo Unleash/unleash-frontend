@@ -19,6 +19,9 @@ const mainTheme = {
         fontFamily: ['Sen', 'Roboto, sans-serif'],
         fontWeightBold: '700',
         fontWeightMedium: '700',
+        h2: {
+            fontSize: '1.5rem',
+        }
     },
     palette: {
         primary: {
