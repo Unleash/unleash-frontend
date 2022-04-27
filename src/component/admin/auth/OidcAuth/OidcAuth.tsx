@@ -105,7 +105,7 @@ export const OidcAuth = () => {
                 </Grid>
             </Grid>
             <form onSubmit={onSubmit}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Enable</strong>
                         <p>Enable Open Id Connect Authentication.</p>
@@ -124,7 +124,7 @@ export const OidcAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Discover URL</strong>
                         <p>(Required) Issuer discover metadata URL</p>
@@ -142,7 +142,7 @@ export const OidcAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Client ID</strong>
                         <p>(Required) Client ID of your OpenID application</p>
@@ -161,7 +161,7 @@ export const OidcAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={4}>
                     <Grid item md={5}>
                         <strong>Client secret</strong>
                         <p>
@@ -183,7 +183,7 @@ export const OidcAuth = () => {
                     </Grid>
                 </Grid>
                 <h3>Optional Configuration</h3>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Enable Single Sign-Out</strong>
                         <p>
@@ -210,7 +210,7 @@ export const OidcAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>ACR Values</strong>
                         <p>

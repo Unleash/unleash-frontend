@@ -32,6 +32,7 @@ export const TabNav = ({
                 label={tab.label}
                 id={`tab-${index}`}
                 aria-controls={`tabpanel-${index}`}
+                className={styles.tab}
             />
         ));
 

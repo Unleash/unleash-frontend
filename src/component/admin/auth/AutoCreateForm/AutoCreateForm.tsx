@@ -39,7 +39,7 @@ export const AutoCreateForm = ({
 
     return (
         <Fragment>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} mb={2}>
                 <Grid item md={5}>
                     <strong>Auto-create users</strong>
                     <p>
@@ -60,7 +60,7 @@ export const AutoCreateForm = ({
                     />
                 </Grid>
             </Grid>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} mb={2}>
                 <Grid item md={5}>
                     <strong>Default Root Role</strong>
                     <p>
@@ -89,7 +89,7 @@ export const AutoCreateForm = ({
                     </FormControl>
                 </Grid>
             </Grid>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} mb={2}>
                 <Grid item md={5}>
                     <strong>Email domains</strong>
                     <p>

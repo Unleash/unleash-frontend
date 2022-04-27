@@ -24,6 +24,7 @@ export const useStyles = makeStyles()(theme => ({
     container: {
         display: 'flex',
         alignItems: 'center',
+        maxWidth: 1280,
         [theme.breakpoints.down('md')]: {
             padding: '0',
         },

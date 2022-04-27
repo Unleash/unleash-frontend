@@ -12,13 +12,9 @@ const StyledSlider = withStyles(Slider, theme => ({
         width: 24,
         backgroundColor: '#fff',
         border: '2px solid currentColor',
-        marginTop: -8,
-        marginLeft: -12,
     },
     active: {},
-    valueLabel: {
-        left: 'calc(-50% + 4px)',
-    },
+    valueLabel: {},
     track: {
         height: 8,
         borderRadius: 4,

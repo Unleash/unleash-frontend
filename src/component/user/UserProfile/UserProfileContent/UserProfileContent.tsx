@@ -98,7 +98,6 @@ const UserProfileContent = ({
                                     condition={!uiConfig.disablePasswordAuth}
                                     show={
                                         <Button
-                                            variant="contained"
                                             onClick={() =>
                                                 setEditingProfile(true)
                                             }

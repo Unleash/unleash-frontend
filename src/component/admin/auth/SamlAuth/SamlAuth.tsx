@@ -102,7 +102,7 @@ export const SamlAuth = () => {
             </Grid>
             <form onSubmit={onSubmit}>
                 <Grid container spacing={3}>
-                    <Grid item md={5}>
+                    <Grid item md={5} mb={2}>
                         <strong>Enable</strong>
                         <p>Enable SAML 2.0 Authentication.</p>
                     </Grid>
@@ -120,7 +120,7 @@ export const SamlAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Entity ID</strong>
                         <p>(Required) The Entity Identity provider issuer.</p>
@@ -139,7 +139,7 @@ export const SamlAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Single Sign-On URL</strong>
                         <p>
@@ -161,7 +161,7 @@ export const SamlAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={4}>
                     <Grid item md={5}>
                         <strong>X.509 Certificate</strong>
                         <p>
@@ -193,7 +193,7 @@ export const SamlAuth = () => {
                     </Grid>
                 </Grid>
                 <h3>Optional Configuration</h3>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Single Sign-out URL</strong>
                         <p>
@@ -214,7 +214,7 @@ export const SamlAuth = () => {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Service Provider X.509 Certificate</strong>
                         <p>

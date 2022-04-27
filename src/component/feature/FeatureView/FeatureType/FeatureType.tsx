@@ -13,8 +13,7 @@ const FeatureStatus = ({ type }: IFeatureTypeProps) => {
     const IconComponent = getFeatureTypeIcons(type);
 
     const typeName = featureTypes.filter(t => t.id === type).map(t => t.name);
-
-    const title = `This is a "${typeName || type}" toggle`;
+    const title = `"${typeName || type}" toggle`;
 
     return (
         <Tooltip arrow placement="right" title={title}>

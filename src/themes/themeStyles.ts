@@ -1,6 +1,15 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useThemeStyles = makeStyles()(theme => ({
+    focusable: {
+        '&:focus-visible': {
+            outline: 0,
+            outlineStyle: 'solid',
+            outlineWidth: 2,
+            outlineOffset: 2,
+            outlineColor: theme.palette.primary.main,
+        },
+    },
     contentSpacingY: {
         '& > *': {
             marginTop: '0.5rem !important',

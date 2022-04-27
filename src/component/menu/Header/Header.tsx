@@ -21,6 +21,7 @@ import { KeyboardArrowDown } from '@mui/icons-material';
 import { filterByFlags } from 'component/common/util';
 import { useAuthPermissions } from 'hooks/api/getters/useAuth/useAuthPermissions';
 import { useStyles } from './Header.styles';
+import classNames from 'classnames';
 
 const Header: VFC = () => {
     const theme = useTheme();
@@ -30,12 +31,12 @@ const Header: VFC = () => {
 
     const [admin, setAdmin] = useState(false);
     const { permissions } = useAuthPermissions();
-    const { classes: themeStyles } = useThemeStyles();
     const {
         uiConfig: { links, name, flags },
     } = useUiConfig();
     const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const toggleDrawer = () => setOpenDrawer(prev => !prev);
@@ -95,7 +96,14 @@ const Header: VFC = () => {
     return (
         <AppBar className={styles.header} position="static">
             <Container className={styles.container}>
-                <Link to="/" className={themeStyles.flexRow} aria-label="Home">
+                <Link
+                    to="/"
+                    className={classNames(
+                        themeStyles.flexRow,
+                        themeStyles.focusable
+                    )}
+                    aria-label="Home"
+                >
                     <UnleashLogo
                         className={styles.logo}
                         aria-label="Unleash logo"
@@ -103,9 +111,12 @@ const Header: VFC = () => {
                 </Link>
                 <nav className={styles.nav}>
                     <div className={styles.links}>
-                        <Link to="/projects">Projects</Link>
-                        <Link to="/features">Feature toggles</Link>
-
+                        <Link to="/projects" className={themeStyles.focusable}>
+                            Projects
+                        </Link>
+                        <Link to="/features" className={themeStyles.focusable}>
+                            Feature toggles
+                        </Link>
                         <button
                             className={styles.advancedNavButton}
                             onClick={e => setAnchorElAdvanced(e.currentTarget)}
@@ -118,7 +129,7 @@ const Header: VFC = () => {
                             options={filteredMainRoutes.mainNavRoutes}
                             anchorEl={anchorElAdvanced}
                             handleClose={handleCloseAdvanced}
-                            style={{ top: '30px', left: '-55px' }}
+                            style={{ top: 10 }}
                         />
                     </div>
                     <div className={styles.userContainer}>
@@ -128,6 +139,8 @@ const Header: VFC = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 size="large"
+                                disableRipple
+                                className={themeStyles.focusable}
                             >
                                 <MenuBookIcon className={styles.icon} />
                             </IconButton>
@@ -140,8 +153,12 @@ const Header: VFC = () => {
                                         onClick={e =>
                                             setAnchorEl(e.currentTarget)
                                         }
-                                        className={styles.wideButton}
+                                        className={classNames(
+                                            styles.wideButton,
+                                            themeStyles.focusable
+                                        )}
                                         size="large"
+                                        disableRipple
                                     >
                                         <SettingsIcon />
                                         <KeyboardArrowDown
@@ -156,7 +173,7 @@ const Header: VFC = () => {
                             options={filteredMainRoutes.adminRoutes}
                             anchorEl={anchorEl}
                             handleClose={handleClose}
-                            style={{ top: '40px', left: '-125px' }}
+                            style={{ top: 5, left: -100 }}
                         />{' '}
                         <UserProfile />
                     </div>

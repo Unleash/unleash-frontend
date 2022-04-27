@@ -63,10 +63,11 @@ const UserProfile = ({
                     className={classnames(
                         themeStyles.flexRow,
                         themeStyles.itemsCenter,
+                        themeStyles.focusable,
                         styles.button
                     )}
                     onClick={() => setShowProfile(prev => !prev)}
-                    role="button"
+                    color="secondary"
                     disableRipple
                 >
                     <Avatar

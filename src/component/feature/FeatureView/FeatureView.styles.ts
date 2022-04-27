@@ -32,6 +32,7 @@ export const useStyles = makeStyles()(theme => ({
         textTransform: 'none',
         width: 'auto',
         fontSize: '1rem',
+        padding: '0 !important',
         [theme.breakpoints.up('md')]: {
             minWidth: 160,
         },

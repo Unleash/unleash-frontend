@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 export const useStyles = makeStyles()(theme => ({
     valueContainer: {
         lineHeight: 1.1,
-        marginTop: -5,
+        marginTop: -2,
         marginBottom: -10,
     },
     optionContainer: {

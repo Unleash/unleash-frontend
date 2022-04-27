@@ -59,7 +59,7 @@ export const PasswordAuth = () => {
     return (
         <PageContent headerContent="">
             <form onSubmit={onSubmit}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} mb={2}>
                     <Grid item md={5}>
                         <strong>Password based login</strong>
                         <p>Allow users to login with username & password</p>

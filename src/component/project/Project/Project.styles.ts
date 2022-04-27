@@ -31,6 +31,9 @@ export const useStyles = makeStyles()(theme => ({
         textTransform: 'none',
         width: 'auto',
         fontSize: '1rem',
+        [theme.breakpoints.up('md')]: {
+            minWidth: 160,
+        },
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,

@@ -1,6 +1,7 @@
 import { Chip } from '@mui/material';
 import { useMemo } from 'react';
 import { useStyles } from './FeatureMetricsChips.styles';
+import { useThemeStyles } from 'themes/themeStyles';
 
 interface IFeatureMetricsChipsProps {
     title: string;
@@ -15,6 +16,7 @@ export const FeatureMetricsChips = ({
     value,
     setValue,
 }: IFeatureMetricsChipsProps) => {
+    const { classes: themeStyles } = useThemeStyles();
     const { classes: styles } = useStyles();
 
     const onClick = (value: string) => () => {
@@ -39,6 +41,7 @@ export const FeatureMetricsChips = ({
                             label={val}
                             onClick={onClick(val)}
                             aria-pressed={val === value}
+                            className={themeStyles.focusable}
                         />
                     </li>
                 ))}

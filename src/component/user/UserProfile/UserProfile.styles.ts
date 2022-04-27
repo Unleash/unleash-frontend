@@ -10,6 +10,9 @@ export const useStyles = makeStyles()(theme => ({
     button: {
         color: 'inherit',
         padding: '0.2rem 1rem',
+        '&:hover': {
+            backgroundColor: 'transparent',
+        },
     },
     icon: {
         color: theme.palette.grey[600],

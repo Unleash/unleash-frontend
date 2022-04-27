@@ -15,6 +15,7 @@ export const ConfirmToken = ({
     token,
 }: IConfirmUserLink) => {
     const { classes: themeStyles } = useThemeStyles();
+
     return (
         <Dialogue
             open={open}
