@@ -1,5 +1,5 @@
 import useLoading from 'hooks/useLoading';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@mui/material';
 import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
 import { useStyles } from './NewUser.styles';

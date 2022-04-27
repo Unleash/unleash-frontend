@@ -1,5 +1,5 @@
 import { useContext, useState, VFC } from 'react';
-import { Add, Album, Delete, Edit } from '@material-ui/icons';
+import { Add, Album, Delete, Edit } from '@mui/icons-material';
 import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
@@ -10,7 +10,7 @@ import {
     ListItemText,
     Tooltip,
     useMediaQuery,
-} from '@material-ui/core';
+} from '@mui/material';
 import PageContent from 'component/common/PageContent/PageContent';
 import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -85,7 +85,7 @@ const ContextList: VFC = () => {
                                 onClick={() =>
                                     history.push(`/context/edit/${field.name}`)
                                 }
-                            >
+                                size="large">
                                 <Edit />
                             </IconButton>
                         </Tooltip>
@@ -101,7 +101,7 @@ const ContextList: VFC = () => {
                                     setName(field.name);
                                     setShowDelDialogue(true);
                                 }}
-                            >
+                                size="large">
                                 <Delete />
                             </IconButton>
                         </Tooltip>
@@ -117,9 +117,7 @@ const ContextList: VFC = () => {
                     condition={smallScreen}
                     show={
                         <Tooltip title="Add context type">
-                            <IconButton
-                                onClick={() => history.push('/context/create')}
-                            >
+                            <IconButton onClick={() => history.push('/context/create')} size="large">
                                 <Add />
                             </IconButton>
                         </Tooltip>

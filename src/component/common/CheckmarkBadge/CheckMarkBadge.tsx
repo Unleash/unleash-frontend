@@ -1,4 +1,4 @@
-import { Check, Close } from '@material-ui/icons';
+import { Check, Close } from '@mui/icons-material';
 import { useStyles } from './CheckMarkBadge.styles';
 import classnames from 'classnames';
 

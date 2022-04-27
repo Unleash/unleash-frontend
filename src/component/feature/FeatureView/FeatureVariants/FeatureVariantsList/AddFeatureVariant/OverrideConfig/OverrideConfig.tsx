@@ -1,9 +1,9 @@
 import { ChangeEvent, VFC } from 'react';
 import classnames from 'classnames';
-import { Grid, IconButton, TextField, Tooltip } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Grid, IconButton, TextField, Tooltip } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 import { useStyles } from './OverrideConfig.styles';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete } from '@mui/material';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useCommonStyles } from 'themes/commonStyles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -46,106 +46,104 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
             });
         };
 
-    return (
-        <>
-            {overrides.map((override, index) => {
-                const definition = context.find(
-                    c => c.name === override.contextName
-                );
-                const legalValues =
-                    definition?.legalValues?.map(({ value }) => value) || [];
-                const filteredValues = override.values.filter(value =>
-                    legalValues.includes(value)
-                );
+    return <>
+        {overrides.map((override, index) => {
+            const definition = context.find(
+                c => c.name === override.contextName
+            );
+            const legalValues =
+                definition?.legalValues?.map(({ value }) => value) || [];
+            const filteredValues = override.values.filter(value =>
+                legalValues.includes(value)
+            );
 
-                return (
+            return (
+                <Grid
+                    container
+                    key={`override=${index}`}
+                    alignItems="center"
+                >
                     <Grid
-                        container
-                        key={`override=${index}`}
-                        alignItems="center"
+                        item
+                        md={3}
+                        sm={3}
+                        xs={3}
+                        className={styles.contextFieldSelect}
                     >
-                        <Grid
-                            item
-                            md={3}
-                            sm={3}
-                            xs={3}
-                            className={styles.contextFieldSelect}
-                        >
-                            <GeneralSelect
-                                name="contextName"
-                                label="Context Field"
-                                value={override.contextName}
-                                options={contextNames}
-                                classes={{
-                                    root: classnames(commonStyles.fullWidth),
-                                }}
-                                onChange={(value: string) => {
+                        <GeneralSelect
+                            name="contextName"
+                            label="Context Field"
+                            value={override.contextName}
+                            options={contextNames}
+                            classes={{
+                                root: classnames(commonStyles.fullWidth),
+                            }}
+                            onChange={(value: string) => {
+                                overridesDispatch({
+                                    type: 'UPDATE_TYPE_AT',
+                                    payload: [index, value],
+                                });
+                            }}
+                        />
+                    </Grid>
+                    <Grid md={7} sm={7} xs={6} item>
+                        <ConditionallyRender
+                            condition={Boolean(
+                                legalValues && legalValues.length > 0
+                            )}
+                            show={
+                                <Autocomplete
+                                    multiple
+                                    id={`override-select-${index}`}
+                                    isOptionEqualToValue={(option, value) => {
+                                        return option === value;
+                                    }}
+                                    options={legalValues}
+                                    onChange={updateSelectValues(index)}
+                                    getOptionLabel={option => option}
+                                    defaultValue={filteredValues}
+                                    value={filteredValues}
+                                    style={{ width: '100%' }}
+                                    filterSelectedOptions
+                                    size="small"
+                                    renderInput={params => (
+                                        <TextField
+                                            {...params}
+                                            variant="outlined"
+                                            label="Legal values"
+                                            style={{ width: '100%' }}
+                                        />
+                                    )}
+                                />
+                            }
+                            elseShow={
+                                <InputListField
+                                    label="Values (v1, v2, ...)"
+                                    name="values"
+                                    placeholder=""
+                                    values={override.values}
+                                    updateValues={updateValues(index)}
+                                />
+                            }
+                        />
+                    </Grid>
+                    <Grid item md={1}>
+                        <Tooltip title="Remove">
+                            <IconButton
+                                onClick={event => {
+                                    event.preventDefault();
                                     overridesDispatch({
-                                        type: 'UPDATE_TYPE_AT',
-                                        payload: [index, value],
+                                        type: 'REMOVE',
+                                        payload: index,
                                     });
                                 }}
-                            />
-                        </Grid>
-                        <Grid md={7} sm={7} xs={6} item>
-                            <ConditionallyRender
-                                condition={Boolean(
-                                    legalValues && legalValues.length > 0
-                                )}
-                                show={
-                                    <Autocomplete
-                                        multiple
-                                        id={`override-select-${index}`}
-                                        getOptionSelected={(option, value) => {
-                                            return option === value;
-                                        }}
-                                        options={legalValues}
-                                        onChange={updateSelectValues(index)}
-                                        getOptionLabel={option => option}
-                                        defaultValue={filteredValues}
-                                        value={filteredValues}
-                                        style={{ width: '100%' }}
-                                        filterSelectedOptions
-                                        size="small"
-                                        renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                label="Legal values"
-                                                style={{ width: '100%' }}
-                                            />
-                                        )}
-                                    />
-                                }
-                                elseShow={
-                                    <InputListField
-                                        label="Values (v1, v2, ...)"
-                                        name="values"
-                                        placeholder=""
-                                        values={override.values}
-                                        updateValues={updateValues(index)}
-                                    />
-                                }
-                            />
-                        </Grid>
-                        <Grid item md={1}>
-                            <Tooltip title="Remove">
-                                <IconButton
-                                    onClick={event => {
-                                        event.preventDefault();
-                                        overridesDispatch({
-                                            type: 'REMOVE',
-                                            payload: index,
-                                        });
-                                    }}
-                                >
-                                    <Delete />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
+                                size="large">
+                                <Delete />
+                            </IconButton>
+                        </Tooltip>
                     </Grid>
-                );
-            })}
-        </>
-    );
+                </Grid>
+            );
+        })}
+    </>;
 };

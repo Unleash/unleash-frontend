@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import classnames from 'classnames';
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { useStyles } from './PasswordMatcher.styles';
 

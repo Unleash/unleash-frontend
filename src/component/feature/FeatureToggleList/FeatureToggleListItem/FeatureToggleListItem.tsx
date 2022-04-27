@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Chip, ListItem, Tooltip } from '@material-ui/core';
-import { Undo } from '@material-ui/icons';
+import { Chip, ListItem, Tooltip } from '@mui/material';
+import { Undo } from '@mui/icons-material';
 import TimeAgo from 'react-timeago';
 import { IAccessContext } from 'contexts/AccessContext';
 import StatusChip from 'component/common/StatusChip/StatusChip';

@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Typography, useTheme, useMediaQuery } from '@material-ui/core';
+import { Typography, useTheme, useMediaQuery } from '@mui/material';
 import Gradient from 'component/common/Gradient/Gradient';
 import { ReactComponent as Logo } from 'assets/icons/logoWhiteBg.svg';
 import { ReactComponent as LogoWithText } from 'assets/img/logoWhiteTransparentHorizontal.svg';
@@ -13,7 +13,7 @@ interface IStandaloneBannerProps {
 const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
     const theme = useTheme();
     const styles = useStyles();
-    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <Gradient

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, VFC } from 'react';
-import { Checkbox } from '@material-ui/core';
-import UnfoldMoreOutlinedIcon from '@material-ui/icons/UnfoldMoreOutlined';
+import { Checkbox } from '@mui/material';
+import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ReportingSortType } from 'component/Reporting/constants';
 import { useStyles } from '../ReportToggleList.styles';

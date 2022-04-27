@@ -6,7 +6,7 @@ import {
     TableHead,
     TableRow,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import usePagination from 'hooks/usePagination';
 import { CREATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';

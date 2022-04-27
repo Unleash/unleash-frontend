@@ -1,4 +1,4 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';

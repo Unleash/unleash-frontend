@@ -5,8 +5,8 @@ import {
     ListItemSecondaryAction,
     ListItemText,
     MenuItem,
-} from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+} from '@mui/material';
+import { Delete } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import {
     IProjectAccessOutput,

@@ -1,5 +1,5 @@
 import { useState, useEffect, VFC } from 'react';
-import { Paper, MenuItem } from '@material-ui/core';
+import { Paper, MenuItem } from '@mui/material';
 import { useFeaturesSort } from 'hooks/useFeaturesSort';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';

@@ -8,7 +8,7 @@ import {
     Select,
     Switch,
     TextField,
-} from '@material-ui/core';
+} from '@mui/material';
 
 interface IAutoCreateFormProps {
     data?: {

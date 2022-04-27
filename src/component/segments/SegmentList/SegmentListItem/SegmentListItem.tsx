@@ -1,6 +1,6 @@
 import { useStyles } from './SegmentListItem.styles';
-import { TableCell, TableRow, Typography } from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+import { TableCell, TableRow, Typography } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import {
     UPDATE_SEGMENT,
     DELETE_SEGMENT,

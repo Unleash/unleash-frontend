@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ISegment } from 'interfaces/segment';
-import { Clear, VisibilityOff, Visibility } from '@material-ui/icons';
+import { Clear, VisibilityOff, Visibility } from '@mui/icons-material';
 import { useStyles } from './FeatureStrategySegmentChip.styles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { constraintAccordionListId } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 
 interface IFeatureStrategySegmentListProps {
     segment: ISegment;

@@ -1,4 +1,4 @@
-import { Portal } from '@material-ui/core';
+import { Portal } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { useCommonStyles } from 'themes/commonStyles';
 import UIContext from 'contexts/UIContext';

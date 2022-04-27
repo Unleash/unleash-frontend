@@ -6,7 +6,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import classnames from 'classnames';
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteUser from './DeleteUser/DeleteUser';

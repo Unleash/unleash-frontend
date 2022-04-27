@@ -3,7 +3,7 @@ import { IFeatureStrategy } from 'interfaces/strategy';
 import { FeatureStrategyType } from '../FeatureStrategyType/FeatureStrategyType';
 import { FeatureStrategyEnabled } from '../FeatureStrategyEnabled/FeatureStrategyEnabled';
 import { FeatureStrategyConstraints } from '../FeatureStrategyConstraints/FeatureStrategyConstraints';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import {
     FeatureStrategyProdGuard,
     useFeatureStrategyProdGuard,

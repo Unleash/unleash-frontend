@@ -1,4 +1,4 @@
-import { FiberManualRecord } from '@material-ui/icons';
+import { FiberManualRecord } from '@mui/icons-material';
 import { IFeatureEnvironmentMetrics } from 'interfaces/featureToggle';
 import { calculatePercentage } from 'utils/calculatePercentage';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';

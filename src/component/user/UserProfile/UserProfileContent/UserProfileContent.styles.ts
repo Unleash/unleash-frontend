@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     profile: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
         minWidth: '300px',
         right: 0,
         padding: '1.5rem',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: '100%',
             padding: '1rem',
         },

@@ -1,4 +1,4 @@
-import { Chip } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import { useStyles } from './StatusChip.styles';
 
 interface IStatusChip {

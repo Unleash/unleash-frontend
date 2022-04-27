@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     innerContainer: {
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         width: '20%',
         borderRight: `1px solid ${theme.palette.grey[300]}`,
         padding: '1rem 0',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: '35%',
         },
     },

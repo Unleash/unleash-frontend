@@ -1,5 +1,6 @@
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Slider, Typography } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
+import { Slider, Typography } from '@mui/material';
 import { ROLLOUT_SLIDER_ID } from 'utils/testIds';
 import React from 'react';
 

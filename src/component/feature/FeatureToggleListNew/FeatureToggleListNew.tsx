@@ -5,7 +5,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from './FeatureToggleListNew.styles';
 import FeatureToggleListNewItem from './FeatureToggleListNewItem/FeatureToggleListNewItem';

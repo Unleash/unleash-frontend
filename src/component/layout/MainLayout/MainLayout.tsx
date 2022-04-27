@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import classnames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid } from '@mui/material';
 import styles from 'component/styles.module.scss';
 import Header from 'component/menu/Header/Header';
 import Footer from 'component/menu/Footer/Footer';
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         padding: '3.25rem 0',
         position: 'relative',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: '3.25rem 0.75rem',
         },
     },

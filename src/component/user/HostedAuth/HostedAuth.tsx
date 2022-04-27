@@ -1,6 +1,6 @@
 import { FormEventHandler, useState, VFC } from 'react';
 import classnames from 'classnames';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useHistory } from 'react-router';
 import { useCommonStyles } from 'themes/commonStyles';
 import { useStyles } from './HostedAuth.styles';

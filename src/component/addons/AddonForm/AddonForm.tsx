@@ -7,7 +7,7 @@ import {
     FormEventHandler,
     MouseEventHandler,
 } from 'react';
-import { TextField, FormControlLabel, Switch, Button } from '@material-ui/core';
+import { TextField, FormControlLabel, Switch, Button } from '@mui/material';
 import produce from 'immer';
 import { styles as commonStyles } from 'component/common';
 import { trim } from 'component/common/util';
@@ -19,7 +19,7 @@ import PageContent from 'component/common/PageContent/PageContent';
 import { useHistory } from 'react-router-dom';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
 const useStyles = makeStyles(theme => ({

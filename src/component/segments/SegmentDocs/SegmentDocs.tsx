@@ -1,4 +1,4 @@
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { useStyles } from 'component/segments/SegmentDocs/SegmentDocs.styles';
 import {
     STRATEGY_SEGMENTS_LIMIT,

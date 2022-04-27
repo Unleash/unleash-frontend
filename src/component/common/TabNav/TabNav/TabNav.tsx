@@ -1,6 +1,6 @@
 import React, { useState, ReactNode } from 'react';
 import classnames from 'classnames';
-import { Tabs, Tab, Paper } from '@material-ui/core';
+import { Tabs, Tab, Paper } from '@mui/material';
 import { useStyles } from 'component/common/TabNav/TabNav/TabNav.styles';
 import { TabPanel } from 'component/common/TabNav/TabPanel/TabPanel';
 

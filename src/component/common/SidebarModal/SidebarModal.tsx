@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Modal, Backdrop } from '@material-ui/core';
-import Fade from '@material-ui/core/Fade';
+import { Modal, Backdrop } from '@mui/material';
+import Fade from '@mui/material/Fade';
 import { useStyles } from 'component/common/SidebarModal/SidebarModal.styles';
 import { SIDEBAR_MODAL_ID } from 'utils/testIds';
 

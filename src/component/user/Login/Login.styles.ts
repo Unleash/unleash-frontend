@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     login: {
         width: '350px',
         maxWidth: '350px',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => ({
         width: '50%',
         padding: '4rem 3rem',
         minHeight: '100vh',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             width: '100%',
             minHeight: 'auto',
         },

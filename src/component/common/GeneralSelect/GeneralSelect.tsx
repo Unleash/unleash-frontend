@@ -5,10 +5,10 @@ import {
     MenuItem,
     Select,
     SelectProps,
-} from '@material-ui/core';
+} from '@mui/material';
 import { SELECT_ITEM_ID } from 'utils/testIds';
-import { KeyboardArrowDownOutlined } from '@material-ui/icons';
-import { SelectInputProps } from '@material-ui/core/Select/SelectInput';
+import { KeyboardArrowDownOutlined } from '@mui/icons-material';
+import { SelectInputProps } from '@mui/material/Select/SelectInput';
 
 export interface ISelectOption {
     key: string;

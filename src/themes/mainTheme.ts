@@ -1,16 +1,16 @@
-import { createTheme, Theme } from '@material-ui/core/styles';
+import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
 
 type MainTheme = typeof mainTheme;
 
-declare module '@material-ui/core/styles/createTheme' {
+declare module '@mui/material/styles/createTheme' {
     interface Theme extends MainTheme {}
 }
 
-declare module '@material-ui/core/styles/makeStyles' {
+declare module '@mui/material/styles/makeStyles' {
     interface Theme extends MainTheme {}
 }
 
-declare module '@material-ui/core/styles/useTheme' {
+declare module '@mui/material/styles/useTheme' {
     interface Theme extends MainTheme {}
 }
 
@@ -153,4 +153,4 @@ const mainTheme = {
     },
 };
 
-export default createTheme(mainTheme as unknown as Theme);
+export default createTheme(adaptV4Theme(mainTheme as unknown as Theme));

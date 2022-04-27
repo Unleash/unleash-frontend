@@ -1,4 +1,4 @@
-import { Chip } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import { useMemo } from 'react';
 import { useStyles } from './FeatureMetricsChips.styles';
 

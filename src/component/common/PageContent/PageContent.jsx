@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import classnames from 'classnames';
 import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 import { useStyles } from './styles';
 
 const PageContent = ({

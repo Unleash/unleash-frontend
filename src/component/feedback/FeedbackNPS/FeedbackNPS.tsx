@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { Button, IconButton, Tooltip } from '@material-ui/core';
+import { Button, IconButton, Tooltip } from '@mui/material';
 import classnames from 'classnames';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import { ReactComponent as Logo } from 'assets/icons/logoPlain.svg';
 import { useStyles } from 'component/feedback/FeedbackNPS/FeedbackNPS.styles';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
@@ -77,7 +77,7 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
                         <IconButton
                             className={styles.close}
                             onClick={() => setShowFeedback(false)}
-                        >
+                            size="large">
                             <CloseIcon />
                         </IconButton>
                     </Tooltip>

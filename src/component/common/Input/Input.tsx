@@ -1,4 +1,4 @@
-import { InputLabelProps, InputProps, TextField } from '@material-ui/core';
+import { InputLabelProps, InputProps, TextField } from '@mui/material';
 import { INPUT_ERROR_TEXT } from 'utils/testIds';
 import { useStyles } from './Input.styles';
 import React from 'react';

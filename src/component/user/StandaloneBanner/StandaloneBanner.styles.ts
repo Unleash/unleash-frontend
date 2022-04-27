@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     gradient: {
@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
         marginBottom: '1rem',
         fontSize: '2rem',
         marginTop: '5rem',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'none',
         },
     },
@@ -25,18 +25,18 @@ export const useStyles = makeStyles(theme => ({
         borderTopLeftRadius: '3px',
         borderBottomLeftRadius: '3px',
         textAlign: 'right',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             padding: '3rem 2rem',
         },
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: '3rem 1rem',
         },
     },
     bannerSubtitle: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'none',
         },
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
         fontSize: '2rem',

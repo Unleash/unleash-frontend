@@ -5,7 +5,7 @@ import {
     Checkbox,
     FormControlLabel,
     TextField,
-} from '@material-ui/core';
+} from '@mui/material';
 import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 import { useStyles } from './ProjectRoleForm.styles';

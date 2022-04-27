@@ -1,4 +1,4 @@
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import {
     Operator,
     stringOperators,

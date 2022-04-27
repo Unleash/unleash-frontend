@@ -3,7 +3,7 @@ import useLoading from 'hooks/useLoading';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
 
 import { useStyles } from './ResetPassword.styles';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
 import useResetPassword from 'hooks/api/getters/useResetPassword/useResetPassword';

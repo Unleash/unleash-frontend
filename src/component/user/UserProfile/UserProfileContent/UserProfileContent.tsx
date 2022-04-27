@@ -8,11 +8,11 @@ import {
     Paper,
     Select,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from 'component/user/UserProfile/UserProfileContent/UserProfileContent.styles';
 import { useCommonStyles } from 'themes/commonStyles';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import EditProfile from '../EditProfile/EditProfile';
 import legacyStyles from '../../user.module.scss';
 import { getBasePath } from 'utils/formatPath';

@@ -1,4 +1,4 @@
-import { FiberManualRecord } from '@material-ui/icons';
+import { FiberManualRecord } from '@mui/icons-material';
 import { useStyles } from './SegmentFormStepList.styles';
 import React from 'react';
 import classNames from 'classnames';

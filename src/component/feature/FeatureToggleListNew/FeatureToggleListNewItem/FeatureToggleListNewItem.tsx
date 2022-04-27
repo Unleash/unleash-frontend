@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@mui/material';
 import { useStyles } from '../FeatureToggleListNew.styles';
 import useToggleFeatureByEnv from 'hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
 import { IEnvironments } from 'interfaces/featureToggle';

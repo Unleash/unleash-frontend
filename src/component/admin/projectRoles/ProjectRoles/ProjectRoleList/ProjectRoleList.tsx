@@ -5,7 +5,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import AccessContext from 'contexts/AccessContext';
 import usePagination from 'hooks/usePagination';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';

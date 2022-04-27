@@ -1,5 +1,5 @@
-import { List, ListItem } from '@material-ui/core';
-import { Check, Error, Cloud } from '@material-ui/icons';
+import { List, ListItem } from '@mui/material';
+import { Check, Error, Cloud } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import { IFeatureEnvironment, IFeatureToggle } from 'interfaces/featureToggle';

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState } from 'react';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { ProjectAccessAddUser } from './ProjectAccessAddUser/ProjectAccessAddUser';
 import PageContent from 'component/common/PageContent';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';

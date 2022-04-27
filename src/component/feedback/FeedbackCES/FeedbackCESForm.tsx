@@ -1,5 +1,5 @@
 import { useStyles } from 'component/feedback/FeedbackCES/FeedbackCESForm.styles';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import produce from 'immer';
 import useToast from 'hooks/useToast';

@@ -1,5 +1,5 @@
 import { useStyles } from './FeatureType.styles';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { getFeatureTypeIcons } from 'utils/getFeatureTypeIcons';
 import useFeatureTypes from 'hooks/api/getters/useFeatureTypes/useFeatureTypes';
 

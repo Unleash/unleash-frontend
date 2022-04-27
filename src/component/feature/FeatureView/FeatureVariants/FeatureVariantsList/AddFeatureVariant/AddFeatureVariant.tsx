@@ -5,7 +5,7 @@ import {
     FormControlLabel,
     Grid,
     InputAdornment,
-} from '@material-ui/core';
+} from '@mui/material';
 import { weightTypes } from './enums';
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';

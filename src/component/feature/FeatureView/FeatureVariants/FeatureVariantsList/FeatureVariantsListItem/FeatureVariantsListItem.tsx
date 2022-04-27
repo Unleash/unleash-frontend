@@ -4,8 +4,8 @@ import {
     TableCell,
     TableRow,
     Tooltip,
-} from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+} from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 
 import styles from '../variants.module.scss';
 import { IFeatureVariant } from 'interfaces/featureToggle';
@@ -64,7 +64,7 @@ const FeatureVariantListItem = ({
                                 <IconButton
                                     data-testid={'VARIANT_EDIT_BUTTON'}
                                     onClick={() => editVariant(variant.name)}
-                                >
+                                    size="large">
                                     <Edit />
                                 </IconButton>
                             </Tooltip>
@@ -78,7 +78,7 @@ const FeatureVariantListItem = ({
                                             name: variant.name,
                                         });
                                     }}
-                                >
+                                    size="large">
                                     <Delete />
                                 </IconButton>
                             </Tooltip>

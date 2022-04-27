@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { CircularProgress } from '@material-ui/core';
-import { Warning } from '@material-ui/icons';
+import { CircularProgress } from '@mui/material';
+import { Warning } from '@mui/icons-material';
 import { AppsLinkList, styles as commonStyles } from 'component/common';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import PageContent from 'component/common/PageContent/PageContent';

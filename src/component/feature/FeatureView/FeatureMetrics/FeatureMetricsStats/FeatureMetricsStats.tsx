@@ -1,6 +1,6 @@
 import { calculatePercentage } from 'utils/calculatePercentage';
 import { useStyles } from './FeatureMetricsStats.styles';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 interface IFeatureMetricsStatsProps {
     totalYes: number;

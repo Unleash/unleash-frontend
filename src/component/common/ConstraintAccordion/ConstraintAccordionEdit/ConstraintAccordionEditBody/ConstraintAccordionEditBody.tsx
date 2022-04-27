@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, Switch } from '@material-ui/core';
+import { Button, FormControlLabel, Switch } from '@mui/material';
 import { IConstraint } from 'interfaces/strategy';
 import { CANCEL } from '../ConstraintAccordionEdit';
 

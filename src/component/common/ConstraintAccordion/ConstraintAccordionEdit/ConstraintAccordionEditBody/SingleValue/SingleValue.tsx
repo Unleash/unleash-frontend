@@ -1,5 +1,5 @@
 import Input from 'component/common/Input/Input';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { ConstraintFormHeader } from '../ConstraintFormHeader/ConstraintFormHeader';
 
 interface ISingleValueProps {

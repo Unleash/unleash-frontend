@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PageContent from 'component/common/PageContent';
 import { useStyles } from './FeatureSettings.styles';
-import { List, ListItem } from '@material-ui/core';
+import { List, ListItem } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import FeatureSettingsProject from './FeatureSettingsProject/FeatureSettingsProject';
 import { useParams } from 'react-router-dom';

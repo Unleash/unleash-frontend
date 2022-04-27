@@ -1,4 +1,4 @@
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import classnames from 'classnames';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { getFeatureTypeIcons } from 'utils/getFeatureTypeIcons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureOverviewMetadata.styles';
 
-import { Edit } from '@material-ui/icons';
+import { Edit } from '@mui/icons-material';
 import { IFeatureViewParams } from 'interfaces/params';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';

@@ -1,4 +1,4 @@
-import { DialogContentText } from '@material-ui/core';
+import { DialogContentText } from '@mui/material';
 import { useParams } from 'react-router';
 import React, { useState } from 'react';
 import { IFeatureViewParams } from 'interfaces/params';

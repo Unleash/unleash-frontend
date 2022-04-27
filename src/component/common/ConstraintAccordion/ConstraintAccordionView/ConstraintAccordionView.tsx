@@ -2,8 +2,8 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-} from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+} from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
 import { IConstraint } from 'interfaces/strategy';
 
 import { ConstraintAccordionViewBody } from './ConstraintAccordionViewBody/ConstraintAccordionViewBody';

@@ -4,7 +4,7 @@ import {
     Switch,
     TextField,
     Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
 import { IParameter, IStrategy } from 'interfaces/strategy';

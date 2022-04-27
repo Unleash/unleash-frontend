@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import classnames from 'classnames';
 import React, {
     Dispatch,

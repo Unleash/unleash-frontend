@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import React from 'react';
 import { IProjectRole } from 'interfaces/role';
 

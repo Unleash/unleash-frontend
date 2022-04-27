@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, FormControlLabel, Checkbox } from '@mui/material';
 
 import { styles as commonStyles } from 'component/common';
 import { IAddonProvider } from 'interfaces/addons';

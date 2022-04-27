@@ -1,8 +1,8 @@
 import Input from 'component/common/Input/Input';
-import { TextField, Button, Switch, Typography } from '@material-ui/core';
+import { TextField, Button, Switch, Typography } from '@mui/material';
 import { useStyles } from './ContextForm.styles';
 import React, { useState, useEffect } from 'react';
-import { Add } from '@material-ui/icons';
+import { Add } from '@mui/icons-material';
 import { ILegalValue } from 'interfaces/context';
 import { ContextFormChip } from 'component/context/ContectFormChip/ContextFormChip';
 import { ContextFormChipList } from 'component/context/ContectFormChip/ContextFormChipList';

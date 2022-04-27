@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     tableRow: {
@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',
         },
     },
@@ -22,17 +22,17 @@ export const useStyles = makeStyles(theme => ({
         flexWrap: 'nowrap',
     },
     hideSM: {
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    hideMD: {
         [theme.breakpoints.down('md')]: {
             display: 'none',
         },
     },
+    hideMD: {
+        [theme.breakpoints.down('lg')]: {
+            display: 'none',
+        },
+    },
     hideXS: {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },

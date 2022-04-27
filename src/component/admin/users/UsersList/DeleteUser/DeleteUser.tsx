@@ -2,9 +2,9 @@ import React from 'react';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { REMOVE_USER_ERROR } from 'hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import useLoading from 'hooks/useLoading';
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar, Typography } from '@mui/material';
 import { useCommonStyles } from 'themes/commonStyles';
 import { IUser } from 'interfaces/user';
 

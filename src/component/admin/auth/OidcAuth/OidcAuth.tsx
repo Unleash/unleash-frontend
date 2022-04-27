@@ -5,8 +5,8 @@ import {
     Grid,
     Switch,
     TextField,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Alert } from '@mui/material';
 import PageContent from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';

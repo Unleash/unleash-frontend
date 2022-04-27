@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
-import { Avatar, Button, ClickAwayListener } from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import { Avatar, Button, ClickAwayListener } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useStyles } from 'component/user/UserProfile/UserProfile.styles';
 import { useCommonStyles } from 'themes/commonStyles';
 import UserProfileContent from './UserProfileContent/UserProfileContent';

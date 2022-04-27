@@ -14,7 +14,7 @@ import AccessContext from 'contexts/AccessContext';
 import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { CREATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { Add } from '@material-ui/icons';
+import { Add } from '@mui/icons-material';
 import ApiError from 'component/common/ApiError/ApiError';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { SearchField } from 'component/common/SearchField/SearchField';

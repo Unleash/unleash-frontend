@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, FormControlLabel, Grid, Switch } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Button, FormControlLabel, Grid, Switch } from '@mui/material';
+import { Alert } from '@mui/material';
 import PageContent from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';

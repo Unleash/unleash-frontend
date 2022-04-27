@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     projectCard: {
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         margin: '0.5rem',
         boxShadow: 'none',
         border: '1px solid #efefef',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             justifyContent: 'center',
         },
     },

@@ -1,4 +1,4 @@
-import { ListItem, Link } from '@material-ui/core';
+import { ListItem, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useStyles } from './NavigationLink.styles';
@@ -24,7 +24,7 @@ const NavigationLink = ({ path, text, handleClose }: INavigationLinkProps) => {
                 component={RouterLink}
                 className={styles.navMenuLink}
                 to={path}
-            >
+                underline="hover">
                 <span className={styles.menuItemBox} />
                 {text}
             </Link>

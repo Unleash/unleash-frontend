@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     actionsContainer: {
@@ -14,13 +14,13 @@ export const useStyles = makeStyles(theme => ({
         gap: '1rem',
         justifyContent: 'space-between',
         alignItems: 'center',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'block',
         },
     },
     searchBar: {
         minWidth: '450px',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             minWidth: '100%',
         },
     },

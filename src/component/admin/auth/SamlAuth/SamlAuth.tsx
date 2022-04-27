@@ -5,8 +5,8 @@ import {
     Grid,
     Switch,
     TextField,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Alert } from '@mui/material';
 import PageContent from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
@@ -185,7 +185,7 @@ export const SamlAuth = () => {
                             }}
                             multiline
                             rows={14}
-                            rowsMax={14}
+                            maxRows={14}
                             variant="outlined"
                             size="small"
                             required
@@ -240,7 +240,7 @@ export const SamlAuth = () => {
                             }}
                             multiline
                             rows={14}
-                            rowsMax={14}
+                            maxRows={14}
                             variant="outlined"
                             size="small"
                         />

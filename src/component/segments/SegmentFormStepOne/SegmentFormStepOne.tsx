@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import Input from 'component/common/Input/Input';
 import React from 'react';
 import { useHistory } from 'react-router-dom';

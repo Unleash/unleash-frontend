@@ -1,8 +1,8 @@
 import React, { useState, VFC } from 'react';
 import classnames from 'classnames';
 import { debounce } from 'debounce';
-import { InputBase, Chip } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { InputBase, Chip } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useStyles } from 'component/common/SearchField/styles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 

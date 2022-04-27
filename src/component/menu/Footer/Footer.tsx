@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 
 import { VFC } from 'react';
-import { List, ListItem, ListItemText, Grid } from '@material-ui/core';
+import { List, ListItem, ListItemText, Grid } from '@mui/material';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { ApiDetails } from './ApiDetails/ApiDetails';
 import { useStyles } from './Footer.styles';

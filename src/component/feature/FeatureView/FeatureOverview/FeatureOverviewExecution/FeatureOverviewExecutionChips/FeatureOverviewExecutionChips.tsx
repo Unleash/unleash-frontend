@@ -1,4 +1,4 @@
-import { Chip } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureOverviewExecutionChips.styles';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';

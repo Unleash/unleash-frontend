@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import { Avatar, TextField, Typography } from '@material-ui/core';
+import { Avatar, TextField, Typography } from '@mui/material';
 import { trim } from 'component/common/util';
 import { modalStyles } from 'component/admin/users/util';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
@@ -8,7 +8,7 @@ import PasswordChecker from 'component/user/common/ResetPasswordForm/PasswordChe
 import { useCommonStyles } from 'themes/commonStyles';
 import PasswordMatcher from 'component/user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { IUser } from 'interfaces/user';
 
 interface IChangePasswordProps {

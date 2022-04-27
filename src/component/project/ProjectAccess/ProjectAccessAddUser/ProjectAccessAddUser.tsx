@@ -5,10 +5,10 @@ import {
     Grid,
     Button,
     InputAdornment,
-} from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Alert } from '@material-ui/lab';
+} from '@mui/material';
+import { Search } from '@mui/icons-material';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Alert } from '@mui/material';
 import { ProjectRoleSelect } from '../ProjectRoleSelect/ProjectRoleSelect';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import { useParams } from 'react-router-dom';
@@ -154,83 +154,81 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         } else return '';
     };
 
-    return (
-        <>
-            <Alert severity="info" style={{ marginBottom: '20px' }}>
-                The user must have an Unleash root role before added to the
-                project.
-            </Alert>
-            <Grid container spacing={3} alignItems="flex-end">
-                <Grid item>
-                    <Autocomplete
-                        id="add-user-component"
-                        style={{ width: 300 }}
-                        noOptionsText="No users found."
-                        onChange={handleSelectUser}
-                        onBlur={() => handleBlur()}
-                        value={user || ''}
-                        freeSolo
-                        getOptionSelected={() => true}
-                        filterOptions={o => o}
-                        getOptionLabel={getOptionLabel}
-                        options={options}
-                        loading={loading}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                label="User"
-                                variant="outlined"
-                                size="small"
-                                name="search"
-                                onChange={handleQueryUpdate}
-                                InputProps={{
-                                    ...params.InputProps,
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Search />
-                                        </InputAdornment>
-                                    ),
-                                    endAdornment: (
-                                        <>
-                                            <ConditionallyRender
-                                                condition={loading}
-                                                show={
-                                                    <CircularProgress
-                                                        color="inherit"
-                                                        size={20}
-                                                    />
-                                                }
-                                            />
+    return <>
+        <Alert severity="info" style={{ marginBottom: '20px' }}>
+            The user must have an Unleash root role before added to the
+            project.
+        </Alert>
+        <Grid container spacing={3} alignItems="flex-end">
+            <Grid item>
+                <Autocomplete
+                    id="add-user-component"
+                    style={{ width: 300 }}
+                    noOptionsText="No users found."
+                    onChange={handleSelectUser}
+                    onBlur={() => handleBlur()}
+                    value={user || ''}
+                    freeSolo
+                    isOptionEqualToValue={() => true}
+                    filterOptions={o => o}
+                    getOptionLabel={getOptionLabel}
+                    options={options}
+                    loading={loading}
+                    renderInput={params => (
+                        <TextField
+                            {...params}
+                            label="User"
+                            variant="outlined"
+                            size="small"
+                            name="search"
+                            onChange={handleQueryUpdate}
+                            InputProps={{
+                                ...params.InputProps,
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <>
+                                        <ConditionallyRender
+                                            condition={loading}
+                                            show={
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20}
+                                                />
+                                            }
+                                        />
 
-                                            {params.InputProps.endAdornment}
-                                        </>
-                                    ),
-                                }}
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item>
-                    <ProjectRoleSelect
-                        labelId="add-user-select-role-label"
-                        id="add-user-select-role"
-                        placeholder="Project role"
-                        value={role?.id || -1}
-                        onChange={handleRoleChange}
-                        roles={roles}
-                    />
-                </Grid>
-                <Grid item>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        disabled={!user}
-                        onClick={handleSubmit}
-                    >
-                        Add user
-                    </Button>
-                </Grid>
+                                        {params.InputProps.endAdornment}
+                                    </>
+                                ),
+                            }}
+                        />
+                    )}
+                />
             </Grid>
-        </>
-    );
+            <Grid item>
+                <ProjectRoleSelect
+                    labelId="add-user-select-role-label"
+                    id="add-user-select-role"
+                    placeholder="Project role"
+                    value={role?.id || -1}
+                    onChange={handleRoleChange}
+                    roles={roles}
+                />
+            </Grid>
+            <Grid item>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={!user}
+                    onClick={handleSubmit}
+                >
+                    Add user
+                </Button>
+            </Grid>
+        </Grid>
+    </>;
 };

@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { useStyles } from 'component/common/DividerText/DividerText.styles';
 
 interface IDividerTextProps {

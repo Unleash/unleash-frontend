@@ -1,5 +1,5 @@
-import { Chip } from '@material-ui/core';
-import { ImportExportOutlined, TextFormatOutlined } from '@material-ui/icons';
+import { Chip } from '@mui/material';
+import { ImportExportOutlined, TextFormatOutlined } from '@mui/icons-material';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useState } from 'react';
 import { stringOperators } from 'constants/operators';

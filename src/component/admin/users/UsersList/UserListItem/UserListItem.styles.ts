@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     tableRow: {
@@ -42,24 +42,24 @@ export const useStyles = makeStyles(theme => ({
         margin: 'auto',
     },
     firstColumnSM: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             borderTopLeftRadius: '8px',
             borderBottomLeftRadius: '8px',
         },
     },
     firstColumnXS: {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             borderTopLeftRadius: '8px',
             borderBottomLeftRadius: '8px',
         },
     },
     hideSM: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'none',
         },
     },
     hideXS: {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },

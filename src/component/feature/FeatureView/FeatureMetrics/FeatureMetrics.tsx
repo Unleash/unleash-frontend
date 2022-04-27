@@ -8,7 +8,7 @@ import {
     FeatureMetricsHours,
 } from './FeatureMetricsHours/FeatureMetricsHours';
 import { IFeatureMetricsRaw } from 'interfaces/featureToggle';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FeatureMetricsContent } from './FeatureMetricsContent/FeatureMetricsContent';
 import { useQueryStringNumberState } from 'hooks/useQueryStringNumberState';
 import { useQueryStringState } from 'hooks/useQueryStringState';

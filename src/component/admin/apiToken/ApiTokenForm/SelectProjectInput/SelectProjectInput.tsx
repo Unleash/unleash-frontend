@@ -5,15 +5,17 @@ import {
     TextField,
     Box,
     Paper,
-} from '@material-ui/core';
+} from '@mui/material';
+import { Autocomplete } from '@mui/material';
+
 import {
-    Autocomplete,
     AutocompleteRenderGroupParams,
     AutocompleteRenderInputParams,
     AutocompleteRenderOptionState,
-} from '@material-ui/lab';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+} from '@mui/lab';
+
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
 import { useStyles } from '../ApiTokenForm.styles';
 import { SelectAllButton } from './SelectAllButton/SelectAllButton';

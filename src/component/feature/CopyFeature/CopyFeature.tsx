@@ -12,14 +12,14 @@ import {
     Switch,
     Paper,
     FormControlLabel,
-} from '@material-ui/core';
-import { FileCopy } from '@material-ui/icons';
+} from '@mui/material';
+import { FileCopy } from '@mui/icons-material';
 import { styles as commonStyles } from 'component/common';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import styles from './CopyFeature.module.scss';
 import { trim } from 'component/common/util';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { getTogglePath } from 'utils/routePathHelpers';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';

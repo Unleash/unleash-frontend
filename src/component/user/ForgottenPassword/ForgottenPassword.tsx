@@ -1,5 +1,5 @@
-import { Button, TextField, Typography } from '@material-ui/core';
-import { AlertTitle, Alert } from '@material-ui/lab';
+import { Button, TextField, Typography } from '@mui/material';
+import { AlertTitle, Alert } from '@mui/material';
 import classnames from 'classnames';
 import { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';

@@ -3,7 +3,7 @@ import { IFeatureMetricsRaw } from 'interfaces/featureToggle';
 import { FeatureMetricsStatsRaw } from '../FeatureMetricsStats/FeatureMetricsStatsRaw';
 import { FeatureMetricsChart } from '../FeatureMetricsChart/FeatureMetricsChart';
 import { FeatureMetricsEmpty } from '../FeatureMetricsEmpty/FeatureMetricsEmpty';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import theme from 'themes/mainTheme';
 
 interface IFeatureMetricsContentProps {

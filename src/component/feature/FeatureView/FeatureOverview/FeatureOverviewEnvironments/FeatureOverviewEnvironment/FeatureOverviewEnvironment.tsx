@@ -3,8 +3,8 @@ import {
     AccordionDetails,
     AccordionSummary,
     Tooltip,
-} from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+} from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
 import React from 'react';
 import { useParams } from 'react-router';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';

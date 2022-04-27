@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useCommonStyles = makeStyles(theme => ({
     contentSpacingY: {
@@ -114,7 +114,7 @@ export const useCommonStyles = makeStyles(theme => ({
         right: '40px',
         top: '40px',
         transform: 'translateY(-400px)',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             right: 20,
             left: 10,
             top: 40,

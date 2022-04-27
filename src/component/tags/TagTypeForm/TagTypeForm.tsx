@@ -1,5 +1,5 @@
 import Input from 'component/common/Input/Input';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button } from '@mui/material';
 
 import { useStyles } from './TagTypeForm.styles';
 import React from 'react';

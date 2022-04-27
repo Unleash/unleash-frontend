@@ -1,11 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from './EditProfile.styles';
 import { useCommonStyles } from 'themes/commonStyles';
 import PasswordChecker from 'component/user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
 import PasswordMatcher from 'component/user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import useLoading from 'hooks/useLoading';
 import {

@@ -3,7 +3,7 @@ import {
     FormControlLabel,
     Radio,
     RadioGroup,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useStyles } from './EnvironmentTypeSelector.styles';
 import React from 'react';
 

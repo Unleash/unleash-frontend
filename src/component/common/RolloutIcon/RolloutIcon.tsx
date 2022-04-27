@@ -1,5 +1,5 @@
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Remove from '@material-ui/icons/Remove';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import Remove from '@mui/icons-material/Remove';
 import { useStyles } from './RolloutIcon.styles';
 import classnames from 'classnames';
 

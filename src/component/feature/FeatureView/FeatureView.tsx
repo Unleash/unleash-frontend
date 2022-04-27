@@ -1,6 +1,6 @@
-import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
+import { Tab, Tabs, useMediaQuery } from '@mui/material';
 import React, { useState } from 'react';
-import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
+import { Archive, FileCopy, Label, WatchLater } from '@mui/icons-material';
 import { Link, Route, useHistory, useParams, Switch } from 'react-router-dom';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';

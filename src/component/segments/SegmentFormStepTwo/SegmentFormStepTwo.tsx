@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext } from 'react';
-import { Button } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Button } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';

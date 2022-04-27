@@ -1,5 +1,5 @@
 import { useStyles } from 'component/context/ContectFormChip/ContextFormChip.styles';
-import { Cancel } from '@material-ui/icons';
+import { Cancel } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IContextFormChipProps {

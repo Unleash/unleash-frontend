@@ -8,7 +8,7 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-} from '@material-ui/core';
+} from '@mui/material';
 import { cleanConstraint } from 'utils/cleanConstraint';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';

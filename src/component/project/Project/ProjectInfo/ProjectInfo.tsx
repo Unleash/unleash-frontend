@@ -1,8 +1,8 @@
 import { useStyles } from './ProjectInfo.styles';
 import { Link } from 'react-router-dom';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import classnames from 'classnames';
-import { Edit, ExpandMore } from '@material-ui/icons';
+import { Edit, ExpandMore } from '@mui/icons-material';
 
 import { useCommonStyles } from 'themes/commonStyles';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -14,7 +14,7 @@ import {
     AccordionActions,
     AccordionDetails,
     AccordionSummary,
-} from '@material-ui/core';
+} from '@mui/material';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 
 interface IProjectInfoProps {
