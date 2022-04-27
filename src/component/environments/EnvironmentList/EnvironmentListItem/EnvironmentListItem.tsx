@@ -169,7 +169,8 @@ const EnvironmentListItem = ({
                                 setSelectedEnv(env);
                                 setToggleDialog(prev => !prev);
                             }}
-                            size="large">
+                            size="large"
+                        >
                             <OfflineBolt />
                         </IconButton>
                     </Tooltip>
@@ -184,7 +185,8 @@ const EnvironmentListItem = ({
                             onClick={() => {
                                 history.push(`/environments/${env.name}`);
                             }}
-                            size="large">
+                            size="large"
+                        >
                             <Edit />
                         </IconButton>
                     </Tooltip>
@@ -200,7 +202,8 @@ const EnvironmentListItem = ({
                                 setDeldialogue(true);
                                 setSelectedEnv(env);
                             }}
-                            size="large">
+                            size="large"
+                        >
                             <Delete />
                         </IconButton>
                     </Tooltip>

@@ -85,7 +85,8 @@ const ContextList: VFC = () => {
                                 onClick={() =>
                                     history.push(`/context/edit/${field.name}`)
                                 }
-                                size="large">
+                                size="large"
+                            >
                                 <Edit />
                             </IconButton>
                         </Tooltip>
@@ -101,7 +102,8 @@ const ContextList: VFC = () => {
                                     setName(field.name);
                                     setShowDelDialogue(true);
                                 }}
-                                size="large">
+                                size="large"
+                            >
                                 <Delete />
                             </IconButton>
                         </Tooltip>
@@ -117,7 +119,10 @@ const ContextList: VFC = () => {
                     condition={smallScreen}
                     show={
                         <Tooltip title="Add context type">
-                            <IconButton onClick={() => history.push('/context/create')} size="large">
+                            <IconButton
+                                onClick={() => history.push('/context/create')}
+                                size="large"
+                            >
                                 <Add />
                             </IconButton>
                         </Tooltip>

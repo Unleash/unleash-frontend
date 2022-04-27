@@ -13,7 +13,11 @@ export const SplashPageOperators = () => {
             <div className={styles.content}>
                 <header className={styles.header}>
                     <h1 className={styles.title}>New strategy operators</h1>
-                    <IconButton className={styles.close} onClick={() => push('/')} size="large">
+                    <IconButton
+                        className={styles.close}
+                        onClick={() => push('/')}
+                        size="large"
+                    >
                         <CloseOutlined titleAccess="Close" />
                     </IconButton>
                     <p className={styles.ingress}>

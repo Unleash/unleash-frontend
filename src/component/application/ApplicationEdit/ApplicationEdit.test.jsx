@@ -39,7 +39,9 @@ test('renders correctly without permission', () => {
                 <StyledEngineProvider injectFirst>
                     <ThemeProvider theme={theme}>
                         <UIProvider>
-                            <AccessProvider permissions={[{ permission: ADMIN }]}>
+                            <AccessProvider
+                                permissions={[{ permission: ADMIN }]}
+                            >
                                 <ApplicationEdit
                                     fetchApplication={() => Promise.resolve({})}
                                     storeApplicationMetaData={jest.fn()}
@@ -103,7 +105,9 @@ test('renders correctly with permissions', () => {
                 <StyledEngineProvider injectFirst>
                     <ThemeProvider theme={theme}>
                         <UIProvider>
-                            <AccessProvider permissions={[{ permission: ADMIN }]}>
+                            <AccessProvider
+                                permissions={[{ permission: ADMIN }]}
+                            >
                                 <ApplicationEdit
                                     fetchApplication={() => Promise.resolve({})}
                                     storeApplicationMetaData={jest.fn()}

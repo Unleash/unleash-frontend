@@ -112,7 +112,11 @@ export const ApplicationEdit = () => {
                             <ConditionallyRender
                                 condition={Boolean(url)}
                                 show={
-                                    <IconButton component={Link} href={url} size="large">
+                                    <IconButton
+                                        component={Link}
+                                        href={url}
+                                        size="large"
+                                    >
                                         <LinkIcon titleAccess={url} />
                                     </IconButton>
                                 }

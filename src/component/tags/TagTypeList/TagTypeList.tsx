@@ -72,7 +72,8 @@ export const TagTypeList = () => {
                                         onClick={() =>
                                             history.push('/tag-types/create')
                                         }
-                                        size="large">
+                                        size="large"
+                                    >
                                         <Add />
                                     </IconButton>
                                 </Tooltip>
@@ -110,7 +111,8 @@ export const TagTypeList = () => {
                             name: tagType.name,
                         })
                     }
-                    size="large">
+                    size="large"
+                >
                     <Delete />
                 </IconButton>
             </Tooltip>

@@ -24,7 +24,8 @@ const NavigationLink = ({ path, text, handleClose }: INavigationLinkProps) => {
                 component={RouterLink}
                 className={styles.navMenuLink}
                 to={path}
-                underline="hover">
+                underline="hover"
+            >
                 <span className={styles.menuItemBox} />
                 {text}
             </Link>

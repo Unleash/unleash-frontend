@@ -1,8 +1,4 @@
-import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-} from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { IConstraint } from 'interfaces/strategy';
 

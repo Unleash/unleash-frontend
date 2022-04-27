@@ -70,7 +70,8 @@ const Header: VFC = () => {
                             onClick={toggleDrawer}
                             aria-controls="header-drawer"
                             aria-expanded={openDrawer}
-                            size="large">
+                            size="large"
+                        >
                             <MenuIcon />
                         </IconButton>
                     </Tooltip>
@@ -126,7 +127,8 @@ const Header: VFC = () => {
                                 href="https://docs.getunleash.io/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                size="large">
+                                size="large"
+                            >
                                 <MenuBookIcon className={styles.icon} />
                             </IconButton>
                         </Tooltip>
@@ -139,7 +141,8 @@ const Header: VFC = () => {
                                             setAnchorEl(e.currentTarget)
                                         }
                                         className={styles.wideButton}
-                                        size="large">
+                                        size="large"
+                                    >
                                         <SettingsIcon />
                                         <KeyboardArrowDown
                                             className={styles.icon}

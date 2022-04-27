@@ -19,7 +19,8 @@ export const SelectAllButton: FC<SelectAllButtonProps> = ({
                 onClick={onClick}
                 className={styles.selectOptionsLink}
                 component="button"
-                underline="hover">
+                underline="hover"
+            >
                 {isAllSelected ? 'Deselect all' : 'Select all'}
             </Link>
         </Box>

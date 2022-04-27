@@ -62,7 +62,11 @@ export const ProjectFeatureToggles = ({
                             <ConditionallyRender
                                 condition={PROJECTFILTERING}
                                 show={
-                                    <IconButton className={styles.iconButton} data-loading size="large">
+                                    <IconButton
+                                        className={styles.iconButton}
+                                        data-loading
+                                        size="large"
+                                    >
                                         <FilterListIcon
                                             className={styles.icon}
                                         />

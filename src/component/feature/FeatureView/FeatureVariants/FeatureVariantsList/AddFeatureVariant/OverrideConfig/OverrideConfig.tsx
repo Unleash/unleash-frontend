@@ -46,104 +46,110 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
             });
         };
 
-    return <>
-        {overrides.map((override, index) => {
-            const definition = context.find(
-                c => c.name === override.contextName
-            );
-            const legalValues =
-                definition?.legalValues?.map(({ value }) => value) || [];
-            const filteredValues = override.values.filter(value =>
-                legalValues.includes(value)
-            );
+    return (
+        <>
+            {overrides.map((override, index) => {
+                const definition = context.find(
+                    c => c.name === override.contextName
+                );
+                const legalValues =
+                    definition?.legalValues?.map(({ value }) => value) || [];
+                const filteredValues = override.values.filter(value =>
+                    legalValues.includes(value)
+                );
 
-            return (
-                <Grid
-                    container
-                    key={`override=${index}`}
-                    alignItems="center"
-                >
+                return (
                     <Grid
-                        item
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className={styles.contextFieldSelect}
+                        container
+                        key={`override=${index}`}
+                        alignItems="center"
                     >
-                        <GeneralSelect
-                            name="contextName"
-                            label="Context Field"
-                            value={override.contextName}
-                            options={contextNames}
-                            classes={{
-                                root: classnames(commonStyles.fullWidth),
-                            }}
-                            onChange={(value: string) => {
-                                overridesDispatch({
-                                    type: 'UPDATE_TYPE_AT',
-                                    payload: [index, value],
-                                });
-                            }}
-                        />
-                    </Grid>
-                    <Grid md={7} sm={7} xs={6} item>
-                        <ConditionallyRender
-                            condition={Boolean(
-                                legalValues && legalValues.length > 0
-                            )}
-                            show={
-                                <Autocomplete
-                                    multiple
-                                    id={`override-select-${index}`}
-                                    isOptionEqualToValue={(option, value) => {
-                                        return option === value;
-                                    }}
-                                    options={legalValues}
-                                    onChange={updateSelectValues(index)}
-                                    getOptionLabel={option => option}
-                                    defaultValue={filteredValues}
-                                    value={filteredValues}
-                                    style={{ width: '100%' }}
-                                    filterSelectedOptions
-                                    size="small"
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            variant="outlined"
-                                            label="Legal values"
-                                            style={{ width: '100%' }}
-                                        />
-                                    )}
-                                />
-                            }
-                            elseShow={
-                                <InputListField
-                                    label="Values (v1, v2, ...)"
-                                    name="values"
-                                    placeholder=""
-                                    values={override.values}
-                                    updateValues={updateValues(index)}
-                                />
-                            }
-                        />
-                    </Grid>
-                    <Grid item md={1}>
-                        <Tooltip title="Remove">
-                            <IconButton
-                                onClick={event => {
-                                    event.preventDefault();
+                        <Grid
+                            item
+                            md={3}
+                            sm={3}
+                            xs={3}
+                            className={styles.contextFieldSelect}
+                        >
+                            <GeneralSelect
+                                name="contextName"
+                                label="Context Field"
+                                value={override.contextName}
+                                options={contextNames}
+                                classes={{
+                                    root: classnames(commonStyles.fullWidth),
+                                }}
+                                onChange={(value: string) => {
                                     overridesDispatch({
-                                        type: 'REMOVE',
-                                        payload: index,
+                                        type: 'UPDATE_TYPE_AT',
+                                        payload: [index, value],
                                     });
                                 }}
-                                size="large">
-                                <Delete />
-                            </IconButton>
-                        </Tooltip>
+                            />
+                        </Grid>
+                        <Grid md={7} sm={7} xs={6} item>
+                            <ConditionallyRender
+                                condition={Boolean(
+                                    legalValues && legalValues.length > 0
+                                )}
+                                show={
+                                    <Autocomplete
+                                        multiple
+                                        id={`override-select-${index}`}
+                                        isOptionEqualToValue={(
+                                            option,
+                                            value
+                                        ) => {
+                                            return option === value;
+                                        }}
+                                        options={legalValues}
+                                        onChange={updateSelectValues(index)}
+                                        getOptionLabel={option => option}
+                                        defaultValue={filteredValues}
+                                        value={filteredValues}
+                                        style={{ width: '100%' }}
+                                        filterSelectedOptions
+                                        size="small"
+                                        renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                variant="outlined"
+                                                label="Legal values"
+                                                style={{ width: '100%' }}
+                                            />
+                                        )}
+                                    />
+                                }
+                                elseShow={
+                                    <InputListField
+                                        label="Values (v1, v2, ...)"
+                                        name="values"
+                                        placeholder=""
+                                        values={override.values}
+                                        updateValues={updateValues(index)}
+                                    />
+                                }
+                            />
+                        </Grid>
+                        <Grid item md={1}>
+                            <Tooltip title="Remove">
+                                <IconButton
+                                    onClick={event => {
+                                        event.preventDefault();
+                                        overridesDispatch({
+                                            type: 'REMOVE',
+                                            payload: index,
+                                        });
+                                    }}
+                                    size="large"
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
                     </Grid>
-                </Grid>
-            );
-        })}
-    </>;
+                );
+            })}
+        </>
+    );
 };

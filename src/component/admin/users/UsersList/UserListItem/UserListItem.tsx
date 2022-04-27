@@ -90,17 +90,26 @@ const UserListItem = ({
                                 onClick={() =>
                                     history.push(`/admin/users/${user.id}/edit`)
                                 }
-                                size="large">
+                                size="large"
+                            >
                                 <Edit />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Change password" arrow>
-                            <IconButton data-loading onClick={openPwDialog(user)} size="large">
+                            <IconButton
+                                data-loading
+                                onClick={openPwDialog(user)}
+                                size="large"
+                            >
                                 <Lock />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Remove user" arrow>
-                            <IconButton data-loading onClick={openDelDialog(user)} size="large">
+                            <IconButton
+                                data-loading
+                                onClick={openDelDialog(user)}
+                                size="large"
+                            >
                                 <Delete />
                             </IconButton>
                         </Tooltip>

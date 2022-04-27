@@ -34,7 +34,8 @@ export const CreateFeatureButton = ({
                         to={createFeature.path}
                         data-testid={NAVIGATE_TO_CREATE_FEATURE}
                         disabled={!createFeature.access}
-                        size="large">
+                        size="large"
+                    >
                         <Add />
                     </IconButton>
                 </Tooltip>

@@ -51,7 +51,12 @@ const PermissionIconButton = ({
     return (
         <TooltipResolver title={formatAccessText(access, tooltip)}>
             <span id={id}>
-                <IconButton {...rest} disabled={!access} aria-labelledby={id} size="large">
+                <IconButton
+                    {...rest}
+                    disabled={!access}
+                    aria-labelledby={id}
+                    size="large"
+                >
                     {children}
                 </IconButton>
             </span>

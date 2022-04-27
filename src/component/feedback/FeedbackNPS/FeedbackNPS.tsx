@@ -77,7 +77,8 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
                         <IconButton
                             className={styles.close}
                             onClick={() => setShowFeedback(false)}
-                            size="large">
+                            size="large"
+                        >
                             <CloseIcon />
                         </IconButton>
                     </Tooltip>

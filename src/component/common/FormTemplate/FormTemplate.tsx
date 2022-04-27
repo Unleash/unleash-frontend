@@ -1,12 +1,7 @@
 import { useStyles } from './FormTemplate.styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Codebox from '../Codebox/Codebox';
-import {
-    Collapse,
-    IconButton,
-    useMediaQuery,
-    Tooltip,
-} from '@mui/material';
+import { Collapse, IconButton, useMediaQuery, Tooltip } from '@mui/material';
 import { FileCopy, Info } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import Loader from '../Loader/Loader';
@@ -128,26 +123,29 @@ const MobileGuidance = ({
     const [open, setOpen] = useState(false);
     const styles = useStyles();
 
-    return <>
-        <div className={styles.mobileGuidanceBgContainer}>
-            <MobileGuidanceBG className={styles.mobileGuidanceBackground} />
-        </div>
-        <Tooltip title="Toggle help">
-            <IconButton
-                className={styles.mobileGuidanceButton}
-                onClick={() => setOpen(prev => !prev)}
-                size="large">
-                <Info className={styles.infoIcon} />
-            </IconButton>
-        </Tooltip>
-        <Collapse in={open} timeout={500}>
-            <Guidance
-                description={description}
-                documentationLink={documentationLink}
-                documentationLinkLabel={documentationLinkLabel}
-            />
-        </Collapse>
-    </>;
+    return (
+        <>
+            <div className={styles.mobileGuidanceBgContainer}>
+                <MobileGuidanceBG className={styles.mobileGuidanceBackground} />
+            </div>
+            <Tooltip title="Toggle help">
+                <IconButton
+                    className={styles.mobileGuidanceButton}
+                    onClick={() => setOpen(prev => !prev)}
+                    size="large"
+                >
+                    <Info className={styles.infoIcon} />
+                </IconButton>
+            </Tooltip>
+            <Collapse in={open} timeout={500}>
+                <Guidance
+                    description={description}
+                    documentationLink={documentationLink}
+                    documentationLinkLabel={documentationLinkLabel}
+                />
+            </Collapse>
+        </>
+    );
 };
 
 interface IGuidanceProps {

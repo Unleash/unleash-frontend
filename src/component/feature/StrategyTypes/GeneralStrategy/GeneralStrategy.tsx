@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    FormControlLabel,
-    Switch,
-    TextField,
-    Tooltip,
-} from '@mui/material';
+import { FormControlLabel, Switch, TextField, Tooltip } from '@mui/material';
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
 import { IParameter, IStrategy } from 'interfaces/strategy';

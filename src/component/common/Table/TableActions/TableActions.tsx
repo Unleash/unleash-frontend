@@ -23,35 +23,38 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
         }
     };
 
-    return <>
-        <AnimateOnMount
-            mounted={searchExpanded}
-            start={styles.fieldWidth}
-            enter={styles.fieldWidthEnter}
-            leave={styles.fieldWidthLeave}
-            onStart={() => setAnimating(true)}
-            onEnd={() => setAnimating(false)}
-        >
-            <TableSearchField
-                value={search}
-                onChange={onSearch}
-                placeholder="Search users..."
-                onBlur={onBlur}
+    return (
+        <>
+            <AnimateOnMount
+                mounted={searchExpanded}
+                start={styles.fieldWidth}
+                enter={styles.fieldWidthEnter}
+                leave={styles.fieldWidthLeave}
+                onStart={() => setAnimating(true)}
+                onEnd={() => setAnimating(false)}
+            >
+                <TableSearchField
+                    value={search}
+                    onChange={onSearch}
+                    placeholder="Search users..."
+                    onBlur={onBlur}
+                />
+            </AnimateOnMount>
+            <ConditionallyRender
+                condition={!searchExpanded && !animating}
+                show={
+                    <Tooltip title="Search users" arrow>
+                        <IconButton
+                            aria-label="Search users"
+                            onClick={() => setSearchExpanded(true)}
+                            size="large"
+                        >
+                            <Search />
+                        </IconButton>
+                    </Tooltip>
+                }
             />
-        </AnimateOnMount>
-        <ConditionallyRender
-            condition={!searchExpanded && !animating}
-            show={
-                <Tooltip title="Search users" arrow>
-                    <IconButton
-                        aria-label="Search users"
-                        onClick={() => setSearchExpanded(true)}
-                        size="large">
-                        <Search />
-                    </IconButton>
-                </Tooltip>
-            }
-        />
-        <div className={styles.verticalSeparator} />
-    </>;
+            <div className={styles.verticalSeparator} />
+        </>
+    );
 };

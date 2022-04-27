@@ -1,10 +1,4 @@
-import {
-    Chip,
-    IconButton,
-    TableCell,
-    TableRow,
-    Tooltip,
-} from '@mui/material';
+import { Chip, IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
 import styles from '../variants.module.scss';
@@ -64,7 +58,8 @@ const FeatureVariantListItem = ({
                                 <IconButton
                                     data-testid={'VARIANT_EDIT_BUTTON'}
                                     onClick={() => editVariant(variant.name)}
-                                    size="large">
+                                    size="large"
+                                >
                                     <Edit />
                                 </IconButton>
                             </Tooltip>
@@ -78,7 +73,8 @@ const FeatureVariantListItem = ({
                                             name: variant.name,
                                         });
                                     }}
-                                    size="large">
+                                    size="large"
+                                >
                                     <Delete />
                                 </IconButton>
                             </Tooltip>

@@ -1,11 +1,6 @@
 import Input from 'component/common/Input/Input';
 import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
-import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    TextField,
-} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 import { useStyles } from './ProjectRoleForm.styles';

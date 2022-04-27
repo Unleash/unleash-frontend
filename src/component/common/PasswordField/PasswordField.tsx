@@ -37,7 +37,8 @@ const PasswordField: VFC<TextFieldProps> = ({ ...rest }) => {
                         <IconButton
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
-                            size="large">
+                            size="large"
+                        >
                             <IconComponent titleAccess={iconTitle} />
                         </IconButton>
                     </InputAdornment>

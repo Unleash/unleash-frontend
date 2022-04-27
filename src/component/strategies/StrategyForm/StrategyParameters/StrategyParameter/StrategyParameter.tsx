@@ -1,9 +1,4 @@
-import {
-    Checkbox,
-    FormControlLabel,
-    IconButton,
-    Tooltip,
-} from '@mui/material';
+import { Checkbox, FormControlLabel, IconButton, Tooltip } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useStyles } from './StrategyParameter.styles';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
@@ -98,7 +93,8 @@ export const StrategyParameter = ({
                         onClick={() => {
                             setParams(params.filter((e, i) => i !== index));
                         }}
-                        size="large">
+                        size="large"
+                    >
                         <Delete />
                     </IconButton>
                 </Tooltip>

@@ -74,7 +74,8 @@ export const SplashPageEnvironmentsContent: React.FC<
                         className={styles.closeButton}
                         onClick={onClose}
                         data-testid={CLOSE_SPLASH}
-                        size="large">
+                        size="large"
+                    >
                         <CloseOutlined titleAccess="Close" />
                     </IconButton>
                 </div>

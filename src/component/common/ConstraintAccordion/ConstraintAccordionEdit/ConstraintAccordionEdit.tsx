@@ -4,11 +4,7 @@ import { IConstraint } from 'interfaces/strategy';
 import { useStyles } from '../ConstraintAccordion.styles';
 import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
 import { ConstraintAccordionEditHeader } from './ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { cleanConstraint } from 'utils/cleanConstraint';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
