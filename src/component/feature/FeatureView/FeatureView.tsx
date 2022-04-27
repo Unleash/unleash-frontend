@@ -131,7 +131,7 @@ export const FeatureView = () => {
                                 />
                             </div>
 
-                            <div className={styles.actions}>
+                            <div>
                                 <PermissionIconButton
                                     permission={CREATE_FEATURE}
                                     projectId={projectId}
@@ -177,7 +177,6 @@ export const FeatureView = () => {
                                 value={activeTab.path}
                                 indicatorColor="primary"
                                 textColor="primary"
-                                className={styles.tabNavigation}
                             >
                                 {renderTabs()}
                             </Tabs>

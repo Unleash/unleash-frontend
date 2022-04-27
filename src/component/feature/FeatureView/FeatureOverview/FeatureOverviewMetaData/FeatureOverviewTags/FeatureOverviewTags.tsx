@@ -138,7 +138,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
                     title="Are you sure you want to delete this tag?"
                 />
 
-                <div className={styles.tagContent}>
+                <div>
                     <ConditionallyRender
                         condition={tags.length > 0}
                         show={tags.map(renderTag)}
