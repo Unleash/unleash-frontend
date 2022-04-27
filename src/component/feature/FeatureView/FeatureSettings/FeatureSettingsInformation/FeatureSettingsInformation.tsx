@@ -45,7 +45,7 @@ export const FeatureSettingsInformation = ({
             <Typography>
                 Description:{' '}
                 <strong>
-                    {feature.description.length === 0
+                    {!feature.description?.length
                         ? 'no description'
                         : feature.description}
                 </strong>
