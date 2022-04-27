@@ -16,6 +16,9 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        [theme.breakpoints.down(500)]: {
+            flexDirection: 'column',
+        },
     },
     separator: {
         width: '100%',
@@ -29,6 +32,9 @@ export const useStyles = makeStyles()(theme => ({
         textTransform: 'none',
         width: 'auto',
         fontSize: '1rem',
+        [theme.breakpoints.up('md')]: {
+            minWidth: 160,
+        },
     },
     featureViewHeader: {
         fontSize: theme.fontSizes.mainHeader,
@@ -38,10 +44,5 @@ export const useStyles = makeStyles()(theme => ({
     },
     statusContainer: {
         marginLeft: '0.5rem',
-    },
-    [theme.breakpoints.down(500)]: {
-        innerContainer: {
-            flexDirection: 'column' as const,
-        },
     },
 }));

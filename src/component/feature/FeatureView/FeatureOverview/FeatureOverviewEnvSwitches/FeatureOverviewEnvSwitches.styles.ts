@@ -11,20 +11,17 @@ export const useStyles = makeStyles()(theme => ({
         minWidth: '350px',
         marginRight: '1rem',
         marginTop: '1rem',
-    },
-
-    header: {
-        fontSize: theme.fontSizes.subHeader,
-        fontWeight: 'normal',
-        margin: 0,
-        marginBottom: '0.5rem',
-    },
-    [theme.breakpoints.down(1000)]: {
-        container: {
+        [theme.breakpoints.down(1000)]: {
             marginBottom: '1rem',
             width: '100%',
             maxWidth: 'none',
             minWidth: 'auto',
         },
+    },
+    header: {
+        fontSize: theme.fontSizes.subHeader,
+        fontWeight: 'normal',
+        margin: 0,
+        marginBottom: '0.5rem',
     },
 }));
