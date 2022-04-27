@@ -16,7 +16,7 @@ declare module '@mui/material/styles/useTheme' {
 
 const mainTheme = {
     typography: {
-        fontFamily: ['Sen', 'Roboto, sans-serif'],
+        fontFamily: 'Sen, Roboto, sans-serif',
         fontWeightBold: '700',
         fontWeightMedium: '700',
     },

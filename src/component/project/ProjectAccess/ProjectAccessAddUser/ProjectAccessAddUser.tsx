@@ -5,6 +5,7 @@ import {
     Grid,
     Button,
     InputAdornment,
+    SelectChangeEvent,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -27,7 +28,7 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
     const { id } = useParams<{ id: string }>();
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
     const [role, setRole] = useState<IProjectRole | undefined>();
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState<IProjectAccessUser[]>([]);
     const [loading, setLoading] = useState(false);
     const { setToastData } = useToast();
     const { refetchProjectAccess, access } = useProjectAccess(id);
@@ -93,12 +94,7 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         }
     };
 
-    const handleRoleChange = (
-        evt: React.ChangeEvent<{
-            name?: string | undefined;
-            value: unknown;
-        }>
-    ) => {
+    const handleRoleChange = (evt: SelectChangeEvent) => {
         const roleId = Number(evt.target.value);
         const role = roles.find(role => role.id === roleId);
         if (role) {
@@ -146,8 +142,8 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         }
     };
 
-    const getOptionLabel = (option: IProjectAccessUser) => {
-        if (option) {
+    const getOptionLabel = (option: IProjectAccessUser | string) => {
+        if (option && typeof option !== 'string') {
             return `${option.name || option.username || '(Empty name)'} <${
                 option.email || option.username
             }>`;

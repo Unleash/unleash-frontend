@@ -57,7 +57,7 @@ const EnvironmentListItem = ({
     setToggleDialog,
 }: IEnvironmentListItemProps) => {
     const history = useHistory();
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLLIElement>(null);
     const ACCEPT_TYPE = 'LIST_ITEM';
     const [{ isDragging }, drag] = useDrag({
         type: ACCEPT_TYPE,
@@ -126,7 +126,6 @@ const EnvironmentListItem = ({
     }
 
     return (
-        // @ts-expect-error
         <ListItem
             style={{ position: 'relative', opacity }}
             ref={ref}

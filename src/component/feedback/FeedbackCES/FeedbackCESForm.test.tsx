@@ -1,12 +1,7 @@
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 import renderer from 'react-test-renderer';
 import { FeedbackCESForm } from './FeedbackCESForm';
 import mainTheme from 'themes/mainTheme';
-
-declare module '@mui/styles/defaultTheme' {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}
 
 test('FeedbackCESForm', () => {
     const onClose = () => {

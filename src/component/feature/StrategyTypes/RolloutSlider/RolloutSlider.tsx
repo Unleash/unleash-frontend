@@ -68,7 +68,7 @@ interface IRolloutSliderProps {
     minLabel?: string;
     maxLabel?: string;
     value: number;
-    onChange: (e: React.ChangeEvent<{}>, newValue: number | number[]) => void;
+    onChange: (e: Event, newValue: number | number[]) => void;
     disabled?: boolean;
 }
 

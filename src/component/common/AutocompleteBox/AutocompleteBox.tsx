@@ -1,7 +1,7 @@
 import { useStyles } from 'component/common/AutocompleteBox/AutocompleteBox.styles';
 import { Search, ArrowDropDown } from '@mui/icons-material';
 import { Autocomplete } from '@mui/material';
-import { AutocompleteRenderInputParams } from '@mui/lab';
+import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete';
 import { TextField } from '@mui/material';
 import classNames from 'classnames';
 

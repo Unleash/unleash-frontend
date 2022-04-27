@@ -12,7 +12,7 @@ import {
     AutocompleteRenderGroupParams,
     AutocompleteRenderInputParams,
     AutocompleteRenderOptionState,
-} from '@mui/lab';
+} from '@mui/material/Autocomplete';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -77,10 +77,11 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
     };
 
     const renderOption = (
+        props: object,
         option: IAutocompleteBoxOption,
         { selected }: AutocompleteRenderOptionState
     ) => (
-        <>
+        <li {...props}>
             <Checkbox
                 icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                 checkedIcon={<CheckBoxIcon fontSize="small" />}
@@ -88,7 +89,7 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
                 className={styles.selectOptionCheckbox}
             />
             {option.label}
-        </>
+        </li>
     );
 
     const renderGroup = ({ key, children }: AutocompleteRenderGroupParams) => (

@@ -5,6 +5,7 @@ import {
     ListItemSecondaryAction,
     ListItemText,
     MenuItem,
+    SelectChangeEvent,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
@@ -21,12 +22,7 @@ import React from 'react';
 
 interface IProjectAccessListItemProps {
     user: IProjectAccessUser;
-    handleRoleChange: (userId: number) => (
-        evt: React.ChangeEvent<{
-            name?: string;
-            value: unknown;
-        }>
-    ) => void;
+    handleRoleChange: (userId: number) => (evt: SelectChangeEvent) => void;
     handleRemoveAccess: (user: IProjectAccessUser) => void;
     access: IProjectAccessOutput;
 }

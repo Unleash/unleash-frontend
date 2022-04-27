@@ -8,6 +8,7 @@ import {
     Paper,
     Select,
     Typography,
+    SelectChangeEvent,
 } from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from 'component/user/UserProfile/UserProfileContent/UserProfileContent.styles';
@@ -55,8 +56,8 @@ const UserProfileContent = ({
         [styles.editingEmail]: editingProfile,
     });
 
-    const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-        const locale = e.target.value as string;
+    const handleChange = (e: SelectChangeEvent) => {
+        const locale = e.target.value;
         setCurrentLocale(locale);
         setLocationSettings({ locale });
     };

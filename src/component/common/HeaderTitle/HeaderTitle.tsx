@@ -1,8 +1,7 @@
 import { ReactNode, VFC } from 'react';
 import classnames from 'classnames';
 
-import { Typography } from '@mui/material';
-import { Variant } from '@mui/material/styles';
+import { Typography, TypographyProps } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 import { useStyles } from './styles';
@@ -12,7 +11,7 @@ interface IHeaderTitleProps {
     title: string;
     titleElement?: ReactNode;
     subtitle?: string;
-    variant?: 'inherit' | Variant;
+    variant?: TypographyProps['variant'];
     loading?: boolean;
     actions?: ReactNode;
     className?: string;

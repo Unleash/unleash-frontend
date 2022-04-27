@@ -8,6 +8,7 @@ import {
     Select,
     Switch,
     TextField,
+    SelectChangeEvent,
 } from '@mui/material';
 
 interface IAutoCreateFormProps {
@@ -28,10 +29,8 @@ export const AutoCreateForm = ({
         setValue('autoCreate', !data.autoCreate);
     };
 
-    const updateDefaultRootRole = (
-        evt: ChangeEvent<{ name?: string; value: unknown }>
-    ) => {
-        setValue('defaultRootRole', evt.target.value as string);
+    const updateDefaultRootRole = (evt: SelectChangeEvent) => {
+        setValue('defaultRootRole', evt.target.value);
     };
 
     const updateField = (e: ChangeEvent<HTMLInputElement>) => {

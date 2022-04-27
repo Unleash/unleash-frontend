@@ -29,11 +29,7 @@ const GeneralStrategy = ({
         updateParameter(field, value);
     };
 
-    const onChangePercentage = (
-        field: string,
-        evt: React.ChangeEvent<{}>,
-        newValue: any
-    ) => {
+    const onChangePercentage = (field: string, evt: Event, newValue: any) => {
         evt.preventDefault();
         updateParameter(field, newValue);
     };

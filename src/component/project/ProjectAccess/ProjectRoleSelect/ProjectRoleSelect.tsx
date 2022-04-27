@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    SelectChangeEvent,
+} from '@mui/material';
 import React from 'react';
 import { IProjectRole } from 'interfaces/role';
 
@@ -9,12 +15,7 @@ interface IProjectRoleSelect {
     labelId: string;
     id: string;
     placeholder?: string;
-    onChange: (
-        evt: React.ChangeEvent<{
-            name?: string | undefined;
-            value: unknown;
-        }>
-    ) => void;
+    onChange: (evt: SelectChangeEvent) => void;
     value: any;
 }
 
@@ -39,13 +40,13 @@ export const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
             <Select
                 labelId={labelId}
                 id={id}
-                classes={{ root: styles.projectRoleSelect }}
+                classes={{ select: styles.projectRoleSelect }}
                 placeholder={placeholder}
                 value={value || ''}
                 onChange={onChange}
                 renderValue={roleId => {
                     const role = roles?.find(role => {
-                        return role.id === roleId;
+                        return String(role.id) === String(roleId);
                     });
                     return role?.name || '';
                 }}

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState } from 'react';
-import { Alert } from '@mui/material';
+import { Alert, SelectChangeEvent } from '@mui/material';
 import { ProjectAccessAddUser } from './ProjectAccessAddUser/ProjectAccessAddUser';
 import PageContent from 'component/common/PageContent';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -46,13 +46,7 @@ export const ProjectAccess = () => {
     }
 
     const handleRoleChange =
-        (userId: number) =>
-        async (
-            evt: React.ChangeEvent<{
-                name?: string;
-                value: unknown;
-            }>
-        ) => {
+        (userId: number) => async (evt: SelectChangeEvent) => {
             const roleId = Number(evt.target.value);
             try {
                 await changeUserRole(projectId, roleId, userId);
