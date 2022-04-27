@@ -7,7 +7,7 @@ import { useStyles } from './NotFound.styles';
 
 const NotFound = () => {
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onClickHome = () => {
         history.push('/');

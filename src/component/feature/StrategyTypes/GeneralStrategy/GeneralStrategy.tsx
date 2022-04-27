@@ -18,7 +18,7 @@ const GeneralStrategy = ({
     updateParameter,
     editable,
 }: IGeneralStrategyProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const onChangeTextField = (
         field: string,
         evt: React.ChangeEvent<HTMLInputElement>

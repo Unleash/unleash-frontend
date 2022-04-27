@@ -12,15 +12,15 @@ interface IAuthOptionProps {
 }
 
 const AuthOptions = ({ options }: IAuthOptionProps) => {
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     return (
         <>
             {options?.map(o => (
                 <div
                     key={o.type}
                     className={classnames(
-                        commonStyles.flexColumn,
-                        commonStyles.contentSpacingY
+                        themeStyles.flexColumn,
+                        themeStyles.contentSpacingY
                     )}
                 >
                     <Button

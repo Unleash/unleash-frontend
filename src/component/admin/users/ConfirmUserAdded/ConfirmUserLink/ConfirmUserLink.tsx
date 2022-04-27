@@ -15,7 +15,7 @@ const ConfirmUserLink = ({
     closeConfirm,
     inviteLink,
 }: IConfirmUserLink) => {
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     return (
         <Dialogue
             open={open}
@@ -23,7 +23,7 @@ const ConfirmUserLink = ({
             primaryButtonText="Close"
             title="Team member added"
         >
-            <div className={commonStyles.contentSpacingYLarge}>
+            <div className={themeStyles.contentSpacingYLarge}>
                 <Typography variant="body1">
                     A new team member has been added. Please provide them with
                     the following link to get started:

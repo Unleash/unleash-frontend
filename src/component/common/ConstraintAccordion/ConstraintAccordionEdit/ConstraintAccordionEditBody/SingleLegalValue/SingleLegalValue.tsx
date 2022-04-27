@@ -28,7 +28,7 @@ export const SingleLegalValue = ({
     setError,
 }: ISingleLegalValueProps) => {
     const [filter, setFilter] = useState('');
-    const styles = useThemeStyles();
+    const { classes: styles } = useThemeStyles();
     const filteredValues = filterLegalValues(legalValues, filter);
 
     return (

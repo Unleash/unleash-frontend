@@ -22,7 +22,7 @@ export const TabNav = ({
     navClass = '',
     startingTab = 0,
 }: ITabNavProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [activeTab, setActiveTab] = useState(startingTab);
 
     const renderTabs = () =>

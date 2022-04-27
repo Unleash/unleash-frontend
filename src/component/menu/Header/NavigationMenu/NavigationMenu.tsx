@@ -17,7 +17,7 @@ export const NavigationMenu = ({
     anchorEl,
     style,
 }: INavigationMenuProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <Menu

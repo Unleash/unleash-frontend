@@ -15,7 +15,7 @@ const EventLog = ({
     locationSettings,
     displayInline,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const toggleShowDiff = () => {
         setEventSettings({ showData: !eventSettings.showData });
     };

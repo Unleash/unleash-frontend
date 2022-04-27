@@ -12,7 +12,7 @@ const METADATA = 'metadata';
 const PROJECT = 'project';
 
 export const FeatureSettings = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const [settings, setSettings] = useState(METADATA);
 

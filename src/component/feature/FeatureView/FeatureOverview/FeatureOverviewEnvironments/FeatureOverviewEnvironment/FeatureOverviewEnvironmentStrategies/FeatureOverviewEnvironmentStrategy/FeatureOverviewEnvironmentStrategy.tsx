@@ -26,7 +26,7 @@ const FeatureOverviewEnvironmentStrategy = ({
 }: IFeatureOverviewEnvironmentStrategyProps) => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const theme = useTheme();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const Icon = getFeatureStrategyIcon(strategy.name);
     const { parameters, constraints } = strategy;
 

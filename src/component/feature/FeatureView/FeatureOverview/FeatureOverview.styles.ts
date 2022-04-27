@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     container: { display: 'flex', width: '100%' },
 
     mainContent: {
@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down(1000)]: {
         container: {
-            flexDirection: 'column',
+            flexDirection: 'column' as const,
         },
         trafficContainer: {
             marginTop: '1rem',

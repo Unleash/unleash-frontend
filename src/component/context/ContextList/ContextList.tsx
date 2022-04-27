@@ -36,7 +36,7 @@ const ContextList: VFC = () => {
     const { removeContext } = useContextsApi();
     const { setToastData, setToastApiError } = useToast();
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onDeleteContext = async () => {
         try {

@@ -22,7 +22,7 @@ export const FeatureMetrics = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const environments = useFeatureMetricsEnvironments(projectId, featureId);
     const applications = useFeatureMetricsApplications(featureId);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     usePageTitle('Metrics');
 
     const [hoursBack = FEATURE_METRIC_HOURS_BACK_MAX, setHoursBack] =

@@ -8,7 +8,7 @@ import StringTruncator from '../StringTruncator/StringTruncator';
 
 const BreadcrumbNav = () => {
     const { isAdmin } = useContext(AccessContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const location = useLocation();
 
     const paths = location.pathname

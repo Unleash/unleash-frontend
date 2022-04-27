@@ -14,7 +14,7 @@ const PasswordMatcher = ({
     started,
     matchingPasswords,
 }: IPasswordMatcherProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.matcherContainer}>
             <ConditionallyRender

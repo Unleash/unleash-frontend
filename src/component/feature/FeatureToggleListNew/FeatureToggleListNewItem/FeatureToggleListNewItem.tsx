@@ -40,7 +40,7 @@ const FeatureToggleListNewItem = ({
     );
 
     const { refetch } = useProject(projectId);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const ref = useRef<HTMLButtonElement>(null);
     const [showInfoBox, setShowInfoBox] = useState(false);
     const [environmentName, setEnvironmentName] = useState('');

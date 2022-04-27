@@ -25,7 +25,7 @@ export const ConstraintAccordionView = ({
     onEdit,
     onDelete,
 }: IConstraintAccordionViewProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const singleValue = oneOf(
         [...semVerOperators, ...numOperators, ...dateOperators],

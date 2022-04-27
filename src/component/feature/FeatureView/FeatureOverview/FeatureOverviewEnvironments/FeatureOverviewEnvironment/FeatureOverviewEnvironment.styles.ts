@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     featureOverviewEnvironment: {
         borderRadius: '12.5px',
         padding: '0.2rem',
@@ -95,14 +95,14 @@ export const useStyles = makeStyles(theme => ({
             top: '13px',
         },
         headerTitle: {
-            flexDirection: 'column',
-            textAlign: 'center',
+            flexDirection: 'column' as const,
+            textAlign: 'center' as const,
         },
         headerIcon: {
             marginBottom: '0.5rem',
         },
         truncator: {
-            textAlign: 'center',
+            textAlign: 'center' as const,
         },
     },
     [theme.breakpoints.down(400)]: {

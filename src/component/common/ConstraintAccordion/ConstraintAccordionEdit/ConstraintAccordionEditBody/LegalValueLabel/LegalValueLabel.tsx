@@ -9,7 +9,7 @@ interface ILegalValueTextProps {
 }
 
 export const LegalValueLabel = ({ legal, control }: ILegalValueTextProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div className={styles.container}>

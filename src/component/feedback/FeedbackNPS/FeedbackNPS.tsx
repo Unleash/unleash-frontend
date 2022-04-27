@@ -24,8 +24,8 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
     const { createFeedback, updateFeedback } = useAuthFeedbackApi();
     const { feedback } = useAuthFeedback();
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const feedbackId = PNPS_FEEDBACK_ID;
 
     const onConfirm = async () => {
@@ -61,16 +61,16 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
     return (
         <AnimateOnMount
             mounted={showFeedback}
-            start={commonStyles.fadeInTopStart}
-            enter={commonStyles.fadeInTopEnter}
-            leave={commonStyles.fadeInTopLeave}
+            start={themeStyles.fadeInTopStart}
+            enter={themeStyles.fadeInTopEnter}
+            leave={themeStyles.fadeInTopLeave}
             container={styles.animateContainer}
         >
             <div className={styles.feedback}>
                 <div
                     className={classnames(
                         styles.container,
-                        commonStyles.contentSpacingY
+                        themeStyles.contentSpacingY
                     )}
                 >
                     <Tooltip title="Close">

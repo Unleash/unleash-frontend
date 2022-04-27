@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import classnames from 'classnames';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import { Grid } from '@mui/material';
 import styles from 'component/styles.module.scss';
 import Header from 'component/menu/Header/Header';
@@ -12,7 +12,7 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { SkipNavLink } from 'component/common/SkipNav/SkipNavLink';
 import { SkipNavTarget } from 'component/common/SkipNav/SkipNavTarget';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles()(theme => ({
     container: {
         height: '100%',
         justifyContent: 'space-between',
@@ -32,7 +32,7 @@ interface IMainLayoutProps {
 }
 
 export const MainLayout = ({ children }: IMainLayoutProps) => {
-    const muiStyles = useStyles();
+    const { classes } = useStyles();
     const { uiConfig } = useUiConfig();
 
     return (
@@ -40,11 +40,11 @@ export const MainLayout = ({ children }: IMainLayoutProps) => {
             <SkipNavLink />
             <Header />
             <SkipNavTarget />
-            <Grid container className={muiStyles.container}>
+            <Grid container className={classes.container}>
                 <main className={classnames(styles.contentWrapper)}>
                     <Grid item className={styles.content} xs={12} sm={12}>
                         <div
-                            className={muiStyles.contentContainer}
+                            className={classes.contentContainer}
                             style={{ zIndex: 200 }}
                         >
                             <BreadcrumbNav />

@@ -22,7 +22,7 @@ const renderProclamation = (id: string) => {
 
 const Proclamation = ({ toast }: IProclamationProps) => {
     const [show, setShow] = useState(false);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         setShow(renderProclamation(toast?.id || ''));

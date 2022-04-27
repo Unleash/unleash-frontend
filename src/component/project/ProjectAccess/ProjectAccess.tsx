@@ -20,7 +20,7 @@ import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 
 export const ProjectAccess = () => {
     const { id: projectId } = useParams<IProjectViewParams>();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { access, refetchProjectAccess } = useProjectAccess(projectId);
     const { setToastData } = useToast();
     const { isOss } = useUiConfig();

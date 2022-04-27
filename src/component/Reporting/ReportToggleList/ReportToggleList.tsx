@@ -25,7 +25,7 @@ export const ReportToggleList: VFC<IReportToggleListProps> = ({
     features,
     selectedProject,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [checkAll, setCheckAll] = useState(false);
     const [localFeatures, setFeatures] = useState<IFeatureToggleListItem[]>([]);
     // @ts-expect-error

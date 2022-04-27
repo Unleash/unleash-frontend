@@ -9,7 +9,7 @@ import FeatureOverviewEnvSwitch from './FeatureOverviewEnvSwitch/FeatureOverview
 import { useStyles } from './FeatureOverviewEnvSwitches.styles';
 
 const FeatureOverviewEnvSwitches = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureId, projectId } = useParams<IFeatureViewParams>();
     useFeatureApi();
     const { feature } = useFeature(projectId, featureId);

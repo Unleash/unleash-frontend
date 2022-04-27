@@ -34,7 +34,7 @@ const ProjectForm: React.FC<IProjectForm> = ({
     validateProjectId,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>

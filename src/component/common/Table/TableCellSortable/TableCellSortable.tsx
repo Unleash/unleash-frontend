@@ -31,7 +31,7 @@ export const TableCellSortable = ({
     children,
 }: ITableCellSortableProps) => {
     const { setAnnouncement } = useContext(AnnouncerContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const ariaSort =
         sort.type === name

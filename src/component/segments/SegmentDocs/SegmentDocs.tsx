@@ -6,7 +6,7 @@ import {
 } from 'utils/segmentLimits';
 
 export const SegmentDocsWarning = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <Alert severity="warning">

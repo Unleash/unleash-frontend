@@ -26,7 +26,7 @@ export const HeaderTitle: VFC<IHeaderTitleProps> = ({
     loading,
     className = '',
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const headerClasses = classnames({ skeleton: loading });
 
     usePageTitle(title);

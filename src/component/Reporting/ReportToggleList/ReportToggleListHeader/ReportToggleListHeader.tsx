@@ -20,7 +20,7 @@ export const ReportToggleListHeader: VFC<IReportToggleListHeaderProps> = ({
     setSort,
     bulkActionsOn,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const handleSort = (type: ReportingSortType) => {
         setSort(prev => ({
             type,

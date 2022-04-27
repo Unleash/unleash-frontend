@@ -31,7 +31,7 @@ export const SegmentFormStepOne: React.FC<ISegmentFormPartOneProps> = ({
     setCurrentStep,
 }) => {
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div className={styles.form}>

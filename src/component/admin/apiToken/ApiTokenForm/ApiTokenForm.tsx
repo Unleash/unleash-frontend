@@ -40,7 +40,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     clearErrors,
 }) => {
     const TYPE_ADMIN = 'ADMIN';
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { environments } = useEnvironments();
     const { projects: availableProjects } = useProjects();
 

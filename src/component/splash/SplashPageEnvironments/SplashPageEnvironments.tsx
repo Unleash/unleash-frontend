@@ -7,7 +7,7 @@ import { ReactComponent as Logo2 } from 'assets/img/splashEnv2.svg';
 import { useHistory } from 'react-router-dom';
 
 export const SplashPageEnvironments = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { push } = useHistory();
 
     const onFinish = () => {

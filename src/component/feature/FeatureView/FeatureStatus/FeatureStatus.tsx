@@ -55,7 +55,7 @@ const FeatureStatus = ({
     lastSeenAt,
     tooltipPlacement,
 }: IFeatureStatusProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const Wrapper = (
         props: React.PropsWithChildren<{ color: string; toolTip: string }>

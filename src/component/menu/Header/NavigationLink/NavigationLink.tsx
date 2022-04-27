@@ -10,7 +10,7 @@ interface INavigationLinkProps {
 }
 
 const NavigationLink = ({ path, text, handleClose }: INavigationLinkProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <ListItem

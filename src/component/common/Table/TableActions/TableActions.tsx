@@ -15,7 +15,7 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
     const [searchExpanded, setSearchExpanded] = useState(false);
     const [animating, setAnimating] = useState(false);
 
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onBlur = (clear = false) => {
         if (!search || clear) {

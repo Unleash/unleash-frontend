@@ -56,12 +56,12 @@ export const AddVariant = ({
     title,
     editing,
 }: IAddVariantProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [data, setData] = useState<Record<string, string>>({});
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
     const [overrides, overridesDispatch] = useOverrides([]);
     const [error, setError] = useState<Record<string, string>>({});
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
@@ -230,7 +230,7 @@ export const AddVariant = ({
             <form
                 id={formId}
                 onSubmit={submit}
-                className={commonStyles.contentSpacingY}
+                className={themeStyles.contentSpacingY}
             >
                 <p className={styles.error}>{error.general}</p>
                 <Input
@@ -336,7 +336,7 @@ export const AddVariant = ({
                             name="variant-payload-value"
                             id="variant-payload-value"
                             label="Value"
-                            className={commonStyles.fullWidth}
+                            className={themeStyles.fullWidth}
                             value={payload.value}
                             onChange={e => onPayload('value')(e.target.value)}
                             data-testid={'VARIANT_PAYLOAD_VALUE'}

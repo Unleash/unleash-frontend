@@ -11,7 +11,7 @@ export const SelectAllButton: FC<SelectAllButtonProps> = ({
     isAllSelected,
     onClick,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <Box sx={{ ml: 3.5, my: 0.5 }}>

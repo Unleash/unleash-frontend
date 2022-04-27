@@ -1,10 +1,9 @@
-import makeStyles from '@mui/styles/makeStyles';
-import withStyles from '@mui/styles/withStyles';
+import { makeStyles, withStyles } from 'tss-react/mui';
 import { Slider, Typography } from '@mui/material';
 import { ROLLOUT_SLIDER_ID } from 'utils/testIds';
 import React from 'react';
 
-const StyledSlider = withStyles({
+const StyledSlider = withStyles(Slider, theme => ({
     root: {
         height: 8,
     },
@@ -28,9 +27,9 @@ const StyledSlider = withStyles({
         height: 8,
         borderRadius: 4,
     },
-})(Slider);
+}));
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles()(theme => ({
     slider: {
         width: '100%',
         maxWidth: '100%',
@@ -78,7 +77,7 @@ const RolloutSlider = ({
     onChange,
     disabled = false,
 }: IRolloutSliderProps) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const valuetext = (value: number) => `${value}%`;
 

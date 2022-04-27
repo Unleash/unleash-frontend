@@ -46,7 +46,7 @@ interface IDialogueMetaData {
 
 export const StrategiesList = () => {
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
     const [dialogueMetaData, setDialogueMetaData] = useState<IDialogueMetaData>(

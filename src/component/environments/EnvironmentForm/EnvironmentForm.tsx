@@ -31,7 +31,7 @@ const EnvironmentForm: React.FC<IEnvironmentForm> = ({
     mode,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>

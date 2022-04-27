@@ -15,7 +15,7 @@ import useTags from 'hooks/api/getters/useTags/useTags';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
 
 const FeatureOverviewMetaData = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { tags } = useTags(featureId);
 

@@ -31,7 +31,7 @@ export const ProjectCard = ({
     onHover,
     id,
 }: IProjectCardProps) => {
-    const styles = useStyles();
+    const { classes } = useStyles();
     const { refetch: refetchProjectOverview } = useProjects();
     const [anchorEl, setAnchorEl] = useState(null);
     const [showDelDialog, setShowDelDialog] = useState(false);
@@ -63,14 +63,14 @@ export const ProjectCard = ({
     };
 
     return (
-        <Card className={styles.projectCard} onMouseEnter={onHover}>
-            <div className={styles.header} data-loading>
-                <h2 className={styles.title}>{name}</h2>
+        <Card className={classes.projectCard} onMouseEnter={onHover}>
+            <div className={classes.header} data-loading>
+                <h2 className={classes.title}>{name}</h2>
 
                 <PermissionIconButton
                     permission={UPDATE_PROJECT}
                     projectId={id}
-                    className={styles.actionsBtn}
+                    className={classes.actionsBtn}
                     data-loading
                     onClick={handleClick}
                     tooltip="Options"
@@ -95,7 +95,7 @@ export const ProjectCard = ({
                             history.push(getProjectEditPath(id));
                         }}
                     >
-                        <Edit className={styles.icon} />
+                        <Edit className={classes.icon} />
                         Edit project
                     </MenuItem>
                     <MenuItem
@@ -104,30 +104,30 @@ export const ProjectCard = ({
                             setShowDelDialog(true);
                         }}
                     >
-                        <Delete className={styles.icon} />
+                        <Delete className={classes.icon} />
                         Delete project
                     </MenuItem>
                 </Menu>
             </div>
             <div data-loading>
-                <ProjectIcon className={styles.projectIcon} />
+                <ProjectIcon className={classes.projectIcon} />
             </div>
-            <div className={styles.info}>
-                <div className={styles.infoBox}>
-                    <p className={styles.infoStats} data-loading>
+            <div className={classes.info}>
+                <div className={classes.infoBox}>
+                    <p className={classes.infoStats} data-loading>
                         {featureCount}
                     </p>
                     <p data-loading>toggles</p>
                 </div>
-                <div className={styles.infoBox}>
-                    <p className={styles.infoStats} data-loading>
+                <div className={classes.infoBox}>
+                    <p className={classes.infoStats} data-loading>
                         {health}%
                     </p>
                     <p data-loading>health</p>
                 </div>
 
-                <div className={styles.infoBox}>
-                    <p className={styles.infoStats} data-loading>
+                <div className={classes.infoBox}>
+                    <p className={classes.infoStats} data-loading>
                         {memberCount}
                     </p>
                     <p data-loading>members</p>

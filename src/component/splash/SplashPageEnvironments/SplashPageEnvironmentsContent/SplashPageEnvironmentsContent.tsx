@@ -17,7 +17,7 @@ interface ISplashPageEnvironmentsContentProps {
 export const SplashPageEnvironmentsContent: React.FC<
     ISplashPageEnvironmentsContentProps
 > = ({ components, onFinish }: ISplashPageEnvironmentsContentProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [counter, setCounter] = useState(0);
 
     const onNext = () => {

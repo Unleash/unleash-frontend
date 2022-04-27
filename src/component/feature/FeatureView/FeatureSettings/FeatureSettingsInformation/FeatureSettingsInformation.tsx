@@ -15,7 +15,7 @@ export const FeatureSettingsInformation = ({
     projectId,
     featureId,
 }: IFeatureSettingsInformationProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { feature } = useFeature(projectId, featureId);
     const history = useHistory();
 

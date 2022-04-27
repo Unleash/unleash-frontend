@@ -19,7 +19,7 @@ export const SearchField: VFC<ISearchFieldProps> = ({
     className = '',
     showValueChip,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [localValue, setLocalValue] = useState(initialValue);
     const debounceUpdateValue = debounce(updateValue, 500);
 

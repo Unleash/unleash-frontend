@@ -15,7 +15,7 @@ export const FeatureMetricsStats = ({
     totalNo,
     hoursBack,
 }: IFeatureMetricsStatsProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const hoursSuffix =
         hoursBack === 1 ? 'in the last hour' : `in the last ${hoursBack} hours`;

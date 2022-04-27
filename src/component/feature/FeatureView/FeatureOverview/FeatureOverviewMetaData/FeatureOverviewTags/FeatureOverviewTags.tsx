@@ -32,7 +32,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
         value: '',
         type: '',
     });
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureId } = useParams<IFeatureViewParams>();
     const { tags, refetch } = useTags(featureId);
     const { tagTypes } = useTagTypes();

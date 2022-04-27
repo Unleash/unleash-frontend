@@ -17,7 +17,7 @@ import { ApiTokenList } from 'component/admin/apiToken/ApiTokenList/ApiTokenList
 import { AdminAlert } from 'component/common/AdminAlert/AdminAlert';
 
 export const ApiTokenPage = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const history = useHistory();

@@ -42,11 +42,11 @@ const UserProfileContent = ({
     setCurrentLocale,
     setLocationSettings,
 }: IUserProfileContentProps) => {
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const { uiConfig } = useUiConfig();
     const [updatedPassword, setUpdatedPassword] = useState(false);
     const [editingProfile, setEditingProfile] = useState(false);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const profileAvatarClasses = classnames(styles.avatar, {
         [styles.editingAvatar]: editingProfile,
@@ -69,9 +69,9 @@ const UserProfileContent = ({
                 <Paper
                     className={classnames(
                         styles.profile,
-                        commonStyles.flexColumn,
-                        commonStyles.itemsCenter,
-                        commonStyles.contentSpacingY
+                        themeStyles.flexColumn,
+                        themeStyles.itemsCenter,
+                        themeStyles.contentSpacingY
                     )}
                 >
                     <Avatar
@@ -107,7 +107,7 @@ const UserProfileContent = ({
                                         </Button>
                                     }
                                 />
-                                <div className={commonStyles.divider} />
+                                <div className={themeStyles.divider} />
                                 <div className={legacyStyles.showUserSettings}>
                                     <FormControl
                                         variant="outlined"
@@ -147,7 +147,7 @@ const UserProfileContent = ({
                                         </Select>
                                     </FormControl>
                                 </div>
-                                <div className={commonStyles.divider} />
+                                <div className={themeStyles.divider} />
                                 <a
                                     className={styles.link}
                                     href="https://www.getunleash.io/privacy-policy"
@@ -156,7 +156,7 @@ const UserProfileContent = ({
                                 >
                                     Privacy policy
                                 </a>
-                                <div className={commonStyles.divider} />
+                                <div className={themeStyles.divider} />
 
                                 <Button
                                     variant="contained"

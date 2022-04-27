@@ -46,7 +46,7 @@ function resolveCreateButtonData(isOss: boolean, hasAccess: boolean) {
 export const ProjectListNew = () => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { projects, loading, error, refetch } = useProjects();
     const [fetchedProjects, setFetchedProjects] = useState<projectMap>({});
     const ref = useLoading(loading);

@@ -31,7 +31,7 @@ export const ConstraintAccordionEditBody: React.FC<
     setAction,
     onSubmit,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <>

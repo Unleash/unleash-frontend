@@ -47,8 +47,8 @@ export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
 }) => {
     const constraintsAccordionListRef = useRef<IConstraintAccordionListRef>();
     const history = useHistory();
-    const styles = useStyles();
     const { hasAccess } = useContext(AccessContext);
+    const { classes: styles } = useStyles();
     const { context = [] } = useUnleashContext();
     const [open, setOpen] = useState(false);
     const segmentValuesCount = useSegmentValuesCount(constraints);

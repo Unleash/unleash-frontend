@@ -30,12 +30,12 @@ const Header: VFC = () => {
 
     const [admin, setAdmin] = useState(false);
     const { permissions } = useAuthPermissions();
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const {
         uiConfig: { links, name, flags },
     } = useUiConfig();
     const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const toggleDrawer = () => setOpenDrawer(prev => !prev);
@@ -95,7 +95,7 @@ const Header: VFC = () => {
     return (
         <AppBar className={styles.header} position="static">
             <Container className={styles.container}>
-                <Link to="/" className={commonStyles.flexRow} aria-label="Home">
+                <Link to="/" className={themeStyles.flexRow} aria-label="Home">
                     <UnleashLogo
                         className={styles.logo}
                         aria-label="Unleash logo"

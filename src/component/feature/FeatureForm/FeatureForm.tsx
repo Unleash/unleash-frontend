@@ -58,7 +58,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
     mode,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureTypes } = useFeatureTypes();
     const history = useHistory();
     const { permissions } = useAuthPermissions();

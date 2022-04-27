@@ -20,7 +20,7 @@ export const FeatureStrategySegmentChip = ({
     preview,
     setPreview,
 }: IFeatureStrategySegmentListProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onRemove = () => {
         setSegments(prev => {

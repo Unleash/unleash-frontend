@@ -33,7 +33,7 @@ export const SegmentListItem = ({
     setCurrentSegment,
     setDelDialog,
 }: ISegmentListItemProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { push } = useHistory();
 
     return (

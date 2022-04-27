@@ -12,7 +12,7 @@ const FeatureOverviewExecutionChips = ({
     value,
     text,
 }: IFeatureOverviewExecutionChipsProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.container}>
             <ConditionallyRender

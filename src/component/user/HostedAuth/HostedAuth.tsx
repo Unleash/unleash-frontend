@@ -21,8 +21,8 @@ interface IHostedAuthProps {
 }
 
 const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
-    const commonStyles = useThemeStyles();
-    const styles = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
+    const { classes: styles } = useStyles();
     const { refetchUser } = useAuthUser();
     const history = useHistory();
     const params = useQueryParams();
@@ -106,7 +106,7 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
                         <div
                             className={classnames(
                                 styles.contentContainer,
-                                commonStyles.contentSpacingY
+                                themeStyles.contentSpacingY
                             )}
                         >
                             <TextField

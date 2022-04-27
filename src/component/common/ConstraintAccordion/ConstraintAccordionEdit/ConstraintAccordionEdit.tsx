@@ -60,7 +60,7 @@ export const ConstraintAccordionEdit = ({
     const { validateConstraint } = useFeatureApi();
     const [expanded, setExpanded] = useState(false);
     const [action, setAction] = useState('');
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         // Setting expanded to true on mount will cause the accordion

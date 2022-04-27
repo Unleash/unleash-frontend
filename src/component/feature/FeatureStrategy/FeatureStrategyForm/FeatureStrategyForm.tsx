@@ -46,7 +46,7 @@ export const FeatureStrategyForm = ({
     segments,
     setSegments,
 }: IFeatureStrategyFormProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
     const hasValidConstraints = useConstraintsValidation(strategy.constraints);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);

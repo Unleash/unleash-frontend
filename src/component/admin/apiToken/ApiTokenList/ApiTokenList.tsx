@@ -37,7 +37,7 @@ interface IApiToken {
 }
 
 export const ApiTokenList = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const [showDelete, setShowDelete] = useState(false);

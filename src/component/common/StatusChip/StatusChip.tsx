@@ -7,7 +7,7 @@ interface IStatusChip {
 }
 
 const StatusChip = ({ stale, showActive = true }: IStatusChip) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     if (!stale && !showActive) {
         return null;

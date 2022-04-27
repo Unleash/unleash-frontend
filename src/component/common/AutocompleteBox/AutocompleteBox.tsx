@@ -25,7 +25,7 @@ export const AutocompleteBox = ({
     onChange,
     disabled,
 }: IAutocompleteBoxProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const renderInput = (params: AutocompleteRenderInputParams) => {
         return <TextField {...params} variant="outlined" label={label} />;

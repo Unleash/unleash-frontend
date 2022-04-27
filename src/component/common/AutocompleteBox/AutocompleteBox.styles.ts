@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     container: {
         display: 'flex',
         alignItems: 'center',
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
         borderTopRightRadius: 50,
         borderBottomRightRadius: 50,
         '& fieldset': {
-            borderColor: theme.palette,
+            borderColor: theme.palette.grey[300],
             borderLeftColor: 'transparent',
         },
     },

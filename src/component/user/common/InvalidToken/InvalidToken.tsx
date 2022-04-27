@@ -5,16 +5,16 @@ import { useThemeStyles } from 'themes/themeStyles';
 import classnames from 'classnames';
 
 const InvalidToken = () => {
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     return (
         <div
             className={classnames(
-                commonStyles.contentSpacingY,
-                commonStyles.flexColumn,
-                commonStyles.itemsCenter
+                themeStyles.contentSpacingY,
+                themeStyles.flexColumn,
+                themeStyles.itemsCenter
             )}
         >
-            <Typography variant="h2" className={commonStyles.title}>
+            <Typography variant="h2" className={themeStyles.title}>
                 Invalid token
             </Typography>
             <Typography variant="subtitle1">

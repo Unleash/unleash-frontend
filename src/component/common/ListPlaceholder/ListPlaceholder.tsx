@@ -10,7 +10,7 @@ interface IListPlaceholderProps {
 }
 
 const ListPlaceholder = ({ text, link, linkText }: IListPlaceholderProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <ListItem className={styles.emptyStateListItem}>

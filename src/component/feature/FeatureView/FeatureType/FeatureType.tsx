@@ -8,7 +8,7 @@ interface IFeatureTypeProps {
 }
 
 const FeatureStatus = ({ type }: IFeatureTypeProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureTypes } = useFeatureTypes();
     const IconComponent = getFeatureTypeIcons(type);
 

@@ -29,7 +29,7 @@ export const ConstraintOperatorSelect = ({
     value,
     onChange,
 }: IConstraintOperatorSelectProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [open, setOpen] = useState(false);
 
     const onSelectChange = (event: SelectChangeEvent) => {

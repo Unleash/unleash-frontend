@@ -1,8 +1,8 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
 export const formTemplateSidebarWidth = '27.5rem';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     container: {
         minHeight: '80vh',
         width: '100%',

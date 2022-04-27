@@ -49,7 +49,7 @@ const ProjectRoleForm: React.FC<IProjectRoleForm> = ({
     clearErrors,
     getRoleKey,
 }: IProjectRoleForm) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { permissions } = useProjectRolePermissions({
         revalidateIfStale: false,
         revalidateOnReconnect: false,

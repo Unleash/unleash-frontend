@@ -13,7 +13,7 @@ export const ContextFormChip = ({
     description,
     onRemove,
 }: IContextFormChipProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <li className={styles.container}>

@@ -43,7 +43,7 @@ export const FeatureView = () => {
         featureId
     );
 
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
     const ref = useLoading(loading);
 

@@ -17,8 +17,8 @@ const ForgottenPassword = () => {
     const [attempted, setAttempted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [attemptedEmail, setAttemptedEmail] = useState('');
-    const commonStyles = useThemeStyles();
-    const styles = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
+    const { classes: styles } = useStyles();
     const ref = useLoading(loading);
 
     const onClick = async (e: SyntheticEvent) => {
@@ -43,16 +43,16 @@ const ForgottenPassword = () => {
         <StandaloneLayout>
             <div
                 className={classnames(
-                    commonStyles.contentSpacingY,
-                    commonStyles.flexColumn,
+                    themeStyles.contentSpacingY,
+                    themeStyles.flexColumn,
                     styles.forgottenPassword
                 )}
                 ref={ref}
             >
                 <h2
                     className={classnames(
-                        commonStyles.title,
-                        commonStyles.textCenter
+                        themeStyles.title,
+                        themeStyles.textCenter
                     )}
                     data-loading
                 >
@@ -77,14 +77,14 @@ const ForgottenPassword = () => {
                 <form
                     onSubmit={onClick}
                     className={classnames(
-                        commonStyles.contentSpacingY,
-                        commonStyles.flexColumn
+                        themeStyles.contentSpacingY,
+                        themeStyles.flexColumn
                     )}
                 >
                     <Typography
                         variant="body1"
                         data-loading
-                        className={commonStyles.textCenter}
+                        className={themeStyles.textCenter}
                     >
                         Please provide your email address. If it exists in the
                         system we'll send a new reset link.

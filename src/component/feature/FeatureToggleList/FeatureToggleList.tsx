@@ -62,7 +62,7 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
 }) => {
     const { hasAccess } = useContext(AccessContext);
     const createFeature = useCreateFeaturePath(filter);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const smallScreen = useMediaQuery('(max-width:800px)');
     const mobileView = useMediaQuery('(max-width:600px)');
 

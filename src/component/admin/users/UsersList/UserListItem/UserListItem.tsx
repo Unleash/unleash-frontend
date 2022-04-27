@@ -38,7 +38,7 @@ const UserListItem = ({
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <TableRow key={user.id} className={styles.tableRow}>

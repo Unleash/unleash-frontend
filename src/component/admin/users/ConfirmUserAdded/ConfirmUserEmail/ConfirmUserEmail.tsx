@@ -16,7 +16,7 @@ const ConfirmUserEmail = ({
     closeConfirm,
     inviteLink,
 }: IConfirmUserEmailProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <Dialogue
             open={open}

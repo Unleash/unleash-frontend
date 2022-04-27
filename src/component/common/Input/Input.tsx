@@ -29,7 +29,7 @@ const Input = ({
     InputProps,
     ...rest
 }: IInputProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.inputContainer} data-loading>
             <TextField

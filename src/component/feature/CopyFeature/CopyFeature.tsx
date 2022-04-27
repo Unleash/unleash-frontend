@@ -14,7 +14,7 @@ import {
     FormControlLabel,
 } from '@mui/material';
 import { FileCopy } from '@mui/icons-material';
-import { styles as commonStyles } from 'component/common';
+import { styles as themeStyles } from 'component/common';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import styles from './CopyFeature.module.scss';
 import { trim } from 'component/common/util';
@@ -83,7 +83,7 @@ export const CopyFeatureToggle = () => {
 
     return (
         <Paper
-            className={commonStyles.fullwidth}
+            className={themeStyles.fullwidth}
             style={{ overflow: 'visible' }}
         >
             <div className={styles.header}>

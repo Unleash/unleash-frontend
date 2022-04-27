@@ -9,7 +9,7 @@ interface IHelpIconProps {
 }
 
 export const HelpIcon = ({ tooltip, style }: IHelpIconProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <Tooltip title={tooltip} arrow>

@@ -1,7 +1,7 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 import { unleashGrey } from 'themes/themeColors';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     tableRow: {
         '& > td': {
             padding: '4px 16px',

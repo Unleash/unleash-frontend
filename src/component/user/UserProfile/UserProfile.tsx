@@ -26,8 +26,8 @@ const UserProfile = ({
     const [showProfile, setShowProfile] = useState(false);
     const [currentLocale, setCurrentLocale] = useState<string>();
 
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     const [possibleLocales, setPossibleLocales] = useState([
         'en-US',
@@ -61,8 +61,8 @@ const UserProfile = ({
             <div className={styles.profileContainer}>
                 <Button
                     className={classnames(
-                        commonStyles.flexRow,
-                        commonStyles.itemsCenter,
+                        themeStyles.flexRow,
+                        themeStyles.itemsCenter,
                         styles.button
                     )}
                     onClick={() => setShowProfile(prev => !prev)}

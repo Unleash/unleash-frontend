@@ -44,7 +44,7 @@ export const RestrictiveLegalValues = ({
 
     // Lazily initialise the values because there might be a lot of them.
     const [valuesMap, setValuesMap] = useState(() => createValuesMap(values));
-    const styles = useThemeStyles();
+    const { classes: styles } = useThemeStyles();
 
     useEffect(() => {
         setValuesMap(createValuesMap(values));

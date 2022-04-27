@@ -19,7 +19,7 @@ export const SidebarModal = ({
     label,
     children,
 }: ISidebarModalProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <Modal

@@ -27,7 +27,7 @@ const ChangePassword = ({
     const [data, setData] = useState({});
     const [error, setError] = useState<Record<string, string>>({});
     const [validPassword, setValidPassword] = useState(false);
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     // @ts-expect-error
     const updateField = e => {
@@ -90,8 +90,8 @@ const ChangePassword = ({
             <form
                 onSubmit={submit}
                 className={classnames(
-                    commonStyles.contentSpacingY,
-                    commonStyles.flexColumn
+                    themeStyles.contentSpacingY,
+                    themeStyles.flexColumn
                 )}
             >
                 <ConditionallyRender
@@ -101,7 +101,7 @@ const ChangePassword = ({
                 <Typography variant="subtitle1">
                     Changing password for user
                 </Typography>
-                <div className={commonStyles.flexRow}>
+                <div className={themeStyles.flexRow}>
                     <Avatar
                         variant="rounded"
                         alt="Gravatar"

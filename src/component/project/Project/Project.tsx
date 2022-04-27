@@ -23,7 +23,7 @@ const Project = () => {
     const { project, error, loading, refetch } = useProject(id);
     const ref = useLoading(loading);
     const { setToastData } = useToast();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
 
     const basePath = `/projects/${id}`;

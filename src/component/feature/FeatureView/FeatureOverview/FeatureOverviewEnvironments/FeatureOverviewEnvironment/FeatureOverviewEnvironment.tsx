@@ -40,7 +40,7 @@ interface IFeatureOverviewEnvironmentProps {
 const FeatureOverviewEnvironment = ({
     env,
 }: IFeatureOverviewEnvironmentProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { metrics } = useFeatureMetrics(projectId, featureId);
     const { feature } = useFeature(projectId, featureId);

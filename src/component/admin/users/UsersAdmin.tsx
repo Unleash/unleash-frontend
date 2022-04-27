@@ -16,7 +16,7 @@ const UsersAdmin = () => {
     const [search, setSearch] = useState('');
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div>

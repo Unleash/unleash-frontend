@@ -28,7 +28,7 @@ export const ProjectFeatureToggles = ({
     features,
     loading,
 }: IProjectFeatureTogglesProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { id } = useParams<{ id: string }>();
     const history = useHistory();
     const { hasAccess } = useContext(AccessContext);

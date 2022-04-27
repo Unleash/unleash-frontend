@@ -26,7 +26,7 @@ const DeleteUser = ({
     userApiErrors,
 }: IDeleteUserProps) => {
     const ref = useLoading(userLoading);
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     return (
         <Dialogue
@@ -50,7 +50,7 @@ const DeleteUser = ({
                         </Alert>
                     }
                 />
-                <div data-loading className={commonStyles.flexRow}>
+                <div data-loading className={themeStyles.flexRow}>
                     <Avatar
                         variant="rounded"
                         alt="Gravatar"

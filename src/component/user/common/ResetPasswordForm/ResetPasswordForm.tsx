@@ -25,8 +25,8 @@ interface IResetPasswordProps {
 }
 
 const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const [apiError, setApiError] = useState(false);
     const [password, setPassword] = useState('');
     const [showPasswordChecker, setShowPasswordChecker] = useState(false);
@@ -104,7 +104,7 @@ const ResetPasswordForm = ({ token, setLoading }: IResetPasswordProps) => {
             <form
                 onSubmit={handleSubmit}
                 className={classnames(
-                    commonStyles.contentSpacingY,
+                    themeStyles.contentSpacingY,
                     styles.container
                 )}
             >

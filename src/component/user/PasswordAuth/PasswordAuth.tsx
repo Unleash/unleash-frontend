@@ -26,8 +26,8 @@ interface IPasswordAuthProps {
 }
 
 const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
-    const commonStyles = useThemeStyles();
-    const styles = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
     const { refetchUser } = useAuthUser();
     const params = useQueryParams();
@@ -110,7 +110,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                         <div
                             className={classnames(
                                 styles.contentContainer,
-                                commonStyles.contentSpacingY
+                                themeStyles.contentSpacingY
                             )}
                         >
                             <TextField

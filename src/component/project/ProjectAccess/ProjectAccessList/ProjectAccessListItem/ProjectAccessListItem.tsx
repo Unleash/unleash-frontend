@@ -34,7 +34,7 @@ export const ProjectAccessListItem = ({
     handleRemoveAccess,
 }: IProjectAccessListItemProps) => {
     const { id: projectId } = useParams<IProjectViewParams>();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const labelId = `checkbox-list-secondary-label-${user.id}`;
 

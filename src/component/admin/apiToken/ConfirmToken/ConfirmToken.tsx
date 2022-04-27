@@ -14,7 +14,7 @@ export const ConfirmToken = ({
     closeConfirm,
     token,
 }: IConfirmUserLink) => {
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
     return (
         <Dialogue
             open={open}
@@ -22,7 +22,7 @@ export const ConfirmToken = ({
             primaryButtonText="Close"
             title="New token created"
         >
-            <div className={commonStyles.contentSpacingYLarge}>
+            <div className={themeStyles.contentSpacingYLarge}>
                 <Typography variant="body1">
                     Your new token has been created successfully.
                 </Typography>

@@ -36,7 +36,7 @@ interface IUsersListProps {
 }
 
 const UsersList = ({ search }: IUsersListProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { users, roles, refetch, loading } = useUsers();
     const { setToastData, setToastApiError } = useToast();
     const {

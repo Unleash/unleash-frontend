@@ -47,7 +47,7 @@ const UserForm: React.FC<IUserForm> = ({
     clearErrors,
     mode,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { roles } = useUsers();
     const { bootstrap } = useUiBootstrap();
 

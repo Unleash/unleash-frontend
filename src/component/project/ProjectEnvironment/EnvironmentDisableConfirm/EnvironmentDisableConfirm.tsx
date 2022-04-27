@@ -22,7 +22,7 @@ const EnvironmentDisableConfirm = ({
     confirmName,
     setConfirmName,
 }: IEnvironmentDisableConfirmProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
         setConfirmName(e.currentTarget.value);

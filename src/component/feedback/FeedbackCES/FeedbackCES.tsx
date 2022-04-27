@@ -14,7 +14,7 @@ export interface IFeedbackCESProps {
 
 export const FeedbackCES = ({ state }: IFeedbackCESProps) => {
     const { hideFeedbackCES } = useContext(feedbackCESContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const closeButton = (
         <button className={styles.close} onClick={hideFeedbackCES}>

@@ -20,7 +20,7 @@ export const ApplicationUpdate = ({ application }: IApplicationUpdateProps) => {
     const [localUrl, setLocalUrl] = useState(url || '');
     const [localDescription, setLocalDescription] = useState(description || '');
     const { setToastData, setToastApiError } = useToast();
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     const onChange = async (
         field: string,
@@ -43,7 +43,7 @@ export const ApplicationUpdate = ({ application }: IApplicationUpdateProps) => {
 
     return (
         <Grid container style={{ marginTop: '1rem' }}>
-            <Grid item sm={12} xs={12} className={commonStyles.contentSpacingY}>
+            <Grid item sm={12} xs={12} className={themeStyles.contentSpacingY}>
                 <Grid item>
                     <GeneralSelect
                         name="iconSelect"

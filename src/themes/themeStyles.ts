@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useThemeStyles = makeStyles(theme => ({
+export const useThemeStyles = makeStyles()(theme => ({
     contentSpacingY: {
         '& > *': {
             marginTop: '0.5rem !important',

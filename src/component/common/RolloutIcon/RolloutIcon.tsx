@@ -8,7 +8,7 @@ interface IRolloutIconProps {
 }
 
 const RolloutIcon = ({ className }: IRolloutIconProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.container}>
             <Remove

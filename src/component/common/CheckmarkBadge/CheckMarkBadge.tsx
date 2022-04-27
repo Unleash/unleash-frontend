@@ -8,7 +8,7 @@ interface ICheckMarkBadgeProps {
 }
 
 const CheckMarkBadge = ({ type, className }: ICheckMarkBadgeProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={classnames(styles.badge, className)}>
             {type === 'error' ? (

@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     scoreInput: {
         display: 'flex',
         gap: '1rem',
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
         width: '8rem',
         whiteSpace: 'nowrap',
         color: theme.palette.grey[600],
-        '&:first-child': {
+        '&:first-of-type': {
             textAlign: 'right',
         },
         [theme.breakpoints.down('sm')]: {

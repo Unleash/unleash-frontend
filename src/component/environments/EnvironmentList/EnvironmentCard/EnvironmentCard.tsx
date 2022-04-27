@@ -8,7 +8,7 @@ interface IEnvironmentProps {
 }
 
 const EnvironmentCard = ({ name, type }: IEnvironmentProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.container}>
             <div className={styles.header}>

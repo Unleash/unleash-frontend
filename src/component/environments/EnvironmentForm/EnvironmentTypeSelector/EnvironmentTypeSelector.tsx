@@ -16,7 +16,7 @@ const EnvironmentTypeSelector = ({
     onChange,
     value,
 }: IEnvironmentTypeSelectorProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <FormControl component="fieldset">
             <RadioGroup

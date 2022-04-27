@@ -9,8 +9,8 @@ import { IToast } from 'interfaces/toast';
 
 const ToastRenderer = () => {
     const { toastData, setToast } = useContext(UIContext);
-    const commonStyles = useThemeStyles();
-    const styles = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
+    const { classes: styles } = useStyles();
 
     const hide = () => {
         setToast((prev: IToast) => ({ ...prev, show: false }));
@@ -32,9 +32,9 @@ const ToastRenderer = () => {
         <Portal>
             <AnimateOnMount
                 mounted={Boolean(toastData?.show)}
-                start={commonStyles.fadeInBottomStartWithoutFixed}
-                enter={commonStyles.fadeInBottomEnter}
-                leave={commonStyles.fadeInBottomLeave}
+                start={themeStyles.fadeInBottomStartWithoutFixed}
+                enter={themeStyles.fadeInBottomEnter}
+                leave={themeStyles.fadeInBottomLeave}
                 container={styles.toastWrapper}
             >
                 <Toast {...toastData} />

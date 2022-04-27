@@ -15,7 +15,7 @@ export const FeatureMetricsChips = ({
     value,
     setValue,
 }: IFeatureMetricsChipsProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onClick = (value: string) => () => {
         if (values.has(value)) {

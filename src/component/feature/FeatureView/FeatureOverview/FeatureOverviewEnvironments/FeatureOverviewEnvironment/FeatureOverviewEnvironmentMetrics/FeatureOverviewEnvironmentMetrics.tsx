@@ -11,7 +11,7 @@ interface IFeatureOverviewEnvironmentMetrics {
 const FeatureOverviewEnvironmentMetrics = ({
     environmentMetric,
 }: IFeatureOverviewEnvironmentMetrics) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     if (!environmentMetric) return null;
 

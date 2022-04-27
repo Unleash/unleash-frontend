@@ -56,7 +56,7 @@ export const StrategyParameter = ({
     setParams,
     errors,
 }: IStrategyParameterProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onTypeChange = (type: string) => {
         set({ type });

@@ -26,7 +26,7 @@ interface IDefaultTag {
 
 const AddTagDialog = ({ open, setOpen }: IAddTagDialogProps) => {
     const DEFAULT_TAG: IDefaultTag = { type: 'simple', value: '' };
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureId } = useParams<IFeatureViewParams>();
     const { addTagToFeature, loading } = useFeatureApi();
     const { refetch } = useTags(featureId);

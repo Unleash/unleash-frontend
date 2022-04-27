@@ -10,7 +10,7 @@ import useResetPassword from 'hooks/api/getters/useResetPassword/useResetPasswor
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
 
 const ResetPassword = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { token, loading, setLoading, invalidToken } = useResetPassword();
     const ref = useLoading(loading);
 

@@ -41,7 +41,7 @@ const PasswordChecker = ({
     callback,
     style = {},
 }: IPasswordCheckerProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [casingError, setCasingError] = useState(true);
     const [numberError, setNumberError] = useState(true);
     const [symbolError, setSymbolError] = useState(true);

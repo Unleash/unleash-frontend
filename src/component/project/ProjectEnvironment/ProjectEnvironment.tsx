@@ -39,13 +39,13 @@ const ProjectEnvironmentList = ({
     const { project, refetch: refetchProject } = useProject(projectId);
     const { removeEnvironmentFromProject, addEnvironmentToProject } =
         useProjectApi();
-    const commonStyles = useThemeStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     // local state
     const [selectedEnv, setSelectedEnv] = useState<IProjectEnvironment>();
     const [confirmName, setConfirmName] = useState('');
     const ref = useLoading(loading);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         const envs = environments.map(e => ({
@@ -130,7 +130,7 @@ const ProjectEnvironmentList = ({
     };
 
     const genLabel = (env: IProjectEnvironment) => (
-        <div className={commonStyles.flexRow}>
+        <div className={themeStyles.flexRow}>
             <code>
                 <StringTruncator
                     text={env.name}

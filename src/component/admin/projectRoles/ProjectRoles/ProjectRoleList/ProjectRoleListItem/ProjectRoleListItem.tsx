@@ -28,7 +28,7 @@ const RoleListItem = ({
     setDelDialog,
 }: IRoleListItemProps) => {
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <>

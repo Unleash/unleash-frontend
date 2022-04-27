@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     headerContainer: {
         padding: '1.8rem 2rem',
         borderBottom: `1px solid ${theme.palette.grey[100]}`,

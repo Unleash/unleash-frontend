@@ -1,4 +1,4 @@
-import { Theme, SimplePaletteColorOptions } from '@mui/material';
+import { SimplePaletteColorOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
     interface CustomTheme {
@@ -46,8 +46,4 @@ declare module '@mui/material/styles' {
 
     interface Palette extends CustomPalette {}
     interface PaletteOptions extends CustomPalette {}
-}
-
-declare module '@mui/styles/defaultTheme' {
-    interface DefaultTheme extends Theme {}
 }

@@ -36,7 +36,7 @@ export const StrategyForm: React.FC<IStrategyFormProps> = ({
     mode,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const updateParameter = (index: number, updated: object) => {
         let item = { ...params[index] };
         params[index] = Object.assign({}, item, updated);

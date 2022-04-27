@@ -26,7 +26,7 @@ export const ConstraintAccordionViewHeader = ({
     onDelete,
     singleValue,
 }: IConstraintAccordionViewHeaderProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { locationSettings } = useLocationSettings();
     const smallScreen = useMediaQuery(`(max-width:${790}px)`);
 

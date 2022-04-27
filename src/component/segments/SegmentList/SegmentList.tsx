@@ -36,7 +36,7 @@ export const SegmentsList = () => {
     const [delDialog, setDelDialog] = useState(false);
     const { setToastData, setToastApiError } = useToast();
 
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const onDeleteSegment = async () => {
         if (!currentSegment?.id) return;

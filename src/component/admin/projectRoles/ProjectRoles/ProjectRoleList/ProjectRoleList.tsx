@@ -24,7 +24,7 @@ const ROOTROLE = 'root';
 const ProjectRoleList = () => {
     const { hasAccess } = useContext(AccessContext);
     const { roles } = useProjectRoles();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const paginationFilter = (role: IRole) => role?.type !== ROOTROLE;
 

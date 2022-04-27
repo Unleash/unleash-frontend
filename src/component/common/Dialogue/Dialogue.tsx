@@ -40,7 +40,7 @@ export const Dialogue: React.FC<IDialogue> = ({
     formId,
     permissionButton,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const handleClick = formId
         ? (e: React.SyntheticEvent) => {
               e.preventDefault();

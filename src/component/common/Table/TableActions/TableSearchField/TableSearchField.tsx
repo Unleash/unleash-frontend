@@ -19,7 +19,7 @@ export const TableSearchField = ({
     placeholder,
     onBlur,
 }: ITableSearchFieldProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const placeholderText = placeholder ?? 'Search...';
 
     return (

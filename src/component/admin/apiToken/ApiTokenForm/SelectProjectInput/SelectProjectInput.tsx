@@ -43,7 +43,7 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
     error,
     onFocus,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [projects, setProjects] = useState<string[]>(
         typeof defaultValue === 'string' ? [defaultValue] : defaultValue
     );

@@ -6,7 +6,7 @@ interface IDividerTextProps {
 }
 
 const DividerText = ({ text, ...rest }: IDividerTextProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div className={styles.container} {...rest}>

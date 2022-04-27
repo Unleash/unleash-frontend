@@ -24,7 +24,7 @@ const FeatureSettingsProjectConfirm = ({
 }: IFeatureSettingsProjectConfirm) => {
     const { project } = useProject(projectId);
     const [incompatibleEnvs, setIncompatibleEnvs] = useState([]);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         calculateCompatability();

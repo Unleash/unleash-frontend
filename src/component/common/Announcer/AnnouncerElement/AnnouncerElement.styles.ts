@@ -1,6 +1,6 @@
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles()({
     container: {
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',

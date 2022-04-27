@@ -33,8 +33,8 @@ const FormTemplate: React.FC<ICreateProps> = ({
     formatApiCode,
 }) => {
     const { setToastData } = useToast();
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const smallScreen = useMediaQuery(`(max-width:${1099}px)`);
 
     const copyCommand = () => {
@@ -64,7 +64,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
             <ConditionallyRender
                 condition={smallScreen}
                 show={
-                    <div className={commonStyles.relative}>
+                    <div className={themeStyles.relative}>
                         <MobileGuidance
                             description={description}
                             documentationLink={documentationLink}
@@ -121,7 +121,7 @@ const MobileGuidance = ({
     documentationLinkLabel,
 }: IMobileGuidance) => {
     const [open, setOpen] = useState(false);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <>
@@ -160,7 +160,7 @@ const Guidance: React.FC<IGuidanceProps> = ({
     documentationLink,
     documentationLinkLabel = 'Learn more',
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <aside className={styles.sidebar}>

@@ -45,7 +45,7 @@ export const ContextForm: React.FC<IContextForm> = ({
     setErrors,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [value, setValue] = useState('');
     const [valueDesc, setValueDesc] = useState('');
     const [valueFocused, setValueFocused] = useState(false);

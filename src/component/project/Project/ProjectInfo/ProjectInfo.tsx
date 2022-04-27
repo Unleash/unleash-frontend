@@ -31,8 +31,8 @@ const ProjectInfo = ({
     health,
     description,
 }: IProjectInfoProps) => {
-    const commonStyles = useThemeStyles();
-    const styles = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
+    const { classes: styles } = useStyles();
     const { uiConfig } = useUiConfig();
 
     let link = `/admin/users`;
@@ -138,8 +138,8 @@ const ProjectInfo = ({
                     <Link
                         data-loading
                         className={classnames(
-                            commonStyles.flexRow,
-                            commonStyles.justifyCenter,
+                            themeStyles.flexRow,
+                            themeStyles.justifyCenter,
                             styles.infoLink
                         )}
                         to={`/projects/${id}/health`}
@@ -167,8 +167,8 @@ const ProjectInfo = ({
                     <Link
                         data-loading
                         className={classnames(
-                            commonStyles.flexRow,
-                            commonStyles.justifyCenter,
+                            themeStyles.flexRow,
+                            themeStyles.justifyCenter,
                             styles.infoLink
                         )}
                         to={link}

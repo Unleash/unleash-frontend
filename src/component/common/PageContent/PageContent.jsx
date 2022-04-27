@@ -14,7 +14,7 @@ const PageContent = ({
     bodyClass = '',
     ...rest
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const headerClasses = classnames(styles.headerContainer, {
         [styles.paddingDisabled]: disablePadding,

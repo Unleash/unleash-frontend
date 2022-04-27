@@ -83,7 +83,7 @@ const FeatureToggleListNew = ({
     loading,
     projectId,
 }: IFeatureToggleListNewProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { setAnnouncement } = useContext(AnnouncerContext);
     const [sortOpt, setSortOpt] = useFeatureToggLeProjectSort();
     const [sortedFeatures, setSortedFeatures] = useState(

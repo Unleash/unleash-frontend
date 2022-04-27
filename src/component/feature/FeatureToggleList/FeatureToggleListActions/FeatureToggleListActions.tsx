@@ -30,7 +30,7 @@ export const FeatureToggleListActions: VFC<IFeatureToggleListActionsProps> = ({
     setSort,
     loading = false,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { uiConfig } = useUiConfig();
     const ref = useLoading(loading);
 

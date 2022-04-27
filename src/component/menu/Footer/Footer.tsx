@@ -8,7 +8,7 @@ import { useStyles } from './Footer.styles';
 import { FooterTitle } from './FooterTitle';
 
 export const Footer: VFC = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { uiConfig } = useUiConfig();
 
     return (

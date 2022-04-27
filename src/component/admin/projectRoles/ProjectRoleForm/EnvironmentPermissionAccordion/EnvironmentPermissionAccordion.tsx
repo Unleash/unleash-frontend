@@ -34,7 +34,7 @@ const EnvironmentPermissionAccordion = ({
 }: IEnvironmentPermissionAccordionProps) => {
     const [permissionMap, setPermissionMap] = useState<PermissionMap>({});
     const [permissionCount, setPermissionCount] = useState(0);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         const permissionMap = environment?.permissions?.reduce(

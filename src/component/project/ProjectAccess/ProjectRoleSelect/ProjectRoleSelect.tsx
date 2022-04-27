@@ -28,7 +28,7 @@ export const ProjectRoleSelect: React.FC<IProjectRoleSelect> = ({
     placeholder,
     children,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <FormControl variant="outlined" size="small">
             <InputLabel

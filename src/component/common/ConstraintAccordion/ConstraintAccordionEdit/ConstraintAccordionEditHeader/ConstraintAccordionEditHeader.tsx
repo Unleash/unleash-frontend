@@ -36,7 +36,7 @@ export const ConstraintAccordionEditHeader = ({
     setOperator,
     action,
 }: IConstraintAccordionViewHeader) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { context } = useUnleashContext();
     const { contextName, operator } = localConstraint;
 

@@ -11,7 +11,7 @@ import { IToast } from 'interfaces/toast';
 const Toast = ({ title, text, type, confetti }: IToast) => {
     const { setToast } = useContext(UIContext);
 
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const confettiColors = ['#d13447', '#ffbf00', '#263672'];
     const confettiAmount = 200;
 

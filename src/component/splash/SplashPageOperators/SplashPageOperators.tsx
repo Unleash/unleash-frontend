@@ -6,7 +6,7 @@ import { OperatorUpgradeAlert } from 'component/common/OperatorUpgradeAlert/Oper
 
 export const SplashPageOperators = () => {
     const { push } = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <section className={styles.container}>

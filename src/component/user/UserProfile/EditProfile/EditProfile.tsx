@@ -27,8 +27,8 @@ const EditProfile = ({
     setEditingProfile,
     setUpdatedPassword,
 }: IEditProfileProps) => {
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
     const [loading, setLoading] = useState(false);
     const [validPassword, setValidPassword] = useState(false);
     const [error, setError] = useState('');
@@ -103,10 +103,7 @@ const EditProfile = ({
                 }
             />
             <form
-                className={classnames(
-                    styles.form,
-                    commonStyles.contentSpacingY
-                )}
+                className={classnames(styles.form, themeStyles.contentSpacingY)}
             >
                 <PasswordChecker
                     password={password}

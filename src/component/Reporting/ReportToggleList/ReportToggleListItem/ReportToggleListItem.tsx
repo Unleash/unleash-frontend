@@ -41,7 +41,7 @@ export const ReportToggleListItem = memo<IReportToggleListItemProps>(
         bulkActionsOn,
         setFeatures,
     }) => {
-        const styles = useStyles();
+        const { classes: styles } = useStyles();
         const nameMatches = (feature: { name: string }) =>
             feature.name === name;
 

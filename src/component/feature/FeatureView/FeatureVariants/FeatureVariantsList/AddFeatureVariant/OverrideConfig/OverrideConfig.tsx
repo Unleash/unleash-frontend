@@ -21,8 +21,8 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
     overrides,
     overridesDispatch,
 }) => {
-    const styles = useStyles();
-    const commonStyles = useThemeStyles();
+    const { classes: styles } = useStyles();
+    const { classes: themeStyles } = useThemeStyles();
 
     const { context } = useUnleashContext();
     const contextNames = context.map(({ name }) => ({
@@ -77,7 +77,7 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
                                 value={override.contextName}
                                 options={contextNames}
                                 classes={{
-                                    root: classnames(commonStyles.fullWidth),
+                                    root: classnames(themeStyles.fullWidth),
                                 }}
                                 onChange={(value: string) => {
                                     overridesDispatch({
