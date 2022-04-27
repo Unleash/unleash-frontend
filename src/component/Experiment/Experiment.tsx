@@ -23,7 +23,11 @@ export const Experiment: VFC<IExperimentProps> = () => {
             data={features}
             dataKey="name"
             columns={[
-                { field: 'name', label: 'Feature toggle name' },
+                {
+                    field: 'name',
+                    label: 'Feature toggle name',
+                    sort: ({ name: a }, { name: b }) => sortPreset(a, b),
+                },
                 { field: 'lastSeenAt', label: 'Seen', render: TimeAgoCell },
                 { field: 'createdAt', label: 'Created on', render: 'date' },
                 { field: 'project', label: 'Project ID' },
