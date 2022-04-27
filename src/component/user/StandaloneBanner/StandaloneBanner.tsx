@@ -16,12 +16,7 @@ const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
     const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
-        <Gradient
-            from={theme.palette.primary.main}
-            // @ts-expect-error
-            to={theme.palette.login.gradient.bottom}
-            className={styles.gradient}
-        >
+        <Gradient from={theme.palette.primary.main} to="#173341">
             <div className={styles.container}>
                 <Typography variant="h1" className={styles.title}>
                     {title}

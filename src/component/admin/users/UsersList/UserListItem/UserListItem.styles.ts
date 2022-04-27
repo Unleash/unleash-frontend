@@ -1,18 +1,19 @@
 import makeStyles from '@mui/styles/makeStyles';
+import { unleashGrey } from 'themes/themeColors';
 
 export const useStyles = makeStyles(theme => ({
     tableRow: {
         '& > td': {
             padding: '4px 16px',
-            borderColor: theme.v2.palette.grey[30],
+            borderColor: unleashGrey[300],
         },
         '&:hover': {
-            backgroundColor: theme.v2.palette.grey[10],
+            backgroundColor: unleashGrey[100],
         },
     },
     tableCellHeader: {
         '& > th': {
-            backgroundColor: theme.v2.palette.grey[20],
+            backgroundColor: unleashGrey[200],
             fontWeight: 'normal',
             border: 0,
             '&:first-child': {

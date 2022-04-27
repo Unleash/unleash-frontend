@@ -1,11 +1,11 @@
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { INVALID_TOKEN_BUTTON } from 'utils/testIds';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import classnames from 'classnames';
 
 const InvalidToken = () => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     return (
         <div
             className={classnames(

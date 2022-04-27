@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Alert } from '@mui/material';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import UserInviteLink from './UserInviteLink/UserInviteLink';
 
@@ -15,7 +15,7 @@ const ConfirmUserLink = ({
     closeConfirm,
     inviteLink,
 }: IConfirmUserLink) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     return (
         <Dialogue
             open={open}

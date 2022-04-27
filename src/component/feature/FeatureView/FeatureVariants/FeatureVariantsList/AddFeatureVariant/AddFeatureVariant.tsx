@@ -9,7 +9,7 @@ import {
 import { weightTypes } from './enums';
 import { OverrideConfig } from './OverrideConfig/OverrideConfig';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { modalStyles, trim } from 'component/common/util';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
@@ -61,7 +61,7 @@ export const AddVariant = ({
     const [payload, setPayload] = useState(EMPTY_PAYLOAD);
     const [overrides, overridesDispatch] = useOverrides([]);
     const [error, setError] = useState<Record<string, string>>({});
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { feature } = useFeature(projectId, featureId);
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);

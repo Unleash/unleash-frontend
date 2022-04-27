@@ -10,8 +10,7 @@ export const useStyles = makeStyles(theme => ({
     },
     headerContainer: { display: 'flex', padding: '0.5rem' },
     divider: {
-        // @ts-expect-error
-        backgroundColor: theme.palette.borders?.main,
+        backgroundColor: theme.palette.grey[100],
         height: '1px',
         width: '100%',
     },

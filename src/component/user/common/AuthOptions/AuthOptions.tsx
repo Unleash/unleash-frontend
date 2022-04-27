@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import classnames from 'classnames';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { ReactComponent as GoogleSvg } from 'assets/icons/google.svg';
 import LockRounded from '@mui/icons-material/LockRounded';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -12,7 +12,7 @@ interface IAuthOptionProps {
 }
 
 const AuthOptions = ({ options }: IAuthOptionProps) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     return (
         <>
             {options?.map(o => (

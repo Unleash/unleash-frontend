@@ -5,7 +5,7 @@ import { trim } from 'component/common/util';
 import { modalStyles } from 'component/admin/users/util';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PasswordChecker from 'component/user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import PasswordMatcher from 'component/user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Alert } from '@mui/material';
@@ -27,7 +27,7 @@ const ChangePassword = ({
     const [data, setData] = useState({});
     const [error, setError] = useState<Record<string, string>>({});
     const [validPassword, setValidPassword] = useState(false);
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     // @ts-expect-error
     const updateField = e => {

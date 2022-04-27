@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { Grid, TextField } from '@mui/material';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import icons from 'component/application/iconNames';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import useApplicationsApi from 'hooks/api/actions/useApplicationsApi/useApplicationsApi';
@@ -20,7 +20,7 @@ export const ApplicationUpdate = ({ application }: IApplicationUpdateProps) => {
     const [localUrl, setLocalUrl] = useState(url || '');
     const [localDescription, setLocalDescription] = useState(description || '');
     const { setToastData, setToastApiError } = useToast();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     const onChange = async (
         field: string,

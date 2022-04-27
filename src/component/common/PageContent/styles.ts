@@ -2,14 +2,14 @@ import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     headerContainer: {
-        padding: theme.padding.pageContent.header,
-        borderBottom: theme.borders.default,
+        padding: '1.8rem 2rem',
+        borderBottom: `1px solid ${theme.palette.grey[100]}`,
         [theme.breakpoints.down('md')]: {
             padding: '1.5rem 1rem',
         },
     },
     bodyContainer: {
-        padding: theme.padding.pageContent.body,
+        padding: '2rem',
         [theme.breakpoints.down('md')]: {
             padding: '1rem',
         },

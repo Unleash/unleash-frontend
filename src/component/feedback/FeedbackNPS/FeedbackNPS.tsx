@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from 'assets/icons/logoPlain.svg';
 import { useStyles } from 'component/feedback/FeedbackNPS/FeedbackNPS.styles';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import UIContext from 'contexts/UIContext';
 import {
     PNPS_FEEDBACK_ID,
@@ -25,7 +25,7 @@ export const FeedbackNPS = ({ openUrl }: IFeedbackNPSProps) => {
     const { feedback } = useAuthFeedback();
     const [answeredNotNow, setAnsweredNotNow] = useState(false);
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const feedbackId = PNPS_FEEDBACK_ID;
 
     const onConfirm = async () => {

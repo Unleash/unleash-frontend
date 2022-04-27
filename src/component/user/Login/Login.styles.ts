@@ -26,12 +26,6 @@ export const useStyles = makeStyles(theme => ({
             minHeight: 'auto',
         },
     },
-    gradient: {
-        // @ts-expect-error
-        background: `linear-gradient(${theme.palette.login.gradient.top}, ${theme.palette.login.gradient.bottom})`,
-        // @ts-expect-error
-        color: theme.palette.login.main,
-    },
     title: {
         fontSize: theme.fontSizes.mainHeader,
         marginBottom: '1rem',

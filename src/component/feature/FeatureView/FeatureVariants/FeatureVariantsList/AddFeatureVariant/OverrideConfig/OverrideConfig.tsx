@@ -5,7 +5,7 @@ import { Delete } from '@mui/icons-material';
 import { useStyles } from './OverrideConfig.styles';
 import { Autocomplete } from '@mui/material';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { InputListField } from 'component/common/InputListField/InputListField';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -22,7 +22,7 @@ export const OverrideConfig: VFC<IOverrideConfigProps> = ({
     overridesDispatch,
 }) => {
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     const { context } = useUnleashContext();
     const contextNames = context.map(({ name }) => ({

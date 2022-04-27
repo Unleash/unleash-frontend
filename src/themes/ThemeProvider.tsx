@@ -1,25 +1,19 @@
 import React, { FC } from 'react';
 import {
     CssBaseline,
-    ThemeProvider,
-    Theme,
+    ThemeProvider as MuiThemeProvider,
     StyledEngineProvider,
 } from '@mui/material';
 import StylesProvider from '@mui/styles/StylesProvider';
-import mainTheme from './mainTheme';
+import mainTheme from 'themes/theme';
 
-declare module '@mui/styles/defaultTheme' {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}
-
-export const MainThemeProvider: FC = ({ children }) => (
+export const ThemeProvider: FC = ({ children }) => (
     <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={mainTheme}>
+        <MuiThemeProvider theme={mainTheme}>
             <StylesProvider injectFirst>
                 <CssBaseline />
                 {children}
             </StylesProvider>
-        </ThemeProvider>
+        </MuiThemeProvider>
     </StyledEngineProvider>
 );

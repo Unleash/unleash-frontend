@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { UserToken } from './UserToken/UserToken';
 
@@ -14,7 +14,7 @@ export const ConfirmToken = ({
     closeConfirm,
     token,
 }: IConfirmUserLink) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     return (
         <Dialogue
             open={open}

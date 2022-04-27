@@ -4,7 +4,7 @@ import { FeatureMetricsStatsRaw } from '../FeatureMetricsStats/FeatureMetricsSta
 import { FeatureMetricsChart } from '../FeatureMetricsChart/FeatureMetricsChart';
 import { FeatureMetricsEmpty } from '../FeatureMetricsEmpty/FeatureMetricsEmpty';
 import { Box } from '@mui/material';
-import theme from 'themes/mainTheme';
+import theme from 'themes/theme';
 
 interface IFeatureMetricsContentProps {
     metrics: IFeatureMetricsRaw[];

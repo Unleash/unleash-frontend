@@ -1,4 +1,5 @@
 import makeStyles from '@mui/styles/makeStyles';
+import { unleashGrey } from 'themes/themeColors';
 
 export const useStyles = makeStyles(theme => ({
     fieldWidth: {
@@ -52,7 +53,7 @@ export const useStyles = makeStyles(theme => ({
     },
     verticalSeparator: {
         height: '100%',
-        backgroundColor: theme.v2.palette.grey[50],
+        backgroundColor: unleashGrey[500],
         width: '1px',
         display: 'inline-block',
         marginLeft: '16px',

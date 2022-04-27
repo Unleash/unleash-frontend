@@ -4,7 +4,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import classnames from 'classnames';
 import { Edit, ExpandMore } from '@mui/icons-material';
 
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
@@ -31,7 +31,7 @@ const ProjectInfo = ({
     health,
     description,
 }: IProjectInfoProps) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const styles = useStyles();
     const { uiConfig } = useUiConfig();
 

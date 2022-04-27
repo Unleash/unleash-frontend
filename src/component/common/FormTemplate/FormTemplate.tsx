@@ -10,7 +10,7 @@ import useToast from 'hooks/useToast';
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { ReactComponent as MobileGuidanceBG } from 'assets/img/mobileGuidanceBg.svg';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 
 interface ICreateProps {
     title: string;
@@ -34,7 +34,7 @@ const FormTemplate: React.FC<ICreateProps> = ({
 }) => {
     const { setToastData } = useToast();
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const smallScreen = useMediaQuery(`(max-width:${1099}px)`);
 
     const copyCommand = () => {

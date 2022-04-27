@@ -20,8 +20,7 @@ export const useStyles = makeStyles(theme => ({
         flexShrink: 0,
     },
     listItemSvg: {
-        // @ts-expect-error
-        fill: theme.palette.icons.lightGrey,
+        fill: theme.palette.grey[300],
     },
     listItemLink: {
         marginLeft: '0.25rem',

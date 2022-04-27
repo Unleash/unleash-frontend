@@ -1,6 +1,6 @@
 import { Portal } from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import UIContext from 'contexts/UIContext';
 import { useStyles } from './ToastRenderer.styles';
 import AnimateOnMount from '../AnimateOnMount/AnimateOnMount';
@@ -9,7 +9,7 @@ import { IToast } from 'interfaces/toast';
 
 const ToastRenderer = () => {
     const { toastData, setToast } = useContext(UIContext);
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const styles = useStyles();
 
     const hide = () => {

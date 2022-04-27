@@ -10,9 +10,8 @@ export const useStyles = makeStyles(theme => ({
     wing: {
         width: '80px',
         height: '3px',
-        // @ts-expect-error
         backgroundColor: theme.palette.division.main,
-        borderRadius: theme.borders.radius.main,
+        borderRadius: theme.borderRadius.main,
     },
     text: {
         textAlign: 'center',

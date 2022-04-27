@@ -10,7 +10,6 @@ export const useStyles = makeStyles(theme => ({
     search: {
         display: 'flex',
         alignItems: 'center',
-        // @ts-expect-error
         backgroundColor: theme.palette.searchField.main,
         borderRadius: '25px',
         padding: '0.25rem 0.5rem',

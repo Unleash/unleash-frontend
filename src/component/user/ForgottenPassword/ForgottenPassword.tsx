@@ -3,7 +3,7 @@ import { AlertTitle, Alert } from '@mui/material';
 import classnames from 'classnames';
 import { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import useLoading from 'hooks/useLoading';
 import { FORGOTTEN_PASSWORD_FIELD } from 'utils/testIds';
 import { formatApiPath } from 'utils/formatPath';
@@ -17,7 +17,7 @@ const ForgottenPassword = () => {
     const [attempted, setAttempted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [attemptedEmail, setAttemptedEmail] = useState('');
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const styles = useStyles();
     const ref = useLoading(loading);
 

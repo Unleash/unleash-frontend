@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Button, TextField } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useHistory } from 'react-router';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { useStyles } from './PasswordAuth.styles';
 import useQueryParams from 'hooks/useQueryParams';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
@@ -26,7 +26,7 @@ interface IPasswordAuthProps {
 }
 
 const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const styles = useStyles();
     const history = useHistory();
     const { refetchUser } = useAuthUser();

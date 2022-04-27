@@ -5,7 +5,7 @@ import { REMOVE_USER_ERROR } from 'hooks/api/actions/useAdminUsersApi/useAdminUs
 import { Alert } from '@mui/material';
 import useLoading from 'hooks/useLoading';
 import { Avatar, Typography } from '@mui/material';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { IUser } from 'interfaces/user';
 
 interface IDeleteUserProps {
@@ -26,7 +26,7 @@ const DeleteUser = ({
     userApiErrors,
 }: IDeleteUserProps) => {
     const ref = useLoading(userLoading);
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     return (
         <Dialogue

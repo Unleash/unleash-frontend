@@ -1,7 +1,6 @@
-import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 import renderer from 'react-test-renderer';
 import { FeedbackCESForm } from './FeedbackCESForm';
-import mainTheme from 'themes/mainTheme';
+import { ThemeProvider } from 'themes/ThemeProvider';
 
 test('FeedbackCESForm', () => {
     const onClose = () => {
@@ -9,14 +8,12 @@ test('FeedbackCESForm', () => {
     };
 
     const tree = renderer.create(
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={mainTheme}>
-                <FeedbackCESForm
-                    onClose={onClose}
-                    state={{ title: 'a', text: 'b', path: '/c' }}
-                />
-            </ThemeProvider>
-        </StyledEngineProvider>
+        <ThemeProvider>
+            <FeedbackCESForm
+                onClose={onClose}
+                state={{ title: 'a', text: 'b', path: '/c' }}
+            />
+        </ThemeProvider>
     );
 
     expect(tree).toMatchSnapshot();

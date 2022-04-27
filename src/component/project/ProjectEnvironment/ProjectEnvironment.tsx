@@ -21,7 +21,7 @@ import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch
 import { IProjectEnvironment } from 'interfaces/environments';
 import { getEnabledEnvs } from './helpers';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 
 interface IProjectEnvironmentListProps {
     projectId: string;
@@ -39,7 +39,7 @@ const ProjectEnvironmentList = ({
     const { project, refetch: refetchProject } = useProject(projectId);
     const { removeEnvironmentFromProject, addEnvironmentToProject } =
         useProjectApi();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     // local state
     const [selectedEnv, setSelectedEnv] = useState<IProjectEnvironment>();

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Avatar, Button, ClickAwayListener } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useStyles } from 'component/user/UserProfile/UserProfile.styles';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import UserProfileContent from './UserProfileContent/UserProfileContent';
 import { IUser } from 'interfaces/user';
 import { ILocationSettings } from 'hooks/useLocationSettings';
@@ -27,7 +27,7 @@ const UserProfile = ({
     const [currentLocale, setCurrentLocale] = useState<string>();
 
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
 
     const [possibleLocales, setPossibleLocales] = useState([
         'en-US',

@@ -12,7 +12,7 @@ import { ReactComponent as UnleashLogo } from 'assets/img/logoDarkWithText.svg';
 
 import { DrawerMenu } from './DrawerMenu/DrawerMenu';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { IPermission } from 'interfaces/user';
 import { NavigationMenu } from './NavigationMenu/NavigationMenu';
@@ -30,7 +30,7 @@ const Header: VFC = () => {
 
     const [admin, setAdmin] = useState(false);
     const { permissions } = useAuthPermissions();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const {
         uiConfig: { links, name, flags },
     } = useUiConfig();

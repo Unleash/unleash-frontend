@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from './EditProfile.styles';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import PasswordChecker from 'component/user/common/ResetPasswordForm/PasswordChecker/PasswordChecker';
 import PasswordMatcher from 'component/user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
 import { Alert } from '@mui/material';
@@ -28,7 +28,7 @@ const EditProfile = ({
     setUpdatedPassword,
 }: IEditProfileProps) => {
     const styles = useStyles();
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const [loading, setLoading] = useState(false);
     const [validPassword, setValidPassword] = useState(false);
     const [error, setError] = useState('');

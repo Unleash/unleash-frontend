@@ -2,15 +2,12 @@ import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     blue: {
-        // @ts-expect-error
-        color: theme.palette.code.edited,
+        color: theme.code.edited,
     },
     negative: {
-        // @ts-expect-error
-        color: theme.palette.code.diffSub,
+        color: theme.code.diffSub,
     },
     positive: {
-        // @ts-expect-error
-        color: theme.palette.code.diffAdd,
+        color: theme.code.diffAdd,
     },
 }));

@@ -2,7 +2,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
     container: {
-        borderRadius: theme.borders.radius.main,
+        borderRadius: theme.borderRadius.main,
         border: `1px solid ${theme.palette.grey[300]}`,
         '& + &': {
             marginTop: '1rem',

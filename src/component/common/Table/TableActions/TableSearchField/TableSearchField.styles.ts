@@ -20,7 +20,7 @@ export const useStyles = makeStyles(theme => ({
         },
         '&.search-container:focus-within': {
             borderColor: theme.palette.primary.light,
-            boxShadow: theme.v2.boxShadows.primary,
+            boxShadow: theme.boxShadows.main,
         },
     },
     searchIcon: {

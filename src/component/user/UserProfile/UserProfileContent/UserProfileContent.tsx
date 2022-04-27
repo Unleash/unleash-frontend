@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import classnames from 'classnames';
 import { useStyles } from 'component/user/UserProfile/UserProfileContent/UserProfileContent.styles';
-import { useCommonStyles } from 'themes/commonStyles';
+import { useThemeStyles } from 'themes/themeStyles';
 import { Alert } from '@mui/material';
 import EditProfile from '../EditProfile/EditProfile';
 import legacyStyles from '../../user.module.scss';
@@ -42,7 +42,7 @@ const UserProfileContent = ({
     setCurrentLocale,
     setLocationSettings,
 }: IUserProfileContentProps) => {
-    const commonStyles = useCommonStyles();
+    const commonStyles = useThemeStyles();
     const { uiConfig } = useUiConfig();
     const [updatedPassword, setUpdatedPassword] = useState(false);
     const [editingProfile, setEditingProfile] = useState(false);
