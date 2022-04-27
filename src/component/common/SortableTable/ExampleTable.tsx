@@ -47,39 +47,31 @@ export const ExampleTable = () => {
         setData
     );
 
-    const renderHeaders = () => {
-        return headerData.map((header: any) => {
-            return (
-                <TableCellSortable
-                    key={header.name}
-                    name={header.name}
-                    sort={sortMetaData.type}
-                    setSort={header.onClick}
-                >
-                    {header.name}
-                </TableCellSortable>
-            );
-        });
-    };
-
-    const renderBody = () => {
-        return filteredData.map((data: any) => {
-            return (
-                <TableRow key={objectId(data)}>
-                    <TableCell>{data.type}</TableCell>
-                    <TableCell>{data.merchant}</TableCell>
-                </TableRow>
-            );
-        });
-    };
-
     return (
         <Box
             style={{ background: '#fff', borderRadius: '5px', padding: '1rem' }}
         >
             <Table>
-                <TableHeader>{renderHeaders()}</TableHeader>
-                <TableBody>{renderBody()}</TableBody>
+                <TableHeader>
+                    {headerData.map((header: any) => (
+                        <TableCellSortable
+                            key={header.name}
+                            name={header.name}
+                            sort={sortMetaData.type}
+                            setSort={header.onClick}
+                        >
+                            {header.name}
+                        </TableCellSortable>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                    {filteredData.map((data: any) => (
+                        <TableRow key={objectId(data)}>
+                            <TableCell>{data.type}</TableCell>
+                            <TableCell>{data.merchant}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
             </Table>
         </Box>
     );

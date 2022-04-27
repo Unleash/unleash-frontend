@@ -67,6 +67,7 @@ export const EnhancedTableHead = ({
                     return (
                         <TableCell
                             align={column.align}
+                            key={column.field}
                             // className={classnames(
                             //     styles.hideXS,
                             //     styles.firstColumnSM
