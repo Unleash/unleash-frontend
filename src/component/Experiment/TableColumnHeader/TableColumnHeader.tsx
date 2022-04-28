@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { TableCell, Typography } from '@material-ui/core';
+import { Box, TableCell, Typography } from '@material-ui/core';
 import classnames from 'classnames';
 import {
     UnfoldMoreOutlined,
@@ -7,13 +7,13 @@ import {
     KeyboardArrowUp,
 } from '@material-ui/icons';
 import ConditionallyRender from 'component/common/ConditionallyRender';
-import { useStyles } from 'component/common/Table/TableCellSortable/TableCellSortable.styles';
+import { useStyles } from './TableColumnHeader.styles';
 import { AnnouncerContext } from 'component/common/Announcer/AnnouncerContext/AnnouncerContext';
 
 interface ITableColumnHeaderProps {
+    children: string;
     className?: string;
     isSortable?: boolean;
-    field: string;
     sortOrder?: 'asc' | 'desc';
     onSort?: () => void;
 }
@@ -22,7 +22,6 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
     children,
     className,
     isSortable,
-    field,
     sortOrder,
     onSort,
 }) => {
@@ -39,8 +38,7 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
         if (onSort) {
             onSort();
             setAnnouncement(
-                // TODO: improve ARIA label
-                `Sorted table by ${field}, ${
+                `Sorted table by ${children}, ${
                     sortOrder === 'desc' ? 'ascending' : 'descending'
                 }`
             );
@@ -52,38 +50,71 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
             aria-sort={ariaSort}
             className={classnames(
                 className,
-                isSortable && styles.tableCellHeaderSortable,
-                isSortable && 'sorted'
+                styles.tableCell,
+                isSortable && styles.tableSortableCell
             )}
-            onClick={onSortClick}
         >
             <ConditionallyRender
                 condition={Boolean(isSortable)}
                 show={
-                    <>
-                        <Typography
-                            className={classnames(
-                                sortOrder && styles.sortButton
-                            )}
-                            component="span"
-                        >
+                    <button
+                        aria-label={`Sort by ${children}`}
+                        onClick={onSortClick}
+                        className={styles.sortButton}
+                    >
+                        <Box className={styles.cellPadding}>
+                            <Typography
+                                component="span"
+                                variant="body2"
+                                className={classnames(
+                                    Boolean(sortOrder) && styles.activeSortLabel
+                                )}
+                            >
+                                {children}
+                            </Typography>
+
+                            <ConditionallyRender
+                                condition={Boolean(sortOrder)}
+                                show={
+                                    <ConditionallyRender
+                                        condition={sortOrder === 'asc'}
+                                        show={
+                                            <Box
+                                                component="span"
+                                                className={styles.icon}
+                                            >
+                                                <KeyboardArrowUp fontSize="inherit" />
+                                            </Box>
+                                        }
+                                        elseShow={
+                                            <Box
+                                                component="span"
+                                                className={styles.icon}
+                                            >
+                                                <KeyboardArrowDown fontSize="inherit" />
+                                            </Box>
+                                        }
+                                    />
+                                }
+                                elseShow={
+                                    <Box
+                                        component="span"
+                                        className={styles.icon}
+                                    >
+                                        <UnfoldMoreOutlined fontSize="inherit" />
+                                    </Box>
+                                }
+                            />
+                        </Box>
+                    </button>
+                }
+                elseShow={
+                    <Box className={styles.cellPadding}>
+                        <Typography variant="body2" component="span">
                             {children}
                         </Typography>
-
-                        <ConditionallyRender
-                            condition={Boolean(sortOrder)}
-                            show={
-                                <ConditionallyRender
-                                    condition={sortOrder === 'asc'}
-                                    show={<KeyboardArrowUp />}
-                                    elseShow={<KeyboardArrowDown />}
-                                />
-                            }
-                            elseShow={<UnfoldMoreOutlined />}
-                        />
-                    </>
+                    </Box>
                 }
-                elseShow={children}
             />
         </TableCell>
     );

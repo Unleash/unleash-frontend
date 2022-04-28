@@ -47,7 +47,6 @@ describe('useSortableHeaders', () => {
 
         expect(result.current.headerProps).toEqual({
             name: {
-                field: 'name',
                 isSortable: true,
                 sortOrder: 'asc',
                 onSort: expect.any(Function),
@@ -79,12 +78,10 @@ describe('useSortableHeaders', () => {
         expect(result.current.sort).toBeDefined();
         expect(result.current.headerProps).toEqual({
             name: {
-                field: 'name',
                 isSortable: true,
                 onSort: expect.any(Function),
             },
             age: {
-                field: 'age',
                 isSortable: true,
                 sortOrder: 'desc',
                 onSort: expect.any(Function),
@@ -96,13 +93,11 @@ describe('useSortableHeaders', () => {
         });
         expect(result.current.headerProps).toEqual({
             name: {
-                field: 'name',
                 isSortable: true,
                 sortOrder: 'desc',
                 onSort: expect.any(Function),
             },
             age: {
-                field: 'age',
                 isSortable: true,
                 onSort: expect.any(Function),
             },
