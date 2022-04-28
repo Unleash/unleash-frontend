@@ -53,12 +53,23 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         data: searchedData,
         onSearch,
     } = useSearch(data, searchOptions);
+
     const { data: sortedData, headerProps: sortableHeaderProps } =
-        useSortableHeaders(searchedData, {
-            name: 'string',
-            createdAt: 'date',
-            project: 'string',
-        });
+        useSortableHeaders(
+            searchedData,
+            {
+                lastSeenAt: 'date',
+                type: 'string',
+                name: 'string',
+                createdAt: 'date',
+                project: 'string',
+                stale: (
+                    { stale: a }: FeatureSchema,
+                    { stale: b }: FeatureSchema
+                ) => (a === b ? 0 : a ? -1 : 1),
+            },
+            { field: 'createdAt', order: 'desc' }
+        );
 
     return (
         <Paper className={styles.container}>
@@ -72,7 +83,6 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                         {columns.map(({ field, header }) => (
                             <TableColumnHeader
                                 key={field}
-                                field={field}
                                 {...sortableHeaderProps[field]}
                             >
                                 {header}

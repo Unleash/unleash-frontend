@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 export const sortPresetFunctions = {
     string: (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0),
     number: (a: number, b: number): number => a - b,
-    date: (a: Date, b: Date): number => a.getTime() - b.getTime(),
+    date: (a: Date, b: Date): number => a?.getTime() - b?.getTime(),
 };
 
 const sort = <T extends Record<string, any>, K extends string>(
