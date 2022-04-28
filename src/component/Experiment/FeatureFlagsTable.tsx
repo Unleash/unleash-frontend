@@ -15,7 +15,7 @@ import { TableHeader } from './TableHeader/TableHeader';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
 import { useSearch } from './EnhancedTable/useSearch';
-import { useSort } from './EnhancedTable/useSort';
+import { useSortableHeaders } from './EnhancedTable/useSortableHeaders';
 import { TableActions } from 'component/common/Table/TableActions/TableActions';
 
 const useStyles = makeStyles(theme => ({
@@ -48,21 +48,17 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         columns: ['name'],
     } as const;
 
-    const sortOptions = {
-        name: 'string',
-        createdAt: 'date',
-    } as const;
-
     const {
         search,
         data: searchedData,
         onSearch,
     } = useSearch(data, searchOptions);
-    const {
-        sort,
-        data: sortedData,
-        onSort,
-    } = useSort(searchedData, sortOptions);
+    const { data: sortedData, headerProps: sortableHeaderProps } =
+        useSortableHeaders(searchedData, {
+            name: 'string',
+            createdAt: 'date',
+            project: 'string',
+        });
 
     return (
         <Paper className={styles.container}>
@@ -77,25 +73,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                             <TableColumnHeader
                                 key={field}
                                 field={field}
-                                isSortable={Object.keys(sortOptions).includes(
-                                    field
-                                )}
-                                sortOrder={
-                                    sort?.field === field
-                                        ? sort?.order
-                                        : undefined
-                                }
-                                onSort={
-                                    Object.keys(sortOptions).includes(field)
-                                        ? () =>
-                                              onSort(
-                                                  field as keyof typeof sortOptions,
-                                                  sort?.order === 'asc'
-                                                      ? 'desc'
-                                                      : 'asc'
-                                              )
-                                        : undefined
-                                }
+                                {...sortableHeaderProps[field]}
                             >
                                 {header}
                             </TableColumnHeader>

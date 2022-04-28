@@ -1,7 +1,7 @@
 import deepClone from 'lodash.clonedeep';
 import { useEffect, useState } from 'react';
 
-const sortPresetFunctions = {
+export const sortPresetFunctions = {
     string: (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0),
     number: (a: number, b: number): number => a - b,
     date: (a: Date, b: Date): number => a.getTime() - b.getTime(),
