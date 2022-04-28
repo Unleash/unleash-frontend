@@ -28,7 +28,6 @@ export const useSortableHeaders = <
                 Object.entries(columns).map(([field]) => [
                     field,
                     {
-                        field,
                         isSortable: true,
                         onSort: () => {
                             onSort(
