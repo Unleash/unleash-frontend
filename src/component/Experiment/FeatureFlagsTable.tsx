@@ -14,8 +14,8 @@ import { TableColumnHeader } from './TableColumnHeader/TableColumnHeader';
 import { TableHeader } from './TableHeader/TableHeader';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
-import { useSearch } from './EnhancedTable/useSearch';
-import { useSortableHeaders } from './EnhancedTable/useSortableHeaders';
+import { useSearch } from './hooks/useSearch';
+import { useSortableHeaders } from './hooks/useSortableHeaders';
 import { TableActions } from 'component/common/Table/TableActions/TableActions';
 
 const useStyles = makeStyles(theme => ({
@@ -59,8 +59,8 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
             searchedData,
             {
                 lastSeenAt: 'date',
-                type: 'string',
-                name: 'string',
+                // type: 'string',
+                // name: 'string',
                 createdAt: 'date',
                 project: 'string',
                 stale: (
