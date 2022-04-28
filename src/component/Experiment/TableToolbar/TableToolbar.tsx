@@ -15,9 +15,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
             paddingTop: '20px', // TODO: theme
             paddingBottom: '20px', // TODO: theme
             borderBottom: `1px solid ${theme.palette.divider}`,
-        },
-        title: {
-            flex: '1 1 100%',
+            justifyContent: 'space-between',
         },
     })
 );
@@ -31,7 +29,7 @@ export const TableToolbar: FC<ITableToolbarProps> = ({ title, children }) => {
 
     return (
         <Toolbar className={styles.root}>
-            <Typography variant="h2" component="h2" className={styles.title}>
+            <Typography variant="h2" component="h2">
                 {title}
             </Typography>
             {children}

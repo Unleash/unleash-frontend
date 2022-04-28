@@ -1,6 +1,7 @@
 import { VFC } from 'react';
 import {
     Box,
+    Link,
     makeStyles,
     Paper,
     Table,
@@ -16,7 +17,8 @@ import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
 import { useSearch } from './hooks/useSearch';
 import { useSortableHeaders } from './hooks/useSortableHeaders';
-import { TableActions } from 'component/common/Table/TableActions/TableActions';
+import { TableActions } from './TableActions/TableActions';
+import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -73,9 +75,20 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
 
     return (
         <Paper className={styles.container}>
-            <TableToolbar title="Feature flags">
-                {/*TODO: Should adapt and refactor to use with our new table logic*/}
-                <TableActions search={search} onSearch={onSearch} />{' '}
+            <TableToolbar title={`Feature toggles (${sortedData.length})`}>
+                <TableActions search={search} onSearch={onSearch}>
+                    <Link
+                        href="/archive"
+                        underline="always"
+                        style={{ marginRight: '24px' }}
+                    >
+                        View archive
+                    </Link>
+                    <CreateFeatureButton
+                        loading={false}
+                        filter={{ query: '', project: 'default' }}
+                    />
+                </TableActions>
             </TableToolbar>
             <Box className={styles.content}>
                 <Table>
