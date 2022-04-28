@@ -9,7 +9,8 @@ import { useStyles } from './styles';
 import { usePageTitle } from 'hooks/usePageTitle';
 
 interface IHeaderTitleProps {
-    title: ReactNode;
+    title: string;
+    titleElement?: ReactNode;
     subtitle?: string;
     variant?: 'inherit' | Variant;
     loading?: boolean;
@@ -19,6 +20,7 @@ interface IHeaderTitleProps {
 
 export const HeaderTitle: VFC<IHeaderTitleProps> = ({
     title,
+    titleElement,
     actions,
     subtitle,
     variant,
@@ -37,7 +39,7 @@ export const HeaderTitle: VFC<IHeaderTitleProps> = ({
                     variant={variant || 'h1'}
                     className={classnames(styles.headerTitle, className)}
                 >
-                    {title}
+                    {titleElement || title}
                 </Typography>
                 {subtitle && <small>{subtitle}</small>}
             </div>

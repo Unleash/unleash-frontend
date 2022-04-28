@@ -93,7 +93,7 @@ export const ApplicationEdit = () => {
         <PageContent
             headerContent={
                 <HeaderTitle
-                    title={
+                    titleElement={
                         <span
                             style={{
                                 display: 'flex',
@@ -106,6 +106,7 @@ export const ApplicationEdit = () => {
                             {appName}
                         </span>
                     }
+                    title={appName}
                     actions={
                         <>
                             <ConditionallyRender
