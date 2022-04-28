@@ -14,21 +14,10 @@ interface IDropdownButtonProps {
 
 export const DropdownButton: VFC<IDropdownButtonProps> = ({
     label,
-    id,
-    title,
     icon,
-    startIcon,
-    style,
     ...rest
 }) => (
-    <Button
-        id={id}
-        title={title}
-        style={style}
-        {...rest}
-        startIcon={startIcon} // TODO: unify
-        endIcon={<Icon>{icon}</Icon>}
-    >
+    <Button {...rest} endIcon={<Icon>{icon}</Icon>}>
         {label}
     </Button>
 );

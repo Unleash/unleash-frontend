@@ -14,7 +14,11 @@ import PasswordField from 'component/common/PasswordField/PasswordField';
 import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import { IAuthEndpointDetailsResponse } from 'hooks/api/getters/useAuth/useAuthEndpoint';
-import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from 'constants/statusCodes';
+import {
+    AuthenticationError,
+    BadRequestError,
+    NotFoundError,
+} from 'utils/apiUtils';
 
 interface IPasswordAuthProps {
     authDetails: IAuthEndpointDetailsResponse;
@@ -62,8 +66,8 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
             history.push(redirect);
         } catch (error: any) {
             if (
-                error?.statusCode === NOT_FOUND ||
-                error?.statusCode === BAD_REQUEST
+                error instanceof NotFoundError ||
+                error instanceof BadRequestError
             ) {
                 setErrors(prev => ({
                     ...prev,
@@ -71,7 +75,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                 }));
                 setPassword('');
                 setUsername('');
-            } else if (error?.statusCode === UNAUTHORIZED) {
+            } else if (error instanceof AuthenticationError) {
                 setErrors({
                     apiError: 'Invalid password and username combination.',
                 });

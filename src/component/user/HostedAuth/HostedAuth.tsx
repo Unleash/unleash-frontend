@@ -13,7 +13,7 @@ import { useAuthApi } from 'hooks/api/actions/useAuthApi/useAuthApi';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import { LOGIN_BUTTON, LOGIN_EMAIL_ID, LOGIN_PASSWORD_ID } from 'utils/testIds';
 import { IAuthEndpointDetailsResponse } from 'hooks/api/getters/useAuth/useAuthEndpoint';
-import { BAD_REQUEST, NOT_FOUND } from 'constants/statusCodes';
+import { BadRequestError, NotFoundError } from 'utils/apiUtils';
 
 interface IHostedAuthProps {
     authDetails: IAuthEndpointDetailsResponse;
@@ -61,8 +61,8 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
             history.push(redirect);
         } catch (error: any) {
             if (
-                error?.statusCode === NOT_FOUND ||
-                error?.statusCode === BAD_REQUEST
+                error instanceof NotFoundError ||
+                error instanceof BadRequestError
             ) {
                 setErrors(prev => ({
                     ...prev,

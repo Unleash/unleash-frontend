@@ -70,7 +70,7 @@ export const CopyFeatureToggle = () => {
 
         try {
             await cloneFeatureToggle(projectId, copyToggleName, {
-                name: newToggleName,
+                name: newToggleName as string,
                 replaceGroupId,
             });
             history.push(getTogglePath(projectId, newToggleName as string));

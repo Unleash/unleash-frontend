@@ -206,7 +206,7 @@ const useFeatureApi = () => {
     const cloneFeatureToggle = async (
         projectId: string,
         featureId: string,
-        payload: { name?: string; replaceGroupId: boolean }
+        payload: { name: string; replaceGroupId: boolean }
     ) => {
         const path = `api/admin/projects/${projectId}/features/${featureId}/clone`;
         const req = createRequest(path, {
