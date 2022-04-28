@@ -19,6 +19,9 @@ import { useSearch } from './hooks/useSearch';
 import { useSortableHeaders } from './hooks/useSortableHeaders';
 import { TableActions } from './TableActions/TableActions';
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
+import { usePagination } from './hooks/usePagination';
+import PaginateUI from 'component/common/PaginateUI/PaginateUI';
+import { Highlighter } from 'component/common/Highlighter/Highlighter';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -47,7 +50,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
     ] as const;
 
     const searchOptions = {
-        columns: ['name'],
+        columns: ['name', 'project'],
     } as const;
 
     const {
@@ -73,9 +76,13 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
             { field: 'createdAt', order: 'desc' }
         );
 
+    // TODO: Just so we don't forget to keep pagination in mind, even though ideally it should be done server-side
+    const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
+        usePagination(sortedData, 50);
+
     return (
         <Paper className={styles.container}>
-            <TableToolbar title={`Feature toggles (${sortedData.length})`}>
+            <TableToolbar title={`Feature toggles (${page.length})`}>
                 <TableActions search={search} onSearch={onSearch}>
                     <Link
                         href="/archive"
@@ -103,7 +110,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {sortedData.map(
+                        {page.map(
                             ({
                                 name,
                                 lastSeenAt,
@@ -126,11 +133,19 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                                     <TableCell>
                                         <FeatureType type={type ?? ''} />
                                     </TableCell>
-                                    <TableCell>{name}</TableCell>
+                                    <TableCell>
+                                        <Highlighter search={search}>
+                                            {name}
+                                        </Highlighter>
+                                    </TableCell>
                                     <TableCell>
                                         {createdAt?.toDateString()}
                                     </TableCell>
-                                    <TableCell>{project}</TableCell>
+                                    <TableCell>
+                                        <Highlighter search={search}>
+                                            {project}
+                                        </Highlighter>
+                                    </TableCell>
                                     <TableCell>
                                         {stale ? 'Stale' : 'Active'}
                                     </TableCell>
@@ -139,6 +154,14 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                         )}
                     </TableBody>
                 </Table>
+                <PaginateUI
+                    pages={pages}
+                    pageIndex={pageIndex}
+                    setPageIndex={setPageIndex}
+                    nextPage={nextPage}
+                    prevPage={prevPage}
+                    style={{ position: 'static' }}
+                />
             </Box>
         </Paper>
     );
