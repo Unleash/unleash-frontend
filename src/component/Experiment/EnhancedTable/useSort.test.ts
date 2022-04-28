@@ -1,5 +1,4 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useEffect, useState } from 'react';
 import { useSort } from './useSort';
 
 const data = [
@@ -15,17 +14,6 @@ describe('useSort', () => {
         const { result } = renderHook(() => useSort(data, { age: 'number' }));
 
         expect(result.current.data).toEqual(data);
-    });
-    it('should', async () => {
-        const { result } = renderHook(() => {
-            const [s, x] = useState(1);
-            useEffect(() => {
-                x(2);
-            }, []);
-            return s;
-        });
-
-        expect(result.current).toEqual(2);
     });
 
     it('should return a sort handler that sorts the data', () => {
