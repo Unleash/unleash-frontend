@@ -52,7 +52,7 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
             aria-sort={ariaSort}
             className={classnames(
                 className,
-                styles.tableCellHeaderSortable,
+                isSortable && styles.tableCellHeaderSortable,
                 isSortable && 'sorted'
             )}
             onClick={onSortClick}

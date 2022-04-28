@@ -14,7 +14,9 @@ import { TableColumnHeader } from './TableColumnHeader/TableColumnHeader';
 import { TableHeader } from './TableHeader/TableHeader';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
+import { useSearch } from './EnhancedTable/useSearch';
 import { useSort } from './EnhancedTable/useSort';
+import { TableActions } from 'component/common/Table/TableActions/TableActions';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -42,16 +44,32 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         { field: 'stale', header: 'Status' },
     ] as const;
 
+    const searchOptions = {
+        columns: ['name'],
+    } as const;
+
     const sortOptions = {
         name: 'string',
         createdAt: 'date',
     } as const;
 
-    const { sort, data: sortedData, onSort } = useSort(data, sortOptions);
+    const {
+        search,
+        data: searchedData,
+        onSearch,
+    } = useSearch(data, searchOptions);
+    const {
+        sort,
+        data: sortedData,
+        onSort,
+    } = useSort(searchedData, sortOptions);
 
     return (
         <Paper className={styles.container}>
-            <TableToolbar title="Feature flags" />
+            <TableToolbar title="Feature flags">
+                {/*TODO: Should adapt and refactor to use with our new table logic*/}
+                <TableActions search={search} onSearch={onSearch} />{' '}
+            </TableToolbar>
             <Box className={styles.content}>
                 <Table>
                     <TableHeader>
