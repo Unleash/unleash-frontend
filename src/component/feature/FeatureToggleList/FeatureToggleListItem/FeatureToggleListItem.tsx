@@ -31,7 +31,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
         const styles = useStyles();
 
         const { projects } = useProjects();
-        const isArchive = !!onRevive;
+        const isArchive = Boolean(onRevive);
 
         const {
             name,
@@ -97,12 +97,12 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                 <small>
                                     <ConditionallyRender
                                         condition={Boolean(createdAt)}
-                                        show={
+                                        show={() => (
                                             <TimeAgo
                                                 date={createdAt}
                                                 live={false}
                                             />
-                                        }
+                                        )}
                                     />
                                 </small>
                                 <div>
@@ -124,12 +124,12 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                 <small>
                                     <ConditionallyRender
                                         condition={Boolean(createdAt)}
-                                        show={
+                                        show={() => (
                                             <TimeAgo
                                                 date={createdAt}
                                                 live={false}
                                             />
-                                        }
+                                        )}
                                     />
                                 </small>
                                 <div>
