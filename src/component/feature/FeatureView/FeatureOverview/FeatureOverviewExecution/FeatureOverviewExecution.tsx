@@ -181,7 +181,7 @@ const FeatureOverviewExecution = ({
                                             text={param.name}
                                         />
                                         <span className={styles.valueSeparator}>
-                                            is set to{' '}
+                                            is set to
                                         </span>
                                         <StringTruncator
                                             maxWidth="300"
@@ -210,9 +210,9 @@ const FeatureOverviewExecution = ({
                                             maxLength={15}
                                             maxWidth="150"
                                             text={param.name}
-                                        />{' '}
+                                        />
                                         <span className={styles.valueSeparator}>
-                                            is set to{' '}
+                                            is set to
                                         </span>
                                         <StringTruncator
                                             maxWidth="300"
