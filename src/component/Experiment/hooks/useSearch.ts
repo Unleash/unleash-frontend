@@ -20,21 +20,14 @@ const search = <T extends Record<string, any>, K extends string>(
         return searchOptions?.searchFunction(data, search);
     }
 
-    try {
-        const searchColumns = searchOptions?.columns ?? Object.keys(data[0]);
-        const regExp = new RegExp(search, 'i');
-        return data.filter(a => {
-            return searchColumns.some(column => {
-                return regExp.test(a[column] ? a[column].toString() : '');
-            });
+    const searchColumns = searchOptions?.columns ?? Object.keys(data[0]);
+    return data.filter(a => {
+        return searchColumns.some(column => {
+            return (a[column] ? a[column].toString() : '')
+                .toLowerCase()
+                .includes(search.toLowerCase());
         });
-    } catch (err) {
-        if (err instanceof SyntaxError) {
-            return data;
-        } else {
-            throw err;
-        }
-    }
+    });
 };
 
 export const useSearch = <T extends Record<string, any>, K extends string>(
