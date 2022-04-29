@@ -9,6 +9,7 @@ import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { FeatureOverviewSegment } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewSegment/FeatureOverviewSegment';
 import { ConstraintAccordionList } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
+import { useStyles } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewExecution/FeatureOverviewExecution.styles';
 
 interface IFeatureOverviewExecutionProps {
     parameters: IParameter;
@@ -22,6 +23,7 @@ const FeatureOverviewExecution = ({
     constraints = [],
     strategy,
 }: IFeatureOverviewExecutionProps) => {
+    const styles = useStyles();
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
 
@@ -172,13 +174,20 @@ const FeatureOverviewExecution = ({
                             key={param.name}
                             show={
                                 <>
-                                    <p>
+                                    <p className={styles.valueContainer}>
                                         <StringTruncator
                                             maxWidth="150"
                                             maxLength={15}
                                             text={param.name}
-                                        />{' '}
-                                        is set to {value}
+                                        />
+                                        <span className={styles.valueSeparator}>
+                                            is set to{' '}
+                                        </span>
+                                        <StringTruncator
+                                            maxWidth="300"
+                                            text={value}
+                                            maxLength={50}
+                                        />
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
@@ -196,13 +205,20 @@ const FeatureOverviewExecution = ({
                             key={param.name}
                             show={
                                 <>
-                                    <p>
+                                    <p className={styles.valueContainer}>
                                         <StringTruncator
                                             maxLength={15}
                                             maxWidth="150"
                                             text={param.name}
                                         />{' '}
-                                        is set to {number}
+                                        <span className={styles.valueSeparator}>
+                                            is set to{' '}
+                                        </span>
+                                        <StringTruncator
+                                            maxWidth="300"
+                                            text={String(number)}
+                                            maxLength={50}
+                                        />
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
