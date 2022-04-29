@@ -288,10 +288,7 @@ describe('feature', () => {
             .children()
             .find('input')
             .should('have.attr', 'disabled');
-        cy.get('[data-testid=VARIANT_WEIGHT_TYPE]')
-            .children()
-            .find('input')
-            .check();
+        cy.get('[data-testid=VARIANT_WEIGHT_CHECK]').find('input').check();
         cy.get('[data-testid=VARIANT_WEIGHT_INPUT]').clear().type('15');
 
         cy.intercept(

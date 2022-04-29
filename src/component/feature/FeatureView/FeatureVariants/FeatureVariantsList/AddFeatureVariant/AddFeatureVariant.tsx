@@ -269,7 +269,7 @@ export const AddVariant = ({
                                                 name="weightType"
                                                 checked={isFixWeight}
                                                 data-testid={
-                                                    'VARIANT_WEIGHT_TYPE'
+                                                    'VARIANT_WEIGHT_CHECK'
                                                 }
                                                 onChange={setVariantWeightType}
                                             />
