@@ -109,7 +109,7 @@ export const routes: IRoute[] = [
     {
         path: '/projects/:projectId/features/:featureId/edit',
         parent: '/projects',
-        title: 'Edit Feature',
+        title: 'Edit feature',
         component: EditFeature,
         type: 'protected',
         menu: {},
@@ -183,7 +183,7 @@ export const routes: IRoute[] = [
     },
     {
         path: '/features',
-        title: 'Feature Toggles',
+        title: 'Feature toggles',
         component: FeatureToggleListContainer,
         type: 'protected',
         menu: { mobile: true },
@@ -227,7 +227,7 @@ export const routes: IRoute[] = [
     },
     {
         path: '/context',
-        title: 'Context Fields',
+        title: 'Context fields',
         component: ContextList,
         type: 'protected',
         flag: C,
@@ -383,7 +383,7 @@ export const routes: IRoute[] = [
     },
     {
         path: '/history',
-        title: 'Event History',
+        title: 'Event log',
         component: EventHistoryPage,
         type: 'protected',
         menu: { adminSettings: true },
@@ -392,7 +392,7 @@ export const routes: IRoute[] = [
     // Archive
     {
         path: '/archive',
-        title: 'Archived Toggles',
+        title: 'Archived toggles',
         component: ArchiveListContainer,
         type: 'protected',
         menu: {},
@@ -458,7 +458,7 @@ export const routes: IRoute[] = [
     {
         path: '/admin/roles',
         parent: '/admin',
-        title: 'Project Roles',
+        title: 'Project roles',
         component: ProjectRoles,
         type: 'protected',
         flag: RE,
@@ -467,7 +467,7 @@ export const routes: IRoute[] = [
     {
         path: '/admin/auth',
         parent: '/admin',
-        title: 'Single Sign-On',
+        title: 'Single sign-on',
         component: AuthSettings,
         type: 'protected',
         menu: { adminSettings: true },
