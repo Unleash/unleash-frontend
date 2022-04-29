@@ -89,7 +89,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
 
     return (
         <Paper className={styles.container}>
-            <TableToolbar title={`Feature toggles (${data.length})`}>
+            <TableToolbar title={`Feature toggles (${page.length})`}>
                 <TableActions search={search} onSearch={onSearch}>
                     <Link
                         component={RouterLink}
