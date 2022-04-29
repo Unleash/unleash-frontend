@@ -165,10 +165,10 @@ const FeatureOverviewExecution = ({
                         </Fragment>
                     );
                 case 'string':
-                    const numValue = strategy.parameters[param.name];
+                    const value = strategy.parameters[param.name];
                     return (
                         <ConditionallyRender
-                            condition={numValue !== undefined}
+                            condition={value !== undefined}
                             key={param.name}
                             show={
                                 <>
@@ -178,7 +178,7 @@ const FeatureOverviewExecution = ({
                                             maxLength={15}
                                             text={param.name}
                                         />{' '}
-                                        is set to {numValue}
+                                        is set to {value}
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
@@ -189,10 +189,10 @@ const FeatureOverviewExecution = ({
                         />
                     );
                 case 'number':
-                    const value = strategy.parameters[param.name];
+                    const number = strategy.parameters[param.name];
                     return (
                         <ConditionallyRender
-                            condition={value}
+                            condition={number !== undefined}
                             key={param.name}
                             show={
                                 <>
@@ -202,7 +202,7 @@ const FeatureOverviewExecution = ({
                                             maxWidth="150"
                                             text={param.name}
                                         />{' '}
-                                        is set to {value}
+                                        is set to {number}
                                     </p>
                                     <ConditionallyRender
                                         condition={notLastItem}
