@@ -14,7 +14,7 @@ import {
     ConstraintAccordionList,
     IConstraintAccordionListRef,
 } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
-import { SegmentFormStep } from '../SegmentForm/SegmentForm';
+import { SegmentFormStep, SegmentFormMode } from '../SegmentForm/SegmentForm';
 import {
     AutocompleteBox,
     IAutocompleteBoxOption,
@@ -25,11 +25,13 @@ import {
 } from 'component/segments/SegmentDocs/SegmentDocs';
 import { useSegmentValuesCount } from 'component/segments/hooks/useSegmentValuesCount';
 import { SEGMENT_VALUES_LIMIT } from 'utils/segmentLimits';
+import AccessContext from 'contexts/AccessContext';
 
 interface ISegmentFormPartTwoProps {
     constraints: IConstraint[];
     setConstraints: React.Dispatch<React.SetStateAction<IConstraint[]>>;
     setCurrentStep: React.Dispatch<React.SetStateAction<SegmentFormStep>>;
+    mode: SegmentFormMode;
 }
 
 export const SegmentFormStepTwo: React.FC<ISegmentFormPartTwoProps> = ({
