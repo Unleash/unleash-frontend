@@ -44,11 +44,13 @@ const filterUsersByQuery = (users: IUser[], filter: IUsersFilter): IUser[] => {
     }
 
     return users.filter(user => {
-        const search = filter.query?.toLowerCase();
-        return filterUserByText(user, search);
+        return filterUserByText(user, filter.query);
     });
 };
 
-const filterUserByText = (user: IUser, search: string = ''): boolean =>
-    (user.name ?? '').toLowerCase().includes(search) ||
-    (user.username ?? user.email ?? '').toLowerCase().includes(search);
+const filterUserByText = (user: IUser, search: string = ''): boolean => {
+    const fieldsToSearch = [user.name ?? '', user.username ?? user.email ?? ''];
+    return fieldsToSearch.some(field =>
+        field.toLowerCase().includes(search.toLowerCase())
+    );
+};
