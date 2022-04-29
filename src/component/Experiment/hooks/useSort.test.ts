@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useSort } from './useSort';
+import { useSort, sortPresetFunctions } from './useSort';
 
 const data = [
     { name: 'Dave', age: 2 },
@@ -8,6 +8,21 @@ const data = [
     { name: 'Bob', age: 2 },
     { name: 'Elijah', age: 1 },
 ];
+
+describe('sortPresetFunctions', () => {
+    describe('string', () => {
+        const sortString = (input: string[]) =>
+            input.sort(sortPresetFunctions['string']);
+
+        it('sorts uppercase and numbers correctly', () => {
+            expect(sortString(['Test', 'alpha', '0123'])).toEqual([
+                '0123',
+                'alpha',
+                'Test',
+            ]);
+        });
+    });
+});
 
 describe('useSort', () => {
     it('should return the same data if default filter is not provided', async () => {

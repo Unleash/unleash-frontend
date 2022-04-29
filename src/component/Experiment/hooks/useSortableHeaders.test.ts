@@ -137,5 +137,30 @@ describe('useSortableHeaders', () => {
             result.current.headerProps.name.onSort();
         });
         expect(result.current.sort).toEqual({ field: 'name', order: 'asc' });
+
+        act(() => {
+            result.current.headerProps.age.onSort();
+        });
+    });
+
+    it('sorts in ascending order by default', () => {
+        const { result } = renderHook(() =>
+            useSortableHeaders(data, { name: true, age: 'number' })
+        );
+
+        act(() => {
+            result.current.headerProps.age.onSort();
+        });
+        expect(result.current.sort).toEqual({ field: 'age', order: 'asc' });
+
+        act(() => {
+            result.current.headerProps.name.onSort();
+        });
+        expect(result.current.sort).toEqual({ field: 'name', order: 'asc' });
+
+        act(() => {
+            result.current.headerProps.age.onSort();
+        });
+        expect(result.current.sort).toEqual({ field: 'age', order: 'asc' });
     });
 });

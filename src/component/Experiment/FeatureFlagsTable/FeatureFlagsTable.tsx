@@ -74,7 +74,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                 stale: (
                     { stale: a }: FeatureSchema,
                     { stale: b }: FeatureSchema
-                ) => (a === b ? 0 : a ? -1 : 1),
+                ) => (a === b ? 0 : a ? 1 : -1),
             },
             { field: 'createdAt', order: 'desc' }
         );

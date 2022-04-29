@@ -32,7 +32,9 @@ export const useSortableHeaders = <
                         onSort: () => {
                             onSort(
                                 field as K,
-                                sort?.order === 'asc' ? 'desc' : 'asc'
+                                sort?.field === field && sort?.order === 'asc'
+                                    ? 'desc'
+                                    : 'asc'
                             );
                         },
                         sortOrder:
