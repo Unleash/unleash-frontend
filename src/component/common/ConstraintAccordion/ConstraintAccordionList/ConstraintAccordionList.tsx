@@ -40,115 +40,101 @@ export const constraintAccordionListId = 'constraintAccordionListId';
 export const ConstraintAccordionList = forwardRef<
     IConstraintAccordionListRef | undefined,
     IConstraintAccordionListProps
->(
-    (
-        {
-            projectId,
-            environmentId,
-            constraints,
-            setConstraints,
-            showCreateButton,
-        },
-        ref
-    ) => {
-        const state = useWeakMap<
-            IConstraint,
-            IConstraintAccordionListItemState
-        >();
-        const { context } = useUnleashContext();
-        const styles = useStyles();
+>(({ projectId, environmentId, constraints, setConstraints, showCreateButton }, ref) => {
+    const state = useWeakMap<IConstraint, IConstraintAccordionListItemState>();
+    const { context } = useUnleashContext();
+    const styles = useStyles();
 
-        const addConstraint =
-            setConstraints &&
-            ((contextName: string) => {
-                const constraint = createEmptyConstraint(contextName);
-                state.set(constraint, { editing: true, new: true });
-                setConstraints(prev => [...prev, constraint]);
-            });
+    const addConstraint =
+        setConstraints &&
+        ((contextName: string) => {
+            const constraint = createEmptyConstraint(contextName);
+            state.set(constraint, { editing: true, new: true });
+            setConstraints(prev => [...prev, constraint]);
+        });
 
-        useImperativeHandle(ref, () => ({
-            addConstraint,
-        }));
+    useImperativeHandle(ref, () => ({
+        addConstraint,
+    }));
 
-        const onAdd =
-            addConstraint &&
-            (() => {
-                addConstraint(context[0].name);
-            });
+    const onAdd =
+        addConstraint &&
+        (() => {
+            addConstraint(context[0].name);
+        });
 
-        const onEdit =
-            setConstraints &&
-            ((constraint: IConstraint) => {
-                state.set(constraint, { editing: true });
-            });
+    const onEdit =
+        setConstraints &&
+        ((constraint: IConstraint) => {
+            state.set(constraint, { editing: true });
+        });
 
-        const onRemove =
-            setConstraints &&
-            ((index: number) => {
-                const constraint = constraints[index];
-                state.set(constraint, {});
-                setConstraints(
-                    produce(draft => {
-                        draft.splice(index, 1);
-                    })
-                );
-            });
-
-        const onSave =
-            setConstraints &&
-            ((index: number, constraint: IConstraint) => {
-                state.set(constraint, {});
-                setConstraints(
-                    produce(draft => {
-                        draft[index] = constraint;
-                    })
-                );
-            });
-
-        const onCancel = (index: number) => {
+    const onRemove =
+        setConstraints &&
+        ((index: number) => {
             const constraint = constraints[index];
-            state.get(constraint)?.new && onRemove?.(index);
             state.set(constraint, {});
-        };
+            setConstraints(
+                produce(draft => {
+                    draft.splice(index, 1);
+                })
+            );
+        });
 
-        if (context.length === 0) {
-            return null;
-        }
+    const onSave =
+        setConstraints &&
+        ((index: number, constraint: IConstraint) => {
+            state.set(constraint, {});
+            setConstraints(
+                produce(draft => {
+                    draft[index] = constraint;
+                })
+            );
+        });
 
-        return (
-            <div className={styles.container} id={constraintAccordionListId}>
-                <ConditionallyRender
-                    condition={Boolean(showCreateButton && setConstraints)}
-                    show={
-                        <PermissionButton
-                            type="button"
-                            onClick={onAdd}
-                            variant="text"
-                            permission={[
-                                UPDATE_FEATURE_STRATEGY,
-                                CREATE_FEATURE_STRATEGY,
-                            ]}
-                            environmentId={environmentId}
-                            projectId={projectId}
-                        >
-                            Add custom constraint
-                        </PermissionButton>
-                    }
-                />
-                {constraints.map((constraint, index) => (
-                    <ConstraintAccordion
-                        key={objectId(constraint)}
-                        environmentId={environmentId}
-                        constraint={constraint}
-                        onEdit={onEdit && onEdit.bind(null, constraint)}
-                        onCancel={onCancel.bind(null, index)}
-                        onDelete={onRemove && onRemove.bind(null, index)}
-                        onSave={onSave && onSave.bind(null, index)}
-                        editing={Boolean(state.get(constraint)?.editing)}
-                        compact
-                    />
-                ))}
-            </div>
-        );
+    const onCancel = (index: number) => {
+        const constraint = constraints[index];
+        state.get(constraint)?.new && onRemove?.(index);
+        state.set(constraint, {});
+    };
+
+    if (context.length === 0) {
+        return null;
     }
-);
+
+    return (
+        <div className={styles.container} id={constraintAccordionListId}>
+            <ConditionallyRender
+                condition={Boolean(showCreateButton && setConstraints)}
+                show={
+                    <PermissionButton
+                        type="button"
+                        onClick={onAdd}
+                        variant="text"
+                        permission={[
+                            UPDATE_FEATURE_STRATEGY,
+                            CREATE_FEATURE_STRATEGY,
+                        ]}
+                        environmentId={environmentId}
+                        projectId={projectId}
+                    >
+                        Add custom constraint
+                    </PermissionButton>
+                }
+            />
+            {constraints.map((constraint, index) => (
+                <ConstraintAccordion
+                    key={objectId(constraint)}
+                    environmentId={environmentId}
+                    constraint={constraint}
+                    onEdit={onEdit && onEdit.bind(null, constraint)}
+                    onCancel={onCancel.bind(null, index)}
+                    onDelete={onRemove && onRemove.bind(null, index)}
+                    onSave={onSave && onSave.bind(null, index)}
+                    editing={Boolean(state.get(constraint)?.editing)}
+                    compact
+                />
+            ))}
+        </div>
+    );
+});
