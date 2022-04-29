@@ -21,7 +21,7 @@ import { useSortableHeaders } from '../hooks/useSortableHeaders';
 import { TableActions } from '../TableActions/TableActions';
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
 import { usePagination } from '../hooks/usePagination';
-import PaginateUI from 'component/common/PaginateUI/PaginateUI';
+import Pagination from '../Pagination/Pagination';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
 import { DateCell } from './DateCell/DateCell';
@@ -59,7 +59,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         data: searchedData,
         onSearch,
     } = useSearch(data, {
-        columns: ['name', 'project'], // TODO: optimize search and add 'description'
+        columns: ['name', 'project', 'description'],
     });
 
     const { data: sortedData, headerProps: sortableHeaderProps } =
@@ -80,8 +80,12 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         );
 
     // TODO: Just so we don't forget to keep pagination in mind, even though ideally it should be done server-side
-    const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
-        usePagination(sortedData, 50);
+    const {
+        data: page,
+        pageCount,
+        pageIndex,
+        onPageChange,
+    } = usePagination(sortedData, 50);
 
     return (
         <Paper className={styles.container}>
@@ -164,13 +168,10 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                         )}
                     </TableBody>
                 </Table>
-                <PaginateUI
-                    pages={pages}
+                <Pagination
+                    pageCount={pageCount}
                     pageIndex={pageIndex}
-                    setPageIndex={setPageIndex}
-                    nextPage={nextPage}
-                    prevPage={prevPage}
-                    style={{ position: 'static' }}
+                    onPageChange={onPageChange}
                 />
             </Box>
         </Paper>

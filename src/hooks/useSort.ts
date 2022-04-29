@@ -22,6 +22,9 @@ import {
 } from 'component/Reporting/constants';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 
+/**
+ * @deprecated
+ */
 const useSort = () => {
     const [sortData, setSortData] = useState({
         sortKey: NAME,
