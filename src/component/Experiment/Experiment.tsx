@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
-import { FeatureFlagsTable } from './FeatureFlagsTable';
+import { FeatureFlagsTable } from './FeatureFlagsTable/FeatureFlagsTable';
 
 interface IExperimentProps {}
 

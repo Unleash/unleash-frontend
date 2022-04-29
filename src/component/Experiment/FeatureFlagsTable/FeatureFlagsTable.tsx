@@ -1,4 +1,5 @@
 import { VFC } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
     Box,
     Link,
@@ -10,18 +11,22 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { FeatureSchema } from 'openapi';
-import { TableToolbar } from './TableToolbar/TableToolbar';
-import { TableColumnHeader } from './TableColumnHeader/TableColumnHeader';
-import { TableHeader } from './TableHeader/TableHeader';
+import { TableToolbar } from '../TableToolbar/TableToolbar';
+import { TableColumnHeader } from '../TableColumnHeader/TableColumnHeader';
+import { TableHeader } from '../TableHeader/TableHeader';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
-import { useSearch } from './hooks/useSearch';
-import { useSortableHeaders } from './hooks/useSortableHeaders';
-import { TableActions } from './TableActions/TableActions';
+import { useSearch } from '../hooks/useSearch';
+import { useSortableHeaders } from '../hooks/useSortableHeaders';
+import { TableActions } from '../TableActions/TableActions';
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
-import { usePagination } from './hooks/usePagination';
+import { usePagination } from '../hooks/usePagination';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
+import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
+import { DateCell } from './DateCell/DateCell';
+import { LinkCell } from './LinkCell/LinkCell';
+import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -49,23 +54,21 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         { field: 'stale', header: 'Status' },
     ] as const;
 
-    const searchOptions = {
-        columns: ['name', 'project'],
-    } as const;
-
     const {
         search,
         data: searchedData,
         onSearch,
-    } = useSearch(data, searchOptions);
+    } = useSearch(data, {
+        columns: ['name', 'project'], // TODO: optimize search and add 'description'
+    });
 
     const { data: sortedData, headerProps: sortableHeaderProps } =
         useSortableHeaders(
             searchedData,
             {
                 lastSeenAt: 'date',
-                // type: 'string',
-                // name: 'string',
+                type: 'string',
+                name: 'string',
                 createdAt: 'date',
                 project: 'string',
                 stale: (
@@ -82,10 +85,11 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
 
     return (
         <Paper className={styles.container}>
-            <TableToolbar title={`Feature toggles (${page.length})`}>
+            <TableToolbar title={`Feature toggles (${data.length})`}>
                 <TableActions search={search} onSearch={onSearch}>
                     <Link
-                        href="/archive"
+                        component={RouterLink}
+                        to="/archive"
                         underline="always"
                         style={{ marginRight: '24px' }}
                     >
@@ -113,6 +117,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                         {page.map(
                             ({
                                 name,
+                                description,
                                 lastSeenAt,
                                 type,
                                 createdAt,
@@ -134,20 +139,25 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                                         <FeatureType type={type ?? ''} />
                                     </TableCell>
                                     <TableCell>
-                                        <Highlighter search={search}>
-                                            {name}
-                                        </Highlighter>
+                                        <FeatureNameCell
+                                            name={name}
+                                            project={project}
+                                            description={description}
+                                            search={search}
+                                        />
                                     </TableCell>
                                     <TableCell>
-                                        {createdAt?.toDateString()}
+                                        <DateCell date={createdAt} />
                                     </TableCell>
                                     <TableCell>
-                                        <Highlighter search={search}>
-                                            {project}
-                                        </Highlighter>
+                                        <LinkCell to={`/project/${project}`}>
+                                            <Highlighter search={search}>
+                                                {project}
+                                            </Highlighter>
+                                        </LinkCell>
                                     </TableCell>
                                     <TableCell>
-                                        {stale ? 'Stale' : 'Active'}
+                                        <FeatureStatusCell stale={stale} />
                                     </TableCell>
                                 </TableRow>
                             )
