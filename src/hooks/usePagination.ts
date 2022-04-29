@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { paginate } from '../utils/paginate';
 
+/**
+ * @deprecated
+ */
 const usePagination = (
     data: any[],
     limit: number,

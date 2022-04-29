@@ -41,6 +41,6 @@ export const useStyles = makeStyles(theme => ({
     icon: {
         fontSize: theme.v2.fontSizes.headerIcon,
         lineHeight: '1',
-        marginLeft: theme.spacing(0.5)
+        marginLeft: theme.spacing(0.5),
     },
 }));

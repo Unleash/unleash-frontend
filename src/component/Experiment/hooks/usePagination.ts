@@ -10,6 +10,7 @@ export const usePagination = <T extends Record<string, any>>(
         () => Math.ceil(data.length / pageSize),
         [data.length, pageSize]
     );
+
     const paginatedData = data.slice(
         pageIndex * pageSize,
         (pageIndex + 1) * pageSize
