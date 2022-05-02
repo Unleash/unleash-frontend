@@ -8,14 +8,14 @@ export const useStyles = makeStyles()(theme => ({
     },
     icon: {
         background: theme.palette.primary.main,
-        height: 56,
+        height: 40,
         display: 'flex',
         alignItems: 'center',
-        width: 56,
+        width: 40,
         justifyContent: 'center',
         paddingLeft: 6,
-        borderTopLeftRadius: 50,
-        borderBottomLeftRadius: 50,
+        borderTopLeftRadius: 40,
+        borderBottomLeftRadius: 40,
         color: '#fff',
     },
     iconDisabled: {
@@ -32,6 +32,9 @@ export const useStyles = makeStyles()(theme => ({
         '& fieldset': {
             borderColor: theme.palette.grey[300],
             borderLeftColor: 'transparent',
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderWidth: 1,
         },
     },
 }));

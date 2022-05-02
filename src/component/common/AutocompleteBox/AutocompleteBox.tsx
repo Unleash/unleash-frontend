@@ -52,6 +52,7 @@ export const AutocompleteBox = ({
                 renderInput={renderInput}
                 getOptionLabel={value => value.label}
                 disabled={disabled}
+                size="small"
                 multiple
             />
         </div>
