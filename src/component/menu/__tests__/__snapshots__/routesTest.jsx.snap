@@ -4,14 +4,6 @@ exports[`returns all baseRoutes 1`] = `
 Array [
   Object {
     "component": [Function],
-    "hidden": false,
-    "menu": Object {},
-    "path": "/test",
-    "title": "Test",
-    "type": "protected",
-  },
-  Object {
-    "component": [Function],
     "menu": Object {},
     "path": "/splash/:splashId",
     "title": "Unleash",

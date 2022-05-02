@@ -54,16 +54,6 @@ import { IRoute } from 'interfaces/route';
 import { Experiment } from 'component/Experiment/Experiment';
 
 export const routes: IRoute[] = [
-    {
-        // FIXME: remove
-        path: '/test',
-        title: 'Test',
-        hidden: false,
-        type: 'protected',
-        component: Experiment,
-        menu: {},
-    },
-
     // Splash
     {
         path: '/splash/:splashId',
