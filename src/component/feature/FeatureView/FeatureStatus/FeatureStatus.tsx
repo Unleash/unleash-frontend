@@ -47,7 +47,7 @@ function getColor(unit?: string): string {
 }
 
 interface IFeatureStatusProps {
-    lastSeenAt?: string;
+    lastSeenAt?: string | Date;
     tooltipPlacement?: TooltipProps['placement'];
 }
 

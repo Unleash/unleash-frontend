@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { List, ListItem } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { IFeatureToggle } from 'interfaces/featureToggle';
 import { IFlags } from 'interfaces/uiConfig';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -17,10 +16,11 @@ import { FeatureToggleListActions } from './FeatureToggleListActions/FeatureTogg
 import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
 import { useCreateFeaturePath } from '../CreateFeatureButton/useCreateFeaturePath';
 import { IFeaturesSort } from 'hooks/useFeaturesSort';
+import { FeatureSchema } from 'openapi';
 import { useStyles } from './styles';
 
 interface IFeatureToggleListProps {
-    features: IFeatureToggle[];
+    features: FeatureSchema[];
     loading?: boolean;
     flags?: IFlags;
     filter: IFeaturesFilter;
@@ -31,7 +31,7 @@ interface IFeatureToggleListProps {
     isArchive?: boolean;
 }
 
-const loadingFeaturesPlaceholder: IFeatureToggle[] = Array(10)
+const loadingFeaturesPlaceholder: FeatureSchema[] = Array(10)
     .fill({
         createdAt: '2021-03-19T09:16:21.329Z',
         description: ' ',

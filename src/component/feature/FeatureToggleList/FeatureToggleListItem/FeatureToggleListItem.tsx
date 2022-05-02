@@ -8,7 +8,6 @@ import { IAccessContext } from 'contexts/AccessContext';
 import StatusChip from 'component/common/StatusChip/StatusChip';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import { IFeatureToggle } from 'interfaces/featureToggle';
 import { IFlags } from 'interfaces/uiConfig';
 import { getTogglePath } from 'utils/routePathHelpers';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
@@ -16,10 +15,12 @@ import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { styles as commonStyles } from 'component/common'; // FIXME: remove
+import { FeatureSchema } from 'openapi';
 import { useStyles } from './styles'; // FIXME: cleanup
+import { C } from 'component/common/flags';
 
 interface IFeatureToggleListItemProps {
-    feature: IFeatureToggle;
+    feature: FeatureSchema;
     onRevive?: (id: string) => void;
     hasAccess: IAccessContext['hasAccess'];
     flags?: IFlags;
@@ -63,9 +64,14 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                 className={classnames(styles.listItem, className)}
             >
                 <span className={styles.listItemMetric}>
-                    <FeatureStatus
-                        lastSeenAt={lastSeenAt}
-                        tooltipPlacement="left"
+                    <ConditionallyRender
+                        condition={Boolean(lastSeenAt)}
+                        show={() => (
+                            <FeatureStatus
+                                lastSeenAt={lastSeenAt as Date}
+                                tooltipPlacement="left"
+                            />
+                        )}
                     />
                 </span>
                 <span
@@ -74,7 +80,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                         commonStyles.hideLt600
                     )}
                 >
-                    <FeatureType type={type} />
+                    <FeatureType type={type as string} />
                 </span>
                 <span className={classnames(styles.listItemLink)}>
                     <ConditionallyRender
@@ -99,7 +105,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                         condition={Boolean(createdAt)}
                                         show={() => (
                                             <TimeAgo
-                                                date={createdAt}
+                                                date={createdAt as Date}
                                                 live={false}
                                             />
                                         )}
@@ -126,7 +132,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                         condition={Boolean(createdAt)}
                                         show={() => (
                                             <TimeAgo
-                                                date={createdAt}
+                                                date={createdAt as Date}
                                                 live={false}
                                             />
                                         )}
