@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { Typography, useTheme, useMediaQuery } from '@material-ui/core';
+import { Typography, useTheme, useMediaQuery } from '@mui/material';
 import Gradient from 'component/common/Gradient/Gradient';
 import { ReactComponent as Logo } from 'assets/icons/logoWhiteBg.svg';
 import { ReactComponent as LogoWithText } from 'assets/img/logoWhiteTransparentHorizontal.svg';
 import { useStyles } from './StandaloneBanner.styles';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IStandaloneBannerProps {
     title: string;
@@ -12,14 +12,13 @@ interface IStandaloneBannerProps {
 
 const StandaloneBanner: FC<IStandaloneBannerProps> = ({ title, children }) => {
     const theme = useTheme();
-    const styles = useStyles();
-    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const { classes: styles } = useStyles();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <Gradient
             from={theme.palette.primary.main}
-            // @ts-expect-error
-            to={theme.palette.login.gradient.bottom}
+            to="#173341"
             className={styles.gradient}
         >
             <div className={styles.container}>

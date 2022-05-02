@@ -3,8 +3,8 @@ import {
     AccordionDetails,
     AccordionSummary,
     Tooltip,
-} from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+} from '@mui/material';
+import { ExpandMore } from '@mui/icons-material';
 import React from 'react';
 import { useParams } from 'react-router';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
@@ -16,7 +16,7 @@ import {
     getFeatureStrategyIcon,
     formatStrategyName,
 } from 'utils/strategyNames';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import DisabledIndicator from 'component/common/DisabledIndicator/DisabledIndicator';
 import EnvironmentIcon from 'component/common/EnvironmentIcon/EnvironmentIcon';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
@@ -40,7 +40,7 @@ interface IFeatureOverviewEnvironmentProps {
 const FeatureOverviewEnvironment = ({
     env,
 }: IFeatureOverviewEnvironmentProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const { metrics } = useFeatureMetrics(projectId, featureId);
     const { feature } = useFeature(projectId, featureId);

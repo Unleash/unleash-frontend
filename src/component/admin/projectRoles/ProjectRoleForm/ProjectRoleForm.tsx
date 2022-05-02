@@ -1,15 +1,10 @@
 import Input from 'component/common/Input/Input';
 import EnvironmentPermissionAccordion from './EnvironmentPermissionAccordion/EnvironmentPermissionAccordion';
-import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    TextField,
-} from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 
 import { useStyles } from './ProjectRoleForm.styles';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import React, { ReactNode } from 'react';
 import { IPermission } from 'interfaces/project';
 import {
@@ -54,7 +49,7 @@ const ProjectRoleForm: React.FC<IProjectRoleForm> = ({
     clearErrors,
     getRoleKey,
 }: IProjectRoleForm) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { permissions } = useProjectRolePermissions({
         revalidateIfStale: false,
         revalidateOnReconnect: false,

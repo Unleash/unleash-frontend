@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { useParams, useHistory } from 'react-router-dom';
 import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import PageContent from 'component/common/PageContent/PageContent';
@@ -6,10 +6,10 @@ import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { Edit } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { Edit } from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const StrategyView = () => {
     const { name } = useParams<{ name: string }>();

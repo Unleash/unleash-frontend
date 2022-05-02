@@ -1,15 +1,9 @@
-import {
-    Chip,
-    IconButton,
-    TableCell,
-    TableRow,
-    Tooltip,
-} from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+import { Chip, IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 
 import styles from '../variants.module.scss';
 import { IFeatureVariant } from 'interfaces/featureToggle';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { weightTypes } from '../AddFeatureVariant/enums';
 
 interface IFeatureVariantListItem {
@@ -64,6 +58,7 @@ const FeatureVariantListItem = ({
                                 <IconButton
                                     data-testid={'VARIANT_EDIT_BUTTON'}
                                     onClick={() => editVariant(variant.name)}
+                                    size="large"
                                 >
                                     <Edit />
                                 </IconButton>
@@ -78,6 +73,7 @@ const FeatureVariantListItem = ({
                                             name: variant.name,
                                         });
                                     }}
+                                    size="large"
                                 >
                                     <Delete />
                                 </IconButton>

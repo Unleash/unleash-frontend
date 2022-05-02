@@ -1,8 +1,13 @@
-import { IconButton, InputAdornment, TextField } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import React, { useState } from 'react';
+import {
+    IconButton,
+    InputAdornment,
+    TextField,
+    TextFieldProps,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState, VFC } from 'react';
 
-const PasswordField = ({ ...rest }) => {
+const PasswordField: VFC<TextFieldProps> = ({ ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {
@@ -32,6 +37,7 @@ const PasswordField = ({ ...rest }) => {
                         <IconButton
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
+                            size="large"
                         >
                             <IconComponent titleAccess={iconTitle} />
                         </IconButton>

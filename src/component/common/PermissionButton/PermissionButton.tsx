@@ -1,8 +1,8 @@
-import { Button, ButtonProps } from '@material-ui/core';
-import { Lock } from '@material-ui/icons';
+import { Button, ButtonProps } from '@mui/material';
+import { Lock } from '@mui/icons-material';
 import AccessContext from 'contexts/AccessContext';
 import React, { useContext } from 'react';
-import ConditionallyRender from '../ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { TooltipResolver } from 'component/common/TooltipResolver/TooltipResolver';
 import { formatAccessText } from 'utils/formatAccessText';
 import { useId } from 'hooks/useId';

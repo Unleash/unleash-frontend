@@ -1,6 +1,6 @@
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import React from 'react';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './EnvironmentDisableConfirm.styles';
 import { IProjectEnvironment } from 'interfaces/environments';
@@ -22,7 +22,7 @@ const EnvironmentDisableConfirm = ({
     confirmName,
     setConfirmName,
 }: IEnvironmentDisableConfirmProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
         setConfirmName(e.currentTarget.value);

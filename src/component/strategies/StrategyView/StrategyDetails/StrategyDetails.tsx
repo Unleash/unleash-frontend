@@ -5,10 +5,10 @@ import {
     ListItemAvatar,
     ListItemText,
     Tooltip,
-} from '@material-ui/core';
-import { Add, RadioButtonChecked } from '@material-ui/icons';
+} from '@mui/material';
+import { Add, RadioButtonChecked } from '@mui/icons-material';
 import { AppsLinkList } from 'component/common';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import styles from '../../strategies.module.scss';
 import { TogglesLinkList } from 'component/strategies/TogglesLinkList/TogglesLinkList';
 import { IParameter, IStrategy } from 'interfaces/strategy';

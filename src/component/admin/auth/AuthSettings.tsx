@@ -1,8 +1,8 @@
 import React from 'react';
 import AdminMenu from '../menu/AdminMenu';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import PageContent from 'component/common/PageContent/PageContent';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { OidcAuth } from './OidcAuth/OidcAuth';
 import { SamlAuth } from './SamlAuth/SamlAuth';

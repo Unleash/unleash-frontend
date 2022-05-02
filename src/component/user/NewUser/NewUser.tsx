@@ -1,11 +1,11 @@
 import useLoading from 'hooks/useLoading';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@mui/material';
 import StandaloneBanner from '../StandaloneBanner/StandaloneBanner';
 import ResetPasswordDetails from '../common/ResetPasswordDetails/ResetPasswordDetails';
 import { useStyles } from './NewUser.styles';
 import useResetPassword from 'hooks/api/getters/useResetPassword/useResetPassword';
 import StandaloneLayout from '../common/StandaloneLayout/StandaloneLayout';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import InvalidToken from '../common/InvalidToken/InvalidToken';
 import AuthOptions from '../common/AuthOptions/AuthOptions';
 import DividerText from 'component/common/DividerText/DividerText';
@@ -16,7 +16,7 @@ export const NewUser = () => {
     const { token, data, loading, setLoading, invalidToken } =
         useResetPassword();
     const ref = useLoading(loading);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div ref={ref}>

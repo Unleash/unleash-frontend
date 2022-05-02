@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
-import { CircularProgress } from '@material-ui/core';
-import { Warning } from '@material-ui/icons';
-import { AppsLinkList, styles as commonStyles } from 'component/common';
+import { CircularProgress } from '@mui/material';
+import { Warning } from '@mui/icons-material';
+import { AppsLinkList, styles as themeStyles } from 'component/common';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import PageContent from 'component/common/PageContent/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const ApplicationList = () => {
     const { applications, loading } = useApplications();
@@ -44,11 +44,11 @@ export const ApplicationList = () => {
 
     return (
         <>
-            <div className={commonStyles.searchField}>
+            <div className={themeStyles.searchField}>
                 <SearchField initialValue={filter} updateValue={setFilter} />
             </div>
             <PageContent headerContent={<HeaderTitle title="Applications" />}>
-                <div className={commonStyles.fullwidth}>
+                <div className={themeStyles.fullwidth}>
                     <ConditionallyRender
                         condition={filteredApplications.length > 0}
                         show={<AppsLinkList apps={filteredApplications} />}

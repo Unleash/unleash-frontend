@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
     IconButton,
     List,
@@ -8,7 +8,7 @@ import {
     ListItemAvatar,
     ListItemText,
     Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
     Add,
     Delete,
@@ -16,18 +16,18 @@ import {
     Extension,
     Visibility,
     VisibilityOff,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import {
     CREATE_STRATEGY,
     DELETE_STRATEGY,
     UPDATE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PageContent from 'component/common/PageContent/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { useStyles } from './StrategiesList.styles';
 import AccessContext from 'contexts/AccessContext';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { ADD_NEW_STRATEGY_ID } from 'utils/testIds';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
@@ -46,7 +46,7 @@ interface IDialogueMetaData {
 
 export const StrategiesList = () => {
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const smallScreen = useMediaQuery('(max-width:700px)');
     const { hasAccess } = useContext(AccessContext);
     const [dialogueMetaData, setDialogueMetaData] = useState<IDialogueMetaData>(
@@ -178,7 +178,7 @@ export const StrategiesList = () => {
             show={
                 <Tooltip title="You cannot deprecate the default strategy">
                     <div>
-                        <IconButton disabled>
+                        <IconButton disabled size="large">
                             <Visibility titleAccess="Deprecate strategy" />
                         </IconButton>
                     </div>
@@ -215,7 +215,7 @@ export const StrategiesList = () => {
             elseShow={
                 <Tooltip title="You cannot delete a built-in strategy">
                     <div>
-                        <IconButton disabled>
+                        <IconButton disabled size="large">
                             <Edit titleAccess="Edit strategy" />
                         </IconButton>
                     </div>
@@ -239,7 +239,7 @@ export const StrategiesList = () => {
             elseShow={
                 <Tooltip title="You cannot delete a built-in strategy">
                     <div>
-                        <IconButton disabled>
+                        <IconButton disabled size="large">
                             <Delete titleAccess="Delete strategy" />
                         </IconButton>
                     </div>

@@ -1,10 +1,10 @@
-import { List, ListItem } from '@material-ui/core';
-import { Check, Error, Cloud } from '@material-ui/icons';
+import { List, ListItem } from '@mui/material';
+import { Check, Error, Cloud } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import { IFeatureEnvironment, IFeatureToggle } from 'interfaces/featureToggle';
-import ConditionallyRender from 'component/common/ConditionallyRender';
-import Dialogue from 'component/common/Dialogue';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { useStyles } from './FeatureSettingsProjectConfirm.styles';
 
 interface IFeatureSettingsProjectConfirm {
@@ -24,7 +24,7 @@ const FeatureSettingsProjectConfirm = ({
 }: IFeatureSettingsProjectConfirm) => {
     const { project } = useProject(projectId);
     const [incompatibleEnvs, setIncompatibleEnvs] = useState([]);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     useEffect(() => {
         calculateCompatability();
@@ -75,7 +75,6 @@ const FeatureSettingsProjectConfirm = ({
                 </Dialogue>
             }
             elseShow={
-                // @ts-expect-error
                 <Dialogue
                     open={open}
                     onClose={onClose}

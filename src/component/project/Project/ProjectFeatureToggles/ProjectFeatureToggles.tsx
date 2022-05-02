@@ -1,14 +1,14 @@
 import { useContext, useMemo, useState } from 'react';
-import { IconButton } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import { IconButton } from '@mui/material';
+import { Add } from '@mui/icons-material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { useParams } from 'react-router';
 import { Link, useHistory } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PROJECTFILTERING } from 'component/common/flags';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import FeatureToggleListNew from 'component/feature/FeatureToggleListNew/FeatureToggleListNew';
@@ -28,7 +28,7 @@ export const ProjectFeatureToggles = ({
     features,
     loading,
 }: IProjectFeatureTogglesProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { id } = useParams<{ id: string }>();
     const history = useHistory();
     const { hasAccess } = useContext(AccessContext);
@@ -65,6 +65,7 @@ export const ProjectFeatureToggles = ({
                                     <IconButton
                                         className={styles.iconButton}
                                         data-loading
+                                        size="large"
                                     >
                                         <FilterListIcon
                                             className={styles.icon}

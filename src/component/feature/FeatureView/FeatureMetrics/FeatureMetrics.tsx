@@ -8,13 +8,13 @@ import {
     FeatureMetricsHours,
 } from './FeatureMetricsHours/FeatureMetricsHours';
 import { IFeatureMetricsRaw } from 'interfaces/featureToggle';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { FeatureMetricsContent } from './FeatureMetricsContent/FeatureMetricsContent';
 import { useQueryStringNumberState } from 'hooks/useQueryStringNumberState';
 import { useQueryStringState } from 'hooks/useQueryStringState';
 import { FeatureMetricsChips } from './FeatureMetricsChips/FeatureMetricsChips';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureMetrics.styles';
 import { usePageTitle } from 'hooks/usePageTitle';
 
@@ -22,7 +22,7 @@ export const FeatureMetrics = () => {
     const { projectId, featureId } = useParams<IFeatureViewParams>();
     const environments = useFeatureMetricsEnvironments(projectId, featureId);
     const applications = useFeatureMetricsApplications(featureId);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     usePageTitle('Metrics');
 
     const [hoursBack = FEATURE_METRIC_HOURS_BACK_MAX, setHoursBack] =

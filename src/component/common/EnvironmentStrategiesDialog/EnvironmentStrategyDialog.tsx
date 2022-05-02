@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { CREATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
-import Dialogue from '../Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PermissionButton from '../PermissionButton/PermissionButton';
 import { useStyles } from './EnvironmentStrategyDialog.styles';
 import { formatCreateStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyCreate/FeatureStrategyCreate';
@@ -19,7 +19,7 @@ const EnvironmentStrategyDialog = ({
     projectId,
     onClose,
 }: IEnvironmentStrategyDialogProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
 
     const createStrategyPath = formatCreateStrategyPath(
@@ -35,7 +35,6 @@ const EnvironmentStrategyDialog = ({
     };
 
     return (
-        // @ts-expect-error
         <Dialogue
             open={open}
             maxWidth="sm"

@@ -5,9 +5,9 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-} from '@material-ui/core';
+} from '@mui/material';
 
-import ConditionallyRender from '../ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './Dialogue.styles';
 import { DIALOGUE_CONFIRM_ID } from 'utils/testIds';
 
@@ -15,7 +15,7 @@ interface IDialogue {
     primaryButtonText?: string;
     secondaryButtonText?: string;
     open: boolean;
-    onClick: (e: React.SyntheticEvent) => void;
+    onClick?: (e: React.SyntheticEvent) => void;
     onClose?: (e: React.SyntheticEvent) => void;
     style?: object;
     title: string;
@@ -26,7 +26,7 @@ interface IDialogue {
     permissionButton?: JSX.Element;
 }
 
-const Dialogue: React.FC<IDialogue> = ({
+export const Dialogue: React.FC<IDialogue> = ({
     children,
     open,
     onClick,
@@ -40,11 +40,13 @@ const Dialogue: React.FC<IDialogue> = ({
     formId,
     permissionButton,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const handleClick = formId
         ? (e: React.SyntheticEvent) => {
               e.preventDefault();
-              onClick(e);
+              if (onClick) {
+                  onClick(e);
+              }
           }
         : onClick;
     return (
@@ -103,5 +105,3 @@ const Dialogue: React.FC<IDialogue> = ({
         </Dialog>
     );
 };
-
-export default Dialogue;

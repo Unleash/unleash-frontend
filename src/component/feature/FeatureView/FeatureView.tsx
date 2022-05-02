@@ -1,6 +1,6 @@
-import { Tab, Tabs, useMediaQuery } from '@material-ui/core';
+import { Tab, Tabs, useMediaQuery } from '@mui/material';
 import React, { useState } from 'react';
-import { Archive, FileCopy, Label, WatchLater } from '@material-ui/icons';
+import { Archive, FileCopy, Label, WatchLater } from '@mui/icons-material';
 import { Link, Route, useHistory, useParams, Switch } from 'react-router-dom';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
@@ -12,7 +12,7 @@ import {
     DELETE_FEATURE,
     UPDATE_FEATURE,
 } from 'component/providers/AccessProvider/permissions';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
@@ -21,7 +21,7 @@ import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
 import { useStyles } from './FeatureView.styles';
 import { FeatureSettings } from './FeatureSettings/FeatureSettings';
 import useLoading from 'hooks/useLoading';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from 'component/common/StatusChip/StatusChip';
@@ -43,7 +43,7 @@ export const FeatureView = () => {
         featureId
     );
 
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
     const ref = useLoading(loading);
 
@@ -131,7 +131,7 @@ export const FeatureView = () => {
                                 />
                             </div>
 
-                            <div className={styles.actions}>
+                            <div>
                                 <PermissionIconButton
                                     permission={CREATE_FEATURE}
                                     projectId={projectId}
@@ -177,7 +177,6 @@ export const FeatureView = () => {
                                 value={activeTab.path}
                                 indicatorColor="primary"
                                 textColor="primary"
-                                className={styles.tabNavigation}
                             >
                                 {renderTabs()}
                             </Tabs>

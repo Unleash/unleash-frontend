@@ -1,5 +1,5 @@
-import { Chip } from '@material-ui/core';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { Chip } from '@mui/material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureOverviewExecutionChips.styles';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 
@@ -12,7 +12,7 @@ const FeatureOverviewExecutionChips = ({
     value,
     text,
 }: IFeatureOverviewExecutionChipsProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <div className={styles.container}>
             <ConditionallyRender

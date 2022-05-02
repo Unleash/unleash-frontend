@@ -1,6 +1,6 @@
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link, useLocation } from 'react-router-dom';
-import ConditionallyRender from '../ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './BreadcrumbNav.styles';
 import AccessContext from 'contexts/AccessContext';
 import { useContext } from 'react';
@@ -8,7 +8,7 @@ import StringTruncator from '../StringTruncator/StringTruncator';
 
 const BreadcrumbNav = () => {
     const { isAdmin } = useContext(AccessContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const location = useLocation();
 
     const paths = location.pathname

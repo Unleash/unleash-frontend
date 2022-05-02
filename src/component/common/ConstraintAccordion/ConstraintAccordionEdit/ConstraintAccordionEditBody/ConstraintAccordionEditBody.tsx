@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, Switch } from '@material-ui/core';
+import { Button, FormControlLabel, Switch } from '@mui/material';
 import { IConstraint } from 'interfaces/strategy';
 import { CANCEL } from '../ConstraintAccordionEdit';
 
@@ -6,7 +6,7 @@ import { ConstraintFormHeader } from './ConstraintFormHeader/ConstraintFormHeade
 import { useStyles } from './ConstraintAccordionEditBody.styles';
 import React from 'react';
 import { newOperators } from 'constants/operators';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { oneOf } from 'utils/oneOf';
 import { OperatorUpgradeAlert } from 'component/common/OperatorUpgradeAlert/OperatorUpgradeAlert';
 
@@ -31,7 +31,7 @@ export const ConstraintAccordionEditBody: React.FC<
     setAction,
     onSubmit,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <>

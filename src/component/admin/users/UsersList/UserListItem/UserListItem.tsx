@@ -5,12 +5,12 @@ import {
     TableRow,
     Tooltip,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import classnames from 'classnames';
-import { Delete, Edit, Lock } from '@material-ui/icons';
+import { Delete, Edit, Lock } from '@mui/icons-material';
 import { SyntheticEvent, useContext } from 'react';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { IUser } from 'interfaces/user';
 import { useHistory } from 'react-router-dom';
@@ -38,7 +38,7 @@ const UserListItem = ({
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <TableRow key={user.id} className={styles.tableRow}>
@@ -90,6 +90,7 @@ const UserListItem = ({
                                 onClick={() =>
                                     history.push(`/admin/users/${user.id}/edit`)
                                 }
+                                size="large"
                             >
                                 <Edit />
                             </IconButton>
@@ -98,6 +99,7 @@ const UserListItem = ({
                             <IconButton
                                 data-loading
                                 onClick={openPwDialog(user)}
+                                size="large"
                             >
                                 <Lock />
                             </IconButton>
@@ -106,6 +108,7 @@ const UserListItem = ({
                             <IconButton
                                 data-loading
                                 onClick={openDelDialog(user)}
+                                size="large"
                             >
                                 <Delete />
                             </IconButton>

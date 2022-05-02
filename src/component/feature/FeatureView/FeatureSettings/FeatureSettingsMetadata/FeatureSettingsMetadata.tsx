@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import * as jsonpatch from 'fast-json-patch';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import FeatureTypeSelect from './FeatureTypeSelect/FeatureTypeSelect';
 import { useParams } from 'react-router';
@@ -10,7 +10,7 @@ import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import { IFeatureViewParams } from 'interfaces/params';
 import useToast from 'hooks/useToast';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
 const FeatureSettingsMetadata = () => {

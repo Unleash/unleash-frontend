@@ -4,7 +4,7 @@ import { SegmentFormStepOne } from '../SegmentFormStepOne/SegmentFormStepOne';
 import { SegmentFormStepTwo } from '../SegmentFormStepTwo/SegmentFormStepTwo';
 import React, { useState } from 'react';
 import { SegmentFormStepList } from 'component/segments/SegmentFormStepList/SegmentFormStepList';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export type SegmentFormStep = 1 | 2;
 export type SegmentFormMode = 'create' | 'edit';
@@ -35,7 +35,7 @@ export const SegmentForm: React.FC<ISegmentProps> = ({
     clearErrors,
     mode,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const totalSteps = 2;
     const [currentStep, setCurrentStep] = useState<SegmentFormStep>(1);
 

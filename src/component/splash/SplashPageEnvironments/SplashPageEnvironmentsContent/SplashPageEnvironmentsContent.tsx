@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@mui/material';
 import { useStyles } from 'component/splash/SplashPageEnvironments/SplashPageEnvironmentsContent/SplashPageEnvironmentsContent.styles';
 import {
     CloseOutlined,
     FiberManualRecord,
     FiberManualRecordOutlined,
-} from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+} from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { CLOSE_SPLASH } from 'utils/testIds';
 
 interface ISplashPageEnvironmentsContentProps {
@@ -17,7 +17,7 @@ interface ISplashPageEnvironmentsContentProps {
 export const SplashPageEnvironmentsContent: React.FC<
     ISplashPageEnvironmentsContentProps
 > = ({ components, onFinish }: ISplashPageEnvironmentsContentProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [counter, setCounter] = useState(0);
 
     const onNext = () => {
@@ -74,6 +74,7 @@ export const SplashPageEnvironmentsContent: React.FC<
                         className={styles.closeButton}
                         onClick={onClose}
                         data-testid={CLOSE_SPLASH}
+                        size="large"
                     >
                         <CloseOutlined titleAccess="Close" />
                     </IconButton>

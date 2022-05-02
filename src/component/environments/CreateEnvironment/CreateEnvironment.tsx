@@ -2,18 +2,18 @@ import { useHistory } from 'react-router-dom';
 import useEnvironmentForm from '../hooks/useEnvironmentForm';
 import EnvironmentForm from '../EnvironmentForm/EnvironmentForm';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
-import { Alert } from '@material-ui/lab';
-import { Button } from '@material-ui/core';
+import { Alert } from '@mui/material';
+import { Button } from '@mui/material';
 import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import useEnvironmentApi from 'hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PageContent from 'component/common/PageContent/PageContent';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import HeaderTitle from 'component/common/HeaderTitle/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
 const CreateEnvironment = () => {

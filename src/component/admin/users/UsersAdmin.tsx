@@ -3,11 +3,11 @@ import UsersList from './UsersList/UsersList';
 import AdminMenu from '../menu/AdminMenu';
 import PageContent from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { Button } from '@mui/material';
 import { TableActions } from 'component/common/Table/TableActions/TableActions';
-import { Button } from '@material-ui/core';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import { useStyles } from './UserAdmin.styles';
 import { useHistory } from 'react-router-dom';
 import { AdminAlert } from 'component/common/AdminAlert/AdminAlert';
@@ -16,7 +16,7 @@ const UsersAdmin = () => {
     const [search, setSearch] = useState('');
     const { hasAccess } = useContext(AccessContext);
     const history = useHistory();
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     return (
         <div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import Input from 'component/common/Input/Input';
 import { useStyles } from './SegmentDeleteConfirm.styles';
 import { ISegment } from 'interfaces/segment';
@@ -18,7 +18,7 @@ export const SegmentDeleteConfirm = ({
     setDeldialogue,
     handleDeleteSegment,
 }: ISegmentDeleteConfirmProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [confirmName, setConfirmName] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>

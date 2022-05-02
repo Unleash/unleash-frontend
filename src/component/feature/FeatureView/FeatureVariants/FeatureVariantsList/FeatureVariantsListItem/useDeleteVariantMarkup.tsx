@@ -1,5 +1,5 @@
-import { Alert } from '@material-ui/lab';
-import Dialogue from 'component/common/Dialogue';
+import { Alert } from '@mui/material';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 
 interface IUseDeleteVariantMarkupProps {
     show: boolean;

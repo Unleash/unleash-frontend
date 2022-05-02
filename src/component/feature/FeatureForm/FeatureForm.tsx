@@ -4,15 +4,15 @@ import {
     FormControlLabel,
     Switch,
     Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useStyles } from './FeatureForm.styles';
 import FeatureTypeSelect from '../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
 import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from 'utils/testIds';
 import useFeatureTypes from 'hooks/api/getters/useFeatureTypes/useFeatureTypes';
-import { KeyboardArrowDownOutlined } from '@material-ui/icons';
+import { KeyboardArrowDownOutlined } from '@mui/icons-material';
 import { projectFilterGenerator } from 'utils/projectFilterGenerator';
 import FeatureProjectSelect from '../FeatureView/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { trim } from 'component/common/util';
 import Input from 'component/common/Input/Input';
 import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
@@ -58,7 +58,7 @@ const FeatureForm: React.FC<IFeatureToggleForm> = ({
     mode,
     clearErrors,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureTypes } = useFeatureTypes();
     const history = useHistory();
     const { permissions } = useAuthPermissions();

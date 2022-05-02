@@ -3,7 +3,7 @@ import { IFeatureStrategy } from 'interfaces/strategy';
 import { FeatureStrategyType } from '../FeatureStrategyType/FeatureStrategyType';
 import { FeatureStrategyEnabled } from '../FeatureStrategyEnabled/FeatureStrategyEnabled';
 import { FeatureStrategyConstraints } from '../FeatureStrategyConstraints/FeatureStrategyConstraints';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import {
     FeatureStrategyProdGuard,
     useFeatureStrategyProdGuard,
@@ -13,7 +13,7 @@ import { useStyles } from './FeatureStrategyForm.styles';
 import { formatFeaturePath } from '../FeatureStrategyEdit/FeatureStrategyEdit';
 import { useHistory } from 'react-router-dom';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { STRATEGY_FORM_SUBMIT_ID } from 'utils/testIds';
 import { useConstraintsValidation } from 'hooks/api/getters/useConstraintsValidation/useConstraintsValidation';
 import AccessContext from 'contexts/AccessContext';
@@ -46,7 +46,7 @@ export const FeatureStrategyForm = ({
     segments,
     setSegments,
 }: IFeatureStrategyFormProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [showProdGuard, setShowProdGuard] = useState(false);
     const hasValidConstraints = useConstraintsValidation(strategy.constraints);
     const enableProdGuard = useFeatureStrategyProdGuard(feature, environmentId);

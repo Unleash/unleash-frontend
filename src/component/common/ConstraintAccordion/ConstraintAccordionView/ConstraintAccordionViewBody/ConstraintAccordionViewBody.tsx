@@ -1,11 +1,11 @@
-import { Chip } from '@material-ui/core';
-import { ImportExportOutlined, TextFormatOutlined } from '@material-ui/icons';
+import { Chip } from '@mui/material';
+import { ImportExportOutlined, TextFormatOutlined } from '@mui/icons-material';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useState } from 'react';
 import { stringOperators } from 'constants/operators';
 import { IConstraint } from 'interfaces/strategy';
 import { oneOf } from 'utils/oneOf';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
 import { ConstraintValueSearch } from 'component/common/ConstraintAccordion/ConstraintValueSearch/ConstraintValueSearch';
 import { formatConstraintValue } from 'utils/formatConstraintValue';
@@ -18,7 +18,7 @@ interface IConstraintAccordionViewBodyProps {
 export const ConstraintAccordionViewBody = ({
     constraint,
 }: IConstraintAccordionViewBodyProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { locationSettings } = useLocationSettings();
 
     return (
@@ -63,7 +63,7 @@ interface ISingleValueProps {
 }
 
 const SingleValue = ({ value, operator }: ISingleValueProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     if (!value) return null;
 
     return (
@@ -89,7 +89,7 @@ interface IMultipleValuesProps {
 
 const MultipleValues = ({ values }: IMultipleValuesProps) => {
     const [filter, setFilter] = useState('');
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     if (!values || values.length === 0) return null;
 

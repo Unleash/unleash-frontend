@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Chip } from '@material-ui/core';
-import { Close, Label } from '@material-ui/icons';
+import { Chip } from '@mui/material';
+import { Close, Label } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import useTags from 'hooks/api/getters/useTags/useTags';
 import { IFeatureViewParams } from 'interfaces/params';
@@ -11,11 +11,11 @@ import webhookIcon from 'assets/icons/webhooks.svg';
 import { formatAssetPath } from 'utils/formatPath';
 import useTagTypes from 'hooks/api/getters/useTagTypes/useTagTypes';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
-import Dialogue from 'component/common/Dialogue';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { ITag } from 'interfaces/tags';
 import useToast from 'hooks/useToast';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
@@ -32,7 +32,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
         value: '',
         type: '',
     });
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureId } = useParams<IFeatureViewParams>();
     const { tags, refetch } = useTags(featureId);
     const { tagTypes } = useTagTypes();
@@ -138,7 +138,7 @@ const FeatureOverviewTags: React.FC<IFeatureOverviewTagsProps> = ({
                     title="Are you sure you want to delete this tag?"
                 />
 
-                <div className={styles.tagContent}>
+                <div>
                     <ConditionallyRender
                         condition={tags.length > 0}
                         show={tags.map(renderTag)}

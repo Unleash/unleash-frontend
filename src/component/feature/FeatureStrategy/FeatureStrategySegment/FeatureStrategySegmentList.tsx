@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { ISegment } from 'interfaces/segment';
 import { useStyles } from 'component/feature/FeatureStrategy/FeatureStrategySegment/FeatureStrategySegmentList.styles';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { FeatureStrategySegmentChip } from 'component/feature/FeatureStrategy/FeatureStrategySegment/FeatureStrategySegmentChip';
 import { ConstraintAccordionList } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
 
@@ -14,7 +14,7 @@ export const FeatureStrategySegmentList = ({
     segments,
     setSegments,
 }: IFeatureStrategySegmentListProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const [preview, setPreview] = useState<ISegment>();
     const lastSegmentIndex = segments.length - 1;
 

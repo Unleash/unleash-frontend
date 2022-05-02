@@ -1,9 +1,9 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
-import ConditionallyRender from 'component/common/ConditionallyRender';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import PageContent from 'component/common/PageContent';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import AdminMenu from 'component/admin/menu/AdminMenu';
@@ -13,7 +13,7 @@ import { AdminAlert } from 'component/common/AdminAlert/AdminAlert';
 
 const ProjectRoles = () => {
     const { hasAccess } = useContext(AccessContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const history = useHistory();
 
     return (

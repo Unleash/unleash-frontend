@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { ConfiguredAddons } from './ConfiguredAddons/ConfiguredAddons';
 import { AvailableAddons } from './AvailableAddons/AvailableAddons';
-import { Avatar } from '@material-ui/core';
-import { DeviceHub } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Avatar } from '@mui/material';
+import { DeviceHub } from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import slackIcon from 'assets/icons/slack.svg';
 import jiraIcon from 'assets/icons/jira.svg';
 import webhooksIcon from 'assets/icons/webhooks.svg';

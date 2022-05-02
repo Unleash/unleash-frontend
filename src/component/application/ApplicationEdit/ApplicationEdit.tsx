@@ -7,15 +7,16 @@ import {
     LinearProgress,
     Link,
     Typography,
-} from '@material-ui/core';
-import { Link as LinkIcon } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+} from '@mui/material';
+import { Link as LinkIcon } from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { UPDATE_APPLICATION } from 'component/providers/AccessProvider/permissions';
 import { ApplicationView } from '../ApplicationView/ApplicationView';
 import { ApplicationUpdate } from '../ApplicationUpdate/ApplicationUpdate';
-import Dialogue from 'component/common/Dialogue';
+import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PageContent from 'component/common/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import AccessContext from 'contexts/AccessContext';
 import useApplicationsApi from 'hooks/api/actions/useApplicationsApi/useApplicationsApi';
 import useApplication from 'hooks/api/getters/useApplication/useApplication';
@@ -25,7 +26,6 @@ import useToast from 'hooks/useToast';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { formatDateYMD } from 'utils/formatDate';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
 
 export const ApplicationEdit = () => {
     const history = useHistory();
@@ -93,7 +93,7 @@ export const ApplicationEdit = () => {
         <PageContent
             headerContent={
                 <HeaderTitle
-                    title={
+                    titleElement={
                         <span
                             style={{
                                 display: 'flex',
@@ -106,12 +106,17 @@ export const ApplicationEdit = () => {
                             {appName}
                         </span>
                     }
+                    title={appName}
                     actions={
                         <>
                             <ConditionallyRender
                                 condition={Boolean(url)}
                                 show={
-                                    <IconButton component={Link} href={url}>
+                                    <IconButton
+                                        component={Link}
+                                        href={url}
+                                        size="large"
+                                    >
                                         <LinkIcon titleAccess={url} />
                                     </IconButton>
                                 }

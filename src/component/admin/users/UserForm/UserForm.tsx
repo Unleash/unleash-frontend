@@ -7,11 +7,11 @@ import {
     Typography,
     Radio,
     Switch,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useStyles } from './UserForm.styles';
 import React from 'react';
 import useUsers from 'hooks/api/getters/useUsers/useUsers';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { EDIT } from 'constants/misc';
 import useUiBootstrap from 'hooks/api/getters/useUiBootstrap/useUiBootstrap';
 
@@ -47,7 +47,7 @@ const UserForm: React.FC<IUserForm> = ({
     clearErrors,
     mode,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { roles } = useUsers();
     const { bootstrap } = useUiBootstrap();
 

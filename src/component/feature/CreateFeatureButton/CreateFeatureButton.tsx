@@ -1,9 +1,9 @@
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Button, IconButton, Tooltip } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Add } from '@material-ui/icons';
-import ConditionallyRender from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Button, IconButton, Tooltip } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Add } from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { NAVIGATE_TO_CREATE_FEATURE } from 'utils/testIds';
 import { IFeaturesFilter } from 'hooks/useFeaturesFilter';
 import { useCreateFeaturePath } from 'component/feature/CreateFeatureButton/useCreateFeaturePath';
@@ -34,6 +34,7 @@ export const CreateFeatureButton = ({
                         to={createFeature.path}
                         data-testid={NAVIGATE_TO_CREATE_FEATURE}
                         disabled={!createFeature.access}
+                        size="large"
                     >
                         <Add />
                     </IconButton>

@@ -1,23 +1,23 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import AccessContext from 'contexts/AccessContext';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import PageContent from 'component/common/PageContent';
-import HeaderTitle from 'component/common/HeaderTitle';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_API_TOKEN,
     READ_API_TOKEN,
 } from 'component/providers/AccessProvider/permissions';
 import { useStyles } from './ApiTokenPage.styles';
 import { CREATE_API_TOKEN_BUTTON } from 'utils/testIds';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import { ApiTokenList } from 'component/admin/apiToken/ApiTokenList/ApiTokenList';
 import { AdminAlert } from 'component/common/AdminAlert/AdminAlert';
 
 export const ApiTokenPage = () => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const history = useHistory();
