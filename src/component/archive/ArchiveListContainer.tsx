@@ -52,6 +52,7 @@ export const ArchiveListContainer: FC<IArchiveListContainer> = ({
             sort={sort}
             setSort={setSort}
             archive
+            inProject={Boolean(projectId)}
         />
     );
 };

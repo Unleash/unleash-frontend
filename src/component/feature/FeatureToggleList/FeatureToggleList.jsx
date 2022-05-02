@@ -21,6 +21,7 @@ const FeatureToggleList = ({
     features,
     revive,
     archive,
+    inProject = false,
     loading,
     flags,
     filter,
@@ -67,6 +68,7 @@ const FeatureToggleList = ({
                         revive={revive}
                         hasAccess={hasAccess}
                         flags={flags}
+                        inProject={inProject}
                     />
                 ))}
                 elseShow={
@@ -100,18 +102,18 @@ const FeatureToggleList = ({
         : '';
 
     const headerTitle = archive
-        ? `Archived feature toggles${searchResultsHeader}`
+        ? inProject ? `Project archived feature toggles${searchResultsHeader}` : `Archived feature toggles${searchResultsHeader}`
         : `Feature toggles${searchResultsHeader}`;
 
     return (
         <div className={styles.featureContainer}>
-            <div className={styles.searchBarContainer}>
+            <div className={classnames(styles.searchBarContainer, {dense: inProject})}>
                 <SearchField
                     initialValue={filter.query}
                     updateValue={setFilterQuery}
                     showValueChip={!mobileView}
                     className={classnames(styles.searchBar, {
-                        skeleton: loading,
+                        skeleton: loading
                     })}
                 />
                 <ConditionallyRender
@@ -136,6 +138,7 @@ const FeatureToggleList = ({
                                             sort={sort}
                                             setSort={setSort}
                                             loading={loading}
+                                            inProject={inProject}
                                         />
                                     }
                                 />

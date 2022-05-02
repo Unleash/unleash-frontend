@@ -10,7 +10,7 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import ConditionallyRender from 'component/common/ConditionallyRender';
 import { createFeaturesFilterSortOptions } from 'hooks/useFeaturesSort';
 
-const sortOptions = createFeaturesFilterSortOptions();
+let sortOptions = createFeaturesFilterSortOptions();
 
 const FeatureToggleListActions = ({
     filter,
@@ -18,6 +18,7 @@ const FeatureToggleListActions = ({
     sort,
     setSort,
     loading,
+    inProject = false
 }) => {
     const styles = useStyles();
     const { uiConfig } = useUiConfig();
@@ -31,6 +32,10 @@ const FeatureToggleListActions = ({
     const isDisabled = s => s === sort.type;
     const selectedOption =
         sortOptions.find(o => o.type === sort.type) || sortOptions[0];
+
+    if (inProject) {
+        sortOptions = sortOptions.filter(o => o.type !== 'project');
+    }
 
     const renderSortingOptions = () =>
         sortOptions.map(option => (
@@ -60,7 +65,7 @@ const FeatureToggleListActions = ({
                 data-loading
             />
             <ConditionallyRender
-                condition={uiConfig.flags.P}
+                condition={uiConfig.flags.P && !inProject}
                 show={
                     <ProjectSelect
                         currentProjectId={filter.project}

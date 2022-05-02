@@ -21,6 +21,7 @@ const FeatureToggleListItem = ({
     revive,
     hasAccess,
     flags = {},
+    inProject = false,
     ...rest
 }) => {
     const styles = useStyles();
@@ -117,22 +118,27 @@ const FeatureToggleListItem = ({
                 )}
             >
                 <StatusChip stale={stale} showActive={false} />
-                <Link
-                    to={`/projects/${project}`}
-                    style={{ textDecoration: 'none' }}
-                    className={classnames({
-                        [`${styles.disabledLink}`]: !projectExists(),
-                    })}
-                >
-                    <Chip
-                        color="primary"
-                        variant="outlined"
-                        className={styles.typeChip}
-                        style={{ marginLeft: '8px', cursor: 'pointer' }}
-                        title={`Project: ${project}`}
-                        label={project}
-                    />
-                </Link>
+                <ConditionallyRender
+                    condition={!inProject}
+                    show={
+                        <Link
+                            to={`/projects/${project}`}
+                            style={{ textDecoration: 'none' }}
+                            className={classnames({
+                                [`${styles.disabledLink}`]: !projectExists(),
+                            })}
+                        >
+                            <Chip
+                                color="primary"
+                                variant="outlined"
+                                className={styles.typeChip}
+                                style={{ marginLeft: '8px', cursor: 'pointer' }}
+                                title={`Project: ${project}`}
+                                label={project}
+                            />
+                        </Link>
+                    }
+                />
             </span>
             <ConditionallyRender
                 condition={revive}
