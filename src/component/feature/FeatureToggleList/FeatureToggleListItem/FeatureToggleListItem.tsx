@@ -17,7 +17,6 @@ import PermissionIconButton from 'component/common/PermissionIconButton/Permissi
 import { styles as commonStyles } from 'component/common'; // FIXME: remove
 import { FeatureSchema } from 'openapi';
 import { useStyles } from './styles'; // FIXME: cleanup
-import { C } from 'component/common/flags';
 
 interface IFeatureToggleListItemProps {
     feature: FeatureSchema;
