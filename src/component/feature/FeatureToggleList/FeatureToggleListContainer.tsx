@@ -1,7 +1,6 @@
 import { Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
-import { FeatureFlagsTable } from './FeatureFlagsTable/FeatureFlagsTable';
 import { EnhancedTable } from 'component/common/Table/EnhancedTable/EnhancedTable';
 import { FeatureStaleCell } from './FeatureFlagsTable/FeatureStaleCell/FeatureStaleCell';
 import { FeatureSeenCell } from './FeatureFlagsTable/FeatureSeenCell/FeatureSeenCell';
@@ -13,7 +12,7 @@ import { FeatureNameCell } from './FeatureFlagsTable/FeatureNameCell/FeatureName
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
 
 export const FeatureToggleListContainer = () => {
-    const { features = [], loading } = useFeatures();
+    const { features = [] } = useFeatures();
 
     return (
         <EnhancedTable
@@ -85,6 +84,7 @@ export const FeatureToggleListContainer = () => {
                 },
             ]}
             searchColumns={['name', 'description', 'project']}
+            defaultSort={{ field: 'createdAt', order: 'asc' }}
             // pageSize={50}
         />
     );
