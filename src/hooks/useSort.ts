@@ -12,22 +12,18 @@ import {
     sortFeaturesByStatusDescending,
 } from 'component/Reporting/utils';
 
-import {
-    LAST_SEEN,
-    NAME,
-    CREATED,
-    EXPIRED,
-    STATUS,
-    REPORT,
-} from 'component/Reporting/constants';
+import { ReportingSortType } from 'component/Reporting/constants';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 
 /**
  * @deprecated
  */
 const useSort = () => {
-    const [sortData, setSortData] = useState({
-        sortKey: NAME,
+    const [sortData, setSortData] = useState<{
+        sortKey: ReportingSortType;
+        ascending: boolean;
+    }>({
+        sortKey: 'name',
         ascending: true,
     });
 
@@ -69,16 +65,16 @@ const useSort = () => {
 
     const sort = (features: IFeatureToggleListItem[]) => {
         switch (sortData.sortKey) {
-            case NAME:
+            case 'name':
                 return handleSortName(features);
-            case LAST_SEEN:
+            case 'last-seen':
                 return handleSortLastSeen(features);
-            case CREATED:
+            case 'created':
                 return handleSortCreatedAt(features);
-            case EXPIRED:
-            case REPORT:
+            case 'expired':
+            case 'report':
                 return handleSortExpiredAt(features);
-            case STATUS:
+            case 'status':
                 return handleSortStatus(features);
             default:
                 return features;
