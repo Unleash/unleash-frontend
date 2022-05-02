@@ -42,7 +42,8 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontWeight: 'normal',
+        fontWeight: theme.fontWeight.bold,
+        fontSize: theme.fontSizes.subHeader,
     },
     description: {
         color: '#fff',
