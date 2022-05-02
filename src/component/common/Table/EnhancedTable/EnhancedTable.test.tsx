@@ -9,6 +9,7 @@ describe('EnhancedTable', () => {
     it('should show a table', async () => {
         render(
             <EnhancedTable
+                title="Table"
                 data={[
                     { name: 'feature-1', project: 'project-1' },
                     { name: 'feature-2', project: 'project-2' },

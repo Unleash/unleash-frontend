@@ -34,7 +34,7 @@ const Pagination = ({
 
     return (
         <ConditionallyRender
-            condition={pageCount > 1}
+            condition={Boolean(pageCount) && pageCount > 1}
             show={
                 <div className={styles.pagination}>
                     <div className={styles.paginationInnerContainer}>

@@ -1,5 +1,4 @@
 import { ComponentProps, ReactNode, useMemo, VFC } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,22 +6,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
+import { usePagination } from 'hooks/table/usePagination';
 import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        paper: {
-            width: '100%',
-            marginBottom: theme.spacing(2),
-        },
-        table: {
-            minWidth: 750,
-        },
-    })
-);
+import { useStyles } from './EnhancedTable.styles';
+import Pagination from '../Pagination/Pagination';
+import { sortPresetFunctions } from 'hooks/table/useSort';
+import { useSortableHeaders } from 'hooks/table/useSortableHeaders';
 
 const columnRenderer = {
     number: (value: number) => `${value}`,
@@ -31,6 +20,7 @@ const columnRenderer = {
 };
 
 interface IEnhancedTableProps<T extends Record<string, any>> {
+    title: string;
     data: T[];
     /**
      * The key of the data object to be used as a unique identifier of each row.
@@ -46,12 +36,17 @@ interface IEnhancedTableProps<T extends Record<string, any>> {
               render?: boolean | keyof typeof columnRenderer | VFC<Partial<T>>;
               label?: string;
               align?: ComponentProps<typeof TableCell>['align'];
+              sort?:
+                  | boolean
+                  | keyof typeof sortPresetFunctions
+                  | VFC<Partial<T>>;
           }
         | {
               field: string;
               render?: VFC<Partial<T>>;
               label?: string;
               align?: ComponentProps<typeof TableCell>['align'];
+              sort?: VFC<Partial<T>>;
           }
     )[];
     pageSize?: number;
@@ -62,12 +57,22 @@ export const EnhancedTable = <T,>({
     dataKey,
     columns,
     pageSize,
+    title,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
     const classes = useStyles();
 
+    const { data: sortedData } = useSortableHeaders(data, {});
+
+    const {
+        data: page,
+        pageCount,
+        pageIndex,
+        onPageChange,
+    } = usePagination(sortedData, pageSize);
+
     const rows = useMemo(
         () =>
-            data.map(item => {
+            page.map(item => {
                 const row = {
                     __key: `${item[dataKey]}`,
                 } as Record<string, ReactNode> & {
@@ -96,44 +101,46 @@ export const EnhancedTable = <T,>({
                 });
                 return row;
             }),
-        [data, dataKey, columns]
+        [page, dataKey, columns]
     );
 
     return (
-        <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <TableToolbar />
-                <TableContainer>
-                    <Table
-                        className={classes.table}
-                        aria-labelledby="tableTitle"
-                        size="medium"
-                        aria-label="enhanced table"
-                    >
-                        <EnhancedTableHead
-                            columns={columns.map(({ field, label, align }) => ({
-                                field: field as string,
-                                label,
-                                align,
-                            }))}
-                        />
-                        <TableBody>
-                            {rows.map(row => (
-                                <TableRow hover tabIndex={-1} key={row.__key}>
-                                    {columns.map(({ field, align }) => (
-                                        <TableCell
-                                            key={field as string}
-                                            align={align}
-                                        >
-                                            {row[field]}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
-        </div>
+        <Paper className={classes.paper}>
+            <TableToolbar title={title} />
+            <TableContainer className={classes.tableContainer}>
+                <Table
+                    aria-labelledby="tableTitle"
+                    size="medium"
+                    aria-label="enhanced table"
+                >
+                    <EnhancedTableHead
+                        columns={columns.map(({ field, label, align }) => ({
+                            field: field as string,
+                            label,
+                            align,
+                        }))}
+                    />
+                    <TableBody>
+                        {rows.map(row => (
+                            <TableRow hover tabIndex={-1} key={row.__key}>
+                                {columns.map(({ field, align }) => (
+                                    <TableCell
+                                        key={field as string}
+                                        align={align}
+                                    >
+                                        {row[field]}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Pagination
+                pageCount={pageCount}
+                pageIndex={pageIndex}
+                onPageChange={onPageChange}
+            />
+        </Paper>
     );
 };

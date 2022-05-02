@@ -85,7 +85,7 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
         pageCount,
         pageIndex,
         onPageChange,
-    } = usePagination(sortedData, 50);
+    } = usePagination(sortedData, 5);
 
     return (
         <Paper className={styles.container}>
