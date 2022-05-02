@@ -9,10 +9,11 @@ import { Edit } from '@material-ui/icons';
 import useToast from 'hooks/useToast';
 import useQueryParams from 'hooks/useQueryParams';
 import { useEffect } from 'react';
-import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
-import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
+import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
+import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
+import { ProjectArchive } from './ProjectArchive/ProjectArchive';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { TabPanel } from 'component/common/TabNav/TabPanel/TabPanel';
@@ -51,6 +52,12 @@ const Project = () => {
             component: <ProjectEnvironment projectId={id} />,
             path: `${basePath}/environments`,
             name: 'environments',
+        },
+        {
+            title: 'Archive',
+            component: <ProjectArchive projectId={id} />,
+            path: `${basePath}/archive`,
+            name: 'archive',
         },
     ];
 

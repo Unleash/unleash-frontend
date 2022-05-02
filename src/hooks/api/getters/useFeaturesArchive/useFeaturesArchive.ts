@@ -9,10 +9,15 @@ export interface IUseFeaturesArchiveOutput {
     error?: Error;
 }
 
-export const useFeaturesArchive = (): IUseFeaturesArchiveOutput => {
+export const useFeaturesArchive = (
+    projectId?: string
+): IUseFeaturesArchiveOutput => {
     const { data, refetch, loading, error } = useApiGetter(
-        'apiAdminArchiveFeaturesGet',
-        () => openApiAdmin.apiAdminArchiveFeaturesGet()
+        ['apiAdminArchiveFeaturesGet', projectId],
+        () =>
+            openApiAdmin.apiAdminArchiveFeaturesProjectIdGet({
+                projectId: projectId ?? '',
+            })
     );
 
     return {

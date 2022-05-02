@@ -5,8 +5,15 @@ import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
 import { useFeatureArchiveApi } from 'hooks/api/actions/useFeatureArchiveApi/useReviveFeatureApi';
 import useToast from 'hooks/useToast';
 import { useFeaturesSort } from 'hooks/useFeaturesSort';
+import { FC } from 'react';
 
-export const ArchiveListContainer = () => {
+interface IArchiveListContainer {
+    projectId?: string;
+}
+
+export const ArchiveListContainer: FC<IArchiveListContainer> = ({
+    projectId,
+}) => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const { reviveFeature } = useFeatureArchiveApi();
@@ -15,7 +22,7 @@ export const ArchiveListContainer = () => {
         archivedFeatures = [],
         refetchArchived,
         loading,
-    } = useFeaturesArchive();
+    } = useFeaturesArchive(projectId);
 
     const { filtered, filter, setFilter } = useFeaturesFilter(archivedFeatures);
     const { sorted, sort, setSort } = useFeaturesSort(filtered);
