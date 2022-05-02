@@ -49,7 +49,7 @@ export const useStyles = makeStyles()(theme => ({
     buttonStyle: {
         position: 'absolute',
         top: '-33px',
-        right: '-29px',
+        right: '-33px',
     },
     '@keyframes drop': {
         '0%': {

@@ -78,7 +78,6 @@ const Toast = ({ title, text, type, confetti }: IToast) => {
                         </div>
                         <Tooltip title="Close">
                             <IconButton
-                                color="primary"
                                 onClick={hide}
                                 className={styles.buttonStyle}
                                 size="large"
