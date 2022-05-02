@@ -11,9 +11,8 @@ export default createTheme({
         fontFamily: 'Sen, Roboto, sans-serif',
         fontWeightBold: '700',
         fontWeightMedium: '700',
-        allVariants: {
-            lineHeight: 1.4,
-        },
+        allVariants: { lineHeight: 1.4 },
+        button: { lineHeight: 1.75 },
     },
     fontSizes: {
         mainHeader: '1.2rem',

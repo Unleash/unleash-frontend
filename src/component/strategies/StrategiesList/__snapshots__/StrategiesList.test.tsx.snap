@@ -35,7 +35,7 @@ Array [
           >
             <button
               aria-describedby="useId-0"
-              className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-duvws4-MuiButtonBase-root-MuiButton-root"
+              className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-16l97z4-MuiButtonBase-root-MuiButton-root"
               data-testid="ADD_NEW_STRATEGY_ID"
               disabled={false}
               onBlur={[Function]}
