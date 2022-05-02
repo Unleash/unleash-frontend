@@ -101,7 +101,10 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
                                         component="span"
                                         className={styles.icon}
                                     >
-                                        <UnfoldMoreOutlined fontSize="inherit" />
+                                        <UnfoldMoreOutlined
+                                            fontSize="inherit"
+                                            className={styles.inactiveIcon}
+                                        />
                                     </Box>
                                 }
                             />

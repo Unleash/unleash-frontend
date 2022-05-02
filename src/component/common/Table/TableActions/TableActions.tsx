@@ -1,15 +1,17 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { TableSearchField } from './TableSearchField/TableSearchField';
 import { useStyles } from './TableActions.styles';
+import { debounce } from 'debounce';
 
 interface ITableActionsProps {
-    search: string;
-    onSearch: (value: string) => void;
+    search?: string;
+    onSearch?: (value: string) => void;
     searchTip?: string;
+    isSeparated?: boolean;
 }
 
 export const TableActions: FC<ITableActionsProps> = ({
@@ -17,9 +19,15 @@ export const TableActions: FC<ITableActionsProps> = ({
     onSearch,
     searchTip = 'Search',
     children,
+    isSeparated,
 }) => {
     const [searchExpanded, setSearchExpanded] = useState(false);
+    const [searchInputState, setSearchInputState] = useState(search);
     const [animating, setAnimating] = useState(false);
+    const debauncedOnSearch = useMemo(
+        () => (onSearch ? debounce(onSearch, 50) : () => {}),
+        [onSearch]
+    );
 
     const styles = useStyles();
 
@@ -29,41 +37,52 @@ export const TableActions: FC<ITableActionsProps> = ({
         }
     };
 
+    const onSearchChange = (value: string) => {
+        debauncedOnSearch(value);
+        setSearchInputState(value);
+    };
+
     return (
         <div className={styles.tableActions}>
-            <AnimateOnMount
-                mounted={searchExpanded}
-                start={styles.fieldWidth}
-                enter={styles.fieldWidthEnter}
-                leave={styles.fieldWidthLeave}
-                onStart={() => setAnimating(true)}
-                onEnd={() => setAnimating(false)}
-            >
-                <TableSearchField
-                    value={search}
-                    onChange={onSearch}
-                    placeholder={`${searchTip}...`}
-                    onBlur={onBlur}
-                />
-            </AnimateOnMount>
             <ConditionallyRender
-                condition={!searchExpanded && !animating}
+                condition={Boolean(onSearch)}
                 show={
-                    <Tooltip title={searchTip} arrow>
-                        <IconButton
-                            aria-label={searchTip}
-                            onClick={() => setSearchExpanded(true)}
+                    <>
+                        <AnimateOnMount
+                            mounted={searchExpanded}
+                            start={styles.fieldWidth}
+                            enter={styles.fieldWidthEnter}
+                            leave={styles.fieldWidthLeave}
+                            onStart={() => setAnimating(true)}
+                            onEnd={() => setAnimating(false)}
                         >
-                            <Search />
-                        </IconButton>
-                    </Tooltip>
+                            <TableSearchField
+                                value={searchInputState!}
+                                onChange={onSearchChange}
+                                placeholder={`${searchTip}...`}
+                                onBlur={onBlur}
+                            />
+                        </AnimateOnMount>
+                        <ConditionallyRender
+                            condition={!searchExpanded && !animating}
+                            show={
+                                <Tooltip title={searchTip} arrow>
+                                    <IconButton
+                                        aria-label={searchTip}
+                                        onClick={() => setSearchExpanded(true)}
+                                    >
+                                        <Search />
+                                    </IconButton>
+                                </Tooltip>
+                            }
+                        />
+                    </>
                 }
             />
             <ConditionallyRender
-                condition={Boolean(children)}
+                condition={Boolean(isSeparated)}
                 show={<div className={styles.verticalSeparator} />}
             />
-
             {children}
         </div>
     );

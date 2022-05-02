@@ -17,7 +17,7 @@ export const useSortableHeaders = <
           >
         | Record<K, (a: T, b: T) => number>,
     defaultSort?: {
-        field: K;
+        field: keyof T | K;
         order?: 'asc' | 'desc';
     }
 ) => {

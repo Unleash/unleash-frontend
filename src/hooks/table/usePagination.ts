@@ -7,22 +7,13 @@ export const usePagination = <T extends Record<string, any>>(
     const [pageIndex, setPageIndex] = useState(0);
 
     const pageCount = useMemo(
-        () => Math.ceil(data.length / (pageSize || 1)),
+        () => (pageSize ? Math.ceil(data.length / (pageSize || 1)) : 1),
         [data.length, pageSize]
     );
 
-    if (!pageSize) {
-        return {
-            data,
-            pageCount: 1,
-            pageIndex: 0,
-            onPageChange: () => {},
-        };
-    }
-
     const paginatedData = data.slice(
-        pageIndex * pageSize,
-        (pageIndex + 1) * pageSize
+        pageSize ? pageIndex * pageSize : 0,
+        pageSize ? (pageIndex + 1) * pageSize : data.length
     );
 
     return {

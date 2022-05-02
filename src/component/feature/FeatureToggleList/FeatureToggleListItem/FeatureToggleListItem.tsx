@@ -26,6 +26,9 @@ interface IFeatureToggleListItemProps {
     className?: string;
 }
 
+/**
+ * @deprecated
+ */
 export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
     ({ feature, onRevive, hasAccess, flags = {}, className, ...rest }) => {
         const styles = useStyles();

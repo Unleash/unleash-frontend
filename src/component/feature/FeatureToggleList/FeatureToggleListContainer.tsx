@@ -1,38 +1,91 @@
+import { Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
-import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
-import { FeatureToggleList } from './FeatureToggleList';
-import { useFeaturesSort } from 'hooks/useFeaturesSort';
 import { FeatureFlagsTable } from './FeatureFlagsTable/FeatureFlagsTable';
 import { EnhancedTable } from 'component/common/Table/EnhancedTable/EnhancedTable';
+import { FeatureStaleCell } from './FeatureFlagsTable/FeatureStaleCell/FeatureStaleCell';
+import { FeatureSeenCell } from './FeatureFlagsTable/FeatureSeenCell/FeatureSeenCell';
+import { DateCell } from './FeatureFlagsTable/DateCell/DateCell';
+import { FeatureTypeCell } from './FeatureFlagsTable/FeatureTypeCell/FeatureTypeCell';
+import { FeatureSchema } from 'openapi';
+import { LinkCell } from './FeatureFlagsTable/LinkCell/LinkCell';
+import { FeatureNameCell } from './FeatureFlagsTable/FeatureNameCell/FeatureNameCell';
+import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
 
 export const FeatureToggleListContainer = () => {
-    const { uiConfig } = useUiConfig();
     const { features = [], loading } = useFeatures();
 
     return (
-        // <FeatureToggleList
-        //     features={sorted}
-        //     loading={loading}
-        //     flags={uiConfig.flags}
-        //     filter={filter}
-        //     setFilter={setFilter}
-        //     sort={sort}
-        //     setSort={setSort}
-        // />
-        <>
-            <FeatureFlagsTable data={features} />
-            <EnhancedTable
-                title={`Feature Flags (${features.length})`}
-                data={features}
-                dataKey="name"
-                columns={[
-                    { field: 'name', label: 'Feature toggle name' },
-                    { field: 'project', label: 'Project ID' },
-                    { field: 'state', label: 'State' },
-                ]}
-                // pageSize={50}
-            />
-        </>
+        <EnhancedTable
+            title={`Feature Flags (${features.length})`}
+            isToolbarSeparated
+            toolbar={
+                <>
+                    <Link
+                        component={RouterLink}
+                        to="/archive"
+                        underline="always"
+                        style={{ marginRight: '24px' }}
+                    >
+                        View archive
+                    </Link>
+                    <CreateFeatureButton
+                        loading={false}
+                        filter={{ query: '', project: 'default' }}
+                    />
+                </>
+            }
+            data={features}
+            dataKey="name"
+            columns={[
+                {
+                    field: 'lastSeenAt',
+                    label: 'Seen',
+                    render: FeatureSeenCell,
+                    sort: 'date',
+                    align: 'center',
+                },
+                {
+                    field: 'type',
+                    label: 'Type',
+                    render: FeatureTypeCell,
+                    sort: true,
+                    align: 'center',
+                },
+                {
+                    field: 'name',
+                    label: 'Feature toggle name',
+                    render: FeatureNameCell,
+                    sort: true,
+                },
+                {
+                    field: 'createdAt',
+                    label: 'Created on',
+                    render: ({ createdAt }) => <DateCell date={createdAt} />,
+                    sort: 'date',
+                },
+                {
+                    field: 'project',
+                    label: 'Project ID',
+                    render: ({ project, ...rest }) => (
+                        <LinkCell {...rest} to={`/projects/${project}`}>
+                            {project}
+                        </LinkCell>
+                    ),
+                    sort: true,
+                },
+                {
+                    field: 'stale',
+                    label: 'State',
+                    render: FeatureStaleCell,
+                    sort: (
+                        { stale: a }: FeatureSchema,
+                        { stale: b }: FeatureSchema
+                    ) => (a === b ? 0 : a ? 1 : -1),
+                },
+            ]}
+            searchColumns={['name', 'description', 'project']}
+            // pageSize={50}
+        />
     );
 };

@@ -1,13 +1,13 @@
 import { VFC } from 'react';
 import { Typography } from '@material-ui/core';
-import { useStyles } from './FeatureStatusCell.styles';
+import { useStyles } from './FeatureStaleCell.styles';
 import classnames from 'classnames';
 
-interface IFeatureStatusCellProps {
+interface IFeatureStaleCellProps {
     stale?: boolean;
 }
 
-export const FeatureStatusCell: VFC<IFeatureStatusCellProps> = ({ stale }) => {
+export const FeatureStaleCell: VFC<IFeatureStaleCellProps> = ({ stale }) => {
     const styles = useStyles();
     return (
         <Typography

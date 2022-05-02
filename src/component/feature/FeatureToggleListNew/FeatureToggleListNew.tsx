@@ -78,6 +78,9 @@ const useFeatureToggLeProjectSort = createGlobalStateHook<ISortedState>(
     { field: 'name', type: 'string', direction: 0 }
 );
 
+/**
+ * @deprecated
+ */
 const FeatureToggleListNew = ({
     features,
     loading,

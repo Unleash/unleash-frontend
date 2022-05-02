@@ -5,6 +5,7 @@ export const useStyles = makeStyles(theme => ({
         padding: 0,
     },
     tableSortableCell: {
+        backgroundColor: theme.v2.palette.grey[20],
         '&:hover': {
             backgroundColor: theme.v2.palette.grey[40],
             '& > svg': {
@@ -42,5 +43,8 @@ export const useStyles = makeStyles(theme => ({
         fontSize: theme.v2.fontSizes.headerIcon,
         lineHeight: '1',
         marginLeft: theme.spacing(0.5),
+    },
+    inactiveIcon: {
+        color: theme.v2.palette.grey[70],
     },
 }));

@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useMemo, VFC } from 'react';
+import { ComponentProps, createElement, ReactNode, useMemo, VFC } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,16 +7,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
 import { usePagination } from 'hooks/table/usePagination';
-import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
 import { useStyles } from './EnhancedTable.styles';
 import Pagination from '../Pagination/Pagination';
 import { sortPresetFunctions } from 'hooks/table/useSort';
 import { useSortableHeaders } from 'hooks/table/useSortableHeaders';
+import { TableHeader } from '../TableHeader/TableHeader';
+import { TableColumnHeader } from '../TableColumnHeader/TableColumnHeader';
+import { TableActions } from '../TableActions/TableActions';
+import { useSearch } from 'hooks/table/useSearch';
 
 const columnRenderer = {
     number: (value: number) => `${value}`,
     boolean: (value: boolean) => (value ? 'Yes' : 'No'),
-    date: (value: string | Date) => new Date(value).toLocaleDateString(), // FIXME: format
 };
 
 interface IEnhancedTableProps<T extends Record<string, any>> {
@@ -28,40 +30,68 @@ interface IEnhancedTableProps<T extends Record<string, any>> {
     dataKey: keyof T;
     /**
      * What columns to render and how.
-     * TODO: improve type
      */
-    columns: (
-        | {
-              field: keyof T;
-              render?: boolean | keyof typeof columnRenderer | VFC<Partial<T>>;
-              label?: string;
-              align?: ComponentProps<typeof TableCell>['align'];
-              sort?:
-                  | boolean
-                  | keyof typeof sortPresetFunctions
-                  | VFC<Partial<T>>;
-          }
-        | {
-              field: string;
-              render?: VFC<Partial<T>>;
-              label?: string;
-              align?: ComponentProps<typeof TableCell>['align'];
-              sort?: VFC<Partial<T>>;
-          }
-    )[];
+    columns: {
+        field: keyof T;
+        render?:
+            | boolean
+            | keyof typeof columnRenderer
+            | VFC<Partial<T> & { __search?: string }>;
+        label?: string;
+        align?: ComponentProps<typeof TableCell>['align'];
+        sort?:
+            | true
+            | keyof typeof sortPresetFunctions
+            | ((a: T, b: T) => number);
+    }[];
+    defaultSort?: { field: keyof T; order: 'asc' | 'desc' };
+    searchColumns?: (keyof T)[];
+    toolbar?: ReactNode;
+    isToolbarSeparated?: boolean;
     pageSize?: number;
+    isLoading?: boolean;
 }
 
+/**
+ * TODO: refactor into hook
+ */
 export const EnhancedTable = <T,>({
     data,
     dataKey,
     columns,
     pageSize,
     title,
+    defaultSort,
+    toolbar,
+    isToolbarSeparated,
+    searchColumns,
+    isLoading,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
     const classes = useStyles();
 
-    const { data: sortedData } = useSortableHeaders(data, {});
+    const {
+        search,
+        data: searchedData,
+        onSearch,
+    } = useSearch(data, {
+        columns: searchColumns,
+    });
+
+    const sortOptions = useMemo(() => {
+        const columnsWithSort = columns.filter(({ sort }) => Boolean(sort));
+        return columnsWithSort.reduce(
+            (acc, { field, sort }) => ({ ...acc, [field]: sort }),
+            {} as Record<
+                keyof T,
+                | true
+                | keyof typeof sortPresetFunctions
+                | ((a: T, b: T) => number)
+            >
+        );
+    }, [columns]);
+
+    const { data: sortedData, headerProps: sortableHeaderProps } =
+        useSortableHeaders(searchedData, sortOptions, defaultSort);
 
     const {
         data: page,
@@ -96,30 +126,48 @@ export const EnhancedTable = <T,>({
                         // @ts-expect-error -- TS has issues resolving parameter types
                         row[key] = func(value);
                     } else if (typeof render === 'function') {
-                        row[key] = render(item);
+                        row[key] = createElement(render, {
+                            ...item,
+                            __search: Boolean(onSearch) ? search : undefined,
+                        });
                     }
                 });
                 return row;
             }),
-        [page, dataKey, columns]
+        [page, dataKey, columns, onSearch, search]
     );
 
     return (
         <Paper className={classes.paper}>
-            <TableToolbar title={title} />
+            <TableToolbar title={title}>
+                <TableActions
+                    isSeparated={isToolbarSeparated}
+                    search={search}
+                    onSearch={
+                        searchColumns && searchColumns?.length > 0
+                            ? onSearch
+                            : undefined
+                    }
+                >
+                    {toolbar}
+                </TableActions>
+            </TableToolbar>
             <TableContainer className={classes.tableContainer}>
                 <Table
                     aria-labelledby="tableTitle"
                     size="medium"
                     aria-label="enhanced table"
                 >
-                    <EnhancedTableHead
-                        columns={columns.map(({ field, label, align }) => ({
-                            field: field as string,
-                            label,
-                            align,
-                        }))}
-                    />
+                    <TableHeader>
+                        {columns.map(({ field, label }) => (
+                            <TableColumnHeader
+                                key={field as string}
+                                {...sortableHeaderProps[field as string]}
+                            >
+                                {label || (field as string)}
+                            </TableColumnHeader>
+                        ))}
+                    </TableHeader>
                     <TableBody>
                         {rows.map(row => (
                             <TableRow hover tabIndex={-1} key={row.__key}>
@@ -128,7 +176,7 @@ export const EnhancedTable = <T,>({
                                         key={field as string}
                                         align={align}
                                     >
-                                        {row[field]}
+                                        {row[field as string]}
                                     </TableCell>
                                 ))}
                             </TableRow>

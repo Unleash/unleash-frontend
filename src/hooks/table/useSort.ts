@@ -5,7 +5,7 @@ export const sortPresetFunctions = {
     string: (a: string, b: string): number =>
         a?.toLowerCase()?.localeCompare(b?.toLowerCase()),
     number: (a: number, b: number): number => a - b,
-    date: (a: Date, b: Date): number => a?.getTime() - b?.getTime(), // TODO: test
+    date: (a: Date, b: Date): number => b?.getTime() - a?.getTime(),
 };
 
 const sort = <T extends Record<string, any>, K extends string>(
@@ -62,7 +62,7 @@ export const useSort = <T extends Record<string, any>, K extends string>(
           >
         | Record<K, (a: T, b: T) => number>,
     defaultSort?: {
-        field: K;
+        field: keyof T | K;
         order?: 'asc' | 'desc';
     }
 ) => {
@@ -74,7 +74,7 @@ export const useSort = <T extends Record<string, any>, K extends string>(
             sortState?.field
                 ? sort(
                       columns,
-                      sortState?.field,
+                      sortState?.field as string,
                       sortState?.order || 'asc',
                       deepClone(data)
                   )

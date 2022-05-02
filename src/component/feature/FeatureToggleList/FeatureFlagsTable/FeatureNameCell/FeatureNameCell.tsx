@@ -6,18 +6,17 @@ import { useStyles } from './FeatureNameCell.styles';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 
 interface IFeatureNameCellProps {
-    name: string;
-    project: string;
+    name?: string;
+    project?: string;
     description?: string;
-    search?: string;
+    __search?: string;
 }
 
 export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
-    children,
     name,
     project,
     description,
-    search,
+    __search,
 }) => {
     const styles = useStyles();
     return (
@@ -27,8 +26,12 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
                 to={`/projects/${project}/features/${name}`}
             >
                 <ConditionallyRender
-                    condition={Boolean(search)}
-                    show={<Highlighter search={search!}>{name}</Highlighter>}
+                    condition={Boolean(__search)}
+                    show={
+                        <Highlighter search={__search!}>
+                            {name || ''}
+                        </Highlighter>
+                    }
                     elseShow={name}
                 />
             </Link>
@@ -43,9 +46,9 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
                             component="span"
                         >
                             <ConditionallyRender
-                                condition={Boolean(search)}
+                                condition={Boolean(__search)}
                                 show={
-                                    <Highlighter search={search!}>
+                                    <Highlighter search={__search!}>
                                         {description!}
                                     </Highlighter>
                                 }

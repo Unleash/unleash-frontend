@@ -22,6 +22,31 @@ describe('sortPresetFunctions', () => {
             ]);
         });
     });
+
+    describe('date', () => {
+        const sortString = (input: Date[]) =>
+            input
+                .sort(sortPresetFunctions['date'])
+                .map(date => date.toISOString());
+
+        it('sorts uppercase and numbers correctly', () => {
+            expect(
+                sortString([
+                    new Date('2022-04-04'),
+                    new Date('2022-01-01'),
+                    new Date('2022-03-03'),
+                    new Date('2022-02-02'),
+                    new Date('2022-05-05'),
+                ])
+            ).toEqual([
+                new Date('2022-05-05').toISOString(),
+                new Date('2022-04-04').toISOString(),
+                new Date('2022-03-03').toISOString(),
+                new Date('2022-02-02').toISOString(),
+                new Date('2022-01-01').toISOString(),
+            ]);
+        });
+    });
 });
 
 describe('useSort', () => {

@@ -26,7 +26,7 @@ import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
 import { DateCell } from './DateCell/DateCell';
 import { LinkCell } from './LinkCell/LinkCell';
-import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
+import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -42,6 +42,9 @@ interface IFeatureFlagsTableProps {
     data: FeatureSchema[];
 }
 
+/**
+ * @deprecated
+ */
 export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
     const styles = useStyles();
 
@@ -147,21 +150,22 @@ export const FeatureFlagsTable: VFC<IFeatureFlagsTableProps> = ({ data }) => {
                                             name={name}
                                             project={project}
                                             description={description}
-                                            search={search}
+                                            __search={search}
                                         />
                                     </TableCell>
                                     <TableCell>
                                         <DateCell date={createdAt} />
                                     </TableCell>
                                     <TableCell>
-                                        <LinkCell to={`/project/${project}`}>
-                                            <Highlighter search={search}>
-                                                {project}
-                                            </Highlighter>
+                                        <LinkCell
+                                            to={`/project/${project}`}
+                                            __search={search}
+                                        >
+                                            {project}
                                         </LinkCell>
                                     </TableCell>
                                     <TableCell>
-                                        <FeatureStatusCell stale={stale} />
+                                        <FeatureStaleCell stale={stale} />
                                     </TableCell>
                                 </TableRow>
                             )
