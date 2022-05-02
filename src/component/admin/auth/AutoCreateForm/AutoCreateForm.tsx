@@ -74,6 +74,7 @@ export const AutoCreateForm = ({
                             Default Role
                         </InputLabel>
                         <Select
+                            label="Default Role"
                             labelId="defaultRootRole-label"
                             id="defaultRootRole"
                             name="defaultRootRole"
