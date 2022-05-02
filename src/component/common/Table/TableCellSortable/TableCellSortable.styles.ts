@@ -6,7 +6,6 @@ export const useStyles = makeStyles()(theme => ({
         padding: 0,
         position: 'relative',
         cursor: 'pointer',
-        overflow: 'hidden',
         '& > svg': {
             fontSize: 18,
             verticalAlign: 'middle',
