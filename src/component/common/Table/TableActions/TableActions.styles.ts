@@ -1,8 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
+    tableActions: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        '&>button': {
+            padding: '8px',
+            flexShrink: 0,
+        },
+        paddingRight: theme.spacing(1),
+    },
     fieldWidth: {
-        width: '49px',
+        width: '45px',
         '& .search-icon': {
             marginRight: 0,
         },
@@ -18,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     fieldWidthEnter: {
-        width: '100%',
+        width: '250px',
         transition: 'width 0.6s',
         '& .search-icon': {
             marginRight: '8px',
@@ -36,7 +46,7 @@ export const useStyles = makeStyles(theme => ({
         },
     },
     fieldWidthLeave: {
-        width: '49px',
+        width: '45px',
         transition: 'width 0.6s',
         '& .search-icon': {
             marginRight: 0,
@@ -55,8 +65,8 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: theme.v2.palette.grey[50],
         width: '1px',
         display: 'inline-block',
-        marginLeft: '16px',
-        marginRight: '32px',
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(4),
         padding: '10px 0',
         verticalAlign: 'middle',
     },

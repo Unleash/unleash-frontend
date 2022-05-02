@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureNameCell.styles';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 

@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
-import { TableSearchField } from 'component/common/Table/TableActions/TableSearchField/TableSearchField';
-import { useStyles } from 'component/common/Table/TableActions/TableActions.styles';
+import { TableSearchField } from './TableSearchField/TableSearchField';
+import { useStyles } from './TableActions.styles';
 
 interface ITableActionsProps {
     search: string;
     onSearch: (value: string) => void;
+    searchTip?: string;
 }
 
-export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
+export const TableActions: FC<ITableActionsProps> = ({
+    search,
+    onSearch,
+    searchTip = 'Search',
+    children,
+}) => {
     const [searchExpanded, setSearchExpanded] = useState(false);
     const [animating, setAnimating] = useState(false);
 
@@ -24,7 +30,7 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
     };
 
     return (
-        <>
+        <div className={styles.tableActions}>
             <AnimateOnMount
                 mounted={searchExpanded}
                 start={styles.fieldWidth}
@@ -36,16 +42,16 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
                 <TableSearchField
                     value={search}
                     onChange={onSearch}
-                    placeholder="Search users..."
+                    placeholder={`${searchTip}...`}
                     onBlur={onBlur}
                 />
             </AnimateOnMount>
             <ConditionallyRender
                 condition={!searchExpanded && !animating}
                 show={
-                    <Tooltip title="Search users" arrow>
+                    <Tooltip title={searchTip} arrow>
                         <IconButton
-                            aria-label="Search users"
+                            aria-label={searchTip}
                             onClick={() => setSearchExpanded(true)}
                         >
                             <Search />
@@ -53,7 +59,12 @@ export const TableActions = ({ search, onSearch }: ITableActionsProps) => {
                     </Tooltip>
                 }
             />
-            <div className={styles.verticalSeparator} />
-        </>
+            <ConditionallyRender
+                condition={Boolean(children)}
+                show={<div className={styles.verticalSeparator} />}
+            />
+
+            {children}
+        </div>
     );
 };

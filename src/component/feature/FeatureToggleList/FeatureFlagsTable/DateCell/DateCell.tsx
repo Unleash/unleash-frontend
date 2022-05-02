@@ -1,7 +1,7 @@
 import { VFC } from 'react';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD, formatDateYMDHMS } from 'utils/formatDate';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Tooltip } from '@material-ui/core';
 
 interface IDateCellProps {

@@ -4,7 +4,7 @@ import { useMediaQuery, useTheme } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
-import ConditionallyRender from 'component/common/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './PaginationUI.styles';
 
 interface IPaginationProps {

@@ -11,17 +11,17 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { FeatureSchema } from 'openapi';
-import { TableToolbar } from '../TableToolbar/TableToolbar';
-import { TableColumnHeader } from '../TableColumnHeader/TableColumnHeader';
-import { TableHeader } from '../TableHeader/TableHeader';
+import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
+import { TableColumnHeader } from 'component/common/Table/TableColumnHeader/TableColumnHeader';
+import { TableHeader } from 'component/common/Table/TableHeader/TableHeader';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
-import { useSearch } from '../hooks/useSearch';
-import { useSortableHeaders } from '../hooks/useSortableHeaders';
-import { TableActions } from '../TableActions/TableActions';
+import { useSearch } from 'hooks/table/useSearch';
+import { useSortableHeaders } from 'hooks/table/useSortableHeaders';
+import { TableActions } from 'component/common/Table/TableActions/TableActions';
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
-import { usePagination } from '../hooks/usePagination';
-import Pagination from '../Pagination/Pagination';
+import { usePagination } from 'hooks/table/usePagination';
+import Pagination from 'component/common/Table/Pagination/Pagination';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
 import { DateCell } from './DateCell/DateCell';

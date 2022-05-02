@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useMemo, useState, VFC } from 'react';
+import { ComponentProps, ReactNode, useMemo, VFC } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { TableToolbar } from '../TableToolbar/TableToolbar';
+import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
 import { EnhancedTableHead } from './EnhancedTableHead/EnhancedTableHead';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -54,12 +54,14 @@ interface IEnhancedTableProps<T extends Record<string, any>> {
               align?: ComponentProps<typeof TableCell>['align'];
           }
     )[];
+    pageSize?: number;
 }
 
 export const EnhancedTable = <T,>({
     data,
     dataKey,
     columns,
+    pageSize,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
     const classes = useStyles();
 
@@ -116,7 +118,7 @@ export const EnhancedTable = <T,>({
                             }))}
                         />
                         <TableBody>
-                            {rows.map((row, index) => (
+                            {rows.map(row => (
                                 <TableRow hover tabIndex={-1} key={row.__key}>
                                     {columns.map(({ field, align }) => (
                                         <TableCell
