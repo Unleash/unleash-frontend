@@ -8,7 +8,7 @@ const randomId = String(Math.random()).split('.')[1];
 const segmentName = `unleash-e2e-${randomId}`;
 
 Cypress.config({
-    experimentalSessionSupport: true,
+    experimentalSessionAndOrigin: true,
 });
 
 // Disable all active splash pages by visiting them.
