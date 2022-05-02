@@ -87,7 +87,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                                     commonStyles.truncate
                                 )}
                             >
-                                <Tooltip title={description || ' '}>
+                                <Tooltip title={description || ''}>
                                     <span className={commonStyles.toggleName}>
                                         {name}&nbsp;
                                     </span>
@@ -114,7 +114,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                         }
                         elseShow={
                             <>
-                                <Tooltip title={description || ' '}>
+                                <Tooltip title={description || ''}>
                                     <span className={commonStyles.toggleName}>
                                         {name}&nbsp;{' '}
                                     </span>
