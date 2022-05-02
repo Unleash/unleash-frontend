@@ -22,7 +22,7 @@ Array [
           data-loading={true}
         >
           <h1
-            className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-ng3ysa-MuiTypography-root"
+            className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-1inkmva-MuiTypography-root"
           >
             Strategies
           </h1>
@@ -35,7 +35,7 @@ Array [
           >
             <button
               aria-describedby="useId-0"
-              className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-2lddgn-MuiButtonBase-root-MuiButton-root"
+              className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-duvws4-MuiButtonBase-root-MuiButton-root"
               data-testid="ADD_NEW_STRATEGY_ID"
               disabled={false}
               onBlur={[Function]}
@@ -100,7 +100,7 @@ Array [
             className="MuiListItemText-root MuiListItemText-multiline mui-konndc-MuiListItemText-root"
           >
             <span
-              className="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-1atpzw9-MuiTypography-root"
+              className="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-1k7ov6f-MuiTypography-root"
             >
               <a
                 href="/strategies/flexibleRollout"
@@ -112,7 +112,7 @@ Array [
               </a>
             </span>
             <p
-              className="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary mui-y6t000-MuiTypography-root"
+              className="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary mui-1yab20-MuiTypography-root"
             >
               Roll out to a percentage of your userbase, and ensure that the experience is the same for the user on each visit.
             </p>

@@ -21,7 +21,7 @@ exports[`renders an empty list correctly 1`] = `
         data-loading={true}
       >
         <h1
-          className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-ng3ysa-MuiTypography-root"
+          className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-1inkmva-MuiTypography-root"
         >
           Tag Types
         </h1>
@@ -30,7 +30,7 @@ exports[`renders an empty list correctly 1`] = `
         className="tss-ap2nhp-headerActions"
       >
         <button
-          className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-2lddgn-MuiButtonBase-root-MuiButton-root"
+          className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-duvws4-MuiButtonBase-root-MuiButton-root"
           disabled={false}
           onBlur={[Function]}
           onClick={[Function]}
