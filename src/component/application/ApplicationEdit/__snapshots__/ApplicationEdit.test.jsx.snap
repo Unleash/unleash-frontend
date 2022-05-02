@@ -1,64 +1,91 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
 exports[`renders correctly if no application 1`] = `
-<div>
-  <p>
-    Loading...
-  </p>
-  <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
-    role="progressbar"
-  >
+[
+  <div>
+    <p>
+      Loading...
+    </p>
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
-      style={Object {}}
-    />
-    <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
-      style={Object {}}
-    />
-  </span>
-</div>
+      className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+      role="progressbar"
+    >
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+        style={{}}
+      />
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+        style={{}}
+      />
+    </span>
+  </div>,
+  <div
+    aria-atomic={true}
+    aria-live="polite"
+    className="tss-1cl4o05-container"
+    data-testid="ANNOUNCER_ELEMENT_TEST_ID"
+    role="status"
+  />,
+]
 `;
 
 exports[`renders correctly with permissions 1`] = `
-<div>
-  <p>
-    Loading...
-  </p>
-  <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
-    role="progressbar"
-  >
+[
+  <div>
+    <p>
+      Loading...
+    </p>
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
-      style={Object {}}
-    />
-    <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
-      style={Object {}}
-    />
-  </span>
-</div>
+      className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+      role="progressbar"
+    >
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+        style={{}}
+      />
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+        style={{}}
+      />
+    </span>
+  </div>,
+  <div
+    aria-atomic={true}
+    aria-live="polite"
+    className="tss-1cl4o05-container"
+    data-testid="ANNOUNCER_ELEMENT_TEST_ID"
+    role="status"
+  />,
+]
 `;
 
 exports[`renders correctly without permission 1`] = `
-<div>
-  <p>
-    Loading...
-  </p>
-  <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
-    role="progressbar"
-  >
+[
+  <div>
+    <p>
+      Loading...
+    </p>
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
-      style={Object {}}
-    />
-    <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
-      style={Object {}}
-    />
-  </span>
-</div>
+      className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+      role="progressbar"
+    >
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+        style={{}}
+      />
+      <span
+        className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+        style={{}}
+      />
+    </span>
+  </div>,
+  <div
+    aria-atomic={true}
+    aria-live="polite"
+    className="tss-1cl4o05-container"
+    data-testid="ANNOUNCER_ELEMENT_TEST_ID"
+    role="status"
+  />,
+]
 `;

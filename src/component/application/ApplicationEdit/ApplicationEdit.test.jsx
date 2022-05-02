@@ -1,3 +1,4 @@
+import {vi} from 'vitest'
 import { ApplicationEdit } from './ApplicationEdit';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
@@ -5,22 +6,25 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
 import { ThemeProvider } from 'themes/ThemeProvider';
 import { AccessProviderMock } from 'component/providers/AccessProvider/AccessProviderMock';
+import { AnnouncerProvider } from 'component/common/Announcer/AnnouncerProvider/AnnouncerProvider';
 
 test('renders correctly if no application', () => {
     const tree = renderer
         .create(
             <AccessProviderMock permissions={[{ permission: ADMIN }]}>
                 <ThemeProvider>
+                <AnnouncerProvider>
                     <UIProvider>
                         <MemoryRouter initialEntries={['/test']}>
                             <ApplicationEdit
                                 fetchApplication={() => Promise.resolve({})}
-                                storeApplicationMetaData={jest.fn()}
-                                deleteApplication={jest.fn()}
+                                storeApplicationMetaData={vi.fn()}
+                                deleteApplication={vi.fn()}
                                 locationSettings={{ locale: 'en-GB' }}
                             />
                         </MemoryRouter>
                     </UIProvider>
+                    </AnnouncerProvider>
                 </ThemeProvider>
             </AccessProviderMock>
         )
@@ -34,14 +38,15 @@ test('renders correctly without permission', () => {
         .create(
             <MemoryRouter>
                 <ThemeProvider>
+                <AnnouncerProvider>
                     <UIProvider>
                         <AccessProviderMock
                             permissions={[{ permission: ADMIN }]}
                         >
                             <ApplicationEdit
                                 fetchApplication={() => Promise.resolve({})}
-                                storeApplicationMetaData={jest.fn()}
-                                deleteApplication={jest.fn()}
+                                storeApplicationMetaData={vi.fn()}
+                                deleteApplication={vi.fn()}
                                 application={{
                                     appName: 'test-app',
                                     instances: [
@@ -85,6 +90,7 @@ test('renders correctly without permission', () => {
                             />
                         </AccessProviderMock>
                     </UIProvider>
+                    </AnnouncerProvider>
                 </ThemeProvider>
             </MemoryRouter>
         )
@@ -98,14 +104,15 @@ test('renders correctly with permissions', () => {
         .create(
             <MemoryRouter>
                 <ThemeProvider>
+                <AnnouncerProvider>
                     <UIProvider>
                         <AccessProviderMock
                             permissions={[{ permission: ADMIN }]}
                         >
                             <ApplicationEdit
                                 fetchApplication={() => Promise.resolve({})}
-                                storeApplicationMetaData={jest.fn()}
-                                deleteApplication={jest.fn()}
+                                storeApplicationMetaData={vi.fn()}
+                                deleteApplication={vi.fn()}
                                 application={{
                                     appName: 'test-app',
                                     instances: [
@@ -149,6 +156,7 @@ test('renders correctly with permissions', () => {
                             />
                         </AccessProviderMock>
                     </UIProvider>
+                    </AnnouncerProvider>
                 </ThemeProvider>
             </MemoryRouter>
         )

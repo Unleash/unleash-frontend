@@ -1,141 +1,141 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
 exports[`returns all baseRoutes 1`] = `
-Array [
-  Object {
+[
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "path": "/splash/:splashId",
     "title": "Unleash",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/create",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:id/edit",
     "title": ":id",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/archive",
     "path": "/projects/:id/archived",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects/:id/features/:name/:activeTab",
     "path": "/projects/:id/features/:name/:activeTab/copy",
     "title": "Copy",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:projectId/features/:featureId/edit",
     "title": "Edit feature",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:projectId/features/:featureId",
     "title": "FeatureView",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:id/features/:name/:activeTab",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects/:id/features",
     "path": "/projects/:projectId/create-toggle",
     "title": "Create feature toggle",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/features",
     "path": "/projects/:projectId/features2/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "P",
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:id/:activeTab",
     "title": ":id",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "P",
-    "menu": Object {},
+    "menu": {},
     "parent": "/projects",
     "path": "/projects/:id",
     "title": ":id",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "mobile": true,
     },
     "path": "/projects",
     "title": "Projects",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/features",
     "path": "/features/:activeTab/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "mobile": true,
     },
     "path": "/features",
     "title": "Feature toggles",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/applications",
     "path": "/applications/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -143,28 +143,28 @@ Array [
     "title": "Applications",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "C",
-    "menu": Object {},
+    "menu": {},
     "parent": "/context",
     "path": "/context/create",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "C",
-    "menu": Object {},
+    "menu": {},
     "parent": "/context",
     "path": "/context/edit/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "C",
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -172,33 +172,33 @@ Array [
     "title": "Context fields",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/strategies",
     "path": "/strategies/create",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/strategies",
     "path": "/strategies/:name/edit",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/strategies",
     "path": "/strategies/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -206,25 +206,25 @@ Array [
     "title": "Strategies",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/environments",
     "path": "/environments/create",
     "title": "Environments",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "path": "/environments/:id",
     "title": "Edit",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "EEA",
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -232,25 +232,25 @@ Array [
     "title": "Environments",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/tag-types",
     "path": "/tag-types/create",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/tag-types",
     "path": "/tag-types/edit/:name",
     "title": ":name",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -258,26 +258,26 @@ Array [
     "title": "Tag types",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/addons",
     "path": "/addons/create/:providerId",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/addons",
     "path": "/addons/edit/:addonId",
     "title": "Edit",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "hidden": false,
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -285,31 +285,31 @@ Array [
     "title": "Addons",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "SE",
     "hidden": false,
     "layout": "main",
-    "menu": Object {},
+    "menu": {},
     "path": "/segments/create",
     "title": "Segments",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "SE",
     "hidden": false,
     "layout": "main",
-    "menu": Object {},
+    "menu": {},
     "path": "/segments/edit/:segmentId",
     "title": "Segments",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "SE",
     "hidden": false,
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -317,57 +317,57 @@ Array [
     "title": "Segments",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/history",
     "path": "/history/:toggleName",
     "title": ":toggleName",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "adminSettings": true,
     },
     "path": "/history",
     "title": "Event log",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "path": "/archive",
     "title": "Archived toggles",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/admin",
     "path": "/admin/api/create-token",
     "title": "API access",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "RE",
-    "menu": Object {},
+    "menu": {},
     "path": "/admin/create-project-role",
     "title": "Create",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "RE",
-    "menu": Object {},
+    "menu": {},
     "path": "/admin/roles/:id/edit",
     "title": "Edit",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "advanced": true,
       "mobile": true,
     },
@@ -376,9 +376,9 @@ Array [
     "title": "API access",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "adminSettings": true,
     },
     "parent": "/admin",
@@ -386,18 +386,18 @@ Array [
     "title": "Users",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {},
+    "menu": {},
     "parent": "/admin",
     "path": "/admin/create-user",
     "title": "Users",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "flag": "RE",
-    "menu": Object {
+    "menu": {
       "adminSettings": true,
     },
     "parent": "/admin",
@@ -405,9 +405,9 @@ Array [
     "title": "Project roles",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
-    "menu": Object {
+    "menu": {
       "adminSettings": true,
     },
     "parent": "/admin",
@@ -415,10 +415,10 @@ Array [
     "title": "Single sign-on",
     "type": "protected",
   },
-  Object {
+  {
     "component": [Function],
     "hidden": false,
-    "menu": Object {},
+    "menu": {},
     "path": "/admin",
     "title": "Admin",
     "type": "protected",
