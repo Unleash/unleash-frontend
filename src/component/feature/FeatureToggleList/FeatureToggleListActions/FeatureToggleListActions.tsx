@@ -49,7 +49,7 @@ export const FeatureToggleListActions: VFC<IFeatureToggleListActionsProps> = ({
         sortOptions.find(o => o.type === sort.type) || sortOptions[0];
 
     if (inProject) {
-        sortOptions = sortOptions.filter(o => o.type !== 'project');
+        sortOptions = sortOptions.filter(option => option.type !== 'project');
     }
 
     const renderSortingOptions = () =>
