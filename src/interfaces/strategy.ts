@@ -50,6 +50,4 @@ export interface IConstraint {
     caseInsensitive?: boolean;
     operator: Operator;
     contextName: string;
-
-    [index: string]: unknown;
 }
