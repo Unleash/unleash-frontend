@@ -11,7 +11,7 @@ import useQueryParams from 'hooks/useQueryParams';
 import { useEffect } from 'react';
 import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
-import { ProjectArchive } from './ProjectArchive/ProjectArchive';
+import { ProjectFeaturesArchive } from './ProjectFeaturesArchive/ProjectFeaturesArchive';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
@@ -55,7 +55,7 @@ const Project = () => {
         },
         {
             title: 'Archive',
-            component: <ProjectArchive projectId={id} />,
+            component: <ProjectFeaturesArchive projectId={id} />,
             path: `${basePath}/archive`,
             name: 'archive',
         },

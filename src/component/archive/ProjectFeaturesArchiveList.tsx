@@ -1,4 +1,5 @@
-import { useFeaturesArchive } from 'hooks/api/getters/useFeaturesArchive/useFeaturesArchive';
+import { FC } from 'react';
+import { useProjectFeaturesArchive } from 'hooks/api/getters/useProjectFeaturesArchive/useProjectFeaturesArchive';
 import { FeatureToggleList } from '../feature/FeatureToggleList/FeatureToggleList';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
@@ -6,7 +7,13 @@ import { useFeatureArchiveApi } from 'hooks/api/actions/useFeatureArchiveApi/use
 import useToast from 'hooks/useToast';
 import { useFeaturesSort } from 'hooks/useFeaturesSort';
 
-export const ArchiveListContainer = () => {
+interface IProjectFeaturesArchiveList {
+    projectId: string;
+}
+
+export const ProjectFeaturesArchiveList: FC<IProjectFeaturesArchiveList> = ({
+    projectId,
+}) => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const { reviveFeature } = useFeatureArchiveApi();
@@ -15,7 +22,7 @@ export const ArchiveListContainer = () => {
         archivedFeatures = [],
         refetchArchived,
         loading,
-    } = useFeaturesArchive();
+    } = useProjectFeaturesArchive(projectId);
 
     const { filtered, filter, setFilter } = useFeaturesFilter(archivedFeatures);
     const { sorted, sort, setSort } = useFeaturesSort(filtered);
@@ -45,6 +52,7 @@ export const ArchiveListContainer = () => {
             sort={sort}
             setSort={setSort}
             isArchive
+            inProject={Boolean(projectId)}
         />
     );
 };
