@@ -82,12 +82,11 @@ const UsersList = ({ search }: IUsersListProps) => {
         setPwDialog({ open: false });
     };
 
-    const onDeleteUser = async () => {
+    const onDeleteUser = async (user: IUser) => {
         try {
-            // @ts-expect-error
-            await removeUser(delUser);
+            await removeUser(user.id);
             setToastData({
-                title: `${delUser?.name} has been deleted`,
+                title: `${user.name} has been deleted`,
                 type: 'success',
             });
             refetch();
@@ -126,7 +125,6 @@ const UsersList = ({ search }: IUsersListProps) => {
         return page.map(user => {
             return (
                 <UserListItem
-                    // @ts-expect-error
                     key={user.id}
                     user={user}
                     openPwDialog={openPwDialog}
@@ -237,7 +235,7 @@ const UsersList = ({ search }: IUsersListProps) => {
                         showDialog={delDialog}
                         closeDialog={closeDelDialog}
                         user={delUser!}
-                        removeUser={onDeleteUser}
+                        removeUser={() => onDeleteUser(delUser!)}
                         userLoading={userLoading}
                         userApiErrors={userApiErrors}
                     />
