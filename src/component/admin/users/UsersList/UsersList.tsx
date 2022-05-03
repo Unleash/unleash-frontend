@@ -39,13 +39,8 @@ const UsersList = ({ search }: IUsersListProps) => {
     const { classes: styles } = useStyles();
     const { users, roles, refetch, loading } = useUsers();
     const { setToastData, setToastApiError } = useToast();
-    const {
-        removeUser,
-        changePassword,
-        validatePassword,
-        userLoading,
-        userApiErrors,
-    } = useAdminUsersApi();
+    const { removeUser, changePassword, userLoading, userApiErrors } =
+        useAdminUsersApi();
     const { hasAccess } = useContext(AccessContext);
     const { locationSettings } = useLocationSettings();
     const [pwDialog, setPwDialog] = useState<{ open: boolean; user?: IUser }>({
@@ -224,16 +219,17 @@ const UsersList = ({ search }: IUsersListProps) => {
                 inviteLink={inviteLink}
             />
 
-            <ChangePassword
-                showDialog={pwDialog.open}
-                closeDialog={closePwDialog}
-                // @ts-expect-error
-                changePassword={changePassword}
-                validatePassword={validatePassword}
-                // @ts-expect-error
-                user={pwDialog.user}
+            <ConditionallyRender
+                condition={Boolean(pwDialog.user)}
+                show={() => (
+                    <ChangePassword
+                        showDialog={pwDialog.open}
+                        closeDialog={closePwDialog}
+                        changePassword={changePassword}
+                        user={pwDialog.user!}
+                    />
+                )}
             />
-
             <ConditionallyRender
                 condition={Boolean(delUser)}
                 show={
