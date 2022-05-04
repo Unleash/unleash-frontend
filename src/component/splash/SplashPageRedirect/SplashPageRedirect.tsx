@@ -18,7 +18,7 @@ export const SplashPageRedirect = () => {
         return null;
     }
 
-    if (matchPath(pathname, { path: '/splash/:splashId' })) {
+    if (matchPath('/splash/:splashId', pathname)) {
         // We've already redirected to the splash page.
         return null;
     }
