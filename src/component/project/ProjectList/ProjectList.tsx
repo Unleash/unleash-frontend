@@ -94,12 +94,7 @@ export const ProjectListNew = () => {
             return (
                 <Link
                     key={project.id}
-                    to={{
-                        pathname: `/projects/${project.id}`,
-                        state: {
-                            projectName: project.name,
-                        },
-                    }}
+                    to={`/projects/${project.id}`}
                     className={styles.cardLink}
                 >
                     <ProjectCard
