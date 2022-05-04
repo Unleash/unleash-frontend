@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useParams } from 'react-router';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -30,7 +30,7 @@ export const ProjectFeatureToggles = ({
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
     const { id } = useParams<{ id: string }>();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const [filter, setFilter] = useState('');
@@ -76,7 +76,7 @@ export const ProjectFeatureToggles = ({
 
                             <ResponsiveButton
                                 onClick={() =>
-                                    history.push(
+                                    navigate(
                                         getCreateTogglePath(
                                             id,
                                             uiConfig.flags.E

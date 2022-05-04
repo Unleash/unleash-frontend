@@ -5,7 +5,7 @@ import {
     FormEventHandler,
     ChangeEventHandler,
 } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
     Button,
     TextField,
@@ -36,7 +36,7 @@ export const CopyFeatureToggle = () => {
         id: string;
     }>();
     const { feature } = useFeature(projectId, copyToggleName);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         inputRef.current?.focus();
@@ -73,7 +73,7 @@ export const CopyFeatureToggle = () => {
                 name: newToggleName as string,
                 replaceGroupId,
             });
-            history.push(getTogglePath(projectId, newToggleName as string));
+            navigate(getTogglePath(projectId, newToggleName as string));
         } catch (error) {
             setApiError(formatUnknownError(error));
         }

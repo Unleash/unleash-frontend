@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import AccessContext from 'contexts/AccessContext';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
@@ -25,7 +25,7 @@ const FeatureSettingsProject = () => {
     const { permissions = [] } = useAuthPermissions();
     const { changeFeatureProject } = useFeatureApi();
     const { setToastData, setToastApiError } = useToast();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (project !== feature.project) {
@@ -59,9 +59,9 @@ const FeatureSettingsProject = () => {
             });
             setDirty(false);
             setShowConfirmDialog(false);
-            history.replace(
-                `/projects/${newProject}/features/${featureId}/settings`
-            );
+            navigate(`/projects/${newProject}/features/${featureId}/settings`, {
+                replace: true,
+            });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         }

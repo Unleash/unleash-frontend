@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import useLoading from 'hooks/useLoading';
 import ApiError from 'component/common/ApiError/ApiError';
@@ -25,7 +25,7 @@ const Project = () => {
     const ref = useLoading(loading);
     const { setToastData } = useToast();
     const { classes: styles } = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const basePath = `/projects/${id}`;
     const tabData = [
@@ -92,7 +92,7 @@ const Project = () => {
                     id={`tab-${index}`}
                     aria-controls={`tabpanel-${index}`}
                     label={tab.title}
-                    onClick={() => history.push(tab.path)}
+                    onClick={() => navigate(tab.path)}
                     className={styles.tabButton}
                 />
             );
@@ -122,7 +122,7 @@ const Project = () => {
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
                             projectId={project?.id}
-                            onClick={() => history.push(`/projects/${id}/edit`)}
+                            onClick={() => navigate(`/projects/${id}/edit`)}
                             tooltip="Edit project"
                             data-loading
                         >

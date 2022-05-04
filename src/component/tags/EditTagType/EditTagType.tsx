@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UPDATE_TAG_TYPE } from 'component/providers/AccessProvider/permissions';
 import useTagTypeForm from '../TagTypeForm/useTagTypeForm';
 import TagForm from '../TagTypeForm/TagTypeForm';
@@ -12,7 +12,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 const EditTagType = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { name } = useParams<{ name: string }>();
     const { tagType } = useTagType(name);
     const {
@@ -32,7 +32,7 @@ const EditTagType = () => {
         const payload = getTagPayload();
         try {
             await updateTagType(tagName, payload);
-            history.push('/tag-types');
+            navigate('/tag-types');
             setToastData({
                 title: 'Tag type updated',
                 type: 'success',
@@ -52,7 +52,7 @@ const EditTagType = () => {
     };
 
     const handleCancel = () => {
-        history.goBack();
+        navigate(-1);
     };
 
     return (

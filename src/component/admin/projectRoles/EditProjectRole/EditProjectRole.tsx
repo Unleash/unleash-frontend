@@ -7,7 +7,7 @@ import useProjectRole from 'hooks/api/getters/useProjectRole/useProjectRole';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { IPermission } from 'interfaces/user';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import { formatUnknownError } from 'utils/formatUnknownError';
@@ -19,7 +19,7 @@ const EditProjectRole = () => {
     const { id } = useParams<{ id: string }>();
     const { role } = useProjectRole(id);
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const {
         roleName,
         roleDesc,
@@ -80,7 +80,7 @@ const EditProjectRole = () => {
             try {
                 await editRole(id, payload);
                 refetch();
-                history.push('/admin/roles');
+                navigate('/admin/roles');
                 setToastData({
                     type: 'success',
                     title: 'Project role updated',
@@ -94,7 +94,7 @@ const EditProjectRole = () => {
     };
 
     const handleCancel = () => {
-        history.goBack();
+        navigate(-1);
     };
 
     return (

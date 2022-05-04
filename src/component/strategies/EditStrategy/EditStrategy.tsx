@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
@@ -14,7 +14,7 @@ import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
 export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { name } = useParams<{ name: string }>();
     const { strategy } = useStrategy(name);
     const {
@@ -44,7 +44,7 @@ export const EditStrategy = () => {
             const payload = getStrategyPayload();
             try {
                 await updateStrategy(payload);
-                history.push(`/strategies/${strategyName}`);
+                navigate(`/strategies/${strategyName}`);
                 setToastData({
                     type: 'success',
                     title: 'Success',
@@ -67,7 +67,7 @@ export const EditStrategy = () => {
     };
 
     const handleCancel = () => {
-        history.goBack();
+        navigate(-1);
     };
 
     return (

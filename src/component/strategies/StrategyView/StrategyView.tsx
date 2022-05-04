@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import PageContent from 'component/common/PageContent/PageContent';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
@@ -16,7 +16,7 @@ export const StrategyView = () => {
     const { strategies } = useStrategies();
     const { features = [] } = useFeatures();
     const { applications } = useApplications();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const toggles = features.filter(toggle => {
         return toggle?.strategies?.find(strategy => strategy.name === name);
@@ -25,7 +25,7 @@ export const StrategyView = () => {
     const strategy = strategies.find(strategy => strategy.name === name);
 
     const handleEdit = () => {
-        history.push(`/strategies/${name}/edit`);
+        navigate(`/strategies/${name}/edit`);
     };
 
     if (!strategy) return null;

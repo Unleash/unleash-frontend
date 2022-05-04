@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UserForm from '../UserForm/UserForm';
 import useAddUserForm from '../hooks/useAddUserForm';
 import { scrollToTop } from 'component/common/util';
@@ -22,7 +22,7 @@ const EditUser = () => {
     const { id } = useParams<{ id: string }>();
     const { user, refetch } = useUserInfo(id);
     const { updateUser, userLoading: loading } = useAdminUsersApi();
-    const history = useHistory();
+    const navigate = useNavigate();
     const {
         name,
         setName,
@@ -56,7 +56,7 @@ const EditUser = () => {
             try {
                 await updateUser({ ...payload, id });
                 refetch();
-                history.push('/admin/users');
+                navigate('/admin/users');
                 setToastData({
                     title: 'User information updated',
                     type: 'success',
@@ -68,7 +68,7 @@ const EditUser = () => {
     };
 
     const handleCancel = () => {
-        history.goBack();
+        navigate(-1);
     };
 
     return (

@@ -1,7 +1,14 @@
 import { Tab, Tabs, useMediaQuery } from '@mui/material';
 import React, { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@mui/icons-material';
-import { Link, Route, useHistory, useParams, Routes } from 'react-router-dom';
+import {
+    Link,
+    Route,
+    useNavigate,
+    useParams,
+    Routes,
+    useLocation,
+} from 'react-router-dom';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useProject from 'hooks/api/getters/useProject/useProject';
@@ -44,7 +51,8 @@ export const FeatureView = () => {
     );
 
     const { classes: styles } = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const ref = useLoading(loading);
 
     const basePath = `/projects/${projectId}/features/${featureId}`;
@@ -59,7 +67,7 @@ export const FeatureView = () => {
             });
             setShowDelDialog(false);
             projectRefetch();
-            history.push(`/projects/${projectId}`);
+            navigate(`/projects/${projectId}`);
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
             setShowDelDialog(false);
@@ -88,9 +96,7 @@ export const FeatureView = () => {
         },
     ];
 
-    const activeTab =
-        tabData.find(tab => tab.path === history.location.pathname) ??
-        tabData[0];
+    const activeTab = tabData.find(tab => tab.path === pathname) ?? tabData[0];
 
     const renderTabs = () => {
         return tabData.map((tab, index) => {
@@ -100,7 +106,7 @@ export const FeatureView = () => {
                     key={tab.title}
                     label={tab.title}
                     value={tab.path}
-                    onClick={() => history.push(tab.path)}
+                    onClick={() => navigate(tab.path)}
                     className={styles.tabButton}
                 />
             );
