@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import 'themes/app.css';
 
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ThemeProvider } from 'themes/ThemeProvider';
@@ -18,7 +18,7 @@ ReactDOM.render(
     <DndProvider backend={HTML5Backend}>
         <UIProvider>
             <AccessProvider>
-                <Router basename={`${getBasePath()}`}>
+                <BrowserRouter basename={`${getBasePath()}`}>
                     <ThemeProvider>
                         <AnnouncerProvider>
                             <FeedbackCESProvider>
@@ -27,7 +27,7 @@ ReactDOM.render(
                             </FeedbackCESProvider>
                         </AnnouncerProvider>
                     </ThemeProvider>
-                </Router>
+                </BrowserRouter>
             </AccessProvider>
         </UIProvider>
     </DndProvider>,
