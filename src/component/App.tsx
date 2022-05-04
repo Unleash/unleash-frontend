@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Switch } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { FeedbackNPS } from 'component/feedback/FeedbackNPS/FeedbackNPS';
 import { LayoutPicker } from 'component/layout/LayoutPicker/LayoutPicker';
@@ -61,12 +61,12 @@ export const App = () => {
                                     path="/"
                                     unauthorized={isUnauthorized()}
                                     component={() => (
-                                        <Redirect to="/features" />
+                                        <Navigate to="/features" replace />
                                     )}
                                 />
                                 {routes.map(renderRoute)}
                                 <Route path="/404" component={NotFound} />
-                                <Redirect to="/404" />
+                                <Navigate to="/404" replace />
                             </Switch>
                             <FeedbackNPS openUrl="http://feedback.unleash.run" />
                             <SplashPageRedirect />

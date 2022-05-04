@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import { getTogglePath } from 'utils/routePathHelpers';
 import { FeatureSchema } from 'openapi';
@@ -26,8 +26,9 @@ const RedirectFeatureView = () => {
     }
 
     return (
-        <Redirect
+        <Navigate
             to={getTogglePath(featureToggle?.project, featureToggle?.name)}
+            replace
         />
     );
 };

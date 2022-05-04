@@ -1,4 +1,4 @@
-import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
+import { Switch, Route, useHistory, Navigate } from 'react-router-dom';
 import { SplashPageEnvironments } from '../SplashPageEnvironments/SplashPageEnvironments';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import useSplashApi from 'hooks/api/actions/useSplashApi/useSplashApi';
@@ -39,7 +39,7 @@ export const SplashPage = () => {
                 <SplashPageOperators />
             </Route>
             <Route>
-                <Redirect to="/" />
+                <Navigate to="/" replace />
             </Route>
         </Switch>
     );

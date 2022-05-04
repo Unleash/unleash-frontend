@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { Route, useLocation, Redirect, RouteProps } from 'react-router-dom';
+import { Route, useLocation, Navigate, RouteProps } from 'react-router-dom';
 
 interface IProtectedRouteProps {
     unauthorized?: boolean;
@@ -15,7 +15,7 @@ const ProtectedRoute: VFC<IProtectedRouteProps & RouteProps> = ({
     const loginLink = `/login?redirect=${redirect}`;
 
     return unauthorized ? (
-        <Route {...rest} render={() => <Redirect to={loginLink} />} />
+        <Route {...rest} render={() => <Navigate to={loginLink} replace />} />
     ) : (
         <Route {...rest} component={Component} />
     );
