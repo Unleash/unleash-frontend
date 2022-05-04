@@ -16,6 +16,8 @@ import { TableColumnHeader } from '../TableColumnHeader/TableColumnHeader';
 import { TableActions } from '../TableActions/TableActions';
 import { useSearch } from 'hooks/table/useSearch';
 import useLoading from 'hooks/useLoading';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import ListPlaceholder from 'component/common/ListPlaceholder/ListPlaceholder';
 
 const columnRenderer = {
     number: (value: number) => `${value}`,
@@ -51,6 +53,7 @@ interface IEnhancedTableProps<T extends Record<string, any>> {
     isToolbarSeparated?: boolean;
     pageSize?: number;
     isLoading?: boolean;
+    placeholder?: string;
 }
 
 /**
@@ -66,6 +69,7 @@ export const EnhancedTable = <T,>({
     toolbar,
     isToolbarSeparated,
     searchColumns,
+    placeholder = 'No items to show.',
     isLoading = false,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
     const { classes: styles } = useStyles();
@@ -187,6 +191,10 @@ export const EnhancedTable = <T,>({
                     </TableBody>
                 </Table>
             </TableContainer>
+            <ConditionallyRender
+                condition={!Boolean(rows.length)}
+                show={<ListPlaceholder>{placeholder}</ListPlaceholder>}
+            />
             <Pagination
                 pageCount={pageCount}
                 pageIndex={pageIndex}

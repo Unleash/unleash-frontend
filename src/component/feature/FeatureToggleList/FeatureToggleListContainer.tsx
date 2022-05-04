@@ -97,6 +97,7 @@ export const FeatureToggleListContainer = () => {
             searchColumns={['name', 'description', 'project']}
             defaultSort={{ field: 'createdAt', order: 'asc' }}
             // pageSize={50}
+            placeholder="No features available. Get started by adding a new feature toggle."
         />
     );
 };

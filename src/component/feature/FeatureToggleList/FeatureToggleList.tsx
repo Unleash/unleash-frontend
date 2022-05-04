@@ -101,26 +101,9 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
                     />
                 ))}
                 elseShow={
-                    <ConditionallyRender
-                        condition={Boolean(isArchive)}
-                        show={
-                            <ListItem className={styles.emptyStateListItem}>
-                                No archived features.
-                            </ListItem>
-                        }
-                        elseShow={
-                            <ConditionallyRender
-                                condition={Boolean(createFeature?.access)}
-                                show={() => (
-                                    <ListPlaceholder
-                                        text="No features available. Get started by adding a new feature toggle."
-                                        link={createFeature?.path}
-                                        linkText="Add your first toggle"
-                                    />
-                                )}
-                            />
-                        }
-                    />
+                    <ListItem className={styles.emptyStateListItem}>
+                        No archived features.
+                    </ListItem>
                 }
             />
         );

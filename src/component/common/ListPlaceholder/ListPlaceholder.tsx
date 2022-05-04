@@ -1,27 +1,11 @@
-import { ListItem } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { FC } from 'react';
+import { Box } from '@mui/material';
 import { useStyles } from 'component/common/ListPlaceholder/ListPlaceholder.styles';
 
-interface IListPlaceholderProps {
-    text: string;
-    link?: string;
-    linkText?: string;
-}
-
-const ListPlaceholder = ({ text, link, linkText }: IListPlaceholderProps) => {
+const ListPlaceholder: FC = ({ children }) => {
     const { classes: styles } = useStyles();
 
-    return (
-        <ListItem className={styles.emptyStateListItem}>
-            {text}
-            <ConditionallyRender
-                condition={Boolean(link && linkText)}
-                // @ts-expect-error
-                show={<Link to={link}>Add your first toggle</Link>}
-            />
-        </ListItem>
-    );
+    return <Box className={styles.emptyStateListItem}>{children}</Box>;
 };
 
 export default ListPlaceholder;
