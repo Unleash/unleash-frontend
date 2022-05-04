@@ -24,6 +24,7 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
             <Link
                 component={RouterLink}
                 to={`/projects/${project}/features/${name}`}
+                data-loading
             >
                 <ConditionallyRender
                     condition={Boolean(__search)}
@@ -44,6 +45,7 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
                         <Typography
                             className={styles.description}
                             component="span"
+                            data-loading
                         >
                             <ConditionallyRender
                                 condition={Boolean(__search)}

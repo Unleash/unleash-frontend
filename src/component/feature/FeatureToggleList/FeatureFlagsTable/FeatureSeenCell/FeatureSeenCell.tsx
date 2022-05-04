@@ -60,18 +60,17 @@ export const FeatureSeenCell = ({
 
     const Wrapper = (
         props: React.PropsWithChildren<{ color: string; toolTip: string }>
-    ) => {
-        return (
-            <Tooltip title={props.toolTip} arrow placement={tooltipPlacement}>
-                <div
-                    className={styles.container}
-                    style={{ background: props.color }}
-                >
-                    {props.children}
-                </div>
-            </Tooltip>
-        );
-    };
+    ) => (
+        <Tooltip title={props.toolTip} arrow placement={tooltipPlacement}>
+            <div
+                className={styles.container}
+                style={{ background: props.color }}
+                data-loading
+            >
+                {props.children}
+            </div>
+        </Tooltip>
+    );
 
     return (
         <ConditionallyRender

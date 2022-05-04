@@ -13,6 +13,7 @@ export const FeatureStaleCell: VFC<IFeatureStaleCellProps> = ({ stale }) => {
         <Typography
             component="span"
             className={classnames(styles.status, stale && styles.stale)}
+            data-loading
         >
             {stale ? 'Stale' : 'Active'}
         </Typography>

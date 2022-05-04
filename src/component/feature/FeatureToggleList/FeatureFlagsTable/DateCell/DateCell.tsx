@@ -22,7 +22,7 @@ export const DateCell: VFC<IDateCellProps> = ({ date }) => {
                     )}
                     arrow
                 >
-                    <span>
+                    <span data-loading>
                         {formatDateYMD(date as Date, locationSettings.locale)}
                     </span>
                 </Tooltip>

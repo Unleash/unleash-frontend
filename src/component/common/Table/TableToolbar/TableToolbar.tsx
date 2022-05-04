@@ -29,7 +29,7 @@ export const TableToolbar: FC<ITableToolbarProps> = ({ title, children }) => {
 
     return (
         <Toolbar className={styles.root}>
-            <Typography variant="h2" component="h2">
+            <Typography variant="h2" component="h2" data-loading>
                 {title}
             </Typography>
             {children}

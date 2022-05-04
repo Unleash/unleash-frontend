@@ -11,8 +11,18 @@ import { LinkCell } from './FeatureFlagsTable/LinkCell/LinkCell';
 import { FeatureNameCell } from './FeatureFlagsTable/FeatureNameCell/FeatureNameCell';
 import { CreateFeatureButton } from 'component/feature/CreateFeatureButton/CreateFeatureButton';
 
+const featuresPlaceholder: FeatureSchema[] = Array(7)
+    .fill({
+        name: 'Name of the feature',
+        description: 'Short description of the feature',
+        type: '-',
+        createdAt: new Date(2022, 1, 1),
+        project: 'projectID',
+    })
+    .map((feature, index) => ({ ...feature, name: `${feature.name}${index}` }));
+
 export const FeatureToggleListContainer = () => {
-    const { features = [] } = useFeatures();
+    const { features = [], loading } = useFeatures();
 
     return (
         <EnhancedTable
@@ -34,7 +44,8 @@ export const FeatureToggleListContainer = () => {
                     />
                 </>
             }
-            data={features}
+            data={loading ? featuresPlaceholder : features}
+            isLoading={loading}
             dataKey="name"
             columns={[
                 {

@@ -11,7 +11,7 @@ interface ILinkCellProps {
 }
 
 export const LinkCell: VFC<ILinkCellProps> = ({ children, to, __search }) => (
-    <Link component={RouterLink} to={to}>
+    <Link component={RouterLink} to={to} data-loading>
         <ConditionallyRender
             condition={Boolean(__search) && Boolean(children)}
             show={<Highlighter search={__search!}>{children!}</Highlighter>}

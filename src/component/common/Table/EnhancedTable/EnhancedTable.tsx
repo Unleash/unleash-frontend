@@ -15,6 +15,7 @@ import { TableHeader } from '../TableHeader/TableHeader';
 import { TableColumnHeader } from '../TableColumnHeader/TableColumnHeader';
 import { TableActions } from '../TableActions/TableActions';
 import { useSearch } from 'hooks/table/useSearch';
+import useLoading from 'hooks/useLoading';
 
 const columnRenderer = {
     number: (value: number) => `${value}`,
@@ -65,9 +66,11 @@ export const EnhancedTable = <T,>({
     toolbar,
     isToolbarSeparated,
     searchColumns,
-    isLoading,
+    isLoading = false,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
-    const classes = useStyles();
+    const styles = useStyles();
+
+    const ref = useLoading(isLoading);
 
     const {
         search,
@@ -138,7 +141,7 @@ export const EnhancedTable = <T,>({
     );
 
     return (
-        <Paper className={classes.paper}>
+        <Paper ref={ref} className={styles.paper}>
             <TableToolbar title={title}>
                 <TableActions
                     isSeparated={isToolbarSeparated}
@@ -152,7 +155,7 @@ export const EnhancedTable = <T,>({
                     {toolbar}
                 </TableActions>
             </TableToolbar>
-            <TableContainer className={classes.tableContainer}>
+            <TableContainer className={styles.tableContainer}>
                 <Table
                     aria-labelledby="tableTitle"
                     size="medium"
