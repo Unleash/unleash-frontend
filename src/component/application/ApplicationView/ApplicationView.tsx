@@ -148,7 +148,7 @@ export const ApplicationView = () => {
                                     permission: CREATE_STRATEGY,
                                 })}
                                 elseShow={foundListItem({
-                                    viewUrl: '/strategies/view',
+                                    viewUrl: '/strategies',
                                     name,
                                     Icon: Extension,
                                     description,

@@ -190,26 +190,11 @@ export const FeatureView = () => {
                         </div>
                     </div>
                     <Routes>
-                        <Route
-                            path={`/projects/:projectId/features/:featureId/metrics`}
-                            component={FeatureMetrics}
-                        />
-                        <Route
-                            path={`/projects/:projectId/features/:featureId/logs`}
-                            component={FeatureLog}
-                        />
-                        <Route
-                            path={`/projects/:projectId/features/:featureId/variants`}
-                            component={FeatureVariants}
-                        />
-                        <Route
-                            path={`/projects/:projectId/features/:featureId/settings`}
-                            component={FeatureSettings}
-                        />
-                        <Route
-                            path={`/projects/:projectId/features/:featureId`}
-                            component={FeatureOverview}
-                        />
+                        <Route path="metrics" element={<FeatureMetrics />} />
+                        <Route path="logs" element={<FeatureLog />} />
+                        <Route path="variants" element={<FeatureVariants />} />
+                        <Route path="settings" element={<FeatureSettings />} />
+                        <Route path="*" element={<FeatureOverview />} />
                     </Routes>
                     <Dialogue
                         onClick={() => archiveToggle()}

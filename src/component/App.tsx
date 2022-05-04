@@ -1,18 +1,16 @@
-import { createElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { FeedbackNPS } from 'component/feedback/FeedbackNPS/FeedbackNPS';
 import { LayoutPicker } from 'component/layout/LayoutPicker/LayoutPicker';
 import Loader from 'component/common/Loader/Loader';
 import NotFound from 'component/common/NotFound/NotFound';
-import ProtectedRoute from 'component/common/ProtectedRoute/ProtectedRoute';
+import { ProtectedRoute } from 'component/common/ProtectedRoute/ProtectedRoute';
 import SWRProvider from 'component/providers/SWRProvider/SWRProvider';
 import ToastRenderer from 'component/common/ToastRenderer/ToastRenderer';
 import { routes } from 'component/menu/routes';
 import { useAuthDetails } from 'hooks/api/getters/useAuth/useAuthDetails';
 import { useAuthUser } from 'hooks/api/getters/useAuth/useAuthUser';
 import { SplashPageRedirect } from 'component/splash/SplashPageRedirect/SplashPageRedirect';
-import { IRoute } from 'interfaces/route';
 import styles from 'component/styles.module.scss';
 
 export const App = () => {
@@ -21,33 +19,8 @@ export const App = () => {
     const isLoggedIn = Boolean(user?.id);
     const hasFetchedAuth = Boolean(authDetails || user);
 
-    const isUnauthorized = (): boolean => {
-        return !isLoggedIn;
-    };
-
-    const renderRoute = (route: IRoute) => {
-        if (route.type === 'protected') {
-            const unauthorized = isUnauthorized();
-            return (
-                <ProtectedRoute
-                    key={route.path}
-                    path={route.path}
-                    component={route.component}
-                    unauthorized={unauthorized}
-                />
-            );
-        }
-        return (
-            <Route
-                key={route.path}
-                path={route.path}
-                render={() => createElement(route.component, {}, null)}
-            />
-        );
-    };
-
     return (
-        <SWRProvider isUnauthorized={isUnauthorized}>
+        <SWRProvider isUnauthorized={!isLoggedIn}>
             <ConditionallyRender
                 condition={!hasFetchedAuth}
                 show={<Loader />}
@@ -56,16 +29,22 @@ export const App = () => {
                         <ToastRenderer />
                         <LayoutPicker>
                             <Routes>
-                                <ProtectedRoute
-                                    exact
+                                {routes.map(route => (
+                                    <Route
+                                        key={route.path}
+                                        path={route.path}
+                                        element={
+                                            <ProtectedRoute route={route} />
+                                        }
+                                    />
+                                ))}
+                                <Route
                                     path="/"
-                                    unauthorized={isUnauthorized()}
-                                    component={() => (
+                                    element={
                                         <Navigate to="/features" replace />
-                                    )}
+                                    }
                                 />
-                                {routes.map(renderRoute)}
-                                <Route component={NotFound} />
+                                <Route path="*" element={<NotFound />} />
                             </Routes>
                             <FeedbackNPS openUrl="http://feedback.unleash.run" />
                             <SplashPageRedirect />

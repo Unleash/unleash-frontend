@@ -6,7 +6,7 @@ import React from 'react';
 import { USER_ENDPOINT_PATH } from 'hooks/api/getters/useAuth/useAuthEndpoint';
 
 interface ISWRProviderProps {
-    isUnauthorized: () => boolean;
+    isUnauthorized: boolean;
 }
 
 const INVALID_TOKEN_ERROR = 'InvalidTokenError';
@@ -45,7 +45,7 @@ const SWRProvider: React.FC<ISWRProviderProps> = ({
             return;
         }
 
-        if (!isUnauthorized()) {
+        if (!isUnauthorized) {
             setToastApiError(error.message);
         }
     };

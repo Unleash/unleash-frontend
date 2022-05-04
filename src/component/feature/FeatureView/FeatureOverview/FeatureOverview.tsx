@@ -31,24 +31,30 @@ const FeatureOverview = () => {
                 <FeatureOverviewEnvironments />
             </div>
             <Routes>
-                <Route path="/projects/:projectId/features/:featureId/strategies/create">
-                    <SidebarModal
-                        label="Create feature strategy"
-                        onClose={onSidebarClose}
-                        open
-                    >
-                        <FeatureStrategyCreate />
-                    </SidebarModal>
-                </Route>
-                <Route path="/projects/:projectId/features/:featureId/strategies/edit">
-                    <SidebarModal
-                        label="Edit feature strategy"
-                        onClose={onSidebarClose}
-                        open
-                    >
-                        <FeatureStrategyEdit />
-                    </SidebarModal>
-                </Route>
+                <Route
+                    path="strategies/create"
+                    element={
+                        <SidebarModal
+                            label="Create feature strategy"
+                            onClose={onSidebarClose}
+                            open
+                        >
+                            <FeatureStrategyCreate />
+                        </SidebarModal>
+                    }
+                />
+                <Route
+                    path="strategies/edit"
+                    element={
+                        <SidebarModal
+                            label="Edit feature strategy"
+                            onClose={onSidebarClose}
+                            open
+                        >
+                            <FeatureStrategyEdit />
+                        </SidebarModal>
+                    }
+                />
             </Routes>
         </div>
     );

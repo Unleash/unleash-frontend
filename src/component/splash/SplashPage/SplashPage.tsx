@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { SplashPageEnvironments } from '../SplashPageEnvironments/SplashPageEnvironments';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import useSplashApi from 'hooks/api/actions/useSplashApi/useSplashApi';
@@ -30,19 +30,14 @@ export const SplashPage = () => {
         return null;
     }
 
-    return (
-        <Routes>
-            <Route path="/splash/environments">
-                <SplashPageEnvironments />
-            </Route>
-            <Route path="/splash/operators">
-                <SplashPageOperators />
-            </Route>
-            <Route>
-                <Navigate to="/" replace />
-            </Route>
-        </Routes>
-    );
+    switch (splashId) {
+        case 'environments':
+            return <SplashPageEnvironments />;
+        case 'operators':
+            return <SplashPageOperators />;
+        default:
+            return <Navigate to="/" replace />;
+    }
 };
 
 const useNavigationOnKeydown = (key: string, path: string) => {
