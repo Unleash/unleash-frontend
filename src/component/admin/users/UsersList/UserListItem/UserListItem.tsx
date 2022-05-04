@@ -18,6 +18,7 @@ import { ILocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { useStyles } from './UserListItem.styles';
+import TimeAgo from 'react-timeago';
 
 interface IUserListItemProps {
     user: IUser;
@@ -76,6 +77,27 @@ const UserListItem = ({
                 <Typography variant="body2" data-loading>
                     {renderRole(user.rootRole)}
                 </Typography>
+            </TableCell>
+            <TableCell className={styles.hideXS}>
+                <ConditionallyRender
+                    condition={Boolean(user.seenAt)}
+                    show={
+                        <Tooltip
+                            title={formatDateYMD(
+                                user.seenAt as string,
+                                locationSettings.locale
+                            )}
+                            arrow
+                        >
+                            <Typography noWrap variant="body2" data-loading>
+                                <TimeAgo
+                                    date={new Date(user.seenAt as string)}
+                                    live={false}
+                                />
+                            </Typography>
+                        </Tooltip>
+                    }
+                />
             </TableCell>
             <ConditionallyRender
                 condition={hasAccess(ADMIN)}
