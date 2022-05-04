@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UserForm from '../UserForm/UserForm';
 import useAddUserForm from '../hooks/useAddUserForm';
 import { scrollToTop } from 'component/common/util';
@@ -12,6 +12,7 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useUserInfo from 'hooks/api/getters/useUserInfo/useUserInfo';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const EditUser = () => {
     useEffect(() => {
@@ -19,7 +20,7 @@ const EditUser = () => {
     }, []);
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const { id } = useParams<{ id: string }>();
+    const id = useRequiredPathParam('id');
     const { user, refetch } = useUserInfo(id);
     const { updateUser, userLoading: loading } = useAdminUsersApi();
     const navigate = useNavigate();

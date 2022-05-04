@@ -5,7 +5,6 @@ import {
     Link,
     Route,
     useNavigate,
-    useParams,
     Routes,
     useLocation,
 } from 'react-router-dom';
@@ -13,7 +12,6 @@ import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import useToast from 'hooks/useToast';
-import { IFeatureViewParams } from 'interfaces/params';
 import {
     CREATE_FEATURE,
     DELETE_FEATURE,
@@ -34,9 +32,12 @@ import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from 'component/common/StatusChip/StatusChip';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { FeatureNotFound } from 'component/feature/FeatureView/FeatureNotFound/FeatureNotFound';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const FeatureView = () => {
-    const { projectId, featureId } = useParams<IFeatureViewParams>();
+    const projectId = useRequiredPathParam('projectId');
+    const featureId = useRequiredPathParam('featureId');
+
     const { refetch: projectRefetch } = useProject(projectId);
     const [openTagDialog, setOpenTagDialog] = useState(false);
     const { archiveFeatureToggle } = useFeatureApi();

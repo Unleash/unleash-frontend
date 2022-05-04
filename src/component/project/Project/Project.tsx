@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import useLoading from 'hooks/useLoading';
 import ApiError from 'component/common/ApiError/ApiError';
@@ -17,9 +17,12 @@ import ProjectHealth from './ProjectHealth/ProjectHealth';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { TabPanel } from 'component/common/TabNav/TabPanel/TabPanel';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { useOptionalPathParam } from 'hooks/useOptionalPathParam';
 
 const Project = () => {
-    const { id, activeTab } = useParams<{ id: string; activeTab: string }>();
+    const id = useRequiredPathParam('id');
+    const activeTab = useOptionalPathParam('activeTab');
     const params = useQueryParams();
     const { project, error, loading, refetch } = useProject(id);
     const ref = useLoading(loading);

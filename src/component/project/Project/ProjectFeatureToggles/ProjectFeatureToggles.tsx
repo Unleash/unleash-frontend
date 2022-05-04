@@ -2,7 +2,6 @@ import { useContext, useMemo, useState } from 'react';
 import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { useParams } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
@@ -18,6 +17,7 @@ import { useStyles } from './ProjectFeatureToggles.styles';
 import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import classnames from 'classnames';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 interface IProjectFeatureTogglesProps {
     features: IFeatureToggleListItem[];
@@ -29,7 +29,7 @@ export const ProjectFeatureToggles = ({
     loading,
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
-    const { id } = useParams<{ id: string }>();
+    const id = useRequiredPathParam('id');
     const navigate = useNavigate();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();

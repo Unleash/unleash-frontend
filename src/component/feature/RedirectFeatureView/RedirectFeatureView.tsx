@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import { getTogglePath } from 'utils/routePathHelpers';
 import { FeatureSchema } from 'openapi';
-
-interface IRedirectParams {
-    name: string;
-}
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const RedirectFeatureView = () => {
-    const { name } = useParams<IRedirectParams>();
+    const name = useRequiredPathParam('name');
     const { features = [] } = useFeatures();
     const [featureToggle, setFeatureToggle] = useState<FeatureSchema>();
 

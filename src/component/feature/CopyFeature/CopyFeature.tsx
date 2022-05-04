@@ -5,13 +5,14 @@ import {
     FormEventHandler,
     ChangeEventHandler,
 } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Button,
     TextField,
     Switch,
     Paper,
     FormControlLabel,
+    Alert,
 } from '@mui/material';
 import { FileCopy } from '@mui/icons-material';
 import { styles as themeStyles } from 'component/common';
@@ -19,10 +20,10 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import styles from './CopyFeature.module.scss';
 import { trim } from 'component/common/util';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Alert } from '@mui/material';
 import { getTogglePath } from 'utils/routePathHelpers';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const CopyFeatureToggle = () => {
     const [replaceGroupId, setReplaceGroupId] = useState(true);
@@ -31,10 +32,8 @@ export const CopyFeatureToggle = () => {
     const [newToggleName, setNewToggleName] = useState<string>();
     const { cloneFeatureToggle, validateFeatureToggleName } = useFeatureApi();
     const inputRef = useRef<HTMLInputElement>();
-    const { name: copyToggleName, id: projectId } = useParams<{
-        name: string;
-        id: string;
-    }>();
+    const copyToggleName = useRequiredPathParam('name');
+    const projectId = useRequiredPathParam('id');
     const { feature } = useFeature(projectId, copyToggleName);
     const navigate = useNavigate();
 

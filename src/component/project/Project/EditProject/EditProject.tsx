@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProjectForm from '../ProjectForm/ProjectForm';
 import useProjectForm from '../hooks/useProjectForm';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
@@ -9,11 +9,12 @@ import useProject from 'hooks/api/getters/useProject/useProject';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const EditProject = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const { id } = useParams<{ id: string }>();
+    const id = useRequiredPathParam('id');
     const { project } = useProject(id);
     const navigate = useNavigate();
     const {

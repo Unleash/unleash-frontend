@@ -20,16 +20,17 @@ import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
 import AccessContext from 'contexts/AccessContext';
 import useApplicationsApi from 'hooks/api/actions/useApplicationsApi/useApplicationsApi';
 import useApplication from 'hooks/api/getters/useApplication/useApplication';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import useToast from 'hooks/useToast';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { formatDateYMD } from 'utils/formatDate';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const ApplicationEdit = () => {
     const navigate = useNavigate();
-    const { name } = useParams<{ name: string }>();
+    const name = useRequiredPathParam('name');
     const { application, loading } = useApplication(name);
     const { appName, url, description, icon = 'apps', createdAt } = application;
     const { hasAccess } = useContext(AccessContext);

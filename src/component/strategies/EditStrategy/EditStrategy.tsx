@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
@@ -10,12 +10,13 @@ import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import useStrategy from 'hooks/api/getters/useStrategy/useStrategy';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
-    const { name } = useParams<{ name: string }>();
+    const name = useRequiredPathParam('name');
     const { strategy } = useStrategy(name);
     const {
         strategyName,

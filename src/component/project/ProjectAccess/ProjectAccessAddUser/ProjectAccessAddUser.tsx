@@ -6,26 +6,26 @@ import {
     Button,
     InputAdornment,
     SelectChangeEvent,
+    Alert,
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Alert } from '@mui/material';
 import { ProjectRoleSelect } from '../ProjectRoleSelect/ProjectRoleSelect';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
-import { useParams } from 'react-router-dom';
 import useToast from 'hooks/useToast';
 import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
 import { IProjectRole } from 'interfaces/role';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 interface IProjectAccessAddUserProps {
     roles: IProjectRole[];
 }
 
 export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
-    const { id } = useParams<{ id: string }>();
+    const id = useRequiredPathParam('id');
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
     const [role, setRole] = useState<IProjectRole | undefined>();
     const [options, setOptions] = useState<IProjectAccessUser[]>([]);

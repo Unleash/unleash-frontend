@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UPDATE_TAG_TYPE } from 'component/providers/AccessProvider/permissions';
 import useTagTypeForm from '../TagTypeForm/useTagTypeForm';
 import TagForm from '../TagTypeForm/TagTypeForm';
@@ -9,11 +9,13 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+
 const EditTagType = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
-    const { name } = useParams<{ name: string }>();
+    const name = useRequiredPathParam('name');
     const { tagType } = useTagType(name);
     const {
         tagName,

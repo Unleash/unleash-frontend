@@ -7,16 +7,16 @@ import useProjectRole from 'hooks/api/getters/useProjectRole/useProjectRole';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { IPermission } from 'interfaces/user';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const EditProjectRole = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-
-    const { id } = useParams<{ id: string }>();
+    const id = useRequiredPathParam('id');
     const { role } = useProjectRole(id);
 
     const navigate = useNavigate();
