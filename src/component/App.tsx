@@ -65,8 +65,7 @@ export const App = () => {
                                     )}
                                 />
                                 {routes.map(renderRoute)}
-                                <Route path="/404" component={NotFound} />
-                                <Navigate to="/404" replace />
+                                <Route component={NotFound} />
                             </Routes>
                             <FeedbackNPS openUrl="http://feedback.unleash.run" />
                             <SplashPageRedirect />
