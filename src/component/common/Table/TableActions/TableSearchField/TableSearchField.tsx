@@ -1,6 +1,6 @@
 import { IconButton, InputBase, Tooltip } from '@material-ui/core';
-import classnames from 'classnames';
 import { Search, Close } from '@material-ui/icons';
+import classnames from 'classnames';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './TableSearchField.styles';
 
@@ -19,7 +19,7 @@ export const TableSearchField = ({
     placeholder,
     onBlur,
 }: ITableSearchFieldProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const placeholderText = placeholder ?? 'Search...';
 
     return (
