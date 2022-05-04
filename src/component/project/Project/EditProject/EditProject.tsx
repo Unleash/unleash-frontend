@@ -14,7 +14,7 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 const EditProject = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const id = useRequiredPathParam('id');
+    const id = useRequiredPathParam('projectId');
     const { project } = useProject(id);
     const navigate = useNavigate();
     const {

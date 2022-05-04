@@ -6,17 +6,17 @@ import { FeatureSchema } from 'openapi';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const RedirectFeatureView = () => {
-    const name = useRequiredPathParam('name');
+    const featureId = useRequiredPathParam('featureId');
     const { features = [] } = useFeatures();
     const [featureToggle, setFeatureToggle] = useState<FeatureSchema>();
 
     useEffect(() => {
         const toggle = features.find(
-            (toggle: FeatureSchema) => toggle.name === name
+            (toggle: FeatureSchema) => toggle.name === featureId
         );
 
         setFeatureToggle(toggle);
-    }, [features, name]);
+    }, [features, featureId]);
 
     if (!featureToggle) {
         return null;

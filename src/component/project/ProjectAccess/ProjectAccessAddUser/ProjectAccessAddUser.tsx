@@ -25,13 +25,13 @@ interface IProjectAccessAddUserProps {
 }
 
 export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
-    const id = useRequiredPathParam('id');
+    const projectId = useRequiredPathParam('projectId');
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
     const [role, setRole] = useState<IProjectRole | undefined>();
     const [options, setOptions] = useState<IProjectAccessUser[]>([]);
     const [loading, setLoading] = useState(false);
     const { setToastData } = useToast();
-    const { refetchProjectAccess, access } = useProjectAccess(id);
+    const { refetchProjectAccess, access } = useProjectAccess(projectId);
 
     const { searchProjectUser, addUserToRole } = useProjectApi();
 
@@ -114,7 +114,7 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
         }
 
         try {
-            await addUserToRole(id, role.id, user.id);
+            await addUserToRole(projectId, role.id, user.id);
             refetchProjectAccess();
             setUser(undefined);
             setOptions([]);
@@ -129,9 +129,9 @@ export const ProjectAccessAddUser = ({ roles }: IProjectAccessAddUserProps) => {
             if (
                 e
                     .toString()
-                    .includes(`User already has access to project=${id}`)
+                    .includes(`User already has access to project=${projectId}`)
             ) {
-                error = `User already has access to project ${id}`;
+                error = `User already has access to project ${projectId}`;
             } else {
                 error = e.toString() || 'Server problems when adding users.';
             }

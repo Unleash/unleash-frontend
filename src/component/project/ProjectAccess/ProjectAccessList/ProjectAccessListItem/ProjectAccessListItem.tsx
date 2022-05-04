@@ -32,7 +32,7 @@ export const ProjectAccessListItem = ({
     handleRoleChange,
     handleRemoveAccess,
 }: IProjectAccessListItemProps) => {
-    const projectId = useRequiredPathParam('id');
+    const projectId = useRequiredPathParam('projectId');
     const { classes: styles } = useStyles();
 
     const labelId = `checkbox-list-secondary-label-${user.id}`;

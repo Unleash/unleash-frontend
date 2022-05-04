@@ -16,8 +16,8 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 const EditProjectRole = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
-    const id = useRequiredPathParam('id');
-    const { role } = useProjectRole(id);
+    const projectId = useRequiredPathParam('projectId');
+    const { role } = useProjectRole(projectId);
 
     const navigate = useNavigate();
     const {
@@ -66,7 +66,7 @@ const EditProjectRole = () => {
 --data-raw '${JSON.stringify(getProjectRolePayload(), undefined, 2)}'`;
     };
 
-    const { refetch } = useProjectRole(id);
+    const { refetch } = useProjectRole(projectId);
     const { editRole, loading } = useProjectRolesApi();
 
     const handleSubmit = async (e: Event) => {
@@ -78,7 +78,7 @@ const EditProjectRole = () => {
 
         if (validName && validPermissions) {
             try {
-                await editRole(id, payload);
+                await editRole(projectId, payload);
                 refetch();
                 navigate('/admin/roles');
                 setToastData({

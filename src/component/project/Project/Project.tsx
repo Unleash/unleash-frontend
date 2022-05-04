@@ -21,26 +21,26 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useOptionalPathParam } from 'hooks/useOptionalPathParam';
 
 const Project = () => {
-    const id = useRequiredPathParam('id');
+    const projectId = useRequiredPathParam('projectId');
     const activeTab = useOptionalPathParam('activeTab');
     const params = useQueryParams();
-    const { project, error, loading, refetch } = useProject(id);
+    const { project, error, loading, refetch } = useProject(projectId);
     const ref = useLoading(loading);
     const { setToastData } = useToast();
     const { classes: styles } = useStyles();
     const navigate = useNavigate();
 
-    const basePath = `/projects/${id}`;
+    const basePath = `/projects/${projectId}`;
     const tabData = [
         {
             title: 'Overview',
-            component: <ProjectOverview projectId={id} />,
+            component: <ProjectOverview projectId={projectId} />,
             path: basePath,
             name: 'overview',
         },
         {
             title: 'Health',
-            component: <ProjectHealth projectId={id} />,
+            component: <ProjectHealth projectId={projectId} />,
             path: `${basePath}/health`,
             name: 'health',
         },
@@ -52,13 +52,13 @@ const Project = () => {
         },
         {
             title: 'Environments',
-            component: <ProjectEnvironment projectId={id} />,
+            component: <ProjectEnvironment projectId={projectId} />,
             path: `${basePath}/environments`,
             name: 'environments',
         },
         {
             title: 'Archive',
-            component: <ProjectFeaturesArchive projectId={id} />,
+            component: <ProjectFeaturesArchive projectId={projectId} />,
             path: `${basePath}/archive`,
             name: 'archive',
         },
@@ -125,7 +125,9 @@ const Project = () => {
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
                             projectId={project?.id}
-                            onClick={() => navigate(`/projects/${id}/edit`)}
+                            onClick={() =>
+                                navigate(`/projects/${projectId}/edit`)
+                            }
                             tooltip="Edit project"
                             data-loading
                         >

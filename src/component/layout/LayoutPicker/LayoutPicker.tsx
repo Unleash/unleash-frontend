@@ -32,6 +32,6 @@ const standalonePagePatterns = [
     '/reset-password',
     '/reset-password-success',
     '/forgotten-password',
-    '/splash/:id',
+    '/splash/:splashId',
     '/404',
 ];

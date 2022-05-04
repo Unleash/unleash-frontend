@@ -29,7 +29,7 @@ export const ProjectFeatureToggles = ({
     loading,
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
-    const id = useRequiredPathParam('id');
+    const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
@@ -78,14 +78,14 @@ export const ProjectFeatureToggles = ({
                                 onClick={() =>
                                     navigate(
                                         getCreateTogglePath(
-                                            id,
+                                            projectId,
                                             uiConfig.flags.E
                                         )
                                     )
                                 }
                                 maxWidth="700px"
                                 Icon={Add}
-                                projectId={id}
+                                projectId={projectId}
                                 permission={CREATE_FEATURE}
                                 className={styles.button}
                             >
@@ -102,7 +102,7 @@ export const ProjectFeatureToggles = ({
                     <FeatureToggleListNew
                         features={filteredFeatures}
                         loading={loading}
-                        projectId={id}
+                        projectId={projectId}
                     />
                 }
                 elseShow={
@@ -111,11 +111,11 @@ export const ProjectFeatureToggles = ({
                             No feature toggles added yet.
                         </p>
                         <ConditionallyRender
-                            condition={hasAccess(CREATE_FEATURE, id)}
+                            condition={hasAccess(CREATE_FEATURE, projectId)}
                             show={
                                 <Link
                                     to={getCreateTogglePath(
-                                        id,
+                                        projectId,
                                         uiConfig.flags.E
                                     )}
                                     className={styles.link}

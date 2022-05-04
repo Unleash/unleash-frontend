@@ -18,7 +18,7 @@ import { ProjectAccessList } from './ProjectAccessList/ProjectAccessList';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const ProjectAccess = () => {
-    const projectId = useRequiredPathParam('id');
+    const projectId = useRequiredPathParam('projectId');
     const { classes: styles } = useStyles();
     const { access, refetchProjectAccess } = useProjectAccess(projectId);
     const { setToastData } = useToast();

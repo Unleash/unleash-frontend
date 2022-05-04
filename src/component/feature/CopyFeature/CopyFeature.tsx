@@ -32,9 +32,9 @@ export const CopyFeatureToggle = () => {
     const [newToggleName, setNewToggleName] = useState<string>();
     const { cloneFeatureToggle, validateFeatureToggleName } = useFeatureApi();
     const inputRef = useRef<HTMLInputElement>();
-    const copyToggleName = useRequiredPathParam('name');
-    const projectId = useRequiredPathParam('id');
-    const { feature } = useFeature(projectId, copyToggleName);
+    const featureId = useRequiredPathParam('featureId');
+    const projectId = useRequiredPathParam('projectId');
+    const { feature } = useFeature(projectId, featureId);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,7 +68,7 @@ export const CopyFeatureToggle = () => {
         }
 
         try {
-            await cloneFeatureToggle(projectId, copyToggleName, {
+            await cloneFeatureToggle(projectId, featureId, {
                 name: newToggleName as string,
                 replaceGroupId,
             });
@@ -86,7 +86,7 @@ export const CopyFeatureToggle = () => {
             style={{ overflow: 'visible' }}
         >
             <div className={styles.header}>
-                <h1>Copy&nbsp;{copyToggleName}</h1>
+                <h1>Copy&nbsp;{featureId}</h1>
             </div>
             <ConditionallyRender
                 condition={Boolean(apiError)}
@@ -96,8 +96,8 @@ export const CopyFeatureToggle = () => {
                 <p className={styles.text}>
                     You are about to create a new feature toggle by cloning the
                     configuration of feature toggle&nbsp;
-                    <Link to={getTogglePath(projectId, copyToggleName)}>
-                        {copyToggleName}
+                    <Link to={getTogglePath(projectId, featureId)}>
+                        {featureId}
                     </Link>
                     . You must give the new feature toggle a unique name before
                     you can proceed.
