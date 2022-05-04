@@ -1,27 +1,26 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     tableCell: {
         padding: 0,
     },
     tableSortableCell: {
-        backgroundColor: theme.v2.palette.grey[20],
+        backgroundColor: theme.palette.grey[200],
         '&:hover': {
-            backgroundColor: theme.v2.palette.grey[40],
+            backgroundColor: theme.palette.grey[400],
             '& > svg': {
-                color: theme.v2.palette.grey[90],
+                color: theme.palette.grey[900],
             },
         },
         '& > svg': {
-            fontSize: theme.v2.fontSizes.headerIcon,
             verticalAlign: 'middle',
-            color: theme.v2.palette.grey[70],
+            color: theme.palette.grey[700],
             marginLeft: '4px',
         },
         '&.sorted': {
             fontWeight: 'bold',
             '& > svg': {
-                color: theme.v2.palette.grey[90],
+                color: theme.palette.grey[900],
             },
         },
     },
@@ -40,11 +39,12 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 'bold',
     },
     icon: {
-        fontSize: theme.v2.fontSizes.headerIcon,
+        fontSize: theme.fontSizes.bodySize,
         lineHeight: '1',
         marginLeft: theme.spacing(0.5),
+        marginBottom: theme.spacing(-0.5),
     },
     inactiveIcon: {
-        color: theme.v2.palette.grey[70],
+        color: theme.palette.grey[700],
     },
 }));

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureNameCell.styles';
@@ -18,12 +18,13 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
     description,
     __search,
 }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <>
             <Link
                 component={RouterLink}
                 to={`/projects/${project}/features/${name}`}
+                underline="hover"
                 data-loading
             >
                 <ConditionallyRender

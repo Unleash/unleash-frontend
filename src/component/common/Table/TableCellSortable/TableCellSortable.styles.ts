@@ -1,5 +1,4 @@
 import { makeStyles } from 'tss-react/mui';
-import { unleashGrey } from 'themes/themeColors';
 
 export const useStyles = makeStyles()(theme => ({
     tableCellHeaderSortable: {
@@ -9,13 +8,13 @@ export const useStyles = makeStyles()(theme => ({
         '& > svg': {
             fontSize: 18,
             verticalAlign: 'middle',
-            color: unleashGrey[700],
+            color: theme.palette.grey[700],
             marginLeft: '4px',
         },
         '&.sorted': {
             fontWeight: 'bold',
             '& > svg': {
-                color: unleashGrey[900],
+                color: theme.palette.grey[900],
             },
         },
     },
@@ -29,9 +28,9 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         alignItems: 'center',
         '&:hover': {
-            backgroundColor: unleashGrey[400],
+            backgroundColor: theme.palette.grey[400],
             '& > svg': {
-                color: unleashGrey[900],
+                color: theme.palette.grey[900],
             },
         },
     },

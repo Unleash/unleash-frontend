@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import classnames from 'classnames';
-import { useMediaQuery, useTheme } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import { useMediaQuery, useTheme } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useStyles } from './PaginationUI.styles';
+import { useStyles } from './Pagination.styles';
 
 interface IPaginationProps {
     pageCount: number;
@@ -18,7 +18,7 @@ const Pagination = ({
     pageIndex,
     onPageChange,
 }: IPaginationProps) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [start, end] = useMemo(() => {

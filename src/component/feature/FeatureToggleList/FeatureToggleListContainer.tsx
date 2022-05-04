@@ -1,4 +1,4 @@
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import { EnhancedTable } from 'component/common/Table/EnhancedTable/EnhancedTable';

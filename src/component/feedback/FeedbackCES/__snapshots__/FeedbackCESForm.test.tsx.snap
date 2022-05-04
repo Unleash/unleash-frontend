@@ -7,7 +7,7 @@ exports[`FeedbackCESForm 1`] = `
       class="tss-fdcp7c-container"
     >
       <h1
-        class="tss-16bfuiy-title"
+        class="tss-1a5bydb-title"
       >
         Please help us improve
       </h1>
@@ -24,12 +24,12 @@ exports[`FeedbackCESForm 1`] = `
           class="tss-io6e1g-scoreInput"
         >
           <span
-            class="tss-lys30y-scoreHelp"
+            class="tss-b4a690-scoreHelp"
           >
             Very difficult
           </span>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -41,7 +41,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -53,7 +53,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -65,7 +65,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -77,7 +77,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -89,7 +89,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -101,7 +101,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <label
-            class="tss-mulaxt-scoreValue"
+            class="tss-1pxfjwm-scoreValue"
           >
             <input
               name="score"
@@ -113,7 +113,7 @@ exports[`FeedbackCESForm 1`] = `
             </span>
           </label>
           <span
-            class="tss-lys30y-scoreHelp"
+            class="tss-b4a690-scoreHelp"
           >
             Very easy
           </span>

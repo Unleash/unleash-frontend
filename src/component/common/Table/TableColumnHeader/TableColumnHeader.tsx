@@ -1,11 +1,11 @@
 import React, { FC, useContext } from 'react';
-import { Box, TableCell, Typography } from '@material-ui/core';
+import { Box, TableCell, Typography } from '@mui/material';
 import classnames from 'classnames';
 import {
     UnfoldMoreOutlined,
     KeyboardArrowDown,
     KeyboardArrowUp,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './TableColumnHeader.styles';
 import { AnnouncerContext } from 'component/common/Announcer/AnnouncerContext/AnnouncerContext';
@@ -26,7 +26,7 @@ export const TableColumnHeader: FC<ITableColumnHeaderProps> = ({
     onSort,
 }) => {
     const { setAnnouncement } = useContext(AnnouncerContext);
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const ariaSort = isSortable
         ? sortOrder === 'desc'

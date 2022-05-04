@@ -1,5 +1,5 @@
-import { IconButton, InputBase, Tooltip } from '@material-ui/core';
-import { Search, Close } from '@material-ui/icons';
+import { IconButton, InputBase, Tooltip } from '@mui/material';
+import { Search, Close } from '@mui/icons-material';
 import classnames from 'classnames';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './TableSearchField.styles';

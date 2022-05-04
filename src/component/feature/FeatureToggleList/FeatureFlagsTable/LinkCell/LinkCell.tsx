@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
@@ -11,7 +11,7 @@ interface ILinkCellProps {
 }
 
 export const LinkCell: VFC<ILinkCellProps> = ({ children, to, __search }) => (
-    <Link component={RouterLink} to={to} data-loading>
+    <Link component={RouterLink} to={to} data-loading underline="hover">
         <ConditionallyRender
             condition={Boolean(__search) && Boolean(children)}
             show={<Highlighter search={__search!}>{children!}</Highlighter>}

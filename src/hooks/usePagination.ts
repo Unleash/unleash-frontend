@@ -4,7 +4,7 @@ import { paginate } from 'utils/paginate';
 /**
  * @deprecated
  */
-const usePagination = (
+const usePagination = <T>(
     data: T[],
     limit: number,
     filterFunc?: (item: T) => boolean

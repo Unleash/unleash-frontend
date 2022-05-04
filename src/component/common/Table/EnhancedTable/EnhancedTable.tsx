@@ -1,10 +1,10 @@
 import { ComponentProps, createElement, ReactNode, useMemo, VFC } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
 import { usePagination } from 'hooks/table/usePagination';
 import { useStyles } from './EnhancedTable.styles';
@@ -68,7 +68,7 @@ export const EnhancedTable = <T,>({
     searchColumns,
     isLoading = false,
 }: IEnhancedTableProps<T>): ReturnType<VFC<IEnhancedTableProps<T>>> => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
 
     const ref = useLoading(isLoading);
 

@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { useStyles } from './FeatureStaleCell.styles';
 import classnames from 'classnames';
 
@@ -8,7 +8,7 @@ interface IFeatureStaleCellProps {
 }
 
 export const FeatureStaleCell: VFC<IFeatureStaleCellProps> = ({ stale }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     return (
         <Typography
             component="span"

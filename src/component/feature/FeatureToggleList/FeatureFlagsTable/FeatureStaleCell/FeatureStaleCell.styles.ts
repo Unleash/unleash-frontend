@@ -1,11 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles()(theme => ({
     status: {
-        color: theme.v2.palette.green['80'],
+        color: theme.palette.success.dark,
         fontSize: 'inherit',
     },
     stale: {
-        color: theme.v2.palette.red['90'],
+        color: theme.palette.error.dark,
     },
 }));

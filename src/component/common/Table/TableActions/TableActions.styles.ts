@@ -1,5 +1,4 @@
 import { makeStyles } from 'tss-react/mui';
-import { unleashGrey } from 'themes/themeColors';
 
 export const useStyles = makeStyles()(theme => ({
     tableActions: {
@@ -63,7 +62,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     verticalSeparator: {
         height: '100%',
-        backgroundColor: unleashGrey[500],
+        backgroundColor: theme.palette.grey[500],
         width: '1px',
         display: 'inline-block',
         marginLeft: theme.spacing(1),

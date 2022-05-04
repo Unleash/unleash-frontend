@@ -11,7 +11,7 @@ exports[`renders an empty list correctly 1`] = `
   }
 >
   <div
-    className="tss-16iyfoa-headerContainer"
+    className="tss-8bhpw1-headerContainer"
   >
     <div
       className="tss-14s7qul-headerTitleContainer"
@@ -21,7 +21,7 @@ exports[`renders an empty list correctly 1`] = `
         data-loading={true}
       >
         <h1
-          className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-1inkmva-MuiTypography-root"
+          className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-ylrecv-MuiTypography-root"
         >
           Tag Types
         </h1>

@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { getFeatureTypeIcons } from 'utils/getFeatureTypeIcons';
 import useFeatureTypes from 'hooks/api/getters/useFeatureTypes/useFeatureTypes';
 import { useStyles } from './FeatureTypeCell.styles';
@@ -9,7 +9,7 @@ interface IFeatureTypeProps {
 }
 
 export const FeatureTypeCell: VFC<IFeatureTypeProps> = ({ type }) => {
-    const styles = useStyles();
+    const { classes: styles } = useStyles();
     const { featureTypes } = useFeatureTypes();
     const IconComponent = getFeatureTypeIcons(type);
 

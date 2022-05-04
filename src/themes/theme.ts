@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { colors } from './colors';
 
 export default createTheme({
     borderRadius: {
@@ -13,6 +14,10 @@ export default createTheme({
         fontWeightMedium: '700',
         allVariants: { lineHeight: 1.4 },
         button: { lineHeight: 1.75 },
+        h1: {
+            fontSize: '1.5rem',
+            lineHeight: 1.875,
+        },
     },
     fontSizes: {
         mainHeader: '1.2rem',
@@ -46,6 +51,7 @@ export default createTheme({
             light: '#817AFE',
             dark: '#635DC5',
         },
+        grey: colors.grey,
         neutral: {
             main: '#18243e',
         },
@@ -62,10 +68,14 @@ export default createTheme({
             main: '#efefef',
         },
         error: {
-            main: '#d95e5e',
+            main: '#d95e5e', // FIXME: colors.red[700] ??
+            dark: colors.red[800],
+            light: colors.red[50],
         },
         success: {
-            main: '#3bd86e',
+            main: '#3bd86e', // FIXME: colors.green[700] ??
+            dark: colors.green[800],
+            light: colors.green[50],
         },
         division: {
             main: '#f1f1f1',

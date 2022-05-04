@@ -12,7 +12,7 @@ Array [
     }
   >
     <div
-      className="tss-16iyfoa-headerContainer"
+      className="tss-8bhpw1-headerContainer"
     >
       <div
         className="tss-14s7qul-headerTitleContainer"
@@ -22,7 +22,7 @@ Array [
           data-loading={true}
         >
           <h1
-            className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-1inkmva-MuiTypography-root"
+            className="MuiTypography-root MuiTypography-h1 tss-whbfmi-headerTitle mui-ylrecv-MuiTypography-root"
           >
             Strategies
           </h1>
@@ -73,7 +73,7 @@ Array [
         className="MuiList-root MuiList-padding mui-h4y409-MuiList-root"
       >
         <li
-          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding tss-18csf3q-listItem mui-uz8enf-MuiListItem-root"
+          className="MuiListItem-root MuiListItem-gutters MuiListItem-padding tss-ynyzms-listItem mui-uz8enf-MuiListItem-root"
           disabled={false}
         >
           <div
