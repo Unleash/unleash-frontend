@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { Navigate, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { FeedbackNPS } from 'component/feedback/FeedbackNPS/FeedbackNPS';
 import { LayoutPicker } from 'component/layout/LayoutPicker/LayoutPicker';
@@ -55,7 +55,7 @@ export const App = () => {
                     <div className={styles.container}>
                         <ToastRenderer />
                         <LayoutPicker>
-                            <Switch>
+                            <Routes>
                                 <ProtectedRoute
                                     exact
                                     path="/"
@@ -67,7 +67,7 @@ export const App = () => {
                                 {routes.map(renderRoute)}
                                 <Route path="/404" component={NotFound} />
                                 <Navigate to="/404" replace />
-                            </Switch>
+                            </Routes>
                             <FeedbackNPS openUrl="http://feedback.unleash.run" />
                             <SplashPageRedirect />
                         </LayoutPicker>

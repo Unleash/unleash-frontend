@@ -2,7 +2,7 @@ import FeatureOverviewMetaData from './FeatureOverviewMetaData/FeatureOverviewMe
 import { useStyles } from './FeatureOverview.styles';
 import FeatureOverviewEnvironments from './FeatureOverviewEnvironments/FeatureOverviewEnvironments';
 import FeatureOverviewEnvSwitches from './FeatureOverviewEnvSwitches/FeatureOverviewEnvSwitches';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Routes, Route, useHistory } from 'react-router-dom';
 import { FeatureStrategyCreate } from 'component/feature/FeatureStrategy/FeatureStrategyCreate/FeatureStrategyCreate';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
 import {
@@ -30,7 +30,7 @@ const FeatureOverview = () => {
             <div className={styles.mainContent}>
                 <FeatureOverviewEnvironments />
             </div>
-            <Switch>
+            <Routes>
                 <Route path="/projects/:projectId/features/:featureId/strategies/create">
                     <SidebarModal
                         label="Create feature strategy"
@@ -49,7 +49,7 @@ const FeatureOverview = () => {
                         <FeatureStrategyEdit />
                     </SidebarModal>
                 </Route>
-            </Switch>
+            </Routes>
         </div>
     );
 };

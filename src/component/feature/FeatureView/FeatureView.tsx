@@ -1,7 +1,7 @@
 import { Tab, Tabs, useMediaQuery } from '@mui/material';
 import React, { useState } from 'react';
 import { Archive, FileCopy, Label, WatchLater } from '@mui/icons-material';
-import { Link, Route, useHistory, useParams, Switch } from 'react-router-dom';
+import { Link, Route, useHistory, useParams, Routes } from 'react-router-dom';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useProject from 'hooks/api/getters/useProject/useProject';
@@ -182,7 +182,7 @@ export const FeatureView = () => {
                             </Tabs>
                         </div>
                     </div>
-                    <Switch>
+                    <Routes>
                         <Route
                             path={`/projects/:projectId/features/:featureId/metrics`}
                             component={FeatureMetrics}
@@ -203,7 +203,7 @@ export const FeatureView = () => {
                             path={`/projects/:projectId/features/:featureId`}
                             component={FeatureOverview}
                         />
-                    </Switch>
+                    </Routes>
                     <Dialogue
                         onClick={() => archiveToggle()}
                         open={showDelDialog}
