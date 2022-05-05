@@ -16,11 +16,10 @@ import {
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { DateCell } from './DateCell/DateCell';
-import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
+import { FeatureLinkCell } from './FeatureLinkCell/FeatureLinkCell';
 import { FeatureSeenCell } from './FeatureSeenCell/FeatureSeenCell';
 import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 import { FeatureTypeCell } from './FeatureTypeCell/FeatureTypeCell';
-import { LinkCell } from './LinkCell/LinkCell';
 import { CreateFeatureButton } from '../../CreateFeatureButton/CreateFeatureButton';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
@@ -49,17 +48,29 @@ const columns = [
         accessor: 'lastSeenAt',
         Cell: FeatureSeenCell,
         sortType: 'date',
+        totalWidth: 120,
     },
     {
         Header: 'Type',
         accessor: 'type',
         Cell: FeatureTypeCell,
+        totalWidth: 120,
     },
     {
         Header: 'Feature toggle name',
         accessor: 'name',
-        // @ts-expect-error // TODO: props type
-        Cell: ({ row: { original } }) => <FeatureNameCell {...original} />,
+        Cell: ({
+            row: {
+                // @ts-expect-error -- props type
+                original: { name, description, project },
+            },
+        }) => (
+            <FeatureLinkCell
+                title={name}
+                subtitle={description}
+                to={`/projects/${project}/features/${name}`}
+            />
+        ),
         sortType: 'alphanumeric',
     },
     {
@@ -72,7 +83,7 @@ const columns = [
         Header: 'Project ID',
         accessor: 'project',
         Cell: ({ value }: { value: string }) => (
-            <LinkCell to={`/projects/${value}`}>{value}</LinkCell>
+            <FeatureLinkCell title={value} to={`/projects/${value}`} />
         ),
         sortType: 'alphanumeric',
     },
