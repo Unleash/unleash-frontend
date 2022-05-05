@@ -13,11 +13,12 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { IUser } from 'interfaces/user';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ILocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { useStyles } from './UserListItem.styles';
+import TimeAgo from 'react-timeago';
 
 interface IUserListItemProps {
     user: IUser;
@@ -37,8 +38,22 @@ const UserListItem = ({
     search,
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
-    const history = useHistory();
+    const navigate = useNavigate();
     const { classes: styles } = useStyles();
+
+    const renderTimeAgo = (date: string) => (
+        <Tooltip
+            title={`Last seen on: ${formatDateYMD(
+                date,
+                locationSettings.locale
+            )}`}
+            arrow
+        >
+            <Typography noWrap variant="body2" data-loading>
+                <TimeAgo date={new Date(date)} live={false} title={''} />
+            </Typography>
+        </Tooltip>
+    );
 
     return (
         <TableRow key={user.id} className={styles.tableRow}>
@@ -77,6 +92,17 @@ const UserListItem = ({
                     {renderRole(user.rootRole)}
                 </Typography>
             </TableCell>
+            <TableCell className={styles.hideXS}>
+                <ConditionallyRender
+                    condition={Boolean(user.seenAt)}
+                    show={() => renderTimeAgo(user.seenAt!)}
+                    elseShow={
+                        <Typography noWrap variant="body2" data-loading>
+                            Never logged
+                        </Typography>
+                    }
+                />
+            </TableCell>
             <ConditionallyRender
                 condition={hasAccess(ADMIN)}
                 show={
@@ -88,7 +114,7 @@ const UserListItem = ({
                             <IconButton
                                 data-loading
                                 onClick={() =>
-                                    history.push(`/admin/users/${user.id}/edit`)
+                                    navigate(`/admin/users/${user.id}/edit`)
                                 }
                                 size="large"
                             >
