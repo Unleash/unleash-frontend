@@ -41,6 +41,20 @@ const UserListItem = ({
     const navigate = useNavigate();
     const { classes: styles } = useStyles();
 
+    const renderTimeAgo = (date: string) => (
+        <Tooltip
+            title={`Last seen on: ${formatDateYMD(
+                date,
+                locationSettings.locale
+            )}`}
+            arrow
+        >
+            <Typography noWrap variant="body2" data-loading>
+                <TimeAgo date={new Date(date)} live={false} title={''} />
+            </Typography>
+        </Tooltip>
+    );
+
     return (
         <TableRow key={user.id} className={styles.tableRow}>
             <TableCell className={styles.hideSM}>
@@ -81,23 +95,7 @@ const UserListItem = ({
             <TableCell className={styles.hideXS}>
                 <ConditionallyRender
                     condition={Boolean(user.seenAt)}
-                    show={
-                        <Tooltip
-                            title={`Last seen on: ${formatDateYMD(
-                                user.seenAt as string,
-                                locationSettings.locale
-                            )}`}
-                            arrow
-                        >
-                            <Typography noWrap variant="body2" data-loading>
-                                <TimeAgo
-                                    date={new Date(user.seenAt as string)}
-                                    live={false}
-                                    title={''}
-                                />
-                            </Typography>
-                        </Tooltip>
-                    }
+                    show={() => renderTimeAgo(user.seenAt!)}
                     elseShow={
                         <Typography noWrap variant="body2" data-loading>
                             Never logged
