@@ -28,13 +28,7 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
                 underline="hover"
                 data-loading
             >
-                <ConditionallyRender
-                    condition={Boolean(search)}
-                    show={
-                        <Highlighter search={search!}>{name || ''}</Highlighter>
-                    }
-                    elseShow={name}
-                />
+                <Highlighter search={search}>{name}</Highlighter>
             </Link>
 
             <ConditionallyRender
@@ -47,15 +41,9 @@ export const FeatureNameCell: FC<IFeatureNameCellProps> = ({
                             component="span"
                             data-loading
                         >
-                            <ConditionallyRender
-                                condition={Boolean(search)}
-                                show={
-                                    <Highlighter search={search!}>
-                                        {description!}
-                                    </Highlighter>
-                                }
-                                elseShow={description}
-                            />
+                            <Highlighter search={search}>
+                                {description}
+                            </Highlighter>
                         </Typography>
                     </>
                 }

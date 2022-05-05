@@ -4,7 +4,7 @@ export const useStyles = makeStyles()(theme => ({
     panel: {
         width: '100%',
         marginBottom: theme.spacing(2),
-        borderRadius: '12px',
+        borderRadius: theme.spacing(1.5),
         paddingBottom: theme.spacing(4),
     },
     content: {

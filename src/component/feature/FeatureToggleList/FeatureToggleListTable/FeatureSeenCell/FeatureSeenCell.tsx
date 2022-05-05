@@ -1,10 +1,10 @@
-import { useStyles } from './FeatureSeenCell.styles';
+import React, { FC, VFC } from 'react';
 import TimeAgo from 'react-timeago';
+import { Tooltip, useTheme } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Tooltip } from '@mui/material';
-import React from 'react';
+import { useStyles } from './FeatureSeenCell.styles';
 
-function generateUnit(unit?: string): string {
+function shortenUnitName(unit?: string): string {
     switch (unit) {
         case 'second':
             return 's';
@@ -25,51 +25,59 @@ function generateUnit(unit?: string): string {
     }
 }
 
-function getColor(unit?: string): string {
-    // FIXME: theme
-    switch (unit) {
-        case 'second':
-            return '#98E3AF';
-        case 'minute':
-            return '#98E3AF';
-        case 'hour':
-            return '#98E3AF';
-        case 'day':
-            return '#98E3AF';
-        case 'week':
-            return '#ECD875';
-        case 'month':
-            return '#F5A69A';
-        case 'year':
-            return '#F5A69A';
-        default:
-            return '#F7F7FA'; // grey-30
-    }
-}
+const useFeatureColor = () => {
+    const theme = useTheme();
+
+    return (unit?: string): string => {
+        switch (unit) {
+            case 'second':
+                return theme.palette.success.light;
+            case 'minute':
+                return theme.palette.success.light;
+            case 'hour':
+                return theme.palette.success.light;
+            case 'day':
+                return theme.palette.success.light;
+            case 'week':
+                return theme.palette.warning.light;
+            case 'month':
+                return theme.palette.error.light;
+            case 'year':
+                return theme.palette.error.light;
+            default:
+                return theme.palette.grey[100];
+        }
+    };
+};
 
 interface IFeatureSeenCellProps {
     value?: string | Date | null;
 }
 
-export const FeatureSeenCell = ({
-    value: lastSeenAt,
-}: IFeatureSeenCellProps) => {
+const Wrapper: FC<{ unit?: string; tooltip: string }> = ({
+    unit,
+    tooltip,
+    children,
+}) => {
     const { classes: styles } = useStyles();
+    const getColor = useFeatureColor();
 
-    const Wrapper = (
-        props: React.PropsWithChildren<{ color: string; toolTip: string }>
-    ) => (
-        <Tooltip title={props.toolTip} arrow>
+    return (
+        <Tooltip title={tooltip} arrow>
             <div
                 className={styles.container}
-                style={{ background: props.color }}
+                style={{ background: getColor(unit) }}
                 data-loading
             >
-                {props.children}
+                {children}
             </div>
         </Tooltip>
     );
+};
 
+export const FeatureSeenCell: VFC<IFeatureSeenCellProps> = ({
+    value: lastSeenAt,
+}) => {
     return (
         <ConditionallyRender
             condition={Boolean(lastSeenAt)}
@@ -85,23 +93,20 @@ export const FeatureSeenCell = ({
                     ) => {
                         return (
                             <Wrapper
-                                toolTip={`Last usage reported ${value} ${unit}${
+                                tooltip={`Last usage reported ${value} ${unit}${
                                     value !== 1 ? 's' : ''
                                 } ${suffix}`}
-                                color={getColor(unit)}
+                                unit={unit}
                             >
                                 {value}
-                                {generateUnit(unit)}
+                                {shortenUnitName(unit)}
                             </Wrapper>
                         );
                     }}
                 />
             }
             elseShow={
-                <Wrapper
-                    toolTip="No usage reported from connected applications"
-                    color={getColor()}
-                >
+                <Wrapper tooltip="No usage reported from connected applications">
                     &ndash;
                 </Wrapper>
             }

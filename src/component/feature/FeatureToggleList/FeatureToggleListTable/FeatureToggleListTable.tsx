@@ -91,10 +91,9 @@ const columns = [
 ];
 
 export const FeatureToggleListTable: VFC<IExperimentProps> = ({
-    data: input,
+    data,
     isLoading = false,
 }) => {
-    const data = useMemo(() => input, [input]);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
@@ -143,7 +142,7 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
         <TablePanel
             ref={ref}
             header={
-                <TableToolbar title={`Feature Flags (${input.length})`}>
+                <TableToolbar title={`Feature Flags (${data.length})`}>
                     <TableActions isSeparated onSearch={setGlobalFilter}>
                         <Link
                             component={RouterLink}
@@ -169,13 +168,11 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
                             prepareRow(row);
                             return (
                                 <TableRow {...row.getRowProps()}>
-                                    {row.cells.map(cell => {
-                                        return (
-                                            <TableCell {...cell.getCellProps()}>
-                                                {cell.render('Cell')}
-                                            </TableCell>
-                                        );
-                                    })}
+                                    {row.cells.map(cell => (
+                                        <TableCell {...cell.getCellProps()}>
+                                            {cell.render('Cell')}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             );
                         })}

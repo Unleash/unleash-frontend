@@ -3,7 +3,7 @@ import { Toolbar, Typography } from '@mui/material';
 import { useStyles } from './TableToolbar.styles';
 
 interface ITableToolbarProps {
-    title?: string;
+    title: string;
 }
 
 export const TableToolbar: FC<ITableToolbarProps> = ({ title, children }) => {

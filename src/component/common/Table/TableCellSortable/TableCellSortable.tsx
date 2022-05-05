@@ -24,7 +24,7 @@ interface ITableCellSortableProps {
 }
 
 /**
- * @deprecated
+ * @deprecated No longer in use. See `SortableTableHeader`. Remove when Users table is refactored.
  */
 export const TableCellSortable = ({
     className,

@@ -6,7 +6,7 @@ export const useStyles = makeStyles()(theme => ({
         alignItems: 'center',
         justifyContent: 'flex-end',
         '&>button': {
-            padding: '8px',
+            padding: theme.spacing(1),
             flexShrink: 0,
         },
         paddingRight: theme.spacing(1),

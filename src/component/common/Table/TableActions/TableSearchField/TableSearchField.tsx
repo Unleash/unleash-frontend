@@ -5,7 +5,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { useStyles } from './TableSearchField.styles';
 
 interface ITableSearchFieldProps {
-    value: string;
+    value?: string;
     onChange: (value: string) => void;
     className?: string;
     placeholder?: string;

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-export const SearchHighlightContext = createContext('');
+const SearchHighlightContext = createContext('');
 
 export const SearchHighlightProvider = SearchHighlightContext.Provider;
 

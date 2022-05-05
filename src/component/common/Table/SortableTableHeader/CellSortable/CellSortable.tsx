@@ -34,7 +34,7 @@ export const CellSortable: FC<ICellSortableProps> = ({
     const onSortClick: MouseEventHandler<HTMLButtonElement> = event => {
         onClick(event);
         setAnnouncement(
-            `Sorted${ariaTitle ? `by ${ariaTitle} ` : ''}, ${
+            `Sorted${ariaTitle ? ` by ${ariaTitle} ` : ''}, ${
                 isDescending ? 'ascending' : 'descending'
             }`
         );

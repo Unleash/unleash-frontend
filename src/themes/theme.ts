@@ -67,15 +67,20 @@ export default createTheme({
         tabs: {
             main: '#efefef',
         },
-        error: {
-            main: colors.red[700],
-            dark: colors.red[800],
-            light: colors.red[50],
-        },
         success: {
+            light: colors.green[100],
             main: colors.green[700],
             dark: colors.green[800],
-            light: colors.green[50],
+        },
+        warning: {
+            light: colors.orange[200],
+            main: colors.orange[700],
+            dark: colors.orange[800],
+        },
+        error: {
+            light: colors.red[200],
+            main: colors.red[700],
+            dark: colors.red[800],
         },
         division: {
             main: '#f1f1f1',
