@@ -1,21 +1,19 @@
 import { useEffect, useMemo, VFC } from 'react';
-import {
-    Link,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    useMediaQuery,
-    useTheme,
-} from '@mui/material';
+import { Link, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import useLoading from 'hooks/useLoading';
-import { SortableTableHeader } from 'component/common/Table/SortableTableHeader/SortableTableHeader';
-import { TableActions } from 'component/common/Table/TableActions/TableActions';
-import { TablePanel } from 'component/common/Table/TablePanel/TablePanel';
-import { TableToolbar } from 'component/common/Table/TableToolbar/TableToolbar';
-import TablePlaceholder from 'component/common/Table/TablePlaceholder/TablePlaceholder';
+import {
+    TableContainer,
+    TableToolbar,
+    Table,
+    SortableTableHeader,
+    TableBody,
+    TableCell,
+    TableRow,
+    TablePlaceholder,
+    TableSearch,
+} from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { DateCell } from './DateCell/DateCell';
 import { FeatureNameCell } from './FeatureNameCell/FeatureNameCell';
@@ -139,27 +137,29 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
 
     return (
-        <TablePanel
-            ref={ref}
-            header={
-                <TableToolbar title={`Feature Flags (${data.length})`}>
-                    <TableActions isSeparated onSearch={setGlobalFilter}>
-                        <Link
-                            component={RouterLink}
-                            to="/archive"
-                            underline="always"
-                            sx={{ marginRight: 3 }}
-                        >
-                            View archive
-                        </Link>
-                        <CreateFeatureButton
-                            loading={false}
-                            filter={{ query: '', project: 'default' }}
-                        />
-                    </TableActions>
-                </TableToolbar>
-            }
-        >
+        <TableContainer ref={ref}>
+            <TableToolbar title={`Feature Flags (${data.length})`}>
+                <TableSearch
+                    initialValue={globalFilter}
+                    onChange={setGlobalFilter}
+                />
+                {/*
+                <TableFilter />
+                */}
+                <TableToolbar.Divider />
+                <Link
+                    component={RouterLink}
+                    to="/archive"
+                    underline="always"
+                    sx={{ marginRight: 3 }}
+                >
+                    View archive
+                </Link>
+                <CreateFeatureButton
+                    loading={false}
+                    filter={{ query: '', project: 'default' }}
+                />
+            </TableToolbar>
             <SearchHighlightProvider value={globalFilter}>
                 <Table {...getTableProps()}>
                     <SortableTableHeader headerGroups={headerGroups} />
@@ -188,6 +188,6 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
                     </TablePlaceholder>
                 }
             />
-        </TablePanel>
+        </TableContainer>
     );
 };
