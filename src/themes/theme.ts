@@ -42,14 +42,14 @@ export default createTheme({
     },
     palette: {
         primary: {
-            main: '#635DC5',
-            light: '#817AFE',
-            dark: '#635DC5',
+            main: colors.purple[800],
+            light: colors.purple[700],
+            dark: colors.purple[900],
         },
         secondary: {
-            main: '#635DC5',
-            light: '#817AFE',
-            dark: '#635DC5',
+            main: colors.purple[800],
+            light: colors.purple[700],
+            dark: colors.purple[900],
         },
         grey: colors.grey,
         neutral: {
@@ -68,12 +68,12 @@ export default createTheme({
             main: '#efefef',
         },
         error: {
-            main: '#d95e5e', // FIXME: colors.red[700] ??
+            main: colors.red[700],
             dark: colors.red[800],
             light: colors.red[50],
         },
         success: {
-            main: '#3bd86e', // FIXME: colors.green[700] ??
+            main: colors.green[700],
             dark: colors.green[800],
             light: colors.green[50],
         },
@@ -82,6 +82,15 @@ export default createTheme({
         },
         footer: {
             main: '#000',
+        },
+    },
+    components: {
+        MuiTableHead: {
+            styleOverrides: {
+                root: {
+                    background: colors.grey[200],
+                },
+            },
         },
     },
 });

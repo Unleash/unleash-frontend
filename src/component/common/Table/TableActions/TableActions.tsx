@@ -1,44 +1,41 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import { Search } from '@mui/icons-material';
+import { useAsyncDebounce } from 'react-table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { TableSearchField } from './TableSearchField/TableSearchField';
 import { useStyles } from './TableActions.styles';
-import { debounce } from 'debounce';
 
 interface ITableActionsProps {
-    search?: string;
+    initialSearchValue?: string;
     onSearch?: (value: string) => void;
     searchTip?: string;
     isSeparated?: boolean;
 }
 
 export const TableActions: FC<ITableActionsProps> = ({
-    search,
-    onSearch,
+    initialSearchValue: search,
+    onSearch = () => {},
     searchTip = 'Search',
     children,
     isSeparated,
 }) => {
-    const [searchExpanded, setSearchExpanded] = useState(false);
+    const [searchExpanded, setSearchExpanded] = useState(Boolean(search));
     const [searchInputState, setSearchInputState] = useState(search);
     const [animating, setAnimating] = useState(false);
-    const debauncedOnSearch = useMemo(
-        () => (onSearch ? debounce(onSearch, 50) : () => {}),
-        [onSearch]
-    );
+    const debouncedOnSearch = useAsyncDebounce(onSearch, 200);
 
     const { classes: styles } = useStyles();
 
     const onBlur = (clear = false) => {
-        if (!search || clear) {
+        if (!searchInputState || clear) {
             setSearchExpanded(false);
         }
     };
 
     const onSearchChange = (value: string) => {
-        debauncedOnSearch(value);
+        debouncedOnSearch(value);
         setSearchInputState(value);
     };
 

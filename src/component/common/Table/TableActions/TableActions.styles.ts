@@ -65,7 +65,7 @@ export const useStyles = makeStyles()(theme => ({
         backgroundColor: theme.palette.grey[500],
         width: '1px',
         display: 'inline-block',
-        marginLeft: theme.spacing(1),
+        marginLeft: theme.spacing(2),
         marginRight: theme.spacing(4),
         padding: '10px 0',
         verticalAlign: 'middle',

@@ -3,8 +3,6 @@ import { makeStyles } from 'tss-react/mui';
 export const useStyles = makeStyles()(theme => ({
     tableHeader: {
         '& > th': {
-            backgroundColor: theme.palette.grey[200],
-            fontWeight: 'normal',
             border: 0,
             '&:first-of-type': {
                 borderTopLeftRadius: '8px',
@@ -15,5 +13,9 @@ export const useStyles = makeStyles()(theme => ({
                 borderBottomRightRadius: '8px',
             },
         },
+    },
+    icon: {
+        marginLeft: theme.spacing(0.5),
+        fontSize: 18,
     },
 }));

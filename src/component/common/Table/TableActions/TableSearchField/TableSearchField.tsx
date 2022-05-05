@@ -13,7 +13,7 @@ interface ITableSearchFieldProps {
 }
 
 export const TableSearchField = ({
-    value,
+    value = '',
     onChange,
     className,
     placeholder,
