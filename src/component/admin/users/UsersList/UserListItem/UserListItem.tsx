@@ -15,7 +15,7 @@ import AccessContext from 'contexts/AccessContext';
 import { IUser } from 'interfaces/user';
 import { useNavigate } from 'react-router-dom';
 import { ILocationSettings } from 'hooks/useLocationSettings';
-import { formatDateYMD } from 'utils/formatDate';
+import { formatDateYMD, formatDateYMDHMS } from 'utils/formatDate';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { useStyles } from './UserListItem.styles';
 import TimeAgo from 'react-timeago';
@@ -83,16 +83,17 @@ const UserListItem = ({
                     condition={Boolean(user.seenAt)}
                     show={
                         <Tooltip
-                            title={formatDateYMD(
+                            title={`Last seen at ${formatDateYMDHMS(
                                 user.seenAt as string,
                                 locationSettings.locale
-                            )}
+                            )}`}
                             arrow
                         >
                             <Typography noWrap variant="body2" data-loading>
                                 <TimeAgo
                                     date={new Date(user.seenAt as string)}
                                     live={false}
+                                    title={''}
                                 />
                             </Typography>
                         </Tooltip>
