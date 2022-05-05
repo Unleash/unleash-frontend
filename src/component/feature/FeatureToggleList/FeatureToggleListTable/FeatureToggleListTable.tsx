@@ -27,9 +27,68 @@ import { CreateFeatureButton } from '../../CreateFeatureButton/CreateFeatureButt
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IExperimentProps {
-    data: any[];
+    data: Record<string, any>[];
     isLoading?: boolean;
 }
+
+const sortTypes = {
+    date: (a: any, b: any, id: string) =>
+        b?.values?.[id]?.getTime() - a?.values?.[id]?.getTime(),
+    boolean: (v1: any, v2: any, id: string) => {
+        const a = v1?.values?.[id];
+        const b = v2?.values?.[id];
+        return a === b ? 0 : a ? 1 : -1;
+    },
+    alphanumeric: (a: any, b: any, id: string) =>
+        a?.values?.[id]
+            ?.toLowerCase()
+            .localeCompare(b?.values?.[id]?.toLowerCase()),
+};
+
+const columns = [
+    {
+        Header: 'Seen',
+        accessor: 'lastSeenAt',
+        Cell: FeatureSeenCell,
+        sortType: 'date',
+    },
+    {
+        Header: 'Type',
+        accessor: 'type',
+        Cell: FeatureTypeCell,
+    },
+    {
+        Header: 'Feature toggle name',
+        accessor: 'name',
+        // @ts-expect-error // TODO: props type
+        Cell: ({ row: { original } }) => <FeatureNameCell {...original} />,
+        sortType: 'alphanumeric',
+    },
+    {
+        Header: 'Created on',
+        accessor: 'createdAt',
+        Cell: DateCell,
+        sortType: 'date',
+    },
+    {
+        Header: 'Project ID',
+        accessor: 'project',
+        Cell: ({ value }: { value: string }) => (
+            <LinkCell to={`/projects/${value}`}>{value}</LinkCell>
+        ),
+        sortType: 'alphanumeric',
+    },
+    {
+        Header: 'State',
+        accessor: 'stale',
+        Cell: FeatureStaleCell,
+        sortType: 'boolean',
+    },
+    // Always hidden -- for search
+    {
+        accessor: 'description',
+    },
+];
 
 export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     data: input,
@@ -41,77 +100,10 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
     const ref = useLoading(isLoading);
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: 'Seen',
-                accessor: 'lastSeenAt',
-                Cell: FeatureSeenCell,
-                sortType: 'date',
-            },
-            {
-                Header: 'Type',
-                accessor: 'type',
-                Cell: FeatureTypeCell,
-            },
-            {
-                Header: 'Feature toggle name',
-                accessor: 'name',
-                // @ts-expect-error // TODO: props type
-                Cell: ({ row: { original } }) => (
-                    <FeatureNameCell {...original} />
-                ),
-                sortType: 'alphanumeric',
-            },
-            {
-                Header: 'Created on',
-                accessor: 'createdAt',
-                Cell: DateCell,
-                sortType: 'date',
-            },
-            {
-                Header: 'Project ID',
-                accessor: 'project',
-                Cell: ({ value }: { value: string }) => (
-                    <LinkCell to={`/projects/${value}`}>{value}</LinkCell>
-                ),
-                sortType: 'alphanumeric',
-            },
-            {
-                Header: 'State',
-                accessor: 'stale',
-                Cell: FeatureStaleCell,
-                sortType: 'boolean',
-            },
-            // Always hidden -- for search
-            {
-                accessor: 'description',
-            },
-        ],
-        []
-    );
-
     const initialState = useMemo(
         () => ({
             sortBy: [{ id: 'createdAt', desc: false }],
             hiddenColumns: ['description'],
-        }),
-        []
-    );
-
-    const sortTypes = useMemo(
-        () => ({
-            date: (a: any, b: any, id: string) =>
-                b?.values?.[id]?.getTime() - a?.values?.[id]?.getTime(),
-            boolean: (v1: any, v2: any, id: string) => {
-                const a = v1?.values?.[id];
-                const b = v2?.values?.[id];
-                return a === b ? 0 : a ? 1 : -1;
-            },
-            alphanumeric: (a: any, b: any, id: string) =>
-                a?.values?.[id]
-                    ?.toLowerCase()
-                    .localeCompare(b?.values?.[id]?.toLowerCase()),
         }),
         []
     );

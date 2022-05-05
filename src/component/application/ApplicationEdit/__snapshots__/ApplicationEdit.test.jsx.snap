@@ -6,15 +6,15 @@ exports[`renders correctly if no application 1`] = `
     Loading...
   </p>
   <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-16h11vi-MuiLinearProgress-root"
     role="progressbar"
   >
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-iuk7rr-MuiLinearProgress-bar1"
       style={Object {}}
     />
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-rvjjtn-MuiLinearProgress-bar2"
       style={Object {}}
     />
   </span>
@@ -27,15 +27,15 @@ exports[`renders correctly with permissions 1`] = `
     Loading...
   </p>
   <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-16h11vi-MuiLinearProgress-root"
     role="progressbar"
   >
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-iuk7rr-MuiLinearProgress-bar1"
       style={Object {}}
     />
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-rvjjtn-MuiLinearProgress-bar2"
       style={Object {}}
     />
   </span>
@@ -48,15 +48,15 @@ exports[`renders correctly without permission 1`] = `
     Loading...
   </p>
   <span
-    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-130qhmc-MuiLinearProgress-root"
+    className="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate mui-16h11vi-MuiLinearProgress-root"
     role="progressbar"
   >
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-yt7v2r-MuiLinearProgress-bar1"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate mui-iuk7rr-MuiLinearProgress-bar1"
       style={Object {}}
     />
     <span
-      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-1wjhhwq-MuiLinearProgress-bar2"
+      className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate mui-rvjjtn-MuiLinearProgress-bar2"
       style={Object {}}
     />
   </span>
