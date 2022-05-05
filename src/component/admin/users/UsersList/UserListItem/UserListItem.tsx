@@ -83,7 +83,7 @@ const UserListItem = ({
                     condition={Boolean(user.seenAt)}
                     show={
                         <Tooltip
-                            title={`Last seen at ${formatDateYMD(
+                            title={`Last seen on: ${formatDateYMD(
                                 user.seenAt as string,
                                 locationSettings.locale
                             )}`}
