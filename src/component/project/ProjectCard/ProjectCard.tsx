@@ -2,7 +2,7 @@ import { Card, Menu, MenuItem } from '@mui/material';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ReactComponent as ProjectIcon } from 'assets/icons/projectIcon.svg';
-import { useState } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
@@ -83,9 +83,8 @@ export const ProjectCard = ({
                     open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
                     style={{ top: '40px', left: '-60px' }}
-                    onClose={e => {
-                        // @ts-expect-error
-                        e.preventDefault();
+                    onClose={(event: SyntheticEvent) => {
+                        event.preventDefault();
                         setAnchorEl(null);
                     }}
                 >
