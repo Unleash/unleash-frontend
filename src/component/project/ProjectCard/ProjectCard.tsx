@@ -73,7 +73,7 @@ export const ProjectCard = ({
                     className={classes.actionsBtn}
                     data-loading
                     onClick={handleClick}
-                    tooltip="Options"
+                    tooltipProps={{ title: 'Options' }}
                 >
                     <MoreVertIcon />
                 </PermissionIconButton>

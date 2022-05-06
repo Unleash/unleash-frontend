@@ -66,7 +66,9 @@ const FeatureOverviewMetaData = () => {
                                         permission={UPDATE_FEATURE}
                                         component={Link}
                                         to={`/projects/${projectId}/features/${featureId}/settings`}
-                                        tooltip="Edit description"
+                                        tooltipProps={{
+                                            title: 'Edit description',
+                                        }}
                                     >
                                         <Edit className={styles.editIcon} />
                                     </PermissionIconButton>
