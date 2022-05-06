@@ -82,7 +82,7 @@ export const ProjectCard = ({
                     id="project-card-menu"
                     open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
-                    style={{ top: '40px', left: '-60px' }}
+                    style={{ top: 0, left: -100 }}
                     onClose={(event: SyntheticEvent) => {
                         event.preventDefault();
                         setAnchorEl(null);
