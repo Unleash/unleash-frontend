@@ -1,44 +1,37 @@
 import Plausible from 'plausible-tracker';
 import { useEffect } from 'react';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import { IFlags } from 'interfaces/uiConfig';
 
 const PLAUSIBLE_UNLEASH_API_HOST = 'https://plausible.getunleash.io';
 const PLAUSIBLE_UNLEASH_DOMAIN = 'app.unleash-hosted.com';
-const PLAUSIBLE_TRACK_LOCALHOST = false;
 
 export const usePlausibleTracker = () => {
-    const enable = enablePlausibleTracker();
+    const { uiConfig } = useUiConfig();
+    const enabled = enablePlausibleTracker(uiConfig.flags);
 
     useEffect(() => {
-        if (enable) {
+        if (enabled) {
             try {
                 return initPlausibleTracker();
             } catch (error) {
                 console.warn(error);
             }
         }
-    }, [enable]);
+    }, [enabled]);
 };
 
 const initPlausibleTracker = (): (() => void) => {
     const plausible = Plausible({
         domain: PLAUSIBLE_UNLEASH_DOMAIN,
         apiHost: PLAUSIBLE_UNLEASH_API_HOST,
-        trackLocalhost: PLAUSIBLE_TRACK_LOCALHOST,
+        trackLocalhost: true,
     });
 
     return plausible.enableAutoPageviews();
 };
 
-export const enablePlausibleTracker = (): boolean => {
-    return isUnleashSaasDomain() || isTrackingLocalhost();
-};
-
-export const isUnleashSaasDomain = (
-    hostname = window.location.hostname
-): boolean => {
-    return hostname === PLAUSIBLE_UNLEASH_DOMAIN;
-};
-
-export const isTrackingLocalhost = (): boolean => {
-    return PLAUSIBLE_TRACK_LOCALHOST;
+// Enable Plausible if we're on the Unleash SaaS domain.
+export const enablePlausibleTracker = (flags: Partial<IFlags>): boolean => {
+    return Boolean(flags.T);
 };
