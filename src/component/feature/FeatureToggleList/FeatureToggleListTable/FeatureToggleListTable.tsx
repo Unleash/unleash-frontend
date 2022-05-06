@@ -132,6 +132,7 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
             initialState,
             sortTypes,
             autoResetGlobalFilter: false,
+            disableSortRemove: true,
         },
         useGlobalFilter,
         useSortBy
@@ -139,7 +140,13 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
 
     useEffect(() => {
         if (isSmallScreen) {
-            setHiddenColumns(['lastSeenAt', 'type', 'stale', 'description']);
+            setHiddenColumns([
+                'lastSeenAt',
+                'type',
+                'stale',
+                'description',
+                'createdAt',
+            ]);
         } else if (isMediumScreen) {
             setHiddenColumns(['lastSeenAt', 'stale', 'description']);
         } else {
@@ -149,14 +156,11 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
 
     return (
         <TableContainer ref={ref}>
-            <TableToolbar title={`Feature Flags (${data.length})`}>
+            <TableToolbar title={`Feature toggles (${data.length})`}>
                 <TableSearch
                     initialValue={globalFilter}
                     onChange={setGlobalFilter}
                 />
-                {/*
-                <TableFilter />
-                */}
                 <TableToolbar.Divider />
                 <Link
                     component={RouterLink}
@@ -193,10 +197,22 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
             <ConditionallyRender
                 condition={rows.length === 0}
                 show={
-                    <TablePlaceholder>
-                        No features available. Get started by adding a new
-                        feature toggle.
-                    </TablePlaceholder>
+                    <ConditionallyRender
+                        condition={globalFilter?.length > 0}
+                        show={
+                            <TablePlaceholder>
+                                No features or projects found matching &ldquo;
+                                {globalFilter}
+                                &rdquo;
+                            </TablePlaceholder>
+                        }
+                        elseShow={
+                            <TablePlaceholder>
+                                No features available. Get started by adding a
+                                new feature toggle.
+                            </TablePlaceholder>
+                        }
+                    />
                 }
             />
         </TableContainer>

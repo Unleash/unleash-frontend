@@ -4,7 +4,6 @@ export const useStyles = makeStyles()(theme => ({
     tableHeader: {
         '& > th': {
             border: 0,
-            overflow: 'hidden',
             '&:first-of-type': {
                 borderTopLeftRadius: '8px',
                 borderBottomLeftRadius: '8px',

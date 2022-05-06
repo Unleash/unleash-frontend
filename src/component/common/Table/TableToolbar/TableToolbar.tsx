@@ -13,7 +13,7 @@ export const TableToolbarComponent: FC<ITableToolbarProps> & {
 
     return (
         <Toolbar className={styles.toolbar}>
-            <Typography variant="h1" component="h1" data-loading>
+            <Typography variant="h1" data-loading>
                 {title}
             </Typography>
             <Box className={styles.actions}>{children}</Box>

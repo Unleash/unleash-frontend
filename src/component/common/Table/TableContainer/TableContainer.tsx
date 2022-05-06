@@ -4,10 +4,10 @@ import { useStyles } from './TableContainer.styles';
 
 export const TableContainer = forwardRef<HTMLDivElement, PaperProps>(
     ({ children, ...props }, ref) => {
-        const { classes: styles } = useStyles();
+        const { classes } = useStyles();
 
         return (
-            <Paper ref={ref} className={styles.panel} {...props}>
+            <Paper ref={ref} className={classes.panel} {...props}>
                 {children}
             </Paper>
         );

@@ -1,7 +1,7 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
-    fieldWidth: {
+    searchField: {
         width: '45px',
         '& .search-icon': {
             marginRight: 0,
@@ -17,7 +17,7 @@ export const useStyles = makeStyles()(theme => ({
             color: theme.palette.text.primary,
         },
     },
-    fieldWidthEnter: {
+    searchFieldEnter: {
         width: '250px',
         transition: 'width 0.6s',
         '& .search-icon': {
@@ -35,7 +35,7 @@ export const useStyles = makeStyles()(theme => ({
             borderColor: theme.palette.grey[300],
         },
     },
-    fieldWidthLeave: {
+    searchFieldLeave: {
         width: '45px',
         transition: 'width 0.6s',
         '& .search-icon': {

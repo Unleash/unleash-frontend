@@ -16,7 +16,7 @@ interface ITableSearchProps {
 export const TableSearch: FC<ITableSearchProps> = ({
     initialValue,
     onChange = () => {},
-    placeholder = 'Search…',
+    placeholder = 'Search',
 }) => {
     const [searchInputState, setSearchInputState] = useState(initialValue);
     const [isSearchExpanded, setIsSearchExpanded] = useState(
@@ -42,16 +42,16 @@ export const TableSearch: FC<ITableSearchProps> = ({
         <>
             <AnimateOnMount
                 mounted={isSearchExpanded}
-                start={styles.fieldWidth}
-                enter={styles.fieldWidthEnter}
-                leave={styles.fieldWidthLeave}
+                start={styles.searchField}
+                enter={styles.searchFieldEnter}
+                leave={styles.searchFieldLeave}
                 onStart={() => setIsAnimating(true)}
                 onEnd={() => setIsAnimating(false)}
             >
                 <TableSearchField
                     value={searchInputState!}
                     onChange={onSearchChange}
-                    placeholder={placeholder}
+                    placeholder={`${placeholder}…`}
                     onBlur={onBlur}
                 />
             </AnimateOnMount>
