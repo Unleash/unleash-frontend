@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    FeaturesSchemaFeatures,
-    FeaturesSchemaFeaturesFromJSON,
-    FeaturesSchemaFeaturesFromJSONTyped,
-    FeaturesSchemaFeaturesToJSON,
-} from './FeaturesSchemaFeatures';
+    FeatureSchema,
+    FeatureSchemaFromJSON,
+    FeatureSchemaFromJSONTyped,
+    FeatureSchemaToJSON,
+} from './FeatureSchema';
 
 /**
  * 
@@ -34,10 +34,10 @@ export interface FeaturesSchema {
     version: number;
     /**
      * 
-     * @type {Array<FeaturesSchemaFeatures>}
+     * @type {Array<FeatureSchema>}
      * @memberof FeaturesSchema
      */
-    features: Array<FeaturesSchemaFeatures>;
+    features: Array<FeatureSchema>;
 }
 
 export function FeaturesSchemaFromJSON(json: any): FeaturesSchema {
@@ -51,7 +51,7 @@ export function FeaturesSchemaFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'version': json['version'],
-        'features': ((json['features'] as Array<any>).map(FeaturesSchemaFeaturesFromJSON)),
+        'features': ((json['features'] as Array<any>).map(FeatureSchemaFromJSON)),
     };
 }
 
@@ -65,7 +65,7 @@ export function FeaturesSchemaToJSON(value?: FeaturesSchema | null): any {
     return {
         
         'version': value.version,
-        'features': ((value.features as Array<any>).map(FeaturesSchemaFeaturesToJSON)),
+        'features': ((value.features as Array<any>).map(FeatureSchemaToJSON)),
     };
 }
 

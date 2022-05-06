@@ -33,28 +33,10 @@ export interface ConstraintSchema {
     operator: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof ConstraintSchema
-     */
-    caseInsensitive?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ConstraintSchema
-     */
-    inverted?: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ConstraintSchema
      */
     values?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConstraintSchema
-     */
-    value?: string;
 }
 
 export function ConstraintSchemaFromJSON(json: any): ConstraintSchema {
@@ -69,10 +51,7 @@ export function ConstraintSchemaFromJSONTyped(json: any, ignoreDiscriminator: bo
         
         'contextName': json['contextName'],
         'operator': json['operator'],
-        'caseInsensitive': !exists(json, 'caseInsensitive') ? undefined : json['caseInsensitive'],
-        'inverted': !exists(json, 'inverted') ? undefined : json['inverted'],
         'values': !exists(json, 'values') ? undefined : json['values'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
     };
 }
 
@@ -87,10 +66,7 @@ export function ConstraintSchemaToJSON(value?: ConstraintSchema | null): any {
         
         'contextName': value.contextName,
         'operator': value.operator,
-        'caseInsensitive': value.caseInsensitive,
-        'inverted': value.inverted,
         'values': value.values,
-        'value': value.value,
     };
 }
 

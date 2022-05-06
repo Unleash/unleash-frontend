@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    CreateStrategySchemaConstraints,
-    CreateStrategySchemaConstraintsFromJSON,
-    CreateStrategySchemaConstraintsFromJSONTyped,
-    CreateStrategySchemaConstraintsToJSON,
-} from './CreateStrategySchemaConstraints';
+    ConstraintSchema,
+    ConstraintSchemaFromJSON,
+    ConstraintSchemaFromJSONTyped,
+    ConstraintSchemaToJSON,
+} from './ConstraintSchema';
 
 /**
  * 
@@ -40,16 +40,16 @@ export interface StrategySchema {
     name: string;
     /**
      * 
-     * @type {Array<CreateStrategySchemaConstraints>}
+     * @type {Array<ConstraintSchema>}
      * @memberof StrategySchema
      */
-    constraints: Array<CreateStrategySchemaConstraints>;
+    constraints: Array<ConstraintSchema>;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {object}
      * @memberof StrategySchema
      */
-    parameters: { [key: string]: string; };
+    parameters: object;
 }
 
 export function StrategySchemaFromJSON(json: any): StrategySchema {
@@ -64,7 +64,7 @@ export function StrategySchemaFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'id': json['id'],
         'name': json['name'],
-        'constraints': ((json['constraints'] as Array<any>).map(CreateStrategySchemaConstraintsFromJSON)),
+        'constraints': ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
         'parameters': json['parameters'],
     };
 }
@@ -80,7 +80,7 @@ export function StrategySchemaToJSON(value?: StrategySchema | null): any {
         
         'id': value.id,
         'name': value.name,
-        'constraints': ((value.constraints as Array<any>).map(CreateStrategySchemaConstraintsToJSON)),
+        'constraints': ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
         'parameters': value.parameters,
     };
 }

@@ -14,17 +14,17 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    FeatureSchemaStrategies,
-    FeatureSchemaStrategiesFromJSON,
-    FeatureSchemaStrategiesFromJSONTyped,
-    FeatureSchemaStrategiesToJSON,
-} from './FeatureSchemaStrategies';
+    StrategySchema,
+    StrategySchemaFromJSON,
+    StrategySchemaFromJSONTyped,
+    StrategySchemaToJSON,
+} from './StrategySchema';
 import {
-    FeatureSchemaVariants,
-    FeatureSchemaVariantsFromJSON,
-    FeatureSchemaVariantsFromJSONTyped,
-    FeatureSchemaVariantsToJSON,
-} from './FeatureSchemaVariants';
+    VariantSchema,
+    VariantSchemaFromJSON,
+    VariantSchemaFromJSONTyped,
+    VariantSchemaToJSON,
+} from './VariantSchema';
 
 /**
  * 
@@ -88,16 +88,16 @@ export interface FeatureSchema {
     lastSeenAt?: Date | null;
     /**
      * 
-     * @type {Array<FeatureSchemaStrategies>}
+     * @type {Array<StrategySchema>}
      * @memberof FeatureSchema
      */
-    strategies?: Array<FeatureSchemaStrategies>;
+    strategies?: Array<StrategySchema>;
     /**
      * 
-     * @type {Array<FeatureSchemaVariants>}
+     * @type {Array<VariantSchema>}
      * @memberof FeatureSchema
      */
-    variants?: Array<FeatureSchemaVariants>;
+    variants?: Array<VariantSchema>;
 }
 
 export function FeatureSchemaFromJSON(json: any): FeatureSchema {
@@ -119,8 +119,8 @@ export function FeatureSchemaFromJSONTyped(json: any, ignoreDiscriminator: boole
         'impressionData': !exists(json, 'impressionData') ? undefined : json['impressionData'],
         'createdAt': !exists(json, 'createdAt') ? undefined : (json['createdAt'] === null ? null : new Date(json['createdAt'])),
         'lastSeenAt': !exists(json, 'lastSeenAt') ? undefined : (json['lastSeenAt'] === null ? null : new Date(json['lastSeenAt'])),
-        'strategies': !exists(json, 'strategies') ? undefined : ((json['strategies'] as Array<any>).map(FeatureSchemaStrategiesFromJSON)),
-        'variants': !exists(json, 'variants') ? undefined : ((json['variants'] as Array<any>).map(FeatureSchemaVariantsFromJSON)),
+        'strategies': !exists(json, 'strategies') ? undefined : ((json['strategies'] as Array<any>).map(StrategySchemaFromJSON)),
+        'variants': !exists(json, 'variants') ? undefined : ((json['variants'] as Array<any>).map(VariantSchemaFromJSON)),
     };
 }
 
@@ -142,8 +142,8 @@ export function FeatureSchemaToJSON(value?: FeatureSchema | null): any {
         'impressionData': value.impressionData,
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt === null ? null : value.createdAt.toISOString().substr(0,10)),
         'lastSeenAt': value.lastSeenAt === undefined ? undefined : (value.lastSeenAt === null ? null : value.lastSeenAt.toISOString().substr(0,10)),
-        'strategies': value.strategies === undefined ? undefined : ((value.strategies as Array<any>).map(FeatureSchemaStrategiesToJSON)),
-        'variants': value.variants === undefined ? undefined : ((value.variants as Array<any>).map(FeatureSchemaVariantsToJSON)),
+        'strategies': value.strategies === undefined ? undefined : ((value.strategies as Array<any>).map(StrategySchemaToJSON)),
+        'variants': value.variants === undefined ? undefined : ((value.variants as Array<any>).map(VariantSchemaToJSON)),
     };
 }
 
