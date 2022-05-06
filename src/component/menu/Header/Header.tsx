@@ -142,7 +142,7 @@ const Header: VFC = () => {
                                 disableRipple
                                 className={themeStyles.focusable}
                             >
-                                <MenuBookIcon className={styles.icon} />
+                                <MenuBookIcon />
                             </IconButton>
                         </Tooltip>
                         <ConditionallyRender
