@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { List } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import useToast from 'hooks/useToast';
-import { IEnvironment, ISortOrderPayload } from 'interfaces/environments';
+import { IEnvironment } from 'interfaces/environments';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
-import useEnvironmentApi from 'hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
+import useEnvironmentApi, {
+    createSortOrderPayload,
+} from 'hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import useProjectRolePermissions from 'hooks/api/getters/useProjectRolePermissions/useProjectRolePermissions';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -16,6 +18,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import EnvironmentListItem from './EnvironmentListItem/EnvironmentListItem';
 import EnvironmentToggleConfirm from './EnvironmentToggleConfirm/EnvironmentToggleConfirm';
 import EnvironmentDeleteConfirm from './EnvironmentDeleteConfirm/EnvironmentDeleteConfirm';
+import { MoveListItem } from 'hooks/useDragItem';
 
 const EnvironmentList = () => {
     const defaultEnv = {
@@ -45,42 +48,6 @@ const EnvironmentList = () => {
         toggleEnvironmentOn,
         toggleEnvironmentOff,
     } = useEnvironmentApi();
-
-    const moveListItem = (dragIndex: number, hoverIndex: number) => {
-        const newEnvList = [...environments];
-        if (newEnvList.length === 0) return newEnvList;
-
-        const item = newEnvList.splice(dragIndex, 1)[0];
-
-        newEnvList.splice(hoverIndex, 0, item);
-        mutateEnvironments(newEnvList);
-        return newEnvList;
-    };
-
-    const moveListItemApi = async (dragIndex: number, hoverIndex: number) => {
-        const newEnvList = moveListItem(dragIndex, hoverIndex);
-        const sortOrder = newEnvList.reduce(
-            (acc: ISortOrderPayload, env: IEnvironment, index: number) => {
-                acc[env.name] = index + 1;
-                return acc;
-            },
-            {}
-        );
-
-        try {
-            await sortOrderAPICall(sortOrder);
-        } catch (error: unknown) {
-            setToastApiError(formatUnknownError(error));
-        }
-    };
-
-    const sortOrderAPICall = async (sortOrder: ISortOrderPayload) => {
-        try {
-            await changeSortOrder(sortOrder);
-        } catch (error: unknown) {
-            setToastApiError(formatUnknownError(error));
-        }
-    };
 
     const handleDeleteEnvironment = async () => {
         try {
@@ -141,6 +108,25 @@ const EnvironmentList = () => {
         }
     };
 
+    const moveListItem: MoveListItem = useCallback(
+        async (dragIndex: number, dropIndex: number, save = false) => {
+            const copy = [...environments];
+            const tmp = copy[dragIndex];
+            copy.splice(dragIndex, 1);
+            copy.splice(dropIndex, 0, tmp);
+            mutateEnvironments(copy);
+
+            if (save) {
+                try {
+                    await changeSortOrder(createSortOrderPayload(copy));
+                } catch (error: unknown) {
+                    setToastApiError(formatUnknownError(error));
+                }
+            }
+        },
+        [changeSortOrder, environments, refetchEnvironments, setToastApiError]
+    );
+
     const environmentList = () =>
         environments.map((env: IEnvironment, index: number) => (
             <EnvironmentListItem
@@ -149,9 +135,8 @@ const EnvironmentList = () => {
                 setDeldialogue={setDeldialogue}
                 setSelectedEnv={setSelectedEnv}
                 setToggleDialog={setToggleDialog}
-                index={index}
                 moveListItem={moveListItem}
-                moveListItemApi={moveListItemApi}
+                index={index}
             />
         ));
 
