@@ -109,7 +109,7 @@ const FeatureOverviewExecution = ({
             switch (param?.type) {
                 case 'list':
                     const values = strategy?.parameters[param.name]
-                        .split(',')
+                        ?.split(',')
                         .filter((val: string) => val);
 
                     return (
