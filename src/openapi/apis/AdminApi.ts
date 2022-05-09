@@ -15,6 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
+    ChangeProjectSchema,
+    ChangeProjectSchemaFromJSON,
+    ChangeProjectSchemaToJSON,
     CloneFeatureSchema,
     CloneFeatureSchemaFromJSON,
     CloneFeatureSchemaToJSON,
@@ -70,6 +73,12 @@ export interface AddTagRequest {
 
 export interface ApiAdminArchiveFeaturesProjectIdGetRequest {
     projectId: string;
+}
+
+export interface ApiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPostRequest {
+    projectId: string;
+    featureName: string;
+    changeProjectSchema: ChangeProjectSchema;
 }
 
 export interface ArchiveFeatureRequest {
@@ -322,6 +331,48 @@ export class AdminApi extends runtime.BaseAPI {
     async apiAdminArchiveFeaturesProjectIdGet(requestParameters: ApiAdminArchiveFeaturesProjectIdGetRequest, initOverrides?: RequestInit): Promise<FeaturesSchema> {
         const response = await this.apiAdminArchiveFeaturesProjectIdGetRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     */
+    async apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPostRaw(requestParameters: ApiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.projectId === null || requestParameters.projectId === undefined) {
+            throw new runtime.RequiredError('projectId','Required parameter requestParameters.projectId was null or undefined when calling apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPost.');
+        }
+
+        if (requestParameters.featureName === null || requestParameters.featureName === undefined) {
+            throw new runtime.RequiredError('featureName','Required parameter requestParameters.featureName was null or undefined when calling apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPost.');
+        }
+
+        if (requestParameters.changeProjectSchema === null || requestParameters.changeProjectSchema === undefined) {
+            throw new runtime.RequiredError('changeProjectSchema','Required parameter requestParameters.changeProjectSchema was null or undefined when calling apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // apiKey authentication
+        }
+
+        const response = await this.request({
+            path: `/api/admin/projects/{projectId}/features/{featureName}/changeProject`.replace(`{${"projectId"}}`, encodeURIComponent(String(requestParameters.projectId))).replace(`{${"featureName"}}`, encodeURIComponent(String(requestParameters.featureName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ChangeProjectSchemaToJSON(requestParameters.changeProjectSchema),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPost(requestParameters: ApiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPostRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.apiAdminProjectsProjectIdFeaturesFeatureNameChangeProjectPostRaw(requestParameters, initOverrides);
     }
 
     /**
