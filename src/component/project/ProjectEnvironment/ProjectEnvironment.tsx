@@ -159,6 +159,7 @@ const ProjectEnvironmentList = ({
                                     env.enabled ? 'Disable' : 'Enable'
                                 } environment`}
                                 size="medium"
+                                disabled={env.name === 'default'}
                                 projectId={projectId}
                                 permission={UPDATE_PROJECT}
                                 checked={env.enabled}
