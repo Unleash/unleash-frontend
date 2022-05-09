@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
-import { FeatureSchema, FeatureSchemaStrategies } from 'openapi';
+import { FeatureSchema, StrategySchema } from 'openapi';
 import parseISO from 'date-fns/parseISO';
 import { IConstraint } from 'interfaces/strategy';
 
@@ -108,8 +108,8 @@ const mockFeatureToggle = (
 };
 
 const mockFeatureStrategy = (
-    overrides?: Partial<FeatureSchemaStrategies>
-): FeatureSchemaStrategies => {
+    overrides?: Partial<StrategySchema>
+): StrategySchema => {
     return {
         id: '1',
         name: '1',
