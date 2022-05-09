@@ -9,6 +9,14 @@ export interface ISegment {
     constraints: IConstraint[];
 }
 
+export interface ISegmentStrategy {
+    id: string;
+    featureName: string;
+    projectId: string;
+    environment: string;
+    strategyName: string;
+}
+
 export type ISegmentPayload = Pick<
     ISegment,
     'name' | 'description' | 'constraints'

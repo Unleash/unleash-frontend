@@ -1,8 +1,7 @@
 import React from 'react';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { useStyles } from '../SegmentDeleteConfirm/SegmentDeleteConfirm.styles';
-import { ISegment } from 'interfaces/segment';
-import { IFeatureStrategy } from 'interfaces/strategy';
+import { ISegment, ISegmentStrategy } from 'interfaces/segment';
 import { Link } from 'react-router-dom';
 import { formatEditStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 import { formatStrategyName } from 'utils/strategyNames';
@@ -11,7 +10,7 @@ interface ISegmentDeleteUsedSegmentProps {
     segment: ISegment;
     open: boolean;
     setDeldialogue: React.Dispatch<React.SetStateAction<boolean>>;
-    strategies: IFeatureStrategy[] | undefined;
+    strategies: ISegmentStrategy[] | undefined;
 }
 
 export const SegmentDeleteUsedSegment = ({
@@ -61,7 +60,7 @@ export const SegmentDeleteUsedSegment = ({
     );
 };
 
-const formatStrategyNameParens = (strategy: IFeatureStrategy): string => {
+const formatStrategyNameParens = (strategy: ISegmentStrategy): string => {
     if (!strategy.strategyName) {
         return '';
     }
