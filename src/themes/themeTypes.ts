@@ -49,6 +49,14 @@ declare module '@mui/material/styles' {
             abandoned: string;
         };
         dividerAlternative: string;
+        /**
+         * For hover effect
+         */
+        hover: string;
+        /**
+         * For highlight effect
+         */
+        highlight: string;
     }
 
     interface Theme extends CustomTheme {}

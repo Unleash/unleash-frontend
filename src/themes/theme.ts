@@ -67,6 +67,8 @@ export default createTheme({
         },
         divider: colors.grey[300],
         dividerAlternative: colors.grey[500],
+        hover: 'rgba(120,120,122,0.1)',
+        highlight: '#FFEACC',
         grey: colors.grey,
         text: {
             primary: colors.grey[900],
