@@ -1,12 +1,12 @@
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
-import PageContent from 'component/common/PageContent/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -33,7 +33,7 @@ export const StrategyView = () => {
     return (
         <PageContent
             headerContent={
-                <HeaderTitle
+                <PageHeader
                     title={strategy?.name}
                     subtitle={strategy?.description}
                     actions={

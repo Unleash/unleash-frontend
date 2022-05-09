@@ -89,6 +89,22 @@ export default createTheme({
         },
     },
     components: {
+        MuiLink: {
+            styleOverrides: {
+                root: {
+                    color: colors.purple[900],
+                },
+            },
+        },
+        MuiBreadcrumbs: {
+            styleOverrides: {
+                root: {
+                    '& a': {
+                        color: colors.purple[900],
+                    },
+                },
+            },
+        },
         MuiTableHead: {
             styleOverrides: {
                 root: {
@@ -96,10 +112,19 @@ export default createTheme({
                 },
             },
         },
-        MuiLink: {
+        MuiTableRow: {
             styleOverrides: {
                 root: {
-                    color: colors.purple[900],
+                    '&.MuiTableRow-hover:hover': {
+                        background: colors.grey[100],
+                    },
+                },
+            },
+        },
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    borderBottomColor: colors.grey[300],
                 },
             },
         },

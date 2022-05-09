@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PageContent from 'component/common/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import { useStyles } from './FeatureSettings.styles';
 import { List, ListItem } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';

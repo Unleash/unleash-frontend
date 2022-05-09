@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import PageContent from 'component/common/PageContent/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import {
     List,
     ListItem,

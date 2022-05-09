@@ -9,9 +9,9 @@ import { useStyles } from './ProjectList.styles';
 import { IProjectCard } from 'interfaces/project';
 import loadingData from './loadingData';
 import useLoading from 'hooks/useLoading';
-import PageContent from 'component/common/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import AccessContext from 'contexts/AccessContext';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { CREATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { Add } from '@mui/icons-material';
@@ -141,7 +141,7 @@ export const ProjectListNew = () => {
             </div>
             <PageContent
                 headerContent={
-                    <HeaderTitle
+                    <PageHeader
                         title="Projects"
                         actions={
                             <ResponsiveButton

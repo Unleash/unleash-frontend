@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import React, { FC, ReactNode } from 'react';
 import classnames from 'classnames';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import { Paper } from '@mui/material';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { Paper, PaperProps } from '@mui/material';
 import { useStyles } from './styles';
 
-const PageContent = ({
+interface IPageContentProps extends PaperProps {
+    headerContent?: ReactNode;
+    disablePadding?: boolean;
+    disableBorder?: boolean;
+    bodyClass?: string;
+}
+
+export const PageContent: FC<IPageContentProps> = ({
     children,
     headerContent,
     disablePadding = false,
@@ -32,7 +37,7 @@ const PageContent = ({
         if (typeof headerContent === 'string') {
             header = (
                 <div className={headerClasses}>
-                    <HeaderTitle title={headerContent} />
+                    <PageHeader title={headerContent} />
                 </div>
             );
         } else {
@@ -52,12 +57,4 @@ const PageContent = ({
             <div className={bodyClasses}>{children}</div>
         </Paper>
     );
-};
-
-export default PageContent;
-
-PageContent.propTypes = {
-    headerContent: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-    disablePadding: PropTypes.bool,
-    disableBorder: PropTypes.bool,
 };

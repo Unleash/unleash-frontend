@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccessContext from 'contexts/AccessContext';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import PageContent from 'component/common/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import AdminMenu from 'component/admin/menu/AdminMenu';
 import { useStyles } from './ProjectRoles.styles';
@@ -22,7 +22,7 @@ const ProjectRoles = () => {
             <PageContent
                 bodyClass={styles.rolesListBody}
                 headerContent={
-                    <HeaderTitle
+                    <PageHeader
                         title="Project Roles"
                         actions={
                             <ConditionallyRender

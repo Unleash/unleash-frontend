@@ -1,7 +1,11 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
-    headerTitleContainer: {
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    topContainer: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',

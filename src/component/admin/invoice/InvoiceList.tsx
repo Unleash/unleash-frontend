@@ -8,8 +8,8 @@ import {
     Button,
 } from '@mui/material';
 import OpenInNew from '@mui/icons-material/OpenInNew';
-import PageContent from 'component/common/PageContent';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { PageContent } from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { formatApiPath } from 'utils/formatPath';
 import useInvoices from 'hooks/api/getters/useInvoices/useInvoices';
@@ -36,7 +36,7 @@ const InvoiceList = () => {
             show={
                 <PageContent
                     headerContent={
-                        <HeaderTitle
+                        <PageHeader
                             title="Invoices"
                             actions={
                                 <Button

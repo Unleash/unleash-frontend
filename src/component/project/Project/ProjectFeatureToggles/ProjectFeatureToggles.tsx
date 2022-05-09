@@ -7,8 +7,8 @@ import AccessContext from 'contexts/AccessContext';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PROJECTFILTERING } from 'component/common/flags';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import PageContent from 'component/common/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import FeatureToggleListNew from 'component/feature/FeatureToggleListNew/FeatureToggleListNew';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
@@ -47,7 +47,7 @@ export const ProjectFeatureToggles = ({
             className={styles.container}
             bodyClass={styles.bodyClass}
             headerContent={
-                <HeaderTitle
+                <PageHeader
                     className={styles.title}
                     title={`Project feature toggles (${filteredFeatures.length})`}
                     actions={

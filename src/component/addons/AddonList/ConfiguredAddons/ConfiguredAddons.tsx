@@ -12,7 +12,7 @@ import {
     UPDATE_ADDON,
 } from 'component/providers/AccessProvider/permissions';
 import { Link, useNavigate } from 'react-router-dom';
-import PageContent from 'component/common/PageContent/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import useAddons from 'hooks/api/getters/useAddons/useAddons';
 import useToast from 'hooks/useToast';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
