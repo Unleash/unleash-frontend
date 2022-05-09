@@ -35,7 +35,7 @@ const InvoiceList = () => {
             condition={invoices.length > 0}
             show={
                 <PageContent
-                    headerContent={
+                    header={
                         <PageHeader
                             title="Invoices"
                             actions={

@@ -142,7 +142,7 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
         </ListItem>
     );
     return (
-        <PageContent headerContent="Configured addons">
+        <PageContent header="Configured addons">
             <List>
                 {sortAddons(addons).map((addon: IAddon) => renderAddon(addon))}
             </List>

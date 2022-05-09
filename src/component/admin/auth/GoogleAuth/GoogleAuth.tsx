@@ -74,7 +74,7 @@ export const GoogleAuth = () => {
     };
 
     return (
-        <PageContent headerContent="">
+        <PageContent>
             <Grid container style={{ marginBottom: '1rem' }}>
                 <Grid item xs={12}>
                     <Alert severity="info">

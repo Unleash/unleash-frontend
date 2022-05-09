@@ -47,7 +47,7 @@ export const ApplicationList = () => {
             <div className={themeStyles.searchField}>
                 <SearchField initialValue={filter} updateValue={setFilter} />
             </div>
-            <PageContent headerContent={<PageHeader title="Applications" />}>
+            <PageContent header={<PageHeader title="Applications" />}>
                 <div className={themeStyles.fullwidth}>
                     <ConditionallyRender
                         condition={filteredApplications.length > 0}

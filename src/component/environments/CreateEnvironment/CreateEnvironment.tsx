@@ -109,9 +109,7 @@ const CreateEnvironment = () => {
             elseShow={
                 <>
                     <PageContent
-                        headerContent={
-                            <PageHeader title="Create environment" />
-                        }
+                        header={<PageHeader title="Create environment" />}
                     >
                         <Alert severity="error">
                             <p>

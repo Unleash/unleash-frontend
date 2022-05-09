@@ -17,7 +17,7 @@ export const FeatureSettings = () => {
     const [settings, setSettings] = useState(METADATA);
 
     return (
-        <PageContent headerContent="Settings" bodyClass={styles.bodyContainer}>
+        <PageContent header="Settings" bodyClass={styles.bodyContainer}>
             <div className={styles.innerContainer}>
                 <div className={styles.listContainer}>
                     <List>

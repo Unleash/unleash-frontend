@@ -159,7 +159,7 @@ const EnvironmentList = () => {
     };
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader
                     title="Environments"
                     actions={

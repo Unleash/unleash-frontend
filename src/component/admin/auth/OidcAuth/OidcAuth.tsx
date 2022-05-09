@@ -85,7 +85,7 @@ export const OidcAuth = () => {
     };
 
     return (
-        <PageContent headerContent="">
+        <PageContent>
             <Grid container style={{ marginBottom: '1rem' }}>
                 <Grid item md={12}>
                     <Alert severity="info">

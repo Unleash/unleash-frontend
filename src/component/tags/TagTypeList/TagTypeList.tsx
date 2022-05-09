@@ -143,7 +143,7 @@ export const TagTypeList = () => {
         );
     };
     return (
-        <PageContent headerContent={header}>
+        <PageContent header={header}>
             <List>
                 <ConditionallyRender
                     condition={tagTypes.length > 0}

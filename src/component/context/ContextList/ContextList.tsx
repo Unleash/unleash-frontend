@@ -143,7 +143,7 @@ const ContextList: VFC = () => {
 
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader actions={headerButton()} title={'Context fields'} />
             }
         >

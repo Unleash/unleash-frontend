@@ -281,9 +281,7 @@ export const StrategiesList = () => {
 
     return (
         <PageContent
-            headerContent={
-                <PageHeader title="Strategies" actions={headerButton()} />
-            }
+            header={<PageHeader title="Strategies" actions={headerButton()} />}
         >
             <Dialogue
                 open={dialogueMetaData.show}

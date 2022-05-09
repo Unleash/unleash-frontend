@@ -49,7 +49,7 @@ export const AvailableAddons = ({
         </ListItem>
     );
     return (
-        <PageContent headerContent="Available addons">
+        <PageContent header="Available addons">
             <List>
                 {providers.map((provider: IProvider) =>
                     renderProvider(provider)

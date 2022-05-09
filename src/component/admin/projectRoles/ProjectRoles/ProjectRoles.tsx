@@ -21,7 +21,7 @@ const ProjectRoles = () => {
             <AdminMenu />
             <PageContent
                 bodyClass={styles.rolesListBody}
-                headerContent={
+                header={
                     <PageHeader
                         title="Project Roles"
                         actions={

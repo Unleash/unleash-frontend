@@ -23,7 +23,7 @@ const UsersAdmin = () => {
             <AdminMenu />
             <PageContent
                 bodyClass={styles.userListBody}
-                headerContent={
+                header={
                     <PageHeader
                         title="Users"
                         actions={

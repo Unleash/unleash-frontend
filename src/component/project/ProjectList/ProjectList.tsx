@@ -140,7 +140,7 @@ export const ProjectListNew = () => {
                 />
             </div>
             <PageContent
-                headerContent={
+                header={
                     <PageHeader
                         title="Projects"
                         actions={

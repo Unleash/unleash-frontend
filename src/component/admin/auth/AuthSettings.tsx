@@ -35,7 +35,7 @@ export const AuthSettings = () => {
     return (
         <div>
             <AdminMenu />
-            <PageContent headerContent="Single Sign-On">
+            <PageContent header="Single Sign-On">
                 <ConditionallyRender
                     condition={authenticationType === 'enterprise'}
                     show={<TabNav tabData={tabs} />}

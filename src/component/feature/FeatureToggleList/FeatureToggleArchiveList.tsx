@@ -138,7 +138,7 @@ export const FeatureToggleList: VFC<IFeatureToggleListProps> = ({
             </div>
 
             <PageContent
-                headerContent={
+                header={
                     <PageHeader
                         loading={loading}
                         title={headerTitle}

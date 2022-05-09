@@ -31,7 +31,7 @@ export const ProjectAccess = () => {
 
     if (isOss()) {
         return (
-            <PageContent headerContent={<PageHeader title="Project Access" />}>
+            <PageContent header={<PageHeader title="Project Access" />}>
                 <Alert severity="error">
                     Controlling access to projects requires a paid version of
                     Unleash. Check out{' '}
@@ -90,7 +90,7 @@ export const ProjectAccess = () => {
 
     return (
         <PageContent
-            headerContent={<PageHeader title="Project Roles"></PageHeader>}
+            header={<PageHeader title="Project Roles"></PageHeader>}
             className={styles.pageContent}
         >
             <ProjectAccessAddUser roles={access?.roles} />

@@ -128,23 +128,5 @@ export default createTheme({
                 },
             },
         },
-        MuiBreadcrumbs: {
-            styleOverrides: {
-                root: {
-                    '& a': {
-                        color: colors.purple[900],
-                    },
-                },
-            },
-        },
-        MuiTableRow: {
-            styleOverrides: {
-                root: {
-                    '&.MuiTableRow-hover:hover': {
-                        background: colors.grey[100],
-                    },
-                },
-            },
-        },
     },
 });

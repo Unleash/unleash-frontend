@@ -184,7 +184,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
     } = provider ? provider : ({} as Partial<IAddonProvider>);
 
     return (
-        <PageContent headerContent={`Configure ${name} addon`}>
+        <PageContent header={`Configure ${name} addon`}>
             <section className={styles.formSection}>
                 {description}&nbsp;
                 <a href={documentationUrl} target="_blank" rel="noreferrer">

@@ -24,7 +24,7 @@ export const ApiTokenPage = () => {
 
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader
                     title="API Access"
                     actions={

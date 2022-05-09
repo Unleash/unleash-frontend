@@ -10,13 +10,26 @@ export const useStyles = makeStyles()(theme => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
+        flexWrap: 'wrap',
     },
     headerTitle: {
         fontSize: theme.fontSizes.mainHeader,
         fontWeight: 'normal',
     },
     headerActions: {
-        position: 'absolute',
-        right: 0,
+        display: 'flex',
+        flexGrow: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    verticalSeparator: {
+        height: '100%',
+        borderColor: theme.palette.dividerAlternative,
+        width: '1px',
+        display: 'inline-block',
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(4),
+        padding: '10px 0',
+        verticalAlign: 'middle',
     },
 }));

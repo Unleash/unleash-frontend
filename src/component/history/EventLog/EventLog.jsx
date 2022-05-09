@@ -50,7 +50,7 @@ const EventLog = ({
         <PageContent
             disablePadding={displayInline}
             disableBorder={displayInline}
-            headerContent={
+            header={
                 <PageHeader
                     title={title}
                     actions={

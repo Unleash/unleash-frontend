@@ -32,7 +32,7 @@ export const StrategyView = () => {
     if (!strategy) return null;
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader
                     title={strategy?.name}
                     subtitle={strategy?.description}

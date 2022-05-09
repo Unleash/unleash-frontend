@@ -174,7 +174,7 @@ const ProjectEnvironmentList = ({
     return (
         <div ref={ref}>
             <PageContent
-                headerContent={
+                header={
                     <PageHeader
                         title={`Configure environments for "${project?.name}" project`}
                     />

@@ -1,7 +1,7 @@
-import { ReactNode, FC } from 'react';
+import { ReactNode, FC, VFC } from 'react';
 import classnames from 'classnames';
 
-import { Typography, TypographyProps } from '@mui/material';
+import { Divider, Typography, TypographyProps } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 import { useStyles } from './PageHeader.styles';
@@ -17,7 +17,7 @@ interface IPageHeaderProps {
     className?: string;
 }
 
-export const PageHeader: FC<IPageHeaderProps> = ({
+const PageHeaderComponent: FC<IPageHeaderProps> & { Divider: VFC } = ({
     title,
     titleElement,
     actions,
@@ -53,3 +53,19 @@ export const PageHeader: FC<IPageHeaderProps> = ({
         </div>
     );
 };
+
+const PageHeaderDivider: VFC = () => {
+    const { classes: styles } = useStyles();
+
+    return (
+        <Divider
+            orientation="vertical"
+            variant="middle"
+            className={styles.verticalSeparator}
+        />
+    );
+};
+
+PageHeaderComponent.Divider = PageHeaderDivider;
+
+export const PageHeader = PageHeaderComponent;

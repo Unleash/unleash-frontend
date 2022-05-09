@@ -90,7 +90,7 @@ export const SegmentsList = () => {
 
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader
                     title="Segments"
                     actions={

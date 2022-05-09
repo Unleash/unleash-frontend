@@ -2,24 +2,36 @@ import React, { FC, ReactNode } from 'react';
 import classnames from 'classnames';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { Paper, PaperProps } from '@mui/material';
-import { useStyles } from './styles';
+import { useStyles } from './PageContent.styles';
+import useLoading from 'hooks/useLoading';
+import { ConditionallyRender } from '../ConditionallyRender/ConditionallyRender';
 
 interface IPageContentProps extends PaperProps {
-    headerContent?: ReactNode;
+    header?: ReactNode;
+    isLoading?: boolean;
+    /**
+     * @deprecated fix feature event log and remove
+     */
     disablePadding?: boolean;
+    /**
+     * @deprecated fix feature event log and remove
+     */
     disableBorder?: boolean;
     bodyClass?: string;
 }
 
 export const PageContent: FC<IPageContentProps> = ({
     children,
-    headerContent,
+    header,
     disablePadding = false,
     disableBorder = false,
     bodyClass = '',
+    isLoading = false,
+    className,
     ...rest
 }) => {
     const { classes: styles } = useStyles();
+    const ref = useLoading(isLoading);
 
     const headerClasses = classnames(styles.headerContainer, {
         [styles.paddingDisabled]: disablePadding,
@@ -32,29 +44,29 @@ export const PageContent: FC<IPageContentProps> = ({
         [bodyClass]: bodyClass,
     });
 
-    let header = null;
-    if (headerContent) {
-        if (typeof headerContent === 'string') {
-            header = (
-                <div className={headerClasses}>
-                    <PageHeader title={headerContent} />
-                </div>
-            );
-        } else {
-            header = <div className={headerClasses}>{headerContent}</div>;
-        }
-    }
-
     const paperProps = disableBorder ? { elevation: 0 } : {};
 
     return (
-        <Paper
-            {...rest}
-            {...paperProps}
-            style={{ borderRadius: '10px', boxShadow: 'none' }}
-        >
-            {header}
-            <div className={bodyClasses}>{children}</div>
-        </Paper>
+        <div ref={ref}>
+            <Paper
+                {...rest}
+                {...paperProps}
+                className={classnames(styles.container, className)}
+            >
+                <ConditionallyRender
+                    condition={Boolean(header)}
+                    show={
+                        <div className={headerClasses}>
+                            <ConditionallyRender
+                                condition={typeof header === 'string'}
+                                show={<PageHeader title={header as string} />}
+                                elseShow={header}
+                            />
+                        </div>
+                    }
+                />
+                <div className={bodyClasses}>{children}</div>
+            </Paper>
+        </div>
     );
 };

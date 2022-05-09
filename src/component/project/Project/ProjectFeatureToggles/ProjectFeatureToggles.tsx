@@ -46,7 +46,7 @@ export const ProjectFeatureToggles = ({
         <PageContent
             className={styles.container}
             bodyClass={styles.bodyClass}
-            headerContent={
+            header={
                 <PageHeader
                     className={styles.title}
                     title={`Project feature toggles (${filteredFeatures.length})`}

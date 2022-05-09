@@ -57,7 +57,7 @@ export const FeatureMetrics = () => {
     }
 
     return (
-        <PageContent headerContent="">
+        <PageContent>
             <Grid
                 container
                 component="header"

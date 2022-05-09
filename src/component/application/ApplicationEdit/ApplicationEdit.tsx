@@ -92,7 +92,7 @@ export const ApplicationEdit = () => {
     }
     return (
         <PageContent
-            headerContent={
+            header={
                 <PageHeader
                     titleElement={
                         <span
