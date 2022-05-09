@@ -73,7 +73,7 @@ export const NewUser = () => {
                                 <div className={styles.roleContainer}>
                                     <ConditionallyRender
                                         condition={Boolean(
-                                            authDetails?.options?.length || true
+                                            authDetails?.options?.length
                                         )}
                                         show={
                                             <>
