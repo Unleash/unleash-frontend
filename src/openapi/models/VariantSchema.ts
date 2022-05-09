@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    FeatureSchemaOverrides,
-    FeatureSchemaOverridesFromJSON,
-    FeatureSchemaOverridesFromJSONTyped,
-    FeatureSchemaOverridesToJSON,
-} from './FeatureSchemaOverrides';
+    OverrideSchema,
+    OverrideSchemaFromJSON,
+    OverrideSchemaFromJSONTyped,
+    OverrideSchemaToJSON,
+} from './OverrideSchema';
 
 /**
  * 
@@ -58,10 +58,10 @@ export interface VariantSchema {
     payload?: object;
     /**
      * 
-     * @type {Array<FeatureSchemaOverrides>}
+     * @type {Array<OverrideSchema>}
      * @memberof VariantSchema
      */
-    overrides?: Array<FeatureSchemaOverrides>;
+    overrides?: Array<OverrideSchema>;
 }
 
 export function VariantSchemaFromJSON(json: any): VariantSchema {
@@ -79,7 +79,7 @@ export function VariantSchemaFromJSONTyped(json: any, ignoreDiscriminator: boole
         'weightType': json['weightType'],
         'stickiness': json['stickiness'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'overrides': !exists(json, 'overrides') ? undefined : ((json['overrides'] as Array<any>).map(FeatureSchemaOverridesFromJSON)),
+        'overrides': !exists(json, 'overrides') ? undefined : ((json['overrides'] as Array<any>).map(OverrideSchemaFromJSON)),
     };
 }
 
@@ -97,7 +97,7 @@ export function VariantSchemaToJSON(value?: VariantSchema | null): any {
         'weightType': value.weightType,
         'stickiness': value.stickiness,
         'payload': value.payload,
-        'overrides': value.overrides === undefined ? undefined : ((value.overrides as Array<any>).map(FeatureSchemaOverridesToJSON)),
+        'overrides': value.overrides === undefined ? undefined : ((value.overrides as Array<any>).map(OverrideSchemaToJSON)),
     };
 }
 

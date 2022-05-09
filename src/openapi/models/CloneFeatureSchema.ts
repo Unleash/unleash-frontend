@@ -16,39 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface FeatureSchemaOverrides
+ * @interface CloneFeatureSchema
  */
-export interface FeatureSchemaOverrides {
+export interface CloneFeatureSchema {
     /**
      * 
      * @type {string}
-     * @memberof FeatureSchemaOverrides
+     * @memberof CloneFeatureSchema
      */
-    contextName: string;
+    name: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof FeatureSchemaOverrides
+     * @type {boolean}
+     * @memberof CloneFeatureSchema
      */
-    values: Array<string>;
+    replaceGroupId: boolean;
 }
 
-export function FeatureSchemaOverridesFromJSON(json: any): FeatureSchemaOverrides {
-    return FeatureSchemaOverridesFromJSONTyped(json, false);
+export function CloneFeatureSchemaFromJSON(json: any): CloneFeatureSchema {
+    return CloneFeatureSchemaFromJSONTyped(json, false);
 }
 
-export function FeatureSchemaOverridesFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeatureSchemaOverrides {
+export function CloneFeatureSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): CloneFeatureSchema {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'contextName': json['contextName'],
-        'values': json['values'],
+        'name': json['name'],
+        'replaceGroupId': json['replaceGroupId'],
     };
 }
 
-export function FeatureSchemaOverridesToJSON(value?: FeatureSchemaOverrides | null): any {
+export function CloneFeatureSchemaToJSON(value?: CloneFeatureSchema | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +57,8 @@ export function FeatureSchemaOverridesToJSON(value?: FeatureSchemaOverrides | nu
     }
     return {
         
-        'contextName': value.contextName,
-        'values': value.values,
+        'name': value.name,
+        'replaceGroupId': value.replaceGroupId,
     };
 }
 

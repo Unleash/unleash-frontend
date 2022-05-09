@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    CreateStrategySchemaConstraints,
-    CreateStrategySchemaConstraintsFromJSON,
-    CreateStrategySchemaConstraintsFromJSONTyped,
-    CreateStrategySchemaConstraintsToJSON,
-} from './CreateStrategySchemaConstraints';
+    ConstraintSchema,
+    ConstraintSchemaFromJSON,
+    ConstraintSchemaFromJSONTyped,
+    ConstraintSchemaToJSON,
+} from './ConstraintSchema';
 
 /**
  * 
@@ -40,10 +40,10 @@ export interface CreateStrategySchema {
     sortOrder?: number;
     /**
      * 
-     * @type {Array<CreateStrategySchemaConstraints>}
+     * @type {Array<ConstraintSchema>}
      * @memberof CreateStrategySchema
      */
-    constraints?: Array<CreateStrategySchemaConstraints>;
+    constraints?: Array<ConstraintSchema>;
     /**
      * 
      * @type {{ [key: string]: string; }}
@@ -64,7 +64,7 @@ export function CreateStrategySchemaFromJSONTyped(json: any, ignoreDiscriminator
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'sortOrder': !exists(json, 'sortOrder') ? undefined : json['sortOrder'],
-        'constraints': !exists(json, 'constraints') ? undefined : ((json['constraints'] as Array<any>).map(CreateStrategySchemaConstraintsFromJSON)),
+        'constraints': !exists(json, 'constraints') ? undefined : ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
         'parameters': !exists(json, 'parameters') ? undefined : json['parameters'],
     };
 }
@@ -80,7 +80,7 @@ export function CreateStrategySchemaToJSON(value?: CreateStrategySchema | null):
         
         'name': value.name,
         'sortOrder': value.sortOrder,
-        'constraints': value.constraints === undefined ? undefined : ((value.constraints as Array<any>).map(CreateStrategySchemaConstraintsToJSON)),
+        'constraints': value.constraints === undefined ? undefined : ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
         'parameters': value.parameters,
     };
 }

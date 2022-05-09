@@ -23,53 +23,53 @@ import {
 /**
  * 
  * @export
- * @interface StrategySchema
+ * @interface UpdateStrategySchema
  */
-export interface StrategySchema {
+export interface UpdateStrategySchema {
     /**
      * 
      * @type {string}
-     * @memberof StrategySchema
+     * @memberof UpdateStrategySchema
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof StrategySchema
+     * @memberof UpdateStrategySchema
      */
-    name: string;
+    name?: string;
     /**
      * 
      * @type {Array<ConstraintSchema>}
-     * @memberof StrategySchema
+     * @memberof UpdateStrategySchema
      */
-    constraints: Array<ConstraintSchema>;
+    constraints?: Array<ConstraintSchema>;
     /**
      * 
      * @type {{ [key: string]: string; }}
-     * @memberof StrategySchema
+     * @memberof UpdateStrategySchema
      */
-    parameters: { [key: string]: string; };
+    parameters?: { [key: string]: string; };
 }
 
-export function StrategySchemaFromJSON(json: any): StrategySchema {
-    return StrategySchemaFromJSONTyped(json, false);
+export function UpdateStrategySchemaFromJSON(json: any): UpdateStrategySchema {
+    return UpdateStrategySchemaFromJSONTyped(json, false);
 }
 
-export function StrategySchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): StrategySchema {
+export function UpdateStrategySchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateStrategySchema {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'name': json['name'],
-        'constraints': ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
-        'parameters': json['parameters'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'constraints': !exists(json, 'constraints') ? undefined : ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
+        'parameters': !exists(json, 'parameters') ? undefined : json['parameters'],
     };
 }
 
-export function StrategySchemaToJSON(value?: StrategySchema | null): any {
+export function UpdateStrategySchemaToJSON(value?: UpdateStrategySchema | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -80,7 +80,7 @@ export function StrategySchemaToJSON(value?: StrategySchema | null): any {
         
         'id': value.id,
         'name': value.name,
-        'constraints': ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
+        'constraints': value.constraints === undefined ? undefined : ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
         'parameters': value.parameters,
     };
 }

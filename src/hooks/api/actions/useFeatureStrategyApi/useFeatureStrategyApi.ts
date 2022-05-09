@@ -1,5 +1,6 @@
 import { IFeatureStrategyPayload, IFeatureStrategy } from 'interfaces/strategy';
 import useAPI from '../useApi/useApi';
+import {openApiAdmin} from "../../../../utils/openapiClient";
 
 const useFeatureStrategyApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({
@@ -12,6 +13,12 @@ const useFeatureStrategyApi = () => {
         environmentId: string,
         payload: IFeatureStrategyPayload
     ): Promise<IFeatureStrategy> => {
+        // return openApiAdmin.addStrategy({
+        //     projectId,
+        //     environment,
+        //     featureName,
+        //     createStrategySchema: payload
+        // });
         const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/strategies`;
         const req = createRequest(
             path,

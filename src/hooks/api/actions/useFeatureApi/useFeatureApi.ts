@@ -41,7 +41,7 @@ const useFeatureApi = () => {
         projectId: string,
         createFeatureSchema: CreateFeatureSchema
     ) => {
-        return openApiAdmin.apiAdminProjectsProjectIdFeaturesPost({
+        return openApiAdmin.createFeature({
             projectId,
             createFeatureSchema,
         });
@@ -49,44 +49,26 @@ const useFeatureApi = () => {
 
     const toggleFeatureEnvironmentOn = async (
         projectId: string,
-        featureId: string,
-        environmentId: string
+        featureName: string,
+        environment: string
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/on`;
-        const req = createRequest(
-            path,
-            { method: 'POST' },
-            'toggleFeatureEnvironmentOn'
-        );
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
+        return openApiAdmin.toggleEnvironmentOn({
+            projectId,
+            featureName,
+            environment
+        });
     };
 
     const toggleFeatureEnvironmentOff = async (
         projectId: string,
-        featureId: string,
-        environmentId: string
+        featureName: string,
+        environment: string
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/off`;
-        const req = createRequest(
-            path,
-            { method: 'POST' },
-            'toggleFeatureEnvironmentOff'
-        );
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
+        return openApiAdmin.toggleEnvironmentOff({
+            projectId,
+            featureName,
+            environment
+        });
     };
 
     const changeFeatureProject = async (
@@ -110,20 +92,10 @@ const useFeatureApi = () => {
     };
 
     const addTagToFeature = async (featureId: string, tag: ITag) => {
-        // TODO: Change this path to the new API when moved.
-        const path = `api/admin/features/${featureId}/tags`;
-        const req = createRequest(path, {
-            method: 'POST',
-            body: JSON.stringify({ ...tag }),
+        return openApiAdmin.addTag({
+            featureName: featureId,
+            tagSchema: tag
         });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
     };
 
     const deleteTagFromFeature = async (
@@ -131,19 +103,11 @@ const useFeatureApi = () => {
         type: string,
         value: string
     ) => {
-        // TODO: Change this path to the new API when moved.
-        const path = `api/admin/features/${featureId}/tags/${type}/${value}`;
-        const req = createRequest(path, {
-            method: 'DELETE',
+        return openApiAdmin.removeTag({
+            featureName: featureId,
+            type,
+            value
         });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
     };
 
     const archiveFeatureToggle = async (
@@ -166,22 +130,14 @@ const useFeatureApi = () => {
 
     const patchFeatureToggle = async (
         projectId: string,
-        featureId: string,
+        featureName: string,
         patchPayload: any
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureId}`;
-        const req = createRequest(path, {
-            method: 'PATCH',
-            body: JSON.stringify(patchPayload),
+        return openApiAdmin.patchFeature({
+            featureName,
+            projectId,
+            patchOperationSchema: patchPayload
         });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
     };
 
     const patchFeatureVariants = async (
@@ -205,22 +161,14 @@ const useFeatureApi = () => {
 
     const cloneFeatureToggle = async (
         projectId: string,
-        featureId: string,
+        featureName: string,
         payload: { name: string; replaceGroupId: boolean }
     ) => {
-        const path = `api/admin/projects/${projectId}/features/${featureId}/clone`;
-        const req = createRequest(path, {
-            method: 'POST',
-            body: JSON.stringify(payload),
+        return openApiAdmin.cloneFeature({
+            projectId,
+            featureName,
+            cloneFeatureSchema: payload
         });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
     };
 
     return {
