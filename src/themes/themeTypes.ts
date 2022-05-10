@@ -57,6 +57,14 @@ declare module '@mui/material/styles' {
          * For highlight effect
          */
         highlight: string;
+        /**
+         * For sidebar container background
+         */
+        sidebarContainer: string;
+        /**
+         * For sidebar divider
+         */
+        sidebarDivider: string;
     }
 
     interface Theme extends CustomTheme {}
@@ -68,6 +76,7 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/system/createTheme/shape' {
     interface Shape {
+        borderRadiusMedium: string;
         borderRadiusLarge: string;
         borderRadiusExtraLarge: string;
     }

@@ -13,15 +13,31 @@ export default createTheme({
         button: { lineHeight: 1.75 },
         h1: {
             fontSize: '1.5rem',
-            lineHeight: 1.875,
+            lineHeight: '1.5rem',
+        },
+        h2: {
+            fontSize: '1.25rem',
+            lineHeight: '1.25rem',
+        },
+        h3: {
+            fontSize: '1rem',
+            lineHeight: '1.375rem',
+        },
+        body1: {
+            fontSize: '1rem',
+            lineHeight: '1.375rem',
+        },
+        body2: {
+            fontSize: '0.875rem',
+            lineHeight: '1.25rem',
         },
     },
     fontSizes: {
-        mainHeader: '1.25rem',
-        subHeader: '1.1rem',
+        mainHeader: '1.5rem',
+        subHeader: '1.25rem',
         bodySize: '1rem',
-        smallBody: '0.9rem',
-        smallerBody: '0.8rem',
+        smallBody: '0.875rem',
+        smallerBody: '0.75rem',
     },
     fontWeight: {
         thin: 300,
@@ -31,6 +47,7 @@ export default createTheme({
     },
     shape: {
         borderRadius: '3px',
+        borderRadiusMedium: '8px',
         borderRadiusLarge: '10px',
         borderRadiusExtraLarge: '25px',
     },
@@ -69,6 +86,8 @@ export default createTheme({
         dividerAlternative: colors.grey[500],
         hover: 'rgba(120,120,122,0.1)',
         highlight: '#FFEACC',
+        sidebarContainer: 'rgba(32,32,33, 0.2)',
+        sidebarDivider: 'rgba(255, 255, 255, 0.3)',
         grey: colors.grey,
         text: {
             primary: colors.grey[900],
@@ -89,20 +108,35 @@ export default createTheme({
             inactive: colors.orange[200],
             abandoned: colors.red[200],
         },
+        action: {
+            active: 'rgba(32,32,33,0.54)',
+            hover: 'rgba(32,32,33,0.04)',
+            selected: 'rgba(32,32,33,0.08)',
+            disabled: 'rgba(32,32,33,0.26)',
+            disabledBackground: 'rgba(32,32,33,0.12)',
+        },
     },
     components: {
         MuiLink: {
             styleOverrides: {
                 root: {
                     color: colors.purple[900],
+                    '&:hover': {
+                        textDecoration: 'none',
+                    },
                 },
             },
         },
         MuiBreadcrumbs: {
             styleOverrides: {
                 root: {
+                    color: colors.grey[900],
                     '& a': {
                         color: colors.purple[900],
+                        textDecoration: 'underline',
+                        '&:hover': {
+                            textDecoration: 'none',
+                        },
                     },
                 },
             },
@@ -127,6 +161,51 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     borderBottomColor: colors.grey[300],
+                },
+            },
+        },
+        MuiAlert: {
+            styleOverrides: {
+                root: {
+                    '&.MuiAlert-standardInfo': {
+                        border: `1px solid ${colors.blue[200]}`,
+                    },
+                    '&.MuiAlert-standardSuccess': {
+                        border: `1px solid ${colors.green[300]}`,
+                    },
+                    '&.MuiAlert-standardWarning': {
+                        border: `1px solid ${colors.orange[500]}`,
+                    },
+                    '&.MuiAlert-standardError': {
+                        border: `1px solid ${colors.red[300]}`,
+                    },
+                },
+            },
+        },
+        MuiTabs: {
+            styleOverrides: {
+                root: {
+                    '& .MuiTabs-indicator': {
+                        height: '4px',
+                    },
+                },
+            },
+        },
+        MuiTab: {
+            styleOverrides: {
+                root: {
+                    color: colors.grey[900],
+                    fontWeight: 400,
+                    '&:hover': {
+                        backgroundColor: colors.grey[200],
+                    },
+                    '&.Mui-selected': {
+                        color: colors.grey[900],
+                        fontWeight: 700,
+                        '& span': {
+                            color: colors.purple[900],
+                        },
+                    },
                 },
             },
         },
