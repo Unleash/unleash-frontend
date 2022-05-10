@@ -44,15 +44,15 @@ export const CellSortable: FC<ICellSortableProps> = ({
         <TableCell
             component="th"
             aria-sort={ariaSort}
-            className={classnames(styles.tableCellHeaderSortable)}
+            className={classnames(styles.header, isSortable && styles.sortable)}
         >
             <ConditionallyRender
                 condition={isSortable}
                 show={
                     <button
                         className={classnames(
-                            styles.sortButton,
-                            isSorted && styles.sorted
+                            isSorted && styles.sortedButton,
+                            styles.sortButton
                         )}
                         onClick={onSortClick}
                     >

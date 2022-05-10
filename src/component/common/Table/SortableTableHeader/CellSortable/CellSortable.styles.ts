@@ -1,9 +1,12 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
-    tableCellHeaderSortable: {
-        padding: 0,
+    header: {
         position: 'relative',
+        fontWeight: theme.fontWeight.medium,
+    },
+    sortable: {
+        padding: 0,
         '&:hover, &:focus': {
             backgroundColor: theme.palette.grey[400],
             '& svg': {
@@ -14,7 +17,7 @@ export const useStyles = makeStyles()(theme => ({
     sortButton: {
         all: 'unset',
         padding: theme.spacing(2),
-        fontWeight: theme.fontWeight.medium,
+        whiteSpace: 'nowrap',
         width: '100%',
         '&:focus-visible, &:active': {
             outline: 'revert',
@@ -24,7 +27,7 @@ export const useStyles = makeStyles()(theme => ({
         boxSizing: 'inherit',
         cursor: 'pointer',
     },
-    sorted: {
+    sortedButton: {
         fontWeight: theme.fontWeight.bold,
     },
 }));
