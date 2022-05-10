@@ -33,7 +33,7 @@ exports[`renders correctly 1`] = `
               >
                 <button
                   aria-describedby="useId-0"
-                  className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-1lmzhxi-MuiButtonBase-root-MuiButton-root"
+                  className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-7xi2gc-MuiButtonBase-root-MuiButton-root"
                   data-testid="ADD_NEW_STRATEGY_ID"
                   disabled={false}
                   onBlur={[Function]}
@@ -120,7 +120,7 @@ exports[`renders correctly 1`] = `
               <button
                 aria-label="Deprecate strategy"
                 aria-labelledby={null}
-                className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge mui-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+                className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge mui-hm8bbr-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element={true}
                 disabled={false}
                 onBlur={[Function]}
@@ -169,7 +169,7 @@ exports[`renders correctly 1`] = `
               onTouchStart={[Function]}
             >
               <button
-                className="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeLarge mui-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+                className="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeLarge mui-hm8bbr-MuiButtonBase-root-MuiIconButton-root"
                 disabled={true}
                 onBlur={[Function]}
                 onContextMenu={[Function]}
@@ -215,7 +215,7 @@ exports[`renders correctly 1`] = `
               onTouchStart={[Function]}
             >
               <button
-                className="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeLarge mui-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
+                className="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeLarge mui-hm8bbr-MuiButtonBase-root-MuiIconButton-root"
                 disabled={true}
                 onBlur={[Function]}
                 onContextMenu={[Function]}

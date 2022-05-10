@@ -29,7 +29,7 @@ exports[`renders an empty list correctly 1`] = `
               className="tss-1u1bjy8-headerActions"
             >
               <button
-                className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-1lmzhxi-MuiButtonBase-root-MuiButton-root"
+                className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  mui-7xi2gc-MuiButtonBase-root-MuiButton-root"
                 disabled={false}
                 onBlur={[Function]}
                 onClick={[Function]}

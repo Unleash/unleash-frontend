@@ -13,31 +13,15 @@ export default createTheme({
         button: { lineHeight: 1.75 },
         h1: {
             fontSize: '1.5rem',
-            lineHeight: '1.5rem',
-        },
-        h2: {
-            fontSize: '1.25rem',
-            lineHeight: '1.25rem',
-        },
-        h3: {
-            fontSize: '1rem',
-            lineHeight: '1.375rem',
-        },
-        body1: {
-            fontSize: '1rem',
-            lineHeight: '1.375rem',
-        },
-        body2: {
-            fontSize: '0.875rem',
-            lineHeight: '1.25rem',
+            lineHeight: 1.875,
         },
     },
     fontSizes: {
-        mainHeader: '1.5rem',
-        subHeader: '1.25rem',
+        mainHeader: '1.25rem',
+        subHeader: '1.1rem',
         bodySize: '1rem',
-        smallBody: '0.875rem',
-        smallerBody: '0.75rem',
+        smallBody: '0.9rem',
+        smallerBody: '0.8rem',
     },
     fontWeight: {
         thin: 300,
