@@ -23,23 +23,23 @@ export interface IFeatureTogglePayload {
 }
 
 export interface IFeatureToggle {
-    stale: boolean;
-    archived: boolean;
+    stale?: boolean;
+    archived?: boolean;
     enabled?: boolean;
-    createdAt: string;
-    lastSeenAt?: string;
+    createdAt?: Date | null | undefined;
+    lastSeenAt?: Date | null | undefined;
     description?: string;
-    environments: IFeatureEnvironment[];
+    environments?: IFeatureEnvironment[];
     name: string;
     project: string;
-    type: string;
-    variants: IFeatureVariant[];
-    impressionData: boolean;
+    type?: string;
+    variants?: IFeatureVariant[];
+    impressionData?: boolean;
     strategies?: IFeatureStrategy[];
 }
 
 export interface IFeatureEnvironment {
-    type: string;
+    type?: string;
     name: string;
     enabled: boolean;
     strategies: IFeatureStrategy[];
@@ -50,7 +50,7 @@ export interface IFeatureVariant {
     stickiness: string;
     weight: number;
     weightType: string;
-    overrides: IOverride[];
+    overrides?: IOverride[];
     payload?: IPayload;
 }
 
@@ -60,8 +60,8 @@ export interface IOverride {
 }
 
 export interface IPayload {
-    type: string;
-    value: string;
+    type?: string;
+    value?: string;
 }
 
 export interface IFeatureEnvironmentMetrics {

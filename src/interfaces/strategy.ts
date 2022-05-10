@@ -1,7 +1,7 @@
-import { Operator } from 'constants/operators';
+import {ConstraintSchemaOperatorEnum} from "../openapi";
 
 export interface IFeatureStrategy {
-    id: string;
+    id?: string;
     strategyName?: string;
     name: string;
     constraints: IConstraint[];
@@ -47,6 +47,6 @@ export interface IConstraint {
     values?: string[];
     value?: string;
     caseInsensitive?: boolean;
-    operator: Operator;
+    operator: ConstraintSchemaOperatorEnum;
     contextName: string;
 }
