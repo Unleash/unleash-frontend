@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
@@ -35,12 +35,26 @@ import { useStyles } from './ProjectFeatureToggles.styles';
 import { Tooltip } from '@mui/material';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import useToggleFeatureByEnv from 'hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
-import { createToggle } from './createToggle';
+import { useFeatureEnvironments } from './hooks/useFeatureEnvironments';
+import { useSetFeatureState } from './hooks/useSetFeatureState';
+import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 
 interface IProjectFeatureTogglesProps {
     features: IFeatureToggleListItem[];
     loading: boolean;
 }
+
+type ListItemType = Pick<
+    IFeatureToggleListItem,
+    'name' | 'lastSeenAt' | 'createdAt' | 'type'
+> & {
+    environments: {
+        [key in string]: {
+            name: IFeatureToggleListItem['environments'][number]['name'];
+            enabled: IFeatureToggleListItem['environments'][number]['enabled'];
+        };
+    };
+};
 
 export const ProjectFeatureToggles = ({
     features,
@@ -51,27 +65,61 @@ export const ProjectFeatureToggles = ({
     const navigate = useNavigate();
     const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
-    const [data, environments] = useMemo(() => {
+    const environments = useFeatureEnvironments(features?.[0]);
+
+    const data = useMemo<ListItemType[]>(() => {
         if (loading) {
-            return [
-                Array(12).fill({
-                    type: '-',
-                    name: 'Feature name',
-                    createdAt: new Date(),
-                }),
-                [{ name: 'production', enabled: false }],
-            ];
+            return Array(12).fill({
+                type: '-',
+                name: 'Feature name',
+                createdAt: new Date(),
+                environments: {
+                    production: { name: 'production', enabled: false },
+                },
+            }) as ListItemType[];
         }
 
-        const environments =
-            features?.[0]?.environments?.length > 0
-                ? features[0].environments.sort(
-                      ({ sortOrder: a }, { sortOrder: b }) => a || 0 - b || 0
-                  )
-                : [];
-
-        return [features as any[], environments];
+        // return features;
+        return features.map(
+            ({
+                name,
+                lastSeenAt,
+                createdAt,
+                type,
+                environments: featureEnvironments,
+            }) => ({
+                name,
+                lastSeenAt,
+                createdAt,
+                type,
+                environments: Object.fromEntries(
+                    environments.map(env => [
+                        env,
+                        {
+                            name: env,
+                            enabled:
+                                featureEnvironments?.find(
+                                    feature => feature?.name === env
+                                )?.enabled || false,
+                        },
+                    ])
+                ),
+            })
+        );
     }, [features, loading]);
+
+    const { setFeatureState, errors } = useSetFeatureState();
+    const onToggle = useCallback(
+        async (
+            projectId: string,
+            featureName: string,
+            environment: string,
+            enabled: boolean
+        ) => {
+            await setFeatureState(projectId, featureName, environment, enabled);
+        },
+        [setFeatureState]
+    );
 
     const columns = useMemo(
         () => [
@@ -105,10 +153,29 @@ export const ProjectFeatureToggles = ({
                 Cell: DateCell,
                 sortType: 'date',
             },
-            ...environments.map(({ name }) => ({
+            ...environments.map(name => ({
                 Header: name,
-                id: `env_${name}`,
-                Cell: createToggle(projectId, name),
+                accessor: `environments.${name}`,
+                Cell: ({
+                    value,
+                    row: { original: feature },
+                }: {
+                    value: { name: string; enabled: boolean };
+                    row: { original: ListItemType };
+                }) => (
+                    <FeatureToggleSwitch
+                        value={value?.enabled || false}
+                        projectId={projectId}
+                        featureName={feature?.name}
+                        environmentName={value?.name}
+                        onToggle={onToggle}
+                    />
+                ),
+                sortType: (v1: any, v2: any, id: string) => {
+                    const a = v1?.values?.[id]?.enabled;
+                    const b = v2?.values?.[id]?.enabled;
+                    return a === b ? 0 : a ? -1 : 1;
+                },
             })),
             {
                 Header: (
@@ -131,8 +198,6 @@ export const ProjectFeatureToggles = ({
         [projectId, environments]
     );
 
-    // console.log('environments', environments);
-
     const initialState = useMemo(
         () => ({
             sortBy: [{ id: 'createdAt', desc: false }],
@@ -152,7 +217,7 @@ export const ProjectFeatureToggles = ({
         setHiddenColumns,
     } = useTable(
         {
-            columns,
+            columns: columns as any[], // TODO: fix after `react-table` v8 update
             data,
             initialState,
             sortTypes,
