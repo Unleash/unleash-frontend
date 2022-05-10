@@ -35,7 +35,9 @@ export const OverrideConfig = ({
 
     return overrides.map((o, i) => {
         const definition = context.find(c => c.name === o.contextName);
-        const legalValues = definition ? definition.legalValues : [];
+        const legalValues = definition
+            ? definition.legalValues.map(legalValue => legalValue.value)
+            : [];
 
         return (
             <Grid container key={`override=${i}`} alignItems="center">
