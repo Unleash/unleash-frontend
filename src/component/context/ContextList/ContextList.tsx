@@ -11,8 +11,8 @@ import {
     Tooltip,
     useMediaQuery,
 } from '@mui/material';
-import PageContent from 'component/common/PageContent/PageContent';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { PageContent } from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     CREATE_CONTEXT_FIELD,
@@ -80,7 +80,7 @@ const ContextList: VFC = () => {
                 <ConditionallyRender
                     condition={hasAccess(UPDATE_CONTEXT_FIELD)}
                     show={
-                        <Tooltip title="Edit context field">
+                        <Tooltip title="Edit context field" arrow>
                             <IconButton
                                 onClick={() =>
                                     navigate(`/context/edit/${field.name}`)
@@ -95,7 +95,7 @@ const ContextList: VFC = () => {
                 <ConditionallyRender
                     condition={hasAccess(DELETE_CONTEXT_FIELD)}
                     show={
-                        <Tooltip title="Delete context field">
+                        <Tooltip title="Delete context field" arrow>
                             <IconButton
                                 aria-label="delete"
                                 onClick={() => {
@@ -118,7 +118,7 @@ const ContextList: VFC = () => {
                 <ConditionallyRender
                     condition={smallScreen}
                     show={
-                        <Tooltip title="Add context type">
+                        <Tooltip title="Add context type" arrow>
                             <IconButton
                                 onClick={() => navigate('/context/create')}
                                 size="large"
@@ -143,11 +143,8 @@ const ContextList: VFC = () => {
 
     return (
         <PageContent
-            headerContent={
-                <HeaderTitle
-                    actions={headerButton()}
-                    title={'Context fields'}
-                />
+            header={
+                <PageHeader actions={headerButton()} title={'Context fields'} />
             }
         >
             <List>

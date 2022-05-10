@@ -12,7 +12,7 @@ import {
     UPDATE_ADDON,
 } from 'component/providers/AccessProvider/permissions';
 import { Link, useNavigate } from 'react-router-dom';
-import PageContent from 'component/common/PageContent/PageContent';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import useAddons from 'hooks/api/getters/useAddons/useAddons';
 import useToast from 'hooks/useToast';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
@@ -113,7 +113,7 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 <PermissionIconButton
                     permission={UPDATE_ADDON}
                     onClick={() => toggleAddon(addon)}
-                    tooltip="Toggle addon"
+                    tooltipProps={{ title: 'Toggle addon' }}
                 >
                     <ConditionallyRender
                         condition={addon.enabled}
@@ -123,14 +123,14 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 </PermissionIconButton>
                 <PermissionIconButton
                     permission={UPDATE_ADDON}
-                    tooltip="Edit Addon"
+                    tooltipProps={{ title: 'Edit Addon' }}
                     onClick={() => navigate(`/addons/edit/${addon.id}`)}
                 >
                     <Edit />
                 </PermissionIconButton>
                 <PermissionIconButton
                     permission={DELETE_ADDON}
-                    tooltip="Remove Addon"
+                    tooltipProps={{ title: 'Remove Addon' }}
                     onClick={() => {
                         setDeletedAddon(addon);
                         setShowDelete(true);
@@ -142,7 +142,7 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
         </ListItem>
     );
     return (
-        <PageContent headerContent="Configured addons">
+        <PageContent header="Configured addons">
             <List>
                 {sortAddons(addons).map((addon: IAddon) => renderAddon(addon))}
             </List>

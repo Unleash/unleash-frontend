@@ -10,8 +10,8 @@ import {
     Tooltip,
 } from '@mui/material';
 import { Add, Delete, Edit, Label } from '@mui/icons-material';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
-import PageContent from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { PageContent } from 'component/common/PageContent/PageContent';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     DELETE_TAG_TYPE,
@@ -27,6 +27,7 @@ import useToast from 'hooks/useToast';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { ITagType } from 'interfaces/tags';
+import { TooltipResolver } from 'component/common/TooltipResolver/TooltipResolver';
 
 export const TagTypeList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -58,7 +59,7 @@ export const TagTypeList = () => {
     };
 
     let header = (
-        <HeaderTitle
+        <PageHeader
             title="Tag Types"
             actions={
                 <ConditionallyRender
@@ -67,7 +68,7 @@ export const TagTypeList = () => {
                         <ConditionallyRender
                             condition={smallScreen}
                             show={
-                                <Tooltip title="Add tag type">
+                                <Tooltip title="Add tag type" arrow>
                                     <IconButton
                                         onClick={() =>
                                             navigate('/tag-types/create')
@@ -103,7 +104,7 @@ export const TagTypeList = () => {
             </Link>
         );
         let deleteButton = (
-            <Tooltip title={`Delete ${tagType.name}`}>
+            <Tooltip title={`Delete ${tagType.name}`} arrow>
                 <IconButton
                     onClick={() =>
                         setDeletion({
@@ -130,7 +131,7 @@ export const TagTypeList = () => {
                 <PermissionIconButton
                     permission={UPDATE_TAG_TYPE}
                     component={Link}
-                    tooltip="Edit tag type"
+                    tooltipProps={{ title: 'Edit tag type' }}
                     to={`/tag-types/edit/${tagType.name}`}
                 >
                     <Edit className={styles.icon} />
@@ -143,7 +144,7 @@ export const TagTypeList = () => {
         );
     };
     return (
-        <PageContent headerContent={header}>
+        <PageContent header={header}>
             <List>
                 <ConditionallyRender
                     condition={tagTypes.length > 0}

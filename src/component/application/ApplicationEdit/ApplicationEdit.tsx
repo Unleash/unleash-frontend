@@ -15,8 +15,8 @@ import { ApplicationView } from '../ApplicationView/ApplicationView';
 import { ApplicationUpdate } from '../ApplicationUpdate/ApplicationUpdate';
 import { TabNav } from 'component/common/TabNav/TabNav/TabNav';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
-import PageContent from 'component/common/PageContent';
-import { HeaderTitle } from 'component/common/HeaderTitle/HeaderTitle';
+import { PageContent } from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import AccessContext from 'contexts/AccessContext';
 import useApplicationsApi from 'hooks/api/actions/useApplicationsApi/useApplicationsApi';
 import useApplication from 'hooks/api/getters/useApplication/useApplication';
@@ -92,8 +92,8 @@ export const ApplicationEdit = () => {
     }
     return (
         <PageContent
-            headerContent={
-                <HeaderTitle
+            header={
+                <PageHeader
                     titleElement={
                         <span
                             style={{
@@ -124,7 +124,7 @@ export const ApplicationEdit = () => {
                             />
 
                             <PermissionButton
-                                tooltip="Delete application"
+                                tooltipProps={{ title: 'Delete application' }}
                                 onClick={toggleModal}
                                 permission={UPDATE_APPLICATION}
                             >
