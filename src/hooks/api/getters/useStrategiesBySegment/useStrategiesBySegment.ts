@@ -2,10 +2,10 @@ import useSWR, { mutate } from 'swr';
 import { useCallback } from 'react';
 import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
-import { IFeatureStrategy } from 'interfaces/strategy';
+import { ISegmentStrategy } from 'interfaces/segment';
 
 export interface IUseStrategiesBySegmentOutput {
-    strategies?: IFeatureStrategy[];
+    strategies?: ISegmentStrategy[];
     refetchUsedSegments: () => void;
     loading: boolean;
     error?: Error;

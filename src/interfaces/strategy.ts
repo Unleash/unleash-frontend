@@ -6,7 +6,6 @@ export interface IFeatureStrategy {
     name: string;
     constraints: IConstraint[];
     parameters: IFeatureStrategyParameters;
-    featureName?: string;
     projectId?: string;
     environment?: string;
 }
