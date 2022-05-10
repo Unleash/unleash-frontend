@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { useFilters, useSortBy, useTable } from 'react-table';
 import AccessContext from 'contexts/AccessContext';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -9,10 +9,7 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 import { getCreateTogglePath } from 'utils/routePathHelpers';
-import {
-    CREATE_FEATURE,
-    UPDATE_FEATURE_ENVIRONMENT,
-} from 'component/providers/AccessProvider/permissions';
+import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
@@ -33,8 +30,6 @@ import {
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { useStyles } from './ProjectFeatureToggles.styles';
 import { Tooltip } from '@mui/material';
-import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
-import useToggleFeatureByEnv from 'hooks/api/actions/useToggleFeatureByEnv/useToggleFeatureByEnv';
 import { useFeatureEnvironments } from './hooks/useFeatureEnvironments';
 import { useSetFeatureState } from './hooks/useSetFeatureState';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
@@ -201,20 +196,19 @@ export const ProjectFeatureToggles = ({
     const initialState = useMemo(
         () => ({
             sortBy: [{ id: 'createdAt', desc: false }],
-            hiddenColumns: ['description'],
         }),
         []
     );
 
     const {
+        state: { filters },
         getTableProps,
         getTableBodyProps,
         headerGroups,
         rows,
         prepareRow,
-        state: { globalFilter },
-        // setGlobalFilter,
-        setHiddenColumns,
+        // setHiddenColumns,
+        setFilter,
     } = useTable(
         {
             columns: columns as any[], // TODO: fix after `react-table` v8 update
@@ -224,8 +218,13 @@ export const ProjectFeatureToggles = ({
             autoResetGlobalFilter: false,
             disableSortRemove: true,
         },
-        useGlobalFilter,
+        useFilters,
         useSortBy
+    );
+
+    const filter = useMemo(
+        () => filters?.find(filterRow => filterRow?.id === 'name')?.value || '',
+        [filters]
     );
 
     return (
@@ -238,15 +237,12 @@ export const ProjectFeatureToggles = ({
                     className={styles.title}
                     title={`Project feature toggles (${rows.length})`}
                     actions={
-                        <div className={styles.actionsContainer}>
-                            {/* <SearchField
+                        <>
+                            <TableSearch
                                 initialValue={filter}
-                                updateValue={setFilter}
-                                className={classnames(styles.search, {
-                                    skeleton: loading,
-                                })}
-                            /> */}
-
+                                onChange={value => setFilter('name', value)}
+                            />
+                            <PageHeader.Divider />
                             <ResponsiveButton
                                 onClick={() =>
                                     navigate(
@@ -264,13 +260,14 @@ export const ProjectFeatureToggles = ({
                             >
                                 New feature toggle
                             </ResponsiveButton>
-                        </div>
+                        </>
                     }
                 />
             }
         >
-            <SearchHighlightProvider value={globalFilter}>
+            <SearchHighlightProvider value={filter}>
                 <Table {...getTableProps()}>
+                    {/* @ts-expect-error -- verify after `react-table` v8 */}
                     <SortableTableHeader headerGroups={headerGroups} />
                     <TableBody {...getTableBodyProps()}>
                         {rows.map(row => {
@@ -292,11 +289,11 @@ export const ProjectFeatureToggles = ({
                 condition={rows.length === 0}
                 show={
                     <ConditionallyRender
-                        condition={globalFilter?.length > 0}
+                        condition={filter?.length > 0}
                         show={
                             <TablePlaceholder>
                                 No features found matching &ldquo;
-                                {globalFilter}
+                                {filter}
                                 &rdquo;
                             </TablePlaceholder>
                         }
