@@ -5,7 +5,6 @@ import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useToast from 'hooks/useToast';
 import { MOVE_FEATURE_TOGGLE } from 'component/providers/AccessProvider/permissions';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import FeatureProjectSelect from './FeatureProjectSelect/FeatureProjectSelect';
 import FeatureSettingsProjectConfirm from './FeatureSettingsProjectConfirm/FeatureSettingsProjectConfirm';
@@ -20,7 +19,6 @@ const FeatureSettingsProject = () => {
     const featureId = useRequiredPathParam('featureId');
     const { feature, refetchFeature } = useFeature(projectId, featureId);
     const [project, setProject] = useState(feature.project);
-    const [dirty, setDirty] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const editable = hasAccess(MOVE_FEATURE_TOGGLE, projectId);
     const { permissions = [] } = useAuthPermissions();
@@ -29,19 +27,9 @@ const FeatureSettingsProject = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (project !== feature.project) {
-            setDirty(true);
-            return;
-        }
-        setDirty(false);
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, [project]);
-
-    useEffect(() => {
         const movableTargets = createMoveTargets();
 
         if (!movableTargets[project]) {
-            setDirty(false);
             setProject(projectId);
         }
         /* eslint-disable-next-line */
@@ -58,7 +46,6 @@ const FeatureSettingsProject = () => {
                 type: 'success',
                 text: 'Successfully updated toggle project.',
             });
-            setDirty(false);
             setShowConfirmDialog(false);
             navigate(`/projects/${newProject}/features/${featureId}/settings`, {
                 replace: true,
@@ -89,6 +76,7 @@ const FeatureSettingsProject = () => {
             }
         };
     };
+
     return (
         <>
             <FeatureProjectSelect
@@ -98,18 +86,13 @@ const FeatureSettingsProject = () => {
                 enabled={editable}
                 filter={filterProjects()}
             />
-            <ConditionallyRender
-                condition={dirty}
-                show={
-                    <PermissionButton
-                        permission={MOVE_FEATURE_TOGGLE}
-                        onClick={() => setShowConfirmDialog(true)}
-                        projectId={projectId}
-                    >
-                        Save changes
-                    </PermissionButton>
-                }
-            />
+            <PermissionButton
+                permission={MOVE_FEATURE_TOGGLE}
+                onClick={() => setShowConfirmDialog(true)}
+                projectId={projectId}
+            >
+                Save
+            </PermissionButton>
             <FeatureSettingsProjectConfirm
                 projectId={project}
                 open={showConfirmDialog}
