@@ -23,33 +23,16 @@ const FeatureSettingsProjectConfirm = ({
     feature,
 }: IFeatureSettingsProjectConfirm) => {
     const { project } = useProject(projectId);
-    const [incompatibleEnvs, setIncompatibleEnvs] = useState([]);
+    const [incompatibleEnvs, setIncompatibleEnvs] = useState<string[]>([]);
     const { classes: styles } = useStyles();
 
     useEffect(() => {
-        calculateCompatability();
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, [projectId, project.name]);
-
-    const calculateCompatability = () => {
-        const featureEnvWithStrategies = feature.environments
-            .filter((env: IFeatureEnvironment) => {
-                return env.strategies.length > 0;
-            })
-            .map((env: IFeatureEnvironment) => env.name);
-
-        const destinationProjectActiveEnvironments = project.environments;
-
-        let incompatible: string[] = [];
-
-        featureEnvWithStrategies.forEach((env: string) => {
-            if (destinationProjectActiveEnvironments.indexOf(env) === -1) {
-                incompatible = [...incompatible, env];
-            }
-        });
-        // @ts-expect-error
-        setIncompatibleEnvs(incompatible);
-    };
+        const incompatibleEnvNames = feature.environments
+            .filter(env => env.enabled)
+            .map(env => env.name)
+            .filter(name => !project.environments.includes(name));
+        setIncompatibleEnvs(incompatibleEnvNames);
+    }, [feature, project]);
 
     return (
         <ConditionallyRender
@@ -66,8 +49,7 @@ const FeatureSettingsProjectConfirm = ({
                     Are you sure you want to change the project for this feature
                     toggle?
                     <div className={styles.compatability}>
-                        This feature toggle is 100% compatible with the new
-                        project.
+                        This feature toggle is compatible with the new project.
                         <div className={styles.iconContainer}>
                             <Check className={styles.check} />
                         </div>
@@ -99,9 +81,8 @@ const FeatureSettingsProjectConfirm = ({
                     <div className={styles.compatability}>
                         <div>
                             <p className={styles.paragraph}>
-                                This feature toggle has strategy configuration
-                                in an environment that is not activated in the
-                                target project:
+                                This feature toggle has an environment that is
+                                not activated in the target project:
                             </p>
                             <List>
                                 {incompatibleEnvs.map(env => {
