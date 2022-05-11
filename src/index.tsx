@@ -10,7 +10,7 @@ import { ThemeProvider } from 'themes/ThemeProvider';
 import { App } from 'component/App';
 import { ScrollTop } from 'component/common/ScrollTop/ScrollTop';
 import { AccessProvider } from 'component/providers/AccessProvider/AccessProvider';
-import { getBasePath } from 'utils/formatPath';
+import { basePath } from 'utils/formatPath';
 import { FeedbackCESProvider } from 'component/feedback/FeedbackCESContext/FeedbackCESProvider';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
 import { AnnouncerProvider } from 'component/common/Announcer/AnnouncerProvider/AnnouncerProvider';
@@ -19,7 +19,7 @@ ReactDOM.render(
     <DndProvider backend={HTML5Backend}>
         <UIProvider>
             <AccessProvider>
-                <BrowserRouter basename={`${getBasePath()}`}>
+                <BrowserRouter basename={basePath}>
                     <ThemeProvider>
                         <AnnouncerProvider>
                             <FeedbackCESProvider>
