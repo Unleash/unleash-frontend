@@ -60,7 +60,6 @@ export const useStyles = makeStyles()(theme => ({
     },
     backButton: {
         marginRight: 'auto',
-        color: theme.palette.primary.main,
     },
     addContextContainer: {
         marginTop: '1rem',
