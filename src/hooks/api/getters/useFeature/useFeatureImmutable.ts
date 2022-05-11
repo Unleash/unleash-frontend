@@ -21,7 +21,7 @@ export const useFeatureImmutable = (
 
     const { data, error, mutate } = useSWRImmutable<IFeatureResponse>(
         ['useFeatureImmutable', path],
-        () => featureFetcher(path)
+        () => featureFetcher(projectId, featureId)
     );
 
     const refetch = useCallback(async () => {
