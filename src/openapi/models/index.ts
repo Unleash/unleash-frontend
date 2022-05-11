@@ -16,3 +16,4 @@ export * from './TagsResponseSchema';
 export * from './UpdateFeatureSchema';
 export * from './UpdateStrategySchema';
 export * from './VariantSchema';
+export * from './VariantSchemaPayload';

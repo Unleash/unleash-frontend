@@ -65,6 +65,12 @@ export interface FeatureStrategySchema {
     strategyName: string;
     /**
      *
+     * @type {number}
+     * @memberof FeatureStrategySchema
+     */
+    sortOrder?: number;
+    /**
+     *
      * @type {Array<ConstraintSchema>}
      * @memberof FeatureStrategySchema
      */
@@ -94,6 +100,7 @@ export function FeatureStrategySchemaFromJSONTyped(json: any, ignoreDiscriminato
         'projectId': !exists(json, 'projectId') ? undefined : json['projectId'],
         'environment': json['environment'],
         'strategyName': json['strategyName'],
+        'sortOrder': !exists(json, 'sortOrder') ? undefined : json['sortOrder'],
         'constraints': ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
         'parameters': json['parameters'],
     };
@@ -115,6 +122,7 @@ export function FeatureStrategySchemaToJSON(value?: FeatureStrategySchema | null
         'projectId': value.projectId,
         'environment': value.environment,
         'strategyName': value.strategyName,
+        'sortOrder': value.sortOrder,
         'constraints': ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
         'parameters': value.parameters,
     };

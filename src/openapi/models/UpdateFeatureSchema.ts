@@ -41,22 +41,22 @@ export interface UpdateFeatureSchema {
     type?: string;
     /**
      *
-     * @type {string}
+     * @type {boolean}
      * @memberof UpdateFeatureSchema
      */
-    stale?: string;
+    stale?: boolean;
     /**
      *
-     * @type {string}
+     * @type {boolean}
      * @memberof UpdateFeatureSchema
      */
-    archived?: string;
+    archived?: boolean;
     /**
      *
-     * @type {string}
+     * @type {Date}
      * @memberof UpdateFeatureSchema
      */
-    createdAt?: string;
+    createdAt?: Date;
     /**
      *
      * @type {boolean}
@@ -86,7 +86,7 @@ export function UpdateFeatureSchemaFromJSONTyped(json: any, ignoreDiscriminator:
         'type': !exists(json, 'type') ? undefined : json['type'],
         'stale': !exists(json, 'stale') ? undefined : json['stale'],
         'archived': !exists(json, 'archived') ? undefined : json['archived'],
-        'createdAt': !exists(json, 'createdAt') ? undefined : json['createdAt'],
+        'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
         'impressionData': !exists(json, 'impressionData') ? undefined : json['impressionData'],
         'constraints': !exists(json, 'constraints') ? undefined : ((json['constraints'] as Array<any>).map(ConstraintSchemaFromJSON)),
     };
@@ -106,7 +106,7 @@ export function UpdateFeatureSchemaToJSON(value?: UpdateFeatureSchema | null): a
         'type': value.type,
         'stale': value.stale,
         'archived': value.archived,
-        'createdAt': value.createdAt,
+        'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString().substr(0,10)),
         'impressionData': value.impressionData,
         'constraints': value.constraints === undefined ? undefined : ((value.constraints as Array<any>).map(ConstraintSchemaToJSON)),
     };
