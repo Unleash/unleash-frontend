@@ -242,7 +242,7 @@ const FeatureOverviewVariants = () => {
     });
 
     const createPatch = (newVariants: IFeatureVariant[]) => {
-        return jsonpatch.compare(feature.variants, newVariants);
+        return jsonpatch.compare(feature.variants ?? [], newVariants);
     };
 
     return (

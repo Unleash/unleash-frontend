@@ -1,9 +1,10 @@
-import { allOperators, dateOperators, Operator } from 'constants/operators';
-import { oneOf } from 'utils/oneOf';
+import {allOperators, dateOperators} from 'constants/operators';
+import {oneOf} from 'utils/oneOf';
+import {ConstraintSchemaOperatorEnum} from "../openapi";
 
 export const CURRENT_TIME_CONTEXT_FIELD = 'currentTime';
 
-export const operatorsForContext = (contextName: string): Operator[] => {
+export const operatorsForContext = (contextName: string): ConstraintSchemaOperatorEnum[] => {
     return allOperators.filter(operator => {
         if (
             oneOf(dateOperators, operator) &&
@@ -12,13 +13,7 @@ export const operatorsForContext = (contextName: string): Operator[] => {
             return false;
         }
 
-        if (
-            !oneOf(dateOperators, operator) &&
-            contextName === CURRENT_TIME_CONTEXT_FIELD
-        ) {
-            return false;
-        }
-
-        return true;
+        return !(!oneOf(dateOperators, operator) &&
+            contextName === CURRENT_TIME_CONTEXT_FIELD);
     });
 };

@@ -32,8 +32,7 @@ const FeatureSettingsProjectConfirm = ({
     }, [projectId, project.name]);
 
     const calculateCompatability = () => {
-        const featureEnvWithStrategies = feature.environments
-            .filter((env: IFeatureEnvironment) => {
+        const featureEnvWithStrategies = feature.environments?.filter((env: IFeatureEnvironment) => {
                 return env.strategies.length > 0;
             })
             .map((env: IFeatureEnvironment) => env.name);
@@ -42,7 +41,7 @@ const FeatureSettingsProjectConfirm = ({
 
         let incompatible: string[] = [];
 
-        featureEnvWithStrategies.forEach((env: string) => {
+        featureEnvWithStrategies?.forEach((env: string) => {
             if (destinationProjectActiveEnvironments.indexOf(env) === -1) {
                 incompatible = [...incompatible, env];
             }

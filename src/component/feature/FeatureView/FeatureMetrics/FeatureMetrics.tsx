@@ -115,7 +115,7 @@ const useFeatureMetricsEnvironments = (
 ): Set<string> => {
     const { feature } = useFeature(projectId, featureId);
 
-    const environments = feature.environments.map(environment => {
+    const environments = feature.environments?.map(environment => {
         return environment.name;
     });
 

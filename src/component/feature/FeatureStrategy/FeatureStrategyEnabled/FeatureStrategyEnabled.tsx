@@ -49,7 +49,7 @@ const isFeatureEnabledInEnvironment = (
     feature: IFeatureToggle,
     environmentId: string
 ): boolean => {
-    const environment = feature.environments.find(environment => {
+    const environment = feature.environments?.find(environment => {
         return environment.name === environmentId;
     });
 

@@ -62,7 +62,7 @@ export const FeatureStrategyCreate = () => {
                 await setStrategySegments({
                     environmentId,
                     projectId,
-                    strategyId: created.id,
+                    strategyId: created.id!,
                     segmentIds: segments.map(s => s.id),
                 });
             }

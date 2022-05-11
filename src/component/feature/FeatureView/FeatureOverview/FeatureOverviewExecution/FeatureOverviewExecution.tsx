@@ -253,7 +253,7 @@ const FeatureOverviewExecution = ({
         <>
             <ConditionallyRender
                 condition={Boolean(uiConfig.flags.SE)}
-                show={<FeatureOverviewSegment strategyId={strategy.id} />}
+                show={<FeatureOverviewSegment strategyId={strategy.id!} />}
             />
             <ConditionallyRender
                 condition={constraints.length > 0}

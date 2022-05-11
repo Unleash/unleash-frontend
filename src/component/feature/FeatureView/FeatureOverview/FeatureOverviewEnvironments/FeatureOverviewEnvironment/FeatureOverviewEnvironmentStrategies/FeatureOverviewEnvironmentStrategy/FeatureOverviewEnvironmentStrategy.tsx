@@ -35,7 +35,7 @@ const FeatureOverviewEnvironmentStrategy = ({
         projectId,
         featureId,
         environmentId,
-        strategy.id
+        strategy.id!
     );
 
     return (
@@ -62,7 +62,7 @@ const FeatureOverviewEnvironmentStrategy = ({
                         projectId={projectId}
                         featureId={featureId}
                         environmentId={environmentId}
-                        strategyId={strategy.id}
+                        strategyId={strategy.id!}
                         icon
                     />
                 </div>

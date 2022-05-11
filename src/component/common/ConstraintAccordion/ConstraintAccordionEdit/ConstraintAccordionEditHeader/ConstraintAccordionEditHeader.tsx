@@ -1,28 +1,27 @@
-import { IConstraint } from 'interfaces/strategy';
+import {IConstraint} from 'interfaces/strategy';
 
-import { useStyles } from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
+import {useStyles} from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
-import { ConstraintIcon } from 'component/common/ConstraintAccordion/ConstraintIcon';
-import { Help } from '@mui/icons-material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { dateOperators, DATE_AFTER, IN } from 'constants/operators';
-import { SAVE } from '../ConstraintAccordionEdit';
-import { resolveText } from './helpers';
-import { oneOf } from 'utils/oneOf';
-import React, { useEffect } from 'react';
-import { Operator } from 'constants/operators';
-import { ConstraintOperatorSelect } from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect';
+import {ConstraintIcon} from 'component/common/ConstraintAccordion/ConstraintIcon';
+import {Help} from '@mui/icons-material';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import {dateOperators} from 'constants/operators';
+import {SAVE} from '../ConstraintAccordionEdit';
+import {resolveText} from './helpers';
+import {oneOf} from 'utils/oneOf';
+import React, {useEffect} from 'react';
 import {
-    operatorsForContext,
-    CURRENT_TIME_CONTEXT_FIELD,
-} from 'utils/operatorsForContext';
-import { Tooltip } from '@mui/material';
+    ConstraintOperatorSelect
+} from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect';
+import {CURRENT_TIME_CONTEXT_FIELD, operatorsForContext,} from 'utils/operatorsForContext';
+import {Tooltip} from '@mui/material';
+import {ConstraintSchemaOperatorEnum} from "../../../../../openapi";
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;
     setContextName: (contextName: string) => void;
-    setOperator: (operator: Operator) => void;
+    setOperator: (operator: ConstraintSchemaOperatorEnum) => void;
     setLocalConstraint: React.Dispatch<React.SetStateAction<IConstraint>>;
     action: string;
     compact: boolean;
@@ -52,14 +51,14 @@ export const ConstraintAccordionEditHeader = ({
         ) {
             setLocalConstraint(prev => ({
                 ...prev,
-                operator: DATE_AFTER,
+                operator: ConstraintSchemaOperatorEnum.DateAfter,
                 value: new Date().toISOString(),
             }));
         } else if (
             contextName !== CURRENT_TIME_CONTEXT_FIELD &&
             oneOf(dateOperators, operator)
         ) {
-            setOperator(IN);
+            setOperator(ConstraintSchemaOperatorEnum.In);
         }
     }, [contextName, setOperator, operator, setLocalConstraint]);
 
@@ -71,7 +70,7 @@ export const ConstraintAccordionEditHeader = ({
         return { key: context.name, label: context.name };
     });
 
-    const onOperatorChange = (operator: Operator) => {
+    const onOperatorChange = (operator: ConstraintSchemaOperatorEnum) => {
         if (oneOf(dateOperators, operator)) {
             setLocalConstraint(prev => ({
                 ...prev,

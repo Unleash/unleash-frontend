@@ -1,6 +1,6 @@
 import {act, renderHook} from '@testing-library/react-hooks';
 import {useFeaturesFilter} from 'hooks/useFeaturesFilter';
-import {FeatureSchema, FeatureStrategySchema} from 'openapi';
+import {ConstraintSchemaOperatorEnum, FeatureSchema, FeatureStrategySchema} from 'openapi';
 import parseISO from 'date-fns/parseISO';
 import {IConstraint} from 'interfaces/strategy';
 
@@ -125,7 +125,7 @@ const mockFeatureStrategy = (
 const mockConstraint = (overrides?: Partial<IConstraint>): IConstraint => {
     return {
         contextName: '',
-        operator: 'IN',
+        operator: ConstraintSchemaOperatorEnum.In,
         ...overrides,
     };
 };

@@ -46,10 +46,10 @@ const FeatureOverviewEnvironment = ({
     const { feature } = useFeature(projectId, featureId);
 
     const featureMetrics = getFeatureMetrics(feature?.environments, metrics);
-    const environmentMetric = featureMetrics.find(
+    const environmentMetric = featureMetrics?.find(
         featureMetric => featureMetric.environment === env.name
     );
-    const featureEnvironment = feature?.environments.find(
+    const featureEnvironment = feature?.environments?.find(
         featureEnvironment => featureEnvironment.name === env.name
     );
 
@@ -95,7 +95,7 @@ const FeatureOverviewEnvironment = ({
                     className={styles.accordionHeader}
                     expandIcon={<ExpandMore titleAccess="Toggle" />}
                 >
-                    <div className={styles.header} data-loading>
+                    <div className={styles.header} data-loading={true}>
                         <div className={styles.headerTitle}>
                             <EnvironmentIcon
                                 enabled={env.enabled}

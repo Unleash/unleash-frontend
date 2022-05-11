@@ -67,7 +67,7 @@ export const useFeatureStrategyProdGuard = (
 ): boolean => {
     const [settings] = useFeatureStrategyProdGuardSettings();
 
-    const environment = feature.environments.find(environment => {
+    const environment = feature.environments?.find(environment => {
         return environment.name === environmentId;
     });
 

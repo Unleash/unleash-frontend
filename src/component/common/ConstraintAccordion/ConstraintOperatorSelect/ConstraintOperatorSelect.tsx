@@ -1,27 +1,23 @@
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,} from '@mui/material';
 import {
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
-    SelectChangeEvent,
-} from '@mui/material';
-import {
-    Operator,
-    stringOperators,
-    semVerOperators,
     dateOperators,
-    numOperators,
     inOperators,
+    numOperators,
+    semVerOperators,
+    stringOperators,
 } from 'constants/operators';
-import React, { useState } from 'react';
-import { formatOperatorDescription } from 'component/common/ConstraintAccordion/ConstraintOperator/formatOperatorDescription';
-import { useStyles } from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect.styles';
+import React, {useState} from 'react';
+import {
+    formatOperatorDescription
+} from 'component/common/ConstraintAccordion/ConstraintOperator/formatOperatorDescription';
+import {useStyles} from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect.styles';
 import classNames from 'classnames';
+import {ConstraintSchemaOperatorEnum} from "../../../../openapi";
 
 interface IConstraintOperatorSelectProps {
-    options: Operator[];
-    value: Operator;
-    onChange: (value: Operator) => void;
+    options: ConstraintSchemaOperatorEnum[];
+    value: ConstraintSchemaOperatorEnum;
+    onChange: (value: ConstraintSchemaOperatorEnum) => void;
 }
 
 export const ConstraintOperatorSelect = ({
@@ -33,7 +29,7 @@ export const ConstraintOperatorSelect = ({
     const [open, setOpen] = useState(false);
 
     const onSelectChange = (event: SelectChangeEvent) => {
-        onChange(event.target.value as Operator);
+        onChange(event.target.value as ConstraintSchemaOperatorEnum);
     };
 
     const renderValue = () => {
@@ -83,7 +79,7 @@ export const ConstraintOperatorSelect = ({
     );
 };
 
-const needSeparatorAbove = (options: Operator[], option: Operator): boolean => {
+const needSeparatorAbove = (options: ConstraintSchemaOperatorEnum[], option: ConstraintSchemaOperatorEnum): boolean => {
     if (option === options[0]) {
         return false;
     }

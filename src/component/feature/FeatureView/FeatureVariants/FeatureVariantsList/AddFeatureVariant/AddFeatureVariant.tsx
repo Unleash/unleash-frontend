@@ -15,7 +15,7 @@ import { modalStyles, trim } from 'component/common/util';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import { IFeatureVariant } from 'interfaces/featureToggle';
+import {IFeatureVariant, IPayload} from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useStyles } from './AddFeatureVariant.styles';
@@ -25,6 +25,7 @@ import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashCon
 import { HelpIcon } from 'component/common/HelpIcon/HelpIcon';
 import { useOverrides } from './useOverrides';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import {VariantSchema} from "../../../../../../openapi";
 
 const payloadOptions = [
     { key: 'string', label: 'string' },
@@ -57,14 +58,14 @@ export const AddVariant = ({
 }: IAddVariantProps) => {
     const { classes: styles } = useStyles();
     const [data, setData] = useState<Record<string, string>>({});
-    const [payload, setPayload] = useState(EMPTY_PAYLOAD);
+    const [payload, setPayload] = useState<IPayload>(EMPTY_PAYLOAD);
     const [overrides, overridesDispatch] = useOverrides([]);
     const [error, setError] = useState<Record<string, string>>({});
     const { classes: themeStyles } = useThemeStyles();
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const { feature } = useFeature(projectId, featureId);
-    const [variants, setVariants] = useState<IFeatureVariant[]>([]);
+    const [variants, setVariants] = useState<VariantSchema[]>([]);
     const { context } = useUnleashContext();
 
     const isValidJSON = (input: string): boolean => {
@@ -108,8 +109,8 @@ export const AddVariant = ({
         setError({});
     };
 
-    const setClonedVariants = (clonedVariants: IFeatureVariant[]) =>
-        setVariants(cloneDeep(clonedVariants));
+    const setClonedVariants = (clonedVariants?: VariantSchema[]) =>
+        setVariants(cloneDeep(clonedVariants) ?? []);
 
     useEffect(() => {
         if (feature) {
@@ -155,7 +156,7 @@ export const AddVariant = ({
             return;
         }
         const validJSON =
-            payload.type === 'json' && !isValidJSON(payload.value);
+            payload.type === 'json' && !isValidJSON(payload.value!);
         if (validJSON) {
             return;
         }
@@ -337,7 +338,7 @@ export const AddVariant = ({
                             id="variant-payload-value"
                             label="Value"
                             className={themeStyles.fullWidth}
-                            value={payload.value}
+                            value={payload.value!}
                             onChange={e => onPayload('value')(e.target.value)}
                             data-testid={'VARIANT_PAYLOAD_VALUE'}
                             placeholder={

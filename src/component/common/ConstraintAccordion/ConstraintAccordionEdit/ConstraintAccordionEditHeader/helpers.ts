@@ -1,82 +1,65 @@
-import {
-    DATE_BEFORE,
-    DATE_AFTER,
-    IN,
-    NOT_IN,
-    NUM_EQ,
-    NUM_GT,
-    NUM_GTE,
-    NUM_LT,
-    NUM_LTE,
-    STR_CONTAINS,
-    STR_ENDS_WITH,
-    STR_STARTS_WITH,
-    SEMVER_EQ,
-    SEMVER_GT,
-    SEMVER_LT,
-    Operator,
-} from 'constants/operators';
+import {ConstraintSchemaOperatorEnum} from "../../../../../openapi";
 
-export const resolveText = (operator: Operator, contextName: string) => {
+export const resolveText = (operator: ConstraintSchemaOperatorEnum, contextName: string) => {
     const base = `To satisfy this constraint, values passed into the SDK as ${contextName} must`;
 
-    if (operator === IN) {
+    if (operator === ConstraintSchemaOperatorEnum.In) {
         return `${base} include:`;
     }
 
-    if (operator === NOT_IN) {
+    if (operator === ConstraintSchemaOperatorEnum.NotIn) {
         return `${base} not include:`;
     }
 
-    if (operator === STR_ENDS_WITH) {
+    if (operator === ConstraintSchemaOperatorEnum.StrEndsWith) {
         return `${base} end with:`;
     }
 
-    if (operator === STR_STARTS_WITH) {
+    if (operator === ConstraintSchemaOperatorEnum.StrStartsWith) {
         return `${base} start with:`;
     }
 
-    if (operator === STR_CONTAINS) {
+    if (operator === ConstraintSchemaOperatorEnum.StrContains) {
         return `${base} contain:`;
     }
 
-    if (operator === NUM_EQ) {
+    if (operator === ConstraintSchemaOperatorEnum.NumEq) {
         return `${base} match:`;
     }
 
-    if (operator === NUM_GT) {
+    if (operator === ConstraintSchemaOperatorEnum.NumGt) {
         return `${base} be greater than:`;
     }
 
-    if (operator === NUM_GTE) {
+    if (operator === ConstraintSchemaOperatorEnum.NumGte) {
         return `${base} be greater than or equal to:`;
     }
 
-    if (operator === NUM_LT) {
+    if (operator === ConstraintSchemaOperatorEnum.NumLt) {
         return `${base} be less than:`;
     }
 
-    if (operator === NUM_LTE) {
+    if (operator === ConstraintSchemaOperatorEnum.NumLte) {
         return `${base} be less than or equal to:`;
     }
 
-    if (operator === DATE_AFTER) {
+    if (operator === ConstraintSchemaOperatorEnum.DateAfter) {
         return `${base} be after the following date`;
     }
 
-    if (operator === DATE_BEFORE) {
+    if (operator === ConstraintSchemaOperatorEnum.DateBefore) {
         return `${base} be before the following date:`;
     }
 
-    if (operator === SEMVER_EQ) {
+    if (operator === ConstraintSchemaOperatorEnum.SemverEq) {
         return `${base} match the following version:`;
     }
 
-    if (operator === SEMVER_GT) {
+    if (operator === ConstraintSchemaOperatorEnum.SemverGt) {
         return `${base} be greater than the following version:`;
     }
 
-    if (operator === SEMVER_LT) {
+    if (operator === ConstraintSchemaOperatorEnum.SemverLt) {
         return `${base} be less than the following version:`;
     }
 };

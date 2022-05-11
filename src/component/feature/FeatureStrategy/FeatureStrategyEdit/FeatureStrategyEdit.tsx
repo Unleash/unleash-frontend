@@ -42,8 +42,7 @@ export const FeatureStrategyEdit = () => {
     } = useSegments(strategyId);
 
     useEffect(() => {
-        const savedStrategy = feature.environments
-            .flatMap(environment => environment.strategies)
+        const savedStrategy = feature.environments?.flatMap(environment => environment.strategies)
             .find(strategy => strategy.id === strategyId);
         setStrategy(prev => ({ ...prev, ...savedStrategy }));
     }, [strategyId, feature]);

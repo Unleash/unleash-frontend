@@ -3,11 +3,11 @@ import {useCallback} from 'react';
 import {emptyFeature} from './emptyFeature';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import {formatApiPath} from 'utils/formatPath';
-import {IFeatureToggle} from 'interfaces/featureToggle';
 import {openApiAdmin} from "../../../../utils/openapiClient";
+import {FeatureSchema} from "../../../../openapi";
 
 export interface IUseFeatureOutput {
-    feature: IFeatureToggle;
+    feature: FeatureSchema;
     refetchFeature: () => void;
     loading: boolean;
     status?: number;
@@ -16,7 +16,7 @@ export interface IUseFeatureOutput {
 
 export interface IFeatureResponse {
     status: number;
-    body?: IFeatureToggle;
+    body?: FeatureSchema;
 }
 
 export const useFeature = (
