@@ -26,9 +26,5 @@ export const useStyles = makeStyles()(theme => ({
         textDecoration: 'none',
         fontSize: 'inherit',
         display: 'inline-block',
-        maxWidth: '250px',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
     },
 }));

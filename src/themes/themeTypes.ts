@@ -50,9 +50,9 @@ declare module '@mui/material/styles' {
         };
         dividerAlternative: string;
         /**
-         * For hover effect
+         * For table header hover effect
          */
-        hover: string;
+        tableHeaderHover: string;
         /**
          * Text highlight effect color. Used when filtering/searching over content.
          */

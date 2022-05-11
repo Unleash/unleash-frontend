@@ -5,7 +5,7 @@ export const useStyles = makeStyles()(theme => ({
         padding: 0,
         position: 'relative',
         '&:hover, &:focus': {
-            backgroundColor: theme.palette.hover,
+            backgroundColor: theme.palette.tableHeaderHover,
             '& svg': {
                 color: 'inherit',
             },
