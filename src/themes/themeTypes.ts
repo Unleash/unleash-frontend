@@ -29,7 +29,7 @@ declare module '@mui/material/styles' {
 
     interface CustomPalette {
         /**
-         * Colors for event log output
+         * Colors for event log output.
          */
         code: {
             main: string;
@@ -40,7 +40,7 @@ declare module '@mui/material/styles' {
             background: string;
         };
         /**
-         * For 'Seen' column on feature toggles list
+         * For 'Seen' column on feature toggles list.
          */
         activityIndicators: {
             unknown: string;
@@ -50,7 +50,7 @@ declare module '@mui/material/styles' {
         };
         dividerAlternative: string;
         /**
-         * For table header hover effect
+         * For table header hover effect.
          */
         tableHeaderHover: string;
         /**
@@ -58,11 +58,11 @@ declare module '@mui/material/styles' {
          */
         highlight: string;
         /**
-         * For sidebar container background
+         * For sidebar container background.
          */
         sidebarContainer: string;
         /**
-         * For sidebar divider
+         * For sidebar divider.
          */
         sidebarDivider: string;
     }

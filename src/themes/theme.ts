@@ -30,10 +30,10 @@ export default createTheme({
         bold: 700,
     },
     shape: {
-        borderRadius: '3px',
+        borderRadius: '4px',
         borderRadiusMedium: '8px',
-        borderRadiusLarge: '10px',
-        borderRadiusExtraLarge: '25px',
+        borderRadiusLarge: '12px',
+        borderRadiusExtraLarge: '20px',
     },
     palette: {
         primary: {
