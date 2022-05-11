@@ -1,18 +1,22 @@
-import { Fragment, ReactNode, useState, VFC } from 'react';
+import { useState, VFC } from 'react';
 import {
+    Box,
     Checkbox,
     Divider,
     IconButton,
-    ListItemButton,
     ListItemIcon,
     ListItemText,
-    Menu,
     MenuItem,
+    MenuList,
+    Popover,
     Tooltip,
+    Typography,
 } from '@mui/material';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
+import CloseIcon from '@mui/icons-material/Close';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { capitalize } from 'lodash';
+import { useStyles } from './ColumnsMenu.styles';
 
 interface IColumnsMenuProps {
     allColumns: Record<string, any>;
@@ -28,91 +32,123 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
     dividerAfter = [],
 }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const { classes } = useStyles();
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const isOpen = Boolean(anchorEl);
     const id = `columns-menu`;
     const menuId = `columns-menu-list-${id}`;
 
     return (
-        <div>
+        <Box className={classes.container}>
             <Tooltip title="Select columns" arrow describeChild>
                 <IconButton
                     id={id}
-                    aria-controls={open ? menuId : undefined}
+                    aria-controls={isOpen ? menuId : undefined}
                     aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
+                    aria-expanded={isOpen ? 'true' : undefined}
                     onClick={handleClick}
                     type="button"
+                    className={classes.button}
                 >
                     <ViewColumnIcon />
                 </IconButton>
             </Tooltip>
-            <Menu
+
+            <Popover
                 id={menuId}
+                open={isOpen}
                 anchorEl={anchorEl}
-                open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': id,
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
                 disableScrollLock={true}
+                PaperProps={{
+                    className: classes.menuContainer,
+                }}
             >
-                {allColumns.map(
-                    (column: {
-                        Header: string | any;
-                        id: string;
-                        isVisible: boolean;
-                        toggleHidden: (state: boolean) => void;
-                    }) => [
-                        <ConditionallyRender
-                            condition={dividerBefore.includes(column.id)}
-                            show={<Divider />}
-                        />,
-                        <MenuItem
-                            onClick={() => {
-                                column.toggleHidden(column.isVisible);
-                            }}
-                            disabled={disabledColumns.includes(column.id)}
-                            dense
-                        >
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={column.isVisible}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{
-                                        'aria-labelledby': column.id,
-                                    }}
-                                />
-                            </ListItemIcon>
-                            <ListItemText
-                                id={column.id}
-                                primary={
-                                    <ConditionallyRender
-                                        condition={
-                                            typeof column.Header === 'string'
-                                        }
-                                        show={() => <>{column.Header}</>}
-                                        elseShow={() => capitalize(column.id)}
+                <Box className={classes.menuHeader}>
+                    <Typography variant="body2">
+                        <strong>Columns</strong>
+                    </Typography>
+                    <IconButton onClick={handleClose}>
+                        <CloseIcon />
+                    </IconButton>
+                </Box>
+                <MenuList>
+                    {allColumns.map(
+                        (column: {
+                            Header: string | any;
+                            id: string;
+                            isVisible: boolean;
+                            toggleHidden: (state: boolean) => void;
+                        }) => [
+                            <ConditionallyRender
+                                condition={dividerBefore.includes(column.id)}
+                                show={<Divider className={classes.divider} />}
+                            />,
+                            <MenuItem
+                                onClick={() => {
+                                    column.toggleHidden(column.isVisible);
+                                }}
+                                disabled={disabledColumns.includes(column.id)}
+                                className={classes.menuItem}
+                            >
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={column.isVisible}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        inputProps={{
+                                            'aria-labelledby': column.id,
+                                        }}
+                                        size="medium"
+                                        className={classes.checkbox}
                                     />
-                                }
-                            />
-                        </MenuItem>,
-                        <ConditionallyRender
-                            condition={dividerAfter.includes(column.id)}
-                            show={<Divider />}
-                        />,
-                    ]
-                )}
-            </Menu>
-        </div>
+                                </ListItemIcon>
+                                <ListItemText
+                                    id={column.id}
+                                    className={classes.label}
+                                    primary={
+                                        <Typography variant="body2">
+                                            <ConditionallyRender
+                                                condition={
+                                                    typeof column.Header ===
+                                                    'string'
+                                                }
+                                                show={() => (
+                                                    <>{column.Header}</>
+                                                )}
+                                                elseShow={() =>
+                                                    capitalize(column.id)
+                                                }
+                                            />
+                                        </Typography>
+                                    }
+                                />
+                            </MenuItem>,
+                            <ConditionallyRender
+                                condition={dividerAfter.includes(column.id)}
+                                show={<Divider className={classes.divider} />}
+                            />,
+                        ]
+                    )}
+                </MenuList>
+            </Popover>
+        </Box>
     );
 };

@@ -9,9 +9,6 @@ export const useStyles = makeStyles()(theme => ({
         padding: 0,
         '&:hover, &:focus': {
             backgroundColor: theme.palette.grey[400],
-            '& svg': {
-                color: 'inherit',
-            },
         },
     },
     sortButton: {
@@ -19,8 +16,10 @@ export const useStyles = makeStyles()(theme => ({
         padding: theme.spacing(2),
         whiteSpace: 'nowrap',
         width: '100%',
-        '&:focus-visible, &:active': {
-            outline: 'revert',
+        ':hover, :focus, &:focus-visible, &:active': {
+            '& svg': {
+                color: 'inherit',
+            },
         },
         display: 'flex',
         alignItems: 'center',
@@ -29,5 +28,11 @@ export const useStyles = makeStyles()(theme => ({
     },
     sortedButton: {
         fontWeight: theme.fontWeight.bold,
+    },
+    label: {
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflowX: 'hidden',
+        overflowY: 'visible',
     },
 }));

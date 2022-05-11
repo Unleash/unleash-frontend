@@ -21,14 +21,21 @@ export const useStyles = makeStyles()(theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    description: {
-        color: theme.palette.grey[800],
-        textDecoration: 'none',
-        fontSize: 'inherit',
-        display: 'inline-block',
-        maxWidth: '250px',
-        whiteSpace: 'nowrap',
+    title: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+    },
+    description: {
+        color: theme.palette.text.secondary,
+        textDecoration: 'none',
+        fontSize: 'inherit',
+        WebkitLineClamp: 1,
+        lineClamp: 1,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
     },
 }));

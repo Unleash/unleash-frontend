@@ -1,5 +1,14 @@
-import React, { FC, MouseEventHandler, useContext } from 'react';
-import { TableCell } from '@mui/material';
+import React, {
+    FC,
+    MouseEventHandler,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+import { HeaderGroup } from 'react-table';
+import { TableCell, Tooltip } from '@mui/material';
 import classnames from 'classnames';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './CellSortable.styles';
@@ -11,6 +20,10 @@ interface ICellSortableProps {
     isSorted?: boolean;
     isDescending?: boolean;
     ariaTitle?: string;
+    width?: number | string;
+    minWidth?: number | string;
+    maxWidth?: number | string;
+    align?: 'left' | 'center' | 'right';
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -19,10 +32,16 @@ export const CellSortable: FC<ICellSortableProps> = ({
     isSortable = true,
     isSorted = false,
     isDescending,
+    width,
+    minWidth,
+    maxWidth,
+    align,
     ariaTitle,
     onClick = () => {},
 }) => {
     const { setAnnouncement } = useContext(AnnouncerContext);
+    const [title, setTitle] = useState('');
+    const ref = useRef<HTMLSpanElement>(null);
     const { classes: styles } = useStyles();
 
     const ariaSort = isSorted
@@ -40,25 +59,64 @@ export const CellSortable: FC<ICellSortableProps> = ({
         );
     };
 
+    const justifyContent = useMemo(() => {
+        switch (align) {
+            case 'left':
+                return 'flex-start';
+            case 'center':
+                return 'center';
+            case 'right':
+                return 'flex-end';
+            default:
+                return undefined;
+        }
+    }, [align]);
+
+    useEffect(() => {
+        const updateTitle = () => {
+            const newTitle =
+                ariaTitle &&
+                ref.current &&
+                ref?.current?.offsetWidth < ref?.current?.scrollWidth
+                    ? `${children}`
+                    : '';
+
+            if (newTitle !== title) {
+                setTitle(newTitle);
+            }
+        };
+
+        updateTitle();
+    }, [ref.current, setTitle, ariaTitle]);
+
     return (
         <TableCell
             component="th"
             aria-sort={ariaSort}
             className={classnames(styles.header, isSortable && styles.sortable)}
+            style={{ width, minWidth, maxWidth }}
         >
             <ConditionallyRender
                 condition={isSortable}
                 show={
-                    <button
-                        className={classnames(
-                            isSorted && styles.sortedButton,
-                            styles.sortButton
-                        )}
-                        onClick={onSortClick}
-                    >
-                        {children}
-                        <SortArrow isSorted={isSorted} isDesc={isDescending} />
-                    </button>
+                    <Tooltip title={title} arrow>
+                        <button
+                            className={classnames(
+                                isSorted && styles.sortedButton,
+                                styles.sortButton
+                            )}
+                            onClick={onSortClick}
+                            style={{ justifyContent }}
+                        >
+                            <span className={styles.label} ref={ref}>
+                                {children}
+                            </span>
+                            <SortArrow
+                                isSorted={isSorted}
+                                isDesc={isDescending}
+                            />
+                        </button>
+                    </Tooltip>
                 }
                 elseShow={children}
             />

@@ -6,14 +6,17 @@ import { CellSortable } from './CellSortable/CellSortable';
 
 interface ISortableTableHeaderProps {
     headerGroups: HeaderGroup<object>[];
+    className?: string;
 }
 
 export const SortableTableHeader: VFC<ISortableTableHeaderProps> = ({
     headerGroups,
+    className,
 }) => {
     const { classes: styles } = useStyles();
+
     return (
-        <TableHead>
+        <TableHead className={className}>
             {headerGroups.map(headerGroup => (
                 <TableRow
                     {...headerGroup.getHeaderGroupProps()}
@@ -35,6 +38,11 @@ export const SortableTableHeader: VFC<ISortableTableHeaderProps> = ({
                                 isSortable={column.canSort}
                                 isSorted={column.isSorted}
                                 isDescending={column.isSortedDesc}
+                                maxWidth={column.maxWidth}
+                                minWidth={column.minWidth}
+                                width={column.width}
+                                // @ts-expect-error -- check after `react-table` v8
+                                align={column.align}
                             >
                                 {content}
                             </CellSortable>

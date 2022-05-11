@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
-import { useFilters, useSortBy, useTable } from 'react-table';
+import { Column, useFilters, useSortBy, useTable } from 'react-table';
 import AccessContext from 'contexts/AccessContext';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -17,7 +17,6 @@ import { FeatureLinkCell } from 'component/common/Table/cells/FeatureLinkCell/Fe
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
 import { sortTypes } from 'utils/sortTypes';
-import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import {
     Table,
     SortableTableHeader,
@@ -29,7 +28,6 @@ import {
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { useStyles } from './ProjectFeatureToggles.styles';
-import { Tooltip } from '@mui/material';
 import { useFeatureEnvironments } from './hooks/useFeatureEnvironments';
 import { useSetFeatureState } from './hooks/useSetFeatureState';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
@@ -124,13 +122,13 @@ export const ProjectFeatureToggles = ({
                 accessor: 'lastSeenAt',
                 Cell: FeatureSeenCell,
                 sortType: 'date',
-                totalWidth: 120,
+                align: 'center',
             },
             {
                 Header: 'Type',
                 accessor: 'type',
                 Cell: FeatureTypeCell,
-                totalWidth: 120,
+                align: 'center',
             },
             {
                 Header: 'Feature toggle name',
@@ -141,6 +139,7 @@ export const ProjectFeatureToggles = ({
                         to={`/projects/${projectId}/features/${value}`}
                     />
                 ),
+                width: '100%',
                 sortType: 'alphanumeric',
             },
             {
@@ -148,10 +147,14 @@ export const ProjectFeatureToggles = ({
                 accessor: 'createdAt',
                 Cell: DateCell,
                 sortType: 'date',
+                align: 'center',
             },
             ...environments.map(name => ({
                 Header: name,
+                maxWidth: 110,
+                minWidth: 110,
                 accessor: `environments.${name}`,
+                align: 'center',
                 Cell: ({
                     value,
                     row: { original: feature },
@@ -193,8 +196,11 @@ export const ProjectFeatureToggles = ({
     const initialState = useMemo(
         () => ({
             sortBy: [{ id: 'createdAt', desc: false }],
+            hiddenColumns: environments
+                .filter((_, index) => index >= 3)
+                .map(environment => `environments.${environment}`),
         }),
-        []
+        [environments]
     );
 
     const {
@@ -264,8 +270,11 @@ export const ProjectFeatureToggles = ({
         >
             <SearchHighlightProvider value={filter}>
                 <Table {...getTableProps()}>
-                    {/* @ts-expect-error -- verify after `react-table` v8 */}
-                    <SortableTableHeader headerGroups={headerGroups} />
+                    <SortableTableHeader
+                        // @ts-expect-error -- verify after `react-table` v8
+                        headerGroups={headerGroups}
+                        className={styles.headerClass}
+                    />
                     <TableBody {...getTableBodyProps()}>
                         {rows.map(row => {
                             prepareRow(row);

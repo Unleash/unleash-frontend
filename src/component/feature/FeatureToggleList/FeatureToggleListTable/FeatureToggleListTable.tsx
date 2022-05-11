@@ -35,17 +35,19 @@ const columns = [
         accessor: 'lastSeenAt',
         Cell: FeatureSeenCell,
         sortType: 'date',
-        totalWidth: 120,
+        align: 'center',
     },
     {
         Header: 'Type',
         accessor: 'type',
         Cell: FeatureTypeCell,
-        totalWidth: 120,
+        align: 'center',
     },
     {
         Header: 'Feature toggle name',
         accessor: 'name',
+        maxWidth: 300,
+        width: '67%',
         Cell: ({
             row: {
                 // @ts-expect-error -- props type
