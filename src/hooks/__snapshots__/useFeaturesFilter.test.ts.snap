@@ -19,15 +19,21 @@ exports[`useFeaturesFilter constraints 1`] = `
       "strategies": [
         {
           "constraints": [],
+          "environment": "some-env",
+          "featureName": "some-feature-name",
           "id": "1",
-          "name": "1",
+          "name": "some-name",
           "parameters": {},
+          "strategyName": "some-strategy-name",
         },
         {
           "constraints": [],
+          "environment": "some-env",
+          "featureName": "some-feature-name",
           "id": "1",
-          "name": "1",
+          "name": "some-name",
           "parameters": {},
+          "strategyName": "some-strategy-name",
         },
         {
           "constraints": [
@@ -48,9 +54,12 @@ exports[`useFeaturesFilter constraints 1`] = `
               ],
             },
           ],
+          "environment": "some-env",
+          "featureName": "some-feature-name",
           "id": "1",
-          "name": "1",
+          "name": "some-name",
           "parameters": {},
+          "strategyName": "some-strategy-name",
         },
       ],
       "type": "1",
