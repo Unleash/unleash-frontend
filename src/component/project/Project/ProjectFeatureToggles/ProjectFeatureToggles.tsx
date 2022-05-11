@@ -33,6 +33,8 @@ import { Tooltip } from '@mui/material';
 import { useFeatureEnvironments } from './hooks/useFeatureEnvironments';
 import { useSetFeatureState } from './hooks/useSetFeatureState';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
+import { ActionsCell } from './ActionsCell/ActionsCell';
+import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
 
 interface IProjectFeatureTogglesProps {
     features: IFeatureToggleListItem[];
@@ -74,7 +76,6 @@ export const ProjectFeatureToggles = ({
             }) as ListItemType[];
         }
 
-        // return features;
         return features.map(
             ({
                 name,
@@ -173,20 +174,16 @@ export const ProjectFeatureToggles = ({
                 },
             })),
             {
-                Header: (
-                    <Tooltip title="Select columns" arrow describeChild>
-                        <ViewColumnIcon />
-                    </Tooltip>
+                Header: ({ allColumns }: any) => (
+                    <ColumnsMenu
+                        allColumns={allColumns}
+                        disabledColumns={['actions', 'name']}
+                        dividerAfter={['createdAt']}
+                        dividerBefore={['actions']}
+                    />
                 ),
                 id: 'actions',
-                Cell: ({
-                    row: { original: feature },
-                }: {
-                    row: { original: IFeatureToggleListItem };
-                }) => {
-                    return '...';
-                    // return <>{feature.name}</>;
-                },
+                Cell: ActionsCell,
                 disableSortBy: true,
             },
         ],
