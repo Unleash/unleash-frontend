@@ -65,10 +65,8 @@ const FeatureSettingsProject = () => {
     const filterProjects = () => {
         const validTargets = createMoveTargets();
 
-        return (project: string) => {
-            if (validTargets[project]) {
-                return project;
-            }
+        return (projectId: string) => {
+            return Boolean(validTargets[projectId]);
         };
     };
 
