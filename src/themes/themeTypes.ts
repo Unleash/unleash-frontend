@@ -54,7 +54,7 @@ declare module '@mui/material/styles' {
          */
         hover: string;
         /**
-         * For highlight effect
+         * Text highlight effect color. Used when filtering/searching over content.
          */
         highlight: string;
         /**
