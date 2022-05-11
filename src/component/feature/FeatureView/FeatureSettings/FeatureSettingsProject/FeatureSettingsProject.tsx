@@ -40,12 +40,7 @@ const FeatureSettingsProject = () => {
         try {
             await changeFeatureProject(projectId, featureId, newProject);
             refetchFeature();
-            setToastData({
-                title: 'Updated project',
-                confetti: true,
-                type: 'success',
-                text: 'Successfully updated toggle project.',
-            });
+            setToastData({ title: 'Project changed', type: 'success' });
             setShowConfirmDialog(false);
             navigate(`/projects/${newProject}/features/${featureId}/settings`, {
                 replace: true,
