@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useMemo } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import AccessContext from 'contexts/AccessContext';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
