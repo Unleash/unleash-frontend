@@ -11,7 +11,7 @@ const ProjectOverview = ({ projectId }: IProjectOverviewProps) => {
     const { project, loading } = useProject(projectId, {
         refreshInterval: 10000,
     });
-    const { members, features, health, description } = project;
+    const { members, features, health, description, environments } = project;
     const { classes: styles } = useStyles();
 
     return (
@@ -27,6 +27,7 @@ const ProjectOverview = ({ projectId }: IProjectOverviewProps) => {
                 <div className={styles.projectToggles}>
                     <ProjectFeatureToggles
                         features={features}
+                        environments={environments}
                         loading={loading}
                     />
                 </div>

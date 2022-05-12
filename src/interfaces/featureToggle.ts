@@ -12,7 +12,6 @@ export interface IFeatureToggleListItem {
 export interface IEnvironments {
     name: string;
     enabled: boolean;
-    sortOrder?: number;
 }
 
 export interface IFeatureTogglePayload {

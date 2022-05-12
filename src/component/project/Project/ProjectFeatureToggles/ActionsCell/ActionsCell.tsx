@@ -10,6 +10,7 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import ArchiveIcon from '@mui/icons-material/Archive';
@@ -21,24 +22,29 @@ import {
     DELETE_FEATURE,
     UPDATE_FEATURE,
 } from 'component/providers/AccessProvider/permissions';
+import { FeatureStaleDialog } from 'component/common/FeatureStaleDialog/FeatureStaleDialog';
+import useProject from 'hooks/api/getters/useProject/useProject';
+import { FeatureArchiveDialog } from 'component/common/FeatureArchiveDialog/FeatureArchiveDialog';
 
 interface IActionsCellProps {
     projectId: string;
     row: {
         original: {
             name: string;
+            stale?: boolean;
         };
     };
 }
 
-export const ActionsCell: VFC<IActionsCellProps> = ({
-    projectId,
-    row: {
-        original: { name },
-    },
-}) => {
+export const ActionsCell: VFC<IActionsCellProps> = ({ projectId, row }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [openStaleDialog, setOpenStaleDialog] = useState(false);
+    const [openArchiveDialog, setOpenArchiveDialog] = useState(false);
+    const { refetch } = useProject(projectId);
     const { classes } = useStyles();
+    const {
+        original: { name: featureId, stale },
+    } = row;
 
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,7 +53,7 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const id = `feature-${name}-actions`;
+    const id = `feature-${featureId}-actions`;
     const menuId = `${id}-menu`;
 
     return (
@@ -92,6 +98,8 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
                                 className={classes.item}
                                 onClick={handleClose}
                                 disabled={!hasAccess}
+                                component={RouterLink}
+                                to={`/projects/${projectId}/features/${featureId}/strategies/copy`}
                             >
                                 <ListItemIcon>
                                     <FileCopyIcon />
@@ -111,7 +119,10 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
                         {({ hasAccess }) => (
                             <MenuItem
                                 className={classes.item}
-                                onClick={handleClose}
+                                onClick={() => {
+                                    setOpenArchiveDialog(true);
+                                    handleClose();
+                                }}
                                 disabled={!hasAccess}
                             >
                                 <ListItemIcon>
@@ -132,7 +143,10 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
                         {({ hasAccess }) => (
                             <MenuItem
                                 className={classes.item}
-                                onClick={handleClose}
+                                onClick={() => {
+                                    handleClose();
+                                    setOpenStaleDialog(true);
+                                }}
                                 disabled={!hasAccess}
                             >
                                 <ListItemIcon>
@@ -140,7 +154,7 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
                                 </ListItemIcon>
                                 <ListItemText>
                                     <Typography variant="body2">
-                                        Mark as stale
+                                        {stale ? 'Un-mark' : 'Mark'} as stale
                                     </Typography>
                                 </ListItemText>
                             </MenuItem>
@@ -148,6 +162,26 @@ export const ActionsCell: VFC<IActionsCellProps> = ({
                     </PermissionHOC>
                 </MenuList>
             </Popover>
+            <FeatureStaleDialog
+                isStale={stale === true}
+                isOpen={openStaleDialog}
+                onClose={() => {
+                    setOpenStaleDialog(false);
+                    refetch();
+                }}
+                featureId={featureId}
+                projectId={projectId}
+            />
+            <FeatureArchiveDialog
+                isOpen={openArchiveDialog}
+                onConfirm={() => {
+                    refetch();
+                    setOpenArchiveDialog(false);
+                }}
+                onAbort={() => setOpenArchiveDialog(false)}
+                featureId={featureId}
+                projectId={projectId}
+            />
         </Box>
     );
 };

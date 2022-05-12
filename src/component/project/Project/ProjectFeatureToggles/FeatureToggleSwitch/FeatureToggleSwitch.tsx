@@ -1,8 +1,9 @@
+import { VFC } from 'react';
 import { Box } from '@mui/material';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_FEATURE_ENVIRONMENT } from 'component/providers/AccessProvider/permissions';
-import { VFC } from 'react';
 import { useOptimisticUpdate } from './hooks/useOptimisticUpdate';
+import { useStyles } from './FeatureToggleSwitch.styles';
 
 interface IFeatureToggleSwitchProps {
     featureName: string;
@@ -17,7 +18,7 @@ interface IFeatureToggleSwitchProps {
     ) => Promise<void>;
 }
 
-// TODO: check React.memo peformance
+// TODO: check React.memo performance
 export const FeatureToggleSwitch: VFC<IFeatureToggleSwitchProps> = ({
     projectId,
     featureName,
@@ -25,6 +26,7 @@ export const FeatureToggleSwitch: VFC<IFeatureToggleSwitchProps> = ({
     value,
     onToggle,
 }) => {
+    const { classes } = useStyles();
     const [isChecked, setIsChecked, rollbackIsChecked] =
         useOptimisticUpdate<boolean>(value);
 
@@ -36,8 +38,10 @@ export const FeatureToggleSwitch: VFC<IFeatureToggleSwitchProps> = ({
     };
 
     return (
-        <Box sx={{ mx: 'auto', display: 'flex', justifyContent: 'center' }}>
-            {/* TODO: move sx to className for performance reasons */}
+        <Box
+            className={classes.container}
+            key={`${featureName}-${environmentName}`} // Prevent animation when archiving rows
+        >
             <PermissionSwitch
                 checked={isChecked}
                 environmentId={environmentName}

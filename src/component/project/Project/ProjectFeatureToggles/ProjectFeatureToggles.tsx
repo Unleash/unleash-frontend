@@ -1,13 +1,11 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
-import { Link, useNavigate } from 'react-router-dom';
-import { Column, useFilters, useSortBy, useTable } from 'react-table';
-import AccessContext from 'contexts/AccessContext';
+import { useNavigate } from 'react-router-dom';
+import { useFilters, useSortBy, useTable } from 'react-table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
-import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 import { getCreateTogglePath } from 'utils/routePathHelpers';
 import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -17,6 +15,7 @@ import { FeatureLinkCell } from 'component/common/Table/cells/FeatureLinkCell/Fe
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
 import { sortTypes } from 'utils/sortTypes';
+import { IProject } from 'interfaces/project';
 import {
     Table,
     SortableTableHeader,
@@ -28,25 +27,26 @@ import {
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { useStyles } from './ProjectFeatureToggles.styles';
-import { useFeatureEnvironments } from './hooks/useFeatureEnvironments';
+import { useEnvironmentsRef } from './hooks/useEnvironmentsRef';
 import { useSetFeatureState } from './hooks/useSetFeatureState';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
 
 interface IProjectFeatureTogglesProps {
-    features: IFeatureToggleListItem[];
+    features: IProject['features'];
+    environments: IProject['environments'];
     loading: boolean;
 }
 
 type ListItemType = Pick<
-    IFeatureToggleListItem,
-    'name' | 'lastSeenAt' | 'createdAt' | 'type'
+    IProject['features'][number],
+    'name' | 'lastSeenAt' | 'createdAt' | 'type' | 'stale'
 > & {
     environments: {
         [key in string]: {
-            name: IFeatureToggleListItem['environments'][number]['name'];
-            enabled: IFeatureToggleListItem['environments'][number]['enabled'];
+            name: string;
+            enabled: boolean;
         };
     };
 };
@@ -54,12 +54,13 @@ type ListItemType = Pick<
 export const ProjectFeatureToggles = ({
     features,
     loading,
+    environments: newEnvironments = [],
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
     const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
     const { uiConfig } = useUiConfig();
-    const environments = useFeatureEnvironments(features?.[0]);
+    const environments = useEnvironmentsRef(newEnvironments);
 
     const data = useMemo<ListItemType[]>(() => {
         if (loading) {
@@ -79,12 +80,14 @@ export const ProjectFeatureToggles = ({
                 lastSeenAt,
                 createdAt,
                 type,
+                stale,
                 environments: featureEnvironments,
             }) => ({
                 name,
                 lastSeenAt,
                 createdAt,
                 type,
+                stale,
                 environments: Object.fromEntries(
                     environments.map(env => [
                         env,
