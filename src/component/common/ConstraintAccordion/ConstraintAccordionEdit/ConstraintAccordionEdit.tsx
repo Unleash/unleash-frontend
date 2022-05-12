@@ -1,18 +1,18 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classnames from 'classnames';
-import {IConstraint} from 'interfaces/strategy';
-import {useStyles} from '../ConstraintAccordion.styles';
-import {ConstraintAccordionEditBody} from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
-import {ConstraintAccordionEditHeader} from './ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
-import {Accordion, AccordionDetails, AccordionSummary} from '@mui/material';
-import {cleanConstraint} from 'utils/cleanConstraint';
+import { IConstraint } from 'interfaces/strategy';
+import { useStyles } from '../ConstraintAccordion.styles';
+import { ConstraintAccordionEditBody } from './ConstraintAccordionEditBody/ConstraintAccordionEditBody';
+import { ConstraintAccordionEditHeader } from './ConstraintAccordionEditHeader/ConstraintAccordionEditHeader';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { cleanConstraint } from 'utils/cleanConstraint';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
-import {formatUnknownError} from 'utils/formatUnknownError';
-import {IUnleashContextDefinition} from 'interfaces/context';
-import {useConstraintInput} from './ConstraintAccordionEditBody/useConstraintInput/useConstraintInput';
-import {ResolveInput} from './ConstraintAccordionEditBody/ResolveInput/ResolveInput';
-import {ConstraintSchemaOperatorEnum} from "../../../../openapi";
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { IUnleashContextDefinition } from 'interfaces/context';
+import { useConstraintInput } from './ConstraintAccordionEditBody/useConstraintInput/useConstraintInput';
+import { ResolveInput } from './ConstraintAccordionEditBody/ResolveInput/ResolveInput';
+import { ConstraintSchemaOperatorEnum } from '../../../../openapi';
 
 interface IConstraintAccordionEditProps {
     constraint: IConstraint;
@@ -83,14 +83,17 @@ export const ConstraintAccordionEdit = ({
         }));
     }, []);
 
-    const setOperator = useCallback((operator: ConstraintSchemaOperatorEnum) => {
-        setLocalConstraint(prev => ({
-            ...prev,
-            operator,
-            values: [],
-            value: '',
-        }));
-    }, []);
+    const setOperator = useCallback(
+        (operator: ConstraintSchemaOperatorEnum) => {
+            setLocalConstraint(prev => ({
+                ...prev,
+                operator,
+                values: [],
+                value: '',
+            }));
+        },
+        []
+    );
 
     const setValues = useCallback((values: string[]) => {
         setLocalConstraint(prev => ({

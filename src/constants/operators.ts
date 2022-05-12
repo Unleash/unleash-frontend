@@ -1,4 +1,4 @@
-import {ConstraintSchemaOperatorEnum} from "../openapi";
+import { ConstraintSchemaOperatorEnum } from '../openapi';
 
 export const stringOperators: ConstraintSchemaOperatorEnum[] = [
     ConstraintSchemaOperatorEnum.StrContains,
@@ -6,7 +6,10 @@ export const stringOperators: ConstraintSchemaOperatorEnum[] = [
     ConstraintSchemaOperatorEnum.StrEndsWith,
 ];
 
-export const inOperators: ConstraintSchemaOperatorEnum[] = [ConstraintSchemaOperatorEnum.In, ConstraintSchemaOperatorEnum.NotIn];
+export const inOperators: ConstraintSchemaOperatorEnum[] = [
+    ConstraintSchemaOperatorEnum.In,
+    ConstraintSchemaOperatorEnum.NotIn,
+];
 
 export const numOperators: ConstraintSchemaOperatorEnum[] = [
     ConstraintSchemaOperatorEnum.NumEq,
@@ -16,9 +19,16 @@ export const numOperators: ConstraintSchemaOperatorEnum[] = [
     ConstraintSchemaOperatorEnum.NumLte,
 ];
 
-export const dateOperators: ConstraintSchemaOperatorEnum[] = [ConstraintSchemaOperatorEnum.DateBefore, ConstraintSchemaOperatorEnum.DateAfter];
+export const dateOperators: ConstraintSchemaOperatorEnum[] = [
+    ConstraintSchemaOperatorEnum.DateBefore,
+    ConstraintSchemaOperatorEnum.DateAfter,
+];
 
-export const semVerOperators: ConstraintSchemaOperatorEnum[] = [ConstraintSchemaOperatorEnum.SemverEq, ConstraintSchemaOperatorEnum.SemverGt, ConstraintSchemaOperatorEnum.SemverLt];
+export const semVerOperators: ConstraintSchemaOperatorEnum[] = [
+    ConstraintSchemaOperatorEnum.SemverEq,
+    ConstraintSchemaOperatorEnum.SemverGt,
+    ConstraintSchemaOperatorEnum.SemverLt,
+];
 
 export const singleValueOperators: ConstraintSchemaOperatorEnum[] = [
     ...semVerOperators,
@@ -40,5 +50,5 @@ export const newOperators: ConstraintSchemaOperatorEnum[] = [
 export const allOperators: ConstraintSchemaOperatorEnum[] = [
     ...singleValueOperators,
     ...multipleValueOperators,
-    ...newOperators
-]
+    ...newOperators,
+];

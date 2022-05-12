@@ -1,8 +1,12 @@
-import {act, renderHook} from '@testing-library/react-hooks';
-import {useFeaturesFilter} from 'hooks/useFeaturesFilter';
-import {ConstraintSchemaOperatorEnum, FeatureSchema, FeatureStrategySchema} from 'openapi';
+import { act, renderHook } from '@testing-library/react-hooks';
+import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
+import {
+    ConstraintSchemaOperatorEnum,
+    FeatureSchema,
+    FeatureStrategySchema,
+} from 'openapi';
 import parseISO from 'date-fns/parseISO';
-import {IConstraint} from 'interfaces/strategy';
+import { IConstraint } from 'interfaces/strategy';
 
 test('useFeaturesFilter empty', () => {
     const { result } = renderHook(() => useFeaturesFilter([]));

@@ -1,6 +1,5 @@
-import { IFeatureStrategyPayload, IFeatureStrategy } from 'interfaces/strategy';
+import {IFeatureStrategy, IFeatureStrategyPayload} from 'interfaces/strategy';
 import useAPI from '../useApi/useApi';
-import {openApiAdmin} from "../../../../utils/openapiClient";
 
 const useFeatureStrategyApi = () => {
     const { makeRequest, createRequest, errors, loading } = useAPI({

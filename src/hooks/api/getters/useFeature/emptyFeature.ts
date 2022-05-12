@@ -1,4 +1,4 @@
-import {FeatureSchema} from "../../../../openapi";
+import { FeatureSchema } from '../../../../openapi';
 
 export const emptyFeature: FeatureSchema = {
     environments: [],

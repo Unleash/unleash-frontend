@@ -55,7 +55,7 @@ const useFeatureApi = () => {
         return openApiAdmin.toggleEnvironmentOn({
             projectId,
             featureName,
-            environment
+            environment,
         });
     };
 
@@ -67,7 +67,7 @@ const useFeatureApi = () => {
         return openApiAdmin.toggleEnvironmentOff({
             projectId,
             featureName,
-            environment
+            environment,
         });
     };
 
@@ -94,7 +94,7 @@ const useFeatureApi = () => {
     const addTagToFeature = async (featureId: string, tag: ITag) => {
         return openApiAdmin.addTag({
             featureName: featureId,
-            tagSchema: tag
+            tagSchema: tag,
         });
     };
 
@@ -106,7 +106,7 @@ const useFeatureApi = () => {
         return openApiAdmin.removeTag({
             featureName: featureId,
             type,
-            value
+            value,
         });
     };
 
@@ -136,7 +136,7 @@ const useFeatureApi = () => {
         return openApiAdmin.patchFeature({
             featureName,
             projectId,
-            patchOperationSchema: patchPayload
+            patchOperationSchema: patchPayload,
         });
     };
 
@@ -167,7 +167,7 @@ const useFeatureApi = () => {
         return openApiAdmin.cloneFeature({
             projectId,
             featureName,
-            cloneFeatureSchema: payload
+            cloneFeatureSchema: payload,
         });
     };
 

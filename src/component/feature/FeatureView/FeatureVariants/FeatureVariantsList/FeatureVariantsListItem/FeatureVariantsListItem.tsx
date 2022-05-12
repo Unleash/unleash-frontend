@@ -31,8 +31,8 @@ const FeatureVariantListItem = ({
                 />
                 <ConditionallyRender
                     condition={Boolean(
-                        variant.overrides && variant.overrides.length > 0)
-                    }
+                        variant.overrides && variant.overrides.length > 0
+                    )}
                     show={
                         <Chip
                             style={{

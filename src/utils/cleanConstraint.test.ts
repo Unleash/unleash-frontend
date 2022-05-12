@@ -1,11 +1,11 @@
-import {cleanConstraint} from 'utils/cleanConstraint';
-import {ConstraintSchemaOperatorEnum} from "../openapi";
+import { cleanConstraint } from 'utils/cleanConstraint';
+import { ConstraintSchemaOperatorEnum } from '../openapi';
 
 test('cleanConstraint values', () => {
     expect(
         cleanConstraint({
             contextName: '',
-            operator:  ConstraintSchemaOperatorEnum.In,
+            operator: ConstraintSchemaOperatorEnum.In,
             value: '1',
             values: ['2'],
         })

@@ -1,6 +1,9 @@
-import {ConstraintSchemaOperatorEnum} from "../../../../../openapi";
+import { ConstraintSchemaOperatorEnum } from '../../../../../openapi';
 
-export const resolveText = (operator: ConstraintSchemaOperatorEnum, contextName: string) => {
+export const resolveText = (
+    operator: ConstraintSchemaOperatorEnum,
+    contextName: string
+) => {
     const base = `To satisfy this constraint, values passed into the SDK as ${contextName} must`;
 
     if (operator === ConstraintSchemaOperatorEnum.In) {

@@ -32,7 +32,8 @@ const FeatureSettingsProjectConfirm = ({
     }, [projectId, project.name]);
 
     const calculateCompatability = () => {
-        const featureEnvWithStrategies = feature.environments?.filter((env: IFeatureEnvironment) => {
+        const featureEnvWithStrategies = feature.environments
+            ?.filter((env: IFeatureEnvironment) => {
                 return env.strategies.length > 0;
             })
             .map((env: IFeatureEnvironment) => env.name);

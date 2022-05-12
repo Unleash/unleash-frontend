@@ -1,10 +1,10 @@
-import useSWR, {SWRConfiguration} from 'swr';
-import {useCallback} from 'react';
-import {emptyFeature} from './emptyFeature';
+import useSWR, { SWRConfiguration } from 'swr';
+import { useCallback } from 'react';
+import { emptyFeature } from './emptyFeature';
 import handleErrorResponses from '../httpErrorResponseHandler';
-import {formatApiPath} from 'utils/formatPath';
-import {openApiAdmin} from "../../../../utils/openapiClient";
-import {FeatureSchema} from "../../../../openapi";
+import { formatApiPath } from 'utils/formatPath';
+import { openApiAdmin } from '../../../../utils/openapiClient';
+import { FeatureSchema } from '../../../../openapi';
 
 export interface IUseFeatureOutput {
     feature: FeatureSchema;
@@ -24,7 +24,6 @@ export const useFeature = (
     featureId: string,
     options?: SWRConfiguration
 ): IUseFeatureOutput => {
-
     const { data, error, mutate } = useSWR<IFeatureResponse>(
         ['useFeature'],
         () => featureFetcher(projectId, featureId),
@@ -44,8 +43,14 @@ export const useFeature = (
     };
 };
 
-export const featureFetcher = async (projectId: string, featureId: string): Promise<IFeatureResponse> => {
-    const {raw, value} = await openApiAdmin.getFeatureRaw({projectId, featureName: featureId});
+export const featureFetcher = async (
+    projectId: string,
+    featureId: string
+): Promise<IFeatureResponse> => {
+    const { raw, value } = await openApiAdmin.getFeatureRaw({
+        projectId,
+        featureName: featureId,
+    });
 
     if (raw.status === 404) {
         return { status: 404 };

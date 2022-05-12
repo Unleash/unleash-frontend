@@ -1,28 +1,38 @@
-import {Tab, Tabs, useMediaQuery} from '@mui/material';
-import React, {useState} from 'react';
-import {Archive, FileCopy, Label, WatchLater} from '@mui/icons-material';
-import {Link, Route, Routes, useLocation, useNavigate,} from 'react-router-dom';
+import { Tab, Tabs, useMediaQuery } from '@mui/material';
+import React, { useState } from 'react';
+import { Archive, FileCopy, Label, WatchLater } from '@mui/icons-material';
+import {
+    Link,
+    Route,
+    Routes,
+    useLocation,
+    useNavigate,
+} from 'react-router-dom';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
-import {useFeature} from 'hooks/api/getters/useFeature/useFeature';
+import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import useToast from 'hooks/useToast';
-import {CREATE_FEATURE, DELETE_FEATURE, UPDATE_FEATURE,} from 'component/providers/AccessProvider/permissions';
-import {Dialogue} from 'component/common/Dialogue/Dialogue';
+import {
+    CREATE_FEATURE,
+    DELETE_FEATURE,
+    UPDATE_FEATURE,
+} from 'component/providers/AccessProvider/permissions';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import FeatureLog from './FeatureLog/FeatureLog';
 import FeatureOverview from './FeatureOverview/FeatureOverview';
 import FeatureVariants from './FeatureVariants/FeatureVariants';
-import {FeatureMetrics} from './FeatureMetrics/FeatureMetrics';
-import {useStyles} from './FeatureView.styles';
-import {FeatureSettings} from './FeatureSettings/FeatureSettings';
+import { FeatureMetrics } from './FeatureMetrics/FeatureMetrics';
+import { useStyles } from './FeatureView.styles';
+import { FeatureSettings } from './FeatureSettings/FeatureSettings';
 import useLoading from 'hooks/useLoading';
-import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import StaleDialog from './FeatureOverview/StaleDialog/StaleDialog';
 import AddTagDialog from './FeatureOverview/AddTagDialog/AddTagDialog';
 import StatusChip from 'component/common/StatusChip/StatusChip';
-import {formatUnknownError} from 'utils/formatUnknownError';
-import {FeatureNotFound} from 'component/feature/FeatureView/FeatureNotFound/FeatureNotFound';
-import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { FeatureNotFound } from 'component/feature/FeatureView/FeatureNotFound/FeatureNotFound';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 export const FeatureView = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -90,7 +100,7 @@ export const FeatureView = () => {
     const activeTab = tabData.find(tab => tab.path === pathname) ?? tabData[0];
 
     const renderTabs = () => {
-        return tabData.map((tab) => {
+        return tabData.map(tab => {
             return (
                 <Tab
                     data-loading
@@ -124,7 +134,11 @@ export const FeatureView = () => {
                                 </h1>
                                 <ConditionallyRender
                                     condition={!smallScreen}
-                                    show={<StatusChip stale={Boolean(feature?.stale)} />}
+                                    show={
+                                        <StatusChip
+                                            stale={Boolean(feature?.stale)}
+                                        />
+                                    }
                                 />
                             </div>
 

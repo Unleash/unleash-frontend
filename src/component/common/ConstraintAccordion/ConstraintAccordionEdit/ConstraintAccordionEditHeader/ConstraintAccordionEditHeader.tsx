@@ -1,22 +1,23 @@
-import {IConstraint} from 'interfaces/strategy';
+import { IConstraint } from 'interfaces/strategy';
 
-import {useStyles} from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
+import { useStyles } from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
-import {ConstraintIcon} from 'component/common/ConstraintAccordion/ConstraintIcon';
-import {Help} from '@mui/icons-material';
-import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
-import {dateOperators} from 'constants/operators';
-import {SAVE} from '../ConstraintAccordionEdit';
-import {resolveText} from './helpers';
-import {oneOf} from 'utils/oneOf';
-import React, {useEffect} from 'react';
+import { ConstraintIcon } from 'component/common/ConstraintAccordion/ConstraintIcon';
+import { Help } from '@mui/icons-material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { dateOperators } from 'constants/operators';
+import { SAVE } from '../ConstraintAccordionEdit';
+import { resolveText } from './helpers';
+import { oneOf } from 'utils/oneOf';
+import React, { useEffect } from 'react';
+import { ConstraintOperatorSelect } from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect';
 import {
-    ConstraintOperatorSelect
-} from 'component/common/ConstraintAccordion/ConstraintOperatorSelect/ConstraintOperatorSelect';
-import {CURRENT_TIME_CONTEXT_FIELD, operatorsForContext,} from 'utils/operatorsForContext';
-import {Tooltip} from '@mui/material';
-import {ConstraintSchemaOperatorEnum} from "../../../../../openapi";
+    CURRENT_TIME_CONTEXT_FIELD,
+    operatorsForContext,
+} from 'utils/operatorsForContext';
+import { Tooltip } from '@mui/material';
+import { ConstraintSchemaOperatorEnum } from '../../../../../openapi';
 
 interface IConstraintAccordionViewHeader {
     localConstraint: IConstraint;

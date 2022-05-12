@@ -1,4 +1,4 @@
-import {ConstraintSchemaOperatorEnum} from "../openapi";
+import { ConstraintSchemaOperatorEnum } from '../openapi';
 
 export interface IFeatureStrategy {
     id?: string;

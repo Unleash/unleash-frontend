@@ -15,7 +15,7 @@ import { modalStyles, trim } from 'component/common/util';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import {IFeatureVariant, IPayload} from 'interfaces/featureToggle';
+import { IFeatureVariant, IPayload } from 'interfaces/featureToggle';
 import cloneDeep from 'lodash.clonedeep';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import { useStyles } from './AddFeatureVariant.styles';
@@ -25,7 +25,7 @@ import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashCon
 import { HelpIcon } from 'component/common/HelpIcon/HelpIcon';
 import { useOverrides } from './useOverrides';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import {VariantSchema} from "../../../../../../openapi";
+import { VariantSchema } from '../../../../../../openapi';
 
 const payloadOptions = [
     { key: 'string', label: 'string' },

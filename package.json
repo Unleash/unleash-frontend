@@ -32,6 +32,7 @@
     "test": "vitest",
     "prepare": "yarn run build",
     "fmt": "prettier src --write --loglevel warn",
+    "fmt:fix": "yarn fmt --write",
     "fmt:check": "prettier src --check",
     "e2e": "yarn run cypress open --config baseUrl='http://localhost:3000' --env AUTH_USER=admin,AUTH_PASSWORD=unleash4all",
     "e2e:heroku": "yarn run cypress open --config baseUrl='http://localhost:3000' --env AUTH_USER=example@example.com"

@@ -1,16 +1,16 @@
-import {useContext, useEffect, useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as jsonpatch from 'fast-json-patch';
-import {TextField} from '@mui/material';
+import { TextField } from '@mui/material';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import FeatureTypeSelect from './FeatureTypeSelect/FeatureTypeSelect';
 import AccessContext from 'contexts/AccessContext';
-import {UPDATE_FEATURE} from 'component/providers/AccessProvider/permissions';
-import {useFeature} from 'hooks/api/getters/useFeature/useFeature';
+import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
+import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useToast from 'hooks/useToast';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
-import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
-import {formatUnknownError} from 'utils/formatUnknownError';
-import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 
 const FeatureSettingsMetadata = () => {
     const { hasAccess } = useContext(AccessContext);
