@@ -1,4 +1,4 @@
-import React, {
+import {
     FC,
     MouseEventHandler,
     useContext,
@@ -7,7 +7,6 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { HeaderGroup } from 'react-table';
 import { TableCell, Tooltip } from '@mui/material';
 import classnames from 'classnames';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -87,7 +86,7 @@ export const CellSortable: FC<ICellSortableProps> = ({
         };
 
         updateTitle();
-    }, [ref.current, setTitle, ariaTitle]);
+    }, [ref.current, setTitle, ariaTitle]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <TableCell

@@ -8,7 +8,10 @@ export const useStyles = makeStyles()(theme => ({
     sortable: {
         padding: 0,
         '&:hover, &:focus': {
-            backgroundColor: theme.palette.grey[400],
+            backgroundColor: theme.palette.tableHeaderHover,
+            '& svg': {
+                color: 'inherit',
+            },
         },
     },
     sortButton: {

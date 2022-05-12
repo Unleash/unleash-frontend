@@ -22,7 +22,7 @@ export const SortableTableHeader: VFC<ISortableTableHeaderProps> = ({
                     {...headerGroup.getHeaderGroupProps()}
                     className={styles.tableHeader}
                 >
-                    {headerGroup.headers.map(column => {
+                    {headerGroup.headers.map((column: HeaderGroup) => {
                         const content = column.render('Header');
 
                         return (
