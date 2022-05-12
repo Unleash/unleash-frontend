@@ -13,7 +13,7 @@ type IPermissionHOCProps = Omit<TooltipProps, 'children' | 'title'> & {
     children: ({ hasAccess }: { hasAccess?: boolean }) => ReactElement;
 };
 
-const PermissionHOC: FC<IPermissionHOCProps> = ({
+export const PermissionHOC: FC<IPermissionHOCProps> = ({
     permission,
     projectId,
     children,
@@ -38,5 +38,3 @@ const PermissionHOC: FC<IPermissionHOCProps> = ({
         </TooltipResolver>
     );
 };
-
-export default PermissionHOC;

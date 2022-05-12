@@ -12,7 +12,7 @@ import {
     IProjectAccessOutput,
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { ProjectRoleSelect } from 'component/project/ProjectAccess/ProjectRoleSelect/ProjectRoleSelect';
 import { useStyles } from '../ProjectAccessListItem/ProjectAccessListItem.styles';
@@ -61,17 +61,17 @@ export const ProjectAccessListItem = ({
                         Choose role
                     </MenuItem>
                 </ProjectRoleSelect>
-                <PermissionHOC
+                <PermissionIconButton
                     permission={UPDATE_PROJECT}
                     projectId={projectId}
                     className={styles.iconButton}
                     edge="end"
                     onClick={() => handleRemoveAccess(user)}
                     disabled={access.users.length === 1}
-                    tooltip="Remove access"
+                    tooltipProps={{ title: 'Remove access' }}
                 >
                     <Delete />
-                </PermissionHOC>
+                </PermissionIconButton>
             </ListItemSecondaryAction>
         </ListItem>
     );

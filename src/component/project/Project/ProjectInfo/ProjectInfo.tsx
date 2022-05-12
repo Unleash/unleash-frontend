@@ -7,7 +7,7 @@ import { Edit, ExpandMore } from '@mui/icons-material';
 import { useThemeStyles } from 'themes/themeStyles';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     Accordion,
@@ -50,17 +50,17 @@ const ProjectInfo = ({
     });
     const permissionButton = (
         <div>
-            <PermissionHOC
+            <PermissionIconButton
                 permission={UPDATE_PROJECT}
                 projectId={id}
                 component={Link}
                 className={permissionButtonClass}
                 data-loading
                 to={`/projects/${id}/edit`}
-                tooltip="Edit description"
+                tooltipProps={{ title: 'Edit description' }}
             >
                 <Edit />
-            </PermissionHOC>
+            </PermissionIconButton>
         </div>
     );
 

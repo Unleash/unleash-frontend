@@ -14,7 +14,7 @@ import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import { ProjectFeaturesArchive } from './ProjectFeaturesArchive/ProjectFeaturesArchive';
 import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { TabPanel } from 'component/common/TabNav/TabPanel/TabPanel';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
@@ -122,17 +122,17 @@ const Project = () => {
                         style={{ margin: 0 }}
                     >
                         <div className={styles.titleText}>{project?.name}</div>
-                        <PermissionHOC
+                        <PermissionIconButton
                             permission={UPDATE_PROJECT}
                             projectId={project?.id}
                             onClick={() =>
                                 navigate(`/projects/${projectId}/edit`)
                             }
-                            tooltip="Edit project"
+                            tooltipProps={{ title: 'Edit project' }}
                             data-loading
                         >
                             <Edit />
-                        </PermissionHOC>
+                        </PermissionIconButton>
                     </h2>
                 </div>
                 <ConditionallyRender

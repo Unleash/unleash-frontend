@@ -16,7 +16,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import { useStyles } from './ActionsCell.styles';
-import PermissionHOC from 'component/common/PermissionHOC/PermissionHOC';
+import { PermissionHOC } from 'component/common/PermissionHOC/PermissionHOC';
 import {
     CREATE_FEATURE,
     DELETE_FEATURE,

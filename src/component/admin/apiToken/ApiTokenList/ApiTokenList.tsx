@@ -191,7 +191,7 @@ export const ApiTokenList = () => {
                                     </Box>
                                 </TableCell>
                                 <TableCell className={styles.actionsContainer}>
-                                    <Tooltip title="Copy token">
+                                    <Tooltip title="Copy token" arrow>
                                         <IconButton
                                             onClick={() => {
                                                 copyToken(item.secret);
@@ -204,7 +204,7 @@ export const ApiTokenList = () => {
                                     <ConditionallyRender
                                         condition={hasAccess(DELETE_API_TOKEN)}
                                         show={
-                                            <Tooltip title="Delete token">
+                                            <Tooltip title="Delete token" arrow>
                                                 <IconButton
                                                     onClick={() => {
                                                         setDeleteToken(item);

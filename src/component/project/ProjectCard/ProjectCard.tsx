@@ -2,14 +2,14 @@ import { Card, Menu, MenuItem } from '@mui/material';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ReactComponent as ProjectIcon } from 'assets/icons/projectIcon.svg';
-import { useState } from 'react';
+import { useState, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@mui/icons-material';
 import { getProjectEditPath } from 'utils/routePathHelpers';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import useToast from 'hooks/useToast';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { formatUnknownError } from 'utils/formatUnknownError';
@@ -67,25 +67,24 @@ export const ProjectCard = ({
             <div className={classes.header} data-loading>
                 <h2 className={classes.title}>{name}</h2>
 
-                <PermissionHOC
+                <PermissionIconButton
                     permission={UPDATE_PROJECT}
                     projectId={id}
                     className={classes.actionsBtn}
                     data-loading
                     onClick={handleClick}
-                    tooltip="Options"
+                    tooltipProps={{ title: 'Options' }}
                 >
                     <MoreVertIcon />
-                </PermissionHOC>
+                </PermissionIconButton>
 
                 <Menu
                     id="project-card-menu"
                     open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
-                    style={{ top: '40px', left: '-60px' }}
-                    onClose={e => {
-                        // @ts-expect-error
-                        e.preventDefault();
+                    style={{ top: 0, left: -100 }}
+                    onClose={(event: SyntheticEvent) => {
+                        event.preventDefault();
                         setAnchorEl(null);
                     }}
                 >

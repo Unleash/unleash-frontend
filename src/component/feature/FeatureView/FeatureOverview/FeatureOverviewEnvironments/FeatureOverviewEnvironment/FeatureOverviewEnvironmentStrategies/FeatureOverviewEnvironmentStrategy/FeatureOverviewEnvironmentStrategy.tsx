@@ -6,7 +6,7 @@ import {
     getFeatureStrategyIcon,
     formatStrategyName,
 } from 'utils/strategyNames';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import FeatureOverviewExecution from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewExecution/FeatureOverviewExecution';
 import { useStyles } from './FeatureOverviewEnvironmentStrategy.styles';
@@ -48,16 +48,16 @@ const FeatureOverviewEnvironmentStrategy = ({
                     text={formatStrategyName(strategy.name)}
                 />
                 <div className={styles.actions}>
-                    <PermissionHOC
+                    <PermissionIconButton
                         permission={UPDATE_FEATURE_STRATEGY}
                         environmentId={environmentId}
                         projectId={projectId}
                         component={Link}
                         to={editStrategyPath}
-                        tooltip="Edit strategy"
+                        tooltipProps={{ title: 'Edit strategy' }}
                     >
                         <Edit />
-                    </PermissionHOC>
+                    </PermissionIconButton>
                     <FeatureStrategyRemove
                         projectId={projectId}
                         featureId={featureId}

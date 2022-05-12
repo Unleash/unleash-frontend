@@ -7,7 +7,7 @@ import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { StrategyDetails } from './StrategyDetails/StrategyDetails';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Edit } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
@@ -40,14 +40,14 @@ export const StrategyView = () => {
                         <ConditionallyRender
                             condition={strategy.editable}
                             show={
-                                <PermissionHOC
+                                <PermissionIconButton
                                     permission={UPDATE_STRATEGY}
                                     data-loading
                                     onClick={handleEdit}
-                                    tooltip="Edit strategy"
+                                    tooltipProps={{ title: 'Edit strategy' }}
                                 >
                                     <Edit />
-                                </PermissionHOC>
+                                </PermissionIconButton>
                             }
                         />
                     }

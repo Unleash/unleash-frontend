@@ -5,7 +5,7 @@ import {
     UPDATE_SEGMENT,
     DELETE_SEGMENT,
 } from 'component/providers/AccessProvider/permissions';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import TimeAgo from 'react-timeago';
 import { ISegment } from 'interfaces/segment';
 import { useNavigate } from 'react-router-dom';
@@ -60,17 +60,17 @@ export const SegmentListItem = ({
             </TableCell>
 
             <TableCell align="right">
-                <PermissionHOC
+                <PermissionIconButton
                     data-loading
                     onClick={() => {
                         navigate(`/segments/edit/${id}`);
                     }}
                     permission={UPDATE_SEGMENT}
-                    tooltip="Edit segment"
+                    tooltipProps={{ title: 'Edit segment' }}
                 >
                     <Edit />
-                </PermissionHOC>
-                <PermissionHOC
+                </PermissionIconButton>
+                <PermissionIconButton
                     data-loading
                     onClick={() => {
                         setCurrentSegment({
@@ -84,11 +84,11 @@ export const SegmentListItem = ({
                         setDelDialog(true);
                     }}
                     permission={DELETE_SEGMENT}
-                    tooltip="Remove segment"
+                    tooltipProps={{ title: 'Remove segment' }}
                     data-testid={`${SEGMENT_DELETE_BTN_ID}_${name}`}
                 >
                     <Delete />
-                </PermissionHOC>
+                </PermissionIconButton>
             </TableCell>
         </TableRow>
     );

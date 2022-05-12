@@ -19,7 +19,7 @@ import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import { ReactElement, useContext, useState } from 'react';
 import AccessContext from 'contexts/AccessContext';
 import { IAddon } from 'interfaces/addons';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
@@ -110,34 +110,34 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 secondary={addon.description}
             />
             <ListItemSecondaryAction>
-                <PermissionHOC
+                <PermissionIconButton
                     permission={UPDATE_ADDON}
                     onClick={() => toggleAddon(addon)}
-                    tooltip="Toggle addon"
+                    tooltipProps={{ title: 'Toggle addon' }}
                 >
                     <ConditionallyRender
                         condition={addon.enabled}
                         show={<Visibility />}
                         elseShow={<VisibilityOff />}
                     />
-                </PermissionHOC>
-                <PermissionHOC
+                </PermissionIconButton>
+                <PermissionIconButton
                     permission={UPDATE_ADDON}
-                    tooltip="Edit Addon"
+                    tooltipProps={{ title: 'Edit Addon' }}
                     onClick={() => navigate(`/addons/edit/${addon.id}`)}
                 >
                     <Edit />
-                </PermissionHOC>
-                <PermissionHOC
+                </PermissionIconButton>
+                <PermissionIconButton
                     permission={DELETE_ADDON}
-                    tooltip="Remove Addon"
+                    tooltipProps={{ title: 'Remove Addon' }}
                     onClick={() => {
                         setDeletedAddon(addon);
                         setShowDelete(true);
                     }}
                 >
                     <Delete />
-                </PermissionHOC>
+                </PermissionIconButton>
             </ListItemSecondaryAction>
         </ListItem>
     );

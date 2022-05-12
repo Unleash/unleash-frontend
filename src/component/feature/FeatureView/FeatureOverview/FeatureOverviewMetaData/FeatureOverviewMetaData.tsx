@@ -6,7 +6,7 @@ import { getFeatureTypeIcons } from 'utils/getFeatureTypeIcons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureOverviewMetadata.styles';
 import { Edit } from '@mui/icons-material';
-import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import useTags from 'hooks/api/getters/useTags/useTags';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
@@ -43,17 +43,17 @@ const FeatureOverviewMetaData = () => {
                                 <div>Description:</div>
                                 <div className={styles.descriptionContainer}>
                                     <p>{description}</p>
-                                    <PermissionHOC
+                                    <PermissionIconButton
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
                                         to={`/projects/${projectId}/features/${featureId}/settings`}
+                                        tooltipProps={{
+                                            title: 'Edit description',
+                                        }}
                                     >
-                                        <Edit
-                                            className={styles.editIcon}
-                                            titleAccess="Settings"
-                                        />
-                                    </PermissionHOC>
+                                        <Edit className={styles.editIcon} />
+                                    </PermissionIconButton>
                                 </div>
                             </span>
                         }
@@ -61,15 +61,17 @@ const FeatureOverviewMetaData = () => {
                             <span data-loading>
                                 <div className={styles.descriptionContainer}>
                                     No description.{' '}
-                                    <PermissionHOC
+                                    <PermissionIconButton
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
                                         to={`/projects/${projectId}/features/${featureId}/settings`}
-                                        tooltip="Edit description"
+                                        tooltipProps={{
+                                            title: 'Edit description',
+                                        }}
                                     >
                                         <Edit className={styles.editIcon} />
-                                    </PermissionHOC>
+                                    </PermissionIconButton>
                                 </div>
                             </span>
                         }

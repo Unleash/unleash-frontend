@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionButton from '../PermissionButton/PermissionButton';
-import PermissionHOC from '../PermissionIconButton/PermissionIconButton';
+import PermissionIconButton from '../PermissionIconButton/PermissionIconButton';
 import React from 'react';
 
 interface IResponsiveButtonProps {
@@ -32,7 +32,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
         <ConditionallyRender
             condition={smallScreen}
             show={
-                <PermissionHOC
+                <PermissionIconButton
                     disabled={disabled}
                     onClick={onClick}
                     permission={permission}
@@ -42,7 +42,7 @@ const ResponsiveButton: React.FC<IResponsiveButtonProps> = ({
                     {...rest}
                 >
                     <Icon />
-                </PermissionHOC>
+                </PermissionIconButton>
             }
             elseShow={
                 <PermissionButton
