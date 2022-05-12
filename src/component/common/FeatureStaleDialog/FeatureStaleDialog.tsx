@@ -2,7 +2,6 @@ import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { DialogContentText } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
-import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import React from 'react';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
@@ -24,7 +23,6 @@ export const FeatureStaleDialog = ({
 }: IFeatureStaleDialogProps) => {
     const { setToastData, setToastApiError } = useToast();
     const { patchFeatureToggle } = useFeatureApi();
-    const { refetchFeature } = useFeature(projectId, featureId);
 
     const toggleToStaleContent = (
         <DialogContentText>
@@ -45,7 +43,6 @@ export const FeatureStaleDialog = ({
         try {
             const patch = [{ op: 'replace', path: '/stale', value: !isStale }];
             await patchFeatureToggle(projectId, featureId, patch);
-            refetchFeature();
             onClose();
         } catch (err: unknown) {
             setToastApiError(formatUnknownError(err));

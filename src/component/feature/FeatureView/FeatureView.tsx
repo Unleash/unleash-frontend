@@ -35,6 +35,7 @@ export const FeatureView = () => {
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const { refetch: projectRefetch } = useProject(projectId);
+    const { refetchFeature } = useFeature(projectId, featureId);
 
     const [openTagDialog, setOpenTagDialog] = useState(false);
     const [showDelDialog, setShowDelDialog] = useState(false);
@@ -192,7 +193,10 @@ export const FeatureView = () => {
                     <FeatureStaleDialog
                         isStale={feature.stale}
                         isOpen={openStaleDialog}
-                        onClose={() => setOpenStaleDialog(false)}
+                        onClose={() => {
+                            setOpenStaleDialog(false);
+                            refetchFeature();
+                        }}
                         featureId={featureId}
                         projectId={projectId}
                     />

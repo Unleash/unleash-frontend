@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useFilters, useSortBy, useTable } from 'react-table';
@@ -114,7 +114,7 @@ export const ProjectFeatureToggles = ({
                 ),
             })
         );
-    }, [features, loading]);
+    }, [features, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const { setFeatureState } = useSetFeatureState();
     const onToggle = useCallback(
@@ -152,7 +152,7 @@ export const ProjectFeatureToggles = ({
             });
             refetch();
         },
-        [setFeatureState]
+        [setFeatureState] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const columns = useMemo(
