@@ -63,6 +63,7 @@ const FeatureSettingsProject = () => {
             <PermissionButton
                 permission={MOVE_FEATURE_TOGGLE}
                 onClick={() => setShowConfirmDialog(true)}
+                disabled={project === projectId}
                 projectId={projectId}
             >
                 Save
