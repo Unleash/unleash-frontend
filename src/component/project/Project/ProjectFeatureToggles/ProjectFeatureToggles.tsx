@@ -15,6 +15,7 @@ import { FeatureLinkCell } from 'component/common/Table/cells/FeatureLinkCell/Fe
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
 import { sortTypes } from 'utils/sortTypes';
+import { formatUnknownError } from 'utils/formatUnknownError';
 import { IProject } from 'interfaces/project';
 import {
     Table,
@@ -26,12 +27,16 @@ import {
     TableSearch,
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { useStyles } from './ProjectFeatureToggles.styles';
+import useProject from 'hooks/api/getters/useProject/useProject';
+import useToast from 'hooks/useToast';
+import { ENVIRONMENT_STRATEGY_ERROR } from 'constants/apiErrors';
+import EnvironmentStrategyDialog from 'component/common/EnvironmentStrategiesDialog/EnvironmentStrategyDialog';
 import { useEnvironmentsRef } from './hooks/useEnvironmentsRef';
 import { useSetFeatureState } from './hooks/useSetFeatureState';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
+import { useStyles } from './ProjectFeatureToggles.styles';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -57,10 +62,17 @@ export const ProjectFeatureToggles = ({
     environments: newEnvironments = [],
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
+    const [strategiesDialogState, setStrategiesDialogState] = useState({
+        open: false,
+        featureId: '',
+        environmentName: '',
+    });
     const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
     const { uiConfig } = useUiConfig();
     const environments = useEnvironmentsRef(newEnvironments);
+    const { refetch } = useProject(projectId);
+    const { setToastData, setToastApiError } = useToast();
 
     const data = useMemo<ListItemType[]>(() => {
         if (loading) {
@@ -104,7 +116,7 @@ export const ProjectFeatureToggles = ({
         );
     }, [features, loading]);
 
-    const { setFeatureState, errors } = useSetFeatureState();
+    const { setFeatureState } = useSetFeatureState();
     const onToggle = useCallback(
         async (
             projectId: string,
@@ -112,7 +124,33 @@ export const ProjectFeatureToggles = ({
             environment: string,
             enabled: boolean
         ) => {
-            await setFeatureState(projectId, featureName, environment, enabled);
+            try {
+                await setFeatureState(
+                    projectId,
+                    featureName,
+                    environment,
+                    enabled
+                );
+            } catch (error) {
+                const message = formatUnknownError(error);
+                if (message === ENVIRONMENT_STRATEGY_ERROR) {
+                    setStrategiesDialogState({
+                        open: true,
+                        featureId: featureName,
+                        environmentName: environment,
+                    });
+                } else {
+                    setToastApiError(message);
+                }
+                throw error; // caught when reverting optimistic update
+            }
+
+            setToastData({
+                type: 'success',
+                title: 'Updated toggle status',
+                text: 'Successfully updated toggle status.',
+            });
+            refetch();
         },
         [setFeatureState]
     );
@@ -194,7 +232,7 @@ export const ProjectFeatureToggles = ({
                 disableSortBy: true,
             },
         ],
-        [projectId, environments]
+        [projectId, environments, onToggle]
     );
 
     const initialState = useMemo(
@@ -224,6 +262,7 @@ export const ProjectFeatureToggles = ({
             sortTypes,
             autoResetGlobalFilter: false,
             disableSortRemove: true,
+            autoResetSortBy: false,
         },
         useFilters,
         useSortBy
@@ -315,6 +354,13 @@ export const ProjectFeatureToggles = ({
                         }
                     />
                 }
+            />
+            <EnvironmentStrategyDialog
+                onClose={() =>
+                    setStrategiesDialogState(prev => ({ ...prev, open: false }))
+                }
+                projectId={projectId}
+                {...strategiesDialogState}
             />
         </PageContent>
     );
