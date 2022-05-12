@@ -176,9 +176,8 @@ export const ActionsCell: VFC<IActionsCellProps> = ({ projectId, row }) => {
                 isOpen={openArchiveDialog}
                 onConfirm={() => {
                     refetch();
-                    setOpenArchiveDialog(false);
                 }}
-                onAbort={() => setOpenArchiveDialog(false)}
+                onClose={() => setOpenArchiveDialog(false)}
                 featureId={featureId}
                 projectId={projectId}
             />

@@ -1,3 +1,8 @@
+/**
+ * For `react-table`.
+ *
+ * @see https://react-table.tanstack.com/docs/api/useSortBy#table-options
+ */
 export const sortTypes = {
     date: (v1: any, v2: any, id: string) => {
         const a = new Date(v1?.values?.[id]);

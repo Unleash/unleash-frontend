@@ -1,15 +1,17 @@
 import { useContext, FC, ReactElement } from 'react';
-import { TooltipProps } from '@mui/material';
 import AccessContext from 'contexts/AccessContext';
-import { TooltipResolver } from 'component/common/TooltipResolver/TooltipResolver';
+import {
+    ITooltipResolverProps,
+    TooltipResolver,
+} from 'component/common/TooltipResolver/TooltipResolver';
 import { formatAccessText } from 'utils/formatAccessText';
-import { useId } from 'hooks/useId';
 
-type IPermissionHOCProps = Omit<TooltipProps, 'children' | 'title'> & {
+type IPermissionHOCProps = {
     permission: string;
     projectId?: string;
     environmentId?: string;
     tooltip?: string;
+    tooltipProps?: Omit<ITooltipResolverProps, 'children' | 'title'>;
     children: ({ hasAccess }: { hasAccess?: boolean }) => ReactElement;
 };
 
@@ -19,7 +21,7 @@ export const PermissionHOC: FC<IPermissionHOCProps> = ({
     children,
     environmentId,
     tooltip,
-    ...rest
+    tooltipProps,
 }) => {
     const { hasAccess } = useContext(AccessContext);
     let access;
@@ -33,7 +35,10 @@ export const PermissionHOC: FC<IPermissionHOCProps> = ({
     }
 
     return (
-        <TooltipResolver {...rest} title={formatAccessText(access, tooltip)}>
+        <TooltipResolver
+            {...tooltipProps}
+            title={formatAccessText(access, tooltip)}
+        >
             {children({ hasAccess: access })}
         </TooltipResolver>
     );

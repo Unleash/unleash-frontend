@@ -63,10 +63,6 @@ export const FeatureStaleDialog = ({
         }
     };
 
-    const onCancel = () => {
-        onClose();
-    };
-
     return (
         <Dialogue
             open={isOpen}
@@ -74,7 +70,7 @@ export const FeatureStaleDialog = ({
             primaryButtonText={`Flip to ${toggleActionText}`}
             title={`Set feature status to ${toggleActionText}`}
             onClick={onSubmit}
-            onClose={onCancel}
+            onClose={onClose}
         >
             <>
                 <ConditionallyRender

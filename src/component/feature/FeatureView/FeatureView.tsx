@@ -182,11 +182,10 @@ export const FeatureView = () => {
                     <FeatureArchiveDialog
                         isOpen={showDelDialog}
                         onConfirm={() => {
-                            setShowDelDialog(false);
                             projectRefetch();
                             navigate(`/projects/${projectId}`);
                         }}
-                        onAbort={() => setShowDelDialog(false)}
+                        onClose={() => setShowDelDialog(false)}
                         projectId={projectId}
                         featureId={featureId}
                     />

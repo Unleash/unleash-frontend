@@ -19,13 +19,12 @@ export const useSetFeatureState = () => {
             const req = createRequest(path, { method: 'POST' });
 
             try {
-                const res = await makeRequest(req.caller, req.id);
-                return res;
+                return makeRequest(req.caller, req.id);
             } catch (e) {
                 throw e;
             }
         },
-        []
+        [] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return { setFeatureState, errors };

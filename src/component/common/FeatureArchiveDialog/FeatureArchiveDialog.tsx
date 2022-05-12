@@ -1,6 +1,5 @@
 import { VFC } from 'react';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
-import useProject from 'hooks/api/getters/useProject/useProject';
 import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
@@ -8,14 +7,14 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 interface IFeatureArchiveDialogProps {
     isOpen: boolean;
     onConfirm: () => void;
-    onAbort: () => void;
+    onClose: () => void;
     projectId: string;
     featureId: string;
 }
 
 export const FeatureArchiveDialog: VFC<IFeatureArchiveDialogProps> = ({
     isOpen,
-    onAbort,
+    onClose,
     onConfirm,
     projectId,
     featureId,
@@ -32,9 +31,10 @@ export const FeatureArchiveDialog: VFC<IFeatureArchiveDialogProps> = ({
                 title: 'Feature archived',
             });
             onConfirm();
+            onClose();
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
-            onAbort();
+            onClose();
         }
     };
 
@@ -42,7 +42,7 @@ export const FeatureArchiveDialog: VFC<IFeatureArchiveDialogProps> = ({
         <Dialogue
             onClick={() => archiveToggle()}
             open={isOpen}
-            onClose={onAbort}
+            onClose={onClose}
             primaryButtonText="Archive toggle"
             secondaryButtonText="Cancel"
             title="Archive feature toggle"

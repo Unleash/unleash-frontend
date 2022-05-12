@@ -107,7 +107,11 @@ export const CellSortable: FC<ICellSortableProps> = ({
                             onClick={onSortClick}
                             style={{ justifyContent }}
                         >
-                            <span className={styles.label} ref={ref}>
+                            <span
+                                className={styles.label}
+                                ref={ref}
+                                tabIndex={-1}
+                            >
                                 {children}
                             </span>
                             <SortArrow

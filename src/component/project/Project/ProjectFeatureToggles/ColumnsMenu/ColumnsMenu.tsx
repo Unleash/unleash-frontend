@@ -19,7 +19,15 @@ import { capitalize } from 'lodash';
 import { useStyles } from './ColumnsMenu.styles';
 
 interface IColumnsMenuProps {
-    allColumns: Record<string, any>;
+    allColumns: Record<
+        string,
+        {
+            Header: string | any;
+            id: string;
+            isVisible: boolean;
+            toggleHidden: (state: boolean) => void;
+        }
+    >;
     disabledColumns?: string[];
     dividerBefore?: string[];
     dividerAfter?: string[];
@@ -89,63 +97,54 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                     </IconButton>
                 </Box>
                 <MenuList>
-                    {allColumns.map(
-                        (column: {
-                            Header: string | any;
-                            id: string;
-                            isVisible: boolean;
-                            toggleHidden: (state: boolean) => void;
-                        }) => [
-                            <ConditionallyRender
-                                condition={dividerBefore.includes(column.id)}
-                                show={<Divider className={classes.divider} />}
-                            />,
-                            <MenuItem
-                                onClick={() => {
-                                    column.toggleHidden(column.isVisible);
-                                }}
-                                disabled={disabledColumns.includes(column.id)}
-                                className={classes.menuItem}
-                            >
-                                <ListItemIcon>
-                                    <Checkbox
-                                        edge="start"
-                                        checked={column.isVisible}
-                                        tabIndex={-1}
-                                        disableRipple
-                                        inputProps={{
-                                            'aria-labelledby': column.id,
-                                        }}
-                                        size="medium"
-                                        className={classes.checkbox}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText
-                                    id={column.id}
-                                    primary={
-                                        <Typography variant="body2">
-                                            <ConditionallyRender
-                                                condition={
-                                                    typeof column.Header ===
-                                                    'string'
-                                                }
-                                                show={() => (
-                                                    <>{column.Header}</>
-                                                )}
-                                                elseShow={() =>
-                                                    capitalize(column.id)
-                                                }
-                                            />
-                                        </Typography>
-                                    }
+                    {allColumns.map(column => [
+                        <ConditionallyRender
+                            condition={dividerBefore.includes(column.id)}
+                            show={<Divider className={classes.divider} />}
+                        />,
+                        <MenuItem
+                            onClick={() => {
+                                column.toggleHidden(column.isVisible);
+                            }}
+                            disabled={disabledColumns.includes(column.id)}
+                            className={classes.menuItem}
+                        >
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={column.isVisible}
+                                    tabIndex={-1}
+                                    disableRipple
+                                    inputProps={{
+                                        'aria-labelledby': column.id,
+                                    }}
+                                    size="medium"
+                                    className={classes.checkbox}
                                 />
-                            </MenuItem>,
-                            <ConditionallyRender
-                                condition={dividerAfter.includes(column.id)}
-                                show={<Divider className={classes.divider} />}
-                            />,
-                        ]
-                    )}
+                            </ListItemIcon>
+                            <ListItemText
+                                id={column.id}
+                                primary={
+                                    <Typography variant="body2">
+                                        <ConditionallyRender
+                                            condition={
+                                                typeof column.Header ===
+                                                'string'
+                                            }
+                                            show={() => <>{column.Header}</>}
+                                            elseShow={() =>
+                                                capitalize(column.id)
+                                            }
+                                        />
+                                    </Typography>
+                                }
+                            />
+                        </MenuItem>,
+                        <ConditionallyRender
+                            condition={dividerAfter.includes(column.id)}
+                            show={<Divider className={classes.divider} />}
+                        />,
+                    ])}
                 </MenuList>
             </Popover>
         </Box>
