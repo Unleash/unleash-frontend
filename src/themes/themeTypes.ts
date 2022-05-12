@@ -61,10 +61,6 @@ declare module '@mui/material/styles' {
          * For sidebar container background.
          */
         sidebarContainer: string;
-        /**
-         * For sidebar divider.
-         */
-        sidebarDivider: string;
     }
 
     interface Theme extends CustomTheme {}

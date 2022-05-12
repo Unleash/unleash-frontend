@@ -33,7 +33,7 @@ export const useStyles = makeStyles()(theme => ({
         },
     },
     sidebarDivider: {
-        borderColor: theme.palette.sidebarDivider,
+        opacity: 0.3,
         marginBottom: '8px',
     },
     title: {

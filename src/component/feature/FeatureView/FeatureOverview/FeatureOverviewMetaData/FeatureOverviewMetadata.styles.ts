@@ -40,6 +40,7 @@ export const useStyles = makeStyles()(theme => ({
     bodyItem: {
         margin: '0.5rem 0',
         fontSize: theme.fontSizes.bodySize,
+        wordBreak: 'break-all',
     },
     headerIcon: {
         marginRight: '1rem',

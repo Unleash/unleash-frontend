@@ -71,7 +71,6 @@ export default createTheme({
         tableHeaderHover: colors.grey[400],
         highlight: '#FFEACC',
         sidebarContainer: 'rgba(32,32,33, 0.2)',
-        sidebarDivider: 'rgba(255, 255, 255, 0.3)',
         grey: colors.grey,
         text: {
             primary: colors.grey[900],
