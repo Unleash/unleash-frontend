@@ -6,7 +6,7 @@ import { getFeatureTypeIcons } from 'utils/getFeatureTypeIcons';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './FeatureOverviewMetadata.styles';
 import { Edit } from '@mui/icons-material';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import useTags from 'hooks/api/getters/useTags/useTags';
 import FeatureOverviewTags from './FeatureOverviewTags/FeatureOverviewTags';
@@ -43,7 +43,7 @@ const FeatureOverviewMetaData = () => {
                                 <div>Description:</div>
                                 <div className={styles.descriptionContainer}>
                                     <p>{description}</p>
-                                    <PermissionIconButton
+                                    <PermissionHOC
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
@@ -53,7 +53,7 @@ const FeatureOverviewMetaData = () => {
                                             className={styles.editIcon}
                                             titleAccess="Settings"
                                         />
-                                    </PermissionIconButton>
+                                    </PermissionHOC>
                                 </div>
                             </span>
                         }
@@ -61,7 +61,7 @@ const FeatureOverviewMetaData = () => {
                             <span data-loading>
                                 <div className={styles.descriptionContainer}>
                                     No description.{' '}
-                                    <PermissionIconButton
+                                    <PermissionHOC
                                         projectId={projectId}
                                         permission={UPDATE_FEATURE}
                                         component={Link}
@@ -69,7 +69,7 @@ const FeatureOverviewMetaData = () => {
                                         tooltip="Edit description"
                                     >
                                         <Edit className={styles.editIcon} />
-                                    </PermissionIconButton>
+                                    </PermissionHOC>
                                 </div>
                             </span>
                         }

@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE } from 'component/providers/AccessProvider/permissions';
 import { useStyles } from './FeatureSettingsInformation.style';
 
@@ -29,7 +29,7 @@ export const FeatureSettingsInformation = ({
                 <Typography className={styles.header}>
                     Feature information
                 </Typography>
-                <PermissionIconButton
+                <PermissionHOC
                     permission={UPDATE_FEATURE}
                     projectId={projectId}
                     data-loading
@@ -37,7 +37,7 @@ export const FeatureSettingsInformation = ({
                     tooltip="Edit"
                 >
                     <Edit />
-                </PermissionIconButton>
+                </PermissionHOC>
             </div>
             <Typography>
                 Name: <strong>{feature.name}</strong>

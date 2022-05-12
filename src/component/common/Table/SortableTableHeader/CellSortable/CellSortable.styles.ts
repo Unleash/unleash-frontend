@@ -17,6 +17,7 @@ export const useStyles = makeStyles()(theme => ({
         whiteSpace: 'nowrap',
         width: '100%',
         ':hover, :focus, &:focus-visible, &:active': {
+            outline: 'revert',
             '& svg': {
                 color: 'inherit',
             },

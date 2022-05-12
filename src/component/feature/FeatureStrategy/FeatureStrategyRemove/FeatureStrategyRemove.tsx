@@ -11,7 +11,7 @@ import { DELETE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/perm
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import { STRATEGY_FORM_REMOVE_ID } from 'utils/testIds';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Delete } from '@mui/icons-material';
 
 interface IFeatureStrategyRemoveProps {
@@ -62,7 +62,7 @@ export const FeatureStrategyRemove = ({
             <ConditionallyRender
                 condition={Boolean(icon)}
                 show={
-                    <PermissionIconButton
+                    <PermissionHOC
                         onClick={() => setOpenDialogue(true)}
                         projectId={projectId}
                         environmentId={environmentId}
@@ -73,7 +73,7 @@ export const FeatureStrategyRemove = ({
                         type="button"
                     >
                         <Delete />
-                    </PermissionIconButton>
+                    </PermissionHOC>
                 }
                 elseShow={
                     <PermissionButton

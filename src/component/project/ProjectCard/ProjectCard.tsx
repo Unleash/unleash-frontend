@@ -9,7 +9,7 @@ import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import { Delete, Edit } from '@mui/icons-material';
 import { getProjectEditPath } from 'utils/routePathHelpers';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import useToast from 'hooks/useToast';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { formatUnknownError } from 'utils/formatUnknownError';
@@ -67,7 +67,7 @@ export const ProjectCard = ({
             <div className={classes.header} data-loading>
                 <h2 className={classes.title}>{name}</h2>
 
-                <PermissionIconButton
+                <PermissionHOC
                     permission={UPDATE_PROJECT}
                     projectId={id}
                     className={classes.actionsBtn}
@@ -76,7 +76,7 @@ export const ProjectCard = ({
                     tooltip="Options"
                 >
                     <MoreVertIcon />
-                </PermissionIconButton>
+                </PermissionHOC>
 
                 <Menu
                     id="project-card-menu"

@@ -27,7 +27,6 @@ export const useStyles = makeStyles()(theme => ({
     checkbox: {
         padding: theme.spacing(0.75, 1),
     },
-    label: {},
     divider: {
         '&.MuiDivider-root.MuiDivider-fullWidth': {
             margin: theme.spacing(0.75, 0),

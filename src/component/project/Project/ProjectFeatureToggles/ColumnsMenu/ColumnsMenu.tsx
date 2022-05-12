@@ -122,7 +122,6 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                                 </ListItemIcon>
                                 <ListItemText
                                     id={column.id}
-                                    className={classes.label}
                                     primary={
                                         <Typography variant="body2">
                                             <ConditionallyRender

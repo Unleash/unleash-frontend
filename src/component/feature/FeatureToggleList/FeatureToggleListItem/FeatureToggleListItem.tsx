@@ -13,7 +13,7 @@ import { getTogglePath } from 'utils/routePathHelpers';
 import FeatureStatus from 'component/feature/FeatureView/FeatureStatus/FeatureStatus';
 import FeatureType from 'component/feature/FeatureView/FeatureType/FeatureType';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { FeatureSchema } from 'openapi';
 import { styles as themeStyles } from 'component/common';
 import { useStyles } from './styles';
@@ -188,7 +188,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                 <ConditionallyRender
                     condition={isArchive}
                     show={
-                        <PermissionIconButton
+                        <PermissionHOC
                             permission={UPDATE_FEATURE}
                             projectId={project}
                             disabled={
@@ -199,7 +199,7 @@ export const FeatureToggleListItem = memo<IFeatureToggleListItemProps>(
                             tooltip="Revive feature"
                         >
                             <Undo />
-                        </PermissionIconButton>
+                        </PermissionHOC>
                     }
                 />
             </ListItem>

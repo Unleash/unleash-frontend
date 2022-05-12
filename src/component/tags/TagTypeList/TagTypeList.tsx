@@ -24,7 +24,7 @@ import AccessContext from 'contexts/AccessContext';
 import useTagTypesApi from 'hooks/api/actions/useTagTypesApi/useTagTypesApi';
 import useTagTypes from 'hooks/api/getters/useTagTypes/useTagTypes';
 import useToast from 'hooks/useToast';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { ITagType } from 'interfaces/tags';
 
@@ -127,14 +127,14 @@ export const TagTypeList = () => {
                     <Label />
                 </ListItemIcon>
                 <ListItemText primary={link} secondary={tagType.description} />
-                <PermissionIconButton
+                <PermissionHOC
                     permission={UPDATE_TAG_TYPE}
                     component={Link}
                     tooltip="Edit tag type"
                     to={`/tag-types/edit/${tagType.name}`}
                 >
                     <Edit className={styles.icon} />
-                </PermissionIconButton>
+                </PermissionHOC>
                 <ConditionallyRender
                     condition={hasAccess(DELETE_TAG_TYPE)}
                     show={deleteButton}

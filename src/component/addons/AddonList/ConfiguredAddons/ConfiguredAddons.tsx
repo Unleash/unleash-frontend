@@ -19,7 +19,7 @@ import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import { ReactElement, useContext, useState } from 'react';
 import AccessContext from 'contexts/AccessContext';
 import { IAddon } from 'interfaces/addons';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { formatUnknownError } from 'utils/formatUnknownError';
 
@@ -110,7 +110,7 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                 secondary={addon.description}
             />
             <ListItemSecondaryAction>
-                <PermissionIconButton
+                <PermissionHOC
                     permission={UPDATE_ADDON}
                     onClick={() => toggleAddon(addon)}
                     tooltip="Toggle addon"
@@ -120,15 +120,15 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                         show={<Visibility />}
                         elseShow={<VisibilityOff />}
                     />
-                </PermissionIconButton>
-                <PermissionIconButton
+                </PermissionHOC>
+                <PermissionHOC
                     permission={UPDATE_ADDON}
                     tooltip="Edit Addon"
                     onClick={() => navigate(`/addons/edit/${addon.id}`)}
                 >
                     <Edit />
-                </PermissionIconButton>
-                <PermissionIconButton
+                </PermissionHOC>
+                <PermissionHOC
                     permission={DELETE_ADDON}
                     tooltip="Remove Addon"
                     onClick={() => {
@@ -137,7 +137,7 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
                     }}
                 >
                     <Delete />
-                </PermissionIconButton>
+                </PermissionHOC>
             </ListItemSecondaryAction>
         </ListItem>
     );

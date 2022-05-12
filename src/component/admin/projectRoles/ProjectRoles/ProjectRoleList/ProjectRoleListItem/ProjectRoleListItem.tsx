@@ -3,7 +3,7 @@ import { TableCell, TableRow, Typography } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionHOC from 'component/common/PermissionIconButton/PermissionIconButton';
 import { IProjectRole } from 'interfaces/role';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
@@ -48,7 +48,7 @@ const RoleListItem = ({
                 </TableCell>
 
                 <TableCell align="right">
-                    <PermissionIconButton
+                    <PermissionHOC
                         data-loading
                         disabled={type === BUILTIN_ROLE_TYPE}
                         onClick={() => {
@@ -58,8 +58,8 @@ const RoleListItem = ({
                         tooltip="Edit role"
                     >
                         <Edit />
-                    </PermissionIconButton>
-                    <PermissionIconButton
+                    </PermissionHOC>
+                    <PermissionHOC
                         data-loading
                         disabled={type === BUILTIN_ROLE_TYPE}
                         onClick={() => {
@@ -71,7 +71,7 @@ const RoleListItem = ({
                         tooltip="Remove role"
                     >
                         <Delete />
-                    </PermissionIconButton>
+                    </PermissionHOC>
                 </TableCell>
             </TableRow>
         </>

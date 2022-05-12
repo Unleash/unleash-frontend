@@ -58,7 +58,6 @@ export const ProjectFeatureToggles = ({
     const { classes: styles } = useStyles();
     const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
-    const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
     const environments = useFeatureEnvironments(features?.[0]);
 
@@ -186,7 +185,9 @@ export const ProjectFeatureToggles = ({
                     />
                 ),
                 id: 'actions',
-                Cell: ActionsCell,
+                Cell: (props: { row: { original: ListItemType } }) => (
+                    <ActionsCell projectId={projectId} {...props} />
+                ),
                 disableSortBy: true,
             },
         ],
