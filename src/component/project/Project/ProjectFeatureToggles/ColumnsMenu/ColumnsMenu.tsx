@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react';
+import { useEffect, useMemo, useState, VFC } from 'react';
 import {
     Box,
     Checkbox,
@@ -11,36 +11,89 @@ import {
     Popover,
     Tooltip,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import CloseIcon from '@mui/icons-material/Close';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { capitalize } from 'lodash';
 import { useStyles } from './ColumnsMenu.styles';
+import { TooltipResolver } from 'component/common/TooltipResolver/TooltipResolver';
 
 interface IColumnsMenuProps {
-    allColumns: Record<
-        string,
-        {
-            Header: string | any;
-            id: string;
-            isVisible: boolean;
-            toggleHidden: (state: boolean) => void;
-        }
-    >;
-    disabledColumns?: string[];
+    allColumns: {
+        Header: string | any;
+        id: string;
+        isVisible: boolean;
+        toggleHidden: (state: boolean) => void;
+    }[];
+    staticColumns?: string[];
     dividerBefore?: string[];
     dividerAfter?: string[];
+    setHiddenColumns: (
+        hiddenColumns:
+            | string[]
+            | ((previousHiddenColumns: string[]) => string[])
+    ) => void;
 }
 
 export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
     allColumns,
-    disabledColumns = [],
+    staticColumns = [],
     dividerBefore = [],
     dividerAfter = [],
+    setHiddenColumns,
 }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const { classes } = useStyles();
+    const theme = useTheme();
+    const isTinyScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
+    const [visibleColumnsCount, setVisibleColumnsCount] = useState(
+        allColumns.filter(({ isVisible }) => isVisible).length
+    );
+
+    const setVisibleColumns = (
+        columns: string[],
+        environmentsToShow: number = 0
+    ) => {
+        const visibleEnvColumns = allColumns
+            .filter(({ id }) => id.startsWith('environments.') !== false)
+            .map(({ id }) => id)
+            .slice(0, environmentsToShow);
+        const hiddenColumns = allColumns
+            .map(({ id }) => id)
+            .filter(id => ![columns, ...staticColumns].includes(id))
+            .filter(id => !visibleEnvColumns.includes(id));
+        setHiddenColumns(hiddenColumns);
+        setVisibleColumnsCount(columns.length + environmentsToShow);
+    };
+
+    const columnsLimit = useMemo(() => {
+        if (isTinyScreen) {
+            setVisibleColumns(['createdAt']);
+            return 3;
+        }
+        if (isSmallScreen) {
+            setVisibleColumns(['createdAt'], 1);
+            return 5;
+        }
+        if (isMediumScreen) {
+            setVisibleColumns(['type', 'createdAt'], 1);
+            return 6;
+        }
+        setVisibleColumns(['lastSeenAt', 'type', 'createdAt'], 3);
+        return 9;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isTinyScreen, isSmallScreen, isMediumScreen]);
+    const [isAddingColumnsDisabled, setIsAddingColumnsDisabled] =
+        useState(false);
+
+    useEffect(() => {
+        setIsAddingColumnsDisabled(visibleColumnsCount >= columnsLimit);
+    }, [visibleColumnsCount, columnsLimit]);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -102,44 +155,62 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                             condition={dividerBefore.includes(column.id)}
                             show={<Divider className={classes.divider} />}
                         />,
-                        <MenuItem
-                            onClick={() => {
-                                column.toggleHidden(column.isVisible);
-                            }}
-                            disabled={disabledColumns.includes(column.id)}
-                            className={classes.menuItem}
+                        <TooltipResolver
+                            title={
+                                !column.isVisible && isAddingColumnsDisabled
+                                    ? 'Hide another column first'
+                                    : undefined
+                            }
+                            arrow
+                            placement="left"
                         >
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={column.isVisible}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{
-                                        'aria-labelledby': column.id,
-                                    }}
-                                    size="medium"
-                                    className={classes.checkbox}
-                                />
-                            </ListItemIcon>
-                            <ListItemText
-                                id={column.id}
-                                primary={
-                                    <Typography variant="body2">
-                                        <ConditionallyRender
-                                            condition={
-                                                typeof column.Header ===
-                                                'string'
-                                            }
-                                            show={() => <>{column.Header}</>}
-                                            elseShow={() =>
-                                                capitalize(column.id)
-                                            }
-                                        />
-                                    </Typography>
+                            <MenuItem
+                                onClick={() => {
+                                    setVisibleColumnsCount(count =>
+                                        column.isVisible ? count - 1 : count + 1
+                                    );
+                                    column.toggleHidden(column.isVisible);
+                                }}
+                                disabled={
+                                    staticColumns.includes(column.id) ||
+                                    (!column.isVisible &&
+                                        isAddingColumnsDisabled)
                                 }
-                            />
-                        </MenuItem>,
+                                className={classes.menuItem}
+                            >
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={column.isVisible}
+                                        disableRipple
+                                        inputProps={{
+                                            'aria-labelledby': column.id,
+                                        }}
+                                        size="medium"
+                                        className={classes.checkbox}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText
+                                    id={column.id}
+                                    primary={
+                                        <Typography variant="body2">
+                                            <ConditionallyRender
+                                                condition={
+                                                    typeof column.Header ===
+                                                    'string'
+                                                }
+                                                show={() => (
+                                                    <>{column.Header}</>
+                                                )}
+                                                elseShow={() =>
+                                                    capitalize(column.id)
+                                                }
+                                            />
+                                        </Typography>
+                                    }
+                                />
+                            </MenuItem>
+                        </TooltipResolver>,
                         <ConditionallyRender
                             condition={dividerAfter.includes(column.id)}
                             show={<Divider className={classes.divider} />}

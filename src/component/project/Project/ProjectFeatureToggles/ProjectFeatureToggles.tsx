@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useFilters, useSortBy, useTable } from 'react-table';
@@ -179,7 +179,8 @@ export const ProjectFeatureToggles = ({
                         to={`/projects/${projectId}/features/${value}`}
                     />
                 ),
-                width: '100%',
+                width: '67%',
+                minWdith: 100,
                 sortType: 'alphanumeric',
             },
             {
@@ -191,8 +192,8 @@ export const ProjectFeatureToggles = ({
             },
             ...environments.map(name => ({
                 Header: name,
-                maxWidth: 110,
-                minWidth: 110,
+                maxWidth: 103,
+                minWidth: 103,
                 accessor: `environments.${name}`,
                 align: 'center',
                 Cell: ({
@@ -217,12 +218,13 @@ export const ProjectFeatureToggles = ({
                 },
             })),
             {
-                Header: ({ allColumns }: any) => (
+                Header: ({ allColumns, setHiddenColumns }: any) => (
                     <ColumnsMenu
                         allColumns={allColumns}
-                        disabledColumns={['actions', 'name']}
+                        staticColumns={['actions', 'name']}
                         dividerAfter={['createdAt']}
                         dividerBefore={['actions']}
+                        setHiddenColumns={setHiddenColumns}
                     />
                 ),
                 id: 'actions',
@@ -252,7 +254,6 @@ export const ProjectFeatureToggles = ({
         headerGroups,
         rows,
         prepareRow,
-        // setHiddenColumns,
         setFilter,
     } = useTable(
         {
