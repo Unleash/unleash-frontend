@@ -60,7 +60,7 @@ export const MainLayout = ({ children }: IMainLayoutProps) => {
                         style={{
                             display: 'block',
                             position: 'fixed',
-                            zIndex: 1,
+                            zIndex: 0,
                             bottom: 0,
                             right: 0,
                             width: 400,

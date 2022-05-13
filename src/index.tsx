@@ -14,6 +14,7 @@ import { basePath } from 'utils/formatPath';
 import { FeedbackCESProvider } from 'component/feedback/FeedbackCESContext/FeedbackCESProvider';
 import UIProvider from 'component/providers/UIProvider/UIProvider';
 import { AnnouncerProvider } from 'component/common/Announcer/AnnouncerProvider/AnnouncerProvider';
+import { InstanceStatus } from 'component/common/InstanceStatus/InstanceStatus';
 
 ReactDOM.render(
     <DndProvider backend={HTML5Backend}>
@@ -23,8 +24,10 @@ ReactDOM.render(
                     <ThemeProvider>
                         <AnnouncerProvider>
                             <FeedbackCESProvider>
-                                <ScrollTop />
-                                <App />
+                                <InstanceStatus>
+                                    <ScrollTop />
+                                    <App />
+                                </InstanceStatus>
                             </FeedbackCESProvider>
                         </AnnouncerProvider>
                     </ThemeProvider>
