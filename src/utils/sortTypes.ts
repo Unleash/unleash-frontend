@@ -5,8 +5,8 @@
  */
 export const sortTypes = {
     date: (v1: any, v2: any, id: string) => {
-        const a = new Date(v1?.values?.[id]);
-        const b = new Date(v2?.values?.[id]);
+        const a = new Date(v1?.values?.[id] || 0);
+        const b = new Date(v2?.values?.[id] || 0);
         return b?.getTime() - a?.getTime();
     },
     boolean: (v1: any, v2: any, id: string) => {

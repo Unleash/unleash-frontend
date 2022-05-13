@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useFilters, useSortBy, useTable } from 'react-table';
@@ -179,7 +179,7 @@ export const ProjectFeatureToggles = ({
                         to={`/projects/${projectId}/features/${value}`}
                     />
                 ),
-                width: '67%',
+                width: '99%',
                 minWdith: 100,
                 sortType: 'alphanumeric',
             },
@@ -227,6 +227,8 @@ export const ProjectFeatureToggles = ({
                         setHiddenColumns={setHiddenColumns}
                     />
                 ),
+                maxWidth: 60,
+                width: 60,
                 id: 'actions',
                 Cell: (props: { row: { original: ListItemType } }) => (
                     <ActionsCell projectId={projectId} {...props} />

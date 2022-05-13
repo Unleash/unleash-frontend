@@ -86,7 +86,7 @@ export const CellSortable: FC<ICellSortableProps> = ({
         };
 
         updateTitle();
-    }, [ref.current, setTitle, ariaTitle]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [setTitle, ariaTitle]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <TableCell

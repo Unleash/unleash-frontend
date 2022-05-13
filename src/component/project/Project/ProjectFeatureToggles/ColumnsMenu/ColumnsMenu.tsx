@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, VFC } from 'react';
+import { useMemo, useState, VFC } from 'react';
 import {
     Box,
     Checkbox,
@@ -65,10 +65,13 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
             .slice(0, environmentsToShow);
         const hiddenColumns = allColumns
             .map(({ id }) => id)
-            .filter(id => ![columns, ...staticColumns].includes(id))
+            .filter(id => !columns.includes(id))
+            .filter(id => !staticColumns.includes(id))
             .filter(id => !visibleEnvColumns.includes(id));
         setHiddenColumns(hiddenColumns);
-        setVisibleColumnsCount(columns.length + environmentsToShow);
+        setVisibleColumnsCount(
+            staticColumns.length + columns.length + environmentsToShow
+        );
     };
 
     const columnsLimit = useMemo(() => {
@@ -88,12 +91,7 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
         return 9;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTinyScreen, isSmallScreen, isMediumScreen]);
-    const [isAddingColumnsDisabled, setIsAddingColumnsDisabled] =
-        useState(false);
-
-    useEffect(() => {
-        setIsAddingColumnsDisabled(visibleColumnsCount >= columnsLimit);
-    }, [visibleColumnsCount, columnsLimit]);
+    const isAddingColumnsDisabled = visibleColumnsCount >= columnsLimit;
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
