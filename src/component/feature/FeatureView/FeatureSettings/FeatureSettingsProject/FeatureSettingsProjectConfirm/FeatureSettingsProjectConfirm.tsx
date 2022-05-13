@@ -4,7 +4,7 @@ import { IFeatureToggle } from 'interfaces/featureToggle';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { useStyles } from './FeatureSettingsProjectConfirm.styles';
-import { sameArrayItems } from 'utils/sameArrayItems';
+import { arraysHaveSameItems } from 'utils/arraysHaveSameItems';
 import { Alert } from '@mui/material';
 
 interface IFeatureSettingsProjectConfirm {
@@ -26,7 +26,7 @@ const FeatureSettingsProjectConfirm = ({
     const { classes: styles } = useStyles();
 
     const hasSameEnvironments: boolean = useMemo(() => {
-        return sameArrayItems(
+        return arraysHaveSameItems(
             feature.environments.map(env => env.name),
             project.environments
         );
