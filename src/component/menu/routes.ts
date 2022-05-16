@@ -10,6 +10,7 @@ import AdminApi from 'component/admin/api';
 import AdminInvoice from 'component/admin/invoice/InvoiceAdminPage';
 import AdminUsers from 'component/admin/users/UsersAdmin';
 import { AuthSettings } from 'component/admin/auth/AuthSettings';
+import { Billing } from 'component/admin/billing/Billing';
 import Login from 'component/user/Login/Login';
 import { C, EEA, P, RE, SE } from 'component/common/flags';
 import { NewUser } from 'component/user/NewUser/NewUser';
@@ -451,6 +452,14 @@ export const routes: IRoute[] = [
         parent: '/admin',
         title: 'Single sign-on',
         component: AuthSettings,
+        type: 'protected',
+        menu: { adminSettings: true },
+    },
+    {
+        path: '/admin/billing',
+        parent: '/admin',
+        title: 'Billing',
+        component: Billing,
         type: 'protected',
         menu: { adminSettings: true },
     },

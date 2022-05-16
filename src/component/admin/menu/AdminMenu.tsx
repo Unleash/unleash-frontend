@@ -79,6 +79,14 @@ function AdminMenu() {
                         </NavLink>
                     }
                 />
+                <Tab
+                    value="/admin/billing"
+                    label={
+                        <NavLink to="/admin/billing" style={createNavLinkStyle}>
+                            Billing
+                        </NavLink>
+                    }
+                />
             </Tabs>
         </Paper>
     );
