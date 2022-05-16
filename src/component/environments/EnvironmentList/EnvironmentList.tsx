@@ -26,7 +26,7 @@ const EnvironmentList = () => {
         enabled: true,
         protected: false,
     };
-    const { environments, refetchEnvironments } = useEnvironments();
+    const { environments, mutateEnvironments } = useEnvironments();
     const { uiConfig } = useUiConfig();
     const { refetch: refetchProjectRolePermissions } =
         useProjectRolePermissions();
@@ -52,7 +52,7 @@ const EnvironmentList = () => {
         const item = newEnvList.splice(dragIndex, 1)[0];
 
         newEnvList.splice(hoverIndex, 0, item);
-        refetchEnvironments({ environments: newEnvList }, false);
+        mutateEnvironments({ environments: newEnvList }, false);
         return newEnvList;
     };
 
@@ -96,7 +96,7 @@ const EnvironmentList = () => {
             setDeldialogue(false);
             setSelectedEnv(defaultEnv);
             setConfirmName('');
-            refetchEnvironments();
+            mutateEnvironments();
         }
     };
 
@@ -120,7 +120,7 @@ const EnvironmentList = () => {
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         } finally {
-            refetchEnvironments();
+            mutateEnvironments();
         }
     };
 
@@ -136,7 +136,7 @@ const EnvironmentList = () => {
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         } finally {
-            refetchEnvironments();
+            mutateEnvironments();
         }
     };
 
