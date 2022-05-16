@@ -1,6 +1,7 @@
 import { IInstanceStatus } from 'interfaces/instance';
 import { useApiGetter } from 'hooks/api/getters/useApiGetter/useApiGetter';
 import { formatApiPath } from 'utils/formatPath';
+import { isLocalhostDomain } from 'utils/env';
 
 export interface IUseInstanceStatusOutput {
     instanceStatus?: IInstanceStatus;
@@ -24,6 +25,10 @@ export const useInstanceStatus = (): IUseInstanceStatusOutput => {
 };
 
 const fetchInstanceStatus = async (): Promise<IInstanceStatus> => {
+    if (!enableInstanceStatusBarFeature()) {
+        return UNKNOWN_INSTANCE_STATUS;
+    }
+
     const res = await fetch(formatApiPath('api/instance/status'));
 
     if (!res.ok) {
@@ -31,6 +36,11 @@ const fetchInstanceStatus = async (): Promise<IInstanceStatus> => {
     }
 
     return res.json();
+};
+
+// TODO(olav): Enable instance status bar feature outside of localhost.
+const enableInstanceStatusBarFeature = () => {
+    return isLocalhostDomain();
 };
 
 export const UNKNOWN_INSTANCE_STATUS: IInstanceStatus = {
