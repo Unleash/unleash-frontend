@@ -1,13 +1,9 @@
 import { useInstanceStatus } from 'hooks/api/getters/useInstanceStatus/useInstanceStatus';
-import React, { ReactNode } from 'react';
+import React, { FC } from 'react';
 import { InstanceStatusBar } from 'component/common/InstanceStatus/InstanceStatusBar';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
-interface IInstanceStatusProps {
-    children: ReactNode;
-}
-
-export const InstanceStatus = ({ children }: IInstanceStatusProps) => {
+export const InstanceStatus: FC = ({ children }) => {
     const { instanceStatus } = useInstanceStatus();
 
     return (
