@@ -21,6 +21,7 @@ export const useStyles = makeStyles()(theme => ({
         flexGrow: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
+        gap: theme.spacing(1),
     },
     verticalSeparator: {
         height: '100%',

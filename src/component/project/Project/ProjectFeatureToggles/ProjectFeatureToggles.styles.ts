@@ -7,7 +7,6 @@ export const useStyles = makeStyles()(theme => ({
         minHeight: '100%',
         width: 'calc(100% - 1rem)',
         position: 'relative',
-        paddingBottom: '4rem',
         [theme.breakpoints.down('md')]: {
             marginLeft: '0',
             paddingBottom: '4rem',
