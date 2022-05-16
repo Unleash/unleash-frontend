@@ -27,8 +27,12 @@ const fetchInstanceStatus = async (): Promise<IInstanceStatus> => {
     const res = await fetch(formatApiPath('api/instance/status'));
 
     if (!res.ok) {
-        return { plan: 'unknown' };
+        return UNKNOWN_INSTANCE_STATUS;
     }
 
     return res.json();
+};
+
+export const UNKNOWN_INSTANCE_STATUS: IInstanceStatus = {
+    plan: 'unknown',
 };

@@ -9,8 +9,6 @@ interface IInstanceStatusBarProps {
     instanceStatus: IInstanceStatus;
 }
 
-const TRIAL_DAYS_REMAINING_THRESHOLD = 5;
-
 export const InstanceStatusBar = ({
     instanceStatus,
 }: IInstanceStatusBarProps) => {
@@ -19,8 +17,24 @@ export const InstanceStatusBar = ({
     if (
         instanceStatus.instanceState === InstanceState.TRIAL &&
         typeof trialDaysRemaining === 'number' &&
-        trialDaysRemaining > 0 &&
-        trialDaysRemaining <= TRIAL_DAYS_REMAINING_THRESHOLD
+        trialDaysRemaining <= 0
+    ) {
+        return (
+            <StyledBar data-testid={INSTANCE_STATUS_BAR_ID}>
+                <StyledInfoIcon />
+                <span>
+                    <strong>Heads up!</strong> Your free trial of the{' '}
+                    {instanceStatus.plan.toUpperCase()} version has expired.
+                </span>
+                <ContactButton />
+            </StyledBar>
+        );
+    }
+
+    if (
+        instanceStatus.instanceState === InstanceState.TRIAL &&
+        typeof trialDaysRemaining === 'number' &&
+        trialDaysRemaining <= 10
     ) {
         return (
             <StyledBar data-testid={INSTANCE_STATUS_BAR_ID}>

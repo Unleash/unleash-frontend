@@ -4,9 +4,26 @@ import { render } from 'utils/testRenderer';
 import { screen } from '@testing-library/react';
 import { addDays } from 'date-fns';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
+import { UNKNOWN_INSTANCE_STATUS } from 'hooks/api/getters/useInstanceStatus/useInstanceStatus';
 
 test('InstanceStatusBar should be hidden by default', async () => {
-    render(<InstanceStatusBar instanceStatus={{ plan: 'pro' }} />);
+    render(<InstanceStatusBar instanceStatus={UNKNOWN_INSTANCE_STATUS} />);
+
+    expect(
+        screen.queryByTestId(INSTANCE_STATUS_BAR_ID)
+    ).not.toBeInTheDocument();
+});
+
+test('InstanceStatusBar should be hidden when the trial is far from expired', async () => {
+    render(
+        <InstanceStatusBar
+            instanceStatus={{
+                plan: 'pro',
+                instanceState: InstanceState.TRIAL,
+                trialExpiry: addDays(new Date(), 15).toISOString(),
+            }}
+        />
+    );
 
     expect(
         screen.queryByTestId(INSTANCE_STATUS_BAR_ID)
@@ -28,7 +45,7 @@ test('InstanceStatusBar should warn when the trial is about to expire', async ()
     expect(await screen.findByTestId(INSTANCE_STATUS_BAR_ID)).toMatchSnapshot();
 });
 
-test('InstanceStatusBar should be hidden when the trial has expired', async () => {
+test('InstanceStatusBar should warn when the trial has expired', async () => {
     render(
         <InstanceStatusBar
             instanceStatus={{
@@ -39,7 +56,6 @@ test('InstanceStatusBar should be hidden when the trial has expired', async () =
         />
     );
 
-    expect(
-        screen.queryByTestId(INSTANCE_STATUS_BAR_ID)
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId(INSTANCE_STATUS_BAR_ID)).toBeInTheDocument();
+    expect(await screen.findByTestId(INSTANCE_STATUS_BAR_ID)).toMatchSnapshot();
 });
