@@ -1,12 +1,12 @@
 import { styled, Button } from '@mui/material';
 import { colors } from 'themes/colors';
-import { InstanceStatus, InstanceState } from 'interfaces/instance';
+import { IInstanceStatus, InstanceState } from 'interfaces/instance';
 import { differenceInDays, parseISO } from 'date-fns';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
 import { Info } from '@mui/icons-material';
 
 interface IInstanceStatusBarProps {
-    instanceStatus: InstanceStatus;
+    instanceStatus: IInstanceStatus;
 }
 
 const TRIAL_DAYS_REMAINING_THRESHOLD = 5;
@@ -51,7 +51,7 @@ const ContactButton = () => {
 };
 
 const calculateTrialDaysRemaining = (
-    instanceStatus: InstanceStatus
+    instanceStatus: IInstanceStatus
 ): number | undefined => {
     return instanceStatus.trialExpiry
         ? differenceInDays(parseISO(instanceStatus.trialExpiry), new Date())

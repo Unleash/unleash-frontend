@@ -1,4 +1,4 @@
-export interface InstanceStatus {
+export interface IInstanceStatus {
     plan: string;
     trialExpiry?: string;
     trialStart?: string;
