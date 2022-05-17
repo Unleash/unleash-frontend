@@ -28,7 +28,7 @@ const ProjectOverview = ({ projectId }: IProjectOverviewProps) => {
                     health={health}
                     featureCount={features?.length}
                 />
-                <div className={styles.projectToggles}>
+                <main className={styles.projectToggles}>
                     <ConditionallyRender
                         condition={uiConfig.flags.NEW_PROJECT_OVERVIEW}
                         show={() => (
@@ -45,7 +45,7 @@ const ProjectOverview = ({ projectId }: IProjectOverviewProps) => {
                             />
                         )}
                     />
-                </div>
+                </main>
             </div>
         </div>
     );

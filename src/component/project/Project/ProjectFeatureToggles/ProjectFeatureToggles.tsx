@@ -182,7 +182,8 @@ export const ProjectFeatureToggles = ({
                     />
                 ),
                 width: '99%',
-                minWdith: 100,
+                minWidth: 100,
+                maxWidth: 200,
                 sortType: 'alphanumeric',
             },
             {

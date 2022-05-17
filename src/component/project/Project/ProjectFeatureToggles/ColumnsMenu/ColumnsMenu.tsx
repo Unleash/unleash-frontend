@@ -49,7 +49,7 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
     const isTinyScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
-    console.log({ allColumns });
+
     useEffect(() => {
         const setVisibleColumns = (
             columns: string[],

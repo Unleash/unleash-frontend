@@ -44,7 +44,6 @@ export const SortArrow: VFC<ISortArrowProps> = ({
                     className={classnames(styles.icon, 'hover-only')}
                     fontSize="inherit"
                 />
-                // <></>
             }
         />
     );

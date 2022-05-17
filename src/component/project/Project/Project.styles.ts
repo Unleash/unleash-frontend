@@ -10,7 +10,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     projectToggles: {
         width: '100%',
-        minHeight: '100%',
+        minWidth: 0,
     },
     header: {
         backgroundColor: '#fff',
