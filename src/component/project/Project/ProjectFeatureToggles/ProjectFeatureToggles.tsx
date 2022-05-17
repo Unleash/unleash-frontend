@@ -37,7 +37,6 @@ import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
 import { useStyles } from './ProjectFeatureToggles.styles';
-import { usePersistentQuery } from 'hooks/usePersistentQuery';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -62,7 +61,6 @@ export const ProjectFeatureToggles = ({
     loading,
     environments: newEnvironments = [],
 }: IProjectFeatureTogglesProps) => {
-    usePersistentQuery('projectOverviewList');
     const { classes: styles } = useStyles();
     const [strategiesDialogState, setStrategiesDialogState] = useState({
         open: false,
