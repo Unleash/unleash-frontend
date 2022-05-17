@@ -27,12 +27,6 @@ export const useStyles = makeStyles()(theme => ({
     bodyClass: {
         overflowX: 'auto',
         padding: theme.spacing(4),
-        // '* > &': {
-        //     padding: theme.spacing(0),
-        // },
-        // '& > *': {
-        //     padding: theme.spacing(4),
-        // },
     },
     header: {
         padding: '1rem',
