@@ -43,8 +43,6 @@ export const SortableTableHeader: VFC<ISortableTableHeaderProps> = ({
                                 width={column.width}
                                 // @ts-expect-error -- check after `react-table` v8
                                 align={column.align}
-                                // @ts-expect-error -- check after `react-table` v8
-                                sticky={column.sticky}
                             >
                                 {content}
                             </CellSortable>

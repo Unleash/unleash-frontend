@@ -45,14 +45,4 @@ export const useStyles = makeStyles()(theme => ({
         overflowX: 'hidden',
         overflowY: 'visible',
     },
-    stickyLeft: {
-        position: 'sticky',
-        left: 0,
-        zIndex: theme.zIndex.sticky,
-    },
-    stickyRight: {
-        position: 'sticky',
-        right: 0,
-        zIndex: theme.zIndex.sticky,
-    },
 }));
