@@ -1,14 +1,56 @@
 import AdminMenu from '../menu/AdminMenu';
+import { BillingInfoButton } from './BillingInfoButton/BillingInfoButton';
 import { PageContent } from 'component/common/PageContent/PageContent';
-import {
-    Alert,
-    Button,
-    Divider,
-    Grid,
-    styled,
-    Typography,
-} from '@mui/material';
+import { Alert, Divider, Grid, styled, Theme, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CheckIcon from '@mui/icons-material/Check';
 import { colors } from 'themes/colors';
+import { FC } from 'react';
+import { SxProps } from '@mui/system';
+
+const GridRow: FC<{ sx?: SxProps<Theme> }> = ({ sx, children }) => {
+    return (
+        <Grid
+            container
+            item
+            justifyContent="space-between"
+            alignItems="center"
+            sx={sx}
+        >
+            {children}
+        </Grid>
+    );
+};
+
+const GridCol: FC<{ vertical?: boolean }> = ({
+    children,
+    vertical = false,
+}) => {
+    return (
+        <Grid
+            item
+            display="flex"
+            alignItems={vertical ? 'start' : 'center'}
+            direction={vertical ? 'column' : 'row'}
+        >
+            {children}
+        </Grid>
+    );
+};
+
+const GridColLink: FC = ({ children }) => {
+    return (
+        <Typography
+            sx={theme => ({
+                fontSize: theme.fontSizes.smallBody,
+                marginLeft: '8px',
+            })}
+            component="span"
+        >
+            ({children})
+        </Typography>
+    );
+};
 
 export const Billing = () => {
     return (
@@ -20,24 +62,32 @@ export const Billing = () => {
                         <StyledInfoBox
                             sx={{ backgroundColor: colors.grey[200] }}
                         >
-                            <Typography variant="body1">
+                            <Typography
+                                variant="body1"
+                                sx={{ marginBottom: '32px' }}
+                            >
                                 Billing Information
                             </Typography>
-                            <Alert severity="warning" sx={{ margin: '32px 0' }}>
+                            <Alert
+                                severity="warning"
+                                sx={{ marginBottom: '32px' }}
+                            >
                                 In order to <strong>Upgrade trial</strong> you
                                 need to provide us your billing information.
                             </Alert>
-                            <Button
-                                variant="contained"
-                                sx={{ width: '100%', marginBottom: '12px' }}
-                            >
+                            <BillingInfoButton>
                                 Add billing information
-                            </Button>
+                            </BillingInfoButton>
                             <StyledInfoLabel>
                                 Once we have received your billing information
                                 we will upgrade your trial within 1 business day
                             </StyledInfoLabel>
-                            <Divider sx={{ margin: '20px 0' }} />
+                            <Divider
+                                sx={{
+                                    margin: '20px 0',
+                                    borderColor: colors.grey[400],
+                                }}
+                            />
                             <StyledInfoLabel>
                                 <a href="mailto:elise@getunleash.ai?subject=PRO plan clarifications">
                                     Get in touch with us
@@ -51,15 +101,15 @@ export const Billing = () => {
                             sx={{
                                 boxShadow: '0px 1px 20px rgba(45, 42, 89, 0.1)',
                                 padding: '52px',
-                                paddingTop: '16px',
                             }}
                         >
                             <Alert
                                 severity="info"
-                                sx={{
-                                    fontSize: '0.75rem',
+                                sx={theme => ({
+                                    fontSize: theme.fontSizes.smallerBody,
                                     marginBottom: '24px',
-                                }}
+                                    marginTop: '-36px',
+                                })}
                             >
                                 After you have sent your billing information,
                                 your instance will be upgraded - you don't have
@@ -71,26 +121,98 @@ export const Billing = () => {
                             </Alert>
                             <StyledPlanBadge>Current plan</StyledPlanBadge>
                             <Grid container>
-                                <Grid
-                                    container
-                                    item
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Grid
-                                        item
-                                        display="flex"
-                                        alignItems="center"
-                                    >
+                                <GridRow sx={{ marginBottom: '25px' }}>
+                                    <GridCol>
                                         <StyledPlanSpan>Pro</StyledPlanSpan>
                                         <StyledTrialSpan>Trial</StyledTrialSpan>
-                                    </Grid>
-                                    <Grid item>
+                                    </GridCol>
+                                    <GridCol>
                                         <StyledPriceSpan>
                                             $80.00
                                         </StyledPriceSpan>
-                                    </Grid>
-                                </Grid>
+                                    </GridCol>
+                                </GridRow>
+                                <GridRow sx={{ marginBottom: '12px' }}>
+                                    <GridCol>
+                                        <Typography>
+                                            <strong>5</strong> team members
+                                            <GridColLink>
+                                                <Link to="/admin/users">
+                                                    5 assigned
+                                                </Link>
+                                            </GridColLink>
+                                        </Typography>
+                                    </GridCol>
+                                    <GridCol>
+                                        <CheckIcon
+                                            sx={{
+                                                fontSize: '1rem',
+                                                marginRight: '8px',
+                                            }}
+                                        />
+                                        <Typography variant="body2">
+                                            included
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
+                                <GridRow>
+                                    <GridCol vertical>
+                                        <Typography>
+                                            Paid members
+                                            <GridColLink>
+                                                <Link to="/admin/users">
+                                                    3 assigned
+                                                </Link>
+                                            </GridColLink>
+                                        </Typography>
+                                        <StyledInfoLabel>
+                                            Add up to 15 extra paid members -
+                                            $15/month per member
+                                        </StyledInfoLabel>
+                                    </GridCol>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontSize:
+                                                    theme.fontSizes.mainHeader,
+                                            })}
+                                        >
+                                            $45.00
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
+                            </Grid>
+                            <Divider
+                                sx={{
+                                    margin: '24px 0',
+                                }}
+                            />
+                            <Grid container>
+                                <GridRow>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
+                                                fontSize:
+                                                    theme.fontSizes.mainHeader,
+                                            })}
+                                        >
+                                            Total per month
+                                        </Typography>
+                                    </GridCol>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
+                                                fontSize: '2rem',
+                                            })}
+                                        >
+                                            $125.00
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
                             </Grid>
                         </StyledInfoBox>
                     </Grid>
@@ -107,28 +229,28 @@ const StyledInfoBox = styled('aside')(({ theme }) => ({
 }));
 
 const StyledInfoLabel = styled(Typography)(({ theme }) => ({
-    fontSize: theme.fontSizes.smallerBody,
+    fontSize: theme.fontSizes.smallBody,
     color: theme.palette.text.secondary,
 }));
 
 const StyledPlanBadge = styled('span')(({ theme }) => ({
     padding: '4px 8px',
     borderRadius: theme.shape.borderRadiusLarge,
-    fontSize: '0.625rem',
+    fontSize: '0.75rem',
     backgroundColor: colors.green[100],
     color: theme.palette.success.dark,
     fontWeight: theme.fontWeight.bold,
 }));
 
 const StyledPlanSpan = styled('span')(({ theme }) => ({
-    fontSize: '2.875rem',
+    fontSize: '3.25rem',
     color: theme.palette.primary.main,
     fontWeight: 800,
 }));
 
 const StyledTrialSpan = styled('span')(({ theme }) => ({
     marginLeft: '12px',
-    color: theme.palette.warning.main,
+    color: colors.orange[900],
     fontWeight: theme.fontWeight.bold,
 }));
 
