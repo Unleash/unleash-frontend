@@ -236,14 +236,10 @@ export default createTheme({
         },
         MuiSwitch: {
             styleOverrides: {
-                thumb: {
-                    zIndex: 2,
-                },
                 switchBase: {
                     zIndex: 1,
                     '&:not(.Mui-checked) .MuiTouchRipple-child': {
-                        color: colors.grey['700'],
-                        zIndex: 1,
+                        color: colors.grey['500'],
                     },
                 },
             },
