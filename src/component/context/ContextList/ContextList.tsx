@@ -24,6 +24,7 @@ import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightC
 import { sortTypes } from 'utils/sortTypes';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { ContextActionsCell } from './ContextActionsCell/ContextActionsCell';
+import { Adjust } from '@mui/icons-material';
 
 const ContextList: VFC = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -52,9 +53,13 @@ const ContextList: VFC = () => {
     const columns = useMemo(
         () => [
             {
+                id: 'Icon',
+                Cell: () => <Adjust color="" />,
+            },
+            {
                 Header: 'Context field name',
                 accessor: 'name',
-                width: '80%',
+                width: '90%',
                 Cell: ({
                     row: {
                         original: { name, description },
@@ -73,7 +78,9 @@ const ContextList: VFC = () => {
                 sortType: 'alphanumeric',
             },
             {
+                Header: 'Actions',
                 id: 'Actions',
+                align: 'center',
                 Cell: ({
                     row: {
                         original: { name },
@@ -87,7 +94,7 @@ const ContextList: VFC = () => {
                         }}
                     />
                 ),
-                width: 200,
+                width: 150,
                 disableSortBy: true,
             },
             {
@@ -104,7 +111,7 @@ const ContextList: VFC = () => {
 
     const initialState = useMemo(
         () => ({
-            sortBy: [{ id: 'sortOrder', desc: false }],
+            sortBy: [{ id: 'name', desc: false }],
             hiddenColumns: ['description', 'sortOrder'],
         }),
         []
@@ -145,6 +152,7 @@ const ContextList: VFC = () => {
             sortTypes,
             autoResetGlobalFilter: false,
             autoResetSortBy: false,
+            disableSortRemove: true,
         },
         useGlobalFilter,
         useSortBy

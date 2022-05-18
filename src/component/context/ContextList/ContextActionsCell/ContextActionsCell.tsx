@@ -1,13 +1,12 @@
-import { useContext, VFC } from 'react';
+import { VFC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Delete, Edit } from '@mui/icons-material';
-import { Box, IconButton, Tooltip } from '@mui/material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Box } from '@mui/material';
 import {
     DELETE_CONTEXT_FIELD,
     UPDATE_CONTEXT_FIELD,
 } from 'component/providers/AccessProvider/permissions';
-import AccessContext from 'contexts/AccessContext';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 
 interface IContextActionsCellProps {
     name: string;
@@ -18,7 +17,6 @@ export const ContextActionsCell: VFC<IContextActionsCellProps> = ({
     name,
     onDelete,
 }) => {
-    const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
 
     return (
@@ -29,35 +27,28 @@ export const ContextActionsCell: VFC<IContextActionsCellProps> = ({
                 justifyContent: 'flex-end',
             }}
         >
-            <ConditionallyRender
-                condition={hasAccess(UPDATE_CONTEXT_FIELD)}
-                show={
-                    <Tooltip title="Edit context field" arrow>
-                        <IconButton
-                            onClick={() => navigate(`/context/edit/${name}`)}
-                            size="large"
-                            data-loading
-                        >
-                            <Edit />
-                        </IconButton>
-                    </Tooltip>
-                }
-            />
-            <ConditionallyRender
-                condition={hasAccess(DELETE_CONTEXT_FIELD)}
-                show={
-                    <Tooltip title="Delete context field" arrow>
-                        <IconButton
-                            aria-label="delete"
-                            onClick={onDelete}
-                            size="large"
-                            data-loading
-                        >
-                            <Delete />
-                        </IconButton>
-                    </Tooltip>
-                }
-            />
+            <PermissionIconButton
+                permission={UPDATE_CONTEXT_FIELD}
+                onClick={() => navigate(`/context/edit/${name}`)}
+                data-loading
+                aria-label="edit"
+                tooltipProps={{
+                    title: 'Edit context field',
+                }}
+            >
+                <Edit />
+            </PermissionIconButton>
+            <PermissionIconButton
+                permission={DELETE_CONTEXT_FIELD}
+                onClick={onDelete}
+                data-loading
+                aria-label="delete"
+                tooltipProps={{
+                    title: 'Delete context field',
+                }}
+            >
+                <Delete />
+            </PermissionIconButton>
         </Box>
     );
 };
