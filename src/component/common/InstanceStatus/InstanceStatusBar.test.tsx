@@ -19,7 +19,7 @@ test('InstanceStatusBar should be hidden when the trial is far from expired', as
         <InstanceStatusBar
             instanceStatus={{
                 plan: 'pro',
-                instanceState: InstanceState.TRIAL,
+                state: InstanceState.TRIAL,
                 trialExpiry: addDays(new Date(), 15).toISOString(),
             }}
         />
@@ -35,7 +35,7 @@ test('InstanceStatusBar should warn when the trial is about to expire', async ()
         <InstanceStatusBar
             instanceStatus={{
                 plan: 'pro',
-                instanceState: InstanceState.TRIAL,
+                state: InstanceState.TRIAL,
                 trialExpiry: addDays(new Date(), 5).toISOString(),
             }}
         />
@@ -50,7 +50,7 @@ test('InstanceStatusBar should warn when the trial has expired', async () => {
         <InstanceStatusBar
             instanceStatus={{
                 plan: 'pro',
-                instanceState: InstanceState.TRIAL,
+                state: InstanceState.TRIAL,
                 trialExpiry: new Date().toISOString(),
             }}
         />

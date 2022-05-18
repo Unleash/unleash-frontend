@@ -15,7 +15,7 @@ export const InstanceStatusBar = ({
     const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
 
     if (
-        instanceStatus.instanceState === InstanceState.TRIAL &&
+        instanceStatus.state === InstanceState.TRIAL &&
         typeof trialDaysRemaining === 'number' &&
         trialDaysRemaining <= 0
     ) {
@@ -32,7 +32,7 @@ export const InstanceStatusBar = ({
     }
 
     if (
-        instanceStatus.instanceState === InstanceState.TRIAL &&
+        instanceStatus.state === InstanceState.TRIAL &&
         typeof trialDaysRemaining === 'number' &&
         trialDaysRemaining <= 10
     ) {
