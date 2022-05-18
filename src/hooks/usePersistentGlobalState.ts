@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
+import useSWR from 'swr';
 import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 type UsePersistentGlobalState<T> = () => [
@@ -30,4 +31,32 @@ export const createPersistentGlobalStateHook = <T extends object>(
     };
 
     return () => [container.useGlobalState(key)[0], setGlobalState];
+};
+
+export const usePersistentGlobalState = <T extends object>(
+    key: string,
+    initialValue: T
+) => {
+    const internalKey = `${key}:usePersistentGlobalState:v1`;
+    const { data, mutate } = useSWR<T>(internalKey, () => {
+        const state = getLocalStorageItem(internalKey) as T;
+        if (state !== undefined) {
+            return state;
+        }
+
+        return initialValue;
+    });
+
+    const output = useMemo(
+        () => (data === undefined ? initialValue : data),
+        [data] // eslint-disable-line react-hooks/exhaustive-deps
+    );
+
+    return {
+        data: output,
+        mutate: (value: T) => {
+            setLocalStorageItem(internalKey, value);
+            mutate();
+        },
+    };
 };

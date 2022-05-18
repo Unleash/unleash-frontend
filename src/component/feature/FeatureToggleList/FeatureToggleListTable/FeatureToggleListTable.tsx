@@ -22,11 +22,14 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
+import { usePersistentQuery } from 'hooks/usePersistentQuery';
 
 interface IExperimentProps {
     data: Record<string, any>[];
     isLoading?: boolean;
 }
+
+type IPageQuery = Partial<Record<'q' | 'sort' | 'order', string>>;
 
 const columns = [
     {
@@ -87,6 +90,8 @@ const columns = [
     },
 ];
 
+const defaultSort = { id: 'createdAt', desc: false };
+
 export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     data,
     isLoading = false,
@@ -94,13 +99,21 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
+    const [query, setQuery] = usePersistentQuery<IPageQuery>(
+        'FeatureToggleListTable'
+    );
 
     const initialState = useMemo(
         () => ({
-            sortBy: [{ id: 'createdAt', desc: false }],
+            sortBy: [
+                query.sort
+                    ? { id: query.sort, desc: query.order === 'desc' }
+                    : defaultSort,
+            ],
             hiddenColumns: ['description'],
+            globalFilter: query.q || '',
         }),
-        []
+        [] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const {
@@ -109,7 +122,7 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
         headerGroups,
         rows,
         prepareRow,
-        state: { globalFilter },
+        state: { globalFilter, sortBy },
         setGlobalFilter,
         setHiddenColumns,
     } = useTable(
@@ -120,6 +133,7 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
             sortTypes,
             autoResetGlobalFilter: false,
             disableSortRemove: true,
+            disableMultiSort: true,
         },
         useGlobalFilter,
         useSortBy
@@ -140,6 +154,24 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
             setHiddenColumns(['description']);
         }
     }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
+
+    useEffect(() => {
+        const tableState: IPageQuery = {};
+        if (sortBy[0]?.id !== defaultSort.id) {
+            tableState.sort = sortBy[0].id;
+        }
+        if (
+            sortBy[0].desc &&
+            !(sortBy[0]?.id === defaultSort.id && defaultSort.desc)
+        ) {
+            tableState.order = 'desc';
+        }
+        if (globalFilter) {
+            tableState.q = globalFilter;
+        }
+
+        setQuery(tableState);
+    }, [sortBy, globalFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <PageContent
