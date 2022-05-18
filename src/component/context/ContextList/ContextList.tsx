@@ -25,6 +25,7 @@ import { sortTypes } from 'utils/sortTypes';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { ContextActionsCell } from './ContextActionsCell/ContextActionsCell';
 import { Adjust } from '@mui/icons-material';
+import { Box } from '@mui/material';
 
 const ContextList: VFC = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -52,10 +53,14 @@ const ContextList: VFC = () => {
 
     const columns = useMemo(
         () => [
-            {
-                id: 'Icon',
-                Cell: () => <Adjust color="" />,
-            },
+            // {
+            //     id: 'Icon',
+            //     Cell: () => (
+            //         <Box sx={{ pl: 2, pr: 1 }}>
+            //             <Adjust color="disabled" />
+            //         </Box>
+            //     ),
+            // },
             {
                 Header: 'Context field name',
                 accessor: 'name',
@@ -162,7 +167,13 @@ const ContextList: VFC = () => {
         <PageContent
             header={
                 <PageHeader
-                    title={'Context fields'}
+                    title="Context fields"
+                    titleElement={
+                        <Box sx={{ display: 'flex', gap: 1.5 }}>
+                            <Adjust color="disabled" fontSize="large" /> Context
+                            fields
+                        </Box>
+                    }
                     actions={
                         <>
                             <TableSearch
