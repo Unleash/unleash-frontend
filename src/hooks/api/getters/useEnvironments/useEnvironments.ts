@@ -1,5 +1,5 @@
-import useSWR, { KeyedMutator } from 'swr';
-import { useMemo } from 'react';
+import useSWR from 'swr';
+import { useMemo, useCallback } from 'react';
 import { IEnvironmentResponse, IEnvironment } from 'interfaces/environments';
 import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
@@ -8,7 +8,8 @@ interface IUseEnvironmentsOutput {
     environments: IEnvironment[];
     loading: boolean;
     error?: Error;
-    mutateEnvironments: KeyedMutator<IEnvironmentResponse>;
+    mutateEnvironments: (environments: IEnvironment[]) => Promise<void>;
+    refetchEnvironments: () => Promise<void>;
 }
 
 export const useEnvironments = (): IUseEnvironmentsOutput => {
@@ -21,9 +22,21 @@ export const useEnvironments = (): IUseEnvironmentsOutput => {
         return data?.environments || [];
     }, [data]);
 
+    const refetchEnvironments = useCallback(async () => {
+        await mutate();
+    }, [mutate]);
+
+    const mutateEnvironments = useCallback(
+        async (environments: IEnvironment[]) => {
+            await mutate({ environments }, false);
+        },
+        [mutate]
+    );
+
     return {
         environments,
-        mutateEnvironments: mutate,
+        refetchEnvironments,
+        mutateEnvironments,
         loading: !error && !data,
         error,
     };

@@ -30,7 +30,7 @@ const ProjectEnvironmentList = ({
     const [envs, setEnvs] = useState<IProjectEnvironment[]>([]);
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-    const { environments, loading, error, mutateEnvironments } =
+    const { environments, loading, error, refetchEnvironments } =
         useEnvironments();
     const { project, refetch: refetchProject } = useProject(projectId);
     const { removeEnvironmentFromProject, addEnvironmentToProject } =
@@ -53,7 +53,7 @@ const ProjectEnvironmentList = ({
     }, [environments, project?.environments]);
 
     const refetch = () => {
-        mutateEnvironments();
+        refetchEnvironments();
         refetchProject();
     };
 
