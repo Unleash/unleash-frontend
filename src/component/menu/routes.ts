@@ -7,7 +7,6 @@ import { TagTypeList } from 'component/tags/TagTypeList/TagTypeList';
 import { AddonList } from 'component/addons/AddonList/AddonList';
 import Admin from 'component/admin';
 import AdminApi from 'component/admin/api';
-import AdminInvoice from 'component/admin/invoice/InvoiceAdminPage';
 import AdminUsers from 'component/admin/users/UsersAdmin';
 import { AuthSettings } from 'component/admin/auth/AuthSettings';
 import { Billing } from 'component/admin/billing/Billing';
@@ -460,14 +459,6 @@ export const routes: IRoute[] = [
         parent: '/admin',
         title: 'Billing',
         component: Billing,
-        type: 'protected',
-        menu: { adminSettings: true },
-    },
-    {
-        path: '/admin-invoices',
-        title: 'Invoices',
-        component: AdminInvoice,
-        hidden: true,
         type: 'protected',
         menu: { adminSettings: true },
     },

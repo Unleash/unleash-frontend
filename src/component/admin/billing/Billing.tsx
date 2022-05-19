@@ -1,12 +1,15 @@
 import AdminMenu from '../menu/AdminMenu';
 import { BillingInfoButton } from './BillingInfoButton/BillingInfoButton';
+import { BillingHistory } from './BillingHistory/BillingHistory';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { Alert, Divider, Grid, styled, Theme, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckIcon from '@mui/icons-material/Check';
 import { colors } from 'themes/colors';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { SxProps } from '@mui/system';
+import useUsers from 'hooks/api/getters/useUsers/useUsers';
+import useInvoices from 'hooks/api/getters/useInvoices/useInvoices';
 
 const GridRow: FC<{ sx?: SxProps<Theme> }> = ({ sx, children }) => {
     return (
@@ -15,7 +18,7 @@ const GridRow: FC<{ sx?: SxProps<Theme> }> = ({ sx, children }) => {
             item
             justifyContent="space-between"
             alignItems="center"
-            sx={sx}
+            sx={{ flexWrap: 'nowrap', ...sx }}
         >
             {children}
         </Grid>
@@ -28,10 +31,11 @@ const GridCol: FC<{ vertical?: boolean }> = ({
 }) => {
     return (
         <Grid
+            container={vertical}
             item
             display="flex"
             alignItems={vertical ? 'start' : 'center'}
-            direction={vertical ? 'column' : 'row'}
+            direction={vertical ? 'column' : undefined}
         >
             {children}
         </Grid>
@@ -53,12 +57,41 @@ const GridColLink: FC = ({ children }) => {
 };
 
 export const Billing = () => {
+    const { invoices } = useInvoices();
+
+    const price = {
+        pro: 80,
+        user: 15,
+    };
+    const seats = 5; // TODO: Fetch from response
+    const { users } = useUsers();
+
+    const freeAssigned = useMemo(
+        () => Math.min(users.length, seats),
+        [users, seats]
+    );
+
+    const paidAssigned = useMemo(
+        () => users.length - freeAssigned,
+        [users, freeAssigned]
+    );
+
+    const paidAssignedPrice = useMemo(
+        () => price.user * paidAssigned,
+        [price.user, paidAssigned]
+    );
+
+    const finalPrice = useMemo(
+        () => price.pro + paidAssignedPrice,
+        [price.pro, paidAssignedPrice]
+    );
+
     return (
         <div>
             <AdminMenu />
             <PageContent header="Billing">
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={5}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={5}>
                         <StyledInfoBox
                             sx={{ backgroundColor: colors.grey[200] }}
                         >
@@ -96,11 +129,14 @@ export const Billing = () => {
                             </StyledInfoLabel>
                         </StyledInfoBox>
                     </Grid>
-                    <Grid item xs={12} sm={7}>
+                    <Grid item xs={12} md={7}>
                         <StyledInfoBox
                             sx={{
                                 boxShadow: '0px 1px 20px rgba(45, 42, 89, 0.1)',
-                                padding: '52px',
+                                padding: {
+                                    xs: '20px',
+                                    md: '52px',
+                                },
                             }}
                         >
                             <Alert
@@ -108,7 +144,10 @@ export const Billing = () => {
                                 sx={theme => ({
                                     fontSize: theme.fontSizes.smallerBody,
                                     marginBottom: '24px',
-                                    marginTop: '-36px',
+                                    marginTop: {
+                                        xs: '-12px',
+                                        md: '-36px',
+                                    },
                                 })}
                             >
                                 After you have sent your billing information,
@@ -128,17 +167,18 @@ export const Billing = () => {
                                     </GridCol>
                                     <GridCol>
                                         <StyledPriceSpan>
-                                            $80.00
+                                            ${price.pro.toFixed(2)}
                                         </StyledPriceSpan>
                                     </GridCol>
                                 </GridRow>
                                 <GridRow sx={{ marginBottom: '12px' }}>
                                     <GridCol>
                                         <Typography>
-                                            <strong>5</strong> team members
+                                            <strong>{seats}</strong> team
+                                            members
                                             <GridColLink>
                                                 <Link to="/admin/users">
-                                                    5 assigned
+                                                    {freeAssigned} assigned
                                                 </Link>
                                             </GridColLink>
                                         </Typography>
@@ -161,13 +201,13 @@ export const Billing = () => {
                                             Paid members
                                             <GridColLink>
                                                 <Link to="/admin/users">
-                                                    3 assigned
+                                                    {paidAssigned} assigned
                                                 </Link>
                                             </GridColLink>
                                         </Typography>
                                         <StyledInfoLabel>
-                                            Add up to 15 extra paid members -
-                                            $15/month per member
+                                            Add up to 15 extra paid members - $
+                                            {price.user}/month per member
                                         </StyledInfoLabel>
                                     </GridCol>
                                     <GridCol>
@@ -177,7 +217,7 @@ export const Billing = () => {
                                                     theme.fontSizes.mainHeader,
                                             })}
                                         >
-                                            $45.00
+                                            ${paidAssignedPrice.toFixed(2)}
                                         </Typography>
                                     </GridCol>
                                 </GridRow>
@@ -209,7 +249,7 @@ export const Billing = () => {
                                                 fontSize: '2rem',
                                             })}
                                         >
-                                            $125.00
+                                            ${finalPrice.toFixed(2)}
                                         </Typography>
                                     </GridCol>
                                 </GridRow>
@@ -217,6 +257,7 @@ export const Billing = () => {
                         </StyledInfoBox>
                     </Grid>
                 </Grid>
+                <BillingHistory data={invoices} />
             </PageContent>
         </div>
     );
@@ -244,6 +285,7 @@ const StyledPlanBadge = styled('span')(({ theme }) => ({
 
 const StyledPlanSpan = styled('span')(({ theme }) => ({
     fontSize: '3.25rem',
+    lineHeight: 1,
     color: theme.palette.primary.main,
     fontWeight: 800,
 }));
