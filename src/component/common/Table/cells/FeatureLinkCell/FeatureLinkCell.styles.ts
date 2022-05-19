@@ -24,7 +24,7 @@ export const useStyles = makeStyles()(theme => ({
         paddingBottom: theme.spacing(1.5),
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
-        minWidth: '145px',
+        width: '145px',
         left: '50px',
     },
     container: {
