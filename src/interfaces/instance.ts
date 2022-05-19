@@ -5,6 +5,7 @@ export interface IInstanceStatus {
     trialExtended?: number;
     billingCenter?: string;
     state?: InstanceState;
+    seats?: number;
 }
 
 export enum InstanceState {

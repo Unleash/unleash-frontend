@@ -1,9 +1,14 @@
 import { styled, Button } from '@mui/material';
 import { colors } from 'themes/colors';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
-import { differenceInDays, parseISO } from 'date-fns';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
 import { Info } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AccessContext from 'contexts/AccessContext';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { ConditionallyRender } from '../ConditionallyRender/ConditionallyRender';
+import { calculateTrialDaysRemaining } from './InstanceStatus';
 
 interface IInstanceStatusBarProps {
     instanceStatus: IInstanceStatus;
@@ -12,6 +17,8 @@ interface IInstanceStatusBarProps {
 export const InstanceStatusBar = ({
     instanceStatus,
 }: IInstanceStatusBarProps) => {
+    const { hasAccess } = useContext(AccessContext);
+
     const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
 
     if (
@@ -26,7 +33,7 @@ export const InstanceStatusBar = ({
                     <strong>Heads up!</strong> Your free trial of the{' '}
                     {instanceStatus.plan.toUpperCase()} version has expired.
                 </span>
-                <ContactButton />
+                <UpgradeButton />
             </StyledBar>
         );
     }
@@ -45,7 +52,10 @@ export const InstanceStatusBar = ({
                     free trial of the {instanceStatus.plan.toUpperCase()}{' '}
                     version.
                 </span>
-                <ContactButton />
+                <ConditionallyRender
+                    condition={hasAccess(ADMIN)}
+                    show={<UpgradeButton />}
+                />
             </StyledBar>
         );
     }
@@ -53,23 +63,17 @@ export const InstanceStatusBar = ({
     return null;
 };
 
-const ContactButton = () => {
+const UpgradeButton = () => {
+    const navigate = useNavigate();
+
     return (
         <StyledButton
-            href="mailto:support@getunleash.zendesk.com"
+            onClick={() => navigate('/admin/billing')}
             variant="outlined"
         >
-            Contact us
+            Upgrade trial
         </StyledButton>
     );
-};
-
-const calculateTrialDaysRemaining = (
-    instanceStatus: IInstanceStatus
-): number | undefined => {
-    return instanceStatus.trialExpiry
-        ? differenceInDays(parseISO(instanceStatus.trialExpiry), new Date())
-        : undefined;
 };
 
 // TODO - Cleanup to use theme instead of colors
