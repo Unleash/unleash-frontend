@@ -67,6 +67,7 @@ export const ProjectFeatureToggles = ({
         featureId: '',
         environmentName: '',
     });
+    const [scrollAmount, setScrollAmount] = useState(0);
     const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
     const { uiConfig } = useUiConfig();
@@ -75,6 +76,12 @@ export const ProjectFeatureToggles = ({
     );
     const { refetch } = useProject(projectId);
     const { setToastData, setToastApiError } = useToast();
+
+    const onScrollHandler = (ref: HTMLDivElement | null) => {
+        if (ref) {
+            setScrollAmount(ref.scrollLeft);
+        }
+    };
 
     const data = useMemo<ListItemType[]>(() => {
         if (loading) {
@@ -177,6 +184,7 @@ export const ProjectFeatureToggles = ({
                 accessor: 'name',
                 Cell: ({ value }: { value: string }) => (
                     <FeatureLinkCell
+                        scrollAmount={scrollAmount}
                         title={value}
                         to={`/projects/${projectId}/features/${value}`}
                     />
@@ -230,7 +238,7 @@ export const ProjectFeatureToggles = ({
                 disableSortBy: true,
             },
         ],
-        [projectId, environments, onToggle, loading]
+        [projectId, environments, onToggle, loading, scrollAmount]
     );
 
     const initialState = useMemo(
@@ -271,11 +279,13 @@ export const ProjectFeatureToggles = ({
         () => filters?.find(filterRow => filterRow?.id === 'name')?.value || '',
         [filters]
     );
+
     return (
         <PageContent
             isLoading={loading}
             className={styles.container}
             bodyClass={styles.bodyClass}
+            onScrollHandler={onScrollHandler}
             header={
                 <PageHeader
                     className={styles.title}

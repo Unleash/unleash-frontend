@@ -16,6 +16,17 @@ export const useStyles = makeStyles()(theme => ({
             },
         },
     },
+    innerContainer: {
+        position: 'absolute',
+        zIndex: 500,
+        backgroundColor: '#fff',
+        paddingTop: theme.spacing(1.5),
+        paddingBottom: theme.spacing(1.5),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        minWidth: '145px',
+        left: '50px',
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',

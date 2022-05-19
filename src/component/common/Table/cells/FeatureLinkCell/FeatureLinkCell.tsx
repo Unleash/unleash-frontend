@@ -5,20 +5,26 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { useStyles } from './FeatureLinkCell.styles';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
 import { useSearchHighlightContext } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-
+import classnames from 'classnames';
 interface IFeatureLinkCellProps {
     title?: string;
     to: string;
     subtitle?: string;
+    scrollAmount: number;
 }
 
 export const FeatureLinkCell: FC<IFeatureLinkCellProps> = ({
     title,
     to,
     subtitle,
+    scrollAmount,
 }) => {
     const { classes: styles } = useStyles();
     const search = useSearchHighlightContext();
+
+    const innerContainerClasses = classnames({
+        [styles.innerContainer]: scrollAmount > 200,
+    });
 
     return (
         <Link
@@ -27,33 +33,35 @@ export const FeatureLinkCell: FC<IFeatureLinkCellProps> = ({
             underline="hover"
             className={styles.wrapper}
         >
-            <div className={styles.container}>
-                <span
-                    data-loading
-                    className={styles.title}
-                    style={{
-                        WebkitLineClamp: Boolean(subtitle) ? 1 : 2,
-                        lineClamp: Boolean(subtitle) ? 1 : 2,
-                    }}
-                >
-                    <Highlighter search={search}>{title}</Highlighter>
-                </span>
-                <ConditionallyRender
-                    condition={Boolean(subtitle)}
-                    show={
-                        <>
-                            <Typography
-                                className={styles.description}
-                                component="span"
-                                data-loading
-                            >
-                                <Highlighter search={search}>
-                                    {subtitle}
-                                </Highlighter>
-                            </Typography>
-                        </>
-                    }
-                />
+            <div className={innerContainerClasses}>
+                <div className={styles.container}>
+                    <span
+                        data-loading
+                        className={styles.title}
+                        style={{
+                            WebkitLineClamp: Boolean(subtitle) ? 1 : 2,
+                            lineClamp: Boolean(subtitle) ? 1 : 2,
+                        }}
+                    >
+                        <Highlighter search={search}>{title}</Highlighter>
+                    </span>
+                    <ConditionallyRender
+                        condition={Boolean(subtitle)}
+                        show={
+                            <>
+                                <Typography
+                                    className={styles.description}
+                                    component="span"
+                                    data-loading
+                                >
+                                    <Highlighter search={search}>
+                                        {subtitle}
+                                    </Highlighter>
+                                </Typography>
+                            </>
+                        }
+                    />
+                </div>
             </div>
         </Link>
     );

@@ -1,10 +1,11 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useRef } from 'react';
 import classnames from 'classnames';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { Paper, PaperProps } from '@mui/material';
 import { useStyles } from './PageContent.styles';
 import useLoading from 'hooks/useLoading';
 import { ConditionallyRender } from '../ConditionallyRender/ConditionallyRender';
+import { useAsyncDebounce } from 'react-table';
 
 interface IPageContentProps extends PaperProps {
     header?: ReactNode;
@@ -18,6 +19,7 @@ interface IPageContentProps extends PaperProps {
      */
     disableBorder?: boolean;
     bodyClass?: string;
+    onScrollHandler?: (ref: HTMLDivElement | null) => void;
 }
 
 export const PageContent: FC<IPageContentProps> = ({
@@ -28,9 +30,11 @@ export const PageContent: FC<IPageContentProps> = ({
     bodyClass = '',
     isLoading = false,
     className,
+    onScrollHandler,
     ...rest
 }) => {
     const { classes: styles } = useStyles();
+    const scrollRef = useRef<HTMLDivElement | null>(null);
     const ref = useLoading(isLoading);
 
     const headerClasses = classnames(styles.headerContainer, {
@@ -47,6 +51,14 @@ export const PageContent: FC<IPageContentProps> = ({
     );
 
     const paperProps = disableBorder ? { elevation: 0 } : {};
+
+    const onScroll = () => {
+        if (onScrollHandler) {
+            onScrollHandler(scrollRef.current);
+        }
+    };
+
+    const debouncedScroll = useAsyncDebounce(onScroll, 50);
 
     return (
         <div ref={ref}>
@@ -67,7 +79,13 @@ export const PageContent: FC<IPageContentProps> = ({
                         </div>
                     }
                 />
-                <div className={bodyClasses}>{children}</div>
+                <div
+                    onScroll={debouncedScroll}
+                    ref={scrollRef}
+                    className={bodyClasses}
+                >
+                    {children}
+                </div>
             </Paper>
         </div>
     );
