@@ -10,14 +10,14 @@ interface IFeatureLinkCellProps {
     title?: string;
     to: string;
     subtitle?: string;
-    scrollAmount: number;
+    scrollAmount?: number;
 }
 
 export const FeatureLinkCell: FC<IFeatureLinkCellProps> = ({
     title,
     to,
     subtitle,
-    scrollAmount,
+    scrollAmount = 0,
 }) => {
     const { classes: styles } = useStyles();
     const search = useSearchHighlightContext();
