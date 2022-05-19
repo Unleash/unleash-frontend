@@ -53,14 +53,21 @@ const ContextList: VFC = () => {
 
     const columns = useMemo(
         () => [
-            // {
-            //     id: 'Icon',
-            //     Cell: () => (
-            //         <Box sx={{ pl: 2, pr: 1 }}>
-            //             <Adjust color="disabled" />
-            //         </Box>
-            //     ),
-            // },
+            {
+                id: 'Icon',
+                Cell: () => (
+                    <Box
+                        sx={{
+                            pl: 2,
+                            pr: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Adjust color="disabled" />
+                    </Box>
+                ),
+            },
             {
                 Header: 'Context field name',
                 accessor: 'name',
@@ -168,12 +175,6 @@ const ContextList: VFC = () => {
             header={
                 <PageHeader
                     title="Context fields"
-                    titleElement={
-                        <Box sx={{ display: 'flex', gap: 1.5 }}>
-                            <Adjust color="disabled" fontSize="large" /> Context
-                            fields
-                        </Box>
-                    }
                     actions={
                         <>
                             <TableSearch
