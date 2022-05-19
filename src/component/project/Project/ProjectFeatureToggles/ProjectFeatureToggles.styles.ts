@@ -24,6 +24,9 @@ export const useStyles = makeStyles()(theme => ({
             },
         },
     },
+    tableRow: {
+        height: '75px',
+    },
     bodyClass: {
         overflowX: 'auto',
         padding: theme.spacing(4),
