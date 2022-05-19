@@ -55,6 +55,7 @@ exports[`renders an empty list correctly 1`] = `
       </div>
       <div
         className="tss-54jt3w-bodyContainer"
+        onScroll={[Function]}
       >
         <ul
           className="MuiList-root MuiList-padding mui-h4y409-MuiList-root"
