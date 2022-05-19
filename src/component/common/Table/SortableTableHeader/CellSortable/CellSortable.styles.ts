@@ -52,6 +52,7 @@ export const useStyles = makeStyles()(theme => ({
             height: 0,
             content: 'attr(data-text)',
             visibility: 'hidden',
+            overflow: 'hidden',
         },
     },
 }));
