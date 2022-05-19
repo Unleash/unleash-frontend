@@ -33,7 +33,6 @@ export const InstanceStatus: FC = ({ children }) => {
 
     return (
         <div hidden={!instanceStatus} style={{ height: '100%' }}>
-            {JSON.stringify(dialogOpen)}
             <ConditionallyRender
                 condition={Boolean(instanceStatus)}
                 show={() => (
