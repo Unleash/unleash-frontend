@@ -69,7 +69,7 @@ const ContextList: VFC = () => {
                 ),
             },
             {
-                Header: 'Context field name',
+                Header: 'Name',
                 accessor: 'name',
                 width: '90%',
                 Cell: ({
@@ -214,15 +214,15 @@ const ContextList: VFC = () => {
                         condition={globalFilter?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No features or projects found matching &ldquo;
+                                No contexts found matching &ldquo;
                                 {globalFilter}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No features available. Get started by adding a
-                                new feature toggle.
+                                No contexts available. Get started by adding
+                                one.
                             </TablePlaceholder>
                         }
                     />
