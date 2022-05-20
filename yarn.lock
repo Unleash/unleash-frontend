@@ -4745,10 +4745,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-msw@0.40.0:
-  version "0.40.0"
-  resolved "https://registry.yarnpkg.com/msw/-/msw-0.40.0.tgz#db66848f6218bb678e8bd8f711ea82883b6ca094"
-  integrity sha512-aJzrpaEdII0vhP/F8ROgSVpIfzUIE4SHD4/NXpKey1vr907enDtZNs1CU9BRSFfKZUfYCBEvZOYk4ZkP1o0FKA==
+msw@0.40.1:
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/msw/-/msw-0.40.1.tgz#fc7dddbb21e9e742618120b951358c7bb561205a"
+  integrity sha512-8fL9whlIZR3rlhMIyDxIBUdT8Ru44TH2QbD46A64oaxqYb+GoZ9uk866rRKxJ8uBNentyaLqGM9VbNvftvwMjw==
   dependencies:
     "@mswjs/cookies" "^0.2.0"
     "@mswjs/interceptors" "^0.15.1"
@@ -5505,10 +5505,10 @@ safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@1.51.0:
-  version "1.51.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.51.0.tgz#25ea36cf819581fe1fe8329e8c3a4eaaf70d2845"
-  integrity sha512-haGdpTgywJTvHC2b91GSq+clTKGbtkkZmVAb82jZQN/wTy6qs8DdFm2lhEQbEwrY0QDRgSQ3xDurqM977C3noA==
+sass@1.52.0:
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.52.0.tgz#3dc755ff459858ce7062887181648701f028c4f5"
+  integrity sha512-6EnTglag2oVD8sNJCxUi2Jd3ICH9tJ5Mqudt/gIZNBR2uKJUBZuTpW9O1t04SkDLP7VFa76FCWTV2rwchqM8Kw==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
