@@ -1,7 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
-import useSWR from 'swr';
-import { getBasePath } from 'utils/formatPath';
 import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 type UsePersistentGlobalState<T> = () => [
@@ -21,7 +19,7 @@ export const createPersistentGlobalStateHook = <T extends object>(
     initialValue: T
 ): UsePersistentGlobalState<T> => {
     const container = createGlobalState<{ [key: string]: T }>({
-        [key]: getLocalStorageItem(key) ?? initialValue,
+        [key]: getLocalStorageItem<T>(key) ?? initialValue,
     });
 
     const setGlobalState = (value: React.SetStateAction<T>) => {
@@ -32,43 +30,4 @@ export const createPersistentGlobalStateHook = <T extends object>(
     };
 
     return () => [container.useGlobalState(key)[0], setGlobalState];
-};
-
-export const usePersistentGlobalState = <T extends object>(
-    key: string,
-    initialValue: T
-) => {
-    const internalKey = `${getBasePath()}:${key}:usePersistentGlobalState:v1`;
-    const { data, mutate } = useSWR<T>(internalKey, () => {
-        const state = getLocalStorageItem(internalKey) as T;
-        if (state !== undefined) {
-            return state;
-        }
-
-        return initialValue;
-    });
-
-    const output = useMemo(() => {
-        if (data) {
-            return data;
-        }
-        const state = getLocalStorageItem(internalKey);
-        if (state) {
-            return state as T;
-        }
-        return initialValue;
-    }, [data, initialValue, internalKey]);
-
-    const onUpdate = useCallback(
-        (value: T) => {
-            setLocalStorageItem(internalKey, value);
-            mutate();
-        },
-        [mutate, internalKey]
-    );
-
-    return {
-        data: output,
-        mutate: onUpdate,
-    };
 };

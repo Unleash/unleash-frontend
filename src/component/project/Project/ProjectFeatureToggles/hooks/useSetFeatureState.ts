@@ -24,7 +24,7 @@ export const useSetFeatureState = () => {
                 throw e;
             }
         },
-        [] // eslint-disable-line react-hooks/exhaustive-deps
+        [createRequest, makeRequest]
     );
 
     return { setFeatureState, errors };
