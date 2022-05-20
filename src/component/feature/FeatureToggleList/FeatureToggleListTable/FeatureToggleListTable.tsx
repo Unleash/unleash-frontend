@@ -1,4 +1,4 @@
-import { useEffect, useMemo, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
@@ -105,21 +105,18 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
         defaultSort
     );
 
-    const initialState = useMemo(
-        () => ({
-            sortBy: [
-                {
-                    id: searchParams.get('sort') || storedParams.id,
-                    desc: searchParams.has('order')
-                        ? searchParams.get('order') === 'desc'
-                        : storedParams.desc,
-                },
-            ],
-            hiddenColumns: ['description'],
-            globalFilter: searchParams.get('search') || '',
-        }),
-        [] // eslint-disable-line react-hooks/exhaustive-deps
-    );
+    const [initialState] = useState(() => ({
+        sortBy: [
+            {
+                id: searchParams.get('sort') || storedParams.id,
+                desc: searchParams.has('order')
+                    ? searchParams.get('order') === 'desc'
+                    : storedParams.desc,
+            },
+        ],
+        hiddenColumns: ['description'],
+        globalFilter: searchParams.get('search') || '',
+    }));
 
     const {
         getTableProps,
