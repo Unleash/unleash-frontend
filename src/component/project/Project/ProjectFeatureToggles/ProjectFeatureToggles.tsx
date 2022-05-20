@@ -28,6 +28,7 @@ import {
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import useProject from 'hooks/api/getters/useProject/useProject';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import useToast from 'hooks/useToast';
 import { ENVIRONMENT_STRATEGY_ERROR } from 'constants/apiErrors';
 import EnvironmentStrategyDialog from 'component/common/EnvironmentStrategiesDialog/EnvironmentStrategyDialog';
@@ -55,6 +56,8 @@ type ListItemType = Pick<
         };
     };
 };
+
+const staticColumns = ['Actions', 'name'];
 
 export const ProjectFeatureToggles = ({
     features,
@@ -233,22 +236,52 @@ export const ProjectFeatureToggles = ({
         [projectId, environments, onToggle, loading]
     );
     const [searchParams, setSearchParams] = useSearchParams();
+    const [storedParams, setStoredParams] = useLocalStorage<{
+        columns?: string[];
+    }>(`${projectId}:ProjectFeatureToggles`, {});
 
     const initialState = useMemo(
-        () => ({
-            sortBy: [
-                {
-                    id: searchParams.get('sort') || 'createdAt',
-                    desc: searchParams.has('order')
-                        ? searchParams.get('order') === 'desc'
-                        : false,
-                },
-            ],
-            hiddenColumns: environments
+        () => {
+            const allColumnIds = columns.map(
+                (column: any) => column?.accessor || column?.id
+            );
+            let hiddenColumns = environments
                 .filter((_, index) => index >= 3)
-                .map(environment => `environments.${environment}`),
-            filters: [{ id: 'name', value: searchParams.get('search') || '' }],
-        }),
+                .map(environment => `environments.${environment}`);
+
+            if (searchParams.has('columns')) {
+                const columnsInParams =
+                    searchParams.get('columns')?.split(',') || [];
+                const visibleColumns = [...staticColumns, ...columnsInParams];
+                hiddenColumns = allColumnIds.filter(
+                    columnId => !visibleColumns.includes(columnId)
+                );
+            } else if (storedParams.columns) {
+                console.log('storedParams.columns', storedParams.columns);
+                const visibleColumns = [
+                    ...staticColumns,
+                    ...storedParams.columns,
+                ];
+                hiddenColumns = allColumnIds.filter(
+                    columnId => !visibleColumns.includes(columnId)
+                );
+            }
+
+            return {
+                sortBy: [
+                    {
+                        id: searchParams.get('sort') || 'createdAt',
+                        desc: searchParams.has('order')
+                            ? searchParams.get('order') === 'desc'
+                            : false,
+                    },
+                ],
+                hiddenColumns,
+                filters: [
+                    { id: 'name', value: searchParams.get('search') || '' },
+                ],
+            };
+        },
         [environments] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
@@ -256,7 +289,7 @@ export const ProjectFeatureToggles = ({
         allColumns,
         headerGroups,
         rows,
-        state: { filters, sortBy },
+        state: { filters, sortBy, hiddenColumns },
         getTableBodyProps,
         getTableProps,
         prepareRow,
@@ -284,6 +317,9 @@ export const ProjectFeatureToggles = ({
     );
 
     useEffect(() => {
+        if (loading) {
+            return;
+        }
         const tableState: Record<string, string> = {};
         tableState.sort = sortBy[0].id;
         if (sortBy[0].desc) {
@@ -292,11 +328,27 @@ export const ProjectFeatureToggles = ({
         if (filter) {
             tableState.search = filter;
         }
+        tableState.columns = allColumns
+            .map(({ id }) => id)
+            .filter(
+                id =>
+                    !staticColumns.includes(id) && !hiddenColumns?.includes(id)
+            )
+            .join(',');
 
         setSearchParams(tableState, {
             replace: true,
         });
-    }, [sortBy, filter, setSearchParams]);
+    }, [loading, sortBy, hiddenColumns, filter, setSearchParams, allColumns]);
+
+    const onCustomizeColumns = useCallback(
+        visibleColumns => {
+            setStoredParams({
+                columns: visibleColumns,
+            });
+        },
+        [setStoredParams]
+    );
 
     return (
         <PageContent
@@ -315,9 +367,11 @@ export const ProjectFeatureToggles = ({
                             />
                             <ColumnsMenu
                                 allColumns={allColumns}
-                                staticColumns={['Actions', 'name']}
+                                staticColumns={staticColumns}
                                 dividerAfter={['createdAt']}
                                 dividerBefore={['Actions']}
+                                isCustomized={Boolean(storedParams.columns)}
+                                onCustomize={onCustomizeColumns}
                                 setHiddenColumns={setHiddenColumns}
                             />
                             <PageHeader.Divider />

@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { getBasePath } from 'utils/formatPath';
+import { basePath } from 'utils/formatPath';
 import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 export const useLocalStorage = <T extends object>(
     key: string,
     initialValue: T
 ) => {
-    const internalKey = `${getBasePath()}:${key}:useLocalStorage:v1`;
+    const internalKey = `${basePath}:${key}:useLocalStorage:v1`;
     const [value, setValue] = useState<T>(() => {
         const state = getLocalStorageItem<T>(internalKey);
         if (state === undefined) {
