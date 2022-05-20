@@ -11,6 +11,7 @@ import { BillingHistory } from './BillingHistory/BillingHistory';
 import { useInstanceStatus } from 'hooks/api/getters/useInstanceStatus/useInstanceStatus';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { InstanceState } from 'interfaces/instance';
+import { calculateTrialDaysRemaining } from 'component/common/InstanceStatus/InstanceStatus';
 
 const GridRow: FC<{ sx?: SxProps<Theme> }> = ({ sx, children }) => {
     return (
@@ -61,6 +62,12 @@ export const BillingGrid: FC = () => {
     const { instanceStatus } = useInstanceStatus();
     const { users } = useUsers();
     const { invoices } = useInvoices();
+    const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
+
+    const statusExpired =
+        instanceStatus?.state === InstanceState.TRIAL &&
+        typeof trialDaysRemaining === 'number' &&
+        trialDaysRemaining <= 0;
 
     const price = {
         pro: 80,
@@ -68,31 +75,11 @@ export const BillingGrid: FC = () => {
     };
 
     const seats = instanceStatus?.seats ?? 5;
-
-    const freeAssigned = useMemo(
-        () => Math.min(users.length, seats),
-        [users, seats]
-    );
-
-    const paidAssigned = useMemo(
-        () => users.length - freeAssigned,
-        [users, freeAssigned]
-    );
-
-    const paidAssignedPrice = useMemo(
-        () => price.user * paidAssigned,
-        [price.user, paidAssigned]
-    );
-
-    const finalPrice = useMemo(
-        () => price.pro + paidAssignedPrice,
-        [price.pro, paidAssignedPrice]
-    );
-
-    const inactive = useMemo(
-        () => instanceStatus?.state !== InstanceState.ACTIVE,
-        [instanceStatus]
-    );
+    const freeAssigned = Math.min(users.length, seats);
+    const paidAssigned = users.length - freeAssigned;
+    const paidAssignedPrice = price.user * paidAssigned;
+    const finalPrice = price.pro + paidAssignedPrice;
+    const inactive = instanceStatus?.state !== InstanceState.ACTIVE;
 
     return (
         <>
@@ -185,8 +172,18 @@ export const BillingGrid: FC = () => {
                                             InstanceState.TRIAL
                                         }
                                         show={
-                                            <StyledTrialSpan>
-                                                Trial
+                                            <StyledTrialSpan
+                                                sx={{
+                                                    color: statusExpired
+                                                        ? colors.red[800]
+                                                        : colors.orange[900],
+                                                }}
+                                            >
+                                                {statusExpired
+                                                    ? 'Trial expired'
+                                                    : instanceStatus?.trialExtended
+                                                    ? 'Extended Trial'
+                                                    : 'Trial'}
                                             </StyledTrialSpan>
                                         }
                                     />
@@ -314,7 +311,6 @@ const StyledPlanSpan = styled('span')(({ theme }) => ({
 
 const StyledTrialSpan = styled('span')(({ theme }) => ({
     marginLeft: '12px',
-    color: colors.orange[900],
     fontWeight: theme.fontWeight.bold,
 }));
 

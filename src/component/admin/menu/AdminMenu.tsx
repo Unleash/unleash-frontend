@@ -79,7 +79,7 @@ function AdminMenu() {
                         </NavLink>
                     }
                 />
-                <Tab
+                <Tab // TODO: conditionally show this tab
                     value="/admin/billing"
                     label={
                         <NavLink to="/admin/billing" style={createNavLinkStyle}>

@@ -1,8 +1,8 @@
-import { styled, Button } from '@mui/material';
+import { styled, Button, Typography } from '@mui/material';
 import { colors } from 'themes/colors';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
-import { Info } from '@mui/icons-material';
+import { Info, Warning } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AccessContext from 'contexts/AccessContext';
@@ -27,14 +27,22 @@ export const InstanceStatusBar = ({
         trialDaysRemaining <= 0
     ) {
         return (
-            <StyledBar data-testid={INSTANCE_STATUS_BAR_ID}>
-                <StyledInfoIcon />
-                <span>
-                    <strong>Heads up!</strong> Your free trial of the{' '}
-                    {instanceStatus.plan.toUpperCase()} version has expired.
-                </span>
-                <UpgradeButton />
-            </StyledBar>
+            <StyledWarningBar data-testid={INSTANCE_STATUS_BAR_ID}>
+                <StyledWarningIcon />
+                <Typography
+                    sx={theme => ({
+                        fontSize: theme.fontSizes.smallBody,
+                    })}
+                >
+                    <strong>Warning!</strong> Your free {instanceStatus.plan}{' '}
+                    trial has expired. <strong>Upgrade trial</strong> otherwise
+                    your <strong>account will be deleted.</strong>
+                </Typography>
+                <ConditionallyRender
+                    condition={hasAccess(ADMIN)}
+                    show={<UpgradeButton />}
+                />
+            </StyledWarningBar>
         );
     }
 
@@ -44,19 +52,22 @@ export const InstanceStatusBar = ({
         trialDaysRemaining <= 10
     ) {
         return (
-            <StyledBar data-testid={INSTANCE_STATUS_BAR_ID}>
+            <StyledInfoBar data-testid={INSTANCE_STATUS_BAR_ID}>
                 <StyledInfoIcon />
-                <span>
+                <Typography
+                    sx={theme => ({
+                        fontSize: theme.fontSizes.smallBody,
+                    })}
+                >
                     <strong>Heads up!</strong> You have{' '}
-                    <strong>{trialDaysRemaining} days</strong> remaining of your
-                    free trial of the {instanceStatus.plan.toUpperCase()}{' '}
-                    version.
-                </span>
+                    <strong>{trialDaysRemaining} days</strong> left of your free{' '}
+                    {instanceStatus.plan} trial.
+                </Typography>
                 <ConditionallyRender
                     condition={hasAccess(ADMIN)}
                     show={<UpgradeButton />}
                 />
-            </StyledBar>
+            </StyledInfoBar>
         );
     }
 
@@ -77,7 +88,21 @@ const UpgradeButton = () => {
 };
 
 // TODO - Cleanup to use theme instead of colors
-const StyledBar = styled('aside')(({ theme }) => ({
+const StyledWarningBar = styled('aside')(({ theme }) => ({
+    position: 'relative',
+    zIndex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing(2),
+    gap: theme.spacing(1),
+    borderBottom: '1px solid',
+    borderColor: colors.orange[500],
+    background: colors.orange[100],
+    color: colors.orange[900],
+}));
+
+const StyledInfoBar = styled('aside')(({ theme }) => ({
     position: 'relative',
     zIndex: 1,
     display: 'flex',
@@ -98,6 +123,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 // TODO - Cleanup to use theme instead of colors
+const StyledWarningIcon = styled(Warning)(({ theme }) => ({
+    color: theme.palette.warning.main,
+}));
+
 const StyledInfoIcon = styled(Info)(({ theme }) => ({
     color: colors.blue[500],
 }));
