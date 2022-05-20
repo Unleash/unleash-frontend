@@ -1,6 +1,6 @@
 import { useEffect, useMemo, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import {
     Table,
@@ -22,14 +22,14 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
-import { usePersistentQuery } from 'hooks/usePersistentQuery';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
-interface IExperimentProps {
+interface FeatureToggleListTableProps {
     data: Record<string, any>[];
     isLoading?: boolean;
 }
 
-type IPageQuery = Partial<Record<'q' | 'sort' | 'order', string>>;
+type PageQueryType = Partial<Record<'sort' | 'order' | 'search', string>>;
 
 const columns = [
     {
@@ -92,26 +92,31 @@ const columns = [
 
 const defaultSort = { id: 'createdAt', desc: false };
 
-export const FeatureToggleListTable: VFC<IExperimentProps> = ({
+export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
     data,
     isLoading = false,
 }) => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
-    const [query, setQuery] = usePersistentQuery<IPageQuery>(
-        'FeatureToggleListTable'
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [storedParams, setStoredParams] = useLocalStorage(
+        'FeatureToggleListTable:v1',
+        defaultSort
     );
 
     const initialState = useMemo(
         () => ({
             sortBy: [
-                query.sort
-                    ? { id: query.sort, desc: query.order === 'desc' }
-                    : defaultSort,
+                {
+                    id: searchParams.get('sort') || storedParams.id,
+                    desc: searchParams.has('order')
+                        ? searchParams.get('order') === 'desc'
+                        : storedParams.desc,
+                },
             ],
             hiddenColumns: ['description'],
-            globalFilter: query.q || '',
+            globalFilter: searchParams.get('search') || '',
         }),
         [] // eslint-disable-line react-hooks/exhaustive-deps
     );
@@ -156,22 +161,20 @@ export const FeatureToggleListTable: VFC<IExperimentProps> = ({
     }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
 
     useEffect(() => {
-        const tableState: IPageQuery = {};
-        if (sortBy[0]?.id !== defaultSort.id) {
-            tableState.sort = sortBy[0].id;
-        }
-        if (
-            sortBy[0].desc &&
-            !(sortBy[0]?.id === defaultSort.id && defaultSort.desc)
-        ) {
+        const tableState: PageQueryType = {};
+        tableState.sort = sortBy[0].id;
+        if (sortBy[0].desc) {
             tableState.order = 'desc';
         }
         if (globalFilter) {
-            tableState.q = globalFilter;
+            tableState.search = globalFilter;
         }
 
-        setQuery(tableState);
-    }, [sortBy, globalFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+        setSearchParams(tableState, {
+            replace: true,
+        });
+        setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
+    }, [sortBy, globalFilter, setSearchParams, setStoredParams]);
 
     return (
         <PageContent

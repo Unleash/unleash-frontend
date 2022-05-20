@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useFilters, useSortBy, useTable } from 'react-table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -232,22 +232,31 @@ export const ProjectFeatureToggles = ({
         ],
         [projectId, environments, onToggle, loading]
     );
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const initialState = useMemo(
         () => ({
-            sortBy: [{ id: 'createdAt', desc: false }],
+            sortBy: [
+                {
+                    id: searchParams.get('sort') || 'createdAt',
+                    desc: searchParams.has('order')
+                        ? searchParams.get('order') === 'desc'
+                        : false,
+                },
+            ],
             hiddenColumns: environments
                 .filter((_, index) => index >= 3)
                 .map(environment => `environments.${environment}`),
+            filters: [{ id: 'name', value: searchParams.get('search') || '' }],
         }),
-        [environments]
+        [environments] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const {
         allColumns,
         headerGroups,
         rows,
-        state: { filters },
+        state: { filters, sortBy },
         getTableBodyProps,
         getTableProps,
         prepareRow,
@@ -268,9 +277,26 @@ export const ProjectFeatureToggles = ({
     );
 
     const filter = useMemo(
-        () => filters?.find(filterRow => filterRow?.id === 'name')?.value || '',
-        [filters]
+        () =>
+            filters?.find(filterRow => filterRow?.id === 'name')?.value ||
+            initialState.filters[0].value,
+        [filters, initialState]
     );
+
+    useEffect(() => {
+        const tableState: Record<string, string> = {};
+        tableState.sort = sortBy[0].id;
+        if (sortBy[0].desc) {
+            tableState.order = 'desc';
+        }
+        if (filter) {
+            tableState.search = filter;
+        }
+
+        setSearchParams(tableState, {
+            replace: true,
+        });
+    }, [sortBy, filter, setSearchParams]);
 
     return (
         <PageContent
