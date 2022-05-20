@@ -29,6 +29,8 @@ interface IColumnsMenuProps {
     staticColumns?: string[];
     dividerBefore?: string[];
     dividerAfter?: string[];
+    isCustomized?: boolean;
+    onCustomize?: (columns: string[]) => void;
     setHiddenColumns: (
         hiddenColumns:
             | string[]
@@ -41,6 +43,8 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
     staticColumns = [],
     dividerBefore = [],
     dividerAfter = [],
+    isCustomized = false,
+    onCustomize = () => {},
     setHiddenColumns,
 }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -51,6 +55,10 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
     useEffect(() => {
+        if (isCustomized) {
+            return;
+        }
+
         const setVisibleColumns = (
             columns: string[],
             environmentsToShow: number = 0
@@ -143,6 +151,15 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                         />,
                         <MenuItem
                             onClick={() => {
+                                onCustomize([
+                                    ...allColumns
+                                        .filter(({ isVisible }) => isVisible)
+                                        .map(({ id }) => id)
+                                        .filter(
+                                            id => !staticColumns.includes(id)
+                                        ),
+                                    ...(!column.isVisible ? [column.id] : []),
+                                ]);
                                 column.toggleHidden(column.isVisible);
                             }}
                             disabled={staticColumns.includes(column.id)}
