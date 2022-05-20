@@ -40,10 +40,20 @@ export const useStyles = makeStyles()(theme => ({
         fontWeight: theme.fontWeight.bold,
     },
     label: {
+        display: 'flex',
+        flexDirection: 'column',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         overflowX: 'hidden',
         overflowY: 'visible',
+        '::after': {
+            fontWeight: 'bold',
+            display: 'inline-block',
+            height: 0,
+            content: 'attr(data-text)',
+            visibility: 'hidden',
+            overflow: 'hidden',
+        },
     },
     alignLeft: {
         justifyContent: 'flex-start',
