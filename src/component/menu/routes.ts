@@ -1,7 +1,6 @@
 import { FeatureToggleListContainer } from 'component/feature/FeatureToggleList/FeatureToggleListContainer';
 import { StrategyView } from 'component/strategies/StrategyView/StrategyView';
 import { StrategiesList } from 'component/strategies/StrategiesList/StrategiesList';
-import { StrategiesList2 } from 'component/strategies/StrategiesList2/StrategiesList2';
 
 import { ArchiveListContainer } from 'component/archive/ArchiveListContainer';
 import { TagTypeList } from 'component/tags/TagTypeList/TagTypeList';
@@ -245,7 +244,7 @@ export const routes: IRoute[] = [
     {
         path: '/strategies',
         title: 'Strategies',
-        component: StrategiesList2,
+        component: StrategiesList,
         type: 'protected',
         menu: { mobile: true, advanced: true },
     },
