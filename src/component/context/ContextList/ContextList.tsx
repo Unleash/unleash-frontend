@@ -76,17 +76,7 @@ const ContextList: VFC = () => {
                     row: {
                         original: { name, description },
                     },
-                }: any) => (
-                    <LinkCell
-                        title={name}
-                        to={
-                            hasAccess(UPDATE_CONTEXT_FIELD)
-                                ? `/context/edit/${name}`
-                                : undefined
-                        }
-                        subtitle={description}
-                    />
-                ),
+                }: any) => <LinkCell title={name} subtitle={description} />,
                 sortType: 'alphanumeric',
             },
             {
