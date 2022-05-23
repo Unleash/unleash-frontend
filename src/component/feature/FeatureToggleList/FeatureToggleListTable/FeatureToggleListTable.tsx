@@ -1,7 +1,7 @@
 import { useEffect, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
 import {
     Table,
     SortableTableHeader,
@@ -90,7 +90,7 @@ const columns = [
     },
 ];
 
-const defaultSort = { id: 'createdAt', desc: false };
+const defaultSort: SortingRule<string> = { id: 'createdAt', desc: false };
 
 export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
     data,
