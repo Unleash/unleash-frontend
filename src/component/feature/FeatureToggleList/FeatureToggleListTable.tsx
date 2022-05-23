@@ -108,7 +108,8 @@ export const FeatureToggleListTable: VFC = () => {
     );
     const { features = [], loading } = useFeatures();
     const data = useMemo(
-        () => (!features && loading ? featuresPlaceholder : features),
+        () =>
+            features?.length === 0 && loading ? featuresPlaceholder : features,
         [features, loading]
     );
 
@@ -124,8 +125,6 @@ export const FeatureToggleListTable: VFC = () => {
         hiddenColumns: ['description'],
         globalFilter: searchParams.get('search') || '',
     }));
-
-    console.log('render', { initialState, data });
 
     const {
         getTableProps,
