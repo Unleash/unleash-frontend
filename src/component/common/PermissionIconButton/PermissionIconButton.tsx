@@ -8,7 +8,7 @@ import {
 } from 'component/common/TooltipResolver/TooltipResolver';
 import { formatAccessText } from 'utils/formatAccessText';
 
-interface IPermissionIconButtonProps {
+interface IPermissionIconButtonProps extends IconButtonProps {
     permission: string;
     projectId?: string;
     environmentId?: string;

@@ -19,6 +19,7 @@ export const AddStrategyButton = () => {
                     data-testid={ADD_NEW_STRATEGY_ID}
                     onClick={() => navigate('/strategies/create')}
                     permission={CREATE_STRATEGY}
+                    size="large"
                     tooltipProps={{ title: 'New strategy' }}
                 >
                     <Add />
