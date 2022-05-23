@@ -1,5 +1,5 @@
 export interface IInstanceStatus {
-    plan: string;
+    plan: InstancePlan;
     trialExpiry?: string;
     trialStart?: string;
     trialExtended?: number;
@@ -14,4 +14,9 @@ export enum InstanceState {
     ACTIVE = 'ACTIVE',
     EXPIRED = 'EXPIRED',
     CHURNED = 'CHURNED',
+}
+
+export enum InstancePlan {
+    PRO = 'Pro',
+    UNKNOWN = 'Unknown',
 }

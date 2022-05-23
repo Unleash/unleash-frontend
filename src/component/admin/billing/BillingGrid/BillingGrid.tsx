@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { SxProps } from '@mui/system';
 import { Alert, Divider, Grid, styled, Theme, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const GridRow: FC<{ sx?: SxProps<Theme> }> = ({ sx, children }) => {
             item
             justifyContent="space-between"
             alignItems="center"
-            sx={{ flexWrap: 'nowrap', ...sx }}
+            sx={{ flexWrap: 'nowrap', gap: '8px', ...sx }}
         >
             {children}
         </Grid>
@@ -127,28 +127,18 @@ export const BillingGrid: FC = () => {
                 </Grid>
                 <Grid item xs={12} md={7}>
                     <StyledInfoBox
-                        sx={{
-                            boxShadow: '0px 1px 20px rgba(45, 42, 89, 0.1)',
+                        sx={theme => ({
+                            boxShadow: theme.boxShadows.elevated,
                             padding: {
                                 xs: '20px',
                                 md: '52px',
                             },
-                        }}
+                        })}
                     >
                         <ConditionallyRender
                             condition={inactive}
                             show={
-                                <Alert
-                                    severity="info"
-                                    sx={theme => ({
-                                        fontSize: theme.fontSizes.smallerBody,
-                                        marginBottom: '24px',
-                                        marginTop: {
-                                            xs: '-12px',
-                                            md: '-36px',
-                                        },
-                                    })}
-                                >
+                                <StyledAlert severity="info">
                                     After you have sent your billing
                                     information, your instance will be upgraded
                                     - you don't have to do anything.{' '}
@@ -156,7 +146,7 @@ export const BillingGrid: FC = () => {
                                         Get in touch with us
                                     </a>{' '}
                                     for any clarification
-                                </Alert>
+                                </StyledAlert>
                             }
                         />
                         <StyledPlanBadge>Current plan</StyledPlanBadge>
@@ -318,4 +308,15 @@ const StyledPriceSpan = styled('span')(({ theme }) => ({
     color: theme.palette.primary.main,
     fontSize: theme.fontSizes.mainHeader,
     fontWeight: theme.fontWeight.bold,
+}));
+
+const StyledAlert = styled(Alert)(({ theme }) => ({
+    fontSize: theme.fontSizes.smallerBody,
+    marginBottom: '24px',
+    [theme.breakpoints.up('md')]: {
+        marginTop: '-36px',
+    },
+    [theme.breakpoints.up('xs')]: {
+        marginTop: '-12px',
+    },
 }));

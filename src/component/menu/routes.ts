@@ -460,7 +460,7 @@ export const routes: IRoute[] = [
         title: 'Billing',
         component: Billing,
         type: 'protected',
-        menu: { adminSettings: true },
+        menu: { adminSettings: true, isBilling: true },
     },
     {
         path: '/admin',

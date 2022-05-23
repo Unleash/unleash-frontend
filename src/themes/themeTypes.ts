@@ -24,6 +24,7 @@ declare module '@mui/material/styles' {
          */
         boxShadows: {
             main: string;
+            elevated: string;
         };
     }
 

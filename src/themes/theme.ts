@@ -13,6 +13,7 @@ export default createTheme({
     },
     boxShadows: {
         main: '0px 2px 4px rgba(129, 122, 254, 0.2)',
+        elevated: '0px 1px 20px rgba(45, 42, 89, 0.1)',
     },
     typography: {
         fontFamily: 'Sen, Roboto, sans-serif',

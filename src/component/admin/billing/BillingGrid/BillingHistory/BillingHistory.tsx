@@ -51,6 +51,7 @@ const columns = [
         Header: 'Download',
         accessor: 'invoicePDF',
         align: 'center',
+        disableSortBy: true,
         Cell: ({ value }: { value: string }) => (
             <IconButton href={value}>
                 <FileDownload />

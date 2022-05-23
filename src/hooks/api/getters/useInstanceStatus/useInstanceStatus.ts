@@ -1,4 +1,8 @@
-import { IInstanceStatus } from 'interfaces/instance';
+import {
+    IInstanceStatus,
+    InstancePlan,
+    InstanceState,
+} from 'interfaces/instance';
 import { useApiGetter } from 'hooks/api/getters/useApiGetter/useApiGetter';
 import { formatApiPath } from 'utils/formatPath';
 import { isLocalhostDomain } from 'utils/env';
@@ -6,6 +10,8 @@ import { isLocalhostDomain } from 'utils/env';
 export interface IUseInstanceStatusOutput {
     instanceStatus?: IInstanceStatus;
     refetchInstanceStatus: () => void;
+    isBilling: boolean;
+    extendTrial: () => Promise<void>;
     loading: boolean;
     error?: Error;
 }
@@ -19,6 +25,15 @@ export const useInstanceStatus = (): IUseInstanceStatusOutput => {
     return {
         instanceStatus: data,
         refetchInstanceStatus: refetch,
+        isBilling: data?.plan === InstancePlan.PRO,
+        extendTrial: async () => {
+            if (data?.state === InstanceState.TRIAL && !data?.trialExtended) {
+                await fetch(formatApiPath('api/instance/extend'), {
+                    method: 'POST',
+                });
+                await refetch();
+            }
+        },
         loading,
         error,
     };
@@ -44,5 +59,5 @@ const enableInstanceStatusBarFeature = () => {
 };
 
 export const UNKNOWN_INSTANCE_STATUS: IInstanceStatus = {
-    plan: 'unknown',
+    plan: InstancePlan.UNKNOWN,
 };

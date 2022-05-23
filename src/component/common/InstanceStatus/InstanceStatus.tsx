@@ -12,9 +12,13 @@ import AccessContext from 'contexts/AccessContext';
 
 interface ITrialDialogProps {
     instanceStatus: IInstanceStatus;
+    extendTrial: () => Promise<void>;
 }
 
-const TrialDialog: VFC<ITrialDialogProps> = ({ instanceStatus }) => {
+const TrialDialog: VFC<ITrialDialogProps> = ({
+    instanceStatus,
+    extendTrial,
+}) => {
     const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
     const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
@@ -48,11 +52,16 @@ const TrialDialog: VFC<ITrialDialogProps> = ({ instanceStatus }) => {
                     navigate('/admin/billing');
                     setDialogOpen(false);
                 }}
-                onClose={() => {
-                    setDialogOpen(false);
-                    // TODO: extend trial if !instanceStatus?.trialExtended
+                onClose={(_: any, reason?: string) => {
+                    if (
+                        reason !== 'backdropClick' &&
+                        reason !== 'escapeKeyDown'
+                    ) {
+                        if (!instanceStatus?.trialExtended) extendTrial();
+                        setDialogOpen(false);
+                    }
                 }}
-                title="Your free Pro trial has expired!"
+                title={`Your free ${instanceStatus.plan} trial has expired!`}
             >
                 <Typography>
                     <strong>Upgrade trial</strong> otherwise your{' '}
@@ -69,7 +78,7 @@ const TrialDialog: VFC<ITrialDialogProps> = ({ instanceStatus }) => {
             onClose={() => {
                 setDialogOpen(false);
             }}
-            title="Your free Pro trial has expired!"
+            title={`Your free ${instanceStatus.plan} trial has expired!`}
         >
             <Typography>
                 Please inform your admin to <strong>Upgrade trial</strong> or
@@ -80,17 +89,24 @@ const TrialDialog: VFC<ITrialDialogProps> = ({ instanceStatus }) => {
 };
 
 export const InstanceStatus: FC = ({ children }) => {
-    const { instanceStatus } = useInstanceStatus();
+    const { instanceStatus, extendTrial, isBilling } = useInstanceStatus();
 
     return (
-        <div hidden={!instanceStatus} style={{ height: '100%' }}>
+        <div style={{ height: '100%' }}>
             <ConditionallyRender
-                condition={Boolean(instanceStatus)}
+                condition={isBilling && Boolean(instanceStatus)}
                 show={() => (
-                    <InstanceStatusBarMemo instanceStatus={instanceStatus!} />
+                    <>
+                        <InstanceStatusBarMemo
+                            instanceStatus={instanceStatus!}
+                        />
+                        <TrialDialog
+                            instanceStatus={instanceStatus!}
+                            extendTrial={extendTrial}
+                        />
+                    </>
                 )}
             />
-            <TrialDialog instanceStatus={instanceStatus!} />
             {children}
         </div>
     );

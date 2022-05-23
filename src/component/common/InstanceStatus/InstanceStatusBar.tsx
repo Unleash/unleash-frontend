@@ -2,7 +2,7 @@ import { styled, Button, Typography } from '@mui/material';
 import { colors } from 'themes/colors';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
-import { Info, Warning } from '@mui/icons-material';
+import { InfoOutlined, WarningAmber } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AccessContext from 'contexts/AccessContext';
@@ -94,7 +94,7 @@ const StyledWarningBar = styled('aside')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     gap: theme.spacing(1),
     borderBottom: '1px solid',
     borderColor: colors.orange[500],
@@ -108,7 +108,7 @@ const StyledInfoBar = styled('aside')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     gap: theme.spacing(1),
     borderBottom: '1px solid',
     borderColor: colors.blue[200],
@@ -123,10 +123,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 // TODO - Cleanup to use theme instead of colors
-const StyledWarningIcon = styled(Warning)(({ theme }) => ({
+const StyledWarningIcon = styled(WarningAmber)(({ theme }) => ({
     color: theme.palette.warning.main,
 }));
 
-const StyledInfoIcon = styled(Info)(({ theme }) => ({
+const StyledInfoIcon = styled(InfoOutlined)({
     color: colors.blue[500],
-}));
+});
