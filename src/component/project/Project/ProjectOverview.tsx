@@ -9,7 +9,7 @@ interface IProjectOverviewProps {
 
 const ProjectOverview = ({ projectId }: IProjectOverviewProps) => {
     const { project, loading } = useProject(projectId, {
-        refreshInterval: 10000,
+        refreshInterval: 15 * 1000, // ms
     });
     const { members, features, health, description, environments } = project;
     const { classes: styles } = useStyles();

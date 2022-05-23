@@ -1,4 +1,4 @@
-import { useEffect, useState, VFC } from 'react';
+import { useEffect, useMemo, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
@@ -11,23 +11,28 @@ import {
     TablePlaceholder,
     TableSearch,
 } from 'component/common/Table';
+import { useFeatures } from 'hooks/api/getters/useFeatures/useFeatures';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { DateCell } from '../../../common/Table/cells/DateCell/DateCell';
+import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
-import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
-import { CreateFeatureButton } from '../../CreateFeatureButton/CreateFeatureButton';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { FeatureSchema } from 'openapi';
+import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
+import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 
-interface FeatureToggleListTableProps {
-    data: Record<string, any>[];
-    isLoading?: boolean;
-}
+const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
+    name: 'Name of the feature',
+    description: 'Short description of the feature',
+    type: '-',
+    createdAt: new Date(2022, 1, 1),
+    project: 'projectID',
+});
 
 type PageQueryType = Partial<Record<'sort' | 'order' | 'search', string>>;
 
@@ -92,10 +97,7 @@ const columns = [
 
 const defaultSort: SortingRule<string> = { id: 'createdAt', desc: false };
 
-export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
-    data,
-    isLoading = false,
-}) => {
+export const FeatureToggleListTable: VFC = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
@@ -103,6 +105,11 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
     const [storedParams, setStoredParams] = useLocalStorage(
         'FeatureToggleListTable:v1',
         defaultSort
+    );
+    const { features = [], loading } = useFeatures();
+    const data = useMemo(
+        () => (!features && loading ? featuresPlaceholder : features),
+        [features, loading]
     );
 
     const [initialState] = useState(() => ({
@@ -118,6 +125,8 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
         globalFilter: searchParams.get('search') || '',
     }));
 
+    console.log('render', { initialState, data });
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -129,11 +138,13 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
         setHiddenColumns,
     } = useTable(
         {
+            // @ts-expect-error -- fix in react-table v8
             columns,
             data,
             initialState,
             sortTypes,
             autoResetGlobalFilter: false,
+            autoResetSortBy: false,
             disableSortRemove: true,
             disableMultiSort: true,
         },
@@ -175,7 +186,7 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
 
     return (
         <PageContent
-            isLoading={isLoading}
+            isLoading={loading}
             header={
                 <PageHeader
                     title={`Feature toggles (${data.length})`}
@@ -205,6 +216,7 @@ export const FeatureToggleListTable: VFC<FeatureToggleListTableProps> = ({
         >
             <SearchHighlightProvider value={globalFilter}>
                 <Table {...getTableProps()}>
+                    {/* @ts-expect-error -- fix in react-table v8 */}
                     <SortableTableHeader headerGroups={headerGroups} />
                     <TableBody {...getTableBodyProps()}>
                         {rows.map(row => {

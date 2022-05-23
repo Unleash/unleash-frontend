@@ -1,4 +1,4 @@
-import { FeatureToggleListContainer } from 'component/feature/FeatureToggleList/FeatureToggleListContainer';
+import { FeatureToggleListTable } from 'component/feature/FeatureToggleList/FeatureToggleListTable';
 import { StrategyView } from 'component/strategies/StrategyView/StrategyView';
 import { StrategiesList } from 'component/strategies/StrategiesList/StrategiesList';
 import { ArchiveListContainer } from 'component/archive/ArchiveListContainer';
@@ -165,7 +165,7 @@ export const routes: IRoute[] = [
     {
         path: '/features',
         title: 'Feature toggles',
-        component: FeatureToggleListContainer,
+        component: FeatureToggleListTable,
         type: 'protected',
         menu: { mobile: true },
     },
