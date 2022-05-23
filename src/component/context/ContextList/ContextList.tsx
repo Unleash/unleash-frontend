@@ -26,14 +26,16 @@ import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { ContextActionsCell } from './ContextActionsCell/ContextActionsCell';
 import { Adjust } from '@mui/icons-material';
 import { Box } from '@mui/material';
+import useLoading from 'hooks/useLoading';
 
 const ContextList: VFC = () => {
-    const { hasAccess } = useContext(AccessContext);
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [name, setName] = useState<string>();
     const { context, refetchUnleashContext, loading } = useUnleashContext();
     const { removeContext } = useContextsApi();
     const { setToastData, setToastApiError } = useToast();
+    const ref = useLoading(loading);
+
     const data = useMemo(() => {
         if (loading) {
             return Array(5).fill({
@@ -57,6 +59,7 @@ const ContextList: VFC = () => {
                 id: 'Icon',
                 Cell: () => (
                     <Box
+                        data-loading
                         sx={{
                             pl: 2,
                             pr: 1,
@@ -76,7 +79,13 @@ const ContextList: VFC = () => {
                     row: {
                         original: { name, description },
                     },
-                }: any) => <LinkCell title={name} subtitle={description} />,
+                }: any) => (
+                    <LinkCell
+                        title={name}
+                        subtitle={description}
+                        data-loading
+                    />
+                ),
                 sortType: 'alphanumeric',
             },
             {
@@ -108,7 +117,7 @@ const ContextList: VFC = () => {
                 sortType: 'number',
             },
         ],
-        [hasAccess]
+        []
     );
 
     const initialState = useMemo(
@@ -178,55 +187,57 @@ const ContextList: VFC = () => {
                 />
             }
         >
-            <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
-                    <SortableTableHeader headerGroups={headerGroups} />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <TableRow hover {...row.getRowProps()}>
-                                    {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </SearchHighlightProvider>
-            <ConditionallyRender
-                condition={rows.length === 0}
-                show={
-                    <ConditionallyRender
-                        condition={globalFilter?.length > 0}
-                        show={
-                            <TablePlaceholder>
-                                No contexts found matching &ldquo;
-                                {globalFilter}
-                                &rdquo;
-                            </TablePlaceholder>
-                        }
-                        elseShow={
-                            <TablePlaceholder>
-                                No contexts available. Get started by adding
-                                one.
-                            </TablePlaceholder>
-                        }
-                    />
-                }
-            />
-            <ConfirmDialogue
-                open={showDelDialogue}
-                onClick={onDeleteContext}
-                onClose={() => {
-                    setName(undefined);
-                    setShowDelDialogue(false);
-                }}
-                title="Really delete context field"
-            />
+            <div ref={ref}>
+                <SearchHighlightProvider value={globalFilter}>
+                    <Table {...getTableProps()}>
+                        <SortableTableHeader headerGroups={headerGroups} />
+                        <TableBody {...getTableBodyProps()}>
+                            {rows.map(row => {
+                                prepareRow(row);
+                                return (
+                                    <TableRow hover {...row.getRowProps()}>
+                                        {row.cells.map(cell => (
+                                            <TableCell {...cell.getCellProps()}>
+                                                {cell.render('Cell')}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </SearchHighlightProvider>
+                <ConditionallyRender
+                    condition={rows.length === 0}
+                    show={
+                        <ConditionallyRender
+                            condition={globalFilter?.length > 0}
+                            show={
+                                <TablePlaceholder>
+                                    No contexts found matching &ldquo;
+                                    {globalFilter}
+                                    &rdquo;
+                                </TablePlaceholder>
+                            }
+                            elseShow={
+                                <TablePlaceholder>
+                                    No contexts available. Get started by adding
+                                    one.
+                                </TablePlaceholder>
+                            }
+                        />
+                    }
+                />
+                <ConfirmDialogue
+                    open={showDelDialogue}
+                    onClick={onDeleteContext}
+                    onClose={() => {
+                        setName(undefined);
+                        setShowDelDialogue(false);
+                    }}
+                    title="Really delete context field"
+                />
+            </div>
         </PageContent>
     );
 };

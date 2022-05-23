@@ -38,6 +38,7 @@ import { sortTypes } from 'utils/sortTypes';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import { AddStrategyButton } from './AddStrategyButton/AddStrategyButton';
 import { PredefinedBadge } from './PredefinedBadge/PredefinedBadge';
+import useLoading from 'hooks/useLoading';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -59,6 +60,7 @@ export const StrategiesList = () => {
     const { removeStrategy, deprecateStrategy, reactivateStrategy } =
         useStrategiesApi();
     const { setToastData, setToastApiError } = useToast();
+    const ref = useLoading(loading);
 
     const data = useMemo(() => {
         if (loading) {
@@ -84,6 +86,7 @@ export const StrategiesList = () => {
                 id: 'Icon',
                 Cell: () => (
                     <Box
+                        data-loading
                         sx={{
                             pl: 2,
                             pr: 1,
@@ -109,6 +112,7 @@ export const StrategiesList = () => {
                         : description;
                     return (
                         <LinkCell
+                            data-loading
                             title={formatStrategyName(name)}
                             subtitle={subTitleText}
                             to={`/strategies/${name}`}
@@ -127,7 +131,10 @@ export const StrategiesList = () => {
                 id: 'Actions',
                 align: 'center',
                 Cell: ({ row: { original } }: any) => (
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Box
+                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
+                        data-loading
+                    >
                         <ConditionallyRender
                             condition={original.deprecated}
                             show={reactivateButton(original)}
@@ -354,58 +361,60 @@ export const StrategiesList = () => {
                 />
             }
         >
-            <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
-                    <SortableTableHeader headerGroups={headerGroups} />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <TableRow hover {...row.getRowProps()}>
-                                    {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </SearchHighlightProvider>
-            <ConditionallyRender
-                condition={rows.length === 0}
-                show={
-                    <ConditionallyRender
-                        condition={globalFilter?.length > 0}
-                        show={
-                            <TablePlaceholder>
-                                No strategies found matching &ldquo;
-                                {globalFilter}
-                                &rdquo;
-                            </TablePlaceholder>
-                        }
-                        elseShow={
-                            <TablePlaceholder>
-                                No strategies available. Get started by adding
-                                one.
-                            </TablePlaceholder>
-                        }
-                    />
-                }
-            />
+            <div ref={ref}>
+                <SearchHighlightProvider value={globalFilter}>
+                    <Table {...getTableProps()}>
+                        <SortableTableHeader headerGroups={headerGroups} />
+                        <TableBody {...getTableBodyProps()}>
+                            {rows.map(row => {
+                                prepareRow(row);
+                                return (
+                                    <TableRow hover {...row.getRowProps()}>
+                                        {row.cells.map(cell => (
+                                            <TableCell {...cell.getCellProps()}>
+                                                {cell.render('Cell')}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </SearchHighlightProvider>
+                <ConditionallyRender
+                    condition={rows.length === 0}
+                    show={
+                        <ConditionallyRender
+                            condition={globalFilter?.length > 0}
+                            show={
+                                <TablePlaceholder>
+                                    No strategies found matching &ldquo;
+                                    {globalFilter}
+                                    &rdquo;
+                                </TablePlaceholder>
+                            }
+                            elseShow={
+                                <TablePlaceholder>
+                                    No strategies available. Get started by
+                                    adding one.
+                                </TablePlaceholder>
+                            }
+                        />
+                    }
+                />
 
-            <Dialogue
-                open={dialogueMetaData.show}
-                onClick={onDialogConfirm}
-                title={dialogueMetaData?.title}
-                onClose={() =>
-                    setDialogueMetaData((prev: IDialogueMetaData) => ({
-                        ...prev,
-                        show: false,
-                    }))
-                }
-            />
+                <Dialogue
+                    open={dialogueMetaData.show}
+                    onClick={onDialogConfirm}
+                    title={dialogueMetaData?.title}
+                    onClose={() =>
+                        setDialogueMetaData((prev: IDialogueMetaData) => ({
+                            ...prev,
+                            show: false,
+                        }))
+                    }
+                />
+            </div>
         </PageContent>
     );
 };
