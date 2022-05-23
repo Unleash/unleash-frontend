@@ -1,9 +1,7 @@
 import { useContext, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { IconButton, Tooltip, Box } from '@mui/material';
 import {
-    Add,
     Delete,
     Edit,
     Extension,
@@ -11,7 +9,6 @@ import {
     VisibilityOff,
 } from '@mui/icons-material';
 import {
-    CREATE_STRATEGY,
     DELETE_STRATEGY,
     UPDATE_STRATEGY,
 } from 'component/providers/AccessProvider/permissions';
@@ -42,6 +39,8 @@ import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
+import { AddStrategyButton } from './AddStrategyButton/AddStrategyButton';
+import { PredefinedBadge } from './PredefinedBadge/PredefinedBadge';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -51,7 +50,6 @@ interface IDialogueMetaData {
 
 export const StrategiesList2 = () => {
     const navigate = useNavigate();
-    const smallScreen = useMediaQuery('(max-width:700px)');
     const [dialogueMetaData, setDialogueMetaData] = useState<IDialogueMetaData>(
         {
             show: false,
@@ -122,20 +120,7 @@ export const StrategiesList2 = () => {
                         >
                             <ConditionallyRender
                                 condition={!editable}
-                                show={() => (
-                                    <div
-                                        style={{
-                                            padding: '0.1rem 0.2rem',
-                                            backgroundColor: 'green',
-                                            color: 'black',
-                                            top: '0',
-                                            borderRadius: '3px',
-                                            marginLeft: '0.25rem',
-                                        }}
-                                    >
-                                        Predefined
-                                    </div>
-                                )}
+                                show={() => <PredefinedBadge />}
                             />
                         </LinkCell>
                     );
@@ -200,37 +185,6 @@ export const StrategiesList2 = () => {
         },
         useGlobalFilter,
         useSortBy
-    );
-
-    const headerButton = () => (
-        <ConditionallyRender
-            condition={hasAccess(CREATE_STRATEGY)}
-            show={
-                <ConditionallyRender
-                    condition={smallScreen}
-                    show={
-                        <PermissionIconButton
-                            data-testid={ADD_NEW_STRATEGY_ID}
-                            onClick={() => navigate('/strategies/create')}
-                            permission={CREATE_STRATEGY}
-                            tooltipProps={{ title: 'New strategy' }}
-                        >
-                            <Add />
-                        </PermissionIconButton>
-                    }
-                    elseShow={
-                        <PermissionButton
-                            onClick={() => navigate('/strategies/create')}
-                            color="primary"
-                            permission={CREATE_STRATEGY}
-                            data-testid={ADD_NEW_STRATEGY_ID}
-                        >
-                            New strategy
-                        </PermissionButton>
-                    }
-                />
-            }
-        />
     );
 
     const onReactivateStrategy = (strategy: IStrategy) => {
@@ -399,7 +353,7 @@ export const StrategiesList2 = () => {
                                 onChange={setGlobalFilter}
                             />
                             <PageHeader.Divider />
-                            {headerButton()}
+                            <AddStrategyButton />
                         </>
                     }
                 />
@@ -431,14 +385,14 @@ export const StrategiesList2 = () => {
                         condition={globalFilter?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No contexts found matching &ldquo;
+                                No strategies found matching &ldquo;
                                 {globalFilter}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No contexts available. Get started by adding
+                                No strategies available. Get started by adding
                                 one.
                             </TablePlaceholder>
                         }
