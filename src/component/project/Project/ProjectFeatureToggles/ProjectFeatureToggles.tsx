@@ -33,7 +33,7 @@ import useToast from 'hooks/useToast';
 import { ENVIRONMENT_STRATEGY_ERROR } from 'constants/apiErrors';
 import EnvironmentStrategyDialog from 'component/common/EnvironmentStrategiesDialog/EnvironmentStrategyDialog';
 import { useEnvironmentsRef } from './hooks/useEnvironmentsRef';
-import { useSetFeatureState } from './hooks/useSetFeatureState';
+import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
@@ -121,7 +121,8 @@ export const ProjectFeatureToggles = ({
         );
     }, [features, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const { setFeatureState } = useSetFeatureState();
+    const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
+        useFeatureApi();
     const onToggle = useCallback(
         async (
             projectId: string,
@@ -130,12 +131,20 @@ export const ProjectFeatureToggles = ({
             enabled: boolean
         ) => {
             try {
-                await setFeatureState(
-                    projectId,
-                    featureName,
-                    environment,
-                    enabled
-                );
+                if (enabled) {
+                    await toggleFeatureEnvironmentOn(
+                        projectId,
+                        featureName,
+                        environment
+                    );
+                } else {
+                    await toggleFeatureEnvironmentOff(
+                        projectId,
+                        featureName,
+                        environment
+                    );
+                }
+                refetch();
             } catch (error) {
                 const message = formatUnknownError(error);
                 if (message === ENVIRONMENT_STRATEGY_ERROR) {
@@ -157,7 +166,7 @@ export const ProjectFeatureToggles = ({
             });
             refetch();
         },
-        [setFeatureState] // eslint-disable-line react-hooks/exhaustive-deps
+        [toggleFeatureEnvironmentOff, toggleFeatureEnvironmentOn] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const columns = useMemo(
