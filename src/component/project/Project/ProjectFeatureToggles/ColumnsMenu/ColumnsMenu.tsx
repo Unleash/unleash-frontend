@@ -156,7 +156,9 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                                         .filter(({ isVisible }) => isVisible)
                                         .map(({ id }) => id)
                                         .filter(
-                                            id => !staticColumns.includes(id)
+                                            id =>
+                                                !staticColumns.includes(id) &&
+                                                id !== column.id
                                         ),
                                     ...(!column.isVisible ? [column.id] : []),
                                 ]);

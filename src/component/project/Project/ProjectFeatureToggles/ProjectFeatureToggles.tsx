@@ -266,7 +266,6 @@ export const ProjectFeatureToggles = ({
                     columnId => !visibleColumns.includes(columnId)
                 );
             } else if (storedParams.columns) {
-                console.log('storedParams.columns', storedParams.columns);
                 const visibleColumns = [
                     ...staticColumns,
                     ...storedParams.columns,
@@ -344,6 +343,7 @@ export const ProjectFeatureToggles = ({
                     !staticColumns.includes(id) && !hiddenColumns?.includes(id)
             )
             .join(',');
+        console.log('tableState.columns', tableState.columns);
 
         setSearchParams(tableState, {
             replace: true,
