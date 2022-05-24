@@ -10,6 +10,6 @@ const StyledBadge = styled('div')(({ theme }) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
     display: 'inline-block',
-    borderRadius: '3px',
+    borderRadius: theme.shape.borderRadius,
     marginLeft: '12.5px',
 }));
