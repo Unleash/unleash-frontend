@@ -8,7 +8,7 @@ import {
 } from 'component/common/TooltipResolver/TooltipResolver';
 import { formatAccessText } from 'utils/formatAccessText';
 
-interface IPermissionIconButtonProps extends IconButtonProps {
+interface IPermissionIconButtonProps {
     permission: string;
     projectId?: string;
     environmentId?: string;
@@ -19,6 +19,7 @@ interface IPermissionIconButtonProps extends IconButtonProps {
     type?: 'button';
     edge?: IconButtonProps['edge'];
     tooltipProps?: Omit<ITooltipResolverProps, 'children'>;
+    size?: string;
 }
 
 interface IButtonProps extends IPermissionIconButtonProps {
