@@ -24,7 +24,6 @@ import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { ContextActionsCell } from './ContextActionsCell/ContextActionsCell';
 import { Adjust } from '@mui/icons-material';
 import { Box } from '@mui/material';
-import useLoading from 'hooks/useLoading';
 
 const ContextList: VFC = () => {
     const [showDelDialogue, setShowDelDialogue] = useState(false);
@@ -32,7 +31,6 @@ const ContextList: VFC = () => {
     const { context, refetchUnleashContext, loading } = useUnleashContext();
     const { removeContext } = useContextsApi();
     const { setToastData, setToastApiError } = useToast();
-    const ref = useLoading(loading);
 
     const data = useMemo(() => {
         if (loading) {
@@ -169,6 +167,7 @@ const ContextList: VFC = () => {
 
     return (
         <PageContent
+            isLoading={loading}
             header={
                 <PageHeader
                     title="Context fields"
@@ -185,57 +184,55 @@ const ContextList: VFC = () => {
                 />
             }
         >
-            <div ref={ref}>
-                <SearchHighlightProvider value={globalFilter}>
-                    <Table {...getTableProps()}>
-                        <SortableTableHeader headerGroups={headerGroups} />
-                        <TableBody {...getTableBodyProps()}>
-                            {rows.map(row => {
-                                prepareRow(row);
-                                return (
-                                    <TableRow hover {...row.getRowProps()}>
-                                        {row.cells.map(cell => (
-                                            <TableCell {...cell.getCellProps()}>
-                                                {cell.render('Cell')}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </SearchHighlightProvider>
-                <ConditionallyRender
-                    condition={rows.length === 0}
-                    show={
-                        <ConditionallyRender
-                            condition={globalFilter?.length > 0}
-                            show={
-                                <TablePlaceholder>
-                                    No contexts found matching &ldquo;
-                                    {globalFilter}
-                                    &rdquo;
-                                </TablePlaceholder>
-                            }
-                            elseShow={
-                                <TablePlaceholder>
-                                    No contexts available. Get started by adding
-                                    one.
-                                </TablePlaceholder>
-                            }
-                        />
-                    }
-                />
-                <ConfirmDialogue
-                    open={showDelDialogue}
-                    onClick={onDeleteContext}
-                    onClose={() => {
-                        setName(undefined);
-                        setShowDelDialogue(false);
-                    }}
-                    title="Really delete context field"
-                />
-            </div>
+            <SearchHighlightProvider value={globalFilter}>
+                <Table {...getTableProps()}>
+                    <SortableTableHeader headerGroups={headerGroups} />
+                    <TableBody {...getTableBodyProps()}>
+                        {rows.map(row => {
+                            prepareRow(row);
+                            return (
+                                <TableRow hover {...row.getRowProps()}>
+                                    {row.cells.map(cell => (
+                                        <TableCell {...cell.getCellProps()}>
+                                            {cell.render('Cell')}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </SearchHighlightProvider>
+            <ConditionallyRender
+                condition={rows.length === 0}
+                show={
+                    <ConditionallyRender
+                        condition={globalFilter?.length > 0}
+                        show={
+                            <TablePlaceholder>
+                                No contexts found matching &ldquo;
+                                {globalFilter}
+                                &rdquo;
+                            </TablePlaceholder>
+                        }
+                        elseShow={
+                            <TablePlaceholder>
+                                No contexts available. Get started by adding
+                                one.
+                            </TablePlaceholder>
+                        }
+                    />
+                }
+            />
+            <ConfirmDialogue
+                open={showDelDialogue}
+                onClick={onDeleteContext}
+                onClose={() => {
+                    setName(undefined);
+                    setShowDelDialogue(false);
+                }}
+                title="Really delete context field"
+            />
         </PageContent>
     );
 };

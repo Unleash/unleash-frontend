@@ -38,8 +38,6 @@ import { sortTypes } from 'utils/sortTypes';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import { AddStrategyButton } from './AddStrategyButton/AddStrategyButton';
 import { PredefinedBadge } from './PredefinedBadge/PredefinedBadge';
-import useLoading from 'hooks/useLoading';
-
 interface IDialogueMetaData {
     show: boolean;
     title: string;
@@ -60,7 +58,6 @@ export const StrategiesList = () => {
     const { removeStrategy, deprecateStrategy, reactivateStrategy } =
         useStrategiesApi();
     const { setToastData, setToastApiError } = useToast();
-    const ref = useLoading(loading);
 
     const data = useMemo(() => {
         if (loading) {
@@ -345,6 +342,7 @@ export const StrategiesList = () => {
 
     return (
         <PageContent
+            isLoading={loading}
             header={
                 <PageHeader
                     title="Strategies"
@@ -361,60 +359,58 @@ export const StrategiesList = () => {
                 />
             }
         >
-            <div ref={ref}>
-                <SearchHighlightProvider value={globalFilter}>
-                    <Table {...getTableProps()}>
-                        <SortableTableHeader headerGroups={headerGroups} />
-                        <TableBody {...getTableBodyProps()}>
-                            {rows.map(row => {
-                                prepareRow(row);
-                                return (
-                                    <TableRow hover {...row.getRowProps()}>
-                                        {row.cells.map(cell => (
-                                            <TableCell {...cell.getCellProps()}>
-                                                {cell.render('Cell')}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </SearchHighlightProvider>
-                <ConditionallyRender
-                    condition={rows.length === 0}
-                    show={
-                        <ConditionallyRender
-                            condition={globalFilter?.length > 0}
-                            show={
-                                <TablePlaceholder>
-                                    No strategies found matching &ldquo;
-                                    {globalFilter}
-                                    &rdquo;
-                                </TablePlaceholder>
-                            }
-                            elseShow={
-                                <TablePlaceholder>
-                                    No strategies available. Get started by
-                                    adding one.
-                                </TablePlaceholder>
-                            }
-                        />
-                    }
-                />
+            <SearchHighlightProvider value={globalFilter}>
+                <Table {...getTableProps()}>
+                    <SortableTableHeader headerGroups={headerGroups} />
+                    <TableBody {...getTableBodyProps()}>
+                        {rows.map(row => {
+                            prepareRow(row);
+                            return (
+                                <TableRow hover {...row.getRowProps()}>
+                                    {row.cells.map(cell => (
+                                        <TableCell {...cell.getCellProps()}>
+                                            {cell.render('Cell')}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </SearchHighlightProvider>
+            <ConditionallyRender
+                condition={rows.length === 0}
+                show={
+                    <ConditionallyRender
+                        condition={globalFilter?.length > 0}
+                        show={
+                            <TablePlaceholder>
+                                No strategies found matching &ldquo;
+                                {globalFilter}
+                                &rdquo;
+                            </TablePlaceholder>
+                        }
+                        elseShow={
+                            <TablePlaceholder>
+                                No strategies available. Get started by adding
+                                one.
+                            </TablePlaceholder>
+                        }
+                    />
+                }
+            />
 
-                <Dialogue
-                    open={dialogueMetaData.show}
-                    onClick={onDialogConfirm}
-                    title={dialogueMetaData?.title}
-                    onClose={() =>
-                        setDialogueMetaData((prev: IDialogueMetaData) => ({
-                            ...prev,
-                            show: false,
-                        }))
-                    }
-                />
-            </div>
+            <Dialogue
+                open={dialogueMetaData.show}
+                onClick={onDialogConfirm}
+                title={dialogueMetaData?.title}
+                onClose={() =>
+                    setDialogueMetaData((prev: IDialogueMetaData) => ({
+                        ...prev,
+                        show: false,
+                    }))
+                }
+            />
         </PageContent>
     );
 };
