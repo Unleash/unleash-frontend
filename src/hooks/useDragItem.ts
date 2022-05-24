@@ -9,12 +9,13 @@ export type MoveListItem = (
 export const useDragItem = (
     listItemIndex: number,
     moveListItem: MoveListItem
-): RefObject<HTMLLIElement> => {
-    const ref = useRef<HTMLLIElement>(null);
+): RefObject<HTMLTableRowElement> => {
+    const ref = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
         if (ref.current) {
             ref.current.draggable = true;
+            ref.current.style.cursor = 'grab';
             ref.current.dataset.index = String(listItemIndex);
             return addEventListeners(ref.current, moveListItem);
         }
@@ -24,7 +25,7 @@ export const useDragItem = (
 };
 
 const addEventListeners = (
-    el: HTMLLIElement,
+    el: HTMLTableRowElement,
     moveListItem: MoveListItem
 ): (() => void) => {
     const moveDraggedElement = (save: boolean) => {
@@ -68,4 +69,4 @@ const addEventListeners = (
 };
 
 // The element being dragged in the browser.
-let globalDraggedElement: HTMLLIElement | null;
+let globalDraggedElement: HTMLTableRowElement | null;
