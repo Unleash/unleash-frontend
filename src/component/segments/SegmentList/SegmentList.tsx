@@ -7,7 +7,6 @@ import {
     TableRow,
 } from '@mui/material';
 import usePagination from 'hooks/usePagination';
-import { CREATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import PaginateUI from 'component/common/PaginateUI/PaginateUI';
 import { SegmentListItem } from './SegmentListItem/SegmentListItem';
 import { ISegment } from 'interfaces/segment';
@@ -16,18 +15,15 @@ import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { useNavigate } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PageContent } from 'component/common/PageContent/PageContent';
-import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { SegmentDelete } from '../SegmentDelete/SegmentDelete';
 import { SegmentDocsWarning } from 'component/segments/SegmentDocs/SegmentDocs';
-import { NAVIGATE_TO_CREATE_SEGMENT } from 'utils/testIds';
 import { SegmentEmpty } from 'component/segments/SegmentEmpty/SegmentEmpty';
+import { CreateSegmentButton } from 'component/segments/CreateSegmentButton/CreateSegmentButton';
 
 export const SegmentsList = () => {
-    const navigate = useNavigate();
     const { segments = [], refetchSegments } = useSegments();
     const { deleteSegment } = useSegmentsApi();
     const { page, pages, nextPage, prevPage, setPageIndex, pageIndex } =
@@ -75,15 +71,7 @@ export const SegmentsList = () => {
             header={
                 <PageHeader
                     title="Segments"
-                    actions={
-                        <PermissionButton
-                            onClick={() => navigate('/segments/create')}
-                            permission={CREATE_SEGMENT}
-                            data-testid={NAVIGATE_TO_CREATE_SEGMENT}
-                        >
-                            New Segment
-                        </PermissionButton>
-                    }
+                    actions={<CreateSegmentButton />}
                 />
             }
         >
