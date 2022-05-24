@@ -71,7 +71,7 @@ const getAddonIcon = (name: string): ReactElement => {
 };
 
 export const AddonList = () => {
-    const { providers, addons } = useAddons();
+    const { providers, addons, loading } = useAddons();
 
     return (
         <>
@@ -82,6 +82,7 @@ export const AddonList = () => {
 
             <br />
             <AvailableAddons
+                loading={loading}
                 providers={providers}
                 getAddonIcon={getAddonIcon}
             />
