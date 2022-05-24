@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState, VFC } from 'react';
+import { useMemo, useState, VFC } from 'react';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import {
     Table,
@@ -12,9 +12,7 @@ import {
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { UPDATE_CONTEXT_FIELD } from 'component/providers/AccessProvider/permissions';
 import { Dialogue as ConfirmDialogue } from 'component/common/Dialogue/Dialogue';
-import AccessContext from 'contexts/AccessContext';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import useContextsApi from 'hooks/api/actions/useContextsApi/useContextsApi';
 import useToast from 'hooks/useToast';
