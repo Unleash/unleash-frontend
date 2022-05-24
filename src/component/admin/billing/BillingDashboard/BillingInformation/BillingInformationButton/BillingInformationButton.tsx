@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
 import { VFC } from 'react';
 
 const href = `mailto:elise@getunleash.ai?subject=Continue with Unleash&body=Hi Unleash,%0D%0A%0D%0A
@@ -16,21 +16,21 @@ Billing information:%0D%0A%0D%0A
 
 -- Thank you for signing up. We will upgrade your trial as quick as possible and we will grant you access to the application again. --`;
 
-interface IBillingButton {
+interface IBillingInformationButtonProps {
     update?: boolean;
 }
 
-export const BillingInfoButton: VFC<IBillingButton> = ({ update }) => {
+export const BillingInformationButton: VFC<IBillingInformationButtonProps> = ({
+    update,
+}) => {
     return (
-        <Button
-            href={href}
-            variant={update ? 'outlined' : 'contained'}
-            sx={{
-                width: '100%',
-                marginBottom: '12px',
-            }}
-        >
+        <StyledButton href={href} variant={update ? 'outlined' : 'contained'}>
             {update ? 'Update billing information' : 'Add billing information'}
-        </Button>
+        </StyledButton>
     );
 };
+
+const StyledButton = styled(Button)(({ theme }) => ({
+    width: '100%',
+    marginBottom: theme.spacing(1.5),
+}));

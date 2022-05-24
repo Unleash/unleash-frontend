@@ -14,7 +14,7 @@ import { useMemo, VFC } from 'react';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, styled, Typography } from '@mui/material';
 import FileDownload from '@mui/icons-material/FileDownload';
 
 interface IBillingHistoryProps {
@@ -87,15 +87,7 @@ export const BillingHistory: VFC<IBillingHistoryProps> = ({
 
     return (
         <PageContent isLoading={isLoading} disablePadding>
-            <Typography
-                sx={theme => ({
-                    marginTop: '48px',
-                    marginBottom: '20px',
-                    fontSize: theme.fontSizes.mainHeader,
-                })}
-            >
-                Payment history
-            </Typography>
+            <StyledTitle>Payment history</StyledTitle>
             <Table {...getTableProps()}>
                 <SortableTableHeader headerGroups={headerGroups} />
                 <TableBody {...getTableBodyProps()}>
@@ -124,3 +116,9 @@ export const BillingHistory: VFC<IBillingHistoryProps> = ({
         </PageContent>
     );
 };
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(2.5),
+    fontSize: theme.fontSizes.mainHeader,
+}));
