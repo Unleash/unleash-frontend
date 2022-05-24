@@ -16,6 +16,7 @@ export const useStyles = makeStyles()(theme => ({
         alignItems: 'center',
     },
     toolbarContainer: {
+        flexShrink: 0,
         display: 'flex',
     },
     innerContainer: {
