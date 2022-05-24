@@ -11,5 +11,5 @@ const StyledBadge = styled('div')(({ theme }) => ({
     color: theme.palette.text.primary,
     display: 'inline-block',
     borderRadius: theme.shape.borderRadius,
-    marginLeft: '12.5px',
+    marginLeft: theme.spacing(1.5),
 }));
