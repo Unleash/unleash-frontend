@@ -4,31 +4,9 @@ export const useStyles = makeStyles()(theme => ({
     docs: {
         marginBottom: '2rem',
     },
-    empty: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginBlock: '5rem',
-    },
-    title: {
-        fontSize: theme.fontSizes.mainHeader,
-        marginBottom: '1.25rem',
-    },
-    subtitle: {
-        fontSize: theme.fontSizes.smallBody,
-        color: theme.palette.grey[600],
-        maxWidth: 515,
-        marginBottom: 20,
-        textAlign: 'center',
-    },
     tableRow: {
         background: '#F6F6FA',
         borderRadius: '8px',
-    },
-    paramButton: {
-        textDecoration: 'none',
-        color: theme.palette.primary.main,
-        fontWeight: theme.fontWeight.bold,
     },
     cell: {
         borderBottom: 'none',

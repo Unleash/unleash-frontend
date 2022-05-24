@@ -5,7 +5,6 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Typography,
 } from '@mui/material';
 import usePagination from 'hooks/usePagination';
 import { CREATE_SEGMENT } from 'component/providers/AccessProvider/permissions';
@@ -17,7 +16,7 @@ import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PageContent } from 'component/common/PageContent/PageContent';
@@ -25,6 +24,7 @@ import PermissionButton from 'component/common/PermissionButton/PermissionButton
 import { SegmentDelete } from '../SegmentDelete/SegmentDelete';
 import { SegmentDocsWarning } from 'component/segments/SegmentDocs/SegmentDocs';
 import { NAVIGATE_TO_CREATE_SEGMENT } from 'utils/testIds';
+import { SegmentEmpty } from 'component/segments/SegmentEmpty/SegmentEmpty';
 
 export const SegmentsList = () => {
     const navigate = useNavigate();
@@ -68,24 +68,6 @@ export const SegmentsList = () => {
                 />
             );
         });
-    };
-
-    const renderNoSegments = () => {
-        return (
-            <div className={styles.empty}>
-                <Typography className={styles.title}>
-                    No segments yet!
-                </Typography>
-                <p className={styles.subtitle}>
-                    Segment makes it easy for you to define who should be
-                    exposed to your feature. The segment is often a collection
-                    of constraints and can be reused.
-                </p>
-                <Link to="/segments/create" className={styles.paramButton}>
-                    Create your first segment
-                </Link>
-            </div>
-        );
     };
 
     return (
@@ -161,7 +143,7 @@ export const SegmentsList = () => {
             />
             <ConditionallyRender
                 condition={segments.length === 0}
-                show={renderNoSegments()}
+                show={() => <SegmentEmpty />}
             />
             <ConditionallyRender
                 condition={Boolean(currentSegment)}
