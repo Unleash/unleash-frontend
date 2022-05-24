@@ -187,7 +187,7 @@ export const TagTypeList = () => {
             isLoading={loading}
             header={
                 <PageHeader
-                    title="Strategies"
+                    title="Tag types"
                     actions={
                         <>
                             <TableSearch
