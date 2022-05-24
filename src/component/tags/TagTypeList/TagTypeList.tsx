@@ -43,8 +43,8 @@ export const TagTypeList = () => {
     const data = useMemo(() => {
         if (loading) {
             return Array(5).fill({
-                name: 'Context name',
-                description: 'Context description when loading',
+                name: 'Tag type name',
+                description: 'Tag type description when loading',
             });
         }
 
