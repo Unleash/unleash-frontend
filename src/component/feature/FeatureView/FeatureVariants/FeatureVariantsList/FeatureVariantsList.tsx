@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { AddVariant } from './AddFeatureVariant/AddFeatureVariant';
 
-import { useContext, useEffect, useState, useMemo } from 'react';
+import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import AccessContext from 'contexts/AccessContext';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
@@ -67,6 +67,8 @@ export const FeatureVariantsList = () => {
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
 
+    console.log('variants', variants);
+
     useEffect(() => {
         const options = [
             'default',
@@ -87,14 +89,26 @@ export const FeatureVariantsList = () => {
         }
 
         return feature.variants;
-    }, [feature, loading]);
+    }, [feature.variants, loading]);
+
+    const editVariant = useCallback(
+        (name: string) => {
+            const variant = {
+                ...variants.find(variant => variant.name === name),
+            };
+            setVariantToEdit(variant);
+            setEditing(true);
+            setShowAddVariant(true);
+        },
+        [variants, setVariantToEdit, setEditing, setShowAddVariant]
+    );
 
     const columns = useMemo(
         () => [
             {
                 Header: 'Name',
                 accessor: 'name',
-                width: '40%',
+                width: '25%',
                 Cell: ({
                     row: {
                         original: { name },
@@ -185,7 +199,7 @@ export const FeatureVariantsList = () => {
                 disableSortBy: true,
             },
         ],
-        []
+        [projectId, editVariant]
     );
 
     const initialState = useMemo(
@@ -232,13 +246,6 @@ export const FeatureVariantsList = () => {
         setShowAddVariant(false);
         setEditing(false);
         setVariantToEdit({});
-    };
-
-    const editVariant = (name: string) => {
-        const variant = { ...variants.find(variant => variant.name === name) };
-        setVariantToEdit(variant);
-        setEditing(true);
-        setShowAddVariant(true);
     };
 
     const renderStickiness = () => {
