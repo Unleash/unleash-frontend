@@ -25,6 +25,7 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 
 const ROOTROLE = 'root';
 const BUILTIN_ROLE_TYPE = 'project';
@@ -144,9 +145,7 @@ const ProjectRoleList = () => {
             autoResetSortBy: false,
             disableSortRemove: true,
             defaultColumn: {
-                Cell: ({ value }) => (
-                    <Box sx={{ padding: '12px' }}>{value}</Box>
-                ),
+                Cell: ({ value }) => <TextCell>{value}</TextCell>,
             },
         },
         useGlobalFilter,
@@ -223,44 +222,6 @@ const ProjectRoleList = () => {
             />
         </PageContent>
     );
-
-    // if (!roles) return null;
-
-    // return (
-    //     <div>
-    //         <Table>
-    //             <TableHead>
-    //                 <TableRow>
-    //                     <TableCell className={styles.hideXS}></TableCell>
-    //                     <TableCell>Project Role</TableCell>
-    //                     <TableCell className={styles.hideSM}>
-    //                         Description
-    //                     </TableCell>
-    //                     <TableCell align="right">
-    //                         {hasAccess(ADMIN) ? 'Action' : ''}
-    //                     </TableCell>
-    //                 </TableRow>
-    //             </TableHead>
-    //             <TableBody>{renderRoles()}</TableBody>
-    //             <PaginateUI
-    //                 pages={pages}
-    //                 pageIndex={pageIndex}
-    //                 setPageIndex={setPageIndex}
-    //                 nextPage={nextPage}
-    //                 prevPage={prevPage}
-    //             />
-    //         </Table>
-    //         <br />
-    //         <ProjectRoleDeleteConfirm
-    //             role={currentRole!}
-    //             open={delDialog}
-    //             setDeldialogue={setDelDialog}
-    //             handleDeleteRole={deleteProjectRole}
-    //             confirmName={confirmName}
-    //             setConfirmName={setConfirmName}
-    //         />
-    //     </div>
-    // );
 };
 
 export default ProjectRoleList;
