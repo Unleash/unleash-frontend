@@ -53,7 +53,7 @@ const UsersList = ({ search }: IUsersListProps) => {
     const [inviteLink, setInviteLink] = useState('');
     const [delUser, setDelUser] = useState<IUser>();
     const ref = useLoading(loading);
-    const { planUsers, isBilling } = useUsersPlan(users);
+    const { planUsers, isBillingUsers } = useUsersPlan(users);
     const { filtered, setFilter } = useUsersFilter(planUsers);
     const { sorted, sort, setSort } = useUsersSort(filtered);
 
@@ -146,7 +146,7 @@ const UsersList = ({ search }: IUsersListProps) => {
                     locationSettings={locationSettings}
                     renderRole={renderRole}
                     search={search}
-                    isBilling={isBilling}
+                    isBillingUsers={isBillingUsers}
                 />
             );
         });
@@ -159,7 +159,7 @@ const UsersList = ({ search }: IUsersListProps) => {
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableCellHeader}>
-                        {isBilling && (
+                        {isBillingUsers && (
                             <TableCell
                                 align="center"
                                 className={classnames(styles.hideSM)}

@@ -5,11 +5,16 @@ import CheckIcon from '@mui/icons-material/Check';
 import { colors } from 'themes/colors';
 import useUsers from 'hooks/api/getters/useUsers/useUsers';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IInstanceStatus, InstanceState } from 'interfaces/instance';
+import {
+    IInstanceStatus,
+    InstanceState,
+    InstancePlan,
+} from 'interfaces/instance';
 import { calculateTrialDaysRemaining } from 'component/common/InstanceStatus/InstanceStatus';
 import { GridRow } from 'component/common/GridRow/GridRow';
 import { GridCol } from 'component/common/GridCol/GridCol';
 import { GridColLink } from './GridColLink/GridColLink';
+import { STRIPE } from 'component/admin/billing/flags';
 
 interface IBillingPlanProps {
     instanceStatus: IInstanceStatus;
@@ -20,7 +25,10 @@ export const BillingPlan: FC<IBillingPlanProps> = ({ instanceStatus }) => {
     const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
 
     const price = {
-        pro: 80,
+        [InstancePlan.PRO]: 80,
+        [InstancePlan.COMPANY]: 0,
+        [InstancePlan.TEAM]: 0,
+        [InstancePlan.UNKNOWN]: 0,
         user: 15,
     };
 
@@ -29,11 +37,12 @@ export const BillingPlan: FC<IBillingPlanProps> = ({ instanceStatus }) => {
         typeof trialDaysRemaining === 'number' &&
         trialDaysRemaining <= 0;
 
+    const planPrice = price[instanceStatus.plan];
     const seats = instanceStatus.seats ?? 5;
     const freeAssigned = Math.min(users.length, seats);
     const paidAssigned = users.length - freeAssigned;
     const paidAssignedPrice = price.user * paidAssigned;
-    const finalPrice = price.pro + paidAssignedPrice;
+    const finalPrice = planPrice + paidAssignedPrice;
     const inactive = instanceStatus.state !== InstanceState.ACTIVE;
 
     return (
@@ -82,80 +91,106 @@ export const BillingPlan: FC<IBillingPlanProps> = ({ instanceStatus }) => {
                             />
                         </GridCol>
                         <GridCol>
-                            <StyledPriceSpan>
-                                ${price.pro.toFixed(2)}
-                            </StyledPriceSpan>
-                        </GridCol>
-                    </GridRow>
-                    <GridRow
-                        sx={theme => ({ marginBottom: theme.spacing(1.5) })}
-                    >
-                        <GridCol>
-                            <Typography>
-                                <strong>{seats}</strong> team members
-                                <GridColLink>
-                                    <Link to="/admin/users">
-                                        {freeAssigned} assigned
-                                    </Link>
-                                </GridColLink>
-                            </Typography>
-                        </GridCol>
-                        <GridCol>
-                            <StyledCheckIcon />
-                            <Typography variant="body2">included</Typography>
-                        </GridCol>
-                    </GridRow>
-                    <GridRow>
-                        <GridCol vertical>
-                            <Typography>
-                                Paid members
-                                <GridColLink>
-                                    <Link to="/admin/users">
-                                        {paidAssigned} assigned
-                                    </Link>
-                                </GridColLink>
-                            </Typography>
-                            <StyledInfoLabel>
-                                Add up to 15 extra paid members - ${price.user}
-                                /month per member
-                            </StyledInfoLabel>
-                        </GridCol>
-                        <GridCol>
-                            <Typography
-                                sx={theme => ({
-                                    fontSize: theme.fontSizes.mainHeader,
-                                })}
-                            >
-                                ${paidAssignedPrice.toFixed(2)}
-                            </Typography>
+                            <ConditionallyRender
+                                condition={planPrice > 0}
+                                show={
+                                    <StyledPriceSpan>
+                                        ${planPrice.toFixed(2)}
+                                    </StyledPriceSpan>
+                                }
+                            />
                         </GridCol>
                     </GridRow>
                 </Grid>
-                <StyledDivider />
-                <Grid container>
-                    <GridRow>
-                        <GridCol>
-                            <Typography
-                                sx={theme => ({
-                                    fontWeight: theme.fontWeight.bold,
-                                    fontSize: theme.fontSizes.mainHeader,
-                                })}
-                            >
-                                Total per month
-                            </Typography>
-                        </GridCol>
-                        <GridCol>
-                            <Typography
-                                sx={theme => ({
-                                    fontWeight: theme.fontWeight.bold,
-                                    fontSize: '2rem',
-                                })}
-                            >
-                                ${finalPrice.toFixed(2)}
-                            </Typography>
-                        </GridCol>
-                    </GridRow>
-                </Grid>
+                <ConditionallyRender
+                    condition={
+                        STRIPE && instanceStatus.plan === InstancePlan.PRO
+                    }
+                    show={
+                        <>
+                            <Grid container>
+                                <GridRow
+                                    sx={theme => ({
+                                        marginBottom: theme.spacing(1.5),
+                                    })}
+                                >
+                                    <GridCol>
+                                        <Typography>
+                                            <strong>{seats}</strong> team
+                                            members
+                                            <GridColLink>
+                                                <Link to="/admin/users">
+                                                    {freeAssigned} assigned
+                                                </Link>
+                                            </GridColLink>
+                                        </Typography>
+                                    </GridCol>
+                                    <GridCol>
+                                        <StyledCheckIcon />
+                                        <Typography variant="body2">
+                                            included
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
+                                <GridRow>
+                                    <GridCol vertical>
+                                        <Typography>
+                                            Paid members
+                                            <GridColLink>
+                                                <Link to="/admin/users">
+                                                    {paidAssigned} assigned
+                                                </Link>
+                                            </GridColLink>
+                                        </Typography>
+                                        <StyledInfoLabel>
+                                            Add up to 15 extra paid members - $
+                                            {price.user}
+                                            /month per member
+                                        </StyledInfoLabel>
+                                    </GridCol>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontSize:
+                                                    theme.fontSizes.mainHeader,
+                                            })}
+                                        >
+                                            ${paidAssignedPrice.toFixed(2)}
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
+                            </Grid>
+                            <StyledDivider />
+                            <Grid container>
+                                <GridRow>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
+                                                fontSize:
+                                                    theme.fontSizes.mainHeader,
+                                            })}
+                                        >
+                                            Total per month
+                                        </Typography>
+                                    </GridCol>
+                                    <GridCol>
+                                        <Typography
+                                            sx={theme => ({
+                                                fontWeight:
+                                                    theme.fontWeight.bold,
+                                                fontSize: '2rem',
+                                            })}
+                                        >
+                                            ${finalPrice.toFixed(2)}
+                                        </Typography>
+                                    </GridCol>
+                                </GridRow>
+                            </Grid>
+                        </>
+                    }
+                />
             </StyledPlanBox>
         </Grid>
     );

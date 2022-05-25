@@ -27,7 +27,7 @@ interface IUserListItemProps {
     openDelDialog: (user: IUser) => (e: SyntheticEvent) => void;
     locationSettings: ILocationSettings;
     search: string;
-    isBilling?: boolean;
+    isBillingUsers?: boolean;
 }
 
 const UserListItem = ({
@@ -37,7 +37,7 @@ const UserListItem = ({
     openPwDialog,
     locationSettings,
     search,
-    isBilling,
+    isBillingUsers,
 }: IUserListItemProps) => {
     const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
@@ -60,7 +60,7 @@ const UserListItem = ({
     return (
         <TableRow key={user.id} className={styles.tableRow}>
             <ConditionallyRender
-                condition={Boolean(isBilling)}
+                condition={Boolean(isBillingUsers)}
                 show={
                     <TableCell align="center" className={styles.hideSM}>
                         <ConditionallyRender

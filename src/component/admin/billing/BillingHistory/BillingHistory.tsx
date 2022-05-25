@@ -107,11 +107,7 @@ export const BillingHistory: VFC<IBillingHistoryProps> = ({
             </Table>
             <ConditionallyRender
                 condition={rows.length === 0}
-                show={
-                    <TablePlaceholder>
-                        You have not made any payments.
-                    </TablePlaceholder>
-                }
+                show={<TablePlaceholder>No invoices to show.</TablePlaceholder>}
             />
         </PageContent>
     );
