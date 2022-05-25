@@ -11,8 +11,8 @@ interface IEnvironmentRowProps {
 
 export const EnvironmentRow = ({ row, moveListItem }: IEnvironmentRowProps) => {
     const dragItemRef = useDragItem(row.index, moveListItem);
-    const search = useSearchHighlightContext();
-    const draggable = !search;
+    const { searchQuery } = useSearchHighlightContext();
+    const draggable = !searchQuery;
 
     return (
         <TableRow hover ref={draggable ? dragItemRef : undefined}>

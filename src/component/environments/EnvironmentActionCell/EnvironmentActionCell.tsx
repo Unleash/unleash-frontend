@@ -36,7 +36,7 @@ export const EnvironmentActionCell = ({
     const navigate = useNavigate();
     const { hasAccess } = useContext(AccessContext);
     const updatePermission = hasAccess(UPDATE_ENVIRONMENT);
-    const search = useSearchHighlightContext();
+    const { searchQuery } = useSearchHighlightContext();
 
     const { setToastApiError, setToastData } = useToast();
     const { refetchEnvironments } = useEnvironments();
@@ -112,7 +112,7 @@ export const EnvironmentActionCell = ({
     return (
         <ActionCell>
             <ConditionallyRender
-                condition={updatePermission && !search}
+                condition={updatePermission && !searchQuery}
                 show={
                     <IconButton size="large">
                         <DragIndicator titleAccess="Drag" cursor="grab" />
