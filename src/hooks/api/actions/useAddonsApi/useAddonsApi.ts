@@ -1,4 +1,5 @@
 import { IAddon } from 'interfaces/addons';
+import { useCallback } from 'react';
 import useAPI from '../useApi/useApi';
 
 const useAddonsApi = () => {
@@ -38,20 +39,23 @@ const useAddonsApi = () => {
         }
     };
 
-    const updateAddon = async (addonConfig: IAddon) => {
-        const path = `${URI}/${addonConfig.id}`;
-        const req = createRequest(path, {
-            method: 'PUT',
-            body: JSON.stringify(addonConfig),
-        });
-        try {
-            const res = await makeRequest(req.caller, req.id);
+    const updateAddon = useCallback(
+        async (addonConfig: IAddon) => {
+            const path = `${URI}/${addonConfig.id}`;
+            const req = createRequest(path, {
+                method: 'PUT',
+                body: JSON.stringify(addonConfig),
+            });
+            try {
+                const res = await makeRequest(req.caller, req.id);
 
-            return res;
-        } catch (e) {
-            throw e;
-        }
-    };
+                return res;
+            } catch (e) {
+                throw e;
+            }
+        },
+        [createRequest, makeRequest]
+    );
 
     return {
         createAddon,
