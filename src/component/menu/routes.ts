@@ -49,9 +49,9 @@ import { SplashPage } from 'component/splash/SplashPage/SplashPage';
 import { CreateUnleashContextPage } from 'component/context/CreateUnleashContext/CreateUnleashContextPage';
 import { CreateSegment } from 'component/segments/CreateSegment/CreateSegment';
 import { EditSegment } from 'component/segments/EditSegment/EditSegment';
-import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { IRoute } from 'interfaces/route';
 import { EnvironmentTable } from 'component/environments/EnvironmentTable/EnvironmentTable';
+import { SegmentTable } from 'component/segments/SegmentTable/SegmentTable';
 
 export const routes: IRoute[] = [
     // Splash
@@ -347,7 +347,7 @@ export const routes: IRoute[] = [
     {
         path: '/segments',
         title: 'Segments',
-        component: SegmentsList,
+        component: SegmentTable,
         hidden: false,
         type: 'protected',
         menu: { mobile: true, advanced: true },

@@ -6,15 +6,18 @@ interface IDateCellProps {
 }
 
 export const TextCell: VFC<IDateCellProps> = ({ children }) => {
-    if (!children) {
-        return <Box sx={{ py: 1.5, px: 2 }} />;
-    }
-
     return (
-        <Box sx={{ py: 1.5, px: 2 }}>
-            <span data-loading role="tooltip">
+        <Box data-loading sx={{ py: 1.5, px: 2 }}>
+            <Box
+                sx={{
+                    display: '-webkit-box',
+                    overflow: 'hidden',
+                    WebkitLineClamp: 1,
+                    WebkitBoxOrient: 'vertical',
+                }}
+            >
                 {children}
-            </span>
+            </Box>
         </Box>
     );
 };

@@ -43,7 +43,7 @@ export const RemoveSegmentButton = ({ segment }: IRemoveSegmentButtonProps) => {
                 onClick={() => toggleModal(true)}
                 permission={DELETE_SEGMENT}
                 tooltipProps={{ title: 'Remove segment' }}
-                data-testid={`${SEGMENT_DELETE_BTN_ID}_${name}`}
+                data-testid={`${SEGMENT_DELETE_BTN_ID}_${segment.name}`}
             >
                 <Delete />
             </PermissionIconButton>
