@@ -1,4 +1,3 @@
-import { useContext, useState } from 'react';
 import {
     Box,
     IconButton,
@@ -9,43 +8,29 @@ import {
     TableRow,
     Tooltip,
 } from '@mui/material';
-import AccessContext from 'contexts/AccessContext';
 import useToast from 'hooks/useToast';
 import useLoading from 'hooks/useLoading';
-import useApiTokens from 'hooks/api/getters/useApiTokens/useApiTokens';
+import {
+    useApiTokens,
+    IApiToken,
+} from 'hooks/api/getters/useApiTokens/useApiTokens';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import useApiTokensApi from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
 import ApiError from 'component/common/ApiError/ApiError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { DELETE_API_TOKEN } from 'component/providers/AccessProvider/permissions';
-import { Delete, FileCopy } from '@mui/icons-material';
-import { Dialogue } from 'component/common/Dialogue/Dialogue';
+import { FileCopy } from '@mui/icons-material';
 import copy from 'copy-to-clipboard';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
 import { ProjectsList } from './ProjectsList/ProjectsList';
 import { useStyles } from './ApiTokenList.styles';
-
-interface IApiToken {
-    createdAt: Date;
-    username: string;
-    secret: string;
-    type: string;
-    project?: string;
-    projects?: string | string[];
-    environment: string;
-}
+import { RemoveApiTokenButton } from 'component/admin/apiToken/RemoveApiTokenButton/RemoveApiTokenButton';
 
 export const ApiTokenList = () => {
     const { classes: styles } = useStyles();
-    const { hasAccess } = useContext(AccessContext);
     const { uiConfig } = useUiConfig();
-    const [showDelete, setShowDelete] = useState(false);
-    const [delToken, setDeleteToken] = useState<IApiToken>();
     const { locationSettings } = useLocationSettings();
     const { setToastData } = useToast();
     const { tokens, loading, refetch, error } = useApiTokens();
-    const { deleteToken } = useApiTokensApi();
     const ref = useLoading(loading);
 
     const renderError = () => {
@@ -60,20 +45,6 @@ export const ApiTokenList = () => {
                 text: `Token is copied to clipboard`,
             });
         }
-    };
-
-    const onDeleteToken = async () => {
-        if (delToken) {
-            await deleteToken(delToken.secret);
-        }
-        setDeleteToken(undefined);
-        setShowDelete(false);
-        refetch();
-        setToastData({
-            type: 'success',
-            title: 'Deleted successfully',
-            text: 'Successfully deleted API token.',
-        });
     };
 
     const renderApiTokens = (tokens: IApiToken[]) => {
@@ -201,22 +172,7 @@ export const ApiTokenList = () => {
                                             <FileCopy />
                                         </IconButton>
                                     </Tooltip>
-                                    <ConditionallyRender
-                                        condition={hasAccess(DELETE_API_TOKEN)}
-                                        show={
-                                            <Tooltip title="Delete token" arrow>
-                                                <IconButton
-                                                    onClick={() => {
-                                                        setDeleteToken(item);
-                                                        setShowDelete(true);
-                                                    }}
-                                                    size="large"
-                                                >
-                                                    <Delete />
-                                                </IconButton>
-                                            </Tooltip>
-                                        }
-                                    />
+                                    <RemoveApiTokenButton token={item} />
                                 </TableCell>
                             </TableRow>
                         );
@@ -236,29 +192,6 @@ export const ApiTokenList = () => {
                     elseShow={renderApiTokens(tokens)}
                 />
             </div>
-            <Dialogue
-                open={showDelete}
-                onClick={onDeleteToken}
-                onClose={() => {
-                    setShowDelete(false);
-                    setDeleteToken(undefined);
-                }}
-                title="Confirm deletion"
-            >
-                <div>
-                    Are you sure you want to delete the following API token?
-                    <br />
-                    <ul>
-                        <li>
-                            <strong>username</strong>:{' '}
-                            <code>{delToken?.username}</code>
-                        </li>
-                        <li>
-                            <strong>type</strong>: <code>{delToken?.type}</code>
-                        </li>
-                    </ul>
-                </div>
-            </Dialogue>
         </div>
     );
 };
