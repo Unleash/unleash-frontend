@@ -21,13 +21,14 @@ import { sortTypes } from 'utils/sortTypes';
 import { useTable, useSortBy } from 'react-table';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { SortableTableHeader, TablePlaceholder } from 'component/common/Table';
-import { getAddonIcon } from '../AddonList';
+import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
+import { AddonIcon } from '../AddonIcon/AddonIcon';
+import { ConfiguredAddonsActionsCell } from './ConfiguredAddonsActionCell/ConfiguredAddonsActionsCell';
 
 export const ConfiguredAddons = () => {
     const { refetchAddons, addons, loading } = useAddons();
     const { updateAddon, removeAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
-    const navigate = useNavigate();
     const [showDelete, setShowDelete] = useState(false);
     const [deletedAddon, setDeletedAddon] = useState<IAddon>({
         id: 0,
@@ -77,17 +78,7 @@ export const ConfiguredAddons = () => {
                         original: { provider },
                     },
                 }: any) => (
-                    <Box
-                        data-loading
-                        sx={{
-                            pl: 2,
-                            pr: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {getAddonIcon(provider)}
-                    </Box>
+                    <IconCell icon={<AddonIcon name={provider as string} />} />
                 ),
             },
             {
@@ -114,41 +105,12 @@ export const ConfiguredAddons = () => {
                 id: 'Actions',
                 align: 'center',
                 Cell: ({ row: { original } }: any) => (
-                    <Box
-                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
-                        data-loading
-                    >
-                        <PermissionIconButton
-                            permission={UPDATE_ADDON}
-                            onClick={() => toggleAddon(original)}
-                            tooltipProps={{ title: 'Toggle addon' }}
-                        >
-                            <ConditionallyRender
-                                condition={original.enabled}
-                                show={<Visibility />}
-                                elseShow={<VisibilityOff />}
-                            />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            permission={UPDATE_ADDON}
-                            tooltipProps={{ title: 'Edit Addon' }}
-                            onClick={() =>
-                                navigate(`/addons/edit/${original.id}`)
-                            }
-                        >
-                            <Edit />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            permission={DELETE_ADDON}
-                            tooltipProps={{ title: 'Remove Addon' }}
-                            onClick={() => {
-                                setDeletedAddon(original);
-                                setShowDelete(true);
-                            }}
-                        >
-                            <Delete />
-                        </PermissionIconButton>
-                    </Box>
+                    <ConfiguredAddonsActionsCell
+                        setShowDelete={setShowDelete}
+                        toggleAddon={toggleAddon}
+                        setDeletedAddon={setDeletedAddon}
+                        original={original as IAddon}
+                    />
                 ),
                 width: 150,
                 disableSortBy: true,
@@ -158,7 +120,7 @@ export const ConfiguredAddons = () => {
                 disableSortBy: true,
             },
         ],
-        [toggleAddon, navigate]
+        [toggleAddon]
     );
 
     const initialState = useMemo(

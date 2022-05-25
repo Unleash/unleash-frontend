@@ -16,13 +16,7 @@ const useAddonsApi = () => {
             body: JSON.stringify(addonConfig),
         });
 
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
+        return makeRequest(req.caller, req.id);
     };
 
     const removeAddon = async (id: number) => {
@@ -30,13 +24,8 @@ const useAddonsApi = () => {
         const req = createRequest(path, {
             method: 'DELETE',
         });
-        try {
-            const res = await makeRequest(req.caller, req.id);
 
-            return res;
-        } catch (e) {
-            throw e;
-        }
+        return await makeRequest(req.caller, req.id);
     };
 
     const updateAddon = useCallback(
@@ -46,13 +35,8 @@ const useAddonsApi = () => {
                 method: 'PUT',
                 body: JSON.stringify(addonConfig),
             });
-            try {
-                const res = await makeRequest(req.caller, req.id);
 
-                return res;
-            } catch (e) {
-                throw e;
-            }
+            return makeRequest(req.caller, req.id);
         },
         [createRequest, makeRequest]
     );
