@@ -150,7 +150,7 @@ exports[`renders an empty list correctly 1`] = `
                 <button
                   aria-label=""
                   aria-labelledby={null}
-                  className="tss-14l86a5-sortedButton tss-182abre-sortButton"
+                  className="tss-14l86a5-sortedButton tss-h39o0j-sortButton"
                   data-mui-internal-clone-element={true}
                   onBlur={[Function]}
                   onClick={[Function]}
@@ -161,23 +161,50 @@ exports[`renders an empty list correctly 1`] = `
                   onTouchStart={[Function]}
                 >
                   <span
-                    className="tss-4yqen5-label"
-                    data-text="Name"
-                    tabIndex={-1}
-                  >
-                    Name
-                  </span>
-                  <svg
                     aria-hidden={true}
-                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit tss-edmbvd-icon tss-19dh3h4-sorted mui-1vooibu-MuiSvgIcon-root"
-                    data-testid="KeyboardArrowUpIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                    className="tss-r8z9jm-hiddenMeasurementLayer"
                   >
-                    <path
-                      d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"
-                    />
-                  </svg>
+                    <span
+                      className="tss-1j5tskk-label"
+                      data-text="Name"
+                      tabIndex={-1}
+                    >
+                      Name
+                    </span>
+                    <svg
+                      aria-hidden={true}
+                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit tss-rkm25w-icon tss-19dh3h4-sorted mui-1vooibu-MuiSvgIcon-root"
+                      data-testid="KeyboardArrowUpIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    className="tss-bqel7i-visibleAbsoluteLayer"
+                  >
+                    <span
+                      tabIndex={-1}
+                    >
+                      <span>
+                        Name
+                      </span>
+                    </span>
+                    <svg
+                      aria-hidden={true}
+                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit tss-rkm25w-icon tss-19dh3h4-sorted sort-arrow mui-1vooibu-MuiSvgIcon-root"
+                      data-testid="KeyboardArrowUpIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"
+                      />
+                    </svg>
+                  </span>
                 </button>
               </th>
               <th
