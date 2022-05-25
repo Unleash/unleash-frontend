@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { useMemo } from 'react';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { Box } from '@mui/material';
 
