@@ -107,12 +107,12 @@ const columns = [
 ];
 
 const scrollOffset = 50;
-const rowHeight = 64;
 
 const defaultSort: SortingRule<string> = { id: 'createdAt', desc: false };
 
 export const FeatureToggleListTable: VFC = () => {
     const theme = useTheme();
+    const rowHeight = theme.shape.tableRowHeight;
     const { classes } = useStyles();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));

@@ -88,6 +88,8 @@ declare module '@mui/system/createTheme/shape' {
         borderRadiusMedium: string;
         borderRadiusLarge: string;
         borderRadiusExtraLarge: string;
+        tableRowHeight: number;
+        tableRowHeightDense: number;
     }
 }
 declare module '@mui/material/styles/zIndex' {
