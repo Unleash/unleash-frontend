@@ -109,10 +109,14 @@ export const EnvironmentActionCell = ({
     const editId = useId();
     const deleteId = useId();
 
+    // Allow drag and drop if the user is permitted to reorder environments.
+    // Disable drag and drop while searching since some rows may be hidden.
+    const enableDragAndDrop = updatePermission && !searchQuery;
+
     return (
         <ActionCell>
             <ConditionallyRender
-                condition={updatePermission && !searchQuery}
+                condition={enableDragAndDrop}
                 show={
                     <IconButton size="large">
                         <DragIndicator titleAccess="Drag" cursor="grab" />
