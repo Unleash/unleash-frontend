@@ -453,7 +453,7 @@ export const FeatureVariantsList = () => {
                 condition={rows.length === 0}
                 show={
                     <TablePlaceholder>
-                        No strategies available. Get started by adding one.
+                        No variants available. Get started by adding one.
                     </TablePlaceholder>
                 }
             />
