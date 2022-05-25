@@ -9,10 +9,9 @@ import {
     TableCell,
     TableRow,
     TablePlaceholder,
-    TableSearch,
 } from 'component/common/Table';
 
-import { useTable, useGlobalFilter, useSortBy } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 
 import { CREATE_ADDON } from 'component/providers/AccessProvider/permissions';
 import { useNavigate } from 'react-router-dom';
@@ -20,8 +19,8 @@ import PermissionButton from 'component/common/PermissionButton/PermissionButton
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
+import { getAddonIcon } from '../AddonList';
 
 interface IProvider {
     name: string;
@@ -33,14 +32,12 @@ interface IProvider {
 }
 
 interface IAvailableAddonsProps {
-    getAddonIcon: (name: string) => ReactElement;
     providers: IProvider[];
     loading: boolean;
 }
 
 export const AvailableAddons = ({
     providers,
-    getAddonIcon,
     loading,
 }: IAvailableAddonsProps) => {
     const navigate = useNavigate();
@@ -147,7 +144,6 @@ export const AvailableAddons = ({
         rows,
         prepareRow,
         state: { globalFilter },
-        setGlobalFilter,
     } = useTable(
         {
             columns: columns as any[], // TODO: fix after `react-table` v8 update
@@ -158,46 +154,32 @@ export const AvailableAddons = ({
             autoResetSortBy: false,
             disableSortRemove: true,
         },
-        useGlobalFilter,
         useSortBy
     );
 
     return (
         <PageContent
             isLoading={loading}
-            header={
-                <PageHeader
-                    title="Available addons"
-                    actions={
-                        <>
-                            <TableSearch
-                                initialValue={globalFilter}
-                                onChange={setGlobalFilter}
-                            />
-                        </>
-                    }
-                />
-            }
+            header={<PageHeader title="Available addons" />}
         >
-            <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
-                    <SortableTableHeader headerGroups={headerGroups} />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <TableRow hover {...row.getRowProps()}>
-                                    {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </SearchHighlightProvider>
+            <Table {...getTableProps()}>
+                <SortableTableHeader headerGroups={headerGroups} />
+                <TableBody {...getTableBodyProps()}>
+                    {rows.map(row => {
+                        prepareRow(row);
+                        return (
+                            <TableRow hover {...row.getRowProps()}>
+                                {row.cells.map(cell => (
+                                    <TableCell {...cell.getCellProps()}>
+                                        {cell.render('Cell')}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        );
+                    })}
+                </TableBody>
+            </Table>
+
             <ConditionallyRender
                 condition={rows.length === 0}
                 show={

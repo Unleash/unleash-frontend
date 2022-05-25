@@ -21,12 +21,9 @@ import { sortTypes } from 'utils/sortTypes';
 import { useTable, useSortBy } from 'react-table';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { SortableTableHeader, TablePlaceholder } from 'component/common/Table';
+import { getAddonIcon } from '../AddonList';
 
-interface IConfigureAddonsProps {
-    getAddonIcon: (name: string) => ReactElement;
-}
-
-export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
+export const ConfiguredAddons = () => {
     const { refetchAddons, addons, loading } = useAddons();
     const { updateAddon, removeAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();

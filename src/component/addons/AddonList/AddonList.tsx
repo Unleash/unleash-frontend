@@ -13,13 +13,13 @@ import { formatAssetPath } from 'utils/formatPath';
 import useAddons from 'hooks/api/getters/useAddons/useAddons';
 
 const style: React.CSSProperties = {
-    width: '40px',
-    height: '40px',
+    width: '32.5px',
+    height: '32.5px',
     marginRight: '16px',
-    float: 'left',
+    borderRadius: '50%',
 };
 
-const getAddonIcon = (name: string): ReactElement => {
+export const getAddonIcon = (name: string): ReactElement => {
     switch (name) {
         case 'slack':
             return (
@@ -77,15 +77,11 @@ export const AddonList = () => {
         <>
             <ConditionallyRender
                 condition={addons.length > 0}
-                show={<ConfiguredAddons getAddonIcon={getAddonIcon} />}
+                show={<ConfiguredAddons />}
             />
 
             <br />
-            <AvailableAddons
-                loading={loading}
-                providers={providers}
-                getAddonIcon={getAddonIcon}
-            />
+            <AvailableAddons loading={loading} providers={providers} />
         </>
     );
 };
