@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Alert, Divider, Grid, styled, Typography } from '@mui/material';
-import { colors } from 'themes/colors';
 import { BillingInformationButton } from './BillingInformationButton/BillingInformationButton';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
@@ -49,7 +48,7 @@ const StyledInfoBox = styled('aside')(({ theme }) => ({
     padding: theme.spacing(4),
     height: '100%',
     borderRadius: theme.shape.borderRadiusLarge,
-    backgroundColor: colors.grey[200],
+    backgroundColor: theme.palette.secondaryContainer,
 }));
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
@@ -67,5 +66,5 @@ const StyledInfoLabel = styled(Typography)(({ theme }) => ({
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
     margin: `${theme.spacing(2.5)} 0`,
-    borderColor: colors.grey[400],
+    borderColor: theme.palette.divider,
 }));

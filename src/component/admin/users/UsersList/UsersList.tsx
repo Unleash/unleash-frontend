@@ -159,14 +159,17 @@ const UsersList = ({ search }: IUsersListProps) => {
             <Table>
                 <TableHead>
                     <TableRow className={styles.tableCellHeader}>
-                        {isBillingUsers && (
-                            <TableCell
-                                align="center"
-                                className={classnames(styles.hideSM)}
-                            >
-                                Type
-                            </TableCell>
-                        )}
+                        <ConditionallyRender
+                            condition={isBillingUsers}
+                            show={
+                                <TableCell
+                                    align="center"
+                                    className={classnames(styles.hideSM)}
+                                >
+                                    Type
+                                </TableCell>
+                            }
+                        />
                         <TableCellSortable
                             className={classnames(
                                 styles.hideSM,

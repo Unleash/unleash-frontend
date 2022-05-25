@@ -1,5 +1,4 @@
 import { styled, Button, Typography } from '@mui/material';
-import { colors } from 'themes/colors';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
 import { INSTANCE_STATUS_BAR_ID } from 'utils/testIds';
 import { InfoOutlined, WarningAmber } from '@mui/icons-material';
@@ -7,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AccessContext from 'contexts/AccessContext';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import { ConditionallyRender } from '../ConditionallyRender/ConditionallyRender';
-import { calculateTrialDaysRemaining } from './InstanceStatus';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { calculateTrialDaysRemaining } from 'utils/billing';
 
 interface IInstanceStatusBarProps {
     instanceStatus: IInstanceStatus;
@@ -87,7 +86,6 @@ const UpgradeButton = () => {
     );
 };
 
-// TODO - Cleanup to use theme instead of colors
 const StyledWarningBar = styled('aside')(({ theme }) => ({
     position: 'relative',
     zIndex: 1,
@@ -97,9 +95,9 @@ const StyledWarningBar = styled('aside')(({ theme }) => ({
     padding: theme.spacing(1),
     gap: theme.spacing(1),
     borderBottom: '1px solid',
-    borderColor: colors.orange[500],
-    background: colors.orange[100],
-    color: colors.orange[900],
+    borderColor: theme.palette.warning.border,
+    background: theme.palette.warning.light,
+    color: theme.palette.warning.dark,
 }));
 
 const StyledInfoBar = styled('aside')(({ theme }) => ({
@@ -111,9 +109,9 @@ const StyledInfoBar = styled('aside')(({ theme }) => ({
     padding: theme.spacing(1),
     gap: theme.spacing(1),
     borderBottom: '1px solid',
-    borderColor: colors.blue[200],
-    background: colors.blue[50],
-    color: colors.blue[700],
+    borderColor: theme.palette.info.border,
+    background: theme.palette.info.light,
+    color: theme.palette.info.dark,
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -122,11 +120,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
     marginLeft: theme.spacing(2),
 }));
 
-// TODO - Cleanup to use theme instead of colors
 const StyledWarningIcon = styled(WarningAmber)(({ theme }) => ({
     color: theme.palette.warning.main,
 }));
 
-const StyledInfoIcon = styled(InfoOutlined)({
-    color: colors.blue[500],
-});
+const StyledInfoIcon = styled(InfoOutlined)(({ theme }) => ({
+    color: theme.palette.info.main,
+}));

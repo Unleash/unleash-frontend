@@ -66,7 +66,11 @@ declare module '@mui/material/styles' {
          */
         highlight: string;
         /**
-         * For sidebar container background.
+         * Background color for secondary containers.
+         */
+        secondaryContainer: string;
+        /**
+         * Background color for sidebar containers.
          */
         sidebarContainer: string;
         /**
@@ -84,6 +88,19 @@ declare module '@mui/material/styles' {
 
     interface Palette extends CustomPalette {}
     interface PaletteOptions extends CustomPalette {}
+
+    interface PaletteColor {
+        light: string;
+        main: string;
+        dark: string;
+        border: string;
+    }
+    interface PaletteColorOptions {
+        light?: string;
+        main?: string;
+        dark?: string;
+        border?: string;
+    }
 }
 
 declare module '@mui/system/createTheme/shape' {

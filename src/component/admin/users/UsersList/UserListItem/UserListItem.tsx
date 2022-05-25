@@ -75,11 +75,7 @@ const UserListItem = ({
                                     />
                                 </Tooltip>
                             }
-                            elseShow={
-                                <span data-loading>
-                                    {user.paid ? 'Paid' : 'Free'}
-                                </span>
-                            }
+                            elseShow={<span data-loading>Free</span>}
                         />
                     </TableCell>
                 }

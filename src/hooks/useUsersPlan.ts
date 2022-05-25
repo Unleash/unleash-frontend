@@ -15,7 +15,7 @@ export const useUsersPlan = (users: IUser[]): IUsersPlanOutput => {
     const isBillingUsers = STRIPE && instanceStatus?.plan === InstancePlan.PRO;
 
     const planUsers = useMemo(
-        () => computeUsers(users, isBillingUsers, instanceStatus?.seats),
+        () => calculatePaidUsers(users, isBillingUsers, instanceStatus?.seats),
         [users, isBillingUsers, instanceStatus?.seats]
     );
 
@@ -25,7 +25,7 @@ export const useUsersPlan = (users: IUser[]): IUsersPlanOutput => {
     };
 };
 
-const computeUsers = (
+const calculatePaidUsers = (
     users: IUser[],
     isBillingUsers: boolean,
     seats: number = 0
@@ -34,8 +34,15 @@ const computeUsers = (
 
     users
         .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-        .forEach((user, i) => {
-            user.paid = i >= seats;
+        .forEach((user, index) => {
+            user.paid = false;
+
+            // If index is greater or equal to seat, the
+            // user isn't paid for and we will add use this
+            // to add costs and icons in the userlist
+            if (index >= seats) {
+                user.paid = true;
+            }
         });
 
     return users;

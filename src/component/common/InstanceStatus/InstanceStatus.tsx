@@ -6,25 +6,26 @@ import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IInstanceStatus, InstanceState } from 'interfaces/instance';
-import { differenceInDays, parseISO } from 'date-fns';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import AccessContext from 'contexts/AccessContext';
+import useInstanceStatusApi from 'hooks/api/actions/useInstanceStatusApi/useInstanceStatusApi';
+import { calculateTrialDaysRemaining } from 'utils/billing';
 
 interface ITrialDialogProps {
     instanceStatus: IInstanceStatus;
-    extendTrial: () => Promise<void>;
+    onExtendTrial: () => Promise<void>;
 }
 
 const TrialDialog: VFC<ITrialDialogProps> = ({
     instanceStatus,
-    extendTrial,
+    onExtendTrial,
 }) => {
     const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
     const trialDaysRemaining = calculateTrialDaysRemaining(instanceStatus);
 
     const statusExpired =
-        instanceStatus?.state === InstanceState.TRIAL &&
+        instanceStatus.state === InstanceState.TRIAL &&
         typeof trialDaysRemaining === 'number' &&
         trialDaysRemaining <= 0;
 
@@ -57,7 +58,7 @@ const TrialDialog: VFC<ITrialDialogProps> = ({
                         reason !== 'backdropClick' &&
                         reason !== 'escapeKeyDown'
                     ) {
-                        if (!instanceStatus?.trialExtended) extendTrial();
+                        onExtendTrial();
                         setDialogOpen(false);
                     }
                 }}
@@ -89,7 +90,19 @@ const TrialDialog: VFC<ITrialDialogProps> = ({
 };
 
 export const InstanceStatus: FC = ({ children }) => {
-    const { instanceStatus, extendTrial, isBilling } = useInstanceStatus();
+    const { instanceStatus, refetchInstanceStatus, isBilling } =
+        useInstanceStatus();
+    const { extendTrial } = useInstanceStatusApi();
+
+    const onExtendTrial = async () => {
+        if (
+            instanceStatus?.state === InstanceState.TRIAL &&
+            !instanceStatus?.trialExtended
+        ) {
+            await extendTrial();
+            await refetchInstanceStatus();
+        }
+    };
 
     return (
         <div style={{ height: '100%' }}>
@@ -102,7 +115,7 @@ export const InstanceStatus: FC = ({ children }) => {
                         />
                         <TrialDialog
                             instanceStatus={instanceStatus!}
-                            extendTrial={extendTrial}
+                            onExtendTrial={onExtendTrial}
                         />
                     </>
                 )}
@@ -110,14 +123,6 @@ export const InstanceStatus: FC = ({ children }) => {
             {children}
         </div>
     );
-};
-
-export const calculateTrialDaysRemaining = (
-    instanceStatus?: IInstanceStatus
-): number | undefined => {
-    return instanceStatus?.trialExpiry
-        ? differenceInDays(parseISO(instanceStatus.trialExpiry), new Date())
-        : undefined;
 };
 
 const InstanceStatusBarMemo = React.memo(InstanceStatusBar);

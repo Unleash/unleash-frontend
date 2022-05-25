@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Alert, Divider, Grid, styled, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CheckIcon from '@mui/icons-material/Check';
-import { colors } from 'themes/colors';
 import useUsers from 'hooks/api/getters/useUsers/useUsers';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
@@ -10,7 +9,7 @@ import {
     InstanceState,
     InstancePlan,
 } from 'interfaces/instance';
-import { calculateTrialDaysRemaining } from 'component/common/InstanceStatus/InstanceStatus';
+import { calculateTrialDaysRemaining } from 'utils/billing';
 import { GridRow } from 'component/common/GridRow/GridRow';
 import { GridCol } from 'component/common/GridCol/GridCol';
 import { GridColLink } from './GridColLink/GridColLink';
@@ -75,11 +74,11 @@ export const BillingPlan: FC<IBillingPlanProps> = ({ instanceStatus }) => {
                                 }
                                 show={
                                     <StyledTrialSpan
-                                        sx={{
+                                        sx={theme => ({
                                             color: statusExpired
-                                                ? colors.red[800]
-                                                : colors.orange[900],
-                                        }}
+                                                ? theme.palette.error.dark
+                                                : theme.palette.warning.dark,
+                                        })}
                                     >
                                         {statusExpired
                                             ? 'Trial expired'
@@ -215,7 +214,7 @@ const StyledPlanBadge = styled('span')(({ theme }) => ({
     padding: `${theme.spacing(0.5)} ${theme.spacing(1)}`,
     borderRadius: theme.shape.borderRadiusLarge,
     fontSize: theme.fontSizes.smallerBody,
-    backgroundColor: colors.green[100],
+    backgroundColor: theme.palette.statusBadge.success,
     color: theme.palette.success.dark,
     fontWeight: theme.fontWeight.bold,
 }));
