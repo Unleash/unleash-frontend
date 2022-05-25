@@ -96,6 +96,17 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
         setAnchorEl(null);
     };
 
+    const onItemClick = (column: typeof allColumns[number]) => {
+        onCustomize([
+            ...allColumns
+                .filter(({ isVisible }) => isVisible)
+                .map(({ id }) => id)
+                .filter(id => !staticColumns.includes(id) && id !== column.id),
+            ...(!column.isVisible ? [column.id] : []),
+        ]);
+        column.toggleHidden(column.isVisible);
+    };
+
     const isOpen = Boolean(anchorEl);
     const id = `columns-menu`;
     const menuId = `columns-menu-list-${id}`;
@@ -150,18 +161,7 @@ export const ColumnsMenu: VFC<IColumnsMenuProps> = ({
                             show={<Divider className={classes.divider} />}
                         />,
                         <MenuItem
-                            onClick={() => {
-                                onCustomize([
-                                    ...allColumns
-                                        .filter(({ isVisible }) => isVisible)
-                                        .map(({ id }) => id)
-                                        .filter(
-                                            id => !staticColumns.includes(id)
-                                        ),
-                                    ...(!column.isVisible ? [column.id] : []),
-                                ]);
-                                column.toggleHidden(column.isVisible);
-                            }}
+                            onClick={() => onItemClick(column)}
                             disabled={staticColumns.includes(column.id)}
                             className={classes.menuItem}
                         >

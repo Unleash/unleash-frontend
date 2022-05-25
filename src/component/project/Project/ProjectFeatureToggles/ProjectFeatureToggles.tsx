@@ -270,7 +270,6 @@ export const ProjectFeatureToggles = ({
                     columnId => !visibleColumns.includes(columnId)
                 );
             } else if (storedParams.columns) {
-                console.log('storedParams.columns', storedParams.columns);
                 const visibleColumns = [
                     ...staticColumns,
                     ...storedParams.columns,
