@@ -58,7 +58,7 @@ describe('useLocalStorage', () => {
         });
 
         expect(setItem).toHaveBeenCalledWith(
-            'test-key:useLocalStorage:v1',
+            ':test-key:useLocalStorage:v1',
             JSON.stringify({ key: 'new-value' })
         );
     });
