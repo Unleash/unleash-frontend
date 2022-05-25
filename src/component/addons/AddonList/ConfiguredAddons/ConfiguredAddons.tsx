@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
     List,
     ListItem,
@@ -28,7 +29,7 @@ interface IConfigureAddonsProps {
 }
 
 export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
-    const { refetchAddons, addons } = useAddons();
+    const { refetchAddons, addons, loading } = useAddons();
     const { updateAddon, removeAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
     const { hasAccess } = useContext(AccessContext);
@@ -50,6 +51,86 @@ export const ConfiguredAddons = ({ getAddonIcon }: IConfigureAddonsProps) => {
             return addonA.id - addonB.id;
         });
     };
+
+    const data = useMemo(() => {
+        if (loading) {
+            return Array(5).fill({
+                name: 'Addon name',
+                description: 'Addon description when loading',
+            });
+        }
+
+        return addons.map(({ provider, id, description, enabled }) => ({
+            provider,
+            id,
+            description,
+            enabled,
+        }));
+    }, [addons, loading]);
+
+    const columns = useMemo(
+        () => [
+            {
+                id: 'Icon',
+                Cell: ({
+                    row: {
+                        original: { name },
+                    },
+                }: any) => (
+                    <Box
+                        data-loading
+                        sx={{
+                            pl: 2,
+                            pr: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {getAddonIcon(name)}
+                    </Box>
+                ),
+            },
+            {
+                Header: 'Name',
+                accessor: 'name',
+                width: '90%',
+                Cell: ({
+                    row: {
+                        original: { name, description },
+                    },
+                }: any) => {
+                    return (
+                        <LinkCell
+                            data-loading
+                            title={name}
+                            subtitle={description}
+                        />
+                    );
+                },
+                sortType: 'alphanumeric',
+            },
+            {
+                Header: 'Actions',
+                id: 'Actions',
+                align: 'center',
+                Cell: ({ row: { original } }: any) => (
+                    <Box
+                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
+                        data-loading
+                    >
+                        Actions
+                    </Box>
+                ),
+                width: 150,
+                disableSortBy: true,
+            },
+            {
+                accessor: 'description',
+                disableSortBy: true,
+            },
+        ],
+        []
+    );
 
     const toggleAddon = async (addon: IAddon) => {
         try {
