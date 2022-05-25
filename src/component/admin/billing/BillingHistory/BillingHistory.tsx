@@ -1,5 +1,3 @@
-// TODO: finish this
-
 import {
     Table,
     SortableTableHeader,
@@ -14,8 +12,9 @@ import { useMemo, VFC } from 'react';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IconButton, styled, Typography } from '@mui/material';
+import { Box, IconButton, styled, Typography } from '@mui/material';
 import FileDownload from '@mui/icons-material/FileDownload';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 
 interface IBillingHistoryProps {
     data: Record<string, any>[];
@@ -24,28 +23,18 @@ interface IBillingHistoryProps {
 
 const columns = [
     {
-        Header: 'Date',
-        accessor: 'createdAt',
-        Cell: DateCell,
-        sortType: 'date',
-    },
-    {
-        Header: 'Invoice nr.',
-        accessor: 'number',
-    },
-    {
-        Header: 'Payment method',
-        accessor: 'method',
-    },
-    {
         Header: 'Amount',
         accessor: 'amountFomratted', // TODO: typo
-        align: 'right',
     },
     {
         Header: 'Status',
         accessor: 'status',
-        align: 'center',
+    },
+    {
+        Header: 'Due date',
+        accessor: 'dueDate',
+        Cell: DateCell,
+        sortType: 'date',
     },
     {
         Header: 'Download',
@@ -53,10 +42,16 @@ const columns = [
         align: 'center',
         disableSortBy: true,
         Cell: ({ value }: { value: string }) => (
-            <IconButton href={value}>
-                <FileDownload />
-            </IconButton>
+            <Box
+                sx={{ display: 'flex', justifyContent: 'center' }}
+                data-loading
+            >
+                <IconButton href={value}>
+                    <FileDownload />
+                </IconButton>
+            </Box>
         ),
+        width: 100,
     },
 ];
 
@@ -80,6 +75,9 @@ export const BillingHistory: VFC<IBillingHistoryProps> = ({
                 sortTypes,
                 autoResetGlobalFilter: false,
                 disableSortRemove: true,
+                defaultColumn: {
+                    Cell: TextCell,
+                },
             },
             useGlobalFilter,
             useSortBy
