@@ -216,7 +216,10 @@ export const ConfiguredAddons = () => {
                         return (
                             <TableRow hover {...row.getRowProps()}>
                                 {row.cells.map(cell => (
-                                    <TableCell {...cell.getCellProps()}>
+                                    <TableCell
+                                        {...cell.getCellProps()}
+                                        padding="none"
+                                    >
                                         {cell.render('Cell')}
                                     </TableCell>
                                 ))}
