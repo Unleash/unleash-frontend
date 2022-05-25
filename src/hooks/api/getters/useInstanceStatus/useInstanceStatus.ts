@@ -24,7 +24,7 @@ export const useInstanceStatus = (): IUseInstanceStatusOutput => {
     } = uiConfig;
 
     const { data, refetch, loading, error } = useApiGetter(
-        `useInstanceStatus`,
+        'useInstanceStatus',
         () => fetchInstanceStatus(UNLEASH_CLOUD)
     );
 
