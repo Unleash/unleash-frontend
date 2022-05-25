@@ -3,7 +3,13 @@ import {
     DELETE_ENVIRONMENT,
     UPDATE_ENVIRONMENT,
 } from 'component/providers/AccessProvider/permissions';
-import { Edit, Delete, OfflineBolt, DragIndicator } from '@mui/icons-material';
+import {
+    Edit,
+    Delete,
+    OfflineBolt,
+    DragIndicator,
+    PowerSettingsNew,
+} from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IconButton, Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -123,7 +129,7 @@ export const EnvironmentActionCell = ({
                             onClick={() => setToggleModal(true)}
                             size="large"
                         >
-                            <OfflineBolt />
+                            <PowerSettingsNew />
                         </IconButton>
                     </Tooltip>
                 }
