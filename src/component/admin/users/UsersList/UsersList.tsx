@@ -165,7 +165,7 @@ const UsersList = ({ search }: IUsersListProps) => {
                             sort={sort}
                             setSort={setSort}
                         >
-                            Created on
+                            Created
                         </TableCellSortable>
                         <TableCell
                             align="center"

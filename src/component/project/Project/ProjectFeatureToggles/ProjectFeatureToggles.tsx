@@ -199,7 +199,7 @@ export const ProjectFeatureToggles = ({
                 sortType: 'alphanumeric',
             },
             {
-                Header: 'Created on',
+                Header: 'Created',
                 accessor: 'createdAt',
                 Cell: DateCell,
                 sortType: 'date',

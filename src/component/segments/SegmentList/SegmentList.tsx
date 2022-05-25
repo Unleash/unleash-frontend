@@ -61,7 +61,7 @@ export const SegmentsList = () => {
                             classes={{ root: styles.cell }}
                             className={styles.hideXS}
                         >
-                            Created on
+                            Created
                         </TableCell>
                         <TableCell
                             classes={{ root: styles.cell }}
