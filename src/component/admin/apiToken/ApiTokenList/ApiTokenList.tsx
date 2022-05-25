@@ -1,14 +1,11 @@
 import {
     Box,
-    IconButton,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
-    Tooltip,
 } from '@mui/material';
-import useToast from 'hooks/useToast';
 import useLoading from 'hooks/useLoading';
 import {
     useApiTokens,
@@ -17,34 +14,22 @@ import {
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import ApiError from 'component/common/ApiError/ApiError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { FileCopy } from '@mui/icons-material';
-import copy from 'copy-to-clipboard';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMD } from 'utils/formatDate';
 import { ProjectsList } from './ProjectsList/ProjectsList';
 import { useStyles } from './ApiTokenList.styles';
 import { RemoveApiTokenButton } from 'component/admin/apiToken/RemoveApiTokenButton/RemoveApiTokenButton';
+import { CopyApiTokenButton } from 'component/admin/apiToken/CopyApiTokenButton/CopyApiTokenButton';
 
 export const ApiTokenList = () => {
     const { classes: styles } = useStyles();
     const { uiConfig } = useUiConfig();
     const { locationSettings } = useLocationSettings();
-    const { setToastData } = useToast();
     const { tokens, loading, refetch, error } = useApiTokens();
     const ref = useLoading(loading);
 
     const renderError = () => {
         return <ApiError onClick={refetch} text="Error fetching api tokens" />;
-    };
-
-    const copyToken = (value: string) => {
-        if (copy(value)) {
-            setToastData({
-                type: 'success',
-                title: 'Token copied',
-                text: `Token is copied to clipboard`,
-            });
-        }
     };
 
     const renderApiTokens = (tokens: IApiToken[]) => {
@@ -162,16 +147,7 @@ export const ApiTokenList = () => {
                                     </Box>
                                 </TableCell>
                                 <TableCell className={styles.actionsContainer}>
-                                    <Tooltip title="Copy token" arrow>
-                                        <IconButton
-                                            onClick={() => {
-                                                copyToken(item.secret);
-                                            }}
-                                            size="large"
-                                        >
-                                            <FileCopy />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <CopyApiTokenButton token={item} />
                                     <RemoveApiTokenButton token={item} />
                                 </TableCell>
                             </TableRow>
