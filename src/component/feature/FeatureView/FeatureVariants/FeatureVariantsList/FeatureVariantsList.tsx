@@ -1,21 +1,19 @@
-import classnames from 'classnames';
 import * as jsonpatch from 'fast-json-patch';
 
-import styles from './variants.module.scss';
 import {
+    Alert,
+    Box,
     Table,
     TableBody,
     TableCell,
-    TableHead,
     TableRow,
-    Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { AddVariant } from './AddFeatureVariant/AddFeatureVariant';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import AccessContext from 'contexts/AccessContext';
-import FeatureVariantListItem from './FeatureVariantsListItem/FeatureVariantsListItem';
 import { UPDATE_FEATURE_VARIANTS } from 'component/providers/AccessProvider/permissions';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -25,25 +23,42 @@ import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import useToast from 'hooks/useToast';
 import { updateWeight } from 'component/common/util';
 import cloneDeep from 'lodash.clonedeep';
-import useDeleteVariantMarkup from './FeatureVariantsListItem/useDeleteVariantMarkup';
+import useDeleteVariantMarkup from './useDeleteVariantMarkup';
 import PermissionButton from 'component/common/PermissionButton/PermissionButton';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { Edit, Delete } from '@mui/icons-material';
+import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
+import { useTable, useSortBy, useGlobalFilter } from 'react-table';
+import { PageContent } from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { SortableTableHeader, TablePlaceholder } from 'component/common/Table';
+import { sortTypes } from 'utils/sortTypes';
+import { PayloadOverridesCell } from './PayloadOverridesCell/PayloadOverridesCell';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
+import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import theme from 'themes/theme';
 
-const FeatureOverviewVariants = () => {
+export const FeatureVariantsList = () => {
     const { hasAccess } = useContext(AccessContext);
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
-    const { feature, refetchFeature } = useFeature(projectId, featureId);
+    const { feature, refetchFeature, loading } = useFeature(
+        projectId,
+        featureId
+    );
     const [variants, setVariants] = useState<IFeatureVariant[]>([]);
     const [editing, setEditing] = useState(false);
     const { context } = useUnleashContext();
     const { setToastData, setToastApiError } = useToast();
     const { patchFeatureVariants } = useFeatureApi();
-    const [editVariant, setEditVariant] = useState({});
+    const [variantToEdit, setVariantToEdit] = useState({});
     const [showAddVariant, setShowAddVariant] = useState(false);
     const [stickinessOptions, setStickinessOptions] = useState<string[]>([]);
     const [delDialog, setDelDialog] = useState({ name: '', show: false });
+
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
     useEffect(() => {
         if (feature) {
@@ -63,6 +78,152 @@ const FeatureOverviewVariants = () => {
 
     const editable = hasAccess(UPDATE_FEATURE_VARIANTS, projectId);
 
+    const data = useMemo(() => {
+        if (loading) {
+            return Array(5).fill({
+                name: 'Context name',
+                description: 'Context description when loading',
+            });
+        }
+
+        return feature.variants;
+    }, [feature, loading]);
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'Name',
+                accessor: 'name',
+                width: '40%',
+                Cell: ({
+                    row: {
+                        original: { name },
+                    },
+                }: any) => {
+                    return <LinkCell data-loading title={name} />;
+                },
+                sortType: 'alphanumeric',
+            },
+            {
+                Header: 'Payload/Overrides',
+                accessor: 'data',
+                Cell: ({
+                    row: {
+                        original: { overrides, payload },
+                    },
+                }: any) => {
+                    return (
+                        <PayloadOverridesCell
+                            overrides={overrides}
+                            payload={payload}
+                        />
+                    );
+                },
+                disableSortBy: true,
+            },
+            {
+                Header: 'Weight',
+                accessor: 'weight',
+                width: '20%',
+                Cell: ({
+                    row: {
+                        original: { weight },
+                    },
+                }: any) => {
+                    return <TextCell data-loading>{weight / 10.0} %</TextCell>;
+                },
+                sortType: 'number',
+            },
+            {
+                Header: 'Type',
+                accessor: 'weightType',
+                width: '20%',
+                Cell: ({
+                    row: {
+                        original: { weightType },
+                    },
+                }: any) => {
+                    return <TextCell data-loading>{weightType}</TextCell>;
+                },
+                sortType: 'alphanumeric',
+            },
+            {
+                Header: 'Actions',
+                id: 'Actions',
+                align: 'right',
+                Cell: ({ row: { original } }: any) => (
+                    <Box
+                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
+                        data-loading
+                    >
+                        <PermissionIconButton
+                            size="large"
+                            data-testid={'VARIANT_EDIT_BUTTON'}
+                            permission={UPDATE_FEATURE_VARIANTS}
+                            projectId={projectId}
+                            onClick={() => editVariant(original.name)}
+                        >
+                            <Edit />
+                        </PermissionIconButton>
+                        <PermissionIconButton
+                            size="large"
+                            permission={UPDATE_FEATURE_VARIANTS}
+                            data-testid={`VARIANT_DELETE_BUTTON_${original.name}`}
+                            projectId={projectId}
+                            onClick={() =>
+                                setDelDialog({
+                                    show: true,
+                                    name: original.name,
+                                })
+                            }
+                        >
+                            <Delete />
+                        </PermissionIconButton>
+                    </Box>
+                ),
+                width: 150,
+                disableSortBy: true,
+            },
+        ],
+        []
+    );
+
+    const initialState = useMemo(
+        () => ({
+            sortBy: [{ id: 'name', desc: false }],
+        }),
+        []
+    );
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        setHiddenColumns,
+    } = useTable(
+        {
+            columns: columns as any[], // TODO: fix after `react-table` v8 update
+            data,
+            initialState,
+            sortTypes,
+            autoResetGlobalFilter: false,
+            autoResetSortBy: false,
+            disableSortRemove: true,
+        },
+        useGlobalFilter,
+        useSortBy
+    );
+
+    useEffect(() => {
+        if (isSmallScreen) {
+            setHiddenColumns(['weightType', 'data']);
+        } else if (isMediumScreen) {
+            setHiddenColumns(['weightType']);
+        }
+    }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
+
     // @ts-expect-error
     const setClonedVariants = clonedVariants =>
         setVariants(cloneDeep(clonedVariants));
@@ -70,26 +231,14 @@ const FeatureOverviewVariants = () => {
     const handleCloseAddVariant = () => {
         setShowAddVariant(false);
         setEditing(false);
-        setEditVariant({});
+        setVariantToEdit({});
     };
 
-    const renderVariants = () => {
-        return variants.map(variant => {
-            return (
-                <FeatureVariantListItem
-                    key={variant.name}
-                    variant={variant}
-                    editVariant={(name: string) => {
-                        const v = { ...variants.find(v => v.name === name) };
-                        setEditVariant(v);
-                        setEditing(true);
-                        setShowAddVariant(true);
-                    }}
-                    setDelDialog={setDelDialog}
-                    editable={editable}
-                />
-            );
-        });
+    const editVariant = (name: string) => {
+        const variant = { ...variants.find(variant => variant.name === name) };
+        setVariantToEdit(variant);
+        setEditing(true);
+        setShowAddVariant(true);
     };
 
     const renderStickiness = () => {
@@ -118,10 +267,7 @@ const FeatureOverviewVariants = () => {
                     onChange={onChange}
                 />
                 &nbsp;&nbsp;
-                <small
-                    className={classnames(styles.paragraph, styles.helperText)}
-                    style={{ display: 'block', marginTop: '0.5rem' }}
-                >
+                <small style={{ display: 'block', marginTop: '0.5rem' }}>
                     By overriding the stickiness you can control which parameter
                     is used to ensure consistent traffic allocation across
                     variants.{' '}
@@ -246,54 +392,75 @@ const FeatureOverviewVariants = () => {
     };
 
     return (
-        <section style={{ padding: '16px' }}>
-            <Typography variant="body1">
+        <PageContent
+            isLoading={loading}
+            header={
+                <PageHeader
+                    title="Variants"
+                    actions={
+                        <>
+                            <PermissionButton
+                                onClick={() => {
+                                    setEditing(false);
+                                    if (variants.length === 0) {
+                                        setVariantToEdit({ weight: 1000 });
+                                    } else {
+                                        setVariantToEdit({
+                                            weightType: 'variable',
+                                        });
+                                    }
+                                    setShowAddVariant(true);
+                                }}
+                                data-testid={'ADD_VARIANT_BUTTON'}
+                                permission={UPDATE_FEATURE_VARIANTS}
+                                projectId={projectId}
+                            >
+                                New variant
+                            </PermissionButton>
+                        </>
+                    }
+                />
+            }
+        >
+            <Alert severity="info" sx={{ marginBottom: '1rem' }}>
                 Variants allows you to return a variant object if the feature
                 toggle is considered enabled for the current request. When using
                 variants you should use the{' '}
                 <code style={{ color: 'navy' }}>getVariant()</code> method in
                 the Client SDK.
-            </Typography>
-
-            <ConditionallyRender
-                condition={variants?.length > 0}
-                show={
-                    <Table className={styles.variantTable}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Variant name</TableCell>
-                                <TableCell className={styles.labels} />
-                                <TableCell>Weight</TableCell>
-                                <TableCell>Weight Type</TableCell>
-                                <TableCell className={styles.actions} />
+            </Alert>
+            <Table {...getTableProps()}>
+                <SortableTableHeader headerGroups={headerGroups} />
+                <TableBody {...getTableBodyProps()}>
+                    {rows.map(row => {
+                        prepareRow(row);
+                        return (
+                            <TableRow hover {...row.getRowProps()}>
+                                {row.cells.map(cell => (
+                                    <TableCell
+                                        {...cell.getCellProps()}
+                                        padding="none"
+                                    >
+                                        {cell.render('Cell')}
+                                    </TableCell>
+                                ))}
                             </TableRow>
-                        </TableHead>
-                        <TableBody>{renderVariants()}</TableBody>
-                    </Table>
+                        );
+                    })}
+                </TableBody>
+            </Table>
+            <ConditionallyRender
+                condition={rows.length === 0}
+                show={
+                    <TablePlaceholder>
+                        No strategies available. Get started by adding one.
+                    </TablePlaceholder>
                 }
-                elseShow={<p>No variants defined.</p>}
             />
 
             <br />
 
             <div>
-                <PermissionButton
-                    onClick={() => {
-                        setEditing(false);
-                        if (variants.length === 0) {
-                            setEditVariant({ weight: 1000 });
-                        } else {
-                            setEditVariant({ weightType: 'variable' });
-                        }
-                        setShowAddVariant(true);
-                    }}
-                    className={styles.addVariantButton}
-                    data-testid={'ADD_VARIANT_BUTTON'}
-                    permission={UPDATE_FEATURE_VARIANTS}
-                    projectId={projectId}
-                >
-                    New variant
-                </PermissionButton>
                 <ConditionallyRender
                     condition={editable}
                     show={renderStickiness()}
@@ -314,13 +481,11 @@ const FeatureOverviewVariants = () => {
                 validateName={validateName}
                 validateWeight={validateWeight}
                 // @ts-expect-error
-                editVariant={editVariant}
+                editVariant={variantToEdit}
                 title={editing ? 'Edit variant' : 'Add variant'}
             />
 
             {delDialogueMarkup}
-        </section>
+        </PageContent>
     );
 };
-
-export default FeatureOverviewVariants;
