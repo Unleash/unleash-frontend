@@ -24,7 +24,7 @@ interface IBillingHistoryProps {
 const columns = [
     {
         Header: 'Amount',
-        accessor: 'amountFomratted', // TODO: typo
+        accessor: 'amountFormatted',
     },
     {
         Header: 'Status',
