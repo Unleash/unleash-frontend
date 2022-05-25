@@ -31,13 +31,12 @@ const BUILTIN_ROLE_TYPE = 'project';
 
 const ProjectRoleList = () => {
     const navigate = useNavigate();
-    const { roles, loading } = useProjectRoles();
+    const { roles, refetch, loading } = useProjectRoles();
 
     const paginationFilter = (role: IRole) => role?.type !== ROOTROLE;
     const data = roles.filter(paginationFilter);
 
     const { deleteRole } = useProjectRolesApi();
-    const { refetch } = useProjectRoles();
     const [currentRole, setCurrentRole] = useState<IProjectRole | null>(null);
     const [delDialog, setDelDialog] = useState(false);
     const [confirmName, setConfirmName] = useState('');
@@ -69,6 +68,7 @@ const ProjectRoleList = () => {
             {
                 Header: 'Description',
                 accessor: 'description',
+                width: '67%',
             },
             {
                 Header: 'Actions',
@@ -80,7 +80,7 @@ const ProjectRoleList = () => {
                     },
                 }: any) => (
                     <Box
-                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
+                        sx={{ display: 'flex', justifyContent: 'center' }}
                         data-loading
                     >
                         <PermissionIconButton
@@ -112,7 +112,7 @@ const ProjectRoleList = () => {
                         </PermissionIconButton>
                     </Box>
                 ),
-                width: 150,
+                width: 100,
                 disableSortBy: true,
             },
         ],
@@ -143,6 +143,11 @@ const ProjectRoleList = () => {
             autoResetGlobalFilter: false,
             autoResetSortBy: false,
             disableSortRemove: true,
+            defaultColumn: {
+                Cell: ({ value }) => (
+                    <Box sx={{ padding: '12px' }}>{value}</Box>
+                ),
+            },
         },
         useGlobalFilter,
         useSortBy
@@ -193,15 +198,15 @@ const ProjectRoleList = () => {
                         condition={globalFilter?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No strategies found matching &ldquo;
+                                No project roles found matching &ldquo;
                                 {globalFilter}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No strategies available. Get started by adding
-                                one.
+                                No project roles available. Get started by
+                                adding one.
                             </TablePlaceholder>
                         }
                     />
