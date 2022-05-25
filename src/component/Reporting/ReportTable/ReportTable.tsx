@@ -9,20 +9,21 @@ import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightC
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { useSortBy, useGlobalFilter, useTable } from 'react-table';
-import { Table, TableBody, TableRow } from '@mui/material';
+import { Table, TableBody, TableRow, useMediaQuery } from '@mui/material';
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
 import { FeatureNameCell } from 'component/common/Table/cells/FeatureNameCell/FeatureNameCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import { ReportExpiredCell } from 'component/Reporting/ReportExpiredCell/ReportExpiredCell';
 import { ReportStatusCell } from 'component/Reporting/ReportStatusCell/ReportStatusCell';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import {
     formatStatus,
     ReportingStatus,
 } from 'component/Reporting/ReportStatusCell/formatStatus';
 import { formatExpiredAt } from 'component/Reporting/ReportExpiredCell/formatExpiredAt';
 import { FeatureStaleCell } from 'component/feature/FeatureToggleList/FeatureStaleCell/FeatureStaleCell';
+import theme from 'themes/theme';
 
 interface IReportTableProps {
     projectId: string;
@@ -41,6 +42,8 @@ export interface IReportTableRow {
 }
 
 export const ReportTable = ({ projectId, features }: IReportTableProps) => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     const data: IReportTableRow[] = useMemo(() => {
         return features.map(feature => {
             return createReportTableRow(projectId, feature);
@@ -60,6 +63,7 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
         prepareRow,
         state: { globalFilter },
         setGlobalFilter,
+        setHiddenColumns,
     } = useTable(
         {
             columns: COLUMNS as any,
@@ -73,6 +77,14 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
         useGlobalFilter,
         useSortBy
     );
+
+    useEffect(() => {
+        if (isSmallScreen) {
+            setHiddenColumns(['createdAt', 'expiredAt', 'description']);
+        } else {
+            setHiddenColumns(['description']);
+        }
+    }, [setHiddenColumns, isSmallScreen]);
 
     const header = (
         <PageHeader
