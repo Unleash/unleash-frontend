@@ -54,11 +54,7 @@ export const SegmentsList = () => {
             return (
                 <SegmentListItem
                     key={segment.id}
-                    id={segment.id}
-                    name={segment.name}
-                    description={segment.description}
-                    createdAt={segment.createdAt}
-                    createdBy={segment.createdBy}
+                    segment={segment}
                     setCurrentSegment={setCurrentSegment}
                     setDelDialog={setDelDialog}
                 />

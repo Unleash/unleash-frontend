@@ -1,23 +1,16 @@
 import { useStyles } from './SegmentListItem.styles';
 import { Box, TableCell, TableRow, Typography } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
-import {
-    UPDATE_SEGMENT,
-    DELETE_SEGMENT,
-} from 'component/providers/AccessProvider/permissions';
+import { Delete } from '@mui/icons-material';
+import { DELETE_SEGMENT } from 'component/providers/AccessProvider/permissions';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import TimeAgo from 'react-timeago';
 import { ISegment } from 'interfaces/segment';
-import { useNavigate } from 'react-router-dom';
 import { SEGMENT_DELETE_BTN_ID } from 'utils/testIds';
 import React from 'react';
+import { EditSegmentButton } from 'component/segments/EditSegmentButton/EditSegmentButton';
 
 interface ISegmentListItemProps {
-    id: number;
-    name: string;
-    description: string;
-    createdAt: string;
-    createdBy: string;
+    segment: ISegment;
     setCurrentSegment: React.Dispatch<
         React.SetStateAction<ISegment | undefined>
     >;
@@ -25,63 +18,42 @@ interface ISegmentListItemProps {
 }
 
 export const SegmentListItem = ({
-    id,
-    name,
-    description,
-    createdAt,
-    createdBy,
+    segment,
     setCurrentSegment,
     setDelDialog,
 }: ISegmentListItemProps) => {
     const { classes: styles } = useStyles();
-    const navigate = useNavigate();
 
     return (
         <TableRow className={styles.tableRow}>
             <TableCell className={styles.leftTableCell}>
                 <Typography variant="body2" data-loading>
-                    {name}
+                    {segment.name}
                 </Typography>
             </TableCell>
             <TableCell className={styles.descriptionCell}>
                 <Typography variant="body2" data-loading>
-                    {description}
+                    {segment.description}
                 </Typography>
             </TableCell>
             <TableCell className={styles.createdAtCell}>
                 <Typography variant="body2" data-loading>
-                    <TimeAgo date={createdAt} live={false} />
+                    <TimeAgo date={segment.createdAt} live={false} />
                 </Typography>
             </TableCell>
             <TableCell className={styles.createdAtCell}>
                 <Typography variant="body2" data-loading>
-                    {createdBy}
+                    {segment.createdBy}
                 </Typography>
             </TableCell>
 
             <TableCell align="right">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <EditSegmentButton segment={segment} />
                     <PermissionIconButton
                         data-loading
                         onClick={() => {
-                            navigate(`/segments/edit/${id}`);
-                        }}
-                        permission={UPDATE_SEGMENT}
-                        tooltipProps={{ title: 'Edit segment' }}
-                    >
-                        <Edit />
-                    </PermissionIconButton>
-                    <PermissionIconButton
-                        data-loading
-                        onClick={() => {
-                            setCurrentSegment({
-                                id,
-                                name,
-                                description,
-                                createdAt,
-                                createdBy,
-                                constraints: [],
-                            });
+                            setCurrentSegment(segment);
                             setDelDialog(true);
                         }}
                         permission={DELETE_SEGMENT}
