@@ -52,6 +52,7 @@ import { EditSegment } from 'component/segments/EditSegment/EditSegment';
 import { SegmentsList } from 'component/segments/SegmentList/SegmentList';
 import { IRoute } from 'interfaces/route';
 import { EnvironmentTable } from 'component/environments/EnvironmentTable/EnvironmentTable';
+import RedirectAdminInvoices from 'component/admin/billing/RedirectAdminInvoices/RedirectAdminInvoices';
 
 export const routes: IRoute[] = [
     // Splash
@@ -461,6 +462,14 @@ export const routes: IRoute[] = [
         component: Billing,
         type: 'protected',
         menu: { adminSettings: true, isBilling: true },
+    },
+    {
+        path: '/admin-invoices',
+        parent: '/admin',
+        title: 'Invoices',
+        component: RedirectAdminInvoices,
+        type: 'protected',
+        menu: {},
     },
     {
         path: '/admin',

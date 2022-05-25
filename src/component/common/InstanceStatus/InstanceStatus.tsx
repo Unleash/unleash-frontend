@@ -10,6 +10,8 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import AccessContext from 'contexts/AccessContext';
 import useInstanceStatusApi from 'hooks/api/actions/useInstanceStatusApi/useInstanceStatusApi';
 import { calculateTrialDaysRemaining } from 'utils/billing';
+import useToast from 'hooks/useToast';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 interface ITrialDialogProps {
     instanceStatus: IInstanceStatus;
@@ -93,14 +95,19 @@ export const InstanceStatus: FC = ({ children }) => {
     const { instanceStatus, refetchInstanceStatus, isBilling } =
         useInstanceStatus();
     const { extendTrial } = useInstanceStatusApi();
+    const { setToastApiError } = useToast();
 
     const onExtendTrial = async () => {
         if (
             instanceStatus?.state === InstanceState.TRIAL &&
             !instanceStatus?.trialExtended
         ) {
-            await extendTrial();
-            await refetchInstanceStatus();
+            try {
+                await extendTrial();
+                await refetchInstanceStatus();
+            } catch (error: unknown) {
+                setToastApiError(formatUnknownError(error));
+            }
         }
     };
 
