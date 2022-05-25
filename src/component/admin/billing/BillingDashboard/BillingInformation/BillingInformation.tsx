@@ -66,5 +66,5 @@ const StyledInfoLabel = styled(Typography)(({ theme }) => ({
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
     margin: `${theme.spacing(2.5)} 0`,
-    borderColor: theme.palette.divider,
+    borderColor: theme.palette.dividerAlternative,
 }));

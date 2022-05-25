@@ -83,7 +83,7 @@ export default createTheme({
             border: colors.red[300],
         },
         divider: colors.grey[300],
-        dividerAlternative: colors.grey[500],
+        dividerAlternative: colors.grey[400],
         tableHeaderHover: colors.grey[400],
         highlight: '#FFEACC',
         secondaryContainer: colors.grey[200],
