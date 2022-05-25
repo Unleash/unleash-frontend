@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Add } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useFilters, useSortBy, useTable } from 'react-table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -28,11 +28,12 @@ import {
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import useProject from 'hooks/api/getters/useProject/useProject';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import useToast from 'hooks/useToast';
 import { ENVIRONMENT_STRATEGY_ERROR } from 'constants/apiErrors';
 import EnvironmentStrategyDialog from 'component/common/EnvironmentStrategiesDialog/EnvironmentStrategyDialog';
 import { useEnvironmentsRef } from './hooks/useEnvironmentsRef';
-import { useSetFeatureState } from './hooks/useSetFeatureState';
+import useFeatureApi from 'hooks/api/actions/useFeatureApi/useFeatureApi';
 import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
@@ -55,6 +56,10 @@ type ListItemType = Pick<
         };
     };
 };
+
+const staticColumns = ['Actions', 'name'];
+const limit = 300; // if above limit, render only `pageSize` of items
+const pageSize = 100;
 
 export const ProjectFeatureToggles = ({
     features,
@@ -88,37 +93,40 @@ export const ProjectFeatureToggles = ({
             }) as ListItemType[];
         }
 
-        return features.map(
-            ({
-                name,
-                lastSeenAt,
-                createdAt,
-                type,
-                stale,
-                environments: featureEnvironments,
-            }) => ({
-                name,
-                lastSeenAt,
-                createdAt,
-                type,
-                stale,
-                environments: Object.fromEntries(
-                    environments.map(env => [
-                        env,
-                        {
-                            name: env,
-                            enabled:
-                                featureEnvironments?.find(
-                                    feature => feature?.name === env
-                                )?.enabled || false,
-                        },
-                    ])
-                ),
-            })
-        );
+        return features
+            .slice(0, features.length > limit ? pageSize : limit)
+            .map(
+                ({
+                    name,
+                    lastSeenAt,
+                    createdAt,
+                    type,
+                    stale,
+                    environments: featureEnvironments,
+                }) => ({
+                    name,
+                    lastSeenAt,
+                    createdAt,
+                    type,
+                    stale,
+                    environments: Object.fromEntries(
+                        environments.map(env => [
+                            env,
+                            {
+                                name: env,
+                                enabled:
+                                    featureEnvironments?.find(
+                                        feature => feature?.name === env
+                                    )?.enabled || false,
+                            },
+                        ])
+                    ),
+                })
+            );
     }, [features, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const { setFeatureState } = useSetFeatureState();
+    const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
+        useFeatureApi();
     const onToggle = useCallback(
         async (
             projectId: string,
@@ -127,12 +135,20 @@ export const ProjectFeatureToggles = ({
             enabled: boolean
         ) => {
             try {
-                await setFeatureState(
-                    projectId,
-                    featureName,
-                    environment,
-                    enabled
-                );
+                if (enabled) {
+                    await toggleFeatureEnvironmentOn(
+                        projectId,
+                        featureName,
+                        environment
+                    );
+                } else {
+                    await toggleFeatureEnvironmentOff(
+                        projectId,
+                        featureName,
+                        environment
+                    );
+                }
+                refetch();
             } catch (error) {
                 const message = formatUnknownError(error);
                 if (message === ENVIRONMENT_STRATEGY_ERROR) {
@@ -154,7 +170,7 @@ export const ProjectFeatureToggles = ({
             });
             refetch();
         },
-        [setFeatureState] // eslint-disable-line react-hooks/exhaustive-deps
+        [toggleFeatureEnvironmentOff, toggleFeatureEnvironmentOn] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const columns = useMemo(
@@ -232,22 +248,60 @@ export const ProjectFeatureToggles = ({
         ],
         [projectId, environments, onToggle, loading]
     );
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [storedParams, setStoredParams] = useLocalStorage<{
+        columns?: string[];
+    }>(`${projectId}:ProjectFeatureToggles`, {});
 
     const initialState = useMemo(
-        () => ({
-            sortBy: [{ id: 'createdAt', desc: false }],
-            hiddenColumns: environments
+        () => {
+            const allColumnIds = columns.map(
+                (column: any) => column?.accessor || column?.id
+            );
+            let hiddenColumns = environments
                 .filter((_, index) => index >= 3)
-                .map(environment => `environments.${environment}`),
-        }),
-        [environments]
+                .map(environment => `environments.${environment}`);
+
+            if (searchParams.has('columns')) {
+                const columnsInParams =
+                    searchParams.get('columns')?.split(',') || [];
+                const visibleColumns = [...staticColumns, ...columnsInParams];
+                hiddenColumns = allColumnIds.filter(
+                    columnId => !visibleColumns.includes(columnId)
+                );
+            } else if (storedParams.columns) {
+                const visibleColumns = [
+                    ...staticColumns,
+                    ...storedParams.columns,
+                ];
+                hiddenColumns = allColumnIds.filter(
+                    columnId => !visibleColumns.includes(columnId)
+                );
+            }
+
+            return {
+                sortBy: [
+                    {
+                        id: searchParams.get('sort') || 'createdAt',
+                        desc: searchParams.has('order')
+                            ? searchParams.get('order') === 'desc'
+                            : false,
+                    },
+                ],
+                hiddenColumns,
+                filters: [
+                    { id: 'name', value: searchParams.get('search') || '' },
+                ],
+            };
+        },
+        [environments] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     const {
         allColumns,
         headerGroups,
         rows,
-        state: { filters },
+        state: { filters, sortBy, hiddenColumns },
         getTableBodyProps,
         getTableProps,
         prepareRow,
@@ -268,8 +322,44 @@ export const ProjectFeatureToggles = ({
     );
 
     const filter = useMemo(
-        () => filters?.find(filterRow => filterRow?.id === 'name')?.value || '',
-        [filters]
+        () =>
+            filters?.find(filterRow => filterRow?.id === 'name')?.value ||
+            initialState.filters[0].value,
+        [filters, initialState]
+    );
+
+    useEffect(() => {
+        if (loading) {
+            return;
+        }
+        const tableState: Record<string, string> = {};
+        tableState.sort = sortBy[0].id;
+        if (sortBy[0].desc) {
+            tableState.order = 'desc';
+        }
+        if (filter) {
+            tableState.search = filter;
+        }
+        tableState.columns = allColumns
+            .map(({ id }) => id)
+            .filter(
+                id =>
+                    !staticColumns.includes(id) && !hiddenColumns?.includes(id)
+            )
+            .join(',');
+
+        setSearchParams(tableState, {
+            replace: true,
+        });
+    }, [loading, sortBy, hiddenColumns, filter, setSearchParams, allColumns]);
+
+    const onCustomizeColumns = useCallback(
+        visibleColumns => {
+            setStoredParams({
+                columns: visibleColumns,
+            });
+        },
+        [setStoredParams]
     );
 
     return (
@@ -280,7 +370,11 @@ export const ProjectFeatureToggles = ({
             header={
                 <PageHeader
                     className={styles.title}
-                    title={`Project feature toggles (${rows.length})`}
+                    title={`Project feature toggles (${
+                        features?.length > limit
+                            ? `first ${rows.length} of ${features.length}`
+                            : data.length
+                    })`}
                     actions={
                         <>
                             <TableSearch
@@ -289,9 +383,11 @@ export const ProjectFeatureToggles = ({
                             />
                             <ColumnsMenu
                                 allColumns={allColumns}
-                                staticColumns={['Actions', 'name']}
+                                staticColumns={staticColumns}
                                 dividerAfter={['createdAt']}
                                 dividerBefore={['Actions']}
+                                isCustomized={Boolean(storedParams.columns)}
+                                onCustomize={onCustomizeColumns}
                                 setHiddenColumns={setHiddenColumns}
                             />
                             <PageHeader.Divider />

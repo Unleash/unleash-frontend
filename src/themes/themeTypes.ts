@@ -24,6 +24,7 @@ declare module '@mui/material/styles' {
          */
         boxShadows: {
             main: string;
+            elevated: string;
         };
     }
 
@@ -50,6 +51,13 @@ declare module '@mui/material/styles' {
         };
         dividerAlternative: string;
         /**
+         * Background colors for status badges.
+         */
+        statusBadge: {
+            success: string;
+            warning: string;
+        };
+        /**
          * For table header hover effect.
          */
         tableHeaderHover: string;
@@ -58,7 +66,11 @@ declare module '@mui/material/styles' {
          */
         highlight: string;
         /**
-         * For sidebar container background.
+         * Background color for secondary containers.
+         */
+        secondaryContainer: string;
+        /**
+         * Background color for sidebar containers.
          */
         sidebarContainer: string;
         /**
@@ -76,6 +88,19 @@ declare module '@mui/material/styles' {
 
     interface Palette extends CustomPalette {}
     interface PaletteOptions extends CustomPalette {}
+
+    interface PaletteColor {
+        light: string;
+        main: string;
+        dark: string;
+        border: string;
+    }
+    interface PaletteColorOptions {
+        light?: string;
+        main?: string;
+        dark?: string;
+        border?: string;
+    }
 }
 
 declare module '@mui/system/createTheme/shape' {
@@ -83,6 +108,8 @@ declare module '@mui/system/createTheme/shape' {
         borderRadiusMedium: string;
         borderRadiusLarge: string;
         borderRadiusExtraLarge: string;
+        tableRowHeight: number;
+        tableRowHeightDense: number;
     }
 }
 declare module '@mui/material/styles/zIndex' {

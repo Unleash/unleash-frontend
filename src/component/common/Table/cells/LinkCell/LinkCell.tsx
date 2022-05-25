@@ -13,9 +13,14 @@ interface ILinkCellProps {
     subtitle?: string;
 }
 
-export const LinkCell: FC<ILinkCellProps> = ({ title, to, subtitle }) => {
+export const LinkCell: FC<ILinkCellProps> = ({
+    title,
+    to,
+    subtitle,
+    children,
+}) => {
     const { classes: styles } = useStyles();
-    const search = useSearchHighlightContext();
+    const { searchQuery } = useSearchHighlightContext();
 
     const content = (
         <div className={styles.container}>
@@ -27,7 +32,8 @@ export const LinkCell: FC<ILinkCellProps> = ({ title, to, subtitle }) => {
                     lineClamp: Boolean(subtitle) ? 1 : 2,
                 }}
             >
-                <Highlighter search={search}>{title}</Highlighter>
+                <Highlighter search={searchQuery}>{title}</Highlighter>
+                {children}
             </span>
             <ConditionallyRender
                 condition={Boolean(subtitle)}
@@ -38,7 +44,7 @@ export const LinkCell: FC<ILinkCellProps> = ({ title, to, subtitle }) => {
                             component="span"
                             data-loading
                         >
-                            <Highlighter search={search}>
+                            <Highlighter search={searchQuery}>
                                 {subtitle}
                             </Highlighter>
                         </Typography>

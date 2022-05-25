@@ -17,6 +17,7 @@ import {
 import { ProjectRoleCell } from './ProjectRoleCell/ProjectRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 
 interface IProjectAccessTableProps {
     access: IProjectAccessOutput;
@@ -61,7 +62,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 id: 'username',
                 accessor: 'email',
                 Cell: ({ row: { original: user } }: any) => (
-                    <>{user.email || user.username}</>
+                    <TextCell>{user.email || user.username}</TextCell>
                 ),
             },
             {
@@ -133,6 +134,9 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 autoResetGlobalFilter: false,
                 autoResetSortBy: false,
                 disableSortRemove: true,
+                defaultColumn: {
+                    Cell: TextCell,
+                },
             },
             useSortBy
         );
