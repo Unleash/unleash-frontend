@@ -79,7 +79,6 @@ export const EnvironmentActionCell = ({
             setToastData({
                 type: 'success',
                 title: 'Project environment enabled',
-                text: 'Your environment is enabled',
             });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
@@ -95,7 +94,6 @@ export const EnvironmentActionCell = ({
             setToastData({
                 type: 'success',
                 title: 'Project environment disabled',
-                text: 'Your environment is disabled.',
             });
         } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
