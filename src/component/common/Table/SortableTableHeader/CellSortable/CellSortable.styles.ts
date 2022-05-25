@@ -31,6 +31,7 @@ export const useStyles = makeStyles()(theme => ({
         whiteSpace: 'nowrap',
         width: '100%',
         position: 'relative',
+        zIndex: 1,
         ':hover, :focus, &:focus-visible, &:active': {
             outline: 'revert',
             '.hover-only': {
