@@ -246,10 +246,10 @@ export const FeatureToggleListTable: VFC = () => {
                             position: 'relative',
                         }}
                     >
-                        {rows.map((row, i) => {
+                        {rows.map((row, index) => {
                             const isVirtual =
-                                i > scrollOffset + scrollIndex ||
-                                i + scrollOffset < scrollIndex;
+                                index > scrollOffset + scrollIndex ||
+                                index + scrollOffset < scrollIndex;
 
                             if (isVirtual) {
                                 return null;
@@ -263,7 +263,7 @@ export const FeatureToggleListTable: VFC = () => {
                                     key={row.id}
                                     className={classes.row}
                                     style={{
-                                        top: `${i * rowHeight}px`,
+                                        top: `${index * rowHeight}px`,
                                         display: 'flex',
                                     }}
                                 >
