@@ -88,7 +88,7 @@ const ProjectRoleList = () => {
             {
                 Header: 'Description',
                 accessor: 'description',
-                width: '67%',
+                width: '90%',
             },
             {
                 Header: 'Actions',
