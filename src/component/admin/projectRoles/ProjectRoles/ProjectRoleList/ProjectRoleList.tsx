@@ -92,9 +92,7 @@ const ProjectRoleList = () => {
                         original: { id, type, name, description },
                     },
                 }: any) => (
-                    <Box
-                        sx={{ display: 'flex', justifyContent: 'center' }}
-                    >
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         <PermissionIconButton
                             data-loading
                             disabled={type === BUILTIN_ROLE_TYPE}
