@@ -96,16 +96,4 @@ export const useStyles = makeStyles()(theme => ({
             overflowY: 'visible',
         },
     },
-    alignLeft: {
-        justifyContent: 'flex-start',
-        textAlign: 'left',
-    },
-    alignRight: {
-        justifyContent: 'flex-end',
-        textAlign: 'right',
-    },
-    alignCenter: {
-        justifyContent: 'center',
-        textAlign: 'center',
-    },
 }));

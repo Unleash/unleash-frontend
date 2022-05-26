@@ -27,7 +27,6 @@ export const ProjectAccess = () => {
 
     const handleRoleChange = useCallback(
         (userId: number) => async (evt: SelectChangeEvent) => {
-            console.log('handleRoleChange', userId, evt.target.value);
             const roleId = Number(evt.target.value);
             try {
                 await changeUserRole(projectId, roleId, userId);
