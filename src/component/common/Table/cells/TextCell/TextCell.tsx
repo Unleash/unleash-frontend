@@ -1,23 +1,21 @@
-import { VFC, ReactNode } from 'react';
+import { FC } from 'react';
 import { Box } from '@mui/material';
 
-interface IDateCellProps {
-    children?: ReactNode;
+interface ITextCellProps {
+    value?: string | null;
 }
 
-export const TextCell: VFC<IDateCellProps> = ({ children }) => {
+export const TextCell: FC<ITextCellProps> = ({ value, children }) => {
+    const text = children ?? value;
+    if (!text) {
+        return <Box sx={{ py: 1.5, px: 2 }} />;
+    }
+
     return (
-        <Box data-loading sx={{ py: 1.5, px: 2 }}>
-            <Box
-                sx={{
-                    display: '-webkit-box',
-                    overflow: 'hidden',
-                    WebkitLineClamp: 1,
-                    WebkitBoxOrient: 'vertical',
-                }}
-            >
-                {children}
-            </Box>
+        <Box sx={{ py: 1.5, px: 2 }}>
+            <span data-loading role="tooltip">
+                {text}
+            </span>
         </Box>
     );
 };
