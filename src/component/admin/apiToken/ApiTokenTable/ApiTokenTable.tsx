@@ -5,6 +5,7 @@ import {
     SortableTableHeader,
     TableSearch,
     TableCell,
+    TablePlaceholder,
 } from 'component/common/Table';
 import { Table, TableBody, Box, TableRow, useMediaQuery } from '@mui/material';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -13,7 +14,7 @@ import { ApiTokenDocs } from 'component/admin/apiToken/ApiTokenDocs/ApiTokenDocs
 import { CreateApiTokenButton } from 'component/admin/apiToken/CreateApiTokenButton/CreateApiTokenButton';
 import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
-import { Lock } from '@mui/icons-material';
+import { Key } from '@mui/icons-material';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { CopyApiTokenButton } from 'component/admin/apiToken/CopyApiTokenButton/CopyApiTokenButton';
 import { RemoveApiTokenButton } from 'component/admin/apiToken/RemoveApiTokenButton/RemoveApiTokenButton';
@@ -23,6 +24,7 @@ import { useEffect, useMemo } from 'react';
 import theme from 'themes/theme';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { ProjectsList } from 'component/admin/apiToken/ProjectsList/ProjectsList';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const ApiTokenTable = () => {
     const { tokens } = useApiTokens();
@@ -66,14 +68,19 @@ export const ApiTokenTable = () => {
         </>
     );
 
-    const header = <PageHeader title="API Access" actions={headerActions} />;
-
     if (!tokens.length) {
         return null;
     }
 
     return (
-        <PageContent header={header}>
+        <PageContent
+            header={
+                <PageHeader
+                    title={`API access (${rows.length})`}
+                    actions={headerActions}
+                />
+            }
+        >
             <Box sx={{ mb: 4 }}>
                 <ApiTokenDocs />
             </Box>
@@ -96,6 +103,26 @@ export const ApiTokenTable = () => {
                     </TableBody>
                 </Table>
             </SearchHighlightProvider>
+            <ConditionallyRender
+                condition={rows.length === 0}
+                show={
+                    <ConditionallyRender
+                        condition={globalFilter?.length > 0}
+                        show={
+                            <TablePlaceholder>
+                                No tokens found matching &ldquo;
+                                {globalFilter}
+                                &rdquo;
+                            </TablePlaceholder>
+                        }
+                        elseShow={
+                            <TablePlaceholder>
+                                No tokens available. Get started by adding one.
+                            </TablePlaceholder>
+                        }
+                    />
+                }
+            />
         </PageContent>
     );
 };
@@ -130,20 +157,23 @@ const COLUMNS = [
     {
         id: 'Icon',
         width: '1%',
-        canSort: false,
-        Cell: () => <IconCell icon={<Lock color="disabled" />} />,
+        Cell: () => <IconCell icon={<Key color="disabled" />} />,
+        disableSortBy: true,
+        disableGlobalFilter: true,
     },
     {
-        Header: 'Name',
+        Header: 'Username',
         accessor: 'username',
-        Cell: (props: any) => (
-            <TextCell>{props.row.original.username}</TextCell>
-        ),
+        Cell: TextCell,
+        width: '60%',
     },
     {
         Header: 'Type',
         accessor: 'type',
-        Cell: (props: any) => <TextCell>{props.row.original.type}</TextCell>,
+        Cell: ({ value }: { value: string }) => (
+            <TextCell>{value.toUpperCase()}</TextCell>
+        ),
+        minWidth: 100,
     },
     {
         Header: 'Project',
@@ -156,25 +186,28 @@ const COLUMNS = [
                 />
             </TextCell>
         ),
+        minWidth: 120,
     },
     {
         Header: 'Environment',
         accessor: 'environment',
-        Cell: (props: any) => (
-            <TextCell>{props.row.original.environment}</TextCell>
-        ),
+        Cell: TextCell,
+        minWidth: 120,
     },
     {
         Header: 'Created',
         accessor: 'createdAt',
-        Cell: (props: any) => <DateCell value={props.row.original.createdAt} />,
+        Cell: DateCell,
+        minWidth: 150,
+        disableGlobalFilter: true,
     },
     {
         Header: 'Actions',
         id: 'Actions',
         align: 'center',
         width: '1%',
-        canSort: false,
+        disableSortBy: true,
+        disableGlobalFilter: true,
         Cell: (props: any) => (
             <ActionCell>
                 <CopyApiTokenButton token={props.row.original} />
