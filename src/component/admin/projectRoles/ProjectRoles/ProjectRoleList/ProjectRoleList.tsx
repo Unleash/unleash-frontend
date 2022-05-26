@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import {
     Table,
     SortableTableHeader,
@@ -16,7 +16,7 @@ import useProjectRolesApi from 'hooks/api/actions/useProjectRolesApi/useProjectR
 import useToast from 'hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Delete, Edit } from '@mui/icons-material';
@@ -26,11 +26,13 @@ import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightC
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
+import AccessContext from 'contexts/AccessContext';
 
 const ROOTROLE = 'root';
 const BUILTIN_ROLE_TYPE = 'project';
 
 const ProjectRoleList = () => {
+    const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
     const { roles, refetch, loading } = useProjectRoles();
 
@@ -157,7 +159,7 @@ const ProjectRoleList = () => {
             isLoading={loading}
             header={
                 <PageHeader
-                    title={`Project roles (${data.length})`}
+                    title="Project roles"
                     actions={
                         <>
                             <TableSearch
@@ -165,7 +167,27 @@ const ProjectRoleList = () => {
                                 onChange={setGlobalFilter}
                             />
                             <PageHeader.Divider />
-                            {/* <AddProjectRoleButton /> */}
+                            <ConditionallyRender
+                                condition={hasAccess(ADMIN)}
+                                show={
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() =>
+                                            navigate(
+                                                '/admin/create-project-role'
+                                            )
+                                        }
+                                    >
+                                        New project role
+                                    </Button>
+                                }
+                                elseShow={
+                                    <small>
+                                        PS! Only admins can add/remove roles.
+                                    </small>
+                                }
+                            />
                         </>
                     }
                 />
