@@ -27,7 +27,7 @@ import { ProjectsList } from 'component/admin/apiToken/ProjectsList/ProjectsList
 export const ApiTokenTable = () => {
     const { tokens } = useApiTokens();
     const hiddenColumns = useHiddenColumns();
-    const initialState = useMemo(() => ({ sortBy: [{ id: 'username' }] }), []);
+    const initialState = useMemo(() => ({ sortBy: [{ id: 'createdAt' }] }), []);
 
     const {
         getTableProps,
