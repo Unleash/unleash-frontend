@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
     Table,
     SortableTableHeader,
@@ -16,7 +16,7 @@ import useProjectRolesApi from 'hooks/api/actions/useProjectRolesApi/useProjectR
 import useToast from 'hooks/useToast';
 import ProjectRoleDeleteConfirm from '../ProjectRoleDeleteConfirm/ProjectRoleDeleteConfirm';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { Box, Button } from '@mui/material';
+import { Box, Button, useMediaQuery } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Delete, Edit, SupervisedUserCircle } from '@mui/icons-material';
@@ -25,16 +25,17 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
-import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
-import AccessContext from 'contexts/AccessContext';
+import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
+import theme from 'themes/theme';
 
 const ROOTROLE = 'root';
 const BUILTIN_ROLE_TYPE = 'project';
 
 const ProjectRoleList = () => {
-    const { hasAccess } = useContext(AccessContext);
     const navigate = useNavigate();
     const { roles, refetch, loading } = useProjectRoles();
+
+    const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const paginationFilter = (role: IRole) => role?.type !== ROOTROLE;
     const data = roles.filter(paginationFilter);
@@ -153,6 +154,7 @@ const ProjectRoleList = () => {
         prepareRow,
         state: { globalFilter },
         setGlobalFilter,
+        setHiddenColumns,
     } = useTable(
         {
             columns: columns as any[], // TODO: fix after `react-table` v8 update
@@ -163,12 +165,19 @@ const ProjectRoleList = () => {
             autoResetSortBy: false,
             disableSortRemove: true,
             defaultColumn: {
-                Cell: TextCell,
+                Cell: HighlightCell,
             },
         },
         useGlobalFilter,
         useSortBy
     );
+
+    useEffect(() => {
+        setHiddenColumns([]);
+        if (isExtraSmallScreen) {
+            setHiddenColumns(['Icon']);
+        }
+    }, [setHiddenColumns, isExtraSmallScreen]);
 
     return (
         <PageContent
@@ -183,27 +192,15 @@ const ProjectRoleList = () => {
                                 onChange={setGlobalFilter}
                             />
                             <PageHeader.Divider />
-                            <ConditionallyRender
-                                condition={hasAccess(ADMIN)}
-                                show={
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() =>
-                                            navigate(
-                                                '/admin/create-project-role'
-                                            )
-                                        }
-                                    >
-                                        New project role
-                                    </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() =>
+                                    navigate('/admin/create-project-role')
                                 }
-                                elseShow={
-                                    <small>
-                                        PS! Only admins can add/remove roles.
-                                    </small>
-                                }
-                            />
+                            >
+                                New project role
+                            </Button>
                         </>
                     }
                 />
