@@ -11,7 +11,7 @@ export const useStyles = makeStyles<{
                     standard: theme.shape.tableRowHeight,
                     compact: theme.shape.tableRowHeightCompact,
                     dense: theme.shape.tableRowHeightDense,
-                }[rowHeight] || rowHeight,
+                }[rowHeight] ?? rowHeight,
         },
     },
 }));

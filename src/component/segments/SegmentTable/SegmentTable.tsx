@@ -189,8 +189,8 @@ const COLUMNS = [
         width: '1%',
         canSort: false,
         disableGlobalFilter: true,
-        Cell: (props: any) => (
-            <SegmentActionCell segment={props.row.original} />
+        Cell: ({ row: { original } }: any) => (
+            <SegmentActionCell segment={original} />
         ),
     },
     {

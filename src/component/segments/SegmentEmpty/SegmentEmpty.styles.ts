@@ -12,13 +12,13 @@ export const useStyles = makeStyles()(theme => ({
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,
-        marginBottom: '1.25rem',
+        marginBottom: theme.spacing(2.5),
     },
     subtitle: {
         fontSize: theme.fontSizes.smallBody,
-        color: theme.palette.grey[800],
+        color: theme.palette.text.secondary,
         maxWidth: 515,
-        marginBottom: 20,
+        marginBottom: theme.spacing(2.5),
         textAlign: 'center',
     },
     paramButton: {

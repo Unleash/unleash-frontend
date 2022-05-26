@@ -1,8 +1,9 @@
 import { VFC } from 'react';
 import { Highlighter } from 'component/common/Highlighter/Highlighter';
-import { useSearchHighlightContext } from '../../SearchHighlightContext/SearchHighlightContext';
+import { useSearchHighlightContext } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { Box, Typography } from '@mui/material';
-import { useStyles } from '../HighlightCell/HighlightCell.styles';
+import { useStyles } from './HighlightCell.styles';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IHighlightCellProps {
     value: string;
@@ -28,15 +29,20 @@ export const HighlightCell: VFC<IHighlightCellProps> = ({
             >
                 <Highlighter search={searchQuery}>{value}</Highlighter>
             </span>
-            {Boolean(subtitle) && (
-                <Typography
-                    component="span"
-                    className={classes.subtitle}
-                    data-loading
-                >
-                    <Highlighter search={searchQuery}>{subtitle}</Highlighter>
-                </Typography>
-            )}
+            <ConditionallyRender
+                condition={Boolean(subtitle)}
+                show={() => (
+                    <Typography
+                        component="span"
+                        className={classes.subtitle}
+                        data-loading
+                    >
+                        <Highlighter search={searchQuery}>
+                            {subtitle}
+                        </Highlighter>
+                    </Typography>
+                )}
+            />
         </Box>
     );
 };
