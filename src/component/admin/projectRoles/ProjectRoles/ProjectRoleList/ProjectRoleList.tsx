@@ -27,6 +27,7 @@ import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import theme from 'themes/theme';
+import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
 
 const ROOTROLE = 'root';
 const BUILTIN_ROLE_TYPE = 'project';
@@ -68,17 +69,9 @@ const ProjectRoleList = () => {
             {
                 id: 'Icon',
                 Cell: () => (
-                    <Box
-                        data-loading
-                        sx={{
-                            pl: 2,
-                            pr: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <SupervisedUserCircle color="disabled" />
-                    </Box>
+                    <IconCell
+                        icon={<SupervisedUserCircle color="disabled" />}
+                    />
                 ),
             },
             {
@@ -109,7 +102,12 @@ const ProjectRoleList = () => {
                                 navigate(`/admin/roles/${id}/edit`);
                             }}
                             permission={ADMIN}
-                            tooltipProps={{ title: 'Edit role' }}
+                            tooltipProps={{
+                                title:
+                                    type === BUILTIN_ROLE_TYPE
+                                        ? 'You cannot edit role'
+                                        : 'Edit role',
+                            }}
                         >
                             <Edit />
                         </PermissionIconButton>
@@ -125,7 +123,12 @@ const ProjectRoleList = () => {
                                 setDelDialog(true);
                             }}
                             permission={ADMIN}
-                            tooltipProps={{ title: 'Remove role' }}
+                            tooltipProps={{
+                                title:
+                                    type === BUILTIN_ROLE_TYPE
+                                        ? 'You cannot remove role'
+                                        : 'Remove role',
+                            }}
                         >
                             <Delete />
                         </PermissionIconButton>
@@ -135,7 +138,7 @@ const ProjectRoleList = () => {
                 disableSortBy: true,
             },
         ],
-        []
+        [navigate]
     );
 
     const initialState = useMemo(

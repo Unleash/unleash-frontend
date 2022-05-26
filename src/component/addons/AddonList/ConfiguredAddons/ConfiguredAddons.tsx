@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow } from 'component/common/Table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import useAddons from 'hooks/api/getters/useAddons/useAddons';
