@@ -5,9 +5,9 @@ import { useStyles } from './Table.styles';
 
 export const Table: FC<
     TableProps & {
-        rowHeight?: 'flex' | 'dense' | 'standard' | 'compact' | number;
+        rowHeight?: 'auto' | 'dense' | 'standard' | 'compact' | number;
     }
-> = ({ rowHeight = 'flex', className, ...props }) => {
+> = ({ rowHeight = 'auto', className, ...props }) => {
     const { classes } = useStyles({ rowHeight });
 
     return (

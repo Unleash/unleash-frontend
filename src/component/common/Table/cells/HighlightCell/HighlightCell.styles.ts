@@ -5,7 +5,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        wordBreak: 'break-all',
+        wordBreak: 'break-word',
         padding: theme.spacing(1, 2),
     },
     title: {

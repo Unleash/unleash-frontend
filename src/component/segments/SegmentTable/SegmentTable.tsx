@@ -20,7 +20,7 @@ import { SegmentEmpty } from 'component/segments/SegmentEmpty/SegmentEmpty';
 import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
 import { DonutLarge } from '@mui/icons-material';
 import { SegmentActionCell } from 'component/segments/SegmentActionCell/SegmentActionCell';
-import { SearchableTextCell } from 'component/common/Table/cells/SearchableTextCell/SearchableTextCell';
+import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import theme from 'themes/theme';
 import { SegmentDocsWarning } from 'component/segments/SegmentDocs/SegmentDocs';
@@ -65,7 +65,7 @@ export const SegmentTable = () => {
             autoResetSortBy: false,
             disableSortRemove: true,
             defaultColumn: {
-                Cell: SearchableTextCell,
+                Cell: HighlightCell,
             },
         },
         useGlobalFilter,
@@ -168,7 +168,7 @@ const COLUMNS = [
         accessor: 'name',
         width: '80%',
         Cell: ({ value, row: { original } }: any) => (
-            <SearchableTextCell value={value} subtitle={original.description} />
+            <HighlightCell value={value} subtitle={original.description} />
         ),
     },
     {
