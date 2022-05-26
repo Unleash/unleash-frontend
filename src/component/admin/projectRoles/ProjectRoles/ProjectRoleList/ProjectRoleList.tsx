@@ -19,7 +19,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { Box, Button } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, SupervisedUserCircle } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
@@ -64,6 +64,22 @@ const ProjectRoleList = () => {
 
     const columns = useMemo(
         () => [
+            {
+                id: 'Icon',
+                Cell: () => (
+                    <Box
+                        data-loading
+                        sx={{
+                            pl: 2,
+                            pr: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <SupervisedUserCircle color="disabled" />
+                    </Box>
+                ),
+            },
             {
                 Header: 'Project role',
                 accessor: 'name',
@@ -147,7 +163,7 @@ const ProjectRoleList = () => {
             autoResetSortBy: false,
             disableSortRemove: true,
             defaultColumn: {
-                Cell: ({ value }) => <TextCell>{value}</TextCell>,
+                Cell: TextCell,
             },
         },
         useGlobalFilter,
