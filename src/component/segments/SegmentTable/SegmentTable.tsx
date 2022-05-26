@@ -4,29 +4,46 @@ import {
     TableSearch,
     SortableTableHeader,
     TableCell,
+    TablePlaceholder,
+    Table,
+    TableBody,
+    TableRow,
 } from 'component/common/Table';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import { CreateSegmentButton } from 'component/segments/CreateSegmentButton/CreateSegmentButton';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { Table, TableBody, TableRow, useMediaQuery, Box } from '@mui/material';
+import { useMediaQuery, Box } from '@mui/material';
 import { sortTypes } from 'utils/sortTypes';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { SegmentEmpty } from 'component/segments/SegmentEmpty/SegmentEmpty';
 import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
-import { Adjust } from '@mui/icons-material';
+import { DonutLarge } from '@mui/icons-material';
 import { SegmentActionCell } from 'component/segments/SegmentActionCell/SegmentActionCell';
-import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
+import { SearchableTextCell } from 'component/common/Table/cells/SearchableTextCell/SearchableTextCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import theme from 'themes/theme';
 import { SegmentDocsWarning } from 'component/segments/SegmentDocs/SegmentDocs';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 export const SegmentTable = () => {
     const { segments, loading } = useSegments();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [initialState] = useState({
+        sortBy: [{ id: 'createdAt', desc: false }],
+        hiddenColumns: ['description'],
+    });
 
     const data = useMemo(() => {
-        return segments ?? [];
+        return (
+            segments ??
+            Array(5).fill({
+                name: 'Segment name',
+                description: 'Segment descripton',
+                createdAt: new Date().toISOString(),
+                createdBy: 'user',
+            })
+        );
     }, [segments]);
 
     const {
@@ -40,12 +57,16 @@ export const SegmentTable = () => {
         setHiddenColumns,
     } = useTable(
         {
+            initialState,
             columns: COLUMNS as any,
             data: data as any,
             sortTypes,
             autoResetGlobalFilter: false,
             autoResetSortBy: false,
             disableSortRemove: true,
+            defaultColumn: {
+                Cell: SearchableTextCell,
+            },
         },
         useGlobalFilter,
         useSortBy
@@ -53,61 +74,83 @@ export const SegmentTable = () => {
 
     useEffect(() => {
         if (isSmallScreen) {
-            setHiddenColumns(['createdAt', 'createdBy']);
+            setHiddenColumns(['description', 'createdAt', 'createdBy']);
         } else {
-            setHiddenColumns([]);
+            setHiddenColumns(['description']);
         }
     }, [setHiddenColumns, isSmallScreen]);
 
-    const headerActions = (
-        <>
-            <TableSearch
-                initialValue={globalFilter}
-                onChange={setGlobalFilter}
-            />
-            <PageHeader.Divider />
-            <CreateSegmentButton />
-        </>
-    );
-
-    const header = <PageHeader title="Segments" actions={headerActions} />;
-
-    if (loading) {
-        return null;
-    }
-
-    if (data.length === 0) {
-        return (
-            <PageContent header={header}>
-                <SegmentEmpty />
-            </PageContent>
-        );
-    }
-
     return (
-        <PageContent header={header}>
+        <PageContent
+            header={
+                <PageHeader
+                    title="Segments"
+                    actions={
+                        <>
+                            <TableSearch
+                                initialValue={globalFilter}
+                                onChange={setGlobalFilter}
+                            />
+                            <PageHeader.Divider />
+                            <CreateSegmentButton />
+                        </>
+                    }
+                />
+            }
+            isLoading={loading}
+        >
             <Box sx={{ mb: 4 }}>
                 <SegmentDocsWarning />
             </Box>
-            <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
-                    <SortableTableHeader headerGroups={headerGroups as any} />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <TableRow hover {...row.getRowProps()}>
-                                    {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </SearchHighlightProvider>
+            <ConditionallyRender
+                condition={!loading && data.length === 0}
+                show={
+                    <TablePlaceholder>
+                        <SegmentEmpty />
+                    </TablePlaceholder>
+                }
+                elseShow={() => (
+                    <>
+                        <SearchHighlightProvider value={globalFilter}>
+                            <Table {...getTableProps()} rowHeight="standard">
+                                <SortableTableHeader
+                                    headerGroups={headerGroups as any}
+                                />
+                                <TableBody {...getTableBodyProps()}>
+                                    {rows.map(row => {
+                                        prepareRow(row);
+                                        return (
+                                            <TableRow
+                                                hover
+                                                {...row.getRowProps()}
+                                            >
+                                                {row.cells.map(cell => (
+                                                    <TableCell
+                                                        {...cell.getCellProps()}
+                                                    >
+                                                        {cell.render('Cell')}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </SearchHighlightProvider>
+                        <ConditionallyRender
+                            condition={
+                                rows.length === 0 && globalFilter?.length > 0
+                            }
+                            show={
+                                <TablePlaceholder>
+                                    No segments found matching &ldquo;
+                                    {globalFilter}&rdquo;
+                                </TablePlaceholder>
+                            }
+                        />
+                    </>
+                )}
+            />
         </PageContent>
     );
 };
@@ -117,35 +160,40 @@ const COLUMNS = [
         id: 'Icon',
         width: '1%',
         canSort: false,
-        Cell: () => <IconCell icon={<Adjust color="disabled" />} />,
+        Cell: () => <IconCell icon={<DonutLarge color="disabled" />} />,
+        disableGlobalFilter: true,
     },
     {
         Header: 'Name',
         accessor: 'name',
-        Cell: (props: any) => <TextCell>{props.row.original.name}</TextCell>,
+        width: '80%',
+        Cell: ({ value, row: { original } }: any) => (
+            <SearchableTextCell value={value} subtitle={original.description} />
+        ),
     },
     {
         Header: 'Created at',
         accessor: 'createdAt',
-        width: '1%',
-        Cell: (props: any) => <DateCell value={props.row.original.createdAt} />,
+        minWidth: 150,
+        Cell: DateCell,
+        disableGlobalFilter: true,
     },
     {
         Header: 'Created by',
         accessor: 'createdBy',
-        width: '1%',
-        Cell: (props: any) => (
-            <TextCell>{props.row.original.createdBy}</TextCell>
-        ),
     },
     {
         Header: 'Actions',
         id: 'Actions',
-        align: 'right',
+        align: 'center',
         width: '1%',
         canSort: false,
+        disableGlobalFilter: true,
         Cell: (props: any) => (
             <SegmentActionCell segment={props.row.original} />
         ),
+    },
+    {
+        accessor: 'description',
     },
 ];

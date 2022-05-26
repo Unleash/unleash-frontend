@@ -236,7 +236,7 @@ export const FeatureToggleListTable: VFC = () => {
             }
         >
             <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
+                <Table {...getTableProps()} rowHeight={rowHeight}>
                     {/* @ts-expect-error -- fix in react-table v8 */}
                     <SortableTableHeader headerGroups={headerGroups} flex />
                     <TableBody

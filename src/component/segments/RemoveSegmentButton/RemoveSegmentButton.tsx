@@ -39,13 +39,12 @@ export const RemoveSegmentButton = ({ segment }: IRemoveSegmentButtonProps) => {
     return (
         <>
             <PermissionIconButton
-                data-loading
                 onClick={() => toggleModal(true)}
                 permission={DELETE_SEGMENT}
                 tooltipProps={{ title: 'Remove segment' }}
                 data-testid={`${SEGMENT_DELETE_BTN_ID}_${segment.name}`}
             >
-                <Delete />
+                <Delete data-loading />
             </PermissionIconButton>
             <ConditionallyRender
                 condition={showModal}

@@ -13,12 +13,11 @@ export const EditSegmentButton = ({ segment }: IEditSegmentButtonProps) => {
 
     return (
         <PermissionIconButton
-            data-loading
             onClick={() => navigate(`/segments/edit/${segment.id}`)}
             permission={UPDATE_SEGMENT}
             tooltipProps={{ title: 'Edit segment' }}
         >
-            <Edit />
+            <Edit data-loading />
         </PermissionIconButton>
     );
 };

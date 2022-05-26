@@ -5,7 +5,10 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginBlock: '5rem',
+        justifyContent: 'center',
+        margin: theme.spacing(6),
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     title: {
         fontSize: theme.fontSizes.mainHeader,

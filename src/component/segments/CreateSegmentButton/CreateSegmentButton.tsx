@@ -12,7 +12,7 @@ export const CreateSegmentButton = () => {
             permission={CREATE_SEGMENT}
             data-testid={NAVIGATE_TO_CREATE_SEGMENT}
         >
-            New Segment
+            New segment
         </PermissionButton>
     );
 };
