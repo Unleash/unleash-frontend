@@ -101,7 +101,6 @@ const ProjectRoleList = () => {
                 }: any) => (
                     <Box
                         sx={{ display: 'flex', justifyContent: 'center' }}
-                        data-loading
                     >
                         <PermissionIconButton
                             data-loading
