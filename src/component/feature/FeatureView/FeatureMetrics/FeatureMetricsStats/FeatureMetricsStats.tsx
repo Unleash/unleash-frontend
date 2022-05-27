@@ -1,6 +1,7 @@
 import { calculatePercentage } from 'utils/calculatePercentage';
 import { useStyles } from './FeatureMetricsStats.styles';
 import { Grid } from '@mui/material';
+import { FEATURE_METRICS_TABLE_ID } from 'component/feature/FeatureView/FeatureMetrics/FeatureMetricsTable/FeatureMetricsTable';
 
 interface IFeatureMetricsStatsProps {
     totalYes: number;
@@ -26,6 +27,7 @@ export const FeatureMetricsStats = ({
             spacing={2}
             id={FEATURE_METRICS_STATS_ID}
             aria-label="Feature metrics summary"
+            aria-describedby={FEATURE_METRICS_TABLE_ID}
             component="section"
         >
             <Grid item xs={12} sm={4}>
