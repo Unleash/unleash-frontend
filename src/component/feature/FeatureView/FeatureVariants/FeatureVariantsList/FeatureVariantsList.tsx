@@ -67,8 +67,6 @@ export const FeatureVariantsList = () => {
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [feature.variants]);
 
-    console.log('variants', variants);
-
     useEffect(() => {
         const options = [
             'default',
@@ -144,7 +142,11 @@ export const FeatureVariantsList = () => {
                         original: { weight },
                     },
                 }: any) => {
-                    return <TextCell data-loading>{weight / 10.0} %</TextCell>;
+                    return (
+                        <TextCell data-testid="VARIANT_WEIGHT">
+                            {weight / 10.0} %
+                        </TextCell>
+                    );
                 },
                 sortType: 'number',
             },
@@ -157,7 +159,7 @@ export const FeatureVariantsList = () => {
                         original: { weightType },
                     },
                 }: any) => {
-                    return <TextCell data-loading>{weightType}</TextCell>;
+                    return <TextCell>{weightType}</TextCell>;
                 },
                 sortType: 'alphanumeric',
             },
@@ -218,8 +220,8 @@ export const FeatureVariantsList = () => {
         setHiddenColumns,
     } = useTable(
         {
-            columns: columns as any[], // TODO: fix after `react-table` v8 update
-            data,
+            columns: columns as any[],
+            data: data as any[],
             initialState,
             sortTypes,
             autoResetGlobalFilter: false,
