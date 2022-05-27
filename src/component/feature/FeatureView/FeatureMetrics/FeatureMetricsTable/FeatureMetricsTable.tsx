@@ -79,7 +79,7 @@ const COLUMNS = [
     {
         id: 'Icon',
         width: '1%',
-        canSort: false,
+        disableSortBy: true,
         Cell: () => <IconCell icon={<Assessment color="disabled" />} />,
     },
     {
