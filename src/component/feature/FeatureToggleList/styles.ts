@@ -35,4 +35,16 @@ export const useStyles = makeStyles()(theme => ({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    row: {
+        position: 'absolute',
+        width: '100%',
+    },
+    cell: {
+        alignItems: 'center',
+        display: 'flex',
+        flexShrink: 0,
+        '& > *': {
+            flexGrow: 1,
+        },
+    },
 }));

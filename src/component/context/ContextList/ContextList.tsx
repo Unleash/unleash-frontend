@@ -66,8 +66,8 @@ const ContextList: VFC = () => {
                 }: any) => (
                     <LinkCell
                         title={name}
+                        to={`/context/edit/${name}`}
                         subtitle={description}
-                        data-loading
                     />
                 ),
                 sortType: 'alphanumeric',
