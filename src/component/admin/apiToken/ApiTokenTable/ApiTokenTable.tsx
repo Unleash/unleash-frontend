@@ -25,6 +25,7 @@ import theme from 'themes/theme';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { ProjectsList } from 'component/admin/apiToken/ProjectsList/ProjectsList';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 
 export const ApiTokenTable = () => {
     const { tokens } = useApiTokens();
@@ -164,14 +165,14 @@ const COLUMNS = [
     {
         Header: 'Username',
         accessor: 'username',
-        Cell: TextCell,
+        Cell: HighlightCell,
         width: '60%',
     },
     {
         Header: 'Type',
         accessor: 'type',
         Cell: ({ value }: { value: string }) => (
-            <TextCell>{value.toUpperCase()}</TextCell>
+            <HighlightCell value={value.toUpperCase()} />
         ),
         minWidth: 100,
     },
@@ -191,7 +192,7 @@ const COLUMNS = [
     {
         Header: 'Environment',
         accessor: 'environment',
-        Cell: TextCell,
+        Cell: HighlightCell,
         minWidth: 120,
     },
     {
