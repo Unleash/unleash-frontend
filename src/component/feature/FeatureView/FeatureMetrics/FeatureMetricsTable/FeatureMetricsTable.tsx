@@ -9,13 +9,15 @@ import { useMemo, useEffect } from 'react';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import theme from 'themes/theme';
 
-export const FEATURE_METRICS_TABLE_ID = 'feature-metrics-table-id';
-
 interface IFeatureMetricsTableProps {
     metrics: IFeatureMetricsRaw[];
+    tableSectionId?: string;
 }
 
-export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
+export const FeatureMetricsTable = ({
+    metrics,
+    tableSectionId,
+}: IFeatureMetricsTableProps) => {
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const initialState = useMemo(
@@ -55,7 +57,7 @@ export const FeatureMetricsTable = ({ metrics }: IFeatureMetricsTableProps) => {
     }
 
     return (
-        <Table {...getTableProps()} rowHeight="standard">
+        <Table {...getTableProps()} rowHeight="standard" id={tableSectionId}>
             <SortableTableHeader headerGroups={headerGroups} />
             <TableBody {...getTableBodyProps()}>
                 {rows.map(row => {
