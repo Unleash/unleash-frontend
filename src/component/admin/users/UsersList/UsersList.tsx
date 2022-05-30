@@ -113,13 +113,12 @@ const UsersList = () => {
                 Header: 'Created',
                 accessor: 'createdAt',
                 Cell: DateCell,
-                sortType: 'date',
                 disableGlobalFilter: true,
+                sortType: 'date',
             },
             {
                 Header: 'Avatar',
                 accessor: 'imageUrl',
-                disableSortBy: true,
                 Cell: ({ row: { original: user } }: any) => (
                     <TextCell>
                         <StyledAvatar
@@ -133,6 +132,7 @@ const UsersList = () => {
                     </TextCell>
                 ),
                 disableGlobalFilter: true,
+                disableSortBy: true,
             },
             {
                 Header: 'Name',
@@ -162,8 +162,8 @@ const UsersList = () => {
                 Cell: ({ row: { original: user } }: any) => (
                     <TimeAgoCell value={user.seenAt} emptyText="Never logged" />
                 ),
-                sortType: 'date',
                 disableGlobalFilter: true,
+                sortType: 'date',
             },
             {
                 Header: 'Actions',
@@ -206,6 +206,7 @@ const UsersList = () => {
                     </Box>
                 ),
                 width: 100,
+                disableGlobalFilter: true,
                 disableSortBy: true,
             },
         ],
