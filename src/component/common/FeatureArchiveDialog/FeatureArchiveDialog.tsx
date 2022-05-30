@@ -9,7 +9,7 @@ interface IFeatureArchiveDialogProps {
     onConfirm: () => void;
     onClose: () => void;
     projectId: string;
-    featureId: string;
+    featureId?: string;
 }
 
 export const FeatureArchiveDialog: VFC<IFeatureArchiveDialogProps> = ({
@@ -24,7 +24,7 @@ export const FeatureArchiveDialog: VFC<IFeatureArchiveDialogProps> = ({
 
     const archiveToggle = async () => {
         try {
-            await archiveFeatureToggle(projectId, featureId);
+            await archiveFeatureToggle(projectId, featureId || '');
             setToastData({
                 text: 'Your feature toggle has been archived',
                 type: 'success',
