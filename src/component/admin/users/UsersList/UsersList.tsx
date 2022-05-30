@@ -12,7 +12,6 @@ import {
 import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
 import { useUsers } from 'hooks/api/getters/useUsers/useUsers';
 import useAdminUsersApi from 'hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
@@ -23,7 +22,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useUsersPlan } from 'hooks/useUsersPlan';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { Avatar, Box, Button, styled, useMediaQuery } from '@mui/material';
+import { Avatar, Button, styled, useMediaQuery } from '@mui/material';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { UserTypeCell } from './UserTypeCell/UserTypeCell';
 import { useGlobalFilter, useSortBy, useTable } from 'react-table';
@@ -31,11 +30,10 @@ import { sortTypes } from 'utils/sortTypes';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { useNavigate } from 'react-router-dom';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { Delete, Edit, Lock } from '@mui/icons-material';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import theme from 'themes/theme';
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
+import { UsersActionsCell } from './UsersActionsCell/UsersActionsCell';
 
 const UsersList = () => {
     const navigate = useNavigate();
@@ -170,40 +168,13 @@ const UsersList = () => {
                 id: 'Actions',
                 align: 'center',
                 Cell: ({ row: { original: user } }: any) => (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={() => {
-                                navigate(`/admin/users/${user.id}/edit`);
-                            }}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Edit user',
-                            }}
-                        >
-                            <Edit />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={openPwDialog(user)}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Change password',
-                            }}
-                        >
-                            <Lock />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={openDelDialog(user)}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Remove user',
-                            }}
-                        >
-                            <Delete />
-                        </PermissionIconButton>
-                    </Box>
+                    <UsersActionsCell
+                        onEdit={() => {
+                            navigate(`/admin/users/${user.id}/edit`);
+                        }}
+                        onChangePassword={openPwDialog(user)}
+                        onDelete={openDelDialog(user)}
+                    />
                 ),
                 width: 100,
                 disableGlobalFilter: true,
