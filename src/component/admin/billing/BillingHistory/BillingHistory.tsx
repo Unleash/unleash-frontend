@@ -29,18 +29,19 @@ const columns = [
     {
         Header: 'Status',
         accessor: 'status',
+        disableGlobalFilter: true,
     },
     {
         Header: 'Due date',
         accessor: 'dueDate',
         Cell: DateCell,
         sortType: 'date',
+        disableGlobalFilter: true,
     },
     {
         Header: 'Download',
         accessor: 'invoicePDF',
         align: 'center',
-        disableSortBy: true,
         Cell: ({ value }: { value: string }) => (
             <Box
                 sx={{ display: 'flex', justifyContent: 'center' }}
@@ -52,6 +53,8 @@ const columns = [
             </Box>
         ),
         width: 100,
+        disableGlobalFilter: true,
+        disableSortBy: true,
     },
 ];
 
