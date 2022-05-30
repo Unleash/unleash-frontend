@@ -14,7 +14,7 @@ import DeleteUser from './DeleteUser/DeleteUser';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import ConfirmUserAdded from '../ConfirmUserAdded/ConfirmUserAdded';
-import useUsers from 'hooks/api/getters/useUsers/useUsers';
+import { useUsers } from 'hooks/api/getters/useUsers/useUsers';
 import useAdminUsersApi from 'hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 import { IUser } from 'interfaces/user';
 import IRole from 'interfaces/role';
@@ -103,7 +103,9 @@ const UsersList = () => {
                 id: 'type',
                 Header: 'Type',
                 accessor: 'paid',
-                Cell: UserTypeCell,
+                Cell: ({ row: { original: user } }: any) => (
+                    <UserTypeCell value={isBillingUsers && user.paid} />
+                ),
                 disableGlobalFilter: true,
                 sortType: 'boolean',
             },
@@ -207,8 +209,7 @@ const UsersList = () => {
                 disableSortBy: true,
             },
         ],
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [loading, navigate, isBillingUsers]
+        [roles, navigate, isBillingUsers]
     );
 
     const initialState = useMemo(() => {

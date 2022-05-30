@@ -1,5 +1,4 @@
 import { Tooltip, Typography } from '@mui/material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { VFC } from 'react';
 import { formatDateYMD } from 'utils/formatDate';
@@ -8,43 +7,32 @@ import TimeAgo from 'react-timeago';
 
 interface ITimeAgoCellProps {
     value?: string | number | Date;
+    live?: boolean;
     emptyText?: string;
-    children?: string | number | Date;
 }
 
 export const TimeAgoCell: VFC<ITimeAgoCellProps> = ({
     value,
+    live = false,
     emptyText,
-    children,
 }) => {
     const { locationSettings } = useLocationSettings();
 
-    const date = value ?? children;
-
-    if (!date) return <TextCell>{emptyText}</TextCell>;
+    if (!value) return <TextCell>{emptyText}</TextCell>;
 
     return (
         <TextCell>
-            <ConditionallyRender
-                condition={Boolean(value || children)}
-                show={
-                    <Tooltip
-                        title={`Last login: ${formatDateYMD(
-                            date,
-                            locationSettings.locale
-                        )}`}
-                        arrow
-                    >
-                        <Typography noWrap variant="body2" data-loading>
-                            <TimeAgo
-                                date={new Date(date)}
-                                live={false}
-                                title={''}
-                            />
-                        </Typography>
-                    </Tooltip>
-                }
-            />
+            <Tooltip
+                title={`Last login: ${formatDateYMD(
+                    value,
+                    locationSettings.locale
+                )}`}
+                arrow
+            >
+                <Typography noWrap variant="body2" data-loading>
+                    <TimeAgo date={new Date(value)} live={live} title={''} />
+                </Typography>
+            </Tooltip>
         </TextCell>
     );
 };
