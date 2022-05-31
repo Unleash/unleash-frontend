@@ -4,6 +4,11 @@ import PermissionIconButton from 'component/common/PermissionIconButton/Permissi
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { VFC } from 'react';
 
+const StyledBox = styled(Box)(() => ({
+    display: 'flex',
+    justifyContent: 'center',
+}));
+
 interface IUsersActionsCellProps {
     onEdit: (event: React.SyntheticEvent) => void;
     onChangePassword: (event: React.SyntheticEvent) => void;
@@ -50,8 +55,3 @@ export const UsersActionsCell: VFC<IUsersActionsCellProps> = ({
         </StyledBox>
     );
 };
-
-const StyledBox = styled(Box)(() => ({
-    display: 'flex',
-    justifyContent: 'center',
-}));

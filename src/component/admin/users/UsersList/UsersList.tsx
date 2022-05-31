@@ -35,6 +35,12 @@ import theme from 'themes/theme';
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
 import { UsersActionsCell } from './UsersActionsCell/UsersActionsCell';
 
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    margin: 'auto',
+}));
+
 const UsersList = () => {
     const navigate = useNavigate();
     const { users, roles, refetch, loading } = useUsers();
@@ -332,11 +338,5 @@ const UsersList = () => {
         </PageContent>
     );
 };
-
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    margin: 'auto',
-}));
 
 export default UsersList;

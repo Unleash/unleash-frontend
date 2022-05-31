@@ -16,6 +16,11 @@ import { Box, IconButton, styled, Typography } from '@mui/material';
 import FileDownload from '@mui/icons-material/FileDownload';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 
+const StyledTitle = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(2.5),
+    fontSize: theme.fontSizes.mainHeader,
+}));
 interface IBillingHistoryProps {
     data: Record<string, any>[];
     isLoading?: boolean;
@@ -113,9 +118,3 @@ export const BillingHistory: VFC<IBillingHistoryProps> = ({
         </PageContent>
     );
 };
-
-const StyledTitle = styled(Typography)(({ theme }) => ({
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(2.5),
-    fontSize: theme.fontSizes.mainHeader,
-}));

@@ -3,6 +3,11 @@ import { styled, Tooltip } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 
+const StyledMonetizationOn = styled(MonetizationOn)(({ theme }) => ({
+    color: theme.palette.primary.light,
+    fontSize: '1.75rem',
+}));
+
 interface IUserTypeCellProps {
     value: boolean;
 }
@@ -22,8 +27,3 @@ export const UserTypeCell = ({ value }: IUserTypeCellProps) => {
         </TextCell>
     );
 };
-
-const StyledMonetizationOn = styled(MonetizationOn)(({ theme }) => ({
-    color: theme.palette.primary.light,
-    fontSize: '1.75rem',
-}));
