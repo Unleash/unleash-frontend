@@ -1,12 +1,15 @@
+import { ReactNode } from 'react';
+
 export interface IUiConfig {
-    authenticationType: string;
-    baseUriPath: string;
+    authenticationType?: string;
+    baseUriPath?: string;
     flags: IFlags;
     name: string;
     slogan: string;
-    unleashUrl: string;
+    environment?: string;
+    unleashUrl?: string;
     version: string;
-    versionInfo: IVersionInfo;
+    versionInfo?: IVersionInfo;
     links: ILinks[];
     disablePasswordAuth?: boolean;
     toast?: IProclamationToast;
@@ -46,7 +49,7 @@ export interface IVersion {
 
 export interface ILinks {
     value: string;
-    icon: string;
+    icon: ReactNode;
     href: string;
     title: string;
 }
