@@ -181,14 +181,12 @@ export const ProjectFeatureToggles = ({
                 Cell: FeatureSeenCell,
                 sortType: 'date',
                 align: 'center',
-                disableGlobalFilter: true,
             },
             {
                 Header: 'Type',
                 accessor: 'type',
                 Cell: FeatureTypeCell,
                 align: 'center',
-                disableGlobalFilter: true,
             },
             {
                 Header: 'Feature toggle name',
@@ -209,8 +207,6 @@ export const ProjectFeatureToggles = ({
                 accessor: 'createdAt',
                 Cell: DateCell,
                 sortType: 'date',
-                align: 'center',
-                disableGlobalFilter: true,
             },
             ...environments.map(name => ({
                 Header: loading ? () => '' : name,
@@ -218,7 +214,6 @@ export const ProjectFeatureToggles = ({
                 minWidth: 90,
                 accessor: `environments.${name}`,
                 align: 'center',
-                disableGlobalFilter: true,
                 Cell: ({
                     value,
                     row: { original: feature },
@@ -248,7 +243,6 @@ export const ProjectFeatureToggles = ({
                     <ActionsCell projectId={projectId} {...props} />
                 ),
                 disableSortBy: true,
-                disableGlobalFilter: true,
             },
         ],
         [projectId, environments, onToggle, loading]
@@ -318,7 +312,7 @@ export const ProjectFeatureToggles = ({
             data,
             initialState,
             sortTypes,
-            autoResetGlobalFilter: false,
+            autoResetFilters: false,
             disableSortRemove: true,
             autoResetSortBy: false,
         },
