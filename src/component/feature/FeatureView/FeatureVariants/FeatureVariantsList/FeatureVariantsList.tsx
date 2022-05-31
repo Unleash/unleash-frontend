@@ -139,11 +139,11 @@ export const FeatureVariantsList = () => {
                 width: '20%',
                 Cell: ({
                     row: {
-                        original: { weight },
+                        original: { name, weight },
                     },
                 }: any) => {
                     return (
-                        <TextCell data-testid="VARIANT_WEIGHT">
+                        <TextCell data-testid={`VARIANT_WEIGHT_${name}`}>
                             {weight / 10.0} %
                         </TextCell>
                     );
@@ -174,7 +174,7 @@ export const FeatureVariantsList = () => {
                     >
                         <PermissionIconButton
                             size="large"
-                            data-testid={'VARIANT_EDIT_BUTTON'}
+                            data-testid={`VARIANT_EDIT_BUTTON_${original.name}`}
                             permission={UPDATE_FEATURE_VARIANTS}
                             projectId={projectId}
                             onClick={() => editVariant(original.name)}
