@@ -28,7 +28,6 @@ import PermissionButton from 'component/common/PermissionButton/PermissionButton
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { Edit, Delete } from '@mui/icons-material';
-import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { useTable, useSortBy, useGlobalFilter } from 'react-table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -112,7 +111,7 @@ export const FeatureVariantsList = () => {
                         original: { name },
                     },
                 }: any) => {
-                    return <LinkCell data-loading title={name} />;
+                    return <TextCell data-loading>{name}</TextCell>;
                 },
                 sortType: 'alphanumeric',
             },
@@ -435,8 +434,8 @@ export const FeatureVariantsList = () => {
                 Variants allows you to return a variant object if the feature
                 toggle is considered enabled for the current request. When using
                 variants you should use the{' '}
-                <code style={{ color: 'navy' }}>getVariant()</code> method in
-                the Client SDK.
+                <code style={{ fontWeight: 'bold' }}>getVariant()</code> method
+                in the Client SDK.
             </Alert>
             <Table {...getTableProps()}>
                 <SortableTableHeader headerGroups={headerGroups} />
@@ -444,7 +443,11 @@ export const FeatureVariantsList = () => {
                     {rows.map(row => {
                         prepareRow(row);
                         return (
-                            <TableRow hover {...row.getRowProps()}>
+                            <TableRow
+                                hover
+                                {...row.getRowProps()}
+                                style={{ height: '75px' }}
+                            >
                                 {row.cells.map(cell => (
                                     <TableCell
                                         {...cell.getCellProps()}

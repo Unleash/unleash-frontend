@@ -1,5 +1,6 @@
 import { Chip } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { IOverride, IPayload } from 'interfaces/featureToggle';
 
 interface IPayloadOverridesCellProps {
@@ -15,18 +16,11 @@ export const PayloadOverridesCell = ({
         <>
             <ConditionallyRender
                 condition={Boolean(payload)}
-                show={<Chip label="Payload" />}
+                show={<TextCell>Payload</TextCell>}
             />
             <ConditionallyRender
                 condition={overrides && overrides.length > 0}
-                show={
-                    <Chip
-                        style={{
-                            backgroundColor: 'rgba(173, 216, 230, 0.2)',
-                        }}
-                        label="Overrides"
-                    />
-                }
+                show={<TextCell>Overrides</TextCell>}
             />
         </>
     );
