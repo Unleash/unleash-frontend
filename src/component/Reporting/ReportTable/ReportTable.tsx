@@ -182,7 +182,7 @@ const COLUMNS = [
         disableGlobalFilter: true,
     },
     {
-        Header: 'Feature toggle name',
+        Header: 'Name',
         accessor: 'name',
         width: '60%',
         sortType: 'alphanumeric',

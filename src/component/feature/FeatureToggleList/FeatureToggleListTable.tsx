@@ -64,7 +64,7 @@ const columns = [
         disableGlobalFilter: true,
     },
     {
-        Header: 'Feature toggle name',
+        Header: 'Name',
         accessor: 'name',
         minWidth: 150,
         Cell: FeatureNameCell,

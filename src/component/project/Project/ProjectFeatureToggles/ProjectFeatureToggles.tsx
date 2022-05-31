@@ -213,7 +213,7 @@ export const ProjectFeatureToggles = ({
                 maxWidth: 80,
             },
             {
-                Header: 'Feature toggle name',
+                Header: 'Name',
                 accessor: 'name',
                 Cell: ({ value }: { value: string }) => (
                     <LinkCell
