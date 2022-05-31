@@ -176,12 +176,10 @@ const COLUMNS = [
         Header: 'Project',
         accessor: 'project',
         Cell: (props: any) => (
-            <TextCell>
-                <ProjectsList
-                    project={props.row.original.project}
-                    projects={props.row.original.projects}
-                />
-            </TextCell>
+            <ProjectsList
+                project={props.row.original.project}
+                projects={props.row.original.projects}
+            />
         ),
         minWidth: 120,
     },

@@ -34,7 +34,12 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
     handleRoleChange,
     handleRemoveAccess,
 }) => {
-    const [initialState] = useState({});
+    const initialState = useMemo(
+        () => ({
+            sortBy: [{ id: 'Name', desc: false }],
+        }),
+        []
+    );
     const data = access.users;
 
     const columns = useMemo(
@@ -55,7 +60,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
             },
             {
                 Header: 'Name',
-                accessor: 'name',
+                accessor: (row: any) => row.name || '',
             },
             {
                 Header: 'Username',

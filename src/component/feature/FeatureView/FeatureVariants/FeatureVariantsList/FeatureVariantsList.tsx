@@ -211,11 +211,14 @@ export const FeatureVariantsList = () => {
     );
 
     useEffect(() => {
-        if (isMediumScreen) {
-            setHiddenColumns(['weightType', 'data']);
-        } else if (isLargeScreen) {
-            setHiddenColumns(['weightType']);
+        const hiddenColumns = [];
+        if (isLargeScreen) {
+            hiddenColumns.push('weightType');
         }
+        if (isMediumScreen) {
+            hiddenColumns.push('data');
+        }
+        setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isMediumScreen, isLargeScreen]);
 
     // @ts-expect-error
