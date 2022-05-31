@@ -1,5 +1,7 @@
 import { makeStyles } from 'tss-react/mui';
 
+const transitionTiming = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+
 export const useStyles = makeStyles()(theme => ({
     searchField: {
         width: '45px',
@@ -11,7 +13,7 @@ export const useStyles = makeStyles()(theme => ({
         },
         '& input::placeholder': {
             color: 'transparent',
-            transition: 'color 0.6s',
+            transition: `color ${transitionTiming}`,
         },
         '& input:focus-within::placeholder': {
             color: theme.palette.text.primary,
@@ -19,17 +21,17 @@ export const useStyles = makeStyles()(theme => ({
     },
     searchFieldEnter: {
         width: '250px',
-        transition: 'width 0.6s',
+        transition: `width ${transitionTiming}`,
         '& .search-icon': {
             marginRight: '8px',
         },
         '& .input-container': {
             width: '100%',
-            transition: 'width 0.6s',
+            transition: `width ${transitionTiming}`,
         },
         '& .clear-container': {
             width: '30px',
-            transition: 'width 0.6s',
+            transition: `width ${transitionTiming}`,
         },
         '& .search-container': {
             borderColor: theme.palette.grey[300],
@@ -37,14 +39,14 @@ export const useStyles = makeStyles()(theme => ({
     },
     searchFieldLeave: {
         width: '45px',
-        transition: 'width 0.6s',
+        transition: `width ${transitionTiming}`,
         '& .search-icon': {
             marginRight: 0,
-            transition: 'margin-right 0.6s',
+            transition: `margin-right ${transitionTiming}`,
         },
         '& .input-container, .clear-container': {
             width: 0,
-            transition: 'width 0.6s',
+            transition: `width ${transitionTiming}`,
         },
         '& .search-container': {
             borderColor: 'transparent',

@@ -6,6 +6,8 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { TableSearchField } from './TableSearchField/TableSearchField';
 import { useStyles } from './TableSearch.styles';
+import { useKeyboardShortcut } from 'hooks/useKeyboardShortcut';
+import { useIsAppleDevice } from 'hooks/useIsAppleDevice';
 
 interface ITableSearchProps {
     initialValue?: string;
@@ -16,14 +18,37 @@ interface ITableSearchProps {
 export const TableSearch: FC<ITableSearchProps> = ({
     initialValue,
     onChange = () => {},
-    placeholder = 'Search',
+    placeholder: customPlaceholder,
 }) => {
     const [searchInputState, setSearchInputState] = useState(initialValue);
     const [isSearchExpanded, setIsSearchExpanded] = useState(
         Boolean(initialValue)
     );
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isTooltipOpen, setIsTooltipOpen] = useState(false);
     const debouncedOnSearch = useAsyncDebounce(onChange, 200);
+    useKeyboardShortcut({ modifiers: ['ctrl'], key: 'f' }, () => {
+        setIsTooltipOpen(true);
+    });
+    useKeyboardShortcut(
+        { modifiers: ['ctrl'], key: 'k', preventDefault: true },
+        () => {
+            setIsSearchExpanded(true);
+        }
+    );
+    useKeyboardShortcut({ key: 'Escape' }, () => {
+        if (isSearchExpanded) {
+            setIsSearchExpanded(false);
+        }
+    });
+    const isAppleDevice = useIsAppleDevice();
+    const placeholder =
+        customPlaceholder ??
+        `Search${
+            isAppleDevice !== undefined
+                ? ` (${isAppleDevice ? '⌘' : 'Ctrl'}+K)`
+                : ''
+        }`;
 
     const { classes: styles } = useStyles();
 
@@ -51,14 +76,24 @@ export const TableSearch: FC<ITableSearchProps> = ({
                 <TableSearchField
                     value={searchInputState!}
                     onChange={onSearchChange}
-                    placeholder={`${placeholder}…`}
+                    placeholder={placeholder}
                     onBlur={onBlur}
                 />
             </AnimateOnMount>
             <ConditionallyRender
                 condition={!isSearchExpanded && !isAnimating}
                 show={
-                    <Tooltip title={placeholder} arrow>
+                    <Tooltip
+                        title={placeholder}
+                        arrow
+                        open={isTooltipOpen}
+                        onOpen={() => {
+                            setIsTooltipOpen(true);
+                        }}
+                        onClose={() => {
+                            setIsTooltipOpen(false);
+                        }}
+                    >
                         <IconButton
                             aria-label={placeholder}
                             onClick={() => setIsSearchExpanded(true)}
