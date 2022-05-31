@@ -36,7 +36,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
 }) => {
     const initialState = useMemo(
         () => ({
-            sortBy: [{ id: 'Name', desc: false }],
+            sortBy: [{ id: 'Name' }],
         }),
         []
     );
