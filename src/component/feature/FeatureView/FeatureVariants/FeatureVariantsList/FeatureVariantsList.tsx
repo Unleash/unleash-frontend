@@ -37,6 +37,7 @@ import { PayloadOverridesCell } from './PayloadOverridesCell/PayloadOverridesCel
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import theme from 'themes/theme';
+import { VariantsActionCell } from './VariantsActionsCell/VariantsActionsCell';
 
 export const FeatureVariantsList = () => {
     const { hasAccess } = useContext(AccessContext);
@@ -56,8 +57,8 @@ export const FeatureVariantsList = () => {
     const [stickinessOptions, setStickinessOptions] = useState<string[]>([]);
     const [delDialog, setDelDialog] = useState({ name: '', show: false });
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isLargeScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
     useEffect(() => {
         if (feature) {
@@ -167,34 +168,12 @@ export const FeatureVariantsList = () => {
                 id: 'Actions',
                 align: 'right',
                 Cell: ({ row: { original } }: any) => (
-                    <Box
-                        sx={{ display: 'flex', justifyContent: 'flex-end' }}
-                        data-loading
-                    >
-                        <PermissionIconButton
-                            size="large"
-                            data-testid={`VARIANT_EDIT_BUTTON_${original.name}`}
-                            permission={UPDATE_FEATURE_VARIANTS}
-                            projectId={projectId}
-                            onClick={() => editVariant(original.name)}
-                        >
-                            <Edit />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            size="large"
-                            permission={UPDATE_FEATURE_VARIANTS}
-                            data-testid={`VARIANT_DELETE_BUTTON_${original.name}`}
-                            projectId={projectId}
-                            onClick={() =>
-                                setDelDialog({
-                                    show: true,
-                                    name: original.name,
-                                })
-                            }
-                        >
-                            <Delete />
-                        </PermissionIconButton>
-                    </Box>
+                    <VariantsActionCell
+                        editVariant={editVariant}
+                        setDelDialog={setDelDialog}
+                        variant={original as IFeatureVariant}
+                        projectId={projectId}
+                    />
                 ),
                 width: 150,
                 disableSortBy: true,
@@ -232,12 +211,12 @@ export const FeatureVariantsList = () => {
     );
 
     useEffect(() => {
-        if (isSmallScreen) {
+        if (isMediumScreen) {
             setHiddenColumns(['weightType', 'data']);
-        } else if (isMediumScreen) {
+        } else if (isLargeScreen) {
             setHiddenColumns(['weightType']);
         }
-    }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
+    }, [setHiddenColumns, isMediumScreen, isLargeScreen]);
 
     // @ts-expect-error
     const setClonedVariants = clonedVariants =>
@@ -399,6 +378,18 @@ export const FeatureVariantsList = () => {
         return jsonpatch.compare(feature.variants, newVariants);
     };
 
+    const addVariant = () => {
+        setEditing(false);
+        if (variants.length === 0) {
+            setVariantToEdit({ weight: 1000 });
+        } else {
+            setVariantToEdit({
+                weightType: 'variable',
+            });
+        }
+        setShowAddVariant(true);
+    };
+
     return (
         <PageContent
             isLoading={loading}
@@ -408,17 +399,7 @@ export const FeatureVariantsList = () => {
                     actions={
                         <>
                             <PermissionButton
-                                onClick={() => {
-                                    setEditing(false);
-                                    if (variants.length === 0) {
-                                        setVariantToEdit({ weight: 1000 });
-                                    } else {
-                                        setVariantToEdit({
-                                            weightType: 'variable',
-                                        });
-                                    }
-                                    setShowAddVariant(true);
-                                }}
+                                onClick={addVariant}
                                 data-testid={'ADD_VARIANT_BUTTON'}
                                 permission={UPDATE_FEATURE_VARIANTS}
                                 projectId={projectId}
