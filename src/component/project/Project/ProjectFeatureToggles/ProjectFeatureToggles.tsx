@@ -522,7 +522,7 @@ export const ProjectFeatureToggles = ({
                     setFeatureStaleDialogState({});
                     refetch();
                 }}
-                featureId={featureStaleDialogState.featureId}
+                featureId={featureStaleDialogState.featureId || ''}
                 projectId={projectId}
             />
             <FeatureArchiveDialog
@@ -533,7 +533,7 @@ export const ProjectFeatureToggles = ({
                 onClose={() => {
                     setFeatureArchiveState(undefined);
                 }}
-                featureId={featureArchiveState}
+                featureId={featureArchiveState || ''}
                 projectId={projectId}
             />
         </PageContent>

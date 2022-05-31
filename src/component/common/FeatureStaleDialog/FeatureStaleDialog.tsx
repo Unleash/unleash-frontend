@@ -10,7 +10,7 @@ interface IFeatureStaleDialogProps {
     isStale: boolean;
     isOpen: boolean;
     projectId: string;
-    featureId?: string;
+    featureId: string;
     onClose: () => void;
 }
 
@@ -42,7 +42,7 @@ export const FeatureStaleDialog = ({
 
         try {
             const patch = [{ op: 'replace', path: '/stale', value: !isStale }];
-            await patchFeatureToggle(projectId, featureId || '', patch);
+            await patchFeatureToggle(projectId, featureId, patch);
             onClose();
         } catch (err: unknown) {
             setToastApiError(formatUnknownError(err));
