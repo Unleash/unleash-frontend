@@ -13,6 +13,8 @@ export interface IUiConfig {
     links: ILinks[];
     disablePasswordAuth?: boolean;
     toast?: IProclamationToast;
+    segmentValuesLimit?: number;
+    strategySegmentsLimit?: number;
 }
 
 export interface IProclamationToast {

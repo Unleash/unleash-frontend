@@ -18,16 +18,11 @@ const useUiConfig = (): IUseUIConfigOutput => {
     const { data, error, mutate } = useSWR<IUiConfig>(path, fetcher);
 
     const isOss = useCallback(() => {
-        return data?.versionInfo?.current
-            ? !data.versionInfo.current.enterprise
-            : false;
+        return !data?.versionInfo?.current?.enterprise;
     }, [data]);
 
-    const uiConfig = useMemo(() => {
-        return {
-            ...defaultValue,
-            ...data,
-        };
+    const uiConfig: IUiConfig = useMemo(() => {
+        return { ...defaultValue, ...data };
     }, [data]);
 
     return {
