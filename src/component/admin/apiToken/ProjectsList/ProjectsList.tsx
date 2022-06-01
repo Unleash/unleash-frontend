@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const StyledLink = styled(Link)(() => ({
     textDecoration: 'none',
-    '&:hover': {
+    '&:hover, &:focus': {
         textDecoration: 'underline',
     },
 }));

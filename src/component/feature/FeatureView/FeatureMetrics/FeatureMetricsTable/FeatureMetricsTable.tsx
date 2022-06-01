@@ -47,7 +47,7 @@ export const FeatureMetricsTable = ({
     useEffect(() => {
         const hiddenColumns = [];
         if (isMediumScreen) {
-            hiddenColumns.push(...['appName', 'environment']);
+            hiddenColumns.push('appName', 'environment');
         }
         setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isMediumScreen]);
@@ -98,6 +98,7 @@ const COLUMNS = [
         accessor: 'environment',
     },
     {
+        id: 'requested',
         Header: 'Requested',
         accessor: (original: any) => original.yes + original.no,
     },

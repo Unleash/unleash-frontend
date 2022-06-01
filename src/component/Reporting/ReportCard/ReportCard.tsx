@@ -68,6 +68,13 @@ interface IReportCardProps {
 }
 
 export const ReportCard = ({ healthReport }: IReportCardProps) => {
+    const healthRatingColor =
+        healthReport.health < 50
+            ? 'error.main'
+            : healthReport.health < 75
+            ? 'warning.main'
+            : 'success.main';
+
     const renderActiveToggles = () => (
         <StyledBoxActive>
             <CheckIcon />
@@ -100,14 +107,7 @@ export const ReportCard = ({ healthReport }: IReportCardProps) => {
                     show={
                         <>
                             <StyledHealthRating
-                                sx={{
-                                    color:
-                                        healthReport.health < 50
-                                            ? 'error.main'
-                                            : healthReport.health < 75
-                                            ? 'warning.main'
-                                            : 'success.main',
-                                }}
+                                sx={{ color: healthRatingColor }}
                             >
                                 {healthReport.health}%
                             </StyledHealthRating>

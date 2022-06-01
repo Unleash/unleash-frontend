@@ -164,10 +164,10 @@ export const FeatureToggleListTable: VFC = () => {
     useEffect(() => {
         const hiddenColumns = ['description'];
         if (isMediumScreen) {
-            hiddenColumns.push(...['lastSeenAt', 'stale']);
+            hiddenColumns.push('lastSeenAt', 'stale');
         }
         if (isSmallScreen) {
-            hiddenColumns.push(...['type', 'createdAt']);
+            hiddenColumns.push('type', 'createdAt');
         }
         setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isSmallScreen, isMediumScreen]);

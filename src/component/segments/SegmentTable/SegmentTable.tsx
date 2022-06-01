@@ -75,7 +75,7 @@ export const SegmentTable = () => {
     useEffect(() => {
         const hiddenColumns = ['description'];
         if (isSmallScreen) {
-            hiddenColumns.push(...['createdAt', 'createdBy']);
+            hiddenColumns.push('createdAt', 'createdBy');
         }
         setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isSmallScreen]);

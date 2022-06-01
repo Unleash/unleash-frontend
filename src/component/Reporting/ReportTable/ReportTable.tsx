@@ -86,7 +86,7 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
     useEffect(() => {
         const hiddenColumns = [];
         if (isSmallScreen) {
-            hiddenColumns.push(...['createdAt', 'expiredAt']);
+            hiddenColumns.push('createdAt', 'expiredAt');
         }
         setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isSmallScreen]);
