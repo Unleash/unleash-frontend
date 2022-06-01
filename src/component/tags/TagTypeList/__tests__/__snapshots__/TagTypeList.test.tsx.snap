@@ -32,7 +32,7 @@ exports[`renders an empty list correctly 1`] = `
               className="tss-u5t8ea-headerActions"
             >
               <button
-                aria-label="Search"
+                aria-label="Search (Ctrl+K)"
                 aria-labelledby={null}
                 className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge tss-15hjuf9-searchButton mui-mf1cb5-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element={true}
