@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useIsAppleDevice } from './useIsAppleDevice';
 
 export const useKeyboardShortcut = (
@@ -49,4 +49,24 @@ export const useKeyboardShortcut = (
             window.removeEventListener('keydown', onKeyDown);
         };
     }, [isAppleDevice, key, modifiers, preventDefault, callback]);
+
+    const hotkey = useMemo(
+        () =>
+            [
+                ...(modifiers.length > 0
+                    ? modifiers.map(
+                          modifier =>
+                              ({
+                                  ctrl: isAppleDevice ? '⌘' : 'Ctrl',
+                                  alt: 'Alt',
+                                  shift: 'Shift',
+                              }[modifier])
+                      )
+                    : ''),
+                `${key[0].toUpperCase()}${key.slice(1)}`,
+            ].join('+'),
+        [isAppleDevice, key, modifiers]
+    );
+
+    return hotkey;
 };

@@ -7,7 +7,6 @@ import AnimateOnMount from 'component/common/AnimateOnMount/AnimateOnMount';
 import { TableSearchField } from './TableSearchField/TableSearchField';
 import { useStyles } from './TableSearch.styles';
 import { useKeyboardShortcut } from 'hooks/useKeyboardShortcut';
-import { useIsAppleDevice } from 'hooks/useIsAppleDevice';
 
 interface ITableSearchProps {
     initialValue?: string;
@@ -27,28 +26,21 @@ export const TableSearch: FC<ITableSearchProps> = ({
     const [isAnimating, setIsAnimating] = useState(false);
     const [isTooltipOpen, setIsTooltipOpen] = useState(false);
     const debouncedOnSearch = useAsyncDebounce(onChange, 200);
+    const hotkey = useKeyboardShortcut(
+        { modifiers: ['ctrl'], key: 'k', preventDefault: true },
+        () => {
+            setIsSearchExpanded(expanded => !expanded);
+        }
+    );
     useKeyboardShortcut({ modifiers: ['ctrl'], key: 'f' }, () => {
         setIsTooltipOpen(true);
     });
-    useKeyboardShortcut(
-        { modifiers: ['ctrl'], key: 'k', preventDefault: true },
-        () => {
-            setIsSearchExpanded(true);
-        }
-    );
     useKeyboardShortcut({ key: 'Escape' }, () => {
         if (isSearchExpanded) {
             setIsSearchExpanded(false);
         }
     });
-    const isAppleDevice = useIsAppleDevice();
-    const placeholder =
-        customPlaceholder ??
-        `Search${
-            isAppleDevice !== undefined
-                ? ` (${isAppleDevice ? '⌘' : 'Ctrl'}+K)`
-                : ''
-        }`;
+    const placeholder = customPlaceholder ?? `Search (${hotkey})`;
 
     const { classes: styles } = useStyles();
 
