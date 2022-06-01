@@ -29,14 +29,22 @@ export const TableSearch: FC<ITableSearchProps> = ({
     const hotkey = useKeyboardShortcut(
         { modifiers: ['ctrl'], key: 'k', preventDefault: true },
         () => {
-            setIsSearchExpanded(expanded => !expanded);
+            setIsSearchExpanded(expanded => {
+                if (!expanded) {
+                    return true;
+                }
+                if (expanded && !searchInputState) {
+                    return false;
+                }
+                return expanded;
+            });
         }
     );
     useKeyboardShortcut({ modifiers: ['ctrl'], key: 'f' }, () => {
         setIsTooltipOpen(true);
     });
     useKeyboardShortcut({ key: 'Escape' }, () => {
-        if (isSearchExpanded) {
+        if (isSearchExpanded && !searchInputState) {
             setIsSearchExpanded(false);
         }
     });
