@@ -3,6 +3,8 @@ import { Search, Close } from '@mui/icons-material';
 import classnames from 'classnames';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from './TableSearchField.styles';
+import { TableSearchFieldSuggestions } from './TableSearchFieldSuggestions/TableSearchFieldSuggestions';
+import { useState } from 'react';
 
 interface ITableSearchFieldProps {
     value: string;
@@ -20,6 +22,7 @@ export const TableSearchField = ({
     onBlur,
 }: ITableSearchFieldProps) => {
     const { classes: styles } = useStyles();
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
     return (
         <div className={styles.container}>
@@ -42,7 +45,11 @@ export const TableSearchField = ({
                     inputProps={{ 'aria-label': placeholder }}
                     value={value}
                     onChange={e => onChange(e.target.value)}
-                    onBlur={() => onBlur?.()}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => {
+                        setShowSuggestions(false);
+                        onBlur?.();
+                    }}
                 />
                 <div
                     className={classnames(
@@ -68,6 +75,10 @@ export const TableSearchField = ({
                     />
                 </div>
             </div>
+            <ConditionallyRender
+                condition={showSuggestions && !Boolean(value)}
+                show={<TableSearchFieldSuggestions />}
+            />
         </div>
     );
 };

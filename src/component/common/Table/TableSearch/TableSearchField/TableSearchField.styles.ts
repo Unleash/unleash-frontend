@@ -3,9 +3,9 @@ import { makeStyles } from 'tss-react/mui';
 export const useStyles = makeStyles()(theme => ({
     container: {
         display: 'flex',
+        flexGrow: 1,
         alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '1rem',
+        position: 'relative',
     },
     search: {
         display: 'flex',
@@ -14,10 +14,8 @@ export const useStyles = makeStyles()(theme => ({
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: theme.shape.borderRadiusExtraLarge,
         padding: '3px 5px 3px 12px',
-        maxWidth: '450px',
-        [theme.breakpoints.down('sm')]: {
-            width: '100%',
-        },
+        width: '100%',
+        zIndex: 3,
         '&.search-container:focus-within': {
             borderColor: theme.palette.primary.light,
             boxShadow: theme.boxShadows.main,

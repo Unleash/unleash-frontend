@@ -48,7 +48,6 @@ const columns = [
         sortType: 'date',
         align: 'center',
         maxWidth: 85,
-        disableGlobalFilter: true,
         filterName: 'seen',
     },
     {
@@ -57,7 +56,6 @@ const columns = [
         Cell: FeatureTypeCell,
         align: 'center',
         maxWidth: 85,
-        disableGlobalFilter: true,
         isFilter: true,
     },
     {
@@ -74,7 +72,6 @@ const columns = [
         Cell: DateCell,
         sortType: 'date',
         maxWidth: 150,
-        disableGlobalFilter: true,
     },
     {
         Header: 'Project ID',
@@ -85,6 +82,7 @@ const columns = [
         sortType: 'alphanumeric',
         maxWidth: 150,
         filterName: 'project',
+        searchable: true,
     },
     {
         Header: 'State',
@@ -92,7 +90,6 @@ const columns = [
         Cell: FeatureStaleCell,
         sortType: 'boolean',
         maxWidth: 120,
-        disableGlobalFilter: true,
         filterName: 'state',
         filterBy: (row: any, values: string[]) =>
             (values.includes('active') && !row.stale) ||
