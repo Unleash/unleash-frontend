@@ -95,7 +95,8 @@ const columns = [
         disableGlobalFilter: true,
         filterName: 'state',
         filterBy: (row: any, values: string[]) =>
-            values.includes('active') && !row.stale,
+            (values.includes('active') && !row.stale) ||
+            (values.includes('stale') && row.stale),
     },
     // Always hidden -- for search
     {
