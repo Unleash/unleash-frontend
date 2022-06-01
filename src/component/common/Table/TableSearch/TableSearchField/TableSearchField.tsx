@@ -11,7 +11,6 @@ interface ITableSearchFieldProps {
     onChange: (value: string) => void;
     className?: string;
     placeholder: string;
-    onBlur?: (clear?: boolean) => void;
 }
 
 export const TableSearchField = ({
@@ -19,7 +18,6 @@ export const TableSearchField = ({
     onChange,
     className,
     placeholder,
-    onBlur,
 }: ITableSearchFieldProps) => {
     const { classes: styles } = useStyles();
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -37,7 +35,6 @@ export const TableSearchField = ({
                     className={classnames(styles.searchIcon, 'search-icon')}
                 />
                 <InputBase
-                    autoFocus
                     placeholder={placeholder}
                     classes={{
                         root: classnames(styles.inputRoot, 'input-container'),
@@ -46,10 +43,7 @@ export const TableSearchField = ({
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     onFocus={() => setShowSuggestions(true)}
-                    onBlur={() => {
-                        setShowSuggestions(false);
-                        onBlur?.();
-                    }}
+                    onBlur={() => setShowSuggestions(false)}
                 />
                 <div
                     className={classnames(
@@ -65,7 +59,6 @@ export const TableSearchField = ({
                                     size="small"
                                     onClick={() => {
                                         onChange('');
-                                        onBlur?.(true);
                                     }}
                                 >
                                     <Close className={styles.clearIcon} />
