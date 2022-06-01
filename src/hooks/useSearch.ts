@@ -64,10 +64,10 @@ const searchInFilteredData = (
 };
 
 const defaultFilter = (fieldValue: string, values: string[]) =>
-    values.some(value => fieldValue.toLowerCase() === value.toLowerCase());
+    values.some(value => fieldValue?.toLowerCase() === value?.toLowerCase());
 
 const defaultSearch = (fieldValue: string, value: string) =>
-    fieldValue.toLowerCase().includes(value.toLowerCase());
+    fieldValue?.toLowerCase().includes(value?.toLowerCase());
 
 export const getSearchText = (searchValue: string) =>
     searchValue
