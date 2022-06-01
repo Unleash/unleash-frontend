@@ -14,7 +14,7 @@ export const useIsAppleDevice = () => {
             'unknown';
 
         setIsAppleDevice(
-            platform.includes('Mac') ||
+            platform.toLowerCase().includes('mac') ||
                 platform === 'iPhone' ||
                 platform === 'iPad'
         );
