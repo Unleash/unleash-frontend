@@ -98,10 +98,13 @@ export const TableSearchFieldSuggestions: VFC<
         .map(column => column.Header ?? column.accessor)
         .join(', ');
 
-    const suggestedTextSearch = getColumnValues(
-        searchableColumns.filter(column => !column.filterName)[0],
-        searchContext.data[randomRow]
-    );
+    const suggestedTextSearch =
+        searchContext.data.length && searchableColumns.length
+            ? getColumnValues(
+                  searchableColumns[0],
+                  searchContext.data[randomRow]
+              )
+            : 'example-search-text';
 
     const searchText = getSearchText(searchContext.searchValue);
     const searchFilters = filters.filter(filter => filter.values.length > 0);
@@ -123,7 +126,9 @@ export const TableSearchFieldSuggestions: VFC<
                                             <StyledCode>
                                                 {searchText}
                                             </StyledCode>{' '}
-                                            in {searchableColumnsString}
+                                            {searchableColumnsString
+                                                ? ` in ${searchableColumnsString}`
+                                                : ''}
                                         </p>
                                     }
                                 />
@@ -141,7 +146,13 @@ export const TableSearchFieldSuggestions: VFC<
                         elseShow={
                             <>
                                 <StyledHeader>
-                                    Filter your search with operators like:
+                                    {filters.length > 0
+                                        ? 'Filter your search with operators like:'
+                                        : `Start typing to search${
+                                              searchableColumnsString
+                                                  ? ` in ${searchableColumnsString}`
+                                                  : '...'
+                                          }`}
                                 </StyledHeader>
                                 {filters.map(filter => (
                                     <p key={filter.name}>
@@ -173,7 +184,11 @@ export const TableSearchFieldSuggestions: VFC<
                 </Box>
             </StyledBox>
             <StyledDivider />
-            Combine filters and search. Example:{' '}
+            <ConditionallyRender
+                condition={filters.length > 0}
+                show="Combine filters and search. "
+            />
+            Example:{' '}
             <StyledCode>
                 {filters.map(filter => (
                     <span key={filter.name}>
