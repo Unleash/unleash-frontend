@@ -43,10 +43,7 @@ export const filter = (columns: any[], searchValue: string, data: any[]) => {
     getFilterableColumns(columns)
         .filter(column => isValidFilter(searchValue, column.filterName))
         .forEach(column => {
-            const values = searchValue
-                .split(`${column.filterName}:`)[1]
-                .split(' ')[0]
-                .split(',');
+            const values = getFilterValues(column.filterName, searchValue);
 
             filteredDataSet = filteredDataSet.filter(row => {
                 if (column.filterBy) {
@@ -120,3 +117,10 @@ export const getColumnValues = (column: any, row: any) => {
 
     return value;
 };
+
+export const getFilterValues = (filterName: string, searchValue: string) =>
+    searchValue
+        ?.split(`${filterName}:`)[1]
+        ?.split(' ')[0]
+        ?.split(',')
+        .filter(value => value) ?? [];

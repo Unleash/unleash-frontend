@@ -26,6 +26,7 @@ export const TableSearchField = ({
 }: ITableSearchFieldProps) => {
     const { classes: styles } = useStyles();
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const searchContext = getSearchContext?.();
 
     return (
         <div className={styles.container}>
@@ -77,7 +78,7 @@ export const TableSearchField = ({
                 condition={
                     Boolean(hasFilters) &&
                     showSuggestions &&
-                    Boolean(getSearchContext)
+                    Boolean(searchContext?.data.length)
                 }
                 show={
                     <TableSearchFieldSuggestions

@@ -1,11 +1,16 @@
 import { FilterList } from '@mui/icons-material';
 import { Box, Divider, Paper, styled } from '@mui/material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     getColumnValues,
     getFilterableColumns,
+    getFilterValues,
+    getSearchTextGenerator,
     IGetSearchContextOutput,
 } from 'hooks/useSearch';
-import { VFC } from 'react';
+import { useMemo, VFC } from 'react';
+
+const randomIndex = (arr: any[]) => Math.floor(Math.random() * arr.length);
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
     position: 'absolute',
@@ -56,35 +61,127 @@ export const TableSearchFieldSuggestions: VFC<
     TableSearchFieldSuggestionsProps
 > = ({ getSearchContext }) => {
     const searchContext = getSearchContext();
+    const getSearchText = getSearchTextGenerator(searchContext.columns);
 
-    const filters = getFilterableColumns(searchContext.columns).map(column => ({
-        name: column.filterName,
-        options: searchContext.data.map(row => getColumnValues(column, row)),
-    }));
+    const randomRow = useMemo(
+        () => randomIndex(searchContext.data),
+        [searchContext.data]
+    );
+
+    const filters = getFilterableColumns(searchContext.columns)
+        .map(column => {
+            const filterOptions = searchContext.data.map(row =>
+                getColumnValues(column, row)
+            );
+
+            return {
+                name: column.filterName,
+                header: column.Header ?? column.filterName,
+                options: [...new Set(filterOptions)].sort((a, b) =>
+                    a.localeCompare(b)
+                ),
+                suggestedOption:
+                    filterOptions[randomRow] ?? `example-${column.filterName}`,
+                values: getFilterValues(
+                    column.filterName,
+                    searchContext.searchValue
+                ),
+            };
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    const searchableColumns = searchContext.columns.filter(
+        column => column.searchable && column.accessor
+    );
+
+    const searchableColumnsString = searchableColumns
+        .map(column => column.Header ?? column.accessor)
+        .join(', ');
+
+    const suggestedTextSearch = getColumnValues(
+        searchableColumns.filter(column => !column.filterName)[0],
+        searchContext.data[randomRow]
+    );
+
+    const searchText = getSearchText(searchContext.searchValue);
+    const searchFilters = filters.filter(filter => filter.values.length > 0);
 
     return (
         <StyledPaper>
             <StyledBox>
                 <StyledFilterList />
                 <Box>
-                    <StyledHeader>
-                        Filter your search with operators like:
-                    </StyledHeader>
-                    <p>
-                        Filter by project{' '}
-                        <StyledCode>project:default,myproject</StyledCode>
-                    </p>
-                    <p>
-                        Filter by status <StyledCode>status:active</StyledCode>{' '}
-                        or <StyledCode>status:stale</StyledCode>
-                    </p>
+                    <ConditionallyRender
+                        condition={Boolean(searchContext.searchValue)}
+                        show={
+                            <>
+                                <StyledHeader>Searching for:</StyledHeader>
+                                <ConditionallyRender
+                                    condition={Boolean(searchText)}
+                                    show={
+                                        <p>
+                                            <StyledCode>
+                                                {searchText}
+                                            </StyledCode>{' '}
+                                            in {searchableColumnsString}
+                                        </p>
+                                    }
+                                />
+                                {searchFilters.map(filter => (
+                                    <p key={filter.name}>
+                                        <StyledCode>
+                                            {filter.values.join(',')}
+                                        </StyledCode>{' '}
+                                        filter in {filter.header}. Options:{' '}
+                                        {filter.options.join(', ')}
+                                    </p>
+                                ))}
+                            </>
+                        }
+                        elseShow={
+                            <>
+                                <StyledHeader>
+                                    Filter your search with operators like:
+                                </StyledHeader>
+                                {filters.map(filter => (
+                                    <p key={filter.name}>
+                                        Filter by {filter.header}:{' '}
+                                        <StyledCode>
+                                            {filter.name}:{filter.options[0]}
+                                        </StyledCode>
+                                        <ConditionallyRender
+                                            condition={
+                                                filter.options.length > 1
+                                            }
+                                            show={
+                                                <>
+                                                    {' or '}
+                                                    <StyledCode>
+                                                        {filter.name}:
+                                                        {filter.options
+                                                            .slice(0, 2)
+                                                            .join(',')}
+                                                    </StyledCode>
+                                                </>
+                                            }
+                                        />
+                                    </p>
+                                ))}
+                            </>
+                        }
+                    />
                 </Box>
             </StyledBox>
             <StyledDivider />
-            Combine filters and search{' '}
-            <StyledCode>project:myproject</StyledCode>{' '}
-            <StyledCode>status:active</StyledCode>{' '}
-            <StyledCode>feature toggle name</StyledCode>
+            Combine filters and search. Example:{' '}
+            <StyledCode>
+                {filters.map(filter => (
+                    <span key={filter.name}>
+                        {filter.name}:{filter.suggestedOption}{' '}
+                    </span>
+                ))}
+                <span>{suggestedTextSearch}</span>
+            </StyledCode>
         </StyledPaper>
     );
 };
