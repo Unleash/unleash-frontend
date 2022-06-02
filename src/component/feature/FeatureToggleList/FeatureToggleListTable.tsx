@@ -28,7 +28,7 @@ import { FeatureSchema } from 'openapi';
 import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
 import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 import { useStyles } from './styles';
-import { useSearch, getSearchText } from 'hooks/useSearch';
+import { useSearch } from 'hooks/useSearch';
 
 const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
     name: 'Name of the feature',
@@ -48,7 +48,6 @@ const columns = [
         sortType: 'date',
         align: 'center',
         maxWidth: 85,
-        filterName: 'seen',
     },
     {
         Header: 'Type',
@@ -56,7 +55,6 @@ const columns = [
         Cell: FeatureTypeCell,
         align: 'center',
         maxWidth: 85,
-        isFilter: true,
     },
     {
         Header: 'Name',
@@ -91,9 +89,7 @@ const columns = [
         sortType: 'boolean',
         maxWidth: 120,
         filterName: 'state',
-        filterBy: (row: any, values: string[]) =>
-            (values.includes('active') && !row.stale) ||
-            (values.includes('stale') && row.stale),
+        filterParsing: (value: any) => (value ? 'stale' : 'active'),
     },
     // Always hidden -- for search
     {
@@ -119,7 +115,11 @@ export const FeatureToggleListTable: VFC = () => {
         searchParams.get('search') || ''
     );
 
-    const searchedData = useSearch(columns, searchValue, features);
+    const {
+        data: searchedData,
+        getSearchText,
+        getSearchContext,
+    } = useSearch(columns, searchValue, features);
 
     const data = useMemo(
         () =>
@@ -208,6 +208,8 @@ export const FeatureToggleListTable: VFC = () => {
                             <TableSearch
                                 initialValue={searchValue}
                                 onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
                             />
                             <PageHeader.Divider />
                             <Link

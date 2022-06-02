@@ -1,5 +1,10 @@
 import { FilterList } from '@mui/icons-material';
 import { Box, Divider, Paper, styled } from '@mui/material';
+import {
+    getColumnValues,
+    getFilterableColumns,
+    IGetSearchContextOutput,
+} from 'hooks/useSearch';
 import { VFC } from 'react';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -43,7 +48,20 @@ const StyledCode = styled('span')(({ theme }) => ({
     borderRadius: theme.spacing(0.5),
 }));
 
-export const TableSearchFieldSuggestions: VFC = () => {
+interface TableSearchFieldSuggestionsProps {
+    getSearchContext: () => IGetSearchContextOutput;
+}
+
+export const TableSearchFieldSuggestions: VFC<
+    TableSearchFieldSuggestionsProps
+> = ({ getSearchContext }) => {
+    const searchContext = getSearchContext();
+
+    const filters = getFilterableColumns(searchContext.columns).map(column => ({
+        name: column.filterName,
+        options: searchContext.data.map(row => getColumnValues(column, row)),
+    }));
+
     return (
         <StyledPaper>
             <StyledBox>

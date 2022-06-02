@@ -5,12 +5,15 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { useStyles } from './TableSearchField.styles';
 import { TableSearchFieldSuggestions } from './TableSearchFieldSuggestions/TableSearchFieldSuggestions';
 import { useState } from 'react';
+import { IGetSearchContextOutput } from 'hooks/useSearch';
 
 interface ITableSearchFieldProps {
     value: string;
     onChange: (value: string) => void;
     className?: string;
     placeholder: string;
+    hasFilters?: boolean;
+    getSearchContext?: () => IGetSearchContextOutput;
 }
 
 export const TableSearchField = ({
@@ -18,6 +21,8 @@ export const TableSearchField = ({
     onChange,
     className,
     placeholder,
+    hasFilters,
+    getSearchContext,
 }: ITableSearchFieldProps) => {
     const { classes: styles } = useStyles();
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -69,8 +74,16 @@ export const TableSearchField = ({
                 </div>
             </div>
             <ConditionallyRender
-                condition={showSuggestions && !Boolean(value)}
-                show={<TableSearchFieldSuggestions />}
+                condition={
+                    Boolean(hasFilters) &&
+                    showSuggestions &&
+                    Boolean(getSearchContext)
+                }
+                show={
+                    <TableSearchFieldSuggestions
+                        getSearchContext={getSearchContext!}
+                    />
+                }
             />
         </div>
     );

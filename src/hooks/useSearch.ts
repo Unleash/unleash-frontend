@@ -1,5 +1,27 @@
-export const useSearch = (columns: any[], searchValue: string, data: any[]) => {
-    if (!searchValue) return data;
+interface IUseSearchOutput {
+    getSearchText: (input: string) => string;
+    data: any[];
+    getSearchContext: () => IGetSearchContextOutput;
+}
+
+export interface IGetSearchContextOutput {
+    data: any[];
+    columns: any[];
+    searchValue: string;
+}
+
+export const useSearch = (
+    columns: any[],
+    searchValue: string,
+    data: any[]
+): IUseSearchOutput => {
+    const getSearchText = getSearchTextGenerator(columns);
+
+    const getSearchContext = () => {
+        return { data, searchValue, columns };
+    };
+
+    if (!searchValue) return { data, getSearchText, getSearchContext };
 
     const search = () => {
         const filteredData = filter(columns, searchValue, data);
@@ -12,16 +34,13 @@ export const useSearch = (columns: any[], searchValue: string, data: any[]) => {
         return searchedData;
     };
 
-    return search();
+    return { data: search(), getSearchText, getSearchContext };
 };
 
-const filter = (columns: any[], searchValue: string, data: any[]) => {
-    const filterableColumns = columns.filter(
-        column => column.filterName ?? column.isFilter
-    );
-
+export const filter = (columns: any[], searchValue: string, data: any[]) => {
     let filteredDataSet = data;
-    filterableColumns
+
+    getFilterableColumns(columns)
         .filter(column => isValidFilter(searchValue, column.filterName))
         .forEach(column => {
             const values = searchValue
@@ -34,31 +53,29 @@ const filter = (columns: any[], searchValue: string, data: any[]) => {
                     return column.filterBy(row, values);
                 }
 
-                if (typeof column.accessor === 'function') {
-                    return defaultFilter(column.accessor(row), values);
-                }
-
-                return defaultFilter(row[column.accessor], values);
+                return defaultFilter(getColumnValues(column, row), values);
             });
         });
 
     return filteredDataSet;
 };
 
-const searchInFilteredData = (
+export const searchInFilteredData = (
     columns: any[],
     searchValue: string,
     filteredData: any[]
 ) => {
-    const searchableColumns = columns.filter(column => column.searchable);
+    const searchableColumns = columns.filter(
+        column => column.searchable && column.accessor
+    );
 
     return filteredData.filter(row => {
         return searchableColumns.some(column => {
-            if (typeof column.accessor === 'function') {
-                return defaultSearch(column.accessor(row), searchValue);
+            if (column.searchBy) {
+                return column.searchBy(row, searchValue);
             }
 
-            return defaultSearch(row[column.accessor], searchValue);
+            return defaultSearch(getColumnValues(column, row), searchValue);
         });
     });
 };
@@ -69,11 +86,37 @@ const defaultFilter = (fieldValue: string, values: string[]) =>
 const defaultSearch = (fieldValue: string, value: string) =>
     fieldValue?.toLowerCase().includes(value?.toLowerCase());
 
-export const getSearchText = (searchValue: string) =>
-    searchValue
-        .split(' ')
-        .filter(fragment => !isValidFilter(fragment, '\\w+'))
-        .join(' ');
+export const getSearchTextGenerator = (columns: any[]) => {
+    const filters = columns
+        .filter(column => column.filterName)
+        .map(column => column.filterName);
 
-const isValidFilter = (input: string, match: string) =>
+    const isValidSearch = (fragment: string) => {
+        return filters.some(filter => isValidFilter(fragment, filter));
+    };
+
+    return (searchValue: string) =>
+        searchValue
+            .split(' ')
+            .filter(fragment => !isValidSearch(fragment))
+            .join(' ');
+};
+
+export const isValidFilter = (input: string, match: string) =>
     new RegExp(`${match}:\\w+`).test(input);
+
+export const getFilterableColumns = (columns: any[]) =>
+    columns.filter(column => column.filterName && column.accessor);
+
+export const getColumnValues = (column: any, row: any) => {
+    const value =
+        typeof column.accessor === 'function'
+            ? column.accessor(row)
+            : row[column.accessor];
+
+    if (column.filterParsing) {
+        return column.filterParsing(value);
+    }
+
+    return value;
+};
