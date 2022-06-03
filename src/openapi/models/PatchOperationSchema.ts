@@ -45,19 +45,17 @@ export interface PatchOperationSchema {
     value?: any | null;
 }
 
-
 /**
- * @export
- */
-export const PatchOperationSchemaOpEnum = {
-    Add: 'add',
-    Remove: 'remove',
-    Replace: 'replace',
-    Copy: 'copy',
-    Move: 'move'
-} as const;
-export type PatchOperationSchemaOpEnum = typeof PatchOperationSchemaOpEnum[keyof typeof PatchOperationSchemaOpEnum];
-
+* @export
+* @enum {string}
+*/
+export enum PatchOperationSchemaOpEnum {
+    Add = 'add',
+    Remove = 'remove',
+    Replace = 'replace',
+    Copy = 'copy',
+    Move = 'move'
+}
 
 export function PatchOperationSchemaFromJSON(json: any): PatchOperationSchema {
     return PatchOperationSchemaFromJSONTyped(json, false);

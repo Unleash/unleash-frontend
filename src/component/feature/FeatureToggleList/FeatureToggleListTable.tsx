@@ -30,7 +30,7 @@ import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 import { useStyles } from './styles';
 import { useSearch } from 'hooks/useSearch';
 
-export const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
+const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
     name: 'Name of the feature',
     description: 'Short description of the feature',
     type: '-',
@@ -38,9 +38,7 @@ export const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
     project: 'projectID',
 });
 
-export type PageQueryType = Partial<
-    Record<'sort' | 'order' | 'search', string>
->;
+type PageQueryType = Partial<Record<'sort' | 'order' | 'search', string>>;
 
 const columns = [
     {
