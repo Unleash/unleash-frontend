@@ -5,10 +5,11 @@ import {
     getColumnValues,
     getFilterableColumns,
     getFilterValues,
-    getSearchTextGenerator,
     IGetSearchContextOutput,
 } from 'hooks/useSearch';
 import { useMemo, VFC } from 'react';
+import { SearchDescription } from './SearchDescription/SearchDescription';
+import { SearchInstructions } from './SearchInstructions/SearchInstructions';
 
 const randomIndex = (arr: any[]) => Math.floor(Math.random() * arr.length);
 
@@ -36,11 +37,6 @@ const StyledFilterList = styled(FilterList)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-const StyledHeader = styled('span')(({ theme }) => ({
-    fontSize: theme.fontSizes.smallBody,
-    color: theme.palette.text.primary,
-}));
-
 const StyledDivider = styled(Divider)(({ theme }) => ({
     border: `1px dashed ${theme.palette.dividerAlternative}`,
     margin: theme.spacing(1.5, 0),
@@ -61,7 +57,6 @@ export const TableSearchFieldSuggestions: VFC<
     TableSearchFieldSuggestionsProps
 > = ({ getSearchContext }) => {
     const searchContext = getSearchContext();
-    const getSearchText = getSearchTextGenerator(searchContext.columns);
 
     const randomRow = useMemo(
         () => randomIndex(searchContext.data),
@@ -106,9 +101,6 @@ export const TableSearchFieldSuggestions: VFC<
               )
             : 'example-search-text';
 
-    const searchText = getSearchText(searchContext.searchValue);
-    const searchFilters = filters.filter(filter => filter.values.length > 0);
-
     return (
         <StyledPaper>
             <StyledBox>
@@ -117,84 +109,22 @@ export const TableSearchFieldSuggestions: VFC<
                     <ConditionallyRender
                         condition={Boolean(searchContext.searchValue)}
                         show={
-                            <>
-                                <ConditionallyRender
-                                    condition={Boolean(searchText)}
-                                    show={
-                                        <>
-                                            <StyledHeader>
-                                                Searching for:
-                                            </StyledHeader>
-                                            <p>
-                                                <StyledCode>
-                                                    {searchText}
-                                                </StyledCode>{' '}
-                                                {searchableColumnsString
-                                                    ? ` in ${searchableColumnsString}`
-                                                    : ''}
-                                            </p>
-                                        </>
-                                    }
-                                />
-                                <ConditionallyRender
-                                    condition={searchFilters.length > 0}
-                                    show={
-                                        <>
-                                            <StyledHeader>
-                                                Filtering by:
-                                            </StyledHeader>
-                                            {searchFilters.map(filter => (
-                                                <p key={filter.name}>
-                                                    <StyledCode>
-                                                        {filter.values.join(
-                                                            ','
-                                                        )}
-                                                    </StyledCode>{' '}
-                                                    in {filter.header}. Options:{' '}
-                                                    {filter.options.join(', ')}
-                                                </p>
-                                            ))}
-                                        </>
-                                    }
-                                />
-                            </>
+                            <SearchDescription
+                                filters={filters}
+                                getSearchContext={getSearchContext}
+                                searchableColumnsString={
+                                    searchableColumnsString
+                                }
+                            />
                         }
                         elseShow={
-                            <>
-                                <StyledHeader>
-                                    {filters.length > 0
-                                        ? 'Filter your search with operators like:'
-                                        : `Start typing to search${
-                                              searchableColumnsString
-                                                  ? ` in ${searchableColumnsString}`
-                                                  : '...'
-                                          }`}
-                                </StyledHeader>
-                                {filters.map(filter => (
-                                    <p key={filter.name}>
-                                        Filter by {filter.header}:{' '}
-                                        <StyledCode>
-                                            {filter.name}:{filter.options[0]}
-                                        </StyledCode>
-                                        <ConditionallyRender
-                                            condition={
-                                                filter.options.length > 1
-                                            }
-                                            show={
-                                                <>
-                                                    {' or '}
-                                                    <StyledCode>
-                                                        {filter.name}:
-                                                        {filter.options
-                                                            .slice(0, 2)
-                                                            .join(',')}
-                                                    </StyledCode>
-                                                </>
-                                            }
-                                        />
-                                    </p>
-                                ))}
-                            </>
+                            <SearchInstructions
+                                filters={filters}
+                                getSearchContext={getSearchContext}
+                                searchableColumnsString={
+                                    searchableColumnsString
+                                }
+                            />
                         }
                     />
                 </Box>
