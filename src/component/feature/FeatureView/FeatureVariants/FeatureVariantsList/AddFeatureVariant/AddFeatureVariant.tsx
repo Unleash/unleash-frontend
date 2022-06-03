@@ -337,8 +337,8 @@ export const AddVariant = ({
                             id="variant-payload-value"
                             label="Value"
                             multiline
-                            minRows={1}
-                            maxRows={10}
+                            minRows={2}
+                            maxRows={8}
                             className={themeStyles.fullWidth}
                             value={payload.value}
                             onChange={e => onPayload('value')(e.target.value)}
