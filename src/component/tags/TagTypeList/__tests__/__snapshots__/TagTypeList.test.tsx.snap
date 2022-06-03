@@ -32,7 +32,7 @@ exports[`renders an empty list correctly 1`] = `
               className="tss-u5t8ea-headerActions"
             >
               <div
-                className="tss-1k3calm-container"
+                className="tss-pqdnox-container"
               >
                 <div
                   className="tss-1mtd8gr-search search-container"
@@ -70,7 +70,7 @@ exports[`renders an empty list correctly 1`] = `
                 </div>
               </div>
               <hr
-                className="MuiDivider-root MuiDivider-middle MuiDivider-vertical tss-a0frlx-verticalSeparator mui-oezrwv-MuiDivider-root"
+                className="MuiDivider-root MuiDivider-middle MuiDivider-vertical mui-1p1j01b-MuiDivider-root"
               />
               <span
                 id="useId-0"
