@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
-import { Link as RouterLink, useSearchParams } from 'react-router-dom';
+import {
+    createSearchParams,
+    Link as RouterLink,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom';
 import {
     SortingRule,
     useFlexLayout,
@@ -28,7 +33,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
-import { useLocalStorage } from 'hooks/useLocalStorage';
+import { createLocalStorage } from 'utils/createLocalStorage';
 import { useVirtualizedRange } from 'hooks/useVirtualizedRange';
 import { FeatureSchema } from 'openapi';
 import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
@@ -103,23 +108,13 @@ const columns = [
 
 const defaultSort: SortingRule<string> = { id: 'createdAt', desc: true };
 
-export const FeatureToggleListTable: VFC = () => {
-    const theme = useTheme();
-    const rowHeight = theme.shape.tableRowHeight;
-    const { classes } = useStyles();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [storedParams, setStoredParams] = useLocalStorage(
-        'FeatureToggleListTable:v1',
-        defaultSort
-    );
-    const { features = [], loading } = useFeatures();
-    const data = useMemo(
-        () =>
-            features?.length === 0 && loading ? featuresPlaceholder : features,
-        [features, loading]
-    );
+const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
+    'FeatureToggleListTable:v1',
+    defaultSort
+);
+
+const useInitialState = () => {
+    const [searchParams] = useSearchParams();
 
     const [initialState] = useState(() => ({
         sortBy: [
@@ -133,6 +128,25 @@ export const FeatureToggleListTable: VFC = () => {
         hiddenColumns: ['description'],
         globalFilter: searchParams.get('search') || '',
     }));
+
+    return initialState;
+};
+
+export const FeatureToggleListTable: VFC = () => {
+    const theme = useTheme();
+    const rowHeight = theme.shape.tableRowHeight;
+    const { classes } = useStyles();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
+    const { features = [], loading } = useFeatures();
+    const data = useMemo(
+        () =>
+            features?.length === 0 && loading ? featuresPlaceholder : features,
+        [features, loading]
+    );
+
+    const initialState = useInitialState();
+    const navigate = useNavigate();
 
     const {
         getTableProps,
@@ -182,11 +196,14 @@ export const FeatureToggleListTable: VFC = () => {
             tableState.search = globalFilter;
         }
 
-        setSearchParams(tableState, {
-            replace: true,
-        });
+        window.history.replaceState(
+            {},
+            '',
+            `?${createSearchParams(tableState)}`
+        );
+
         setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [sortBy, globalFilter, setSearchParams, setStoredParams]);
+    }, [sortBy, globalFilter, navigate]);
 
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
