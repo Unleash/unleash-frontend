@@ -22,7 +22,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     borderBottomLeftRadius: theme.spacing(1),
     borderBottomRightRadius: theme.spacing(1),
     boxShadow: '0px 8px 20px rgba(33, 33, 33, 0.15)',
-    fontSize: theme.fontSizes.smallerBody,
+    fontSize: theme.fontSizes.smallBody,
     color: theme.palette.text.secondary,
     wordBreak: 'break-word',
 }));
@@ -118,29 +118,45 @@ export const TableSearchFieldSuggestions: VFC<
                         condition={Boolean(searchContext.searchValue)}
                         show={
                             <>
-                                <StyledHeader>Searching for:</StyledHeader>
                                 <ConditionallyRender
                                     condition={Boolean(searchText)}
                                     show={
-                                        <p>
-                                            <StyledCode>
-                                                {searchText}
-                                            </StyledCode>{' '}
-                                            {searchableColumnsString
-                                                ? ` in ${searchableColumnsString}`
-                                                : ''}
-                                        </p>
+                                        <>
+                                            <StyledHeader>
+                                                Searching for:
+                                            </StyledHeader>
+                                            <p>
+                                                <StyledCode>
+                                                    {searchText}
+                                                </StyledCode>{' '}
+                                                {searchableColumnsString
+                                                    ? ` in ${searchableColumnsString}`
+                                                    : ''}
+                                            </p>
+                                        </>
                                     }
                                 />
-                                {searchFilters.map(filter => (
-                                    <p key={filter.name}>
-                                        <StyledCode>
-                                            {filter.values.join(',')}
-                                        </StyledCode>{' '}
-                                        filter in {filter.header}. Options:{' '}
-                                        {filter.options.join(', ')}
-                                    </p>
-                                ))}
+                                <ConditionallyRender
+                                    condition={searchFilters.length > 0}
+                                    show={
+                                        <>
+                                            <StyledHeader>
+                                                Filtering by:
+                                            </StyledHeader>
+                                            {searchFilters.map(filter => (
+                                                <p key={filter.name}>
+                                                    <StyledCode>
+                                                        {filter.values.join(
+                                                            ','
+                                                        )}
+                                                    </StyledCode>{' '}
+                                                    in {filter.header}. Options:{' '}
+                                                    {filter.options.join(', ')}
+                                                </p>
+                                            ))}
+                                        </>
+                                    }
+                                />
                             </>
                         }
                         elseShow={
@@ -186,17 +202,19 @@ export const TableSearchFieldSuggestions: VFC<
             <StyledDivider />
             <ConditionallyRender
                 condition={filters.length > 0}
-                show="Combine filters and search. "
+                show="Combine filters and search."
             />
-            Example:{' '}
-            <StyledCode>
-                {filters.map(filter => (
-                    <span key={filter.name}>
-                        {filter.name}:{filter.suggestedOption}{' '}
-                    </span>
-                ))}
-                <span>{suggestedTextSearch}</span>
-            </StyledCode>
+            <p>
+                Example:{' '}
+                <StyledCode>
+                    {filters.map(filter => (
+                        <span key={filter.name}>
+                            {filter.name}:{filter.suggestedOption}{' '}
+                        </span>
+                    ))}
+                    <span>{suggestedTextSearch}</span>
+                </StyledCode>
+            </p>
         </StyledPaper>
     );
 };

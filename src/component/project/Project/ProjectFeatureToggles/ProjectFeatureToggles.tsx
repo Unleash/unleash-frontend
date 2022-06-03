@@ -266,7 +266,7 @@ export const ProjectFeatureToggles = ({
                                 name: env,
                                 enabled:
                                     featureEnvironments?.find(
-                                        (feature?: any) => feature?.name === env
+                                        feature => feature?.name === env
                                     )?.enabled || false,
                             },
                         ])
@@ -412,7 +412,7 @@ export const ProjectFeatureToggles = ({
             header={
                 <PageHeader
                     className={styles.title}
-                    title={`Project feature toggles (${rows.length})`}
+                    title={`Feature toggles (${rows.length})`}
                     actions={
                         <>
                             <TableSearch
@@ -430,7 +430,7 @@ export const ProjectFeatureToggles = ({
                                 onCustomize={onCustomizeColumns}
                                 setHiddenColumns={setHiddenColumns}
                             />
-                            <PageHeader.Divider />
+                            <PageHeader.Divider sx={{ marginLeft: 0 }} />
                             <ResponsiveButton
                                 onClick={() =>
                                     navigate(
@@ -440,7 +440,7 @@ export const ProjectFeatureToggles = ({
                                         )
                                     )
                                 }
-                                maxWidth="700px"
+                                maxWidth="960px"
                                 Icon={Add}
                                 projectId={projectId}
                                 permission={CREATE_FEATURE}

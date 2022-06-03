@@ -6,6 +6,7 @@ export const useStyles = makeStyles()(theme => ({
         flexGrow: 1,
         alignItems: 'center',
         position: 'relative',
+        maxWidth: '400px',
     },
     search: {
         display: 'flex',
