@@ -43,6 +43,7 @@ import { useStyles } from './ProjectFeatureToggles.styles';
 import { FeatureStaleDialog } from 'component/common/FeatureStaleDialog/FeatureStaleDialog';
 import { FeatureArchiveDialog } from 'component/common/FeatureArchiveDialog/FeatureArchiveDialog';
 import { useSearch } from 'hooks/useSearch';
+import { useMediaQuery } from '@mui/material';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -77,6 +78,8 @@ export const ProjectFeatureToggles = ({
     environments: newEnvironments = [],
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [strategiesDialogState, setStrategiesDialogState] = useState({
         open: false,
         featureId: '',
@@ -97,7 +100,6 @@ export const ProjectFeatureToggles = ({
     );
     const { refetch } = useProject(projectId);
     const { setToastData, setToastApiError } = useToast();
-    const theme = useTheme();
     const rowHeight = theme.shape.tableRowHeight;
 
     const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
@@ -415,11 +417,18 @@ export const ProjectFeatureToggles = ({
                     title={`Feature toggles (${rows.length})`}
                     actions={
                         <>
-                            <TableSearch
-                                initialValue={searchValue}
-                                onChange={value => setSearchValue(value)}
-                                hasFilters
-                                getSearchContext={getSearchContext}
+                            <ConditionallyRender
+                                condition={!isSmallScreen}
+                                show={
+                                    <TableSearch
+                                        initialValue={searchValue}
+                                        onChange={value =>
+                                            setSearchValue(value)
+                                        }
+                                        hasFilters
+                                        getSearchContext={getSearchContext}
+                                    />
+                                }
                             />
                             <ColumnsMenu
                                 allColumns={allColumns}
@@ -450,7 +459,19 @@ export const ProjectFeatureToggles = ({
                             </ResponsiveButton>
                         </>
                     }
-                />
+                >
+                    <ConditionallyRender
+                        condition={isSmallScreen}
+                        show={
+                            <TableSearch
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
+                            />
+                        }
+                    />
+                </PageHeader>
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>

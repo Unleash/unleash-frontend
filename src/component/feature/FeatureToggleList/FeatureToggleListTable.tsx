@@ -205,13 +205,20 @@ export const FeatureToggleListTable: VFC = () => {
                     })`}
                     actions={
                         <>
-                            <TableSearch
-                                initialValue={searchValue}
-                                onChange={setSearchValue}
-                                hasFilters
-                                getSearchContext={getSearchContext}
+                            <ConditionallyRender
+                                condition={!isSmallScreen}
+                                show={
+                                    <>
+                                        <TableSearch
+                                            initialValue={searchValue}
+                                            onChange={setSearchValue}
+                                            hasFilters
+                                            getSearchContext={getSearchContext}
+                                        />
+                                        <PageHeader.Divider />
+                                    </>
+                                }
                             />
-                            <PageHeader.Divider />
                             <Link
                                 component={RouterLink}
                                 to="/archive"
@@ -226,7 +233,19 @@ export const FeatureToggleListTable: VFC = () => {
                             />
                         </>
                     }
-                />
+                >
+                    <ConditionallyRender
+                        condition={isSmallScreen}
+                        show={
+                            <TableSearch
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
+                            />
+                        }
+                    />
+                </PageHeader>
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>

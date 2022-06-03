@@ -7,6 +7,10 @@ export const useStyles = makeStyles()(theme => ({
         alignItems: 'center',
         position: 'relative',
         maxWidth: '400px',
+        [theme.breakpoints.down('md')]: {
+            marginTop: theme.spacing(1),
+            maxWidth: '100%',
+        },
     },
     search: {
         display: 'flex',
