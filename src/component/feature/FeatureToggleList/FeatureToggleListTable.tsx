@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
-import {
-    SortingRule,
-    useFlexLayout,
-    useGlobalFilter,
-    useSortBy,
-    useTable,
-} from 'react-table';
+import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import {
     Table,
     SortableTableHeader,
@@ -23,16 +17,18 @@ import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
+import { FeatureNameCell } from 'component/common/Table/cells/FeatureNameCell/FeatureNameCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { useVirtualizedRange } from 'hooks/useVirtualizedRange';
 import { FeatureSchema } from 'openapi';
 import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
 import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
-import { FeatureNameCell } from 'component/common/Table/cells/FeatureNameCell/FeatureNameCell';
 import { useStyles } from './styles';
+import { useSearch } from 'hooks/useSearch';
 
 const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
     name: 'Name of the feature',
@@ -52,7 +48,6 @@ const columns = [
         sortType: 'date',
         align: 'center',
         maxWidth: 85,
-        disableGlobalFilter: true,
     },
     {
         Header: 'Type',
@@ -60,14 +55,14 @@ const columns = [
         Cell: FeatureTypeCell,
         align: 'center',
         maxWidth: 85,
-        disableGlobalFilter: true,
     },
     {
-        Header: 'Feature toggle name',
+        Header: 'Name',
         accessor: 'name',
         minWidth: 150,
         Cell: FeatureNameCell,
         sortType: 'alphanumeric',
+        searchable: true,
     },
     {
         Header: 'Created',
@@ -75,7 +70,6 @@ const columns = [
         Cell: DateCell,
         sortType: 'date',
         maxWidth: 150,
-        disableGlobalFilter: true,
     },
     {
         Header: 'Project ID',
@@ -85,6 +79,8 @@ const columns = [
         ),
         sortType: 'alphanumeric',
         maxWidth: 150,
+        filterName: 'project',
+        searchable: true,
     },
     {
         Header: 'State',
@@ -92,7 +88,8 @@ const columns = [
         Cell: FeatureStaleCell,
         sortType: 'boolean',
         maxWidth: 120,
-        disableGlobalFilter: true,
+        filterName: 'state',
+        filterParsing: (value: any) => (value ? 'stale' : 'active'),
     },
     // Always hidden -- for search
     {
@@ -100,9 +97,7 @@ const columns = [
     },
 ];
 
-const scrollOffset = 50;
-
-const defaultSort: SortingRule<string> = { id: 'createdAt', desc: false };
+const defaultSort: SortingRule<string> = { id: 'createdAt', desc: true };
 
 export const FeatureToggleListTable: VFC = () => {
     const theme = useTheme();
@@ -116,10 +111,22 @@ export const FeatureToggleListTable: VFC = () => {
         defaultSort
     );
     const { features = [], loading } = useFeatures();
+    const [searchValue, setSearchValue] = useState(
+        searchParams.get('search') || ''
+    );
+
+    const {
+        data: searchedData,
+        getSearchText,
+        getSearchContext,
+    } = useSearch(columns, searchValue, features);
+
     const data = useMemo(
         () =>
-            features?.length === 0 && loading ? featuresPlaceholder : features,
-        [features, loading]
+            searchedData?.length === 0 && loading
+                ? featuresPlaceholder
+                : searchedData,
+        [searchedData, loading]
     );
 
     const [initialState] = useState(() => ({
@@ -132,7 +139,6 @@ export const FeatureToggleListTable: VFC = () => {
             },
         ],
         hiddenColumns: ['description'],
-        globalFilter: searchParams.get('search') || '',
     }));
 
     const {
@@ -141,41 +147,31 @@ export const FeatureToggleListTable: VFC = () => {
         headerGroups,
         rows,
         prepareRow,
-        state: { globalFilter, sortBy },
-        setGlobalFilter,
+        state: { sortBy },
         setHiddenColumns,
     } = useTable(
         {
-            // @ts-expect-error -- fix in react-table v8
             columns,
-            // @ts-expect-error -- fix in react-table v8
             data,
             initialState,
             sortTypes,
-            autoResetGlobalFilter: false,
             autoResetSortBy: false,
             disableSortRemove: true,
             disableMultiSort: true,
         },
-        useGlobalFilter,
         useSortBy,
         useFlexLayout
     );
 
     useEffect(() => {
-        if (isSmallScreen) {
-            setHiddenColumns([
-                'lastSeenAt',
-                'type',
-                'stale',
-                'description',
-                'createdAt',
-            ]);
-        } else if (isMediumScreen) {
-            setHiddenColumns(['lastSeenAt', 'stale', 'description']);
-        } else {
-            setHiddenColumns(['description']);
+        const hiddenColumns = ['description'];
+        if (isMediumScreen) {
+            hiddenColumns.push('lastSeenAt', 'stale');
         }
+        if (isSmallScreen) {
+            hiddenColumns.push('type', 'createdAt');
+        }
+        setHiddenColumns(hiddenColumns);
     }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
 
     useEffect(() => {
@@ -184,30 +180,18 @@ export const FeatureToggleListTable: VFC = () => {
         if (sortBy[0].desc) {
             tableState.order = 'desc';
         }
-        if (globalFilter) {
-            tableState.search = globalFilter;
+        if (searchValue) {
+            tableState.search = searchValue;
         }
 
         setSearchParams(tableState, {
             replace: true,
         });
         setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [sortBy, globalFilter, setSearchParams, setStoredParams]);
+    }, [sortBy, searchValue, setSearchParams, setStoredParams]);
 
-    const [scrollIndex, setScrollIndex] = useState(0);
-    useEffect(() => {
-        const handleScroll = () => {
-            requestAnimationFrame(() => {
-                const position = window.pageYOffset;
-                setScrollIndex(Math.floor(position / (rowHeight * 5)) * 5);
-            });
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [rowHeight]);
+    const [firstRenderedIndex, lastRenderedIndex] =
+        useVirtualizedRange(rowHeight);
 
     return (
         <PageContent
@@ -221,16 +205,25 @@ export const FeatureToggleListTable: VFC = () => {
                     })`}
                     actions={
                         <>
-                            <TableSearch
-                                initialValue={globalFilter}
-                                onChange={setGlobalFilter}
+                            <ConditionallyRender
+                                condition={!isSmallScreen}
+                                show={
+                                    <>
+                                        <TableSearch
+                                            initialValue={searchValue}
+                                            onChange={setSearchValue}
+                                            hasFilters
+                                            getSearchContext={getSearchContext}
+                                        />
+                                        <PageHeader.Divider />
+                                    </>
+                                }
                             />
-                            <PageHeader.Divider />
                             <Link
                                 component={RouterLink}
                                 to="/archive"
                                 underline="always"
-                                sx={{ marginRight: 3 }}
+                                sx={{ marginRight: 2 }}
                             >
                                 View archive
                             </Link>
@@ -240,12 +233,23 @@ export const FeatureToggleListTable: VFC = () => {
                             />
                         </>
                     }
-                />
+                >
+                    <ConditionallyRender
+                        condition={isSmallScreen}
+                        show={
+                            <TableSearch
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
+                            />
+                        }
+                    />
+                </PageHeader>
             }
         >
-            <SearchHighlightProvider value={globalFilter}>
+            <SearchHighlightProvider value={getSearchText(searchValue)}>
                 <Table {...getTableProps()} rowHeight={rowHeight}>
-                    {/* @ts-expect-error -- fix in react-table v8 */}
                     <SortableTableHeader headerGroups={headerGroups} flex />
                     <TableBody
                         {...getTableBodyProps()}
@@ -256,8 +260,8 @@ export const FeatureToggleListTable: VFC = () => {
                     >
                         {rows.map((row, index) => {
                             const isVirtual =
-                                index > scrollOffset + scrollIndex ||
-                                index + scrollOffset < scrollIndex;
+                                index < firstRenderedIndex ||
+                                index > lastRenderedIndex;
 
                             if (isVirtual) {
                                 return null;
@@ -299,18 +303,18 @@ export const FeatureToggleListTable: VFC = () => {
                 condition={rows.length === 0}
                 show={
                     <ConditionallyRender
-                        condition={globalFilter?.length > 0}
+                        condition={searchValue?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No features or projects found matching &ldquo;
-                                {globalFilter}
+                                No feature toggles found matching &ldquo;
+                                {searchValue}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No features available. Get started by adding a
-                                new feature toggle.
+                                No feature toggles available. Get started by
+                                adding a new feature toggle.
                             </TablePlaceholder>
                         }
                     />

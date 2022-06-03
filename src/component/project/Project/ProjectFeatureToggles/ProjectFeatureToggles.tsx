@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTheme } from '@mui/system';
 import { Add } from '@mui/icons-material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { useFlexLayout, useSortBy, useTable, SortingRule } from 'react-table';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PageContent } from 'component/common/PageContent/PageContent';
@@ -29,6 +30,7 @@ import {
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { useVirtualizedRange } from 'hooks/useVirtualizedRange';
 import useToast from 'hooks/useToast';
 import { ENVIRONMENT_STRATEGY_ERROR } from 'constants/apiErrors';
 import EnvironmentStrategyDialog from 'component/common/EnvironmentStrategiesDialog/EnvironmentStrategyDialog';
@@ -38,6 +40,10 @@ import { FeatureToggleSwitch } from './FeatureToggleSwitch/FeatureToggleSwitch';
 import { ActionsCell } from './ActionsCell/ActionsCell';
 import { ColumnsMenu } from './ColumnsMenu/ColumnsMenu';
 import { useStyles } from './ProjectFeatureToggles.styles';
+import { FeatureStaleDialog } from 'component/common/FeatureStaleDialog/FeatureStaleDialog';
+import { FeatureArchiveDialog } from 'component/common/FeatureArchiveDialog/FeatureArchiveDialog';
+import { useSearch } from 'hooks/useSearch';
+import { useMediaQuery } from '@mui/material';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -58,8 +64,13 @@ type ListItemType = Pick<
 };
 
 const staticColumns = ['Actions', 'name'];
-const limit = 300; // if above limit, render only `pageSize` of items
-const pageSize = 100;
+
+const defaultSort: SortingRule<string> & {
+    columns?: string[];
+} = {
+    id: 'createdAt',
+    desc: true,
+};
 
 export const ProjectFeatureToggles = ({
     features,
@@ -67,11 +78,20 @@ export const ProjectFeatureToggles = ({
     environments: newEnvironments = [],
 }: IProjectFeatureTogglesProps) => {
     const { classes: styles } = useStyles();
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [strategiesDialogState, setStrategiesDialogState] = useState({
         open: false,
         featureId: '',
         environmentName: '',
     });
+    const [featureStaleDialogState, setFeatureStaleDialogState] = useState<{
+        featureId?: string;
+        stale?: boolean;
+    }>({});
+    const [featureArchiveState, setFeatureArchiveState] = useState<
+        string | undefined
+    >();
     const projectId = useRequiredPathParam('projectId');
     const navigate = useNavigate();
     const { uiConfig } = useUiConfig();
@@ -80,53 +100,11 @@ export const ProjectFeatureToggles = ({
     );
     const { refetch } = useProject(projectId);
     const { setToastData, setToastApiError } = useToast();
-
-    const data = useMemo<ListItemType[]>(() => {
-        if (loading) {
-            return Array(6).fill({
-                type: '-',
-                name: 'Feature name',
-                createdAt: new Date(),
-                environments: {
-                    production: { name: 'production', enabled: false },
-                },
-            }) as ListItemType[];
-        }
-
-        return features
-            .slice(0, features.length > limit ? pageSize : limit)
-            .map(
-                ({
-                    name,
-                    lastSeenAt,
-                    createdAt,
-                    type,
-                    stale,
-                    environments: featureEnvironments,
-                }) => ({
-                    name,
-                    lastSeenAt,
-                    createdAt,
-                    type,
-                    stale,
-                    environments: Object.fromEntries(
-                        environments.map(env => [
-                            env,
-                            {
-                                name: env,
-                                enabled:
-                                    featureEnvironments?.find(
-                                        feature => feature?.name === env
-                                    )?.enabled || false,
-                            },
-                        ])
-                    ),
-                })
-            );
-    }, [features, loading]); // eslint-disable-line react-hooks/exhaustive-deps
+    const rowHeight = theme.shape.tableRowHeight;
 
     const { toggleFeatureEnvironmentOn, toggleFeatureEnvironmentOff } =
         useFeatureApi();
+
     const onToggle = useCallback(
         async (
             projectId: string,
@@ -181,15 +159,17 @@ export const ProjectFeatureToggles = ({
                 Cell: FeatureSeenCell,
                 sortType: 'date',
                 align: 'center',
+                maxWidth: 80,
             },
             {
                 Header: 'Type',
                 accessor: 'type',
                 Cell: FeatureTypeCell,
                 align: 'center',
+                maxWidth: 80,
             },
             {
-                Header: 'Feature toggle name',
+                Header: 'Name',
                 accessor: 'name',
                 Cell: ({ value }: { value: string }) => (
                     <LinkCell
@@ -197,11 +177,9 @@ export const ProjectFeatureToggles = ({
                         to={`/projects/${projectId}/features/${value}`}
                     />
                 ),
-                width: '99%',
                 minWidth: 100,
-                maxWidth: 200,
                 sortType: 'alphanumeric',
-                disableGlobalFilter: false,
+                searchable: true,
             },
             {
                 Header: 'Created',
@@ -213,7 +191,6 @@ export const ProjectFeatureToggles = ({
             ...environments.map(name => ({
                 Header: loading ? () => '' : name,
                 maxWidth: 90,
-                minWidth: 90,
                 accessor: `environments.${name}`,
                 align: 'center',
                 Cell: ({
@@ -236,23 +213,90 @@ export const ProjectFeatureToggles = ({
                     const b = v2?.values?.[id]?.enabled;
                     return a === b ? 0 : a ? -1 : 1;
                 },
+                filterName: name,
+                filterParsing: (value: any) =>
+                    value.enabled ? 'enabled' : 'disabled',
             })),
             {
                 id: 'Actions',
                 maxWidth: 56,
                 width: 56,
                 Cell: (props: { row: { original: ListItemType } }) => (
-                    <ActionsCell projectId={projectId} {...props} />
+                    <ActionsCell
+                        projectId={projectId}
+                        onOpenArchiveDialog={setFeatureArchiveState}
+                        onOpenStaleDialog={setFeatureStaleDialogState}
+                        {...props}
+                    />
                 ),
                 disableSortBy: true,
             },
         ],
         [projectId, environments, onToggle, loading]
     );
+
     const [searchParams, setSearchParams] = useSearchParams();
-    const [storedParams, setStoredParams] = useLocalStorage<{
-        columns?: string[];
-    }>(`${projectId}:ProjectFeatureToggles`, {});
+    const [storedParams, setStoredParams] = useLocalStorage(
+        `${projectId}:ProjectFeatureToggles`,
+        defaultSort
+    );
+
+    const [searchValue, setSearchValue] = useState(
+        searchParams.get('search') || ''
+    );
+
+    const featuresData = useMemo(
+        () =>
+            features.map(
+                ({
+                    name,
+                    lastSeenAt,
+                    createdAt,
+                    type,
+                    stale,
+                    environments: featureEnvironments,
+                }) => ({
+                    name,
+                    lastSeenAt,
+                    createdAt,
+                    type,
+                    stale,
+                    environments: Object.fromEntries(
+                        environments.map(env => [
+                            env,
+                            {
+                                name: env,
+                                enabled:
+                                    featureEnvironments?.find(
+                                        feature => feature?.name === env
+                                    )?.enabled || false,
+                            },
+                        ])
+                    ),
+                })
+            ),
+        [features, environments]
+    );
+
+    const {
+        data: searchedData,
+        getSearchText,
+        getSearchContext,
+    } = useSearch(columns, searchValue, featuresData);
+
+    const data = useMemo<ListItemType[]>(() => {
+        if (loading) {
+            return Array(6).fill({
+                type: '-',
+                name: 'Feature name',
+                createdAt: new Date(),
+                environments: {
+                    production: { name: 'production', enabled: false },
+                },
+            }) as ListItemType[];
+        }
+        return searchedData;
+    }, [loading, searchedData]);
 
     const initialState = useMemo(
         () => {
@@ -286,11 +330,10 @@ export const ProjectFeatureToggles = ({
                         id: searchParams.get('sort') || 'createdAt',
                         desc: searchParams.has('order')
                             ? searchParams.get('order') === 'desc'
-                            : false,
+                            : storedParams.desc,
                     },
                 ],
                 hiddenColumns,
-                globalFilter: searchParams.get('search') || '',
             };
         },
         [environments] // eslint-disable-line react-hooks/exhaustive-deps
@@ -300,11 +343,10 @@ export const ProjectFeatureToggles = ({
         allColumns,
         headerGroups,
         rows,
-        state: { globalFilter, sortBy, hiddenColumns },
+        state: { sortBy, hiddenColumns },
         getTableBodyProps,
         getTableProps,
         prepareRow,
-        setGlobalFilter,
         setHiddenColumns,
     } = useTable(
         {
@@ -312,14 +354,10 @@ export const ProjectFeatureToggles = ({
             data,
             initialState,
             sortTypes,
-            autoResetGlobalFilter: false,
             disableSortRemove: true,
             autoResetSortBy: false,
-            defaultColumn: {
-                disableGlobalFilter: true,
-            },
         },
-        useGlobalFilter,
+        useFlexLayout,
         useSortBy
     );
 
@@ -332,8 +370,8 @@ export const ProjectFeatureToggles = ({
         if (sortBy[0].desc) {
             tableState.order = 'desc';
         }
-        if (globalFilter) {
-            tableState.search = globalFilter;
+        if (searchValue) {
+            tableState.search = searchValue;
         }
         tableState.columns = allColumns
             .map(({ id }) => id)
@@ -346,16 +384,26 @@ export const ProjectFeatureToggles = ({
         setSearchParams(tableState, {
             replace: true,
         });
+        setStoredParams({
+            id: sortBy[0].id,
+            desc: sortBy[0].desc || false,
+            columns: tableState.columns.split(','),
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading, sortBy, hiddenColumns, globalFilter, setSearchParams]);
+    }, [loading, sortBy, hiddenColumns, searchValue, setSearchParams]);
 
     const onCustomizeColumns = useCallback(
         visibleColumns => {
-            setStoredParams({
+            setStoredParams(storedParams => ({
+                ...storedParams,
                 columns: visibleColumns,
-            });
+            }));
         },
         [setStoredParams]
+    );
+    const [firstRenderedIndex, lastRenderedIndex] = useVirtualizedRange(
+        rowHeight,
+        20
     );
 
     return (
@@ -366,16 +414,21 @@ export const ProjectFeatureToggles = ({
             header={
                 <PageHeader
                     className={styles.title}
-                    title={`Project feature toggles (${
-                        features?.length > limit
-                            ? `first ${rows.length} of ${features.length}`
-                            : data.length
-                    })`}
+                    title={`Feature toggles (${rows.length})`}
                     actions={
                         <>
-                            <TableSearch
-                                initialValue={globalFilter}
-                                onChange={value => setGlobalFilter(value)}
+                            <ConditionallyRender
+                                condition={!isSmallScreen}
+                                show={
+                                    <TableSearch
+                                        initialValue={searchValue}
+                                        onChange={value =>
+                                            setSearchValue(value)
+                                        }
+                                        hasFilters
+                                        getSearchContext={getSearchContext}
+                                    />
+                                }
                             />
                             <ColumnsMenu
                                 allColumns={allColumns}
@@ -386,7 +439,7 @@ export const ProjectFeatureToggles = ({
                                 onCustomize={onCustomizeColumns}
                                 setHiddenColumns={setHiddenColumns}
                             />
-                            <PageHeader.Divider />
+                            <PageHeader.Divider sx={{ marginLeft: 0 }} />
                             <ResponsiveButton
                                 onClick={() =>
                                     navigate(
@@ -396,7 +449,7 @@ export const ProjectFeatureToggles = ({
                                         )
                                     )
                                 }
-                                maxWidth="700px"
+                                maxWidth="960px"
                                 Icon={Add}
                                 projectId={projectId}
                                 permission={CREATE_FEATURE}
@@ -406,23 +459,67 @@ export const ProjectFeatureToggles = ({
                             </ResponsiveButton>
                         </>
                     }
-                />
+                >
+                    <ConditionallyRender
+                        condition={isSmallScreen}
+                        show={
+                            <TableSearch
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
+                            />
+                        }
+                    />
+                </PageHeader>
             }
         >
-            <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
+            <SearchHighlightProvider value={getSearchText(searchValue)}>
+                <Table {...getTableProps()} rowHeight={rowHeight}>
                     <SortableTableHeader
                         // @ts-expect-error -- verify after `react-table` v8
                         headerGroups={headerGroups}
                         className={styles.headerClass}
+                        flex
                     />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
+                    <TableBody
+                        {...getTableBodyProps()}
+                        style={{
+                            height: `${rowHeight * rows.length}px`,
+                            position: 'relative',
+                        }}
+                    >
+                        {rows.map((row, index) => {
+                            const isVirtual =
+                                index < firstRenderedIndex ||
+                                index > lastRenderedIndex;
+
+                            if (isVirtual) {
+                                return null;
+                            }
+
                             prepareRow(row);
                             return (
-                                <TableRow hover {...row.getRowProps()}>
+                                <TableRow
+                                    hover
+                                    {...row.getRowProps()}
+                                    className={styles.row}
+                                    style={{
+                                        top: `${index * rowHeight}px`,
+                                        display: 'flex',
+                                    }}
+                                >
                                     {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
+                                        <TableCell
+                                            {...cell.getCellProps({
+                                                style: {
+                                                    flex: cell.column.minWidth
+                                                        ? '1 0 auto'
+                                                        : undefined,
+                                                },
+                                            })}
+                                            className={styles.cell}
+                                        >
                                             {cell.render('Cell')}
                                         </TableCell>
                                     ))}
@@ -436,18 +533,18 @@ export const ProjectFeatureToggles = ({
                 condition={rows.length === 0}
                 show={
                     <ConditionallyRender
-                        condition={globalFilter?.length > 0}
+                        condition={searchValue?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No features found matching &ldquo;
-                                {globalFilter}
+                                No feature toggles found matching &ldquo;
+                                {searchValue}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No features available. Get started by adding a
-                                new feature toggle.
+                                No feature toggles available. Get started by
+                                adding a new feature toggle.
                             </TablePlaceholder>
                         }
                     />
@@ -459,6 +556,27 @@ export const ProjectFeatureToggles = ({
                 }
                 projectId={projectId}
                 {...strategiesDialogState}
+            />
+            <FeatureStaleDialog
+                isStale={featureStaleDialogState.stale === true}
+                isOpen={Boolean(featureStaleDialogState.featureId)}
+                onClose={() => {
+                    setFeatureStaleDialogState({});
+                    refetch();
+                }}
+                featureId={featureStaleDialogState.featureId || ''}
+                projectId={projectId}
+            />
+            <FeatureArchiveDialog
+                isOpen={Boolean(featureArchiveState)}
+                onConfirm={() => {
+                    refetch();
+                }}
+                onClose={() => {
+                    setFeatureArchiveState(undefined);
+                }}
+                featureId={featureArchiveState || ''}
+                projectId={projectId}
             />
         </PageContent>
     );
