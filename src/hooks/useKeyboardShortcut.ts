@@ -50,23 +50,27 @@ export const useKeyboardShortcut = (
         };
     }, [isAppleDevice, key, modifiers, preventDefault, callback]);
 
-    const hotkey = useMemo(
+    const formattedModifiers = useMemo(
         () =>
-            [
-                ...(modifiers.length > 0
-                    ? modifiers.map(
-                          modifier =>
-                              ({
-                                  ctrl: isAppleDevice ? '⌘' : 'Ctrl',
-                                  alt: 'Alt',
-                                  shift: 'Shift',
-                              }[modifier])
-                      )
-                    : ''),
-                `${key[0].toUpperCase()}${key.slice(1)}`,
-            ].join('+'),
-        [isAppleDevice, key, modifiers]
+            modifiers.map(
+                modifier =>
+                    ({
+                        ctrl: isAppleDevice ? '⌘' : 'Ctrl',
+                        alt: 'Alt',
+                        shift: 'Shift',
+                    }[modifier])
+            ),
+        [isAppleDevice, modifiers]
     );
 
-    return hotkey;
+    const hotkeyDescription = useMemo(
+        () =>
+            [
+                ...formattedModifiers,
+                `${key[0].toUpperCase()}${key.slice(1)}`,
+            ].join('+'),
+        [formattedModifiers, key]
+    );
+
+    return hotkeyDescription;
 };
