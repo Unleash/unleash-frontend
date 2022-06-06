@@ -40,7 +40,7 @@ export const TableSearchField = ({
             setShowSuggestions(suggestions => !suggestions);
         }
     });
-    const placeholder = customPlaceholder ?? `Search (${hotkey})`;
+    const placeholder = `${customPlaceholder ?? 'Search'} (${hotkey})`;
 
     return (
         <div className={styles.container}>
