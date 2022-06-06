@@ -73,14 +73,28 @@ export const ConstraintAccordionViewHeader = ({
                         }
                         elseShow={
                             <div className={styles.headerValuesContainer}>
-                                <p className={styles.headerValues}>
+                                {/* <p className={styles.headerValues}>
                                     {constraint?.values?.length}{' '}
                                     {constraint?.values?.length === 1
                                         ? 'value'
                                         : 'values'}
-                                </p>
+                                </p> */}
+                                {/* TODO: Fix this: */}
+                                <div
+                                    style={{
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 1,
+                                        WebkitBoxOrient: 'vertical',
+                                        overflow: 'hidden',
+                                    }}
+                                >
+                                    {constraint?.values?.map(value => (
+                                        <Chip label={value} />
+                                    ))}
+                                </div>
                                 <p className={styles.headerValuesExpand}>
-                                    Expand to view
+                                    Expand to view all (
+                                    {constraint?.values?.length})
                                 </p>
                             </div>
                         }

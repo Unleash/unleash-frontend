@@ -9,7 +9,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: '2rem',
+        marginRight: theme.spacing(2),
         [theme.breakpoints.down(650)]: {
             marginBottom: '1rem',
             marginRight: 0,
@@ -56,10 +56,10 @@ export const useStyles = makeStyles()(theme => ({
     },
     headerValues: {
         fontSize: theme.fontSizes.smallBody,
-        color: theme.palette.primary.main,
     },
     headerValuesExpand: {
         fontSize: theme.fontSizes.smallBody,
+        color: theme.palette.primary.main,
     },
     headerConstraintContainer: {
         minWidth: '220px',
