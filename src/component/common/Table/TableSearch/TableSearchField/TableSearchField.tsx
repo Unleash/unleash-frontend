@@ -36,7 +36,9 @@ export const TableSearchField = ({
         }
     );
     useKeyboardShortcut({ key: 'Escape' }, () => {
-        setShowSuggestions(suggestions => !suggestions);
+        if (document.activeElement === ref.current) {
+            setShowSuggestions(suggestions => !suggestions);
+        }
     });
     const placeholder = customPlaceholder ?? `Search (${hotkey})`;
 
