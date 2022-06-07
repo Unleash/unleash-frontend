@@ -14,48 +14,48 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    FeatureSchema,
-    FeatureSchemaFromJSON,
-    FeatureSchemaFromJSONTyped,
-    FeatureSchemaToJSON,
-} from './FeatureSchema';
+    VariantSchema,
+    VariantSchemaFromJSON,
+    VariantSchemaFromJSONTyped,
+    VariantSchemaToJSON,
+} from './VariantSchema';
 
 /**
  * 
  * @export
- * @interface FeaturesSchema
+ * @interface FeatureVariantsSchema
  */
-export interface FeaturesSchema {
+export interface FeatureVariantsSchema {
     /**
      * 
      * @type {number}
-     * @memberof FeaturesSchema
+     * @memberof FeatureVariantsSchema
      */
     version: number;
     /**
      * 
-     * @type {Array<FeatureSchema>}
-     * @memberof FeaturesSchema
+     * @type {Array<VariantSchema>}
+     * @memberof FeatureVariantsSchema
      */
-    features: Array<FeatureSchema>;
+    variants: Array<VariantSchema>;
 }
 
-export function FeaturesSchemaFromJSON(json: any): FeaturesSchema {
-    return FeaturesSchemaFromJSONTyped(json, false);
+export function FeatureVariantsSchemaFromJSON(json: any): FeatureVariantsSchema {
+    return FeatureVariantsSchemaFromJSONTyped(json, false);
 }
 
-export function FeaturesSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeaturesSchema {
+export function FeatureVariantsSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeatureVariantsSchema {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'version': json['version'],
-        'features': ((json['features'] as Array<any>).map(FeatureSchemaFromJSON)),
+        'variants': ((json['variants'] as Array<any>).map(VariantSchemaFromJSON)),
     };
 }
 
-export function FeaturesSchemaToJSON(value?: FeaturesSchema | null): any {
+export function FeatureVariantsSchemaToJSON(value?: FeatureVariantsSchema | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -65,7 +65,7 @@ export function FeaturesSchemaToJSON(value?: FeaturesSchema | null): any {
     return {
         
         'version': value.version,
-        'features': ((value.features as Array<any>).map(FeatureSchemaToJSON)),
+        'variants': ((value.variants as Array<any>).map(VariantSchemaToJSON)),
     };
 }
 

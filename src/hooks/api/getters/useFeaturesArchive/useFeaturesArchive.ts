@@ -11,8 +11,8 @@ export interface IUseFeaturesArchiveOutput {
 
 export const useFeaturesArchive = (): IUseFeaturesArchiveOutput => {
     const { data, refetch, loading, error } = useApiGetter(
-        'apiAdminArchiveFeaturesGet',
-        () => openApiAdmin.apiAdminArchiveFeaturesGet()
+        'getArchivedFeatures',
+        () => openApiAdmin.getArchivedFeatures()
     );
 
     return {

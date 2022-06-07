@@ -72,41 +72,6 @@ const useProjectApi = () => {
         }
     };
 
-    const addEnvironmentToProject = async (
-        projectId: string,
-        environment: string
-    ) => {
-        const path = `api/admin/projects/${projectId}/environments`;
-        const req = createRequest(path, {
-            method: 'POST',
-            body: JSON.stringify({ environment }),
-        });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
-    };
-
-    const removeEnvironmentFromProject = async (
-        projectId: string,
-        environment: string
-    ) => {
-        const path = `api/admin/projects/${projectId}/environments/${environment}`;
-        const req = createRequest(path, { method: 'DELETE' });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
-    };
-
     const addUserToRole = async (
         projectId: string,
         roleId: number,
@@ -171,8 +136,6 @@ const useProjectApi = () => {
         validateId,
         editProject,
         deleteProject,
-        addEnvironmentToProject,
-        removeEnvironmentFromProject,
         addUserToRole,
         removeUserFromRole,
         changeUserRole,

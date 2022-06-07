@@ -16,11 +16,11 @@ export const useProjectFeaturesArchive = (
         ['apiAdminArchiveFeaturesGet', projectId],
         () => {
             if (projectId) {
-                return openApiAdmin.apiAdminArchiveFeaturesProjectIdGet({
+                return openApiAdmin.getArchivedFeaturesByProjectId({
                     projectId,
                 });
             }
-            return openApiAdmin.apiAdminArchiveFeaturesGet();
+            return openApiAdmin.getArchivedFeatures();
         }
     );
 
