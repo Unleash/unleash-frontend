@@ -96,7 +96,7 @@ const MultipleValues = ({ values }: IMultipleValuesProps) => {
     return (
         <>
             <ConditionallyRender
-                condition={values.length > 5}
+                condition={values.length > 20}
                 show={
                     <ConstraintValueSearch
                         filter={filter}

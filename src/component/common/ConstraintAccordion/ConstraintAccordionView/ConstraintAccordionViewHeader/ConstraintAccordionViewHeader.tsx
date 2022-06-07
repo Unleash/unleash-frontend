@@ -1,11 +1,4 @@
-import StringTruncator from 'component/common/StringTruncator/StringTruncator';
-import {
-    Chip,
-    useMediaQuery,
-    IconButton,
-    Tooltip,
-    styled,
-} from '@mui/material';
+import { Chip, IconButton, Tooltip, styled } from '@mui/material';
 import { ConstraintIcon } from 'component/common/ConstraintAccordion/ConstraintIcon';
 import { Delete, Edit } from '@mui/icons-material';
 import { IConstraint } from 'interfaces/strategy';
@@ -18,34 +11,36 @@ import { useLocationSettings } from 'hooks/useLocationSettings';
 import { ConstraintOperator } from 'component/common/ConstraintAccordion/ConstraintOperator/ConstraintOperator';
 import classnames from 'classnames';
 
-// const StyledValuesDiv = styled('div')(({ theme }) => ({
-//     display: '-webkit-box',
-//     WebkitLineClamp: 1,
-//     WebkitBoxOrient: 'vertical',
-//     overflow: 'hidden',
-//     [theme.breakpoints.down('lg')]: {
-//         maxWidth: '160px',
-//     },
-//     [theme.breakpoints.down(1000)]: {
-//         maxWidth: '800px',
-//     },
-//     [theme.breakpoints.down(830)]: {
-//         maxWidth: '250px',
-//     },
-//     [theme.breakpoints.down(770)]: {
-//         maxWidth: '200px',
-//     },
-//     [theme.breakpoints.down(710)]: {
-//         margin: theme.spacing(1, 0),
-//         maxWidth: '800px',
-//     },
-//     [theme.breakpoints.down(468)]: {
-//         maxWidth: '250px',
-//     },
-//     '& .MuiChip-label': {
-//         whiteSpace: 'wrap',
-//     },
-// }));
+const StyledHeaderText = styled('span')(({ theme }) => ({
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    maxWidth: '100px',
+    minWidth: '100px',
+    marginRight: '10px',
+    wordBreak: 'break-word',
+    fontSize: theme.fontSizes.smallBody,
+    [theme.breakpoints.down(710)]: {
+        textAlign: 'center',
+        padding: theme.spacing(1, 0),
+        marginRight: 'inherit',
+        maxWidth: 'inherit',
+    },
+}));
+
+const StyledValuesSpan = styled('span')(({ theme }) => ({
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
+    fontSize: theme.fontSizes.smallBody,
+    [theme.breakpoints.down(710)]: {
+        margin: theme.spacing(1, 0),
+        textAlign: 'center',
+    },
+}));
 
 const StyledSingleValueChip = styled(Chip)(({ theme }) => ({
     [theme.breakpoints.down(710)]: {
@@ -70,9 +65,6 @@ export const ConstraintAccordionViewHeader = ({
 }: IConstraintAccordionViewHeaderProps) => {
     const { classes: styles } = useStyles();
     const { locationSettings } = useLocationSettings();
-    const smallScreen = useMediaQuery(`(max-width:${790}px)`);
-
-    const minWidthHeader = compact || smallScreen ? '100px' : '175px';
 
     const onEditClick =
         onEdit &&
@@ -88,17 +80,17 @@ export const ConstraintAccordionViewHeader = ({
             onDelete();
         });
 
+    constraint.contextName = 'verylonglonglonglongcontextname';
+
     return (
         <div className={styles.headerContainer}>
             <ConstraintIcon />
             <div className={styles.headerMetaInfo}>
-                <div style={{ minWidth: minWidthHeader }}>
-                    <StringTruncator
-                        text={constraint.contextName}
-                        maxWidth="175px"
-                        maxLength={25}
-                    />
-                </div>
+                <Tooltip title={constraint.contextName} arrow>
+                    <StyledHeaderText>
+                        {constraint.contextName}
+                    </StyledHeaderText>
+                </Tooltip>
                 <div className={styles.headerConstraintContainer}>
                     <ConstraintOperator constraint={constraint} />
                 </div>
@@ -114,38 +106,11 @@ export const ConstraintAccordionViewHeader = ({
                     }
                     elseShow={
                         <div className={styles.headerValuesContainer}>
-                            {/* <StyledValuesDiv>
-                                {constraint?.values
-                                    ?.slice(0, 10)
-                                    .map((value, index) => (
-                                        <Chip
-                                            key={index}
-                                            label={
-                                                <StringTruncator
-                                                    text={value}
-                                                    maxWidth="150"
-                                                    maxLength={25}
-                                                />
-                                            }
-                                            sx={{ marginRight: '4px' }}
-                                        />
-                                    ))}
-                                {constraint?.values?.length &&
-                                    constraint?.values?.length > 10 &&
-                                    '...'}
-                            </StyledValuesDiv> */}
-                            <span
-                                style={{
-                                    textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    display: 'block',
-                                }}
-                            >
+                            <StyledValuesSpan>
                                 {constraint?.values
                                     ?.map(value => value)
                                     .join(', ')}
-                            </span>
+                            </StyledValuesSpan>
                             <p
                                 className={classnames(
                                     styles.headerValuesExpand,

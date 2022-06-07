@@ -3,8 +3,6 @@ import { makeStyles } from 'tss-react/mui';
 export const useStyles = makeStyles()(theme => ({
     constraintIconContainer: {
         backgroundColor: theme.palette.primary.main,
-        height: '28px',
-        width: '28px',
         borderRadius: '50%',
         display: 'flex',
         alignItems: 'center',
@@ -17,8 +15,6 @@ export const useStyles = makeStyles()(theme => ({
     },
     constraintIcon: {
         fill: '#fff',
-        width: '26px',
-        height: '26px',
     },
     accordion: {
         border: `1px solid ${theme.palette.grey[300]}`,
@@ -137,10 +133,6 @@ export const useStyles = makeStyles()(theme => ({
     summary: {
         border: 'none',
         padding: '0.25rem 1rem',
-        height: '85px',
-        [theme.breakpoints.down(710)]: {
-            height: '180px',
-        },
         '&:hover .valuesExpandLabel': {
             textDecoration: 'underline',
         },
