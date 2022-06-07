@@ -106,6 +106,7 @@ export const ProjectFeatureToggles = ({
             defaultSort
         );
     const navigate = useNavigate();
+    const setSearchParams = useSearchParams()[1];
     const { uiConfig } = useUiConfig();
     const environments = useEnvironmentsRef(
         loading ? ['a', 'b', 'c'] : newEnvironments
@@ -377,12 +378,9 @@ export const ProjectFeatureToggles = ({
             )
             .join(',');
 
-        window.history.replaceState(
-            {},
-            '',
-            `?${createSearchParams(tableState)}`
-        );
-
+        setSearchParams(tableState, {
+            replace: true,
+        });
         setStoredParams(params => ({
             ...params,
             id: sortBy[0].id,

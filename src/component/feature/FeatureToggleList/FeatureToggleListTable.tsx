@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { Link, useMediaQuery, useTheme } from '@mui/material';
-import {
-    createSearchParams,
-    Link as RouterLink,
-    useNavigate,
-    useSearchParams,
-} from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import {
     SortingRule,
     useFlexLayout,
@@ -146,7 +141,7 @@ export const FeatureToggleListTable: VFC = () => {
     );
 
     const initialState = useInitialState();
-    const navigate = useNavigate();
+    const setSearchParams = useSearchParams()[1];
 
     const {
         getTableProps,
@@ -196,14 +191,11 @@ export const FeatureToggleListTable: VFC = () => {
             tableState.search = globalFilter;
         }
 
-        window.history.replaceState(
-            {},
-            '',
-            `?${createSearchParams(tableState)}`
-        );
-
+        setSearchParams(tableState, {
+            replace: true,
+        });
         setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [sortBy, globalFilter, navigate]);
+    }, [sortBy, globalFilter, setSearchParams]);
 
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);

@@ -1,7 +1,15 @@
-import { FC } from 'react';
+import { FC, Profiler } from 'react';
 import classnames from 'classnames';
 import { Table as MUITable, TableProps } from '@mui/material';
 import { useStyles } from './Table.styles';
+
+declare global {
+    interface Window {
+        profilerData: any;
+    }
+}
+
+window.profilerData = window.profilerData || [];
 
 export const Table: FC<
     TableProps & {
@@ -11,6 +19,20 @@ export const Table: FC<
     const { classes } = useStyles({ rowHeight });
 
     return (
-        <MUITable className={classnames(classes.table, className)} {...props} />
+        <Profiler
+            id="table"
+            onRender={(id, phase, duration) => {
+                window.profilerData.push({
+                    id,
+                    phase,
+                    duration,
+                });
+            }}
+        >
+            <MUITable
+                className={classnames(classes.table, className)}
+                {...props}
+            />
+        </Profiler>
     );
 };
