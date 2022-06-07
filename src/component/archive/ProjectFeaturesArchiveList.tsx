@@ -3,9 +3,9 @@ import { useProjectFeaturesArchive } from 'hooks/api/getters/useProjectFeaturesA
 import { FeatureToggleList } from '../feature/FeatureToggleList/FeatureToggleArchiveList';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { useFeaturesFilter } from 'hooks/useFeaturesFilter';
-import { useFeatureArchiveApi } from 'hooks/api/actions/useFeatureArchiveApi/useReviveFeatureApi';
 import useToast from 'hooks/useToast';
 import { useFeaturesSort } from 'hooks/useFeaturesSort';
+import { openApiAdmin } from 'utils/openapiClient';
 
 interface IProjectFeaturesArchiveList {
     projectId: string;
@@ -16,7 +16,6 @@ export const ProjectFeaturesArchiveList: FC<IProjectFeaturesArchiveList> = ({
 }) => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-    const { reviveFeature } = useFeatureArchiveApi();
 
     const {
         archivedFeatures = [],
@@ -27,8 +26,9 @@ export const ProjectFeaturesArchiveList: FC<IProjectFeaturesArchiveList> = ({
     const { filtered, filter, setFilter } = useFeaturesFilter(archivedFeatures);
     const { sorted, sort, setSort } = useFeaturesSort(filtered);
 
-    const onRevive = (feature: string) => {
-        reviveFeature(feature)
+    const onRevive = (featureName: string) => {
+        openApiAdmin
+            .reviveFeature({ featureName })
             .then(refetchArchived)
             .then(() =>
                 setToastData({

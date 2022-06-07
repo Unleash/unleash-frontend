@@ -16,39 +16,32 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OverrideSchema
+ * @interface ProjectEnvironmentSchema
  */
-export interface OverrideSchema {
+export interface ProjectEnvironmentSchema {
     /**
      * 
      * @type {string}
-     * @memberof OverrideSchema
+     * @memberof ProjectEnvironmentSchema
      */
-    contextName: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof OverrideSchema
-     */
-    values: Array<string>;
+    environment: string;
 }
 
-export function OverrideSchemaFromJSON(json: any): OverrideSchema {
-    return OverrideSchemaFromJSONTyped(json, false);
+export function ProjectEnvironmentSchemaFromJSON(json: any): ProjectEnvironmentSchema {
+    return ProjectEnvironmentSchemaFromJSONTyped(json, false);
 }
 
-export function OverrideSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): OverrideSchema {
+export function ProjectEnvironmentSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProjectEnvironmentSchema {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'contextName': json['contextName'],
-        'values': json['values'],
+        'environment': json['environment'],
     };
 }
 
-export function OverrideSchemaToJSON(value?: OverrideSchema | null): any {
+export function ProjectEnvironmentSchemaToJSON(value?: ProjectEnvironmentSchema | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +50,7 @@ export function OverrideSchemaToJSON(value?: OverrideSchema | null): any {
     }
     return {
         
-        'contextName': value.contextName,
-        'values': value.values,
+        'environment': value.environment,
     };
 }
 

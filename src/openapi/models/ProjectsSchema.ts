@@ -14,48 +14,48 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    FeatureSchema,
-    FeatureSchemaFromJSON,
-    FeatureSchemaFromJSONTyped,
-    FeatureSchemaToJSON,
-} from './FeatureSchema';
+    ProjectSchema,
+    ProjectSchemaFromJSON,
+    ProjectSchemaFromJSONTyped,
+    ProjectSchemaToJSON,
+} from './ProjectSchema';
 
 /**
  * 
  * @export
- * @interface FeaturesSchema
+ * @interface ProjectsSchema
  */
-export interface FeaturesSchema {
+export interface ProjectsSchema {
     /**
      * 
      * @type {number}
-     * @memberof FeaturesSchema
+     * @memberof ProjectsSchema
      */
     version: number;
     /**
      * 
-     * @type {Array<FeatureSchema>}
-     * @memberof FeaturesSchema
+     * @type {Array<ProjectSchema>}
+     * @memberof ProjectsSchema
      */
-    features: Array<FeatureSchema>;
+    projects: Array<ProjectSchema>;
 }
 
-export function FeaturesSchemaFromJSON(json: any): FeaturesSchema {
-    return FeaturesSchemaFromJSONTyped(json, false);
+export function ProjectsSchemaFromJSON(json: any): ProjectsSchema {
+    return ProjectsSchemaFromJSONTyped(json, false);
 }
 
-export function FeaturesSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeaturesSchema {
+export function ProjectsSchemaFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProjectsSchema {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'version': json['version'],
-        'features': ((json['features'] as Array<any>).map(FeatureSchemaFromJSON)),
+        'projects': ((json['projects'] as Array<any>).map(ProjectSchemaFromJSON)),
     };
 }
 
-export function FeaturesSchemaToJSON(value?: FeaturesSchema | null): any {
+export function ProjectsSchemaToJSON(value?: ProjectsSchema | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -65,7 +65,7 @@ export function FeaturesSchemaToJSON(value?: FeaturesSchema | null): any {
     return {
         
         'version': value.version,
-        'features': ((value.features as Array<any>).map(FeatureSchemaToJSON)),
+        'projects': ((value.projects as Array<any>).map(ProjectSchemaToJSON)),
     };
 }
 

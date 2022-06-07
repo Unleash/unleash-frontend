@@ -10,7 +10,6 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import useProject from 'hooks/api/getters/useProject/useProject';
 import { FormControlLabel, FormGroup, Alert } from '@mui/material';
-import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import EnvironmentDisableConfirm from './EnvironmentDisableConfirm/EnvironmentDisableConfirm';
 import { Link } from 'react-router-dom';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
@@ -18,6 +17,7 @@ import { IProjectEnvironment } from 'interfaces/environments';
 import { getEnabledEnvs } from './helpers';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useThemeStyles } from 'themes/themeStyles';
+import { openApiAdmin } from 'utils/openapiClient';
 
 interface IProjectEnvironmentListProps {
     projectId: string;
@@ -33,8 +33,6 @@ const ProjectEnvironmentList = ({
     const { environments, loading, error, refetchEnvironments } =
         useEnvironments();
     const { project, refetch: refetchProject } = useProject(projectId);
-    const { removeEnvironmentFromProject, addEnvironmentToProject } =
-        useProjectApi();
     const { classes: themeStyles } = useThemeStyles();
 
     // local state
@@ -76,7 +74,6 @@ const ProjectEnvironmentList = ({
     const toggleEnv = async (env: IProjectEnvironment) => {
         if (env.enabled) {
             const enabledEnvs = getEnabledEnvs(envs);
-
             if (enabledEnvs > 1) {
                 setSelectedEnv(env);
                 return;
@@ -88,7 +85,10 @@ const ProjectEnvironmentList = ({
             });
         } else {
             try {
-                await addEnvironmentToProject(projectId, env.name);
+                await openApiAdmin.addEnvironmentToProject({
+                    projectId,
+                    projectEnvironmentSchema: { environment: env.name },
+                });
                 setToastData({
                     title: 'Environment enabled',
                     text: 'Environment successfully enabled. You can now use it to segment strategies in your feature toggles.',
@@ -104,7 +104,10 @@ const ProjectEnvironmentList = ({
     const handleDisableEnvironment = async () => {
         if (selectedEnv && confirmName === selectedEnv.name) {
             try {
-                await removeEnvironmentFromProject(projectId, selectedEnv.name);
+                await openApiAdmin.removeEnvironmentFromProject({
+                    projectId,
+                    environment: selectedEnv.name,
+                });
                 setSelectedEnv(undefined);
                 setConfirmName('');
                 setToastData({
