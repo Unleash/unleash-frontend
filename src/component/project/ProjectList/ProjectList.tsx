@@ -17,8 +17,6 @@ import { CREATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { Add } from '@mui/icons-material';
 import ApiError from 'component/common/ApiError/ApiError';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { SearchField } from 'component/common/SearchField/SearchField';
-import classnames from 'classnames';
 import { TableSearchField } from 'component/common/Table/TableSearch/TableSearchField/TableSearchField';
 
 type projectMap = {
