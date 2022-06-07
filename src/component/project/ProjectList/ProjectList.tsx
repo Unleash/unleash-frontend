@@ -19,6 +19,7 @@ import ApiError from 'component/common/ApiError/ApiError';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { SearchField } from 'component/common/SearchField/SearchField';
 import classnames from 'classnames';
+import { TableSearchField } from 'component/common/Table/TableSearch/TableSearchField/TableSearchField';
 
 type projectMap = {
     [index: string]: boolean;
@@ -130,14 +131,7 @@ export const ProjectListNew = () => {
     return (
         <div ref={ref}>
             <div className={styles.searchBarContainer}>
-                <SearchField
-                    initialValue={filter}
-                    updateValue={setFilter}
-                    showValueChip
-                    className={classnames(styles.searchBar, {
-                        skeleton: loading,
-                    })}
-                />
+                <TableSearchField value={filter} onChange={setFilter} />
             </div>
             <PageContent
                 header={
