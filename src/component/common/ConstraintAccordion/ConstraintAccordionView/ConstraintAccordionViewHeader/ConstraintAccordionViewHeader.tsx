@@ -1,5 +1,11 @@
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
-import { Chip, useMediaQuery, IconButton, Tooltip } from '@mui/material';
+import {
+    Chip,
+    useMediaQuery,
+    IconButton,
+    Tooltip,
+    styled,
+} from '@mui/material';
 import { ConstraintIcon } from 'component/common/ConstraintAccordion/ConstraintIcon';
 import { Delete, Edit } from '@mui/icons-material';
 import { IConstraint } from 'interfaces/strategy';
@@ -10,6 +16,42 @@ import React from 'react';
 import { formatConstraintValue } from 'utils/formatConstraintValue';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { ConstraintOperator } from 'component/common/ConstraintAccordion/ConstraintOperator/ConstraintOperator';
+import classnames from 'classnames';
+
+// const StyledValuesDiv = styled('div')(({ theme }) => ({
+//     display: '-webkit-box',
+//     WebkitLineClamp: 1,
+//     WebkitBoxOrient: 'vertical',
+//     overflow: 'hidden',
+//     [theme.breakpoints.down('lg')]: {
+//         maxWidth: '160px',
+//     },
+//     [theme.breakpoints.down(1000)]: {
+//         maxWidth: '800px',
+//     },
+//     [theme.breakpoints.down(830)]: {
+//         maxWidth: '250px',
+//     },
+//     [theme.breakpoints.down(770)]: {
+//         maxWidth: '200px',
+//     },
+//     [theme.breakpoints.down(710)]: {
+//         margin: theme.spacing(1, 0),
+//         maxWidth: '800px',
+//     },
+//     [theme.breakpoints.down(468)]: {
+//         maxWidth: '250px',
+//     },
+//     '& .MuiChip-label': {
+//         whiteSpace: 'wrap',
+//     },
+// }));
+
+const StyledSingleValueChip = styled(Chip)(({ theme }) => ({
+    [theme.breakpoints.down(710)]: {
+        margin: theme.spacing(1, 0),
+    },
+}));
 
 interface IConstraintAccordionViewHeaderProps {
     compact: boolean;
@@ -60,46 +102,62 @@ export const ConstraintAccordionViewHeader = ({
                 <div className={styles.headerConstraintContainer}>
                     <ConstraintOperator constraint={constraint} />
                 </div>
-                <div className={styles.headerViewValuesContainer}>
-                    <ConditionallyRender
-                        condition={singleValue}
-                        show={
-                            <Chip
-                                label={formatConstraintValue(
-                                    constraint,
-                                    locationSettings
-                                )}
-                            />
-                        }
-                        elseShow={
-                            <div className={styles.headerValuesContainer}>
-                                {/* <p className={styles.headerValues}>
-                                    {constraint?.values?.length}{' '}
-                                    {constraint?.values?.length === 1
-                                        ? 'value'
-                                        : 'values'}
-                                </p> */}
-                                {/* TODO: Fix this: */}
-                                <div
-                                    style={{
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 1,
-                                        WebkitBoxOrient: 'vertical',
-                                        overflow: 'hidden',
-                                    }}
-                                >
-                                    {constraint?.values?.map(value => (
-                                        <Chip label={value} />
+                <ConditionallyRender
+                    condition={singleValue}
+                    show={
+                        <StyledSingleValueChip
+                            label={formatConstraintValue(
+                                constraint,
+                                locationSettings
+                            )}
+                        />
+                    }
+                    elseShow={
+                        <div className={styles.headerValuesContainer}>
+                            {/* <StyledValuesDiv>
+                                {constraint?.values
+                                    ?.slice(0, 10)
+                                    .map((value, index) => (
+                                        <Chip
+                                            key={index}
+                                            label={
+                                                <StringTruncator
+                                                    text={value}
+                                                    maxWidth="150"
+                                                    maxLength={25}
+                                                />
+                                            }
+                                            sx={{ marginRight: '4px' }}
+                                        />
                                     ))}
-                                </div>
-                                <p className={styles.headerValuesExpand}>
-                                    Expand to view all (
-                                    {constraint?.values?.length})
-                                </p>
-                            </div>
-                        }
-                    />
-                </div>
+                                {constraint?.values?.length &&
+                                    constraint?.values?.length > 10 &&
+                                    '...'}
+                            </StyledValuesDiv> */}
+                            <span
+                                style={{
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    display: 'block',
+                                }}
+                            >
+                                {constraint?.values
+                                    ?.map(value => value)
+                                    .join(', ')}
+                            </span>
+                            <p
+                                className={classnames(
+                                    styles.headerValuesExpand,
+                                    'valuesExpandLabel'
+                                )}
+                            >
+                                Expand to view all ({constraint?.values?.length}
+                                )
+                            </p>
+                        </div>
+                    }
+                />
             </div>
             <div className={styles.headerActions}>
                 <ConditionallyRender

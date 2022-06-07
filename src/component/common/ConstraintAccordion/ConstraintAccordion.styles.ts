@@ -44,7 +44,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        [theme.breakpoints.down(650)]: {
+        [theme.breakpoints.down(710)]: {
             flexDirection: 'column',
             alignItems: 'center',
             position: 'relative',
@@ -59,7 +59,10 @@ export const useStyles = makeStyles()(theme => ({
     },
     headerValuesExpand: {
         fontSize: theme.fontSizes.smallBody,
-        color: theme.palette.primary.main,
+        color: theme.palette.primary.dark,
+        [theme.breakpoints.down(710)]: {
+            textAlign: 'center',
+        },
     },
     headerConstraintContainer: {
         minWidth: '220px',
@@ -67,11 +70,6 @@ export const useStyles = makeStyles()(theme => ({
         paddingRight: '1rem',
         [theme.breakpoints.down(650)]: {
             paddingRight: 0,
-        },
-    },
-    headerViewValuesContainer: {
-        [theme.breakpoints.down(990)]: {
-            display: 'none',
         },
     },
     editingBadge: {
@@ -122,9 +120,8 @@ export const useStyles = makeStyles()(theme => ({
     headerActions: {
         marginLeft: 'auto',
         whiteSpace: 'nowrap',
-        [theme.breakpoints.down(660)]: {
-            marginLeft: '0',
-            marginTop: '0.5rem',
+        [theme.breakpoints.down(710)]: {
+            display: 'none',
         },
     },
     accordionDetails: {
@@ -141,8 +138,11 @@ export const useStyles = makeStyles()(theme => ({
         border: 'none',
         padding: '0.25rem 1rem',
         height: '85px',
-        [theme.breakpoints.down(770)]: {
-            height: '200px',
+        [theme.breakpoints.down(710)]: {
+            height: '180px',
+        },
+        '&:hover .valuesExpandLabel': {
+            textDecoration: 'underline',
         },
     },
     settingsParagraph: {
