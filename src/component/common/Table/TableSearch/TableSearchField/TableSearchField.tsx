@@ -28,16 +28,20 @@ export const TableSearchField = ({
     const ref = useRef<HTMLInputElement>();
     const { classes: styles } = useStyles();
     const [showSuggestions, setShowSuggestions] = useState(false);
+
     const hotkey = useKeyboardShortcut(
         { modifiers: ['ctrl'], key: 'k', preventDefault: true },
         () => {
-            ref.current?.focus();
-            setShowSuggestions(true);
+            if (document.activeElement === ref.current) {
+                ref.current?.blur();
+            } else {
+                ref.current?.focus();
+            }
         }
     );
     useKeyboardShortcut({ key: 'Escape' }, () => {
         if (document.activeElement === ref.current) {
-            setShowSuggestions(suggestions => !suggestions);
+            ref.current?.blur();
         }
     });
     const placeholder = `${customPlaceholder ?? 'Search'} (${hotkey})`;
