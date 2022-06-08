@@ -80,8 +80,6 @@ export const ConstraintAccordionViewHeader = ({
             onDelete();
         });
 
-    constraint.contextName = 'verylonglonglonglongcontextname';
-
     return (
         <div className={styles.headerContainer}>
             <ConstraintIcon />
