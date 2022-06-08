@@ -6,8 +6,8 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import useApplications from 'hooks/api/getters/useApplications/useApplications';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { TableSearch } from 'component/common/Table';
 import { useSearchParams } from 'react-router-dom';
+import { Search } from 'component/common/Search/Search';
 
 type PageQueryType = Partial<Record<'search', string>>;
 
@@ -66,7 +66,7 @@ export const ApplicationList = () => {
                     <PageHeader
                         title="Applications"
                         actions={
-                            <TableSearch
+                            <Search
                                 initialValue={searchValue}
                                 onChange={setSearchValue}
                             />

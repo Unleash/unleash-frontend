@@ -17,9 +17,10 @@ import { CREATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { Add } from '@mui/icons-material';
 import ApiError from 'component/common/ApiError/ApiError';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { TablePlaceholder, TableSearch } from 'component/common/Table';
+import { TablePlaceholder } from 'component/common/Table';
 import { useMediaQuery } from '@mui/material';
 import theme from 'themes/theme';
+import { Search } from 'component/common/Search/Search';
 
 type PageQueryType = Partial<Record<'search', string>>;
 
@@ -158,7 +159,7 @@ export const ProjectListNew = () => {
                                     condition={!isSmallScreen}
                                     show={
                                         <>
-                                            <TableSearch
+                                            <Search
                                                 initialValue={searchValue}
                                                 onChange={setSearchValue}
                                             />
@@ -181,7 +182,7 @@ export const ProjectListNew = () => {
                         <ConditionallyRender
                             condition={isSmallScreen}
                             show={
-                                <TableSearch
+                                <Search
                                     initialValue={searchValue}
                                     onChange={setSearchValue}
                                 />

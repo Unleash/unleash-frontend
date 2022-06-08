@@ -14,7 +14,7 @@ interface ISearchFieldProps {
 }
 
 /**
- * @deprecated use `TableSearchField` instead.
+ * @deprecated use `Search` instead.
  */
 export const SearchField: VFC<ISearchFieldProps> = ({
     updateValue,
