@@ -165,7 +165,6 @@ const COLUMNS = [
         Header: 'Username',
         accessor: 'username',
         Cell: HighlightCell,
-        width: '60%',
     },
     {
         Header: 'Type',
