@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Divider } from '@mui/material';
+import { Box } from '@mui/material';
 import { Extension } from '@mui/icons-material';
 import {
     Table,
@@ -11,11 +11,11 @@ import {
     TablePlaceholder,
     TableSearch,
 } from 'component/common/Table';
+import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
-
 import { formatStrategyName } from 'utils/strategyNames';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import useStrategiesApi from 'hooks/api/actions/useStrategiesApi/useStrategiesApi';
@@ -31,30 +31,12 @@ import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
 import { StrategySwitch } from './StrategySwitch/StrategySwitch';
 import { StrategyEditButton } from './StrategyEditButton/StrategyEditButton';
 import { StrategyDeleteButton } from './StrategyDeleteButton/StrategyDeleteButton';
-import { styled } from '@mui/system';
 
 interface IDialogueMetaData {
     show: boolean;
     title: string;
     onConfirm: () => void;
 }
-
-const ActionsContainer = styled(Box)(
-    ({ theme }) => `
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-right: ${theme.spacing(1)};
-    `
-);
-
-const ActionsDivider = styled(Divider)(
-    ({ theme }) => `
-        display: block;
-        height: ${theme.spacing(3)};
-        margin: ${theme.spacing(0, 2)};
-    `
-);
 
 export const StrategiesList = () => {
     const navigate = useNavigate();
@@ -224,13 +206,13 @@ export const StrategiesList = () => {
                 id: 'Actions',
                 align: 'center',
                 Cell: ({ row: { original } }: any) => (
-                    <ActionsContainer>
+                    <ActionCell>
                         <StrategySwitch
                             deprecated={original.deprecated}
                             onToggle={onToggle(original)}
                             disabled={original.name === 'default'}
                         />
-                        <ActionsDivider orientation="vertical" />
+                        <ActionCell.Divider />
                         <StrategyEditButton
                             strategy={original}
                             onClick={() => onEditStrategy(original)}
@@ -239,7 +221,7 @@ export const StrategiesList = () => {
                             strategy={original}
                             onClick={() => onDeleteStrategy(original)}
                         />
-                    </ActionsContainer>
+                    </ActionCell>
                 ),
                 width: 150,
                 disableGlobalFilter: true,
