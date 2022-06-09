@@ -129,7 +129,6 @@ export const ApiTokenTable = () => {
 
 const useHiddenColumns = (): string[] => {
     const { uiConfig } = useUiConfig();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return useMemo(() => {
@@ -145,12 +144,8 @@ const useHiddenColumns = (): string[] => {
             hidden.push('createdAt');
         }
 
-        if (isSmallScreen) {
-            hidden.push('username');
-        }
-
         return hidden;
-    }, [uiConfig, isSmallScreen, isMediumScreen]);
+    }, [uiConfig, isMediumScreen]);
 };
 
 const COLUMNS = [
