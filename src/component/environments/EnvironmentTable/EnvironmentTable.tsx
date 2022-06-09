@@ -9,11 +9,13 @@ import {
     Table,
     TablePlaceholder,
 } from 'component/common/Table';
-import { useCallback } from 'react';
-import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { Alert, styled, TableBody } from '@mui/material';
-import { CloudCircle } from '@mui/icons-material';
-import { IconCell } from 'component/common/Table/cells/IconCell/IconCell';
+import { useCallback, useContext } from 'react';
+import {
+    SearchHighlightProvider,
+    useSearchHighlightContext,
+} from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
+import { Alert, Box, IconButton, styled, TableBody } from '@mui/material';
+import { CloudCircle, DragIndicator } from '@mui/icons-material';
 import { EnvironmentActionCell } from 'component/environments/EnvironmentActionCell/EnvironmentActionCell';
 import { EnvironmentNameCell } from 'component/environments/EnvironmentNameCell/EnvironmentNameCell';
 import { EnvironmentRow } from 'component/environments/EnvironmentRow/EnvironmentRow';
@@ -24,6 +26,8 @@ import useEnvironmentApi, {
 } from 'hooks/api/actions/useEnvironmentApi/useEnvironmentApi';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import AccessContext from 'contexts/AccessContext';
+import { UPDATE_ENVIRONMENT } from 'component/providers/AccessProvider/permissions';
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
     marginBottom: theme.spacing(4),
@@ -137,7 +141,35 @@ const COLUMNS = [
     {
         id: 'Icon',
         width: '1%',
-        Cell: () => <IconCell icon={<CloudCircle color="disabled" />} />,
+        Cell: () => {
+            const { hasAccess } = useContext(AccessContext);
+            const updatePermission = hasAccess(UPDATE_ENVIRONMENT);
+            const { searchQuery } = useSearchHighlightContext();
+
+            // Allow drag and drop if the user is permitted to reorder environments.
+            // Disable drag and drop while searching since some rows may be hidden.
+            const enableDragAndDrop = updatePermission && !searchQuery;
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <ConditionallyRender
+                        condition={enableDragAndDrop}
+                        show={
+                            <IconButton
+                                size="large"
+                                disableRipple
+                                sx={{ cursor: 'inherit', pl: 2, pr: 1 }}
+                            >
+                                <DragIndicator
+                                    titleAccess="Drag to reorder"
+                                    cursor="grab"
+                                />
+                            </IconButton>
+                        }
+                    />
+                    <CloudCircle color="disabled" />
+                </Box>
+            );
+        },
         disableGlobalFilter: true,
     },
     {

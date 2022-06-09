@@ -1,4 +1,4 @@
-import { useRef, useEffect, RefObject } from 'react';
+import { useRef, useEffect, RefObject, useState } from 'react';
 
 export type MoveListItem = (
     dragIndex: number,
@@ -9,24 +9,26 @@ export type MoveListItem = (
 export const useDragItem = (
     listItemIndex: number,
     moveListItem: MoveListItem
-): RefObject<HTMLTableRowElement> => {
+): [RefObject<HTMLTableRowElement>, boolean] => {
     const ref = useRef<HTMLTableRowElement>(null);
+    const [isDragging, setIsDragging] = useState(false);
 
     useEffect(() => {
         if (ref.current) {
             ref.current.draggable = true;
             ref.current.style.cursor = 'grab';
             ref.current.dataset.index = String(listItemIndex);
-            return addEventListeners(ref.current, moveListItem);
+            return addEventListeners(ref.current, moveListItem, setIsDragging);
         }
     }, [listItemIndex, moveListItem]);
 
-    return ref;
+    return [ref, isDragging];
 };
 
 const addEventListeners = (
     el: HTMLTableRowElement,
-    moveListItem: MoveListItem
+    moveListItem: MoveListItem,
+    setIsDragging: (isDragging: boolean) => void
 ): (() => void) => {
     const moveDraggedElement = (save: boolean) => {
         if (globalDraggedElement) {
@@ -40,6 +42,7 @@ const addEventListeners = (
 
     const onDragStart = () => {
         globalDraggedElement = el;
+        setIsDragging(true);
     };
 
     const onDragEnter = () => {
@@ -53,6 +56,7 @@ const addEventListeners = (
     const onDrop = () => {
         moveDraggedElement(true);
         globalDraggedElement = null;
+        setIsDragging(false);
     };
 
     el.addEventListener('dragstart', onDragStart);

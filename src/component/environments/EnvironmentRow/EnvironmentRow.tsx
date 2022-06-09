@@ -10,7 +10,7 @@ interface IEnvironmentRowProps {
 }
 
 export const EnvironmentRow = ({ row, moveListItem }: IEnvironmentRowProps) => {
-    const dragItemRef = useDragItem(row.index, moveListItem);
+    const [dragItemRef] = useDragItem(row.index, moveListItem);
     const { searchQuery } = useSearchHighlightContext();
     const draggable = !searchQuery;
 
