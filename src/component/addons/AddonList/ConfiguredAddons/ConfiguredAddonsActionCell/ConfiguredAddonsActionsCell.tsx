@@ -1,7 +1,8 @@
-import { Visibility, VisibilityOff, Edit, Delete } from '@mui/icons-material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { Edit, Delete } from '@mui/icons-material';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
+import { useOptimisticUpdate } from 'component/project/Project/ProjectFeatureToggles/FeatureToggleSwitch/hooks/useOptimisticUpdate';
 import {
     UPDATE_ADDON,
     DELETE_ADDON,
@@ -23,19 +24,22 @@ export const ConfiguredAddonsActionsCell = ({
     original,
 }: IConfiguredAddonsActionsCellProps) => {
     const navigate = useNavigate();
+    const [isEnabled, setIsEnabled, rollbackIsChecked] =
+        useOptimisticUpdate<boolean>(original.enabled);
+
+    const onClick = () => {
+        setIsEnabled(!isEnabled);
+        toggleAddon(original).catch(rollbackIsChecked);
+    };
+
     return (
         <ActionCell>
-            <PermissionIconButton
+            <PermissionSwitch
                 permission={UPDATE_ADDON}
-                onClick={() => toggleAddon(original)}
-                tooltipProps={{ title: 'Toggle addon' }}
-            >
-                <ConditionallyRender
-                    condition={original.enabled}
-                    show={<Visibility />}
-                    elseShow={<VisibilityOff />}
-                />
-            </PermissionIconButton>
+                checked={isEnabled}
+                onClick={onClick}
+            />
+            <ActionCell.Divider />
             <PermissionIconButton
                 permission={UPDATE_ADDON}
                 tooltipProps={{ title: 'Edit Addon' }}

@@ -45,19 +45,24 @@ export const ConfiguredAddons = () => {
     }, [addons, loading]);
 
     const toggleAddon = useCallback(
-        async (addon: IAddon) => {
-            try {
-                await updateAddon({ ...addon, enabled: !addon.enabled });
-                refetchAddons();
-                setToastData({
-                    type: 'success',
-                    title: 'Success',
-                    text: 'Addon state switched successfully',
-                });
-            } catch (error: unknown) {
-                setToastApiError(formatUnknownError(error));
-            }
-        },
+        async (addon: IAddon) =>
+            new Promise<void>(async (resolve, reject) => {
+                try {
+                    await updateAddon({ ...addon, enabled: !addon.enabled });
+                    refetchAddons();
+                    setToastData({
+                        type: 'success',
+                        title: 'Success',
+                        text: !addon.enabled
+                            ? 'Addon is now active'
+                            : 'Addon is now disabled',
+                    });
+                    resolve();
+                } catch (error: unknown) {
+                    setToastApiError(formatUnknownError(error));
+                    reject();
+                }
+            }),
         [setToastApiError, refetchAddons, setToastData, updateAddon]
     );
 
@@ -96,12 +101,16 @@ export const ConfiguredAddons = () => {
                 Header: 'Actions',
                 id: 'Actions',
                 align: 'center',
-                Cell: ({ row: { original } }: any) => (
+                Cell: ({
+                    row: { original },
+                }: {
+                    row: { original: IAddon };
+                }) => (
                     <ConfiguredAddonsActionsCell
                         setShowDelete={setShowDelete}
                         toggleAddon={toggleAddon}
                         setDeletedAddon={setDeletedAddon}
-                        original={original as IAddon}
+                        original={original}
                     />
                 ),
                 width: 150,
