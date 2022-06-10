@@ -118,7 +118,7 @@ const Project = () => {
                         </div>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
-                            projectId={project?.id}
+                            projectId={projectId}
                             onClick={() =>
                                 navigate(`/projects/${projectId}/edit`)
                             }
