@@ -70,9 +70,8 @@ export const ProjectCard = ({
         setAnchorEl(null);
     };
 
-    const canDeleteProject = (id: string): boolean => {
-        return hasAccess(DELETE_PROJECT, id) && id !== DEFAULT_PROJECT_ID;
-    };
+    const canDeleteProject =
+        hasAccess(DELETE_PROJECT, id) && id !== DEFAULT_PROJECT_ID;
 
     return (
         <Card className={classes.projectCard} onMouseEnter={onHover}>
@@ -120,10 +119,12 @@ export const ProjectCard = ({
                             e.preventDefault();
                             setShowDelDialog(true);
                         }}
-                        disabled={!canDeleteProject(id)}
+                        disabled={!canDeleteProject}
                     >
                         <Delete className={classes.icon} />
-                        Delete project
+                        {id === DEFAULT_PROJECT_ID && !canDeleteProject
+                            ? 'Cannot delete default project'
+                            : 'Delete project'}
                     </MenuItem>
                 </Menu>
             </div>
