@@ -16,8 +16,6 @@ import {
 } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { Alert, Box, IconButton, styled, TableBody } from '@mui/material';
 import { CloudCircle, DragIndicator } from '@mui/icons-material';
-import { EnvironmentActionCell } from 'component/environments/EnvironmentActionCell/EnvironmentActionCell';
-import { EnvironmentNameCell } from 'component/environments/EnvironmentNameCell/EnvironmentNameCell';
 import { EnvironmentRow } from 'component/environments/EnvironmentRow/EnvironmentRow';
 import { MoveListItem } from 'hooks/useDragItem';
 import useToast from 'hooks/useToast';
@@ -28,6 +26,8 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import AccessContext from 'contexts/AccessContext';
 import { UPDATE_ENVIRONMENT } from 'component/providers/AccessProvider/permissions';
+import { EnvironmentNameCell } from './EnvironmentNameCell/EnvironmentNameCell';
+import { EnvironmentActionCell } from './EnvironmentActionCell/EnvironmentActionCell';
 
 const StyledAlert = styled(Alert)(({ theme }) => ({
     marginBottom: theme.spacing(4),
