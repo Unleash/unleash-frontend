@@ -44,7 +44,6 @@ import { FeatureArchiveDialog } from 'component/common/FeatureArchiveDialog/Feat
 import { useSearch } from 'hooks/useSearch';
 import { useMediaQuery } from '@mui/material';
 import { Search } from 'component/common/Search/Search';
-import { TABLE_HEADER_HEIGHT } from 'component/common/Table/SortableTableHeader/SortableTableHeader.styles';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -399,7 +398,8 @@ export const ProjectFeatureToggles = ({
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
 
-    const tableHeight = rowHeight * rows.length + TABLE_HEADER_HEIGHT;
+    const tableHeight =
+        rowHeight * rows.length + theme.shape.tableRowHeightCompact;
 
     return (
         <PageContent
@@ -480,7 +480,9 @@ export const ProjectFeatureToggles = ({
                     />
                     <TableBody {...getTableBodyProps()}>
                         {rows.map((row, index) => {
-                            const top = index * rowHeight + TABLE_HEADER_HEIGHT;
+                            const top =
+                                index * rowHeight +
+                                theme.shape.tableRowHeightCompact;
 
                             const isVirtual =
                                 index < firstRenderedIndex ||
