@@ -75,7 +75,7 @@ const EditProject = () => {
 
     const accessDeniedAlert = !hasAccess(UPDATE_PROJECT, projectId) && (
         <Alert severity="error" sx={{ mb: 4 }}>
-            You do not have access to edit this project.
+            You do not have the required permissions to edit this project.
         </Alert>
     );
 
