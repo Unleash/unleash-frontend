@@ -108,7 +108,7 @@ export const ArchiveTable = ({
                 Cell: FeatureTypeCell,
             },
             {
-                Header: 'Feature toggle Name',
+                Header: 'Feature toggle name',
                 accessor: 'name',
                 searchable: true,
                 minWidth: 100,
@@ -249,7 +249,7 @@ export const ArchiveTable = ({
             replace: true,
         });
         setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [loading, sortBy, searchValue, setSearchParams, setStoredParams]);
+    }, [loading, sortBy, searchValue]);
 
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
