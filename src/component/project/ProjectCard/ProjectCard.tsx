@@ -18,6 +18,7 @@ import {
 import { formatUnknownError } from 'utils/formatUnknownError';
 import AccessContext from 'contexts/AccessContext';
 import { DEFAULT_PROJECT_ID } from 'hooks/api/getters/useDefaultProject/useDefaultProjectId';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 
 interface IProjectCardProps {
     name: string;
@@ -38,6 +39,7 @@ export const ProjectCard = ({
 }: IProjectCardProps) => {
     const { classes } = useStyles();
     const { hasAccess } = useContext(AccessContext);
+    const { isOss } = useUiConfig();
     const { refetch: refetchProjectOverview } = useProjects();
     const [anchorEl, setAnchorEl] = useState(null);
     const [showDelDialog, setShowDelDialog] = useState(false);
@@ -79,6 +81,7 @@ export const ProjectCard = ({
 
                 <PermissionIconButton
                     permission={UPDATE_PROJECT}
+                    hidden={isOss()}
                     projectId={id}
                     data-loading
                     onClick={handleClick}
