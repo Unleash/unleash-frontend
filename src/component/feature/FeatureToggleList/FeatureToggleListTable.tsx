@@ -193,6 +193,8 @@ export const FeatureToggleListTable: VFC = () => {
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
 
+    const tableHeight = rowHeight * rows.length + TABLE_HEADER_HEIGHT;
+
     return (
         <PageContent
             isLoading={loading}
@@ -249,12 +251,13 @@ export const FeatureToggleListTable: VFC = () => {
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>
-                <Table {...getTableProps()} rowHeight={rowHeight}>
+                <Table
+                    {...getTableProps()}
+                    rowHeight={rowHeight}
+                    style={{ height: tableHeight }}
+                >
                     <SortableTableHeader headerGroups={headerGroups} flex />
-                    <TableBody
-                        {...getTableBodyProps()}
-                        style={{ height: rowHeight * rows.length }}
-                    >
+                    <TableBody {...getTableBodyProps()}>
                         {rows.map((row, index) => {
                             const top = index * rowHeight + TABLE_HEADER_HEIGHT;
 

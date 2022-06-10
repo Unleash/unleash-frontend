@@ -399,6 +399,8 @@ export const ProjectFeatureToggles = ({
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
 
+    const tableHeight = rowHeight * rows.length + TABLE_HEADER_HEIGHT;
+
     return (
         <PageContent
             isLoading={loading}
@@ -465,17 +467,18 @@ export const ProjectFeatureToggles = ({
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>
-                <Table {...getTableProps()} rowHeight={rowHeight}>
+                <Table
+                    {...getTableProps()}
+                    rowHeight={rowHeight}
+                    style={{ height: tableHeight }}
+                >
                     <SortableTableHeader
                         // @ts-expect-error -- verify after `react-table` v8
                         headerGroups={headerGroups}
                         className={styles.headerClass}
                         flex
                     />
-                    <TableBody
-                        {...getTableBodyProps()}
-                        style={{ height: rowHeight * rows.length }}
-                    >
+                    <TableBody {...getTableBodyProps()}>
                         {rows.map((row, index) => {
                             const top = index * rowHeight + TABLE_HEADER_HEIGHT;
 
