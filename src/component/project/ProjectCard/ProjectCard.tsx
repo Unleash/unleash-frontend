@@ -2,7 +2,7 @@ import { Card, Menu, MenuItem } from '@mui/material';
 import { useStyles } from './ProjectCard.styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ReactComponent as ProjectIcon } from 'assets/icons/projectIcon.svg';
-import { useState, SyntheticEvent, useContext } from 'react';
+import React, { useState, SyntheticEvent, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
@@ -53,7 +53,7 @@ export const ProjectCard = ({
         setAnchorEl(e.currentTarget);
     };
 
-    const onRemoveProject = async (e: Event) => {
+    const onRemoveProject = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
             await deleteProject(id);
@@ -98,6 +98,9 @@ export const ProjectCard = ({
                     open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
                     style={{ top: 0, left: -100 }}
+                    onClick={event => {
+                        event.preventDefault();
+                    }}
                     onClose={(event: SyntheticEvent) => {
                         event.preventDefault();
                         setAnchorEl(null);
@@ -150,9 +153,9 @@ export const ProjectCard = ({
             </div>
             <Dialogue
                 open={showDelDialog}
-                // @ts-expect-error
                 onClick={onRemoveProject}
-                onClose={() => {
+                onClose={event => {
+                    event.preventDefault();
                     setAnchorEl(null);
                     setShowDelDialog(false);
                 }}
