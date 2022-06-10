@@ -113,6 +113,7 @@ export const EnvironmentActionCell = ({
                                 permission={UPDATE_ENVIRONMENT}
                                 checked={environment.enabled}
                                 onClick={() => setToggleModal(true)}
+                                disabled={environment.protected}
                             />
                         </Tooltip>
                         <ActionCell.Divider />
