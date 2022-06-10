@@ -10,13 +10,18 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { useContext } from 'react';
+import AccessContext from 'contexts/AccessContext';
+import { Alert } from '@mui/material';
 
 const EditProject = () => {
     const { uiConfig } = useUiConfig();
     const { setToastData, setToastApiError } = useToast();
+    const { hasAccess } = useContext(AccessContext);
     const id = useRequiredPathParam('projectId');
     const { project } = useProject(id);
     const navigate = useNavigate();
+
     const {
         projectId,
         projectName,
@@ -68,6 +73,12 @@ const EditProject = () => {
         navigate(-1);
     };
 
+    const accessDeniedAlert = !hasAccess(UPDATE_PROJECT, projectId) && (
+        <Alert severity="error" sx={{ mb: 4 }}>
+            You do not have access to edit this project.
+        </Alert>
+    );
+
     return (
         <FormTemplate
             loading={loading}
@@ -77,6 +88,7 @@ const EditProject = () => {
             documentationLinkLabel="Projects documentation"
             formatApiCode={formatApiCode}
         >
+            {accessDeniedAlert}
             <ProjectForm
                 errors={errors}
                 handleSubmit={handleSubmit}
