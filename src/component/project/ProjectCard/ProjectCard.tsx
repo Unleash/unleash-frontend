@@ -123,7 +123,7 @@ export const ProjectCard = ({
                     >
                         <Delete className={classes.icon} />
                         {id === DEFAULT_PROJECT_ID && !canDeleteProject
-                            ? 'Cannot delete default project'
+                            ? 'You can't delete the default project'
                             : 'Delete project'}
                     </MenuItem>
                 </Menu>
