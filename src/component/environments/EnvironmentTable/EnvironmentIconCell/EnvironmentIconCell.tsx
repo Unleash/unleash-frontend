@@ -9,7 +9,7 @@ import AccessContext from 'contexts/AccessContext';
 
 const DragIcon = styled(IconButton)(
     ({ theme }) => `
-    padding: ${theme.spacing(0, 1, 0, 2)};
+    padding: ${theme.spacing(0, 1, 0, 0)};
     cursor: inherit;
     color: ${theme.palette.grey[500]};
     transition: color 0.2s ease-in-out;
@@ -29,7 +29,7 @@ export const EnvironmentIconCell: VFC = () => {
     // Disable drag and drop while searching since some rows may be hidden.
     const enableDragAndDrop = updatePermission && !searchQuery;
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', pl: 2 }}>
             <ConditionallyRender
                 condition={enableDragAndDrop}
                 show={
