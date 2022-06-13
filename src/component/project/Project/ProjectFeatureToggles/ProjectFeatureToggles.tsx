@@ -25,7 +25,6 @@ import {
     TableCell,
     TableRow,
     TablePlaceholder,
-    TableSearch,
 } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import useProject from 'hooks/api/getters/useProject/useProject';
@@ -44,6 +43,7 @@ import { FeatureStaleDialog } from 'component/common/FeatureStaleDialog/FeatureS
 import { FeatureArchiveDialog } from 'component/common/FeatureArchiveDialog/FeatureArchiveDialog';
 import { useSearch } from 'hooks/useSearch';
 import { useMediaQuery } from '@mui/material';
+import { Search } from 'component/common/Search/Search';
 
 interface IProjectFeatureTogglesProps {
     features: IProject['features'];
@@ -398,6 +398,9 @@ export const ProjectFeatureToggles = ({
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
 
+    const tableHeight =
+        rowHeight * rows.length + theme.shape.tableRowHeightCompact;
+
     return (
         <PageContent
             isLoading={loading}
@@ -412,11 +415,9 @@ export const ProjectFeatureToggles = ({
                             <ConditionallyRender
                                 condition={!isSmallScreen}
                                 show={
-                                    <TableSearch
+                                    <Search
                                         initialValue={searchValue}
-                                        onChange={value =>
-                                            setSearchValue(value)
-                                        }
+                                        onChange={setSearchValue}
                                         hasFilters
                                         getSearchContext={getSearchContext}
                                     />
@@ -454,7 +455,7 @@ export const ProjectFeatureToggles = ({
                     <ConditionallyRender
                         condition={isSmallScreen}
                         show={
-                            <TableSearch
+                            <Search
                                 initialValue={searchValue}
                                 onChange={setSearchValue}
                                 hasFilters
@@ -466,21 +467,23 @@ export const ProjectFeatureToggles = ({
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>
-                <Table {...getTableProps()} rowHeight={rowHeight}>
+                <Table
+                    {...getTableProps()}
+                    rowHeight={rowHeight}
+                    style={{ height: tableHeight }}
+                >
                     <SortableTableHeader
                         // @ts-expect-error -- verify after `react-table` v8
                         headerGroups={headerGroups}
                         className={styles.headerClass}
                         flex
                     />
-                    <TableBody
-                        {...getTableBodyProps()}
-                        style={{
-                            height: `${rowHeight * rows.length}px`,
-                            position: 'relative',
-                        }}
-                    >
+                    <TableBody {...getTableBodyProps()}>
                         {rows.map((row, index) => {
+                            const top =
+                                index * rowHeight +
+                                theme.shape.tableRowHeightCompact;
+
                             const isVirtual =
                                 index < firstRenderedIndex ||
                                 index > lastRenderedIndex;
@@ -495,10 +498,7 @@ export const ProjectFeatureToggles = ({
                                     hover
                                     {...row.getRowProps()}
                                     className={styles.row}
-                                    style={{
-                                        top: `${index * rowHeight}px`,
-                                        display: 'flex',
-                                    }}
+                                    style={{ display: 'flex', top }}
                                 >
                                     {row.cells.map(cell => (
                                         <TableCell

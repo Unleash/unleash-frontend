@@ -9,7 +9,6 @@ import {
     TableCell,
     TableRow,
     TablePlaceholder,
-    TableSearch,
 } from 'component/common/Table';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -31,6 +30,7 @@ import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
 import { StrategySwitch } from './StrategySwitch/StrategySwitch';
 import { StrategyEditButton } from './StrategyEditButton/StrategyEditButton';
 import { StrategyDeleteButton } from './StrategyDeleteButton/StrategyDeleteButton';
+import { Search } from 'component/common/Search/Search';
 
 interface IDialogueMetaData {
     show: boolean;
@@ -286,7 +286,7 @@ export const StrategiesList = () => {
                     title="Strategies"
                     actions={
                         <>
-                            <TableSearch
+                            <Search
                                 initialValue={globalFilter}
                                 onChange={setGlobalFilter}
                             />
