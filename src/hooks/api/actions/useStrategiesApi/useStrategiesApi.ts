@@ -16,13 +16,7 @@ const useStrategiesApi = () => {
                 body: JSON.stringify(strategy),
             });
 
-            try {
-                const res = await makeRequest(req.caller, req.id);
-
-                return res;
-            } catch (e) {
-                throw e;
-            }
+            return makeRequest(req.caller, req.id);
         },
         [createRequest, makeRequest]
     );
