@@ -18,21 +18,23 @@ export const StrategySwitch: VFC<IStrategySwitchProps> = ({
         onToggle(deprecated);
     };
 
+    const title = deprecated
+        ? 'Excluded from strategy list'
+        : 'Included in strategy list';
+
     return (
         <Tooltip
-            title={
-                deprecated
-                    ? 'Excluded from strategy list'
-                    : 'Included in strategy list'
-            }
+            title={disabled ? 'You cannot disable default strategy' : title}
             arrow
         >
-            <PermissionSwitch
-                checked={!deprecated}
-                permission={UPDATE_STRATEGY}
-                onClick={onClick}
-                disabled={disabled}
-            />
+            <span>
+                <PermissionSwitch
+                    checked={!deprecated}
+                    permission={UPDATE_STRATEGY}
+                    onClick={onClick}
+                    disabled={disabled}
+                />
+            </span>
         </Tooltip>
     );
 };

@@ -10,16 +10,12 @@ interface IEnvironmentRowProps {
 }
 
 export const EnvironmentRow = ({ row, moveListItem }: IEnvironmentRowProps) => {
-    const [dragItemRef, isDragging] = useDragItem(row.index, moveListItem);
+    const dragItemRef = useDragItem(row.index, moveListItem);
     const { searchQuery } = useSearchHighlightContext();
     const draggable = !searchQuery;
 
     return (
-        <TableRow
-            hover
-            ref={draggable ? dragItemRef : undefined}
-            data-dragging={isDragging}
-        >
+        <TableRow hover ref={draggable ? dragItemRef : undefined}>
             {row.cells.map((cell: any) => (
                 <TableCell {...cell.getCellProps()}>
                     {cell.render('Cell')}

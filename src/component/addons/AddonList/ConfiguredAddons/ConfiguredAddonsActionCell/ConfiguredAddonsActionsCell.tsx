@@ -1,4 +1,5 @@
 import { Edit, Delete } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
@@ -34,11 +35,13 @@ export const ConfiguredAddonsActionsCell = ({
 
     return (
         <ActionCell>
-            <PermissionSwitch
-                permission={UPDATE_ADDON}
-                checked={isEnabled}
-                onClick={onClick}
-            />
+            <Tooltip title={isEnabled ? 'Disable' : 'Enable'} arrow>
+                <PermissionSwitch
+                    permission={UPDATE_ADDON}
+                    checked={isEnabled}
+                    onClick={onClick}
+                />
+            </Tooltip>
             <ActionCell.Divider />
             <PermissionIconButton
                 permission={UPDATE_ADDON}

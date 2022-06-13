@@ -9,15 +9,10 @@ import AccessContext from 'contexts/AccessContext';
 
 const DragIcon = styled(IconButton)(
     ({ theme }) => `
-    padding: ${theme.spacing(0, 1, 0, 0)};
-    cursor: inherit;
-    color: ${theme.palette.grey[500]};
-    transition: color 0.2s ease-in-out;
-
-    [data-dragging=true] & {
-        color: ${theme.palette.grey[700]};
-    }
-`
+        padding: ${theme.spacing(0, 1, 0, 0)};
+        cursor: inherit;
+        transition: color 0.2s ease-in-out;
+    `
 );
 
 export const EnvironmentIconCell: VFC = () => {
@@ -33,7 +28,7 @@ export const EnvironmentIconCell: VFC = () => {
             <ConditionallyRender
                 condition={enableDragAndDrop}
                 show={
-                    <DragIcon size="large" disableRipple>
+                    <DragIcon size="large" disableRipple disabled>
                         <DragIndicator
                             titleAccess="Drag to reorder"
                             cursor="grab"
