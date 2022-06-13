@@ -131,9 +131,9 @@ export const EnvironmentActionCell = ({
                         }
                         arrow
                     >
-                        <span id={editId}>
+                        <span id={editId} role="tooltip">
                             <IconButton
-                                aria-describedby={editId}
+                                aria-labelledby={editId}
                                 disabled={environment.protected}
                                 onClick={() => {
                                     navigate(
@@ -160,9 +160,9 @@ export const EnvironmentActionCell = ({
                         describeChild
                         arrow
                     >
-                        <span id={deleteId}>
+                        <span id={deleteId} role="tooltip">
                             <IconButton
-                                aria-describedby={deleteId}
+                                aria-labelledby={deleteId}
                                 disabled={environment.protected}
                                 onClick={() => setDeleteModal(true)}
                                 size="large"
