@@ -76,7 +76,7 @@ const InvoiceList = () => {
                                         <TableCell
                                             style={{ textAlign: 'left' }}
                                         >
-                                            {item.amountFomratted}
+                                            {item.amountFormatted}
                                         </TableCell>
                                         <TableCell
                                             style={{ textAlign: 'left' }}
