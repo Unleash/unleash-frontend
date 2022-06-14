@@ -2,6 +2,7 @@ import { VFC } from 'react';
 import PermissionSwitch from 'component/common/PermissionSwitch/PermissionSwitch';
 import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import { Tooltip } from '@mui/material';
+import { useId } from 'hooks/useId';
 
 interface IStrategySwitchProps {
     deprecated: boolean;
@@ -17,6 +18,7 @@ export const StrategySwitch: VFC<IStrategySwitchProps> = ({
     const onClick = () => {
         onToggle(deprecated);
     };
+    const id = useId();
 
     const title = deprecated
         ? 'Excluded from strategy list'
@@ -27,14 +29,14 @@ export const StrategySwitch: VFC<IStrategySwitchProps> = ({
             title={disabled ? 'You cannot disable default strategy' : title}
             arrow
         >
-            <span>
+            <div id={id} role="tooltip">
                 <PermissionSwitch
                     checked={!deprecated}
                     permission={UPDATE_STRATEGY}
                     onClick={onClick}
                     disabled={disabled}
                 />
-            </span>
+            </div>
         </Tooltip>
     );
 };
