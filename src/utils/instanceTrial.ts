@@ -29,7 +29,9 @@ export const formatTrialExpirationWarning = (
         differenceInDays(trialExpiry, new Date()) <=
         TRIAL_EXPIRATION_WARNING_DAYS_THRESHOLD
     ) {
-        return formatDistanceToNowStrict(trialExpiry);
+        return formatDistanceToNowStrict(trialExpiry, {
+            roundingMethod: 'floor',
+        });
     }
 };
 

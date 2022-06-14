@@ -46,14 +46,21 @@ test('formatTrialExpirationWarning', () => {
         formatTrialExpirationWarning({
             plan: InstancePlan.UNKNOWN,
             state: InstanceState.TRIAL,
-            trialExpiry: addHours(new Date(), 2).toISOString(),
+            trialExpiry: addHours(new Date(), 23).toISOString(),
         })
-    ).toEqual('2 hours');
+    ).toEqual('23 hours');
     expect(
         formatTrialExpirationWarning({
             plan: InstancePlan.UNKNOWN,
             state: InstanceState.TRIAL,
-            trialExpiry: addHours(new Date(), 24).toISOString(),
+            trialExpiry: addHours(new Date(), 25).toISOString(),
         })
     ).toEqual('1 day');
+    expect(
+        formatTrialExpirationWarning({
+            plan: InstancePlan.UNKNOWN,
+            state: InstanceState.TRIAL,
+            trialExpiry: addHours(new Date(), 24 * 11 - 1).toISOString(),
+        })
+    ).toEqual('10 days');
 });
