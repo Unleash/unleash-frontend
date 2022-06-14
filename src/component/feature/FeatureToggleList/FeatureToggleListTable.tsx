@@ -97,7 +97,7 @@ const columns = [
     },
 ];
 
-const defaultSort: SortingRule<string> = { id: 'createdAt', desc: true };
+const defaultSort: SortingRule<string> = { id: 'createdAt' };
 
 const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
     'FeatureToggleListTable:v1',
