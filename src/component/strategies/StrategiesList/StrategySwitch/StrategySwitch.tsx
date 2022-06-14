@@ -27,6 +27,7 @@ export const StrategySwitch: VFC<IStrategySwitchProps> = ({
     return (
         <Tooltip
             title={disabled ? 'You cannot disable default strategy' : title}
+            describeChild
             arrow
         >
             <div id={id} role="tooltip">

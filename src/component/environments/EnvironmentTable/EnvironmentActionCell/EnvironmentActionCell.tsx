@@ -96,8 +96,8 @@ export const EnvironmentActionCell = ({
     };
 
     const toggleIconTooltip = environment.enabled
-        ? 'Disable environment'
-        : 'Enable environment';
+        ? `Disable environment ${environment.name}`
+        : `Enable environment ${environment.name}`;
 
     const editId = useId();
     const deleteId = useId();
@@ -108,7 +108,7 @@ export const EnvironmentActionCell = ({
                 condition={updatePermission}
                 show={
                     <>
-                        <Tooltip title={toggleIconTooltip} arrow>
+                        <Tooltip title={toggleIconTooltip} arrow describeChild>
                             <PermissionSwitch
                                 permission={UPDATE_ENVIRONMENT}
                                 checked={environment.enabled}
@@ -157,6 +157,7 @@ export const EnvironmentActionCell = ({
                                 ? 'You cannot delete protected environment'
                                 : 'Delete environment'
                         }
+                        describeChild
                         arrow
                     >
                         <span id={deleteId}>

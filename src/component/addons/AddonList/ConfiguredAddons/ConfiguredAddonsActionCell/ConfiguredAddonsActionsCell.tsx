@@ -35,7 +35,15 @@ export const ConfiguredAddonsActionsCell = ({
 
     return (
         <ActionCell>
-            <Tooltip title={isEnabled ? 'Disable' : 'Enable'} arrow>
+            <Tooltip
+                title={
+                    isEnabled
+                        ? `Disable addon ${original.provider}`
+                        : `Enable addon ${original.provider}`
+                }
+                arrow
+                describeChild
+            >
                 <PermissionSwitch
                     permission={UPDATE_ADDON}
                     checked={isEnabled}
