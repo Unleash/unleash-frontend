@@ -68,7 +68,7 @@ const PermissionButton: React.FC<IPermissionButtonProps> = ({
             title={formatAccessText(access, tooltipProps?.title)}
             arrow
         >
-            <span id={id} role="tooltip">
+            <span id={id}>
                 <Button
                     onClick={onClick}
                     disabled={disabled || !access}

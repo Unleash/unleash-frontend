@@ -18,7 +18,7 @@ export const FeatureStrategyIcon = ({
     return (
         <StyledIcon>
             <Tooltip title={formatStrategyName(strategyName)} arrow>
-                <div id={id} role="tooltip">
+                <div id={id}>
                     <Icon aria-labelledby={id} />
                 </div>
             </Tooltip>

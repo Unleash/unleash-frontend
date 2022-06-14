@@ -74,7 +74,6 @@ exports[`renders an empty list correctly 1`] = `
               />
               <span
                 id="useId-0"
-                role="tooltip"
               >
                 <button
                   aria-labelledby="useId-0"
@@ -314,7 +313,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-1"
@@ -365,7 +363,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-2"
@@ -486,7 +483,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-3"
@@ -537,7 +533,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-4"
@@ -658,7 +653,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-5"
@@ -709,7 +703,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-6"
@@ -830,7 +823,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-7"
@@ -881,7 +873,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-8"
@@ -1002,7 +993,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-9"
@@ -1053,7 +1043,6 @@ exports[`renders an empty list correctly 1`] = `
                     onMouseOver={[Function]}
                     onTouchEnd={[Function]}
                     onTouchStart={[Function]}
-                    role="tooltip"
                   >
                     <button
                       aria-labelledby="useId-10"

@@ -131,7 +131,7 @@ export const EnvironmentActionCell = ({
                         }
                         arrow
                     >
-                        <span id={editId} role="tooltip">
+                        <span id={editId}>
                             <IconButton
                                 aria-labelledby={editId}
                                 disabled={environment.protected}
@@ -160,7 +160,7 @@ export const EnvironmentActionCell = ({
                         describeChild
                         arrow
                     >
-                        <span id={deleteId} role="tooltip">
+                        <span id={deleteId}>
                             <IconButton
                                 aria-labelledby={deleteId}
                                 disabled={environment.protected}
