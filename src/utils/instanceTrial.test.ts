@@ -3,7 +3,7 @@ import {
     formatTrialExpirationWarning,
 } from 'utils/instanceTrial';
 import { InstancePlan, InstanceState } from 'interfaces/instance';
-import { subHours, addHours } from 'date-fns';
+import { subHours, addHours, addMinutes, subMinutes } from 'date-fns';
 
 test.each([
     undefined,
@@ -39,14 +39,14 @@ test('formatTrialExpirationWarning', () => {
         formatTrialExpirationWarning({
             plan: InstancePlan.UNKNOWN,
             state: InstanceState.TRIAL,
-            trialExpiry: subHours(new Date(), 1).toISOString(),
+            trialExpiry: subMinutes(new Date(), 1).toISOString(),
         })
     ).toEqual(undefined);
     expect(
         formatTrialExpirationWarning({
             plan: InstancePlan.UNKNOWN,
             state: InstanceState.TRIAL,
-            trialExpiry: addHours(new Date(), 23).toISOString(),
+            trialExpiry: addMinutes(new Date(), 23 * 60 + 1).toISOString(),
         })
     ).toEqual('23 hours');
     expect(
