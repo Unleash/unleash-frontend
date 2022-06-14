@@ -4,6 +4,7 @@ export const useStyles = makeStyles<{
     rowHeight: 'auto' | 'standard' | 'dense' | 'compact' | number;
 }>()((theme, { rowHeight }) => ({
     table: {
+        position: 'relative',
         '& tbody tr': {
             height:
                 {

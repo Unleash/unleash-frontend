@@ -380,7 +380,7 @@ export const ProjectFeatureToggles = ({
         rowHeight,
         20
     );
-
+    const tableHeight = rowHeight * rows.length + theme.shape.tableRowHeightCompact;
     return (
         <PageContent
             isLoading={loading}
@@ -429,7 +429,7 @@ export const ProjectFeatureToggles = ({
             }
         >
             <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()} rowHeight={rowHeight}>
+                <Table {...getTableProps()} rowHeight={rowHeight} style={{height: tableHeight}}>
                     <SortableTableHeader
                         // @ts-expect-error -- verify after `react-table` v8
                         headerGroups={headerGroups}
@@ -438,12 +438,11 @@ export const ProjectFeatureToggles = ({
                     />
                     <TableBody
                         {...getTableBodyProps()}
-                        style={{
-                            height: `${rowHeight * rows.length}px`,
-                            position: 'relative',
-                        }}
                     >
                         {rows.map((row, index) => {
+                            const top =
+                                index * rowHeight +
+                                theme.shape.tableRowHeightCompact;
                             const isVirtual =
                                 index < firstRenderedIndex ||
                                 index > lastRenderedIndex;
@@ -459,7 +458,7 @@ export const ProjectFeatureToggles = ({
                                     {...row.getRowProps()}
                                     className={styles.row}
                                     style={{
-                                        top: `${index * rowHeight}px`,
+                                        top,
                                         display: 'flex',
                                     }}
                                 >

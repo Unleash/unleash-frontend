@@ -91,7 +91,7 @@ const EditProject = () => {
                 clearErrors={clearErrors}
                 validateProjectId={validateProjectId}
             >
-                <UpdateButton permission={UPDATE_PROJECT} />
+                <UpdateButton projectId={projectId} permission={UPDATE_PROJECT} />
             </ProjectForm>
         </FormTemplate>
     );
