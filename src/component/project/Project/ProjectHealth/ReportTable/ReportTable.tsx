@@ -46,11 +46,20 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    const data: IReportTableRow[] = useMemo(() => {
-        return features.map(feature => {
-            return createReportTableRow(projectId, feature);
-        });
-    }, [projectId, features]);
+    const data: IReportTableRow[] = useMemo<IReportTableRow[]>(
+        () =>
+            features.map(report => ({
+                project: projectId,
+                name: report.name,
+                type: report.type,
+                stale: report.stale,
+                status: formatStatus(report),
+                lastSeenAt: report.lastSeenAt,
+                createdAt: report.createdAt,
+                expiredAt: formatExpiredAt(report),
+            })),
+        [projectId, features]
+    );
 
     const initialState = useMemo(
         () => ({
@@ -147,22 +156,6 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
             />
         </PageContent>
     );
-};
-
-const createReportTableRow = (
-    projectId: string,
-    report: IFeatureToggleListItem
-): IReportTableRow => {
-    return {
-        project: projectId,
-        name: report.name,
-        type: report.type,
-        stale: report.stale,
-        status: formatStatus(report),
-        lastSeenAt: report.lastSeenAt,
-        createdAt: report.createdAt,
-        expiredAt: formatExpiredAt(report),
-    };
 };
 
 const COLUMNS = [
