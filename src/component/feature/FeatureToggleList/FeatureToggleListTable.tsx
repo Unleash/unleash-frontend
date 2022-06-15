@@ -29,6 +29,7 @@ import { FeatureStaleCell } from './FeatureStaleCell/FeatureStaleCell';
 import { useStyles } from './styles';
 import { useSearch } from 'hooks/useSearch';
 import { Search } from 'component/common/Search/Search';
+import { VirtualizedTable } from './VirtualizedTable';
 
 export const featuresPlaceholder: FeatureSchema[] = Array(15).fill({
     name: 'Name of the feature',
@@ -253,54 +254,11 @@ export const FeatureToggleListTable: VFC = () => {
             }
         >
             <SearchHighlightProvider value={getSearchText(searchValue)}>
-                <Table
-                    {...getTableProps()}
-                    rowHeight={rowHeight}
-                    style={{ height: tableHeight }}
-                >
-                    <SortableTableHeader headerGroups={headerGroups} flex />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map((row, index) => {
-                            const top =
-                                index * rowHeight +
-                                theme.shape.tableRowHeightCompact;
-
-                            const isVirtual =
-                                index < firstRenderedIndex ||
-                                index > lastRenderedIndex;
-
-                            if (isVirtual) {
-                                return null;
-                            }
-
-                            prepareRow(row);
-                            return (
-                                <TableRow
-                                    hover
-                                    {...row.getRowProps()}
-                                    key={row.id}
-                                    className={classes.row}
-                                    style={{ display: 'flex', top }}
-                                >
-                                    {row.cells.map(cell => (
-                                        <TableCell
-                                            {...cell.getCellProps({
-                                                style: {
-                                                    flex: cell.column.minWidth
-                                                        ? '1 0 auto'
-                                                        : undefined,
-                                                },
-                                            })}
-                                            className={classes.cell}
-                                        >
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
+                <VirtualizedTable
+                    rows={rows}
+                    headerGroups={headerGroups}
+                    prepareRow={prepareRow}
+                />
             </SearchHighlightProvider>
             <ConditionallyRender
                 condition={rows.length === 0}
