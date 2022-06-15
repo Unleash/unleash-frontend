@@ -4,7 +4,7 @@ import {
     getDiffInDays,
     expired,
     toggleExpiryByTypeMap,
-} from 'component/Reporting/utils';
+} from 'component/project/Project/ProjectHealth/ReportTable/utils';
 import { subDays, parseISO } from 'date-fns';
 
 export const formatExpiredAt = (

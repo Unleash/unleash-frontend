@@ -1,31 +1,30 @@
+import { useMemo, useEffect } from 'react';
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
 import {
     SortableTableHeader,
+    Table,
+    TableBody,
     TableCell,
     TablePlaceholder,
+    TableRow,
 } from 'component/common/Table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { useSortBy, useGlobalFilter, useTable } from 'react-table';
-import { Table, TableBody, TableRow, useMediaQuery } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
 import { FeatureNameCell } from 'component/common/Table/cells/FeatureNameCell/FeatureNameCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
-import { ReportExpiredCell } from 'component/Reporting/ReportExpiredCell/ReportExpiredCell';
-import { ReportStatusCell } from 'component/Reporting/ReportStatusCell/ReportStatusCell';
-import { useMemo, useEffect } from 'react';
-import {
-    formatStatus,
-    ReportingStatus,
-} from 'component/Reporting/ReportStatusCell/formatStatus';
-import { formatExpiredAt } from 'component/Reporting/ReportExpiredCell/formatExpiredAt';
 import { FeatureStaleCell } from 'component/feature/FeatureToggleList/FeatureStaleCell/FeatureStaleCell';
-import theme from 'themes/theme';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
+import { ReportExpiredCell } from './ReportExpiredCell/ReportExpiredCell';
+import { ReportStatusCell } from './ReportStatusCell/ReportStatusCell';
+import { formatStatus, ReportingStatus } from './ReportStatusCell/formatStatus';
+import { formatExpiredAt } from './ReportExpiredCell/formatExpiredAt';
 
 interface IReportTableProps {
     projectId: string;
@@ -44,6 +43,7 @@ export interface IReportTableRow {
 }
 
 export const ReportTable = ({ projectId, features }: IReportTableProps) => {
+    const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const data: IReportTableRow[] = useMemo(() => {

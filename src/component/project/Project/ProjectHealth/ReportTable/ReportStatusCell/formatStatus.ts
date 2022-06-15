@@ -1,5 +1,8 @@
 import { IFeatureToggleListItem } from 'interfaces/featureToggle';
-import { getDiffInDays, expired } from 'component/Reporting/utils';
+import {
+    getDiffInDays,
+    expired,
+} from 'component/project/Project/ProjectHealth/ReportTable/utils';
 import { PERMISSION, KILLSWITCH } from 'constants/featureToggleTypes';
 import { parseISO } from 'date-fns';
 

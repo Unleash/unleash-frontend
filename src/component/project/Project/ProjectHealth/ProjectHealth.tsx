@@ -1,9 +1,9 @@
 import { useHealthReport } from 'hooks/api/getters/useHealthReport/useHealthReport';
 import ApiError from 'component/common/ApiError/ApiError';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { ReportCard } from 'component/Reporting/ReportCard/ReportCard';
 import { usePageTitle } from 'hooks/usePageTitle';
-import { ReportTable } from 'component/Reporting/ReportTable/ReportTable';
+import { ReportCard } from './ReportTable/ReportCard/ReportCard';
+import { ReportTable } from './ReportTable/ReportTable';
 
 interface IProjectHealthProps {
     projectId: string;
