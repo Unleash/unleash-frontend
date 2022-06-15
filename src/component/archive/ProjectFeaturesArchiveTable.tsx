@@ -3,7 +3,7 @@ import { SortingRule } from 'react-table';
 import { useProjectFeaturesArchive } from 'hooks/api/getters/useProjectFeaturesArchive/useProjectFeaturesArchive';
 import { createLocalStorage } from 'utils/createLocalStorage';
 
-const defaultSort: SortingRule<string> = { id: 'archivedAt', desc: true };
+const defaultSort: SortingRule<string> = { id: 'archivedAt' };
 
 interface IProjectFeaturesTable {
     projectId: string;
