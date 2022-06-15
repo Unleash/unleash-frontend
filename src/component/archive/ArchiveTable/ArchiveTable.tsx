@@ -152,7 +152,7 @@ export const ArchiveTable = ({
                   ]
                 : []),
             {
-                Header: 'Status',
+                Header: 'State',
                 accessor: 'stale',
                 Cell: FeatureStaleCell,
                 sortType: 'boolean',
