@@ -107,7 +107,7 @@ export const ArchiveTable = ({
                 align: 'center',
             },
             {
-                Header: 'Feature toggle name',
+                Header: 'Name',
                 accessor: 'name',
                 searchable: true,
                 minWidth: 100,
