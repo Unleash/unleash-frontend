@@ -166,7 +166,6 @@ export const ArchiveTable = ({
                 align: 'center',
                 maxWidth: 85,
                 canSort: false,
-                disableGlobalFilter: true,
                 Cell: ({ row: { original } }: any) => (
                     <ReviveArchivedFeatureCell
                         project={original.project}
@@ -339,21 +338,23 @@ export const ArchiveTable = ({
                 </Table>
             </SearchHighlightProvider>
             <ConditionallyRender
-                condition={rows.length === 0 && searchValue?.length > 0}
-                show={
-                    <TablePlaceholder>
-                        No feature toggles found matching &ldquo;
-                        {searchValue}&rdquo;
-                    </TablePlaceholder>
-                }
-            />
-            <ConditionallyRender
-                condition={rows.length === 0 && searchValue?.length === 0}
-                show={
-                    <TablePlaceholder>
-                        None of the feature toggles where archived yet.
-                    </TablePlaceholder>
-                }
+                condition={rows.length === 0}
+                show={() => (
+                    <ConditionallyRender
+                        condition={searchValue?.length > 0}
+                        show={
+                            <TablePlaceholder>
+                                No feature toggles found matching &ldquo;
+                                {searchValue}&rdquo;
+                            </TablePlaceholder>
+                        }
+                        elseShow={
+                            <TablePlaceholder>
+                                None of the feature toggles were archived yet.
+                            </TablePlaceholder>
+                        }
+                    />
+                )}
             />
         </PageContent>
     );
