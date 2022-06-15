@@ -44,7 +44,9 @@ export interface IReportTableRow {
 
 export const ReportTable = ({ projectId, features }: IReportTableProps) => {
     const theme = useTheme();
+    const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
     const data: IReportTableRow[] = useMemo<IReportTableRow[]>(
         () =>
@@ -94,26 +96,32 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
 
     useEffect(() => {
         const hiddenColumns = [];
+        if (isMediumScreen) {
+            hiddenColumns.push('createdAt');
+        }
         if (isSmallScreen) {
-            hiddenColumns.push('createdAt', 'expiredAt');
+            hiddenColumns.push('expiredAt', 'lastSeenAt');
+        }
+        if (isExtraSmallScreen) {
+            hiddenColumns.push('stale');
         }
         setHiddenColumns(hiddenColumns);
-    }, [setHiddenColumns, isSmallScreen]);
-
-    const header = (
-        <PageHeader
-            title="Overview"
-            actions={
-                <Search
-                    initialValue={globalFilter}
-                    onChange={setGlobalFilter}
-                />
-            }
-        />
-    );
+    }, [setHiddenColumns, isSmallScreen, isMediumScreen, isExtraSmallScreen]);
 
     return (
-        <PageContent header={header}>
+        <PageContent
+            header={
+                <PageHeader
+                    titleElement="Overview"
+                    actions={
+                        <Search
+                            initialValue={globalFilter}
+                            onChange={setGlobalFilter}
+                        />
+                    }
+                />
+            }
+        >
             <SearchHighlightProvider value={globalFilter}>
                 <Table {...getTableProps()}>
                     <SortableTableHeader headerGroups={headerGroups} />
@@ -184,7 +192,7 @@ const COLUMNS = [
         Cell: FeatureNameCell,
     },
     {
-        Header: 'Created on',
+        Header: 'Created',
         accessor: 'createdAt',
         sortType: 'date',
         Cell: DateCell,

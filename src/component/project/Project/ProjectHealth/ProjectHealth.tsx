@@ -7,13 +7,16 @@ import { ReportTable } from './ReportTable/ReportTable';
 
 interface IProjectHealthProps {
     projectId: string;
+    projectName: string;
 }
 
-const ProjectHealth = ({ projectId }: IProjectHealthProps) => {
-    usePageTitle('Project health');
+const ProjectHealth = ({ projectId, projectName }: IProjectHealthProps) => {
+    usePageTitle(`Project health – ${projectName}`);
 
-    const { healthReport, refetchHealthReport, error } =
-        useHealthReport(projectId);
+    const { healthReport, refetchHealthReport, error } = useHealthReport(
+        projectId,
+        { refreshInterval: 15 * 1000 }
+    );
 
     if (!healthReport) {
         return null;

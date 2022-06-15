@@ -406,7 +406,7 @@ export const ProjectFeatureToggles = ({
             header={
                 <PageHeader
                     className={styles.title}
-                    title={`Feature toggles (${rows.length})`}
+                    titleElement={`Feature toggles (${rows.length})`}
                     actions={
                         <>
                             <ConditionallyRender

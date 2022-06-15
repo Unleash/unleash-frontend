@@ -264,7 +264,7 @@ export const ArchiveTable = ({
             isLoading={loading}
             header={
                 <PageHeader
-                    title={`${title} (${
+                    titleElement={`${title} (${
                         rows.length < data.length
                             ? `${rows.length} of ${data.length}`
                             : data.length
