@@ -180,7 +180,6 @@ const COLUMNS = [
     {
         Header: 'Name',
         accessor: 'name',
-        maxWidth: '60%',
         sortType: 'alphanumeric',
         Cell: FeatureNameCell,
         minWidth: 120,
@@ -205,7 +204,7 @@ const COLUMNS = [
         id: 'status',
         Cell: ReportStatusCell,
         disableGlobalFilter: true,
-        maxWidth: 250,
+        width: 180,
     },
     {
         Header: 'State',
