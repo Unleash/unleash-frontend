@@ -7,12 +7,18 @@ import {
     TableCell,
     TablePlaceholder,
     TableRow,
+    VirtualizedTable,
 } from 'component/common/Table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
-import { useSortBy, useGlobalFilter, useTable } from 'react-table';
+import {
+    useSortBy,
+    useGlobalFilter,
+    useTable,
+    useFlexLayout,
+} from 'react-table';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
@@ -72,8 +78,6 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
     );
 
     const {
-        getTableProps,
-        getTableBodyProps,
         headerGroups,
         rows,
         prepareRow,
@@ -91,6 +95,7 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
             disableSortRemove: true,
         },
         useGlobalFilter,
+        useFlexLayout,
         useSortBy
     );
 
@@ -123,23 +128,11 @@ export const ReportTable = ({ projectId, features }: IReportTableProps) => {
             }
         >
             <SearchHighlightProvider value={globalFilter}>
-                <Table {...getTableProps()}>
-                    <SortableTableHeader headerGroups={headerGroups} />
-                    <TableBody {...getTableBodyProps()}>
-                        {rows.map(row => {
-                            prepareRow(row);
-                            return (
-                                <TableRow hover {...row.getRowProps()}>
-                                    {row.cells.map(cell => (
-                                        <TableCell {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
+                <VirtualizedTable
+                    headerGroups={headerGroups}
+                    prepareRow={prepareRow}
+                    rows={rows}
+                />
             </SearchHighlightProvider>
             <ConditionallyRender
                 condition={rows.length === 0}
@@ -174,7 +167,7 @@ const COLUMNS = [
         align: 'center',
         Cell: FeatureSeenCell,
         disableGlobalFilter: true,
-        minWidth: 85,
+        maxWidth: 85,
     },
     {
         Header: 'Type',
@@ -182,14 +175,15 @@ const COLUMNS = [
         align: 'center',
         Cell: FeatureTypeCell,
         disableGlobalFilter: true,
-        minWidth: 85,
+        maxWidth: 85,
     },
     {
         Header: 'Name',
         accessor: 'name',
-        width: '60%',
+        maxWidth: '60%',
         sortType: 'alphanumeric',
         Cell: FeatureNameCell,
+        minWidth: 120,
     },
     {
         Header: 'Created',
@@ -197,21 +191,21 @@ const COLUMNS = [
         sortType: 'date',
         Cell: DateCell,
         disableGlobalFilter: true,
-        minWidth: 150,
+        maxWidth: 150,
     },
     {
         Header: 'Expired',
         accessor: 'expiredAt',
         Cell: ReportExpiredCell,
         disableGlobalFilter: true,
-        minWidth: 150,
+        maxWidth: 150,
     },
     {
         Header: 'Status',
         id: 'status',
         Cell: ReportStatusCell,
         disableGlobalFilter: true,
-        minWidth: 200,
+        maxWidth: 200,
     },
     {
         Header: 'State',
@@ -219,6 +213,6 @@ const COLUMNS = [
         sortType: 'boolean',
         Cell: FeatureStaleCell,
         disableGlobalFilter: true,
-        minWidth: 120,
+        maxWidth: 120,
     },
 ];

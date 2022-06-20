@@ -8,7 +8,7 @@ import {
     TableRow,
 } from 'component/common/Table';
 import { useVirtualizedRange } from 'hooks/useVirtualizedRange';
-import { useStyles } from './styles';
+import { useStyles } from './VirtualizedTable.styles';
 import { HeaderGroup, Row } from 'react-table';
 
 interface IVirtualizedTableProps {
@@ -18,6 +18,16 @@ interface IVirtualizedTableProps {
     prepareRow: (row: Row) => void;
 }
 
+/**
+ * READ BEFORE USE
+ *
+ * Virtualized tables require some setup.
+ * With this component all but one columns are fixed width, and one fills remaining space.
+ * Add `maxWidth` to columns that will be static in width, and `minWidth` to the one that should grow.
+ *
+ * Remember to add `useFlexLayout` to `useTable`
+ * (more at: https://react-table-v7.tanstack.com/docs/api/useFlexLayout)
+ */
 export const VirtualizedTable: VFC<IVirtualizedTableProps> = ({
     rowHeight: rowHeightOverride,
     headerGroups,
@@ -34,8 +44,10 @@ export const VirtualizedTable: VFC<IVirtualizedTableProps> = ({
     const [firstRenderedIndex, lastRenderedIndex] =
         useVirtualizedRange(rowHeight);
 
-    const tableHeight =
-        rowHeight * rows.length + theme.shape.tableRowHeightCompact;
+    const tableHeight = useMemo(
+        () => rowHeight * rows.length + theme.shape.tableRowHeightCompact,
+        [rowHeight, rows.length, theme.shape.tableRowHeightCompact]
+    );
 
     return (
         <Table
@@ -57,6 +69,7 @@ export const VirtualizedTable: VFC<IVirtualizedTableProps> = ({
                     }
 
                     prepareRow(row);
+
                     return (
                         <TableRow
                             hover
