@@ -205,7 +205,7 @@ const COLUMNS = [
         id: 'status',
         Cell: ReportStatusCell,
         disableGlobalFilter: true,
-        maxWidth: 200,
+        maxWidth: 250,
     },
     {
         Header: 'State',
