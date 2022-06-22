@@ -122,7 +122,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                                 value={username}
                                 error={Boolean(usernameError)}
                                 helperText={usernameError}
-                                autoComplete="true"
+                                autoComplete="username"
                                 data-testid={LOGIN_EMAIL_ID}
                                 variant="outlined"
                                 size="small"
@@ -136,7 +136,7 @@ const PasswordAuth: VFC<IPasswordAuthProps> = ({ authDetails, redirect }) => {
                                 value={password}
                                 error={Boolean(passwordError)}
                                 helperText={passwordError}
-                                autoComplete="true"
+                                autoComplete="current-password"
                                 data-testid={LOGIN_PASSWORD_ID}
                             />
                             <Button

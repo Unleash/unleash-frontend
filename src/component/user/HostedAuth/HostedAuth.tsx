@@ -130,6 +130,7 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
                                 value={password}
                                 error={Boolean(passwordError)}
                                 helperText={passwordError}
+                                autoComplete="current-password"
                                 data-testid={LOGIN_PASSWORD_ID}
                             />
                             <Grid container>
