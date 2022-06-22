@@ -113,7 +113,7 @@ const HostedAuth: VFC<IHostedAuthProps> = ({ authDetails, redirect }) => {
                                 label="Username or email"
                                 name="username"
                                 id="username"
-                                type="string"
+                                type="text"
                                 onChange={evt => setUsername(evt.target.value)}
                                 value={username}
                                 error={Boolean(usernameError)}
