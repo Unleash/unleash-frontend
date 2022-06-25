@@ -114,7 +114,6 @@ export const CopyFeatureToggle = () => {
                         variant="outlined"
                         size="small"
                         inputRef={inputRef}
-                        required
                     />
                     <FormControlLabel
                         control={
