@@ -9,24 +9,24 @@ import { useThemeStyles } from 'themes/themeStyles';
 import PasswordMatcher from 'component/user/common/ResetPasswordForm/PasswordMatcher/PasswordMatcher';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IUser } from 'interfaces/user';
+import useAdminUsersApi from 'hooks/api/actions/useAdminUsersApi/useAdminUsersApi';
 
 interface IChangePasswordProps {
     showDialog: boolean;
     closeDialog: () => void;
-    changePassword: (userId: number, password: string) => Promise<Response>;
     user: IUser;
 }
 
 const ChangePassword = ({
     showDialog,
     closeDialog,
-    changePassword,
     user,
 }: IChangePasswordProps) => {
     const [data, setData] = useState<Record<string, string>>({});
     const [error, setError] = useState<Record<string, string>>({});
     const [validPassword, setValidPassword] = useState(false);
     const { classes: themeStyles } = useThemeStyles();
+    const { changePassword } = useAdminUsersApi();
 
     const updateField: React.ChangeEventHandler<HTMLInputElement> = event => {
         setError({});
@@ -116,7 +116,8 @@ const ChangePassword = ({
                     label="New password"
                     name="password"
                     type="password"
-                    value={data.password}
+                    value={data.password || ''}
+                    error={error.password !== undefined}
                     helperText={error.password}
                     onChange={updateField}
                     variant="outlined"
@@ -126,7 +127,7 @@ const ChangePassword = ({
                     label="Confirm password"
                     name="confirm"
                     type="password"
-                    value={data.confirm}
+                    value={data.confirm || ''}
                     error={error.confirm !== undefined}
                     helperText={error.confirm}
                     onChange={updateField}
