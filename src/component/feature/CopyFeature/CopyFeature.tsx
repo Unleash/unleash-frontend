@@ -53,9 +53,9 @@ export const CopyFeatureToggle = () => {
     const onSubmit: FormEventHandler = async event => {
         event.preventDefault();
 
-        const nameIsValid = await onValidateName();
+        const isValidName = await onValidateName();
 
-        if (!nameIsValid) {
+        if (!isValidName) {
             return;
         }
 
