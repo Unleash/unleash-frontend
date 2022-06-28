@@ -120,8 +120,6 @@ const ChangePassword = ({
                     name="confirm"
                     type="password"
                     value={data.confirm}
-                    error={error.confirm !== undefined}
-                    helperText={error.confirm}
                     onChange={updateField}
                     variant="outlined"
                     size="small"
