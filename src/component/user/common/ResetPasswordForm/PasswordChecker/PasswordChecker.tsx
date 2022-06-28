@@ -36,7 +36,7 @@ const LOWERCASE_ERROR =
 const REPEATING_CHARACTER_ERROR =
     'The password may not contain sequences of three or more repeated characters.';
 export const PASSWORD_FORMAT_MESSAGE =
-    'The password must be at least 10 characters long, and include an uppercase letter, a lowercase letter, a number, and a symbol.';
+    'The password must be at least 10 characters long and must include an uppercase letter, a lowercase letter, a number, and a symbol.';
 
 const PasswordChecker = ({
     password,
