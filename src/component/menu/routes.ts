@@ -52,6 +52,7 @@ import { SegmentTable } from 'component/segments/SegmentTable/SegmentTable';
 import FlaggedBillingRedirect from 'component/admin/billing/FlaggedBillingRedirect/FlaggedBillingRedirect';
 import { FeaturesArchiveTable } from '../archive/FeaturesArchiveTable';
 import { Billing } from 'component/admin/billing/Billing';
+import { Playground } from 'component/playground/Playground/Playground';
 
 export const routes: IRoute[] = [
     // Splash
@@ -476,6 +477,16 @@ export const routes: IRoute[] = [
         path: '/admin',
         title: 'Admin',
         component: Admin,
+        hidden: false,
+        type: 'protected',
+        menu: {},
+    },
+
+    // Playground
+    {
+        path: '/playground',
+        title: 'Playground',
+        component: Playground,
         hidden: false,
         type: 'protected',
         menu: {},
