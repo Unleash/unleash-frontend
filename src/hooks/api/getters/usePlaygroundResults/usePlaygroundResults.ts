@@ -29,7 +29,12 @@ export const usePlaygroundResults = (): IUsePlaygroundResultsOutput => {
                 enabled: false,
             },
         ],
-        context: {},
+        context: {
+            environment: 'development',
+            userID: '86432135',
+            sessionID: '35435135',
+            remoteAddress: '127.0.0.1'
+        },
     };
 
     return {
