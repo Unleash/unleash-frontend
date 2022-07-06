@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { FormEventHandler, useMemo, useState, VFC } from 'react';
 import {
     Box,
     Button,
@@ -16,6 +16,17 @@ interface IPlaygroundProps {}
 
 export const Playground: VFC<IPlaygroundProps> = () => {
     const theme = useTheme();
+    const [context, setContext] = useState<string>();
+    const [contextObject, setContextObject] = useState<string>();
+    const onSubmit: FormEventHandler<HTMLFormElement> = event => {
+        event.preventDefault();
+
+        try {
+            setContextObject(
+                JSON.stringify(JSON.parse(context || '{}'), null, 2)
+            );
+        } catch (e) {}
+    };
 
     return (
         <PageContent header={<PageHeader title="Unleash playground" />}>
@@ -27,7 +38,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     background: theme.palette.grey[200],
                 }}
             >
-                <Box component="form" sx={{ position: 'relative' }}>
+                <Box component="form" onSubmit={onSubmit}>
                     <Typography
                         sx={{
                             mb: 3,
@@ -44,7 +55,10 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                             borderStyle: 'dashed',
                         }}
                     />
-                    <PlaygroundCodeFieldset />
+                    <PlaygroundCodeFieldset
+                        value={context}
+                        setValue={setContext}
+                    />
                     <Divider
                         variant="fullWidth"
                         sx={{
@@ -53,11 +67,17 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                             borderColor: theme.palette.dividerAlternative,
                         }}
                     />
-                    <Button variant="contained" size="large">
+                    <Button variant="contained" size="large" type="submit">
                         Try configuration
                     </Button>
                 </Box>
             </Paper>
+            {Boolean(contextObject) && (
+                <Box sx={{ p: 4 }}>
+                    <Typography>TODO: Request</Typography>
+                    <pre>{contextObject}</pre>
+                </Box>
+            )}
         </PageContent>
     );
 };

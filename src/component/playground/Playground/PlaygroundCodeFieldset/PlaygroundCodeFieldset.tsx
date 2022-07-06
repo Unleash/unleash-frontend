@@ -1,17 +1,35 @@
-import { useMemo, VFC } from 'react';
 import {
-    Autocomplete,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useMemo,
+    useState,
+    VFC,
+} from 'react';
+import {
     Box,
     Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField,
     Typography,
     useTheme,
 } from '@mui/material';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { debounce } from 'debounce';
 
-interface IPlaygroundCodeFieldsetProps {}
+interface IPlaygroundCodeFieldsetProps {
+    value: string | undefined;
+    setValue: Dispatch<SetStateAction<string | undefined>>;
+}
 
-export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = () => {
+export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
+    value,
+    setValue,
+}) => {
     const theme = useTheme();
     const { context } = useUnleashContext();
     const contextOptions = useMemo(
@@ -21,6 +39,49 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = () => {
                 .map(({ name }) => name),
         [context]
     );
+    const [error, setError] = useState<string>();
+    const debounceSetError = useMemo(
+        () =>
+            debounce((input?: string) => {
+                if (!input) {
+                    return setError(undefined);
+                }
+
+                try {
+                    JSON.parse(input);
+                } catch (error: unknown) {
+                    return setError(formatUnknownError(error));
+                }
+
+                return setError(undefined);
+            }, 250),
+        [setError]
+    );
+
+    useEffect(() => {
+        debounceSetError(value);
+    }, [debounceSetError, value]);
+
+    const [contextField, setContextField] = useState<string>('');
+    const [contextValue, setContextValue] = useState<string>('');
+    const onAddField = () => {
+        try {
+            const currentValue = JSON.parse(value || '{}');
+            setValue(
+                JSON.stringify(
+                    {
+                        ...currentValue,
+                        [contextField]: contextValue,
+                    },
+                    null,
+                    2
+                )
+            );
+        } catch (error) {
+            // Shouldn't happened, because button is disabled when there is an error
+            // but needed because the error is debounced
+        }
+    };
 
     return (
         <Box>
@@ -32,6 +93,8 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = () => {
                 Unleash context
             </Typography>
             <TextField
+                error={Boolean(error)}
+                helperText={error}
                 autoCorrect="off"
                 spellCheck={false}
                 multiline
@@ -48,29 +111,51 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = () => {
                 )}
                 fullWidth
                 InputLabelProps={{ shrink: true }}
+                InputProps={{ minRows: 5 }}
+                value={value}
+                onChange={event => setValue(event.target.value)}
             />
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}>
-                <Autocomplete
-                    disablePortal
-                    id="context-field"
-                    options={contextOptions}
-                    sx={{ width: 300, maxWidth: '100%' }}
-                    renderInput={params => (
-                        <TextField {...params} label="Context field" />
-                    )}
-                    size="small"
-                    // value={}
-                    // onChange={}
-                />
+                <FormControl>
+                    <InputLabel id="context-field-label" size="small">
+                        Context field
+                    </InputLabel>
+                    <Select
+                        label="Context field"
+                        labelId="context-field-label"
+                        id="context-field"
+                        value={contextField}
+                        onChange={event =>
+                            setContextField(event.target.value || '')
+                        }
+                        variant="outlined"
+                        size="small"
+                        sx={{ width: 300, maxWidth: '100%' }}
+                    >
+                        {contextOptions.map(option => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     label="Value"
                     id="context-value"
                     sx={{ width: 300, maxWidth: '100%' }}
                     size="small"
-                    // value={}
-                    // onChange={}
+                    value={contextValue}
+                    onChange={event =>
+                        setContextValue(event.target.value || '')
+                    }
                 />
-                <Button variant="outlined">Add context field</Button>
+                <Button
+                    variant="outlined"
+                    disabled={!contextField || Boolean(error)}
+                    onClick={onAddField}
+                >
+                    Add context field
+                </Button>
             </Box>
         </Box>
     );
