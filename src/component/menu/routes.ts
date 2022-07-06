@@ -174,6 +174,16 @@ export const routes: IRoute[] = [
         menu: { mobile: true },
     },
 
+    // Playground
+    {
+        path: '/playground',
+        title: 'Playground',
+        component: Playground,
+        hidden: false,
+        type: 'protected',
+        menu: { mobile: true },
+    },
+
     // Applications
     {
         path: '/applications/:name',
@@ -477,16 +487,6 @@ export const routes: IRoute[] = [
         path: '/admin',
         title: 'Admin',
         component: Admin,
-        hidden: false,
-        type: 'protected',
-        menu: {},
-    },
-
-    // Playground
-    {
-        path: '/playground',
-        title: 'Playground',
-        component: Playground,
         hidden: false,
         type: 'protected',
         menu: {},
