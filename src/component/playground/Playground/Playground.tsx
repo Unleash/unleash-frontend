@@ -4,13 +4,13 @@ import {
     Button,
     Divider,
     Paper,
-    TextField,
     Typography,
     useTheme,
 } from '@mui/material';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PlaygroundConnectionFieldset } from './PlaygroundConnectionFieldset/PlaygroundConnectionFieldset';
+import { PlaygroundCodeFieldset } from './PlaygroundCodeFieldset/PlaygroundCodeFieldset';
 
 interface IPlaygroundProps {}
 
@@ -27,7 +27,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     background: theme.palette.grey[200],
                 }}
             >
-                <Box component="form">
+                <Box component="form" sx={{ position: 'relative' }}>
                     <Typography
                         sx={{
                             mb: 3,
@@ -36,27 +36,26 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                         Configure playground
                     </Typography>
                     <PlaygroundConnectionFieldset />
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                        Unleash context
-                    </Typography>
-                    <TextField
-                        autoCorrect="off"
-                        spellCheck={false}
-                        multiline
-                        label="JSON"
-                        defaultValue={JSON.stringify(
-                            {
-                                currentTime: '2022-07-04T14:13:03.929Z',
-                                appName: 'playground',
-                                userId: 'test',
-                            },
-                            null,
-                            2
-                        )}
-                        fullWidth
+                    <Divider
+                        variant="fullWidth"
+                        sx={{
+                            mb: 2,
+                            borderColor: theme.palette.dividerAlternative,
+                            borderStyle: 'dashed',
+                        }}
                     />
-                    <Divider variant="fullWidth" sx={{ m: 3 }} />
-                    <Button variant="contained">Try configuration</Button>
+                    <PlaygroundCodeFieldset />
+                    <Divider
+                        variant="fullWidth"
+                        sx={{
+                            mt: 3,
+                            mb: 2,
+                            borderColor: theme.palette.dividerAlternative,
+                        }}
+                    />
+                    <Button variant="contained" size="large">
+                        Try configuration
+                    </Button>
                 </Box>
             </Paper>
         </PageContent>
