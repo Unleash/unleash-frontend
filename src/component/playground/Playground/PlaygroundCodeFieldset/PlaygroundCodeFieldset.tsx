@@ -17,9 +17,10 @@ import {
     Typography,
     useTheme,
 } from '@mui/material';
+import { debounce } from 'debounce';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { debounce } from 'debounce';
+import useToast from 'hooks/useToast';
 
 interface IPlaygroundCodeFieldsetProps {
     value: string | undefined;
@@ -31,6 +32,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
     setValue,
 }) => {
     const theme = useTheme();
+    const { setToastData } = useToast();
     const { context } = useUnleashContext();
     const contextOptions = useMemo(
         () =>
@@ -78,8 +80,10 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                 )
             );
         } catch (error) {
-            // Shouldn't happened, because button is disabled when there is an error
-            // but needed because the error is debounced
+            setToastData({
+                type: 'error',
+                title: `Error parsing context: ${formatUnknownError(error)}`,
+            });
         }
     };
 
