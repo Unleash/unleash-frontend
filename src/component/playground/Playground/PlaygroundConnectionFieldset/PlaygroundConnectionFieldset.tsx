@@ -23,26 +23,19 @@ export const PlaygroundConnectionFieldset: VFC<
 > = () => {
     const theme = useTheme();
     const { environments } = useEnvironments();
-    const environmentOptions = useMemo(
-        () =>
-            environments
-                .filter(({ enabled }) => Boolean(enabled))
-                .sort((a, b) => a.sortOrder - b.sortOrder)
-                .map(({ name }) => name),
-        [environments]
-    );
+    const environmentOptions = environments
+        .filter(({ enabled }) => Boolean(enabled))
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .map(({ name }) => name);
 
     const { projects: availableProjects = [] } = useProjects();
-    const projectsOptions = useMemo(
-        () => [
-            allOption,
-            ...availableProjects.map(({ name: label, id }) => ({
-                label,
-                id,
-            })),
-        ],
-        [availableProjects]
-    );
+    const projectsOptions = [
+        allOption,
+        ...availableProjects.map(({ name: label, id }) => ({
+            label,
+            id,
+        })),
+    ];
     const [projects, setProjects] = useState<IOption | IOption[]>(allOption);
 
     const onProjectsChange: ComponentProps<typeof Autocomplete>['onChange'] = (
