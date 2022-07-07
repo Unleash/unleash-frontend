@@ -1,5 +1,5 @@
 import { IGroup } from 'interfaces/group';
-import { groups } from '../useGroups/useGroups';
+import { useGroups } from '../useGroups/useGroups';
 // import { FeatureSchema } from 'openapi';
 // import { openApiAdmin } from 'utils/openapiClient';
 // import { useApiGetter } from 'hooks/api/getters/useApiGetter/useApiGetter';
@@ -20,8 +20,10 @@ export const useGroup = (groupId: string): IUseGroupOutput => {
     //     }
     // );
 
+    const { groups } = useGroups();
+
     return {
-        group: groups.find(group => group.id === groupId),
+        group: groups?.find(group => group.id === groupId),
         refetchGroup: () => {},
         loading: false,
         error: undefined,

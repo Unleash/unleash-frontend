@@ -1,6 +1,7 @@
 import { Avatar, styled } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IGroupUser } from 'interfaces/group';
+import { useMemo } from 'react';
 
 const StyledAvatars = styled('div')(({ theme }) => ({
     display: 'inline-flex',
@@ -28,36 +29,38 @@ interface IGroupCardAvatarsProps {
 }
 
 export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
+    const sortedUsers = useMemo(
+        () => users.sort((a, b) => (a.role < b.role ? 1 : -1)),
+        [users]
+    );
     return (
         <StyledAvatars>
-            {users
-                .sort((a, b) => (a.role < b.role ? 1 : -1))
-                .map(user => (
-                    <ConditionallyRender
-                        key={user.id}
-                        condition={user.role === 'member'}
-                        show={
-                            <StyledAvatar
-                                data-loading
-                                alt="Gravatar"
-                                src={user.imageUrl}
-                                title={`${
-                                    user.name || user.email || user.username
-                                } (id: ${user.id})`}
-                            />
-                        }
-                        elseShow={
-                            <StyledOwnerAvatar
-                                data-loading
-                                alt="Gravatar"
-                                src={user.imageUrl}
-                                title={`${
-                                    user.name || user.email || user.username
-                                } (id: ${user.id})`}
-                            />
-                        }
-                    />
-                ))}
+            {sortedUsers.map(user => (
+                <ConditionallyRender
+                    key={user.id}
+                    condition={user.role === 'member'}
+                    show={
+                        <StyledAvatar
+                            data-loading
+                            alt="Gravatar"
+                            src={user.imageUrl}
+                            title={`${
+                                user.name || user.email || user.username
+                            } (id: ${user.id})`}
+                        />
+                    }
+                    elseShow={
+                        <StyledOwnerAvatar
+                            data-loading
+                            alt="Gravatar"
+                            src={user.imageUrl}
+                            title={`${
+                                user.name || user.email || user.username
+                            } (id: ${user.id})`}
+                        />
+                    }
+                />
+            ))}
         </StyledAvatars>
     );
 };
