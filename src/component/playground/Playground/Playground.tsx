@@ -11,6 +11,8 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { PlaygroundConnectionFieldset } from './PlaygroundConnectionFieldset/PlaygroundConnectionFieldset';
 import { PlaygroundCodeFieldset } from './PlaygroundCodeFieldset/PlaygroundCodeFieldset';
+import useToast from 'hooks/useToast';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 interface IPlaygroundProps {}
 
@@ -18,6 +20,8 @@ export const Playground: VFC<IPlaygroundProps> = () => {
     const theme = useTheme();
     const [context, setContext] = useState<string>();
     const [contextObject, setContextObject] = useState<string>();
+    const { setToastData } = useToast();
+
     const onSubmit: FormEventHandler<HTMLFormElement> = event => {
         event.preventDefault();
 
@@ -25,7 +29,12 @@ export const Playground: VFC<IPlaygroundProps> = () => {
             setContextObject(
                 JSON.stringify(JSON.parse(context || '{}'), null, 2)
             );
-        } catch (e) {}
+        } catch (error: unknown) {
+            setToastData({
+                type: 'error',
+                title: `Error parsing context: ${formatUnknownError(error)}`,
+            });
+        }
     };
 
     return (
