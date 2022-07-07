@@ -1,7 +1,7 @@
 import { IUser } from './user';
 
 export interface IGroup {
-    id: number;
+    id: string;
     name: string;
     description: string;
     createdAt: Date;
@@ -9,5 +9,6 @@ export interface IGroup {
 }
 
 export interface IGroupUser extends IUser {
-    role: 'admin' | 'member';
+    role: 'owner' | 'member';
+    joinedAt: Date;
 }

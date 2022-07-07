@@ -1,151 +1,46 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
-import { Link, useMediaQuery, useTheme } from '@mui/material';
-import { Link as RouterLink, useSearchParams } from 'react-router-dom';
-import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
-import { TablePlaceholder, VirtualizedTable } from 'component/common/Table';
 import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
-// import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
-// import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
-// import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/FeatureTypeCell';
-import { FeatureNameCell } from 'component/common/Table/cells/FeatureNameCell/FeatureNameCell';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { useSearchParams } from 'react-router-dom';
+import { IGroup } from 'interfaces/group';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { sortTypes } from 'utils/sortTypes';
-import { createLocalStorage } from 'utils/createLocalStorage';
-import { IGroup } from 'interfaces/group'; // TODO: Delete this and use OpenAPI schema instead
-// import { FeatureSchema } from 'openapi';
-// import { CreateFeatureButton } from '../CreateFeatureButton/CreateFeatureButton';
-import { useSearch } from 'hooks/useSearch';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
+import { Button, Grid, useMediaQuery } from '@mui/material';
+import theme from 'themes/theme';
+import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
+import { TablePlaceholder } from 'component/common/Table';
+import { GroupCard } from './GroupCard/GroupCard';
 
-export const groupsPlaceholder: IGroup[] = Array(15).fill({
-    name: 'Name of the group',
-    description: 'Short description of the group',
-    createdAt: new Date(2022, 1, 1),
-});
+type PageQueryType = Partial<Record<'search', string>>;
 
-export type PageQueryType = Partial<
-    Record<'sort' | 'order' | 'search', string>
->;
-
-const columns = [
-    {
-        Header: 'Name',
-        accessor: 'name',
-        minWidth: 150,
-        Cell: FeatureNameCell,
-        sortType: 'alphanumeric',
-        searchable: true,
-    },
-    {
-        Header: 'Admin',
-        accessor: 'admin',
-        Cell: TextCell,
-        align: 'center',
-        maxWidth: 85,
-    },
-    {
-        Header: 'Users',
-        accessor: 'users',
-        Cell: TextCell,
-        align: 'center',
-        maxWidth: 85,
-    },
-    {
-        Header: 'Created',
-        accessor: 'createdAt',
-        Cell: DateCell,
-        sortType: 'date',
-        maxWidth: 150,
-    },
-    // Always hidden -- for search
-    {
-        accessor: 'description',
-    },
-];
-
-const defaultSort: SortingRule<string> = { id: 'createdAt' };
-
-const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
-    'GroupsList:v1',
-    defaultSort
-);
+const groupsSearch = (group: IGroup, searchValue: string) => {
+    const search = searchValue.toLowerCase();
+    const users = {
+        names: group.users?.map(user => user.name?.toLowerCase() || ''),
+        usernames: group.users?.map(user => user.username?.toLowerCase() || ''),
+        emails: group.users?.map(user => user.email?.toLowerCase() || ''),
+    };
+    return (
+        group.name.toLowerCase().includes(search) ||
+        group.description.toLowerCase().includes(search) ||
+        users.names?.some(name => name.includes(search)) ||
+        users.usernames?.some(username => username.includes(search)) ||
+        users.emails?.some(email => email.includes(search))
+    );
+};
 
 export const GroupsList: VFC = () => {
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
     const { groups = [], loading } = useGroups();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [initialState] = useState(() => ({
-        sortBy: [
-            {
-                id: searchParams.get('sort') || storedParams.id,
-                desc: searchParams.has('order')
-                    ? searchParams.get('order') === 'desc'
-                    : storedParams.desc,
-            },
-        ],
-        hiddenColumns: ['description'],
-        globalFilter: searchParams.get('search') || '',
-    }));
-    const [searchValue, setSearchValue] = useState(initialState.globalFilter);
-
-    const {
-        data: searchedData,
-        getSearchText,
-        getSearchContext,
-    } = useSearch(columns, searchValue, groups);
-
-    const data = useMemo(
-        () =>
-            searchedData?.length === 0 && loading
-                ? groupsPlaceholder
-                : searchedData,
-        [searchedData, loading]
+    const [searchValue, setSearchValue] = useState(
+        searchParams.get('search') || ''
     );
 
-    const {
-        headerGroups,
-        rows,
-        prepareRow,
-        state: { sortBy },
-        setHiddenColumns,
-    } = useTable(
-        {
-            columns,
-            data,
-            initialState,
-            sortTypes,
-            autoResetSortBy: false,
-            disableSortRemove: true,
-            disableMultiSort: true,
-        },
-        useSortBy,
-        useFlexLayout
-    );
-
-    useEffect(() => {
-        const hiddenColumns = ['description'];
-        // if (isMediumScreen) {
-        //     hiddenColumns.push('lastSeenAt', 'stale');
-        // }
-        // if (isSmallScreen) {
-        //     hiddenColumns.push('type', 'createdAt');
-        // }
-        setHiddenColumns(hiddenColumns);
-    }, [setHiddenColumns, isSmallScreen, isMediumScreen]);
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     useEffect(() => {
         const tableState: PageQueryType = {};
-        tableState.sort = sortBy[0].id;
-        if (sortBy[0].desc) {
-            tableState.order = 'desc';
-        }
         if (searchValue) {
             tableState.search = searchValue;
         }
@@ -153,19 +48,20 @@ export const GroupsList: VFC = () => {
         setSearchParams(tableState, {
             replace: true,
         });
-        setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [sortBy, searchValue, setSearchParams]);
+    }, [searchValue, setSearchParams]);
+
+    const data = useMemo(() => {
+        return searchValue
+            ? groups.filter(group => groupsSearch(group, searchValue))
+            : groups;
+    }, [groups, searchValue]);
 
     return (
         <PageContent
             isLoading={loading}
             header={
                 <PageHeader
-                    title={`Groups (${
-                        rows.length < data.length
-                            ? `${rows.length} of ${data.length}`
-                            : data.length
-                    })`}
+                    title={`Groups (${data.length})`}
                     actions={
                         <>
                             <ConditionallyRender
@@ -175,17 +71,18 @@ export const GroupsList: VFC = () => {
                                         <Search
                                             initialValue={searchValue}
                                             onChange={setSearchValue}
-                                            hasFilters
-                                            getSearchContext={getSearchContext}
                                         />
                                         <PageHeader.Divider />
                                     </>
                                 }
                             />
-                            {/* <CreateGroupButton
-                                loading={false}
-                                filter={{ query: '', project: 'default' }}
-                            /> */}
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {}}
+                            >
+                                New group
+                            </Button>
                         </>
                     }
                 >
@@ -195,23 +92,23 @@ export const GroupsList: VFC = () => {
                             <Search
                                 initialValue={searchValue}
                                 onChange={setSearchValue}
-                                hasFilters
-                                getSearchContext={getSearchContext}
                             />
                         }
                     />
                 </PageHeader>
             }
         >
-            <SearchHighlightProvider value={getSearchText(searchValue)}>
-                <VirtualizedTable
-                    rows={rows}
-                    headerGroups={headerGroups}
-                    prepareRow={prepareRow}
-                />
+            <SearchHighlightProvider value={searchValue}>
+                <Grid container spacing={2}>
+                    {data.map(group => (
+                        <Grid key={group.id} item xs={12} md={6}>
+                            <GroupCard group={group} />
+                        </Grid>
+                    ))}
+                </Grid>
             </SearchHighlightProvider>
             <ConditionallyRender
-                condition={rows.length === 0}
+                condition={data.length === 0}
                 show={
                     <ConditionallyRender
                         condition={searchValue?.length > 0}

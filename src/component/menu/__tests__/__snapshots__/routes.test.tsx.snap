@@ -400,6 +400,24 @@ exports[`returns all baseRoutes 1`] = `
   },
   {
     "component": [Function],
+    "menu": {
+      "adminSettings": true,
+    },
+    "parent": "/admin",
+    "path": "/admin/groups",
+    "title": "Groups",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
+    "menu": {},
+    "parent": "/admin",
+    "path": "/admin/groups/:groupId",
+    "title": ":groupId",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
     "flag": "RE",
     "menu": {
       "adminSettings": true,

@@ -54,6 +54,7 @@ import FlaggedBillingRedirect from 'component/admin/billing/FlaggedBillingRedire
 import { FeaturesArchiveTable } from '../archive/FeaturesArchiveTable';
 import { Billing } from 'component/admin/billing/Billing';
 import { Playground } from 'component/playground/Playground/Playground';
+import { Group } from 'component/admin/groups/Group/Group';
 
 export const routes: IRoute[] = [
     // Splash
@@ -444,6 +445,14 @@ export const routes: IRoute[] = [
         menu: { adminSettings: true },
     },
     {
+        path: '/admin/create-user',
+        parent: '/admin',
+        title: 'Users',
+        component: CreateUser,
+        type: 'protected',
+        menu: {},
+    },
+    {
         path: '/admin/groups',
         parent: '/admin',
         title: 'Groups',
@@ -452,10 +461,10 @@ export const routes: IRoute[] = [
         menu: { adminSettings: true },
     },
     {
-        path: '/admin/create-user',
+        path: '/admin/groups/:groupId',
         parent: '/admin',
-        title: 'Users',
-        component: CreateUser,
+        title: ':groupId',
+        component: Group,
         type: 'protected',
         menu: {},
     },
