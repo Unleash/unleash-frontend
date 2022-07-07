@@ -34,13 +34,9 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
     const theme = useTheme();
     const { setToastData } = useToast();
     const { context } = useUnleashContext();
-    const contextOptions = useMemo(
-        () =>
-            context
-                .sort((a, b) => a.sortOrder - b.sortOrder)
-                .map(({ name }) => name),
-        [context]
-    );
+    const contextOptions = context
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .map(({ name }) => name);
     const [error, setError] = useState<string>();
     const debounceSetError = useMemo(
         () =>
