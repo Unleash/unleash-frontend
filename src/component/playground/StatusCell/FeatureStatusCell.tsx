@@ -9,11 +9,15 @@ interface Props {
     enabled: boolean;
 }
 
-export const StatusCell = ({ enabled }: Props) => {
-    const bgColor = enabled ? colors.green['600'] : colors.red['700'];
-    const color = enabled ? colors.green['900'] : colors.red['900'];
+export const FeatureStatusCell = ({ enabled }: Props) => {
+    const bgColor = enabled ? colors.green['100'] : colors.red['200'];
+    const color = enabled ? colors.green['700'] : colors.red['700'];
 
-    const icon = enabled ? <FeatureEnabledIcon /> : <FeatureDisabledIcon />;
+    const icon = enabled ? (
+        <FeatureEnabledIcon stroke={colors.green['600']} stroke-width="0.25" />
+    ) : (
+        <FeatureDisabledIcon stroke={colors.red['700']} stroke-width="0.25" />
+    );
     const label = enabled ? 'True' : 'False';
 
     return (
@@ -21,11 +25,18 @@ export const StatusCell = ({ enabled }: Props) => {
             <Chip
                 icon={icon}
                 label={label}
+                color={enabled ? 'success' : 'error'}
                 sx={{
+                    width: 70,
                     borderRadius: '5px',
                     border: `1px solid ${color}`,
-                    color: color,
                     backgroundColor: bgColor,
+                    ['& .MuiChip-label']: {
+                        color: color,
+                    },
+                    ['& .MuiChip-icon']: {
+                        color: color,
+                    },
                 }}
             />
         </TextCell>

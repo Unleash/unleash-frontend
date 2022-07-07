@@ -17,13 +17,14 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { Search } from 'component/common/Search/Search';
 import { usePlaygroundResults } from '../../../hooks/api/getters/usePlaygroundResults/usePlaygroundResults';
 import { LinkCell } from '../../common/Table/cells/LinkCell/LinkCell';
-import { StatusCell } from '../StatusCell/StatusCell';
+import { FeatureStatusCell } from '../StatusCell/FeatureStatusCell';
 import { useSearchParams } from 'react-router-dom';
 import { useSearch } from '../../../hooks/useSearch';
 import { ContextBanner } from '../ContextBanner/ContextBanner';
 
 export const PlaygroundResultsTable = () => {
-    const { features, context, loading } = usePlaygroundResults();
+    const { features, input, loading } = usePlaygroundResults();
+    const { context } = input;
     const [initialState] = useState({
         sortBy: [{ id: 'name' }],
         hiddenColumns: ['description'],
@@ -93,7 +94,11 @@ export const PlaygroundResultsTable = () => {
         >
             <ConditionallyRender
                 condition={!loading && data.length === 0}
-                show={<TablePlaceholder />}
+                show={() => (
+                    <TablePlaceholder>
+                        None of the feature toggles were evaluated yet.
+                    </TablePlaceholder>
+                )}
                 elseShow={() => (
                     <>
                         <SearchHighlightProvider
@@ -133,14 +138,7 @@ export const PlaygroundResultsTable = () => {
                                     {searchValue}&rdquo;
                                 </TablePlaceholder>
                             }
-                            elseShow={
-                                <TablePlaceholder>
-                                    None of the feature toggles were evaluated
-                                    yet.
-                                </TablePlaceholder>
-                            }
                         />
-                        )
                     </>
                 )}
             />
@@ -181,7 +179,7 @@ const COLUMNS = [
         Header: 'isEnabled',
         accessor: 'enabled',
         maxWidth: 170,
-        Cell: ({ value }: any) => <StatusCell enabled={value} />,
+        Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
     },
     {
         accessor: 'description',

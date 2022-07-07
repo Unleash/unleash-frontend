@@ -5,13 +5,18 @@ export type PlaygroundResultsFeatureSchema = Pick<
     'name' | 'description' | 'project' | 'enabled'
 >;
 
+interface PlaygroundResultsInputSchema {
+    context: object;
+}
+
 export interface IUsePlaygroundResultsOutput {
     features: PlaygroundResultsFeatureSchema[];
-    context?: object;
+    input: PlaygroundResultsInputSchema;
     refetchFeatures: () => void;
     loading: boolean;
     error?: Error;
 }
+1;
 
 export const usePlaygroundResults = (): IUsePlaygroundResultsOutput => {
     const data = {
@@ -29,17 +34,19 @@ export const usePlaygroundResults = (): IUsePlaygroundResultsOutput => {
                 enabled: false,
             },
         ],
-        context: {
-            environment: 'development',
-            userID: '86432135',
-            sessionID: '35435135',
-            remoteAddress: '127.0.0.1'
+        input: {
+            context: {
+                environment: 'development',
+                userID: '86432135',
+                sessionID: '35435135',
+                remoteAddress: '127.0.0.1',
+            },
         },
     };
 
     return {
         features: data?.features ?? [],
-        context: data?.context,
+        input: data?.input,
         refetchFeatures: () => {},
         loading: false,
         error: undefined,
