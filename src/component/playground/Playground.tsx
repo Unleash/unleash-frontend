@@ -16,6 +16,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 import { ContextBanner } from './PlaygroundResultsTable/ContextBanner/ContextBanner';
 import { PlaygroundResponseSchema } from '../../openapi';
+import { ConditionallyRender } from '../common/ConditionallyRender/ConditionallyRender';
 
 interface IPlaygroundProps {}
 
@@ -53,7 +54,6 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         }
 
         setLoading(false);
-
     };
 
     return (
@@ -100,9 +100,15 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     </Button>
                 </Box>
             </Paper>
-            {Boolean(results?.input?.context) && (
-                <ContextBanner context={results?.input.context!} />
-            )}
+
+            <ConditionallyRender
+                condition={Boolean(results?.input?.context)}
+                show={
+                    <ContextBanner
+                        context={results?.input.context!}
+                    />
+                }
+            />
 
             <PlaygroundResultsTable
                 loading={loading}

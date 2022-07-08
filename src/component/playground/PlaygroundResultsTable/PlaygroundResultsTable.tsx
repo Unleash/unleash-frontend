@@ -16,7 +16,7 @@ import { HighlightCell } from 'component/common/Table/cells/HighlightCell/Highli
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
 import { LinkCell } from '../../common/Table/cells/LinkCell/LinkCell';
-import { FeatureStatusCell } from './StatusCell/FeatureStatusCell';
+import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
 import { useSearchParams } from 'react-router-dom';
 import { useSearch } from '../../../hooks/useSearch';
 import { createLocalStorage } from '../../../utils/createLocalStorage';
@@ -28,12 +28,15 @@ const { value, setValue } = createLocalStorage(
     defaultSort
 );
 
-interface Props {
+interface IPlaygroundResultsTableProps {
     features: PlaygroundFeatureSchema[];
     loading: boolean;
 }
 
-export const PlaygroundResultsTable = ({ features, loading }: Props) => {
+export const PlaygroundResultsTable = ({
+    features,
+    loading,
+}: IPlaygroundResultsTableProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [searchValue, setSearchValue] = useState(
