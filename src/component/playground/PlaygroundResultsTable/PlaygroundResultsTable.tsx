@@ -1,3 +1,6 @@
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import {
@@ -8,19 +11,16 @@ import {
     TablePlaceholder,
     TableRow,
 } from 'component/common/Table';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
-import { useMemo, useState } from 'react';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { usePlaygroundResults } from '../../../hooks/api/getters/usePlaygroundResults/usePlaygroundResults';
-import { LinkCell } from '../../common/Table/cells/LinkCell/LinkCell';
-import { FeatureStatusCell } from '../StatusCell/FeatureStatusCell';
-import { useSearchParams } from 'react-router-dom';
-import { useSearch } from '../../../hooks/useSearch';
-import { ContextBanner } from '../ContextBanner/ContextBanner';
+import { usePlaygroundResults } from 'hooks/api/getters/usePlaygroundResults/usePlaygroundResults';
+import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
+import { useSearch } from 'hooks/useSearch';
+import { FeatureStatusCell } from './StatusCell/FeatureStatusCell';
+import { ContextBanner } from './ContextBanner/ContextBanner';
 
 export const PlaygroundResultsTable = () => {
     const { features, input, loading } = usePlaygroundResults();

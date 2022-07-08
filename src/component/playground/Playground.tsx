@@ -13,6 +13,7 @@ import { PlaygroundConnectionFieldset } from './PlaygroundConnectionFieldset/Pla
 import { PlaygroundCodeFieldset } from './PlaygroundCodeFieldset/PlaygroundCodeFieldset';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 
 interface IPlaygroundProps {}
 
@@ -87,6 +88,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     <pre>{contextObject}</pre>
                 </Box>
             )}
+            <PlaygroundResultsTable />
         </PageContent>
     );
 };
