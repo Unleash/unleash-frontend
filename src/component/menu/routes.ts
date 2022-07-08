@@ -52,7 +52,7 @@ import { SegmentTable } from 'component/segments/SegmentTable/SegmentTable';
 import FlaggedBillingRedirect from 'component/admin/billing/FlaggedBillingRedirect/FlaggedBillingRedirect';
 import { FeaturesArchiveTable } from '../archive/FeaturesArchiveTable';
 import { Billing } from 'component/admin/billing/Billing';
-import { PlaygroundResultsTable } from '../playground/PlaygroundResultsTable/PlaygroundResultsTable';
+import { Playground } from 'component/playground/Playground';
 
 export const routes: IRoute[] = [
     // Splash
@@ -170,6 +170,16 @@ export const routes: IRoute[] = [
         path: '/features',
         title: 'Feature toggles',
         component: FeatureToggleListTable,
+        type: 'protected',
+        menu: { mobile: true },
+    },
+
+    // Playground
+    {
+        path: '/playground',
+        title: 'Playground',
+        component: Playground,
+        hidden: false,
         type: 'protected',
         menu: { mobile: true },
     },
@@ -516,15 +526,6 @@ export const routes: IRoute[] = [
         hidden: true,
         component: ForgottenPassword,
         type: 'unprotected',
-        menu: {},
-    },
-
-    /* Playground */
-    {
-        path: '/playground',
-        title: 'Playground',
-        component: PlaygroundResultsTable,
-        type: 'protected',
         menu: {},
     },
 ];

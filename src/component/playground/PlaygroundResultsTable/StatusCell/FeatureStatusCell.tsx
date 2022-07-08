@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from '@mui/material';
-import { TextCell } from '../../common/Table/cells/TextCell/TextCell';
-import { colors } from '../../../themes/colors';
+import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
+import { colors } from 'themes/colors';
 import { ReactComponent as FeatureEnabledIcon } from 'assets/icons/isenabled-true.svg';
 import { ReactComponent as FeatureDisabledIcon } from 'assets/icons/isenabled-false.svg';
 
