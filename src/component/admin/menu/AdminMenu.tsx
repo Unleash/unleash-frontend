@@ -51,14 +51,19 @@ function AdminMenu() {
                         </NavLink>
                     }
                 />
-                <Tab
-                    value="/admin/groups"
-                    label={
-                        <NavLink to="/admin/groups" style={createNavLinkStyle}>
-                            <span>Groups</span>
-                        </NavLink>
-                    }
-                />
+                {flags.UG && (
+                    <Tab
+                        value="/admin/groups"
+                        label={
+                            <NavLink
+                                to="/admin/groups"
+                                style={createNavLinkStyle}
+                            >
+                                <span>Groups</span>
+                            </NavLink>
+                        }
+                    />
+                )}
                 {flags.RE && (
                     <Tab
                         value="/admin/roles"
