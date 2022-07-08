@@ -200,9 +200,9 @@ const COLUMNS = [
     },
     {
         Header: 'Project ID',
-        accessor: 'project',
+        accessor: 'projectId',
         sortType: 'alphanumeric',
-        filterName: 'project',
+        filterName: 'projectId',
         searchable: true,
         maxWidth: 170,
         Cell: ({ value }: any) => (
@@ -216,11 +216,11 @@ const COLUMNS = [
         filterName: 'variant',
         searchable: true,
         maxWidth: 170,
-        Cell: ({ value }: any) => <HighlightCell value={value} />,
+        Cell: ({ value }: any) => <HighlightCell value={value?.name} />,
     },
     {
         Header: 'isEnabled',
-        accessor: 'enabled',
+        accessor: 'isEnabled',
         maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
     },

@@ -10,7 +10,7 @@ interface IFeatureStatusCellProps {
 }
 
 const FalseChip = styled(Chip)(() => ({
-    width: 70,
+    width: 80,
     borderRadius: '5px',
     border: `1px solid ${colors.red['700']}`,
     backgroundColor: colors.red['200'],
@@ -23,7 +23,7 @@ const FalseChip = styled(Chip)(() => ({
 }));
 
 const TrueChip = styled(Chip)(() => ({
-    width: 70,
+    width: 80,
     borderRadius: '5px',
     border: `1px solid ${colors.green['700']}`,
     backgroundColor: colors.green['100'],

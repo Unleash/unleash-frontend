@@ -1,4 +1,4 @@
-import { ComponentProps, useMemo, useState, VFC } from 'react';
+import { ComponentProps, useEffect, useMemo, useState, VFC } from 'react';
 import {
     Autocomplete,
     Box,
@@ -9,7 +9,10 @@ import {
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 
-interface IPlaygroundConnectionFieldsetProps {}
+interface IPlaygroundConnectionFieldsetProps {
+    onSetProjects: (projects: string[]) => void;
+    onSetEnvironment: (environment: string) => void;
+}
 
 interface IOption {
     label: string;
@@ -20,7 +23,7 @@ const allOption: IOption = { label: 'ALL', id: '*' };
 
 export const PlaygroundConnectionFieldset: VFC<
     IPlaygroundConnectionFieldsetProps
-> = () => {
+> = ({ onSetProjects, onSetEnvironment }) => {
     const theme = useTheme();
     const { environments } = useEnvironments();
     const environmentOptions = environments
@@ -37,6 +40,14 @@ export const PlaygroundConnectionFieldset: VFC<
         })),
     ];
     const [projects, setProjects] = useState<IOption | IOption[]>(allOption);
+
+    useEffect(() => {
+        if (Array.isArray(projects))
+            onSetProjects(projects.map(option => option.id));
+        else {
+            onSetProjects([projects.id]);
+        }
+    }, [projects, onSetProjects]);
 
     const onProjectsChange: ComponentProps<typeof Autocomplete>['onChange'] = (
         event,
@@ -83,6 +94,7 @@ export const PlaygroundConnectionFieldset: VFC<
                     renderInput={params => (
                         <TextField {...params} label="Environment" required />
                     )}
+                    onChange={(event, value) => onSetEnvironment(value || '')}
                     size="small"
                 />
                 <Autocomplete

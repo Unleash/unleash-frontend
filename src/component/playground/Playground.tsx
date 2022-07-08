@@ -15,15 +15,17 @@ import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 import { ContextBanner } from './PlaygroundResultsTable/ContextBanner/ContextBanner';
-import { PlaygroundResponseSchema } from '../../openapi';
+import { PlaygroundResponseSchema, SdkContextSchema } from 'openapi';
 import { ConditionallyRender } from '../common/ConditionallyRender/ConditionallyRender';
 
 interface IPlaygroundProps {}
 
 export const Playground: VFC<IPlaygroundProps> = () => {
     const theme = useTheme();
+    const [environment, onSetEnvironment] = useState<string>('');
+    const [projects, onSetProjects] = useState<string[]>([]);
     const [context, setContext] = useState<string>();
-    const [contextObject, setContextObject] = useState<string>();
+    const [contextObject, setContextObject] = useState<SdkContextSchema>();
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<
         PlaygroundResponseSchema | undefined
@@ -35,9 +37,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         setLoading(true);
 
         try {
-            setContextObject(
-                JSON.stringify(JSON.parse(context || '{}'), null, 2)
-            );
+            setContextObject(JSON.parse(context || '{}'));
             // const result = await openApiAdmin.getPlayground({
             //     playgroundRequestSchema: {
             //         context,
@@ -45,7 +45,31 @@ export const Playground: VFC<IPlaygroundProps> = () => {
             //         environment
             //     },
             // });
-            // setResults(result);
+            setResults({
+                input: {
+                    context: contextObject as any,
+                    environment,
+                    projects,
+                },
+                toggles: [
+                    {
+                        isEnabled: true,
+                        name: 'mock',
+                        projectId: 'default',
+                        variant: {
+                            name: 'variant',
+                            enabled: true,
+                            payload: { type: 'string', value: 'test' },
+                        },
+                    },
+                    {
+                        isEnabled: false,
+                        name: 'test',
+                        projectId: 'default',
+                        variant: null,
+                    },
+                ],
+            });
         } catch (error: unknown) {
             setToastData({
                 type: 'error',
@@ -63,6 +87,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                 sx={{
                     px: 4,
                     py: 3,
+                    mb: 4,
                     background: theme.palette.grey[200],
                 }}
             >
@@ -74,7 +99,10 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     >
                         Configure playground
                     </Typography>
-                    <PlaygroundConnectionFieldset />
+                    <PlaygroundConnectionFieldset
+                        onSetEnvironment={onSetEnvironment}
+                        onSetProjects={onSetProjects}
+                    />
                     <Divider
                         variant="fullWidth"
                         sx={{
@@ -100,12 +128,11 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     </Button>
                 </Box>
             </Paper>
-
             <ConditionallyRender
-                condition={Boolean(results?.input?.context)}
+                condition={Boolean(contextObject)}
                 show={
                     <ContextBanner
-                        context={results?.input.context!}
+                        context={contextObject as SdkContextSchema}
                     />
                 }
             />
