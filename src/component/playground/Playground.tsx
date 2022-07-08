@@ -14,6 +14,8 @@ import { PlaygroundCodeFieldset } from './PlaygroundCodeFieldset/PlaygroundCodeF
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
+import { ContextBanner } from './PlaygroundResultsTable/ContextBanner/ContextBanner';
+import { PlaygroundResponseSchema } from '../../openapi';
 
 interface IPlaygroundProps {}
 
@@ -21,21 +23,37 @@ export const Playground: VFC<IPlaygroundProps> = () => {
     const theme = useTheme();
     const [context, setContext] = useState<string>();
     const [contextObject, setContextObject] = useState<string>();
+    const [loading, setLoading] = useState(false);
+    const [results, setResults] = useState<
+        PlaygroundResponseSchema | undefined
+    >();
     const { setToastData } = useToast();
 
-    const onSubmit: FormEventHandler<HTMLFormElement> = event => {
+    const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();
+        setLoading(true);
 
         try {
             setContextObject(
                 JSON.stringify(JSON.parse(context || '{}'), null, 2)
             );
+            // const result = await openApiAdmin.getPlayground({
+            //     playgroundRequestSchema: {
+            //         context,
+            //         projects
+            //         environment
+            //     },
+            // });
+            // setResults(result);
         } catch (error: unknown) {
             setToastData({
                 type: 'error',
                 title: `Error parsing context: ${formatUnknownError(error)}`,
             });
         }
+
+        setLoading(false);
+
     };
 
     return (
@@ -82,13 +100,14 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     </Button>
                 </Box>
             </Paper>
-            {Boolean(contextObject) && (
-                <Box sx={{ p: 4 }}>
-                    <Typography>TODO: Request</Typography>
-                    <pre>{contextObject}</pre>
-                </Box>
+            {Boolean(results?.input?.context) && (
+                <ContextBanner context={results?.input.context!} />
             )}
-            <PlaygroundResultsTable />
+
+            <PlaygroundResultsTable
+                loading={loading}
+                features={results?.toggles ?? []}
+            />
         </PageContent>
     );
 };

@@ -1,6 +1,3 @@
-import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import {
@@ -11,25 +8,32 @@ import {
     TablePlaceholder,
     TableRow,
 } from 'component/common/Table';
+import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
+import { useEffect, useMemo, useState } from 'react';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { usePlaygroundResults } from 'hooks/api/getters/usePlaygroundResults/usePlaygroundResults';
-import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
-import { useSearch } from 'hooks/useSearch';
+import { LinkCell } from '../../common/Table/cells/LinkCell/LinkCell';
 import { FeatureStatusCell } from './StatusCell/FeatureStatusCell';
-import { ContextBanner } from './ContextBanner/ContextBanner';
+import { useSearchParams } from 'react-router-dom';
+import { useSearch } from '../../../hooks/useSearch';
+import { createLocalStorage } from '../../../utils/createLocalStorage';
+import { PlaygroundFeatureSchema } from '../../../openapi';
 
-export const PlaygroundResultsTable = () => {
-    const { features, input, loading } = usePlaygroundResults();
-    const { context } = input;
-    const [initialState] = useState({
-        sortBy: [{ id: 'name' }],
-        hiddenColumns: ['description'],
-    });
+const defaultSort: SortingRule<string> = { id: 'name' };
+const { value, setValue } = createLocalStorage(
+    'PlaygroundResultsTable:v1',
+    defaultSort
+);
 
+interface Props {
+    features: PlaygroundFeatureSchema[];
+    loading: boolean;
+}
+
+export const PlaygroundResultsTable = ({ features, loading }: Props) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [searchValue, setSearchValue] = useState(
@@ -43,34 +47,71 @@ export const PlaygroundResultsTable = () => {
     } = useSearch(COLUMNS, searchValue, features);
 
     const data = useMemo(() => {
-        return (
-            features ??
-            Array(5).fill({
-                name: 'Feature name',
-                project: 'Feature Project',
-                variant: 'Feature variant',
-                enabled: 'Feature state',
-            })
-        );
+        return loading
+            ? Array(5).fill({
+                  name: 'Feature name',
+                  project: 'Feature Project',
+                  variant: 'Feature variant',
+                  enabled: 'Feature state',
+              })
+            : searchedData;
     }, [searchedData, loading]);
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable(
+    const [initialState] = useState(() => ({
+        sortBy: [
             {
-                initialState,
-                columns: COLUMNS as any,
-                data: data as any,
-                sortTypes,
-                autoResetGlobalFilter: false,
-                autoResetSortBy: false,
-                disableSortRemove: true,
-                defaultColumn: {
-                    Cell: HighlightCell,
-                },
+                id: searchParams.get('sort') || value.id,
+                desc: searchParams.has('order')
+                    ? searchParams.get('order') === 'desc'
+                    : value.desc,
             },
-            useGlobalFilter,
-            useSortBy
-        );
+        ],
+        hiddenColumns: [],
+    }));
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        state: { sortBy },
+        rows,
+        prepareRow,
+    } = useTable(
+        {
+            initialState,
+            columns: COLUMNS as any,
+            data: data as any,
+            sortTypes,
+            autoResetGlobalFilter: false,
+            autoResetSortBy: false,
+            disableSortRemove: true,
+            defaultColumn: {
+                Cell: HighlightCell,
+            },
+        },
+        useGlobalFilter,
+        useSortBy
+    );
+
+    useEffect(() => {
+        if (loading) {
+            return;
+        }
+        const tableState: Record<string, string> = {};
+        tableState.sort = sortBy[0].id;
+        if (sortBy[0].desc) {
+            tableState.order = 'desc';
+        }
+        if (searchValue) {
+            tableState.search = searchValue;
+        }
+
+        setSearchParams(tableState, {
+            replace: true,
+        });
+        setValue({ id: sortBy[0].id, desc: sortBy[0].desc || false });
+    }, [loading, sortBy, searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <PageContent
             header={
@@ -104,7 +145,6 @@ export const PlaygroundResultsTable = () => {
                         <SearchHighlightProvider
                             value={getSearchText(searchValue)}
                         >
-                            {context && <ContextBanner context={context} />}
                             <Table {...getTableProps()} rowHeight="standard">
                                 <SortableTableHeader
                                     headerGroups={headerGroups as any}
@@ -180,8 +220,5 @@ const COLUMNS = [
         accessor: 'enabled',
         maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
-    },
-    {
-        accessor: 'description',
     },
 ];
