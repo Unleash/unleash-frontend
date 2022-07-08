@@ -1,12 +1,7 @@
-import { styled } from '@mui/material';
-import { useLocationSettings } from 'hooks/useLocationSettings';
+import { IconButton, styled, Tooltip } from '@mui/material';
 import { IGroup } from 'interfaces/group';
 import { Link } from 'react-router-dom';
-import { formatDateYMD } from 'utils/formatDate';
-import { Delete, Edit, Event } from '@mui/icons-material';
-import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { ADMIN } from 'component/providers/AccessProvider/permissions';
-import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
+import { MoreVert } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { GroupCardAvatars } from './GroupCardAvatars/GroupCardAvatars';
 
@@ -26,7 +21,7 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     },
 }));
 
-const StyledHeader = styled('div')(({ theme }) => ({
+const StyledRow = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -44,30 +39,11 @@ const StyledHeaderActions = styled('div')(({ theme }) => ({
     fontSize: theme.fontSizes.smallBody,
 }));
 
-const StyledEvent = styled(Event)(({ theme }) => ({
-    fontSize: theme.fontSizes.bodySize,
-    marginRight: theme.spacing(1),
-}));
-
-const StyledEdit = styled(Edit)(({ theme }) => ({
-    fontSize: theme.fontSizes.mainHeader,
-}));
-
-const StyledDelete = styled(Delete)(({ theme }) => ({
-    fontSize: theme.fontSizes.mainHeader,
-}));
-
 const StyledDescription = styled('p')(({ theme }) => ({
     color: theme.palette.text.secondary,
     fontSize: theme.fontSizes.smallBody,
     marginTop: theme.spacing(1),
-}));
-
-const StyledCounter = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: theme.fontSizes.smallBody,
-    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
 }));
 
 const StyledCounterDescription = styled('span')(({ theme }) => ({
@@ -79,61 +55,46 @@ interface IGroupCardProps {
     group: IGroup;
 }
 
-export const GroupCard = ({ group }: IGroupCardProps) => {
-    const { locationSettings } = useLocationSettings();
-    const date = formatDateYMD(group.createdAt, locationSettings.locale);
-
-    return (
-        <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
-            <StyledGroupCard>
-                <StyledHeader>
-                    <StyledHeaderTitle>{group.name}</StyledHeaderTitle>
-                    <StyledHeaderActions>
-                        <StyledEvent />
-                        {date}
-                        <PageHeader.Divider />
-                        <PermissionIconButton
-                            data-loading
-                            onClick={() => {}}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Edit group',
-                            }}
+export const GroupCard = ({ group }: IGroupCardProps) => (
+    <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
+        <StyledGroupCard>
+            <StyledRow>
+                <StyledHeaderTitle>{group.name}</StyledHeaderTitle>
+                <StyledHeaderActions>
+                    <Tooltip
+                        title="Group actions"
+                        arrow
+                        placement="bottom-end"
+                        describeChild
+                        enterDelay={1000}
+                    >
+                        <IconButton
+                            // TODO: Implement. See e.g.: src/component/project/Project/ProjectFeatureToggles/ActionsCell/ActionsCell.tsx
+                            // id={id}
+                            // aria-controls={open ? menuId : undefined}
+                            aria-haspopup="true"
+                            // aria-expanded={open ? 'true' : undefined}
+                            // onClick={handleClick}
+                            type="button"
                         >
-                            <StyledEdit />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={() => {}}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Remove group',
-                            }}
-                        >
-                            <StyledDelete />
-                        </PermissionIconButton>
-                    </StyledHeaderActions>
-                </StyledHeader>
-                <StyledDescription>{group.description}</StyledDescription>
-                <StyledCounter>
-                    Projects (0):{' '}
-                    <StyledCounterDescription>
-                        This group is not assigned to any projects.
-                    </StyledCounterDescription>
-                </StyledCounter>
-                <StyledCounter>
-                    Users ({group.users?.length ?? 0}):
-                    <ConditionallyRender
-                        condition={group.users?.length > 0}
-                        show={<GroupCardAvatars users={group.users} />}
-                        elseShow={
-                            <StyledCounterDescription>
-                                This group has no users.
-                            </StyledCounterDescription>
-                        }
-                    />
-                </StyledCounter>
-            </StyledGroupCard>
-        </StyledLink>
-    );
-};
+                            <MoreVert />
+                        </IconButton>
+                    </Tooltip>
+                </StyledHeaderActions>
+            </StyledRow>
+            <StyledDescription>{group.description}</StyledDescription>
+            <StyledRow>
+                <ConditionallyRender
+                    condition={group.users?.length > 0}
+                    show={<GroupCardAvatars users={group.users} />}
+                    elseShow={
+                        <StyledCounterDescription>
+                            This group has no users.
+                        </StyledCounterDescription>
+                    }
+                />
+                <div>TODO: Projects</div>
+            </StyledRow>
+        </StyledGroupCard>
+    </StyledLink>
+);
