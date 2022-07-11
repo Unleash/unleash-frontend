@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MoreVert } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { GroupCardAvatars } from './GroupCardAvatars/GroupCardAvatars';
+import { Badge } from 'component/common/Badge/Badge';
 
 const StyledLink = styled(Link)(({ theme }) => ({
     textDecoration: 'none',
@@ -21,7 +22,7 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     },
 }));
 
-const StyledRow = styled('div')(({ theme }) => ({
+const StyledRow = styled('div')(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -93,7 +94,15 @@ export const GroupCard = ({ group }: IGroupCardProps) => (
                         </StyledCounterDescription>
                     }
                 />
-                <div>TODO: Projects</div>
+                <Tooltip
+                    title="This project is not used in any project"
+                    arrow
+                    placement="bottom-end"
+                    describeChild
+                    enterDelay={1000}
+                >
+                    <Badge>Not used</Badge>
+                </Tooltip>
             </StyledRow>
         </StyledGroupCard>
     </StyledLink>
