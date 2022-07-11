@@ -21,6 +21,8 @@ import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
 import { makeStyles } from 'tss-react/mui';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { AddonProjects } from './AddonProjects/AddonProjects';
+import { AddonEnvironments } from './AddonEnvironments/AddonEnvironments';
 
 const useStyles = makeStyles()(theme => ({
     nameInput: {
@@ -58,6 +60,8 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         containsErrors: boolean;
         parameters: Record<string, string>;
         events?: string;
+        projects?: string;
+        environments?: string;
         general?: string;
         description?: string;
     }>({
@@ -122,6 +126,45 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 events: undefined,
             }));
         };
+
+    const setProject =
+        (name: string) => (event: ChangeEvent<HTMLInputElement>) => {
+            setFormValues(
+                produce(draft => {
+                    if (!draft.projects) {
+                        draft.projects = [];
+                    }
+                    if (event.target.checked) {
+                        draft.projects.push(name);
+                    } else {
+                        draft.projects = draft.projects.filter(p => p !== name)
+                    }
+                })
+            );
+            setErrors(prev => ({
+                ...prev,
+                projects: undefined
+            }));
+    };
+
+    const setEnvironment = (name: string) => (event: ChangeEvent<HTMLInputElement>) => {
+            setFormValues(
+                produce(draft => {
+                    if (!draft.environments) {
+                        draft.environments = [];
+                    }
+                    if (event.target.checked) {
+                        draft.environments.push(name);
+                    } else {
+                        draft.environments = draft.environments.filter(p => p !== name)
+                    }
+                })
+            );
+            setErrors(prev => ({
+                ...prev,
+                environments: undefined
+            }));
+    }
 
     const onCancel = () => {
         navigate(-1);
@@ -234,6 +277,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         variant="outlined"
                     />
                 </section>
+
                 <section className={styles.formSection}>
                     <AddonEvents
                         provider={provider}
@@ -241,6 +285,18 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         setEventValue={setEventValue}
                         error={errors.events}
                     />
+                </section>
+                <section className={styles.formSection}>
+                    <AddonProjects
+                        selectedProjects={formValues.projects || []}
+                        setProject={setProject}
+                        />
+                </section>
+                <section className={styles.formSection}>
+                    <AddonEnvironments
+                        selectedEnvironments={formValues.environments || []}
+                        selectEnvironment={setEnvironment}
+                        />
                 </section>
                 <section className={styles.formSection}>
                     <AddonParameters
