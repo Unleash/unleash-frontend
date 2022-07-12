@@ -26,8 +26,21 @@ export const useGroupApi = () => {
         }
     };
 
+    const removeGroup = async (groupId: string) => {
+        const path = `api/admin/groups/${groupId}`;
+        const req = createRequest(path, {
+            method: 'DELETE',
+        });
+        try {
+            await makeRequest(req.caller, req.id);
+        } catch (e) {
+            throw e;
+        }
+    };
+
     return {
         createGroup,
+        removeGroup,
         errors,
         loading,
     };

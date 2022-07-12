@@ -23,6 +23,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
 
 // TODO: Refactor into its own component and cleanup avatars everywhere?
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -121,6 +122,8 @@ export const Group: VFC = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { group, loading } = useGroup(groupId);
+    const [removeOpen, setRemoveOpen] = useState(false);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const [initialState] = useState(() => ({
         sortBy: [
@@ -186,116 +189,132 @@ export const Group: VFC = () => {
     }, [sortBy, searchValue, setSearchParams]);
 
     return (
-        <>
-            <MainHeader
-                title={group?.name}
-                description={group?.description}
-                actions={
-                    <>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={() => {}}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Edit group',
-                            }}
-                        >
-                            <StyledEdit />
-                        </PermissionIconButton>
-                        <PermissionIconButton
-                            data-loading
-                            onClick={() => {}}
-                            permission={ADMIN}
-                            tooltipProps={{
-                                title: 'Remove group',
-                            }}
-                        >
-                            <StyledDelete />
-                        </PermissionIconButton>
-                    </>
-                }
-            />
-            <PageContent
-                isLoading={loading}
-                header={
-                    <PageHeader
-                        secondary
-                        title={`Users (${
-                            rows.length < data.length
-                                ? `${rows.length} of ${data.length}`
-                                : data.length
-                        })`}
+        <ConditionallyRender
+            condition={Boolean(group)}
+            show={
+                <>
+                    <MainHeader
+                        title={group?.name}
+                        description={group?.description}
                         actions={
                             <>
-                                <ConditionallyRender
-                                    condition={!isSmallScreen}
-                                    show={
-                                        <>
-                                            <Search
-                                                initialValue={searchValue}
-                                                onChange={setSearchValue}
-                                                hasFilters
-                                                getSearchContext={
-                                                    getSearchContext
-                                                }
-                                            />
-                                            <PageHeader.Divider />
-                                        </>
-                                    }
-                                />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
+                                <PermissionIconButton
+                                    data-loading
                                     onClick={() => {}}
+                                    permission={ADMIN}
+                                    tooltipProps={{
+                                        title: 'Edit group',
+                                    }}
                                 >
-                                    Add user
-                                </Button>
+                                    <StyledEdit />
+                                </PermissionIconButton>
+                                <PermissionIconButton
+                                    data-loading
+                                    onClick={() => setRemoveOpen(true)}
+                                    permission={ADMIN}
+                                    tooltipProps={{
+                                        title: 'Remove group',
+                                    }}
+                                >
+                                    <StyledDelete />
+                                </PermissionIconButton>
                             </>
                         }
+                    />
+                    <PageContent
+                        isLoading={loading}
+                        header={
+                            <PageHeader
+                                secondary
+                                title={`Users (${
+                                    rows.length < data.length
+                                        ? `${rows.length} of ${data.length}`
+                                        : data.length
+                                })`}
+                                actions={
+                                    <>
+                                        <ConditionallyRender
+                                            condition={!isSmallScreen}
+                                            show={
+                                                <>
+                                                    <Search
+                                                        initialValue={
+                                                            searchValue
+                                                        }
+                                                        onChange={
+                                                            setSearchValue
+                                                        }
+                                                        hasFilters
+                                                        getSearchContext={
+                                                            getSearchContext
+                                                        }
+                                                    />
+                                                    <PageHeader.Divider />
+                                                </>
+                                            }
+                                        />
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => {}}
+                                        >
+                                            Add user
+                                        </Button>
+                                    </>
+                                }
+                            >
+                                <ConditionallyRender
+                                    condition={isSmallScreen}
+                                    show={
+                                        <Search
+                                            initialValue={searchValue}
+                                            onChange={setSearchValue}
+                                            hasFilters
+                                            getSearchContext={getSearchContext}
+                                        />
+                                    }
+                                />
+                            </PageHeader>
+                        }
                     >
+                        <SearchHighlightProvider
+                            value={getSearchText(searchValue)}
+                        >
+                            <VirtualizedTable
+                                rows={rows}
+                                headerGroups={headerGroups}
+                                prepareRow={prepareRow}
+                            />
+                        </SearchHighlightProvider>
                         <ConditionallyRender
-                            condition={isSmallScreen}
+                            condition={rows.length === 0}
                             show={
-                                <Search
-                                    initialValue={searchValue}
-                                    onChange={setSearchValue}
-                                    hasFilters
-                                    getSearchContext={getSearchContext}
+                                <ConditionallyRender
+                                    condition={searchValue?.length > 0}
+                                    show={
+                                        <TablePlaceholder>
+                                            No users found matching &ldquo;
+                                            {searchValue}
+                                            &rdquo; in this group.
+                                        </TablePlaceholder>
+                                    }
+                                    elseShow={
+                                        <TablePlaceholder>
+                                            This group is empty. Get started by
+                                            adding a user to the group.
+                                        </TablePlaceholder>
+                                    }
                                 />
                             }
                         />
-                    </PageHeader>
-                }
-            >
-                <SearchHighlightProvider value={getSearchText(searchValue)}>
-                    <VirtualizedTable
-                        rows={rows}
-                        headerGroups={headerGroups}
-                        prepareRow={prepareRow}
-                    />
-                </SearchHighlightProvider>
-                <ConditionallyRender
-                    condition={rows.length === 0}
-                    show={
-                        <ConditionallyRender
-                            condition={searchValue?.length > 0}
-                            show={
-                                <TablePlaceholder>
-                                    No users found matching &ldquo;
-                                    {searchValue}
-                                    &rdquo; in this group.
-                                </TablePlaceholder>
-                            }
-                            elseShow={
-                                <TablePlaceholder>
-                                    This group is empty. Get started by adding a
-                                    user to the group.
-                                </TablePlaceholder>
-                            }
+                        <RemoveGroup
+                            open={removeOpen}
+                            setOpen={setRemoveOpen}
+                            group={group!}
                         />
-                    }
-                />
-            </PageContent>
-        </>
+                    </PageContent>
+                </>
+            }
+        />
     );
 };

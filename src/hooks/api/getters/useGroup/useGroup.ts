@@ -26,7 +26,7 @@ export const useGroup = (groupId: string): IUseGroupOutput => {
 
     return useMemo(
         () => ({
-            group: { ...data, users: mapGroupUsers(data?.users ?? []) },
+            group: data && { ...data, users: mapGroupUsers(data?.users ?? []) },
             loading: !error && !data,
             refetchGroup: () => mutate(),
             error,
