@@ -4,6 +4,7 @@ import { colors } from 'themes/colors';
 import { ReactComponent as FeatureEnabledIcon } from 'assets/icons/isenabled-true.svg';
 import { ReactComponent as FeatureDisabledIcon } from 'assets/icons/isenabled-false.svg';
 import { Chip, styled } from '@mui/material';
+import {ConditionallyRender} from "../../../common/ConditionallyRender/ConditionallyRender";
 
 interface IFeatureStatusCellProps {
     enabled: boolean;
@@ -36,20 +37,17 @@ const TrueChip = styled(Chip)(() => ({
 }));
 
 export const FeatureStatusCell = ({ enabled }: IFeatureStatusCellProps) => {
-    const icon = enabled ? (
-        <FeatureEnabledIcon stroke={colors.green['600']} stroke-width="0.25" />
-    ) : (
-        <FeatureDisabledIcon stroke={colors.red['700']} stroke-width="0.25" />
-    );
+    const icon = (<ConditionallyRender condition={enabled}
+                         show={<FeatureEnabledIcon stroke={colors.green['600']} stroke-width="0.25" />}
+                         elseShow={<FeatureDisabledIcon stroke={colors.red['700']} stroke-width="0.25" />} />)
+
     const label = enabled ? 'True' : 'False';
 
     return (
         <TextCell>
-            {enabled ? (
-                <TrueChip icon={icon} label={label} />
-            ) : (
-                <FalseChip icon={icon} label={label} />
-            )}
+            <ConditionallyRender condition={enabled}
+                                 show={ <TrueChip icon={icon} label={label} />}
+                                 elseShow={<FalseChip icon={icon} label={label} />} />
         </TextCell>
     );
 };

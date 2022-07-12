@@ -39,6 +39,8 @@ export const PlaygroundResultsTable = ({
 }: IPlaygroundResultsTableProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
+
+
     const [searchValue, setSearchValue] = useState(
         searchParams.get('search') || ''
     );
@@ -113,7 +115,7 @@ export const PlaygroundResultsTable = ({
             replace: true,
         });
         setValue({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [loading, sortBy, searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [loading, sortBy, searchValue, setValue]);
 
     return (
         <PageContent
