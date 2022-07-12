@@ -1,9 +1,12 @@
 import { Typography } from '@mui/material';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import { useGroupApi } from 'hooks/api/actions/useGroupApi/useGroupApi';
+import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
+import useToast from 'hooks/useToast';
 import { IGroup } from 'interfaces/group';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 interface IRemoveGroupProps {
     open: boolean;
@@ -16,13 +19,24 @@ export const RemoveGroup: FC<IRemoveGroupProps> = ({
     setOpen,
     group,
 }) => {
+    const { refetchGroups } = useGroups();
     const { removeGroup } = useGroupApi();
+    const { setToastData, setToastApiError } = useToast();
     const navigate = useNavigate();
 
     const onRemoveClick = async () => {
-        removeGroup(group.id);
-        setOpen(false);
-        navigate('/admin/groups');
+        try {
+            await removeGroup(group.id);
+            refetchGroups();
+            setOpen(false);
+            navigate('/admin/groups');
+            setToastData({
+                title: 'Group removed successfully',
+                type: 'success',
+            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
+        }
     };
 
     return (

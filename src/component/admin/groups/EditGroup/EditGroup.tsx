@@ -40,7 +40,7 @@ export const EditGroup = () => {
         try {
             await updateGroup(groupId, payload);
             refetchGroup();
-            navigate(`/admin/groups/${groupId}`);
+            navigate(-1);
             setToastData({
                 title: 'Group updated successfully',
                 type: 'success',

@@ -1,10 +1,12 @@
-import { IconButton, styled, Tooltip } from '@mui/material';
+import { styled, Tooltip } from '@mui/material';
 import { IGroup } from 'interfaces/group';
 import { Link } from 'react-router-dom';
-import { MoreVert } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { GroupCardAvatars } from './GroupCardAvatars/GroupCardAvatars';
 import { Badge } from 'component/common/Badge/Badge';
+import { GroupCardActions } from './GroupCardActions/GroupCardActions';
+import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
+import { useState } from 'react';
 
 const StyledLink = styled(Link)(({ theme }) => ({
     textDecoration: 'none',
@@ -56,54 +58,50 @@ interface IGroupCardProps {
     group: IGroup;
 }
 
-export const GroupCard = ({ group }: IGroupCardProps) => (
-    <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
-        <StyledGroupCard>
-            <StyledRow>
-                <StyledHeaderTitle>{group.name}</StyledHeaderTitle>
-                <StyledHeaderActions>
-                    <Tooltip
-                        title="Group actions"
-                        arrow
-                        placement="bottom-end"
-                        describeChild
-                        enterDelay={1000}
-                    >
-                        <IconButton
-                            // TODO: Implement. See e.g.: src/component/project/Project/ProjectFeatureToggles/ActionsCell/ActionsCell.tsx
-                            // id={id}
-                            // aria-controls={open ? menuId : undefined}
-                            aria-haspopup="true"
-                            // aria-expanded={open ? 'true' : undefined}
-                            // onClick={handleClick}
-                            type="button"
+export const GroupCard = ({ group }: IGroupCardProps) => {
+    const [removeOpen, setRemoveOpen] = useState(false);
+
+    return (
+        <>
+            <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
+                <StyledGroupCard>
+                    <StyledRow>
+                        <StyledHeaderTitle>{group.name}</StyledHeaderTitle>
+                        <StyledHeaderActions>
+                            <GroupCardActions
+                                groupId={group.id}
+                                onRemove={() => setRemoveOpen(true)}
+                            />
+                        </StyledHeaderActions>
+                    </StyledRow>
+                    <StyledDescription>{group.description}</StyledDescription>
+                    <StyledRow>
+                        <ConditionallyRender
+                            condition={group.users?.length > 0}
+                            show={<GroupCardAvatars users={group.users} />}
+                            elseShow={
+                                <StyledCounterDescription>
+                                    This group has no users.
+                                </StyledCounterDescription>
+                            }
+                        />
+                        <Tooltip
+                            title="This project is not used in any project"
+                            arrow
+                            placement="bottom-end"
+                            describeChild
+                            enterDelay={1000}
                         >
-                            <MoreVert />
-                        </IconButton>
-                    </Tooltip>
-                </StyledHeaderActions>
-            </StyledRow>
-            <StyledDescription>{group.description}</StyledDescription>
-            <StyledRow>
-                <ConditionallyRender
-                    condition={group.users?.length > 0}
-                    show={<GroupCardAvatars users={group.users} />}
-                    elseShow={
-                        <StyledCounterDescription>
-                            This group has no users.
-                        </StyledCounterDescription>
-                    }
-                />
-                <Tooltip
-                    title="This project is not used in any project"
-                    arrow
-                    placement="bottom-end"
-                    describeChild
-                    enterDelay={1000}
-                >
-                    <Badge>Not used</Badge>
-                </Tooltip>
-            </StyledRow>
-        </StyledGroupCard>
-    </StyledLink>
-);
+                            <Badge>Not used</Badge>
+                        </Tooltip>
+                    </StyledRow>
+                </StyledGroupCard>
+            </StyledLink>
+            <RemoveGroup
+                open={removeOpen}
+                setOpen={setRemoveOpen}
+                group={group!}
+            />
+        </>
+    );
+};
