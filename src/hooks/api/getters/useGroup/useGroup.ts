@@ -1,8 +1,8 @@
+import useSWR from 'swr';
+import { useMemo } from 'react';
+import { formatApiPath } from 'utils/formatPath';
+import handleErrorResponses from '../httpErrorResponseHandler';
 import { IGroup } from 'interfaces/group';
-import { useGroups } from '../useGroups/useGroups';
-// import { FeatureSchema } from 'openapi';
-// import { openApiAdmin } from 'utils/openapiClient';
-// import { useApiGetter } from 'hooks/api/getters/useApiGetter/useApiGetter';
 
 export interface IUseGroupOutput {
     group?: IGroup;
@@ -11,21 +11,25 @@ export interface IUseGroupOutput {
     error?: Error;
 }
 
-export const useGroup = (groupId: string): IUseGroupOutput => {
-    // const { data, refetch, loading, error } = useApiGetter(
-    //     'apiAdminGroupGet',
-    //     () => openApiAdmin.getGroup(),
-    //     {
-    //         refreshInterval: 15 * 1000, // ms
-    //     }
-    // );
+export const useGroup = (groupId: number): IUseGroupOutput => {
+    const { data, error, mutate } = useSWR(
+        formatApiPath(`api/admin/groups/${groupId}`),
+        fetcher
+    );
 
-    const { groups } = useGroups();
+    return useMemo(
+        () => ({
+            group: data,
+            loading: !error && !data,
+            refetchGroup: () => mutate(),
+            error,
+        }),
+        [data, error, mutate]
+    );
+};
 
-    return {
-        group: groups?.find(group => group.id === groupId),
-        refetchGroup: () => {},
-        loading: false,
-        error: undefined,
-    };
+const fetcher = (path: string) => {
+    return fetch(path)
+        .then(handleErrorResponses('Group'))
+        .then(res => res.json());
 };

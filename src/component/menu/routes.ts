@@ -55,6 +55,7 @@ import { FeaturesArchiveTable } from '../archive/FeaturesArchiveTable';
 import { Billing } from 'component/admin/billing/Billing';
 import { Playground } from 'component/playground/Playground/Playground';
 import { Group } from 'component/admin/groups/Group/Group';
+import { CreateGroup } from 'component/admin/groups/CreateGroup/CreateGroup';
 
 export const routes: IRoute[] = [
     // Splash
@@ -469,6 +470,14 @@ export const routes: IRoute[] = [
         type: 'protected',
         menu: {},
         flag: UG,
+    },
+    {
+        path: '/admin/groups/create-group',
+        parent: '/admin/groups',
+        title: 'Create group',
+        component: CreateGroup,
+        type: 'protected',
+        menu: {},
     },
     {
         path: '/admin/roles',

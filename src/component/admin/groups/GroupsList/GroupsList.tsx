@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { IGroup } from 'interfaces/group';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -77,9 +77,10 @@ export const GroupsList: VFC = () => {
                                 }
                             />
                             <Button
+                                to="/admin/groups/create-group"
+                                component={Link}
                                 variant="contained"
                                 color="primary"
-                                onClick={() => {}}
                             >
                                 New group
                             </Button>

@@ -6,11 +6,10 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { useGroupApi } from 'hooks/api/actions/useGroupApi/useGroupApi';
 import { useContext } from 'react';
-import { CreateButton } from 'component/common/CreateButton/CreateButton';
 import UIContext from 'contexts/UIContext';
 import { formatUnknownError } from 'utils/formatUnknownError';
-
-// TODO: Implement.
+import { UG_CREATE_BTN_ID } from 'utils/testIds';
+import { Button } from '@mui/material';
 
 export const CreateGroup = () => {
     const { setToastData, setToastApiError } = useToast();
@@ -19,18 +18,13 @@ export const CreateGroup = () => {
     const navigate = useNavigate();
 
     const {
-        type,
-        setType,
         name,
         setName,
-        project,
-        setProject,
         description,
         setDescription,
-        validateToggleName,
-        impressionData,
-        setImpressionData,
-        getTogglePayload,
+        users,
+        setUsers,
+        getGroupPayload,
         clearErrors,
         errors,
     } = useGroupForm();
@@ -40,33 +34,30 @@ export const CreateGroup = () => {
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
-        const validToggleName = await validateToggleName();
 
-        if (validToggleName) {
-            const payload = getTogglePayload();
-            try {
-                await createGroup(project, payload);
-                navigate(`/projects/${project}/features/${name}`);
-                setToastData({
-                    title: 'Toggle created successfully',
-                    text: 'Now you can start using your toggle.',
-                    confetti: true,
-                    type: 'success',
-                });
-                setShowFeedback(true);
-            } catch (error: unknown) {
-                setToastApiError(formatUnknownError(error));
-            }
+        const payload = getGroupPayload();
+        try {
+            const groupId = await createGroup(payload);
+            navigate(`/admin/groups/${groupId}`);
+            setToastData({
+                title: 'Group created successfully',
+                text: 'Now you can start using your group.',
+                confetti: true,
+                type: 'success',
+            });
+            setShowFeedback(true);
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
         }
     };
 
     const formatApiCode = () => {
         return `curl --location --request POST '${
             uiConfig.unleashUrl
-        }/api/admin/projects/${project}/features' \\
+        }/api/admin/groups' \\
     --header 'Authorization: INSERT_API_KEY' \\
     --header 'Content-Type: application/json' \\
-    --data-raw '${JSON.stringify(getTogglePayload(), undefined, 2)}'`;
+    --data-raw '${JSON.stringify(getGroupPayload(), undefined, 2)}'`;
     };
 
     const handleCancel = () => {
@@ -83,24 +74,26 @@ export const CreateGroup = () => {
             formatApiCode={formatApiCode}
         >
             <GroupForm
-                type={type}
                 name={name}
-                project={project}
                 description={description}
-                setType={setType}
+                users={users}
                 setName={setName}
-                setProject={setProject}
                 setDescription={setDescription}
-                validateToggleName={validateToggleName}
-                setImpressionData={setImpressionData}
-                impressionData={impressionData}
+                setUsers={setUsers}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
                 mode="Create"
                 clearErrors={clearErrors}
             >
-                <CreateButton name="group" permission={''} />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    data-testid={UG_CREATE_BTN_ID}
+                >
+                    Create group
+                </Button>
             </GroupForm>
         </FormTemplate>
     );

@@ -1,39 +1,18 @@
-import {
-    Button,
-    FormControl,
-    FormControlLabel,
-    Switch,
-    Typography,
-} from '@mui/material';
+import { Button } from '@mui/material';
 import { useStyles } from './GroupForm.styles'; // TODO: Delete styles file.
-// import FeatureTypeSelect from '../FeatureView/FeatureSettings/FeatureSettingsMetadata/FeatureTypeSelect/FeatureTypeSelect';
-import { CF_DESC_ID, CF_NAME_ID, CF_TYPE_ID } from 'utils/testIds';
-import useFeatureTypes from 'hooks/api/getters/useFeatureTypes/useFeatureTypes';
-import { KeyboardArrowDownOutlined } from '@mui/icons-material';
-import { projectFilterGenerator } from 'utils/projectFilterGenerator';
-// import FeatureProjectSelect from '../FeatureView/FeatureSettings/FeatureSettingsProject/FeatureProjectSelect/FeatureProjectSelect';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { trim } from 'component/common/util';
+import { UG_DESC_ID, UG_NAME_ID } from 'utils/testIds';
 import Input from 'component/common/Input/Input';
-import { CREATE_FEATURE } from 'component/providers/AccessProvider/permissions';
-import { useNavigate } from 'react-router-dom';
 import React, { FC } from 'react';
-import { useAuthPermissions } from 'hooks/api/getters/useAuth/useAuthPermissions';
-
-// TODO: Implement.
+import { IGroupUser } from 'interfaces/group';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IGroupForm {
-    type: string;
     name: string;
     description: string;
-    project: string;
-    impressionData: boolean;
-    setType: React.Dispatch<React.SetStateAction<string>>;
+    users: IGroupUser[];
     setName: React.Dispatch<React.SetStateAction<string>>;
     setDescription: React.Dispatch<React.SetStateAction<string>>;
-    setProject: React.Dispatch<React.SetStateAction<string>>;
-    setImpressionData: React.Dispatch<React.SetStateAction<boolean>>;
-    validateToggleName?: () => void;
+    setUsers: React.Dispatch<React.SetStateAction<IGroupUser[]>>;
     handleSubmit: (e: any) => void;
     handleCancel: () => void;
     errors: { [key: string]: string };
@@ -42,106 +21,64 @@ interface IGroupForm {
 }
 
 export const GroupForm: FC<IGroupForm> = ({
-    children,
-    type,
     name,
     description,
-    project,
-    setType,
+    users,
     setName,
     setDescription,
-    setProject,
-    validateToggleName,
-    setImpressionData,
-    impressionData,
+    setUsers,
     handleSubmit,
     handleCancel,
     errors,
     mode,
     clearErrors,
+    children,
 }) => {
     const { classes: styles } = useStyles();
-    const { featureTypes } = useFeatureTypes();
-    const navigate = useNavigate();
-    const { permissions } = useAuthPermissions();
-    const editable = mode !== 'Edit';
-
-    const renderToggleDescription = () => {
-        return featureTypes.find(toggle => toggle.id === type)?.description;
-    };
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
-                    What would you like to call your toggle?
+                    What would you like to call your group?
                 </p>
                 <Input
                     autoFocus
-                    disabled={mode === 'Edit'}
                     className={styles.input}
                     label="Name"
-                    id="feature-toggle-name"
+                    id="group-name"
                     error={Boolean(errors.name)}
                     errorText={errors.name}
                     onFocus={() => clearErrors()}
                     value={name}
-                    onChange={e => setName(trim(e.target.value))}
-                    data-testid={CF_NAME_ID}
-                    onBlur={validateToggleName}
+                    onChange={e => setName(e.target.value)}
+                    data-testid={UG_NAME_ID}
                 />
                 <p className={styles.inputDescription}>
-                    What kind of feature toggle do you want?
-                </p>
-                {/* <FeatureTypeSelect
-                    value={type}
-                    onChange={setType}
-                    label={'Toggle type'}
-                    id="feature-type-select"
-                    editable
-                    data-testid={CF_TYPE_ID}
-                    IconComponent={KeyboardArrowDownOutlined}
-                    className={styles.selectInput}
-                /> */}
-                <p className={styles.typeDescription}>
-                    {renderToggleDescription()}
-                </p>
-                <ConditionallyRender
-                    condition={editable}
-                    show={
-                        <p className={styles.inputDescription}>
-                            In which project do you want to save the toggle?
-                        </p>
-                    }
-                />
-                {/* <FeatureProjectSelect
-                    value={project}
-                    onChange={projectId => {
-                        setProject(projectId);
-                        navigate(`/projects/${projectId}/create-toggle`, {
-                            replace: true,
-                        });
-                    }}
-                    enabled={editable}
-                    filter={projectFilterGenerator(permissions, CREATE_FEATURE)}
-                    IconComponent={KeyboardArrowDownOutlined}
-                    className={styles.selectInput}
-                /> */}
-
-                <p className={styles.inputDescription}>
-                    How would you describe your feature toggle?
+                    How would you describe your group?
                 </p>
                 <Input
                     className={styles.input}
                     multiline
                     rows={4}
                     label="Description"
-                    placeholder="A short description of the feature toggle"
+                    placeholder="A short description of the group"
                     value={description}
-                    data-testid={CF_DESC_ID}
                     onChange={e => setDescription(e.target.value)}
+                    data-testid={UG_DESC_ID}
                 />
-                <FormControl className={styles.input}>
+                <ConditionallyRender
+                    condition={mode === 'Create'}
+                    show={
+                        <>
+                            <p className={styles.inputDescription}>
+                                Add users to this group
+                            </p>
+                            TODO: Select users input, add button, users table
+                        </>
+                    }
+                />
+                {/* <FormControl className={styles.input}>
                     <Typography
                         variant="subtitle1"
                         className={styles.roleSubtitle}
@@ -178,7 +115,7 @@ export const GroupForm: FC<IGroupForm> = ({
                             label="Enable impression data"
                         />
                     </div>
-                </FormControl>
+                </FormControl> */}
             </div>
 
             <div className={styles.buttonContainer}>
