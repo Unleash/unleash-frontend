@@ -14,8 +14,9 @@ export const sortTypes = {
         const b = v2?.values?.[id];
         return a === b ? 0 : a ? 1 : -1;
     },
-    alphanumeric: (a: any, b: any, id: string) =>
-        a?.values?.[id]
+    alphanumeric: (a: any, b: any, id: string) => {
+        return (a?.values?.[id] || '')
             ?.toLowerCase()
-            .localeCompare(b?.values?.[id]?.toLowerCase()),
+            .localeCompare(b?.values?.[id]?.toLowerCase() || '');
+    },
 };
