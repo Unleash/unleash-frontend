@@ -1,10 +1,12 @@
+import { FC } from 'react';
 import { Button } from '@mui/material';
 import { useStyles } from './GroupForm.styles'; // TODO: Delete styles file.
 import { UG_DESC_ID, UG_NAME_ID } from 'utils/testIds';
 import Input from 'component/common/Input/Input';
-import React, { FC } from 'react';
 import { IGroupUser } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { GroupFormUsersSelect } from './GroupFormUsersSelect/GroupFormUsersSelect';
+import { GroupFormUsersTable } from './GroupFormUsersTable/GroupFormUsersTable';
 
 interface IGroupForm {
     name: string;
@@ -38,7 +40,7 @@ export const GroupForm: FC<IGroupForm> = ({
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.container}>
+            <div>
                 <p className={styles.inputDescription}>
                     What would you like to call your group?
                 </p>
@@ -74,48 +76,17 @@ export const GroupForm: FC<IGroupForm> = ({
                             <p className={styles.inputDescription}>
                                 Add users to this group
                             </p>
-                            TODO: Select users input, add button, users table
+                            <GroupFormUsersSelect
+                                users={users}
+                                setUsers={setUsers}
+                            />
+                            <GroupFormUsersTable
+                                users={users}
+                                setUsers={setUsers}
+                            />
                         </>
                     }
                 />
-                {/* <FormControl className={styles.input}>
-                    <Typography
-                        variant="subtitle1"
-                        className={styles.roleSubtitle}
-                        data-loading
-                        component="h2"
-                    >
-                        Impression Data
-                    </Typography>
-                    <p>
-                        When you enable impression data for a feature toggle,
-                        your client SDKs will emit events you can listen for
-                        every time this toggle gets triggered. Learn more in{' '}
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://docs.getunleash.io/advanced/impression_data"
-                        >
-                            the impression data documentation
-                        </a>
-                    </p>
-                    <div className={styles.flexRow}>
-                        <FormControlLabel
-                            labelPlacement="start"
-                            style={{ marginLeft: 0 }}
-                            control={
-                                <Switch
-                                    name="impressionData"
-                                    onChange={() =>
-                                        setImpressionData(!impressionData)
-                                    }
-                                    checked={impressionData}
-                                />
-                            }
-                            label="Enable impression data"
-                        />
-                    </div>
-                </FormControl> */}
             </div>
 
             <div className={styles.buttonContainer}>

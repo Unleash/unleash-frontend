@@ -11,6 +11,13 @@ export interface IUseGroupOutput {
     error?: Error;
 }
 
+export const mapGroupUsers = (users: any[]) =>
+    users.map(user => ({
+        ...user.user,
+        joinedAt: new Date(user.joinedAt),
+        role: user.role,
+    }));
+
 export const useGroup = (groupId: string): IUseGroupOutput => {
     const { data, error, mutate } = useSWR(
         formatApiPath(`api/admin/groups/${groupId}`),
@@ -19,7 +26,7 @@ export const useGroup = (groupId: string): IUseGroupOutput => {
 
     return useMemo(
         () => ({
-            group: data,
+            group: { ...data, users: mapGroupUsers(data?.users ?? []) },
             loading: !error && !data,
             refetchGroup: () => mutate(),
             error,

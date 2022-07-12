@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import { IGroup } from 'interfaces/group';
+import { mapGroupUsers } from 'hooks/api/getters/useGroup/useGroup';
 
 export interface IUseGroupsOutput {
     groups?: IGroup[];
@@ -19,7 +20,11 @@ export const useGroups = (): IUseGroupsOutput => {
 
     return useMemo(
         () => ({
-            groups: data ?? [],
+            groups:
+                data?.groups.map((group: any) => ({
+                    ...group,
+                    users: mapGroupUsers(group.users ?? []),
+                })) ?? [],
             loading: !error && !data,
             refetchGroups: () => mutate(),
             error,

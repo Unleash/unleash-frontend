@@ -11,13 +11,13 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { createLocalStorage } from 'utils/createLocalStorage';
-import { IGroupUser } from 'interfaces/group'; // TODO: Delete this and use OpenAPI schema instead?
+import { IGroupUser, Role } from 'interfaces/group';
 import { useSearch } from 'hooks/useSearch';
 import { Search } from 'component/common/Search/Search';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
-import { GroupUserRoleCell } from './GroupUserRoleCell/GroupUserRoleCell';
+import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Delete, Edit } from '@mui/icons-material';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
@@ -42,7 +42,7 @@ const StyledDelete = styled(Delete)(({ theme }) => ({
 export const groupUsersPlaceholder: IGroupUser[] = Array(15).fill({
     name: 'Name of the user',
     username: 'Username of the user',
-    role: 'member',
+    role: Role.Member,
 });
 
 export type PageQueryType = Partial<

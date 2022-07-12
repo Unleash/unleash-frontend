@@ -1,8 +1,7 @@
 import { Avatar, styled } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IGroupUser } from 'interfaces/group';
+import { IGroupUser, Role } from 'interfaces/group';
 import { useMemo } from 'react';
-import { colors } from 'themes/colors';
 import StarIcon from '@mui/icons-material/Star';
 
 const StyledAvatars = styled('div')(({ theme }) => ({
@@ -29,7 +28,7 @@ const StyledOwnerStar = styled(StarIcon)(({ theme }) => ({
 }));
 
 const StyledAvatarMore = styled(StyledAvatar)(({ theme }) => ({
-    backgroundColor: colors.purple[100], // TODO: Add to theme?
+    backgroundColor: theme.palette.secondary.light,
     color: theme.palette.text.primary,
     fontSize: theme.fontSizes.smallerBody,
     fontWeight: theme.fontWeight.bold,
@@ -49,7 +48,7 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
             {shownUsers.map(user => (
                 <ConditionallyRender
                     key={user.id}
-                    condition={user.role === 'member'}
+                    condition={user.role === Role.Member}
                     show={
                         <StyledAvatar
                             data-loading

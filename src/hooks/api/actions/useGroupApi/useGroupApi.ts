@@ -1,10 +1,10 @@
 import useAPI from '../useApi/useApi';
-import { IGroupUser } from 'interfaces/group';
+import { IGroupUserModel } from 'interfaces/group';
 
 interface ICreateGroupPayload {
     name: string;
     description: string;
-    users: IGroupUser[];
+    users: IGroupUserModel[];
 }
 
 export const useGroupApi = () => {
@@ -19,7 +19,8 @@ export const useGroupApi = () => {
             body: JSON.stringify(payload),
         });
         try {
-            return await makeRequest(req.caller, req.id);
+            const response = await makeRequest(req.caller, req.id);
+            return await response.json();
         } catch (e) {
             throw e;
         }
