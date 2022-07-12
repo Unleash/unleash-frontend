@@ -1,7 +1,7 @@
 import { IUser } from './user';
 
 export interface IGroup {
-    id: number;
+    id: string;
     name: string;
     description: string;
     createdAt: Date;

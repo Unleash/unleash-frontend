@@ -478,6 +478,7 @@ export const routes: IRoute[] = [
         component: CreateGroup,
         type: 'protected',
         menu: {},
+        flag: UG,
     },
     {
         path: '/admin/roles',

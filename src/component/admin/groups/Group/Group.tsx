@@ -42,7 +42,7 @@ const StyledDelete = styled(Delete)(({ theme }) => ({
 export const groupUsersPlaceholder: IGroupUser[] = Array(15).fill({
     name: 'Name of the user',
     username: 'Username of the user',
-    type: Math.random() < 0.8 ? 'member' : 'admin',
+    role: 'member',
 });
 
 export type PageQueryType = Partial<

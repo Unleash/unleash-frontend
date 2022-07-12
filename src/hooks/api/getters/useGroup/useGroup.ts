@@ -11,7 +11,7 @@ export interface IUseGroupOutput {
     error?: Error;
 }
 
-export const useGroup = (groupId: number): IUseGroupOutput => {
+export const useGroup = (groupId: string): IUseGroupOutput => {
     const { data, error, mutate } = useSWR(
         formatApiPath(`api/admin/groups/${groupId}`),
         fetcher
