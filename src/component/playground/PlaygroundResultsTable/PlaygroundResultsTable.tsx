@@ -1,3 +1,6 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import {
@@ -8,19 +11,16 @@ import {
     TablePlaceholder,
     TableRow,
 } from 'component/common/Table';
-import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
-import { useEffect, useMemo, useState } from 'react';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { LinkCell } from '../../common/Table/cells/LinkCell/LinkCell';
+import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
+import { useSearch } from 'hooks/useSearch';
+import { createLocalStorage } from 'utils/createLocalStorage';
+import { PlaygroundFeatureSchema } from 'openapi';
 import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
-import { useSearchParams } from 'react-router-dom';
-import { useSearch } from '../../../hooks/useSearch';
-import { createLocalStorage } from '../../../utils/createLocalStorage';
-import { PlaygroundFeatureSchema } from '../../../openapi';
 
 const defaultSort: SortingRule<string> = { id: 'name' };
 const { value, setValue } = createLocalStorage(
@@ -29,7 +29,7 @@ const { value, setValue } = createLocalStorage(
 );
 
 interface IPlaygroundResultsTableProps {
-    features: PlaygroundFeatureSchema[];
+    features?: PlaygroundFeatureSchema[];
     loading: boolean;
 }
 
@@ -39,8 +39,6 @@ export const PlaygroundResultsTable = ({
 }: IPlaygroundResultsTableProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
-
-
     const [searchValue, setSearchValue] = useState(
         searchParams.get('search') || ''
     );
@@ -49,7 +47,7 @@ export const PlaygroundResultsTable = ({
         data: searchedData,
         getSearchText,
         getSearchContext,
-    } = useSearch(COLUMNS, searchValue, features);
+    } = useSearch(COLUMNS, searchValue, features || []);
 
     const data = useMemo(() => {
         return loading
@@ -71,7 +69,6 @@ export const PlaygroundResultsTable = ({
                     : value.desc,
             },
         ],
-        hiddenColumns: [],
     }));
 
     const {
@@ -102,10 +99,13 @@ export const PlaygroundResultsTable = ({
         if (loading) {
             return;
         }
-        const tableState: Record<string, string> = {};
+        const tableState: Record<string, string> =
+            Object.fromEntries(searchParams);
         tableState.sort = sortBy[0].id;
         if (sortBy[0].desc) {
             tableState.order = 'desc';
+        } else if (tableState.order) {
+            delete tableState.order;
         }
         if (searchValue) {
             tableState.search = searchValue;
@@ -115,17 +115,23 @@ export const PlaygroundResultsTable = ({
             replace: true,
         });
         setValue({ id: sortBy[0].id, desc: sortBy[0].desc || false });
-    }, [loading, sortBy, searchValue, setValue]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- don't re-render after search params change
+    }, [loading, sortBy, searchValue]);
 
     return (
         <PageContent
             header={
                 <PageHeader
-                    titleElement={`Results (${
-                        rows.length < data.length
-                            ? `${rows.length} of ${data.length}`
-                            : data.length
-                    })`}
+                    titleElement={
+                        features !== undefined
+                            ? `Results (${
+                                  rows.length < data.length
+                                      ? `${rows.length} of ${data.length}`
+                                      : data.length
+                              })`
+                            : 'Results'
+                    }
                     actions={
                         <Search
                             initialValue={searchValue}
@@ -195,6 +201,7 @@ const COLUMNS = [
     {
         Header: 'Name',
         accessor: 'name',
+        searchable: true,
         width: '60%',
         Cell: ({ value }: any) => (
             <LinkCell title={value} to={`/feature/${value}`} />
@@ -213,17 +220,19 @@ const COLUMNS = [
     },
     {
         Header: 'Variant',
-        accessor: 'variant',
+        id: 'variant',
+        accessor: 'variant.name',
         sortType: 'alphanumeric',
         filterName: 'variant',
         searchable: true,
         maxWidth: 170,
-        Cell: ({ value }: any) => <HighlightCell value={value?.name} />,
+        Cell: ({ value }: any) => <HighlightCell value={value} />,
     },
     {
         Header: 'isEnabled',
         accessor: 'isEnabled',
         maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
+        sortType: 'boolean',
     },
 ];

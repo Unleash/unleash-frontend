@@ -1,4 +1,5 @@
-import { FormEventHandler, useState, VFC } from 'react';
+import { FormEventHandler, useEffect, useState, VFC } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -31,6 +32,33 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         PlaygroundResponseSchema | undefined
     >();
     const { setToastData } = useToast();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        // Load initial values from URL
+        try {
+            const environmentFromUrl = searchParams.get('environment');
+            if (environmentFromUrl) {
+                onSetEnvironment(environmentFromUrl);
+            }
+            const projectsFromUrl = searchParams.get('projects');
+            if (projectsFromUrl) {
+                onSetProjects(projectsFromUrl.split(','));
+            }
+            const contextFromUrl = searchParams.get('context');
+            if (contextFromUrl) {
+                setContext(decodeURI(contextFromUrl));
+            }
+        } catch (error) {
+            setToastData({
+                type: 'error',
+                title: `Failed to parse URL parameters: ${formatUnknownError(
+                    error
+                )}`,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();
@@ -38,6 +66,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
 
         try {
             setContextObject(JSON.parse(context || '{}'));
+            // TODO: API integration
             // const result = await openApiAdmin.getPlayground({
             //     playgroundRequestSchema: {
             //         context,
@@ -45,6 +74,22 @@ export const Playground: VFC<IPlaygroundProps> = () => {
             //         environment
             //     },
             // });
+
+            // Set URL search parameters
+            searchParams.set('context', encodeURI(context || '')); // always set because of native validation
+            searchParams.set('environment', environment);
+            if (
+                Array.isArray(projects) &&
+                projects.length > 0 &&
+                !(projects.length === 1 && projects[0] === '*')
+            ) {
+                searchParams.set('projects', projects.join(','));
+            } else {
+                searchParams.delete('projects');
+            }
+            setSearchParams(searchParams);
+
+            // Display results
             setResults({
                 input: {
                     context: contextObject as any,
@@ -52,6 +97,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     projects,
                 },
                 toggles: [
+                    // FIXME: mock
                     {
                         isEnabled: true,
                         name: 'mock',
@@ -66,6 +112,28 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                         isEnabled: false,
                         name: 'test',
                         projectId: 'default',
+                        variant: null,
+                    },
+                    {
+                        isEnabled: false,
+                        name: 'playground',
+                        projectId: 'default',
+                        variant: {
+                            name: 'option',
+                            enabled: true,
+                            payload: { type: 'string', value: '123' },
+                        },
+                    },
+                    {
+                        isEnabled: true,
+                        name: 'dx',
+                        projectId: 'default',
+                        variant: null,
+                    },
+                    {
+                        isEnabled: false,
+                        name: 'new-context',
+                        projectId: 'playground',
                         variant: null,
                     },
                 ],
@@ -100,8 +168,10 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                         Configure playground
                     </Typography>
                     <PlaygroundConnectionFieldset
-                        onSetEnvironment={onSetEnvironment}
-                        onSetProjects={onSetProjects}
+                        environment={environment}
+                        projects={projects}
+                        setEnvironment={onSetEnvironment}
+                        setProjects={onSetProjects}
                     />
                     <Divider
                         variant="fullWidth"
@@ -139,7 +209,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
 
             <PlaygroundResultsTable
                 loading={loading}
-                features={results?.toggles ?? []}
+                features={results?.toggles}
             />
         </PageContent>
     );

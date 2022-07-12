@@ -3,14 +3,14 @@ import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { colors } from 'themes/colors';
 import { ReactComponent as FeatureEnabledIcon } from 'assets/icons/isenabled-true.svg';
 import { ReactComponent as FeatureDisabledIcon } from 'assets/icons/isenabled-false.svg';
-import { Chip, styled } from '@mui/material';
-import {ConditionallyRender} from "../../../common/ConditionallyRender/ConditionallyRender";
+import { Chip, styled, useTheme } from '@mui/material';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IFeatureStatusCellProps {
     enabled: boolean;
 }
 
-const FalseChip = styled(Chip)(() => ({
+const StyledFalseChip = styled(Chip)(() => ({
     width: 80,
     borderRadius: '5px',
     border: `1px solid ${colors.red['700']}`,
@@ -23,7 +23,7 @@ const FalseChip = styled(Chip)(() => ({
     },
 }));
 
-const TrueChip = styled(Chip)(() => ({
+const StyledTrueChip = styled(Chip)(() => ({
     width: 80,
     borderRadius: '5px',
     border: `1px solid ${colors.green['700']}`,
@@ -37,17 +37,34 @@ const TrueChip = styled(Chip)(() => ({
 }));
 
 export const FeatureStatusCell = ({ enabled }: IFeatureStatusCellProps) => {
-    const icon = (<ConditionallyRender condition={enabled}
-                         show={<FeatureEnabledIcon stroke={colors.green['600']} stroke-width="0.25" />}
-                         elseShow={<FeatureDisabledIcon stroke={colors.red['700']} stroke-width="0.25" />} />)
+    const theme = useTheme();
+    const icon = (
+        <ConditionallyRender
+            condition={enabled}
+            show={
+                <FeatureEnabledIcon
+                    stroke={theme.palette.success.main}
+                    strokeWidth="0.25"
+                />
+            }
+            elseShow={
+                <FeatureDisabledIcon
+                    stroke={theme.palette.error.main}
+                    strokeWidth="0.25"
+                />
+            }
+        />
+    );
 
     const label = enabled ? 'True' : 'False';
 
     return (
         <TextCell>
-            <ConditionallyRender condition={enabled}
-                                 show={ <TrueChip icon={icon} label={label} />}
-                                 elseShow={<FalseChip icon={icon} label={label} />} />
+            <ConditionallyRender
+                condition={enabled}
+                show={<StyledTrueChip icon={icon} label={label} />}
+                elseShow={<StyledFalseChip icon={icon} label={label} />}
+            />
         </TextCell>
     );
 };
