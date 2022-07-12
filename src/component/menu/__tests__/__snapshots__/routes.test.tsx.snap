@@ -400,6 +400,7 @@ exports[`returns all baseRoutes 1`] = `
   },
   {
     "component": [Function],
+    "flag": "UG",
     "menu": {
       "adminSettings": true,
     },
@@ -410,10 +411,19 @@ exports[`returns all baseRoutes 1`] = `
   },
   {
     "component": [Function],
+    "flag": "UG",
     "menu": {},
     "parent": "/admin",
     "path": "/admin/groups/:groupId",
     "title": ":groupId",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
+    "menu": {},
+    "parent": "/admin/groups",
+    "path": "/admin/groups/create-group",
+    "title": "Create group",
     "type": "protected",
   },
   {
