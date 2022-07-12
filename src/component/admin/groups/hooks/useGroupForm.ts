@@ -5,7 +5,7 @@ import { IGroupUser, Role } from 'interfaces/group';
 export const useGroupForm = (
     initialName = '',
     initialDescription = '',
-    initialUsers = []
+    initialUsers: IGroupUser[] = []
 ) => {
     const params = useQueryParams();
     const groupQueryName = params.get('name');

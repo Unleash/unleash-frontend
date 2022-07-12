@@ -24,8 +24,8 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
+import { Link } from 'react-router-dom';
 
-// TODO: Refactor into its own component and cleanup avatars everywhere?
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
@@ -199,8 +199,9 @@ export const Group: VFC = () => {
                         actions={
                             <>
                                 <PermissionIconButton
+                                    to={`/admin/groups/${groupId}/edit`}
+                                    component={Link}
                                     data-loading
-                                    onClick={() => {}}
                                     permission={ADMIN}
                                     tooltipProps={{
                                         title: 'Edit group',

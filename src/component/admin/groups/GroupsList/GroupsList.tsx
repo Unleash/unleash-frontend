@@ -51,9 +51,12 @@ export const GroupsList: VFC = () => {
     }, [searchValue, setSearchParams]);
 
     const data = useMemo(() => {
+        const sortedGroups = groups.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
         return searchValue
-            ? groups.filter(group => groupsSearch(group, searchValue))
-            : groups;
+            ? sortedGroups.filter(group => groupsSearch(group, searchValue))
+            : sortedGroups;
     }, [groups, searchValue]);
 
     return (

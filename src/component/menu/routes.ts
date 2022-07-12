@@ -56,6 +56,7 @@ import { Billing } from 'component/admin/billing/Billing';
 import { Playground } from 'component/playground/Playground/Playground';
 import { Group } from 'component/admin/groups/Group/Group';
 import { CreateGroup } from 'component/admin/groups/CreateGroup/CreateGroup';
+import { EditGroup } from 'component/admin/groups/EditGroup/EditGroup';
 
 export const routes: IRoute[] = [
     // Splash
@@ -476,6 +477,15 @@ export const routes: IRoute[] = [
         parent: '/admin/groups',
         title: 'Create group',
         component: CreateGroup,
+        type: 'protected',
+        menu: {},
+        flag: UG,
+    },
+    {
+        path: '/admin/groups/:groupId/edit',
+        parent: '/admin/groups',
+        title: 'Edit group',
+        component: EditGroup,
         type: 'protected',
         menu: {},
         flag: UG,

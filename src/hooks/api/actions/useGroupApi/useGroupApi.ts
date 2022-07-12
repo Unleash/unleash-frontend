@@ -26,6 +26,22 @@ export const useGroupApi = () => {
         }
     };
 
+    const updateGroup = async (
+        groupId: string,
+        payload: ICreateGroupPayload
+    ) => {
+        const path = `api/admin/groups/${groupId}`;
+        const req = createRequest(path, {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+        });
+        try {
+            await makeRequest(req.caller, req.id);
+        } catch (e) {
+            throw e;
+        }
+    };
+
     const removeGroup = async (groupId: string) => {
         const path = `api/admin/groups/${groupId}`;
         const req = createRequest(path, {
@@ -40,6 +56,7 @@ export const useGroupApi = () => {
 
     return {
         createGroup,
+        updateGroup,
         removeGroup,
         errors,
         loading,

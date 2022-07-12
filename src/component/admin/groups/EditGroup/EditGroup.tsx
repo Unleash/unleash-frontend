@@ -6,11 +6,14 @@ import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
 import { useGroupApi } from 'hooks/api/actions/useGroupApi/useGroupApi';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { UG_CREATE_BTN_ID } from 'utils/testIds';
 import { Button } from '@mui/material';
-import { CREATE } from 'constants/misc';
+import { EDIT } from 'constants/misc';
+import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 
-export const CreateGroup = () => {
+export const EditGroup = () => {
+    const groupId = useRequiredPathParam('groupId');
+    const { group, refetchGroup } = useGroup(groupId);
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
@@ -25,9 +28,9 @@ export const CreateGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
-    } = useGroupForm();
+    } = useGroupForm(group?.name, group?.description, group?.users);
 
-    const { createGroup, loading } = useGroupApi();
+    const { updateGroup, loading } = useGroupApi();
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
@@ -35,12 +38,11 @@ export const CreateGroup = () => {
 
         const payload = getGroupPayload();
         try {
-            const group = await createGroup(payload);
-            navigate(`/admin/groups/${group.id}`);
+            await updateGroup(groupId, payload);
+            refetchGroup();
+            navigate(`/admin/groups/${groupId}`);
             setToastData({
-                title: 'Group created successfully',
-                text: 'Now you can start using your group.',
-                confetti: true,
+                title: 'Group updated successfully',
                 type: 'success',
             });
         } catch (error: unknown) {
@@ -49,9 +51,9 @@ export const CreateGroup = () => {
     };
 
     const formatApiCode = () => {
-        return `curl --location --request POST '${
+        return `curl --location --request PUT '${
             uiConfig.unleashUrl
-        }/api/admin/groups' \\
+        }/api/admin/groups/${groupId}' \\
     --header 'Authorization: INSERT_API_KEY' \\
     --header 'Content-Type: application/json' \\
     --data-raw '${JSON.stringify(getGroupPayload(), undefined, 2)}'`;
@@ -64,7 +66,7 @@ export const CreateGroup = () => {
     return (
         <FormTemplate
             loading={loading}
-            title="Create group"
+            title="Edit group"
             description="Groups is the best and easiest way to organize users and then use them in projects to assign a specific role in one go to all the users in a group."
             documentationLink="https://docs.getunleash.io/advanced/groups"
             documentationLinkLabel="Groups documentation"
@@ -80,16 +82,11 @@ export const CreateGroup = () => {
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
-                mode={CREATE}
+                mode={EDIT}
                 clearErrors={clearErrors}
             >
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    data-testid={UG_CREATE_BTN_ID}
-                >
-                    Create group
+                <Button type="submit" variant="contained" color="primary">
+                    Save
                 </Button>
             </GroupForm>
         </FormTemplate>

@@ -429,6 +429,15 @@ exports[`returns all baseRoutes 1`] = `
   },
   {
     "component": [Function],
+    "flag": "UG",
+    "menu": {},
+    "parent": "/admin/groups",
+    "path": "/admin/groups/:groupId/edit",
+    "title": "Edit group",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
     "flag": "RE",
     "menu": {
       "adminSettings": true,
