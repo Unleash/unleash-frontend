@@ -1,4 +1,4 @@
-import { Avatar, styled } from '@mui/material';
+import { Avatar, Badge, styled } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IGroupUser, Role } from 'interfaces/group';
 import { useMemo } from 'react';
@@ -18,20 +18,19 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
     marginLeft: theme.spacing(-1),
 }));
 
-const StyledOwnerAvatar = styled(StyledAvatar)(({ theme }) => ({
-    position: 'relative',
-}));
-// TODO: https://mui.com/material-ui/react-avatar/#with-badge instead? Depending on designs.
-const StyledOwnerStar = styled(StarIcon)(({ theme }) => ({
-    position: 'absolute',
-    color: theme.palette.success.main,
-}));
-
 const StyledAvatarMore = styled(StyledAvatar)(({ theme }) => ({
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.text.primary,
     fontSize: theme.fontSizes.smallerBody,
     fontWeight: theme.fontWeight.bold,
+}));
+
+const StyledStar = styled(StarIcon)(({ theme }) => ({
+    color: theme.palette.warning.main,
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadiusExtraLarge,
+    fontSize: theme.fontSizes.smallBody,
+    marginLeft: theme.spacing(-1),
 }));
 
 interface IGroupCardAvatarsProps {
@@ -60,16 +59,23 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                         />
                     }
                     elseShow={
-                        <StyledOwnerAvatar
-                            data-loading
-                            alt="Gravatar"
-                            src={user.imageUrl}
-                            title={`${
-                                user.name || user.email || user.username
-                            } (id: ${user.id})`}
+                        <Badge
+                            overlap="circular"
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            badgeContent={<StyledStar />}
                         >
-                            <StyledOwnerStar />
-                        </StyledOwnerAvatar>
+                            <StyledAvatar
+                                data-loading
+                                alt="Gravatar"
+                                src={user.imageUrl}
+                                title={`${
+                                    user.name || user.email || user.username
+                                } (id: ${user.id})`}
+                            />
+                        </Badge>
                     }
                 />
             ))}
