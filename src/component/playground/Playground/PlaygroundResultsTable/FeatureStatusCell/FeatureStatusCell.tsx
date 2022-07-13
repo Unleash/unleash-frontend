@@ -43,13 +43,13 @@ export const FeatureStatusCell = ({ enabled }: IFeatureStatusCellProps) => {
             condition={enabled}
             show={
                 <FeatureEnabledIcon
-                    stroke={theme.palette.success.main}
+                    color={theme.palette.success.main}
                     strokeWidth="0.25"
                 />
             }
             elseShow={
                 <FeatureDisabledIcon
-                    stroke={theme.palette.error.main}
+                    color={theme.palette.error.main}
                     strokeWidth="0.25"
                 />
             }

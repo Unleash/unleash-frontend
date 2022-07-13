@@ -234,5 +234,6 @@ const COLUMNS = [
         maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
         sortType: 'boolean',
+        sortInverted: true,
     },
 ];
