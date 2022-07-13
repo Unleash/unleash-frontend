@@ -35,9 +35,9 @@ export const useGroupForm = (
         return {
             name,
             description,
-            users: users.map(user => ({
-                user: { id: user.id },
-                role: user.role || Role.Member,
+            users: users.map(({ id, role }) => ({
+                user: { id },
+                role: role || Role.Member,
             })),
         };
     };

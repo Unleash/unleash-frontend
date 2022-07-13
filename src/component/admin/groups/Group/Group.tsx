@@ -34,8 +34,9 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
 import { Link } from 'react-router-dom';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
-import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
+import { AddGroupUser } from './AddGroupUser/AddGroupUser';
 import { EditGroupUser } from './EditGroupUser/EditGroupUser';
+import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(4),
@@ -74,6 +75,7 @@ export const Group: VFC = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { group, loading } = useGroup(groupId);
     const [removeOpen, setRemoveOpen] = useState(false);
+    const [addUserOpen, setAddUserOpen] = useState(false);
     const [editUserOpen, setEditUserOpen] = useState(false);
     const [removeUserOpen, setRemoveUserOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IGroupUser>();
@@ -317,7 +319,9 @@ export const Group: VFC = () => {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            onClick={() => {}}
+                                            onClick={() => {
+                                                setAddUserOpen(true);
+                                            }}
                                         >
                                             Add user
                                         </Button>
@@ -371,6 +375,11 @@ export const Group: VFC = () => {
                         <RemoveGroup
                             open={removeOpen}
                             setOpen={setRemoveOpen}
+                            group={group!}
+                        />
+                        <AddGroupUser
+                            open={addUserOpen}
+                            setOpen={setAddUserOpen}
                             group={group!}
                         />
                         <EditGroupUser

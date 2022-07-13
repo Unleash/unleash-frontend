@@ -64,7 +64,7 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
     const usersOptions = useMemo(
         () =>
             usersAll.filter(
-                (user: IUser) => !users?.map(user => user.id).includes(user.id)
+                (user: IUser) => !users?.map(({ id }) => id).includes(user.id)
             ),
         [usersAll, users]
     );

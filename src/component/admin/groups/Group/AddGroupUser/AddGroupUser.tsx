@@ -1,13 +1,15 @@
-import { Button, MenuItem, Select, styled } from '@mui/material';
+import { Button, styled } from '@mui/material';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
 import { useGroupApi } from 'hooks/api/actions/useGroupApi/useGroupApi';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
-import { IGroup, IGroupUser, Role } from 'interfaces/group';
+import { IGroup, IGroupUser } from 'interfaces/group';
 import { FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { GroupFormUsersSelect } from 'component/admin/groups/GroupForm/GroupFormUsersSelect/GroupFormUsersSelect';
+import { GroupFormUsersTable } from 'component/admin/groups/GroupForm/GroupFormUsersTable/GroupFormUsersTable';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -15,29 +17,9 @@ const StyledForm = styled('form')(() => ({
     height: '100%',
 }));
 
-const StyledUser = styled('div')(({ theme }) => ({
-    width: '100%',
-    maxWidth: theme.spacing(50),
-    marginBottom: theme.spacing(2),
-    padding: theme.spacing(1.5),
-    borderRadius: theme.shape.borderRadiusMedium,
-    backgroundColor: theme.palette.secondaryContainer,
-    display: 'flex',
-    flexDirection: 'column',
-    '& > span:first-of-type': {
-        color: theme.palette.text.secondary,
-    },
-}));
-
 const StyledInputDescription = styled('p')(({ theme }) => ({
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(1),
-}));
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-    width: '100%',
-    maxWidth: theme.spacing(50),
-    marginBottom: theme.spacing(2),
 }));
 
 const StyledButtonContainer = styled('div')(() => ({
@@ -50,17 +32,15 @@ const StyledCancelButton = styled(Button)(({ theme }) => ({
     marginLeft: theme.spacing(3),
 }));
 
-interface IEditGroupUserProps {
+interface IAddGroupUserProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    user?: IGroupUser;
     group: IGroup;
 }
 
-export const EditGroupUser: FC<IEditGroupUserProps> = ({
+export const AddGroupUser: FC<IAddGroupUserProps> = ({
     open,
     setOpen,
-    user,
     group,
 }) => {
     const { refetchGroup } = useGroup(group.id);
@@ -68,38 +48,47 @@ export const EditGroupUser: FC<IEditGroupUserProps> = ({
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
 
-    const [role, setRole] = useState<Role>(user?.role || Role.Member);
+    const [users, setUsers] = useState<IGroupUser[]>(group.users);
 
     useEffect(() => {
-        setRole(user?.role || Role.Member);
-    }, [user, open]);
+        setUsers(group.users);
+    }, [group.users, open]);
+
+    const newUsers = useMemo(() => {
+        return users.filter(
+            user => !group.users.some(({ id }) => id === user.id)
+        );
+    }, [group.users, users]);
 
     const payload = useMemo(() => {
-        const editUsers = [...group.users];
-        const editUserIndex = editUsers.findIndex(({ id }) => id === user?.id);
-        editUsers[editUserIndex] = {
-            ...user!,
-            role,
-        };
+        const addUsers = [...group.users, ...newUsers];
         return {
             name: group.name,
             description: group.description,
-            users: editUsers.map(({ id, role }) => ({
+            users: addUsers.map(({ id, role }) => ({
                 user: { id },
                 role,
             })),
         };
-    }, [group, user, role]);
+    }, [group, newUsers]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
+            const message =
+                newUsers.length === 1
+                    ? `${
+                          newUsers[0].name ||
+                          newUsers[0].username ||
+                          newUsers[0].email
+                      } added to the group`
+                    : `${newUsers.length} users added to the group`;
             await updateGroup(group.id, payload);
             refetchGroup();
             setOpen(false);
             setToastData({
-                title: 'User edited successfully',
+                title: message,
                 type: 'success',
             });
         } catch (error: unknown) {
@@ -118,16 +107,16 @@ export const EditGroupUser: FC<IEditGroupUserProps> = ({
 
     return (
         <SidebarModal
-            open={open && Boolean(user)}
+            open={open}
             onClose={() => {
                 setOpen(false);
             }}
-            label="Edit user"
+            label="Add user"
         >
             <FormTemplate
                 loading={loading}
                 modal
-                title="Edit user"
+                title="Add user"
                 description="Groups is the best and easiest way to organize users and then use them in projects to assign a specific role in one go to all the users in a group."
                 documentationLink="https://docs.getunleash.io/advanced/groups"
                 documentationLinkLabel="Groups documentation"
@@ -135,26 +124,17 @@ export const EditGroupUser: FC<IEditGroupUserProps> = ({
             >
                 <StyledForm onSubmit={handleSubmit}>
                     <div>
-                        <StyledUser>
-                            <span>{user?.name || user?.username}</span>
-                            <span>{user?.email}</span>
-                        </StyledUser>
                         <StyledInputDescription>
-                            Assign the role the user should have in this group
+                            Add users to this group
                         </StyledInputDescription>
-                        <StyledSelect
-                            size="small"
-                            value={role}
-                            onChange={event =>
-                                setRole(event.target.value as Role)
-                            }
-                        >
-                            {Object.values(Role).map(role => (
-                                <MenuItem key={role} value={role}>
-                                    {role}
-                                </MenuItem>
-                            ))}
-                        </StyledSelect>
+                        <GroupFormUsersSelect
+                            users={users}
+                            setUsers={setUsers}
+                        />
+                        <GroupFormUsersTable
+                            users={newUsers}
+                            setUsers={setUsers}
+                        />
                     </div>
 
                     <StyledButtonContainer>
