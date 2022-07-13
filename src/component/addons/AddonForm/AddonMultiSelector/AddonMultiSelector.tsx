@@ -33,6 +33,12 @@ export interface IAddonMultiSelectorProps {
 
 const ALL_OPTIONS = '*';
 
+const StyledCheckbox = styled(Checkbox)(() => ({
+    marginRight: '0.2em',
+}));
+
+const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
+
 export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     options,
     selectedItems,
@@ -58,9 +64,6 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
         />
     );
 
-    const StyledCheckbox = styled(Checkbox)(() => ({
-        marginRight: '0.2em',
-    }));
     const isAllSelected =
         selectedItems.length > 0 &&
         selectedItems.length === options.length &&
@@ -113,7 +116,6 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
             {children}
         </Fragment>
     );
-    const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
     const SelectAllFormControl = () => (
         <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
             <FormControlLabel
