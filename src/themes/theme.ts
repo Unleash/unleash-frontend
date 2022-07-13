@@ -117,8 +117,16 @@ export default createTheme({
         footerBackground: colors.white,
         formBackground: colors.white,
         formSidebar: colors.purple[800],
+        featureMetaData: colors.purple[800],
         codebox: 'rgba(32,32,33, 0.2)',
         sidebarContainer: 'rgba(32,32,33, 0.2)',
+        playgroundBackground: colors.grey[200],
+        standaloneBackground: colors.grey[300],
+        standaloneBannerGradient: {
+            from: colors.purple[900],
+            to: "#173341"
+        },
+        featureMetricsBackground: colors.grey[100],
         grey: colors.grey,
         lightBorder: colors.grey[400],
         text: {

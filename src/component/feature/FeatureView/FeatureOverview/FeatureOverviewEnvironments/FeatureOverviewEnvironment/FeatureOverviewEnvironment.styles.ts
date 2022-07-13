@@ -5,6 +5,8 @@ export const useStyles = makeStyles()(theme => ({
         borderRadius: theme.shape.borderRadiusLarge,
         marginBottom: theme.spacing(2),
         background: theme.palette.background.default,
+        padding: '0.2rem',
+        backgroundColor: theme.palette.background.paper,
     },
     accordion: {
         boxShadow: 'none',

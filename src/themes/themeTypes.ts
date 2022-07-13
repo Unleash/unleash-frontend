@@ -58,6 +58,14 @@ declare module '@mui/material/styles' {
         headerBackground: string;
         footerBackground: string;
         codebox: string;
+        featureMetaData: string;
+        playgroundBackground: string;
+        standaloneBackground: string;
+        standaloneBannerGradient: {
+            from: string;
+            to: string;
+        };
+        featureMetricsBackground: string;
         /**
          * For table header hover effect.
          */

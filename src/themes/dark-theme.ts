@@ -106,6 +106,14 @@ export default createTheme({
         footerBackground: themeColors.main,
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         codebox: colors.darkblue[600],
+        featureMetaData: colors.darkblue[1000],
+        playgroundBackground: themeColors.secondary,
+        standaloneBackground: colors.black,
+        standaloneBannerGradient: {
+            from: colors.darkblue[1000],
+            to: colors.black,
+        },
+        featureMetricsBackground: themeColors.secondary,
         grey: colors.grey,
         text: {
             primary: themeColors.textColor,
@@ -269,16 +277,16 @@ export default createTheme({
         MuiTab: {
             styleOverrides: {
                 root: {
-                    color: colors.grey[900],
+                    color: themeColors.textColor,
                     fontSize: '1rem',
                     textTransform: 'none',
                     fontWeight: 400,
                     minHeight: '62px',
                     '&:hover': {
-                        backgroundColor: colors.grey[200],
+                        backgroundColor: themeColors.secondary,
                     },
                     '&.Mui-selected': {
-                        color: colors.grey[900],
+                        color: themeColors.textColor,
                         fontWeight: 700,
                     },
                     '& > span': {
@@ -336,7 +344,7 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: themeColors.main,
-                    color: colors.white,
+                    color: colors.textColor,
                 },
             },
         },

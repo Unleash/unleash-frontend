@@ -155,6 +155,9 @@ export const Playground: VFC<{}> = () => {
                 sx={{
                     display: 'flex',
                     flexDirection: !matches ? 'row' : 'column',
+                    px: 4,
+                    py: 3,
+                    background: theme.palette.playgroundBackground,
                 }}
             >
                 <Box
