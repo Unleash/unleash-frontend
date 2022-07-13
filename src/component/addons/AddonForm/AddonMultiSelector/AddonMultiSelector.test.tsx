@@ -45,7 +45,7 @@ describe('AddonMultiSelector', () => {
 
     it('can toggle "ALL" checkbox', async () => {
         const user = userEvent.setup();
-        render(<AddonMultiSelector {...mockProps} selectedItems={['*']}/>);
+        render(<AddonMultiSelector {...mockProps} selectedItems={['*']} />);
 
         await user.click(screen.getByTestId('select-all-projects'));
 

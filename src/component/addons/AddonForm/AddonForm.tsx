@@ -1,4 +1,11 @@
-import React, { ChangeEventHandler, FormEventHandler, MouseEventHandler, useEffect, useState, VFC, } from 'react';
+import React, {
+    ChangeEventHandler,
+    FormEventHandler,
+    MouseEventHandler,
+    useEffect,
+    useState,
+    VFC,
+} from 'react';
 import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
 import produce from 'immer';
 import { styles as themeStyles } from 'component/common';
@@ -20,7 +27,7 @@ const useStyles = makeStyles()(theme => ({
     nameInput: {
         marginRight: '1.5rem',
     },
-    formSection: {padding: '10px 28px'},
+    formSection: { padding: '10px 28px' },
     buttonsSection: {
         padding: '10px 28px',
         '& > *': {
@@ -42,23 +49,23 @@ export const AddonForm: VFC<IAddonFormProps> = ({
     addon: initialValues,
     fetch,
 }) => {
-    const {createAddon, updateAddon} = useAddonsApi();
-    const {setToastData, setToastApiError} = useToast();
+    const { createAddon, updateAddon } = useAddonsApi();
+    const { setToastData, setToastApiError } = useToast();
     const navigate = useNavigate();
-    const {classes: styles} = useStyles();
-    const {projects: availableProjects} = useProjects();
+    const { classes: styles } = useStyles();
+    const { projects: availableProjects } = useProjects();
     const selectableProjects = availableProjects.map(project => ({
         value: project.id,
         label: project.name,
     }));
-    const {environments: availableEnvironments} = useEnvironments();
+    const { environments: availableEnvironments } = useEnvironments();
     const selectableEnvironments = availableEnvironments.map(environment => ({
         value: environment.name,
         label: environment.name,
     }));
     const selectableEvents = provider?.events.map(event => ({
         value: event,
-        label: event
+        label: event,
     }));
     const [formValues, setFormValues] = useState(initialValues);
     const [errors, setErrors] = useState<{
@@ -82,72 +89,72 @@ export const AddonForm: VFC<IAddonFormProps> = ({
     }, [fetch, provider]); // empty array => fetch only first time
 
     useEffect(() => {
-        setFormValues({...initialValues});
+        setFormValues({ ...initialValues });
         /* eslint-disable-next-line */
     }, [initialValues.description, initialValues.provider]);
 
     useEffect(() => {
         if (provider && !formValues.provider) {
-            setFormValues({...initialValues, provider: provider.name});
+            setFormValues({ ...initialValues, provider: provider.name });
         }
     }, [provider, initialValues, formValues.provider]);
 
     const setFieldValue =
         (field: string): ChangeEventHandler<HTMLInputElement> =>
-            event => {
-                event.preventDefault();
-                setFormValues({...formValues, [field]: event.target.value});
-            };
+        event => {
+            event.preventDefault();
+            setFormValues({ ...formValues, [field]: event.target.value });
+        };
 
     const onEnabled: MouseEventHandler = event => {
         event.preventDefault();
-        setFormValues(({enabled}) => ({...formValues, enabled: !enabled}));
+        setFormValues(({ enabled }) => ({ ...formValues, enabled: !enabled }));
     };
 
     const setParameterValue =
         (param: string): ChangeEventHandler<HTMLInputElement> =>
-            event => {
-                event.preventDefault();
-                setFormValues(
-                    produce(draft => {
-                        draft.parameters[param] = event.target.value;
-                    })
-                );
-            };
+        event => {
+            event.preventDefault();
+            setFormValues(
+                produce(draft => {
+                    draft.parameters[param] = event.target.value;
+                })
+            );
+        };
 
     const setEventValues = (events: string[]) => {
         setFormValues(
             produce(draft => {
-                draft.events = events
+                draft.events = events;
             })
         );
         setErrors(prev => ({
             ...prev,
-            events: undefined
+            events: undefined,
         }));
-    }
+    };
     const setProjects = (projects: string[]) => {
         setFormValues(
             produce(draft => {
-                draft.projects = projects
+                draft.projects = projects;
             })
         );
         setErrors(prev => ({
             ...prev,
-            projects: undefined
+            projects: undefined,
         }));
-    }
+    };
     const setEnvironments = (environments: string[]) => {
         setFormValues(
             produce(draft => {
-                draft.environments = environments
+                draft.environments = environments;
             })
         );
         setErrors(prev => ({
             ...prev,
-            environments: undefined
+            environments: undefined,
         }));
-    }
+    };
 
     const onCancel = () => {
         navigate(-1);
@@ -247,7 +254,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 <section className={styles.formSection}>
                     <TextField
                         size="small"
-                        style={{width: '80%'}}
+                        style={{ width: '80%' }}
                         minRows={4}
                         multiline
                         label="Description"
@@ -262,16 +269,31 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 </section>
 
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableEvents || []} selectedItems={formValues.events}
-                                        onChange={setEventValues} entityName={'event'} selectAllEnabled={false}/>
+                    <AddonMultiSelector
+                        options={selectableEvents || []}
+                        selectedItems={formValues.events}
+                        onChange={setEventValues}
+                        entityName={'event'}
+                        selectAllEnabled={false}
+                    />
                 </section>
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableProjects} selectedItems={formValues.projects || []}
-                                        onChange={setProjects} entityName={'project'} selectAllEnabled={true}/>
+                    <AddonMultiSelector
+                        options={selectableProjects}
+                        selectedItems={formValues.projects || []}
+                        onChange={setProjects}
+                        entityName={'project'}
+                        selectAllEnabled={true}
+                    />
                 </section>
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableEnvironments} selectedItems={formValues.environments || []}
-                                        onChange={setEnvironments} entityName={'environment'} selectAllEnabled={true}/>
+                    <AddonMultiSelector
+                        options={selectableEnvironments}
+                        selectedItems={formValues.environments || []}
+                        onChange={setEnvironments}
+                        entityName={'environment'}
+                        selectAllEnabled={true}
+                    />
                 </section>
                 <section className={styles.formSection}>
                     <AddonParameters

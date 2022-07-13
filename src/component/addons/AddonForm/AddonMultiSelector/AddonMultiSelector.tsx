@@ -4,16 +4,22 @@ import { styles as themeStyles } from 'component/common';
 import {
     AutocompleteRenderGroupParams,
     AutocompleteRenderInputParams,
-    AutocompleteRenderOptionState
+    AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete';
 import { styled } from '@mui/system';
-import { Autocomplete, Box, capitalize, Checkbox, FormControlLabel, Paper, TextField } from '@mui/material';
+import {
+    Autocomplete,
+    Box,
+    capitalize,
+    Checkbox,
+    FormControlLabel,
+    Paper,
+    TextField,
+} from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ConditionallyRender } from '../../../common/ConditionallyRender/ConditionallyRender';
-import {
-    SelectAllButton
-} from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
+import { SelectAllButton } from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
 
 export interface IAddonMultiSelectorProps {
     options: IAutocompleteBoxOption[];
@@ -34,9 +40,11 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     error,
     onFocus,
     entityName,
-    selectAllEnabled= true,
+    selectAllEnabled = true,
 }) => {
-    const [isWildcardSelected, selectWildcard] = useState(selectedItems.includes(ALL_OPTIONS));
+    const [isWildcardSelected, selectWildcard] = useState(
+        selectedItems.includes(ALL_OPTIONS)
+    );
     const renderInput = (params: AutocompleteRenderInputParams) => (
         <TextField
             {...params}
@@ -53,7 +61,10 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     const StyledCheckbox = styled(Checkbox)(() => ({
         marginRight: '0.2em',
     }));
-    const isAllSelected = selectedItems.length > 0 && selectedItems.length === options.length && selectedItems[0] !== ALL_OPTIONS;
+    const isAllSelected =
+        selectedItems.length > 0 &&
+        selectedItems.length === options.length &&
+        selectedItems[0] !== ALL_OPTIONS;
 
     const onAllItemsChange = (
         e: ChangeEvent<HTMLInputElement>,
@@ -66,30 +77,29 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
             selectWildcard(false);
             onChange(selectedItems.includes(ALL_OPTIONS) ? [] : selectedItems);
         }
-    }
+    };
 
     const onSelectAllClick = () => {
-        const newItems = isAllSelected
-            ? []
-            : options.map(({value}) => value);
+        const newItems = isAllSelected ? [] : options.map(({ value }) => value);
         onChange(newItems);
-    }
+    };
     const renderOption = (
         props: object,
         option: IAutocompleteBoxOption,
-        {selected}: AutocompleteRenderOptionState
+        { selected }: AutocompleteRenderOptionState
     ) => {
         return (
-        <li {...props}>
-            <StyledCheckbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
-                checkedIcon={<CheckBoxIcon fontSize="small"/>}
-                checked={selected}
-            />
-            {option.label}
-        </li>
-    )};
-    const renderGroup = ({key, children}: AutocompleteRenderGroupParams) => (
+            <li {...props}>
+                <StyledCheckbox
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                    checked={selected}
+                />
+                {option.label}
+            </li>
+        );
+    };
+    const renderGroup = ({ key, children }: AutocompleteRenderGroupParams) => (
         <Fragment key={key}>
             <ConditionallyRender
                 condition={options.length > 2 && selectAllEnabled}
@@ -103,40 +113,51 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
             {children}
         </Fragment>
     );
-    const CustomPaper = ({...props}) => <Paper elevation={8} {...props} />;
-    const SelectAllFormControl = () => (<Box sx={{mt: 1, mb: 0.25, ml: 1.5}}>
-        <FormControlLabel
-            data-testid={`select-all-${entityName}s`}
-            control={
-                <Checkbox
-                    checked={isWildcardSelected}
-                    onChange={onAllItemsChange}
-                />
-            }
-            label={`ALL current and future ${entityName}s`}
-        />
-    </Box>);
+    const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
+    const SelectAllFormControl = () => (
+        <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
+            <FormControlLabel
+                data-testid={`select-all-${entityName}s`}
+                control={
+                    <Checkbox
+                        checked={isWildcardSelected}
+                        onChange={onAllItemsChange}
+                    />
+                }
+                label={`ALL current and future ${entityName}s`}
+            />
+        </Box>
+    );
 
-    const HelpText = () => (<p>
-        Selecting {entityName}(s) here will filter events so that your addon will only receive events that is
-        tagged with one of your {entityName}s.
-    </p>);
+    const HelpText = () => (
+        <p>
+            Selecting {entityName}(s) here will filter events so that your addon
+            will only receive events that is tagged with one of your{' '}
+            {entityName}s.
+        </p>
+    );
 
     return (
         <React.Fragment>
             <h4>{capitalize(entityName)}s</h4>
-            <ConditionallyRender condition={selectAllEnabled} show={<HelpText />} />
+            <ConditionallyRender
+                condition={selectAllEnabled}
+                show={<HelpText />}
+            />
             <span className={themeStyles.error}>{error}</span>
-            <br/>
-            <Box sx={{mt: -1, mb: 3}}>
-                <ConditionallyRender condition={selectAllEnabled} show={<SelectAllFormControl />} />
+            <br />
+            <Box sx={{ mt: -1, mb: 3 }}>
+                <ConditionallyRender
+                    condition={selectAllEnabled}
+                    show={<SelectAllFormControl />}
+                />
                 <Autocomplete
                     disabled={isWildcardSelected}
                     multiple
                     limitTags={2}
                     options={options}
                     disableCloseOnSelect
-                    getOptionLabel={({label}) => label}
+                    getOptionLabel={({ label }) => label}
                     fullWidth
                     groupBy={() => 'Select/Deselect all'}
                     renderGroup={renderGroup}
@@ -147,15 +168,15 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
                         isWildcardSelected
                             ? options
                             : options.filter(option =>
-                                selectedItems.includes(option.value)
-                            )
+                                  selectedItems.includes(option.value)
+                              )
                     }
                     onChange={(_, input) => {
-                        const state = input.map(({value}) => value);
+                        const state = input.map(({ value }) => value);
                         onChange(state);
                     }}
                 />
             </Box>
         </React.Fragment>
     );
-}
+};
