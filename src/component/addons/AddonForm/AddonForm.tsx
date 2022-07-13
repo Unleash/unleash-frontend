@@ -37,11 +37,11 @@ interface IAddonFormProps {
 }
 
 export const AddonForm: VFC<IAddonFormProps> = ({
-                                                    editMode,
-                                                    provider,
-                                                    addon: initialValues,
-                                                    fetch,
-                                                }) => {
+    editMode,
+    provider,
+    addon: initialValues,
+    fetch,
+}) => {
     const {createAddon, updateAddon} = useAddonsApi();
     const {setToastData, setToastApiError} = useToast();
     const navigate = useNavigate();
