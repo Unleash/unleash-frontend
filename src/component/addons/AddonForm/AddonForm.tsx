@@ -42,7 +42,6 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                                                     addon: initialValues,
                                                     fetch,
                                                 }) => {
-    console.log(initialValues);
     const {createAddon, updateAddon} = useAddonsApi();
     const {setToastData, setToastApiError} = useToast();
     const navigate = useNavigate();
