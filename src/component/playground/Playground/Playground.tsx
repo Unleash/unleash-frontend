@@ -27,13 +27,12 @@ export const Playground: VFC<IPlaygroundProps> = () => {
     const [environment, onSetEnvironment] = useState<string>('');
     const [projects, onSetProjects] = useState<string[]>([]);
     const [context, setContext] = useState<string>();
-    const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<
         PlaygroundResponseSchema | undefined
     >();
     const { setToastData } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
-    const { evaluatePlayground } = usePlaygroundApi();
+    const { evaluatePlayground, loading } = usePlaygroundApi();
 
     useEffect(() => {
         // Load initial values from URL
@@ -63,7 +62,6 @@ export const Playground: VFC<IPlaygroundProps> = () => {
 
     const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();
-        setLoading(true);
 
         try {
             const parsedContext = JSON.parse(context || '{}');
@@ -103,8 +101,6 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                 title: `Error parsing context: ${formatUnknownError(error)}`,
             });
         }
-
-        setLoading(false);
     };
 
     return (
