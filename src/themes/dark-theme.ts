@@ -1,6 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 import { colors } from './colors';
 
+const themeColors = {
+    main: colors.darkblue[900],
+    secondary: colors.darkblue[800],
+    textColor: '#ffffffe6',
+};
+
 export default createTheme({
     breakpoints: {
         values: {
@@ -13,7 +19,6 @@ export default createTheme({
     },
     boxShadows: {
         main: '0px 2px 4px rgba(129, 122, 254, 0.2)',
-        card: '0px 2px 10px rgba(28, 25, 78, 0.12)',
         elevated: '0px 1px 20px rgba(45, 42, 89, 0.1)',
     },
     typography: {
@@ -26,16 +31,10 @@ export default createTheme({
             fontSize: '1.5rem',
             lineHeight: 1.875,
         },
-        h3: {
-            fontSize: '1rem',
-            fontWeight: '700',
-        },
-        caption: {
-            fontSize: `${12 / 16}rem`,
-        },
     },
     fontSizes: {
         mainHeader: '1.25rem',
+        subHeader: '1.1rem',
         bodySize: '1rem',
         smallBody: `${14 / 16}rem`,
         smallerBody: `${12 / 16}rem`,
@@ -47,25 +46,24 @@ export default createTheme({
         bold: 700,
     },
     shape: {
-        borderRadius: 4,
-        borderRadiusMedium: 8,
-        borderRadiusLarge: 12,
-        borderRadiusExtraLarge: 20,
+        borderRadius: '4px',
+        borderRadiusMedium: '8px',
+        borderRadiusLarge: '12px',
+        borderRadiusExtraLarge: '20px',
         tableRowHeight: 64,
         tableRowHeightCompact: 56,
         tableRowHeightDense: 48,
     },
     palette: {
         primary: {
-            main: colors.purple[800],
+            main: themeColors.textColor,
             light: colors.purple[700],
             dark: colors.purple[900],
         },
         secondary: {
-            light: colors.purple[50],
             main: colors.purple[800],
+            light: colors.purple[700],
             dark: colors.purple[900],
-            border: colors.purple[300],
         },
         info: {
             light: colors.blue[50],
@@ -76,7 +74,7 @@ export default createTheme({
         success: {
             light: colors.green[50],
             main: colors.green[600],
-            dark: colors.green[800],
+            dark: themeColors.textColor,
             border: colors.green[300],
         },
         warning: {
@@ -91,63 +89,83 @@ export default createTheme({
             dark: colors.red[800],
             border: colors.red[300],
         },
-        neutral: {
-            light: colors.grey[100],
-            main: colors.grey[700],
-            dark: colors.grey[800],
-            border: colors.grey[500],
+        background: {
+            paper: themeColors.main,
         },
-        tertiary: {
-            light: colors.grey[200],
-            main: colors.grey[400],
-            dark: colors.grey[600],
-            background: 'white',
-            contrast: colors.grey[300],
-        },
-
-        divider: colors.grey[300],
+        divider: themeColors.secondary,
         dividerAlternative: colors.grey[400],
-        tableHeaderHover: colors.grey[400],
-        tableHeaderBackground: colors.white,
-        tableHeaderColor: colors.grey[900],
+        tableHeaderHover: colors.darkblue[700],
+        tableHeaderBackground: themeColors.secondary,
+        tableHeaderColor: themeColors.textColor,
         highlight: '#FFEACC',
         secondaryContainer: colors.grey[200],
-        contentWrapper: colors.grey[300],
-        headerBackground: colors.white,
-        footerBackground: colors.white,
-        formBackground: colors.white,
-        formSidebar: colors.purple[800],
-        codebox: 'rgba(32,32,33, 0.2)',
+        contentWrapper: colors.darkblue[800],
+        formBackground: themeColors.main,
+        formSidebar: colors.darkblue[1000],
+        headerBackground: themeColors.main,
+        footerBackground: themeColors.main,
         sidebarContainer: 'rgba(32,32,33, 0.2)',
+        codebox: colors.darkblue[600],
         grey: colors.grey,
-        lightBorder: colors.grey[400],
         text: {
-            primary: colors.grey[900],
+            primary: themeColors.textColor,
             secondary: colors.grey[800],
             disabled: colors.grey[600],
-            tertiaryContrast: '#fff',
         },
         code: {
             main: '#0b8c8f',
-            diffAdd: '#3b6600',
-            diffSub: '#d11525',
+            diffAdd: 'green',
+            diffSub: 'red',
             diffNeutral: 'black',
-            edited: 'black',
+            edited: 'blue',
+            background: '#efefef',
         },
         activityIndicators: {
-            unknown: colors.grey[100],
-            recent: colors.green[100],
-            inactive: colors.orange[200],
-            abandoned: colors.red[200],
-            primary: colors.purple[100],
+            unknown: themeColors.secondary,
+            recent: themeColors.secondary,
+            inactive: themeColors.secondary,
+            abandoned: themeColors.secondary,
+        },
+        statusBadge: {
+            success: colors.green[100],
+            warning: colors.orange[200],
         },
         inactiveIcon: colors.grey[600],
     },
     components: {
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    color: themeColors.textColor,
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                primary: {
+                    backgroundColor: colors.white,
+                    color: themeColors.main,
+                },
+            },
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    fill: colors.white,
+                },
+            },
+        },
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    color: colors.white,
+                },
+            },
+        },
         MuiLink: {
             styleOverrides: {
                 root: {
-                    color: colors.purple[900],
+                    color: colors.white,
                     '&:hover': {
                         textDecoration: 'none',
                     },
@@ -157,10 +175,10 @@ export default createTheme({
         MuiBreadcrumbs: {
             styleOverrides: {
                 root: {
-                    color: colors.grey[900],
+                    color: themeColors.textColor,
                     fontSize: '0.875rem',
                     '& a': {
-                        color: colors.purple[900],
+                        color: themeColors.textColor,
                         textDecoration: 'underline',
                         '&:hover': {
                             textDecoration: 'none',
@@ -183,7 +201,7 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     '&.MuiTableRow-hover:hover': {
-                        background: colors.grey[100],
+                        background: themeColors.secondary,
                     },
                 },
             },
@@ -191,7 +209,7 @@ export default createTheme({
         MuiTableCell: {
             styleOverrides: {
                 root: {
-                    borderBottomColor: colors.grey[300],
+                    borderBottomColor: themeColors.main,
                 },
             },
         },
@@ -240,6 +258,8 @@ export default createTheme({
         MuiTabs: {
             styleOverrides: {
                 root: {
+                    backgroundColor: themeColors.main,
+                    color: themeColors.textColor,
                     '& .MuiTabs-indicator': {
                         height: '4px',
                     },
@@ -267,23 +287,11 @@ export default createTheme({
                 },
             },
         },
-        MuiAccordion: {
-            styleOverrides: {
-                root: ({ theme }) => ({
-                    '&:first-of-type, &:last-of-type': {
-                        borderRadius: theme.shape.borderRadiusMedium,
-                    },
-                }),
-            },
-        },
         MuiAccordionSummary: {
             styleOverrides: {
                 root: {
                     '& > .MuiAccordionSummary-content.Mui-expanded': {
                         margin: '12px 0',
-                    },
-                    '&.Mui-expanded': {
-                        minHeight: '0',
                     },
                 },
             },
@@ -300,8 +308,11 @@ export default createTheme({
         },
         MuiIcon: {
             styleOverrides: {
+                root: {
+                    color: colors.white,
+                },
                 colorDisabled: {
-                    color: colors.grey[600],
+                    color: colors.white[600],
                 },
             },
         },
@@ -314,43 +325,18 @@ export default createTheme({
                 },
             },
         },
-        MuiChip: {
-            styleOverrides: {
-                root: ({ ownerState, theme }) => ({
-                    ...(ownerState.variant === 'outlined' &&
-                        ownerState.size === 'small' && {
-                            borderRadius: theme.shape.borderRadius,
-                            margin: 0,
-                            borderWidth: 1,
-                            borderStyle: 'solid',
-                            fontWeight: theme.typography.fontWeightBold,
-                            fontSize: theme.typography.caption.fontSize,
-                            ...(ownerState.color === 'success' && {
-                                backgroundColor: colors.green[50],
-                                borderColor: theme.palette.success.border,
-                                color: theme.palette.success.dark,
-                            }),
-                            ...(ownerState.color === 'default' && {
-                                color: theme.palette.text.secondary,
-                            }),
-                            ...(ownerState.color === 'error' && {
-                                color: theme.palette.error.dark,
-                                background: theme.palette.error.light,
-                                borderColor: theme.palette.error.border,
-                            }),
-                        }),
-                }),
         MuiInputBase: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#fff',
+                    backgroundColor: colors.darkblue[1000],
                 },
             },
         },
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#fff',
+                    backgroundColor: themeColors.main,
+                    color: colors.white,
                 },
             },
         },

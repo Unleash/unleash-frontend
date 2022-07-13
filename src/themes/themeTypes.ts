@@ -54,10 +54,19 @@ declare module '@mui/material/styles' {
             primary: string;
         };
         dividerAlternative: string;
+        contentWrapper: string;
+        headerBackground: string;
+        footerBackground: string;
+        codebox: string;
         /**
          * For table header hover effect.
          */
+        tableHeaderBackground: string;
         tableHeaderHover: string;
+        tableHeaderColor: string;
+
+        formBackground: string;
+        formSidebar: string;
         /**
          * Text highlight effect color. Used when filtering/searching over content.
          */
