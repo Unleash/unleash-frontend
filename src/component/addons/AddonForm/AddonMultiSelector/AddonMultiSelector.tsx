@@ -6,6 +6,7 @@ import {
     AutocompleteRenderInputParams,
     AutocompleteRenderOptionState
 } from '@mui/material/Autocomplete';
+import { styled } from '@mui/system';
 import { Autocomplete, Box, capitalize, Checkbox, FormControlLabel, Paper, TextField } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -13,7 +14,6 @@ import { ConditionallyRender } from '../../../common/ConditionallyRender/Conditi
 import {
     SelectAllButton
 } from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
-import { useStyles } from './AddonMultiSelector.styles';
 
 export interface IAddonMultiSelectorProps {
     options: IAutocompleteBoxOption[];
@@ -36,7 +36,6 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     entityName,
     selectAllEnabled= true,
 }) => {
-    const { classes: styles } = useStyles();
     const [isWildcardSelected, selectWildcard] = useState(selectedItems.includes(ALL_OPTIONS));
     const renderInput = (params: AutocompleteRenderInputParams) => (
         <TextField
@@ -51,6 +50,9 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
         />
     );
 
+    const StyledCheckbox = styled(Checkbox)(() => ({
+        marginRight: '0.2em',
+    }));
     const isAllSelected = selectedItems.length > 0 && selectedItems.length === options.length && selectedItems[0] !== ALL_OPTIONS;
 
     const onAllItemsChange = (
@@ -76,17 +78,17 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
         props: object,
         option: IAutocompleteBoxOption,
         {selected}: AutocompleteRenderOptionState
-    ) => (
+    ) => {
+        return (
         <li {...props}>
-            <Checkbox
+            <StyledCheckbox
                 icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
                 checkedIcon={<CheckBoxIcon fontSize="small"/>}
                 checked={selected}
-                className={styles.selectOptionCheckbox}
             />
             {option.label}
         </li>
-    );
+    )};
     const renderGroup = ({key, children}: AutocompleteRenderGroupParams) => (
         <Fragment key={key}>
             <ConditionallyRender

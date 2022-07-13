@@ -262,13 +262,16 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 </section>
 
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableEvents || []} selectedItems={formValues.events} onChange={setEventValues} entityName={'event'} selectAllEnabled={false} />
+                    <AddonMultiSelector options={selectableEvents || []} selectedItems={formValues.events}
+                                        onChange={setEventValues} entityName={'event'} selectAllEnabled={false}/>
                 </section>
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableProjects} selectedItems={formValues.projects || []} onChange={setProjects} entityName={'project'} selectAllEnabled={true}/>
+                    <AddonMultiSelector options={selectableProjects} selectedItems={formValues.projects || []}
+                                        onChange={setProjects} entityName={'project'} selectAllEnabled={true}/>
                 </section>
                 <section className={styles.formSection}>
-                    <AddonMultiSelector options={selectableEnvironments} selectedItems={formValues.environments || []} onChange={setEnvironments} entityName={'environment'} selectAllEnabled={true}/>
+                    <AddonMultiSelector options={selectableEnvironments} selectedItems={formValues.environments || []}
+                                        onChange={setEnvironments} entityName={'environment'} selectAllEnabled={true}/>
                 </section>
                 <section className={styles.formSection}>
                     <AddonParameters
