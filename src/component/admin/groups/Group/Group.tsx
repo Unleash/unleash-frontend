@@ -1,5 +1,13 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
-import { Avatar, Button, styled, useMediaQuery, useTheme } from '@mui/material';
+import {
+    Avatar,
+    Button,
+    IconButton,
+    styled,
+    Tooltip,
+    useMediaQuery,
+    useTheme,
+} from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { TablePlaceholder, VirtualizedTable } from 'component/common/Table';
@@ -25,6 +33,9 @@ import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
 import { Link } from 'react-router-dom';
+import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
+import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
+import { EditGroupUser } from './EditGroupUser/EditGroupUser';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(4),
@@ -50,66 +61,6 @@ export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
 >;
 
-const columns = [
-    {
-        Header: 'Avatar',
-        accessor: 'imageUrl',
-        Cell: ({ row: { original: user } }: any) => (
-            <TextCell>
-                <StyledAvatar
-                    data-loading
-                    alt="Gravatar"
-                    src={user.imageUrl}
-                    title={`${user.name || user.email || user.username} (id: ${
-                        user.id
-                    })`}
-                />
-            </TextCell>
-        ),
-        maxWidth: 85,
-        disableSortBy: true,
-    },
-    {
-        id: 'name',
-        Header: 'Name',
-        accessor: (row: IGroupUser) => row.name || '',
-        Cell: HighlightCell,
-        minWidth: 100,
-        searchable: true,
-    },
-    {
-        id: 'username',
-        Header: 'Username',
-        accessor: (row: IGroupUser) => row.username || row.email,
-        Cell: HighlightCell,
-        minWidth: 100,
-        searchable: true,
-    },
-    {
-        Header: 'User type',
-        accessor: 'role',
-        Cell: GroupUserRoleCell,
-        maxWidth: 150,
-        filterName: 'type',
-    },
-    {
-        Header: 'Joined',
-        accessor: 'joinedAt',
-        Cell: DateCell,
-        sortType: 'date',
-        maxWidth: 150,
-    },
-    {
-        Header: 'Last login',
-        accessor: (row: IGroupUser) => row.seenAt || '',
-        Cell: ({ row: { original: user } }: any) => (
-            <TimeAgoCell value={user.seenAt} emptyText="Never logged" />
-        ),
-        sortType: 'date',
-        maxWidth: 150,
-    },
-];
-
 const defaultSort: SortingRule<string> = { id: 'role', desc: true };
 
 const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
@@ -123,6 +74,115 @@ export const Group: VFC = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { group, loading } = useGroup(groupId);
     const [removeOpen, setRemoveOpen] = useState(false);
+    const [editUserOpen, setEditUserOpen] = useState(false);
+    const [removeUserOpen, setRemoveUserOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<IGroupUser>();
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'Avatar',
+                accessor: 'imageUrl',
+                Cell: ({ row: { original: user } }: any) => (
+                    <TextCell>
+                        <StyledAvatar
+                            data-loading
+                            alt="Gravatar"
+                            src={user.imageUrl}
+                            title={`${
+                                user.name || user.email || user.username
+                            } (id: ${user.id})`}
+                        />
+                    </TextCell>
+                ),
+                maxWidth: 85,
+                disableSortBy: true,
+            },
+            {
+                id: 'name',
+                Header: 'Name',
+                accessor: (row: IGroupUser) => row.name || '',
+                Cell: HighlightCell,
+                minWidth: 100,
+                searchable: true,
+            },
+            {
+                id: 'username',
+                Header: 'Username',
+                accessor: (row: IGroupUser) => row.username || row.email,
+                Cell: HighlightCell,
+                minWidth: 100,
+                searchable: true,
+            },
+            {
+                Header: 'User type',
+                accessor: 'role',
+                Cell: GroupUserRoleCell,
+                maxWidth: 150,
+                filterName: 'type',
+            },
+            {
+                Header: 'Joined',
+                accessor: 'joinedAt',
+                Cell: DateCell,
+                sortType: 'date',
+                maxWidth: 150,
+            },
+            {
+                Header: 'Last login',
+                accessor: (row: IGroupUser) => row.seenAt || '',
+                Cell: ({ row: { original: user } }: any) => (
+                    <TimeAgoCell value={user.seenAt} emptyText="Never logged" />
+                ),
+                sortType: 'date',
+                maxWidth: 150,
+            },
+            {
+                Header: 'Actions',
+                id: 'Actions',
+                align: 'center',
+                Cell: ({ row: { original: rowUser } }: any) => (
+                    <ActionCell>
+                        <Tooltip
+                            title="Edit user"
+                            arrow
+                            placement="bottom-end"
+                            describeChild
+                            enterDelay={1000}
+                        >
+                            <IconButton
+                                onClick={() => {
+                                    setSelectedUser(rowUser);
+                                    setEditUserOpen(true);
+                                }}
+                            >
+                                <Edit />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip
+                            title="Remove user from group"
+                            arrow
+                            placement="bottom-end"
+                            describeChild
+                            enterDelay={1000}
+                        >
+                            <IconButton
+                                onClick={() => {
+                                    setSelectedUser(rowUser);
+                                    setRemoveUserOpen(true);
+                                }}
+                            >
+                                <Delete />
+                            </IconButton>
+                        </Tooltip>
+                    </ActionCell>
+                ),
+                maxWidth: 100,
+                disableSortBy: true,
+            },
+        ],
+        [setSelectedUser, setRemoveUserOpen]
+    );
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [initialState] = useState(() => ({
@@ -311,6 +371,18 @@ export const Group: VFC = () => {
                         <RemoveGroup
                             open={removeOpen}
                             setOpen={setRemoveOpen}
+                            group={group!}
+                        />
+                        <EditGroupUser
+                            open={editUserOpen}
+                            setOpen={setEditUserOpen}
+                            user={selectedUser!}
+                            group={group!}
+                        />
+                        <RemoveGroupUser
+                            open={removeUserOpen}
+                            setOpen={setRemoveUserOpen}
+                            user={selectedUser!}
                             group={group!}
                         />
                     </PageContent>

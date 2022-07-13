@@ -7,7 +7,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { GroupFormUsersSelect } from './GroupFormUsersSelect/GroupFormUsersSelect';
 import { GroupFormUsersTable } from './GroupFormUsersTable/GroupFormUsersTable';
 
-const StyledForm = styled('form')(({ theme }) => ({
+const StyledForm = styled('form')(() => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
