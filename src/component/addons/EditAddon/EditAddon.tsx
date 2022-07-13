@@ -10,6 +10,7 @@ export const EditAddon = () => {
     const { providers, addons, refetchAddons } = useAddons();
 
     const editMode = true;
+    console.log(addons);
     const addon = addons.find(
         (addon: IAddon) => addon.id === Number(addonId)
     ) || { ...cloneDeep(DEFAULT_DATA) };

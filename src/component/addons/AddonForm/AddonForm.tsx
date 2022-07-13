@@ -1,19 +1,10 @@
-import React, {
-    ChangeEvent,
-    ChangeEventHandler,
-    FormEventHandler,
-    MouseEventHandler,
-    useEffect,
-    useState,
-    VFC,
-} from 'react';
+import React, { ChangeEventHandler, FormEventHandler, MouseEventHandler, useEffect, useState, VFC, } from 'react';
 import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
 import produce from 'immer';
 import { styles as themeStyles } from 'component/common';
 import { trim } from 'component/common/util';
 import { IAddon, IAddonProvider } from 'interfaces/addons';
 import { AddonParameters } from './AddonParameters/AddonParameters';
-import { AddonEvents } from './AddonEvents/AddonEvents';
 import cloneDeep from 'lodash.clonedeep';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { useNavigate } from 'react-router-dom';
@@ -21,14 +12,9 @@ import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
 import { makeStyles } from 'tss-react/mui';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import { AddonEnvironments } from './AddonEnvironments/AddonEnvironments';
-import { SelectProjectInput } from '../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectProjectInput';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useEnvironments';
-import GeneralSelect from '../../common/GeneralSelect/GeneralSelect';
-import { KeyboardArrowDownOutlined } from '@mui/icons-material';
-import Autocomplete from '@mui/material/Autocomplete';
-import { AddonProjects } from './AddonProjects/AddonProjects';
+import { AddonMultiSelector } from './AddonMultiSelector/AddonMultiSelector';
 
 const useStyles = makeStyles()(theme => ({
     nameInput: {
@@ -56,6 +42,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                                                     addon: initialValues,
                                                     fetch,
                                                 }) => {
+    console.log(initialValues);
     const {createAddon, updateAddon} = useAddonsApi();
     const {setToastData, setToastApiError} = useToast();
     const navigate = useNavigate();
@@ -276,22 +263,13 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 </section>
 
                 <section className={styles.formSection}>
-                    <AddonEvents
-                        options={selectableEvents || []}
-                        selectedEvents={formValues.events}
-                        onChange={setEventValues}
-                        error={errors.events}
-                    />
+                    <AddonMultiSelector options={selectableEvents || []} selectedItems={formValues.events} onChange={setEventValues} entityName={'event'} selectAllEnabled={false} />
                 </section>
                 <section className={styles.formSection}>
-                    <AddonProjects options={selectableProjects} selectedProjects={formValues.projects || []}
-                                   onChange={setProjects} error={errors?.projects}/>
+                    <AddonMultiSelector options={selectableProjects} selectedItems={formValues.projects || []} onChange={setProjects} entityName={'project'} selectAllEnabled={true}/>
                 </section>
                 <section className={styles.formSection}>
-                    <AddonEnvironments options={selectableEnvironments}
-                                       selectedEnvironments={formValues.environments || []}
-                                       onChange={setEnvironments}
-                                       error={errors?.environments}/>
+                    <AddonMultiSelector options={selectableEnvironments} selectedItems={formValues.environments || []} onChange={setEnvironments} entityName={'environment'} selectAllEnabled={true}/>
                 </section>
                 <section className={styles.formSection}>
                     <AddonParameters
