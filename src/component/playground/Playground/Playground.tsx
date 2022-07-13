@@ -17,6 +17,8 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 import { ContextBanner } from './PlaygroundResultsTable/ContextBanner/ContextBanner';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import usePlaygroundApi from 'hooks/api/actions/usePlayground/usePlayground';
+import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 
 interface IPlaygroundProps {}
 
@@ -25,11 +27,13 @@ export const Playground: VFC<IPlaygroundProps> = () => {
     const [environment, onSetEnvironment] = useState<string>('');
     const [projects, onSetProjects] = useState<string[]>([]);
     const [context, setContext] = useState<string>();
-    const [contextObject, setContextObject] = useState<any>();
     const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<any | undefined>();
+    const [results, setResults] = useState<
+        PlaygroundResponseSchema | undefined
+    >();
     const { setToastData } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
+    const { evaluatePlayground } = usePlaygroundApi();
 
     useEffect(() => {
         // Load initial values from URL
@@ -62,15 +66,20 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         setLoading(true);
 
         try {
-            setContextObject(JSON.parse(context || '{}'));
-            // TODO: API integration
-            // const result = await openApiAdmin.getPlayground({
-            //     playgroundRequestSchema: {
-            //         context,
-            //         projects
-            //         environment
-            //     },
-            // });
+            const parsedContext = JSON.parse(context || '{}');
+            const response = await evaluatePlayground({
+                environment,
+                projects:
+                    !projects ||
+                    projects.length === 0 ||
+                    (projects.length === 1 && projects[0] === '*')
+                        ? '*'
+                        : projects,
+                context: {
+                    appName: 'playground',
+                    ...parsedContext,
+                },
+            });
 
             // Set URL search parameters
             searchParams.set('context', encodeURI(context || '')); // always set because of native validation
@@ -87,54 +96,7 @@ export const Playground: VFC<IPlaygroundProps> = () => {
             setSearchParams(searchParams);
 
             // Display results
-            setResults({
-                input: {
-                    context: contextObject as any,
-                    environment,
-                    projects,
-                },
-                toggles: [
-                    // FIXME: mock
-                    {
-                        isEnabled: true,
-                        name: 'mock',
-                        projectId: 'default',
-                        variant: {
-                            name: 'variant',
-                            enabled: true,
-                            payload: { type: 'string', value: 'test' },
-                        },
-                    },
-                    {
-                        isEnabled: false,
-                        name: 'test',
-                        projectId: 'default',
-                        variant: null,
-                    },
-                    {
-                        isEnabled: false,
-                        name: 'playground',
-                        projectId: 'default',
-                        variant: {
-                            name: 'option',
-                            enabled: true,
-                            payload: { type: 'string', value: '123' },
-                        },
-                    },
-                    {
-                        isEnabled: true,
-                        name: 'dx',
-                        projectId: 'default',
-                        variant: null,
-                    },
-                    {
-                        isEnabled: false,
-                        name: 'new-context',
-                        projectId: 'playground',
-                        variant: null,
-                    },
-                ],
-            });
+            setResults(response);
         } catch (error: unknown) {
             setToastData({
                 type: 'error',
@@ -146,13 +108,18 @@ export const Playground: VFC<IPlaygroundProps> = () => {
     };
 
     return (
-        <PageContent header={<PageHeader title="Unleash playground" />}>
+        <PageContent
+            header={<PageHeader title="Unleash playground" />}
+            disableLoading
+            bodyClass={'no-padding'}
+        >
             <Paper
                 elevation={0}
                 sx={{
                     px: 4,
                     py: 3,
                     mb: 4,
+                    m: 4,
                     background: theme.palette.grey[200],
                 }}
             >
@@ -196,13 +163,31 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                 </Box>
             </Paper>
             <ConditionallyRender
-                condition={Boolean(contextObject)}
-                show={<ContextBanner context={contextObject as any} />}
+                condition={Boolean(results)}
+                show={
+                    <>
+                        <Divider />
+                        <ContextBanner
+                            environment={
+                                (results as PlaygroundResponseSchema)?.input
+                                    ?.environment
+                            }
+                            projects={
+                                (results as PlaygroundResponseSchema)?.input
+                                    ?.projects
+                            }
+                            context={
+                                (results as PlaygroundResponseSchema)?.input
+                                    ?.context
+                            }
+                        />
+                    </>
+                }
             />
 
             <PlaygroundResultsTable
                 loading={loading}
-                features={results?.toggles}
+                features={results?.features}
             />
         </PageContent>
     );
