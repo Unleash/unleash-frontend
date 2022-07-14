@@ -134,7 +134,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     const HelpText = () => (
         <p>
             Selecting {entityName}(s) here will filter events so that your addon
-            will only receive events that is tagged with one of your{' '}
+            will only receive events that are tagged with one of your{' '}
             {entityName}s.
         </p>
     );
