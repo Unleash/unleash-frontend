@@ -162,6 +162,7 @@ exports[`renders an empty list correctly 1`] = `
                   onMouseOver={[Function]}
                   onTouchEnd={[Function]}
                   onTouchStart={[Function]}
+                  type="button"
                 >
                   <span
                     aria-hidden={true}
