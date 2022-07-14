@@ -27,6 +27,8 @@ import { ProjectAccessAssign } from 'component/project/ProjectAccess/ProjectAcce
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useToast from 'hooks/useToast';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import { ProjectGroupView } from '../ProjectGroupView/ProjectGroupView';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(4),
@@ -52,6 +54,10 @@ interface IProjectAccessTableProps {
 export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
     projectId,
 }) => {
+    const { uiConfig } = useUiConfig();
+    const { flags } = uiConfig;
+    const entity = flags.UG ? 'user / group' : 'user';
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { setToastData } = useToast();
@@ -61,6 +67,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
     const [assignOpen, setAssignOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [removeOpen, setRemoveOpen] = useState(false);
+    const [groupOpen, setGroupOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IProjectAccessUser>();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -236,7 +243,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
             setToastData({
                 type: 'success',
                 title: `${
-                    user.email || user.username || 'The user / group'
+                    user.email || user.username || `The ${entity}`
                 } has been removed from project`,
             });
         } catch (err: any) {
@@ -279,7 +286,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                                 color="primary"
                                 onClick={() => setAssignOpen(true)}
                             >
-                                Assign user / group
+                                Assign {entity}
                             </Button>
                         </>
                     }
@@ -320,14 +327,14 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                         elseShow={
                             <TablePlaceholder>
                                 No access available. Get started by assigning a
-                                user / group.
+                                {entity}.
                             </TablePlaceholder>
                         }
                     />
                 }
             />
             <SidebarModal
-                label="Assign user / group"
+                label={`Assign ${entity}`}
                 onClose={() => setAssignOpen(false)}
                 open={assignOpen}
             >
@@ -345,7 +352,16 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                     setSelectedRow(undefined);
                     setRemoveOpen(false);
                 }}
-                title="Really remove user / group from this project?"
+                title={`Really remove ${entity} from this project?`}
+            />
+            {/* TODO: use the real groupId, or group, depending on the data object we get back */}
+            <ProjectGroupView
+                groupId="1"
+                projectId={projectId}
+                open={groupOpen}
+                setOpen={setGroupOpen}
+                onEdit={() => {}}
+                onRemove={() => {}}
             />
         </PageContent>
     );
