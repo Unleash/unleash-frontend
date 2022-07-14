@@ -5,6 +5,7 @@ const themeColors = {
     main: colors.darkblue[900],
     secondary: colors.darkblue[800],
     textColor: '#ffffffe6',
+    hover: 'rgb(255, 255, 255, 0.7)',
 };
 
 export default createTheme({
@@ -329,6 +330,9 @@ export default createTheme({
                 root: {
                     '&.Mui-disabled': {
                         opacity: 0.66,
+                    },
+                    '&:hover': {
+                        backgroundColor: themeColors.secondary,
                     },
                 },
             },
