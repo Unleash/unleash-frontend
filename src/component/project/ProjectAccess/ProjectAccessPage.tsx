@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { SelectChangeEvent } from '@mui/material';
-import { ProjectAccessAddUser } from './ProjectAccessAddUser/ProjectAccessAddUser';
+import {Button, SelectChangeEvent} from '@mui/material';
+import { ProjectAccessAssign } from './ProjectAccessAssign/ProjectAccessAssign';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { useStyles } from './ProjectAccess.styles';
 import useToast from 'hooks/useToast';
@@ -12,6 +12,10 @@ import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { ProjectAccessTable } from './ProjectAccessTable/ProjectAccessTable';
+import {Search} from "../../common/Search/Search";
+import {useSearchParams} from "react-router-dom";
+import {SidebarModal} from "../../common/SidebarModal/SidebarModal";
+import {CreateUnleashContext} from "../../context/CreateUnleashContext/CreateUnleashContext";
 
 export const ProjectAccessPage = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -21,6 +25,8 @@ export const ProjectAccessPage = () => {
     const { removeUserFromRole, changeUserRole } = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [open, setOpen] = useState(false);
 
     const handleRoleChange = useCallback(
         (userId: number) => async (evt: SelectChangeEvent) => {
@@ -70,13 +76,46 @@ export const ProjectAccessPage = () => {
         setShowDelDialogue(false);
     };
 
+    const [searchValue, setSearchValue] = useState(
+        searchParams.get('search') || ''
+    );
+
     return (
         <PageContent
-            header={<PageHeader titleElement="Project roles" />}
+            header={
+                <PageHeader
+                    titleElement="Project roles"
+                    actions={
+                        <>
+                            <Search
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => setOpen(true)}
+                            >
+                                Assign user/group
+                            </Button>
+                            <SidebarModal
+                                label="Create new context"
+                                onClose={() => setOpen(false)}
+                                open={open}
+                            >
+                                <ProjectAccessAssign
+                                    onSubmit={() => setOpen(false)}
+                                    onCancel={() => setOpen(false)}
+                                    roles={access?.roles}
+                                    modal
+                                />
+                            </SidebarModal>
+                        </>
+                    }
+                />
+            }
             className={styles.pageContent}
         >
-            <ProjectAccessAddUser roles={access?.roles} />
-            <div className={styles.divider} />
             <ProjectAccessTable
                 access={access}
                 handleRoleChange={handleRoleChange}
