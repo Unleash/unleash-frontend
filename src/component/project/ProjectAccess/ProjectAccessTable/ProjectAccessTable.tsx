@@ -1,32 +1,32 @@
-import {useMemo, useState, VFC} from 'react';
-import {useFlexLayout, useSortBy, useTable} from 'react-table';
-import {
-    Table,
-    TableBody,
-    TableRow,
-    TableCell,
-    SortableTableHeader, VirtualizedTable, TablePlaceholder,
-} from 'component/common/Table';
-import {Avatar, SelectChangeEvent, styled} from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { useEffect, useMemo, useState, VFC } from 'react';
+import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
+import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
+import { Avatar, Button, styled, useMediaQuery, useTheme } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import { sortTypes } from 'utils/sortTypes';
-import {
-    IProjectAccessOutput,
+import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
-import { ProjectRoleCell } from './ProjectRoleCell/ProjectRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
-import {SearchHighlightProvider} from "../../../common/Table/SearchHighlightContext/SearchHighlightContext";
-import {ConditionallyRender} from "../../../common/ConditionallyRender/ConditionallyRender";
-import {useSearch} from "../../../../hooks/useSearch";
-import {useSearchParams} from "react-router-dom";
-
-const initialState = {
-    sortBy: [{ id: 'name' }],
-};
+import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { useSearch } from 'hooks/useSearch';
+import { useSearchParams } from 'react-router-dom';
+import { createLocalStorage } from 'utils/createLocalStorage';
+import { IUser } from 'interfaces/user';
+import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
+import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
+import { PageContent } from 'component/common/PageContent/PageContent';
+import { PageHeader } from 'component/common/PageHeader/PageHeader';
+import { Search } from 'component/common/Search/Search';
+import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
+import { ProjectAccessAssign } from 'component/project/ProjectAccess/ProjectAccessAssign/ProjectAccessAssign';
+import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
+import useToast from 'hooks/useToast';
+import { Dialogue } from 'component/common/Dialogue/Dialogue';
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
     width: theme.spacing(4),
@@ -34,76 +34,90 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
     margin: 'auto',
 }));
 
+export type PageQueryType = Partial<
+    Record<'sort' | 'order' | 'search', string>
+>;
+
+const defaultSort: SortingRule<string> = { id: 'name' };
+
+const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
+    'ProjectAccess:v1',
+    defaultSort
+);
+
 interface IProjectAccessTableProps {
-    access: IProjectAccessOutput;
     projectId: string;
-    handleRoleChange: (
-        userId: number
-    ) => (event: SelectChangeEvent) => Promise<void>;
-    handleRemoveAccess: (user: IProjectAccessUser) => void;
 }
 
 export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
-    access,
     projectId,
-    handleRoleChange,
-    handleRemoveAccess,
 }) => {
-    const data = access.users;
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const { setToastData } = useToast();
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const { access, refetchProjectAccess } = useProjectAccess(projectId);
+    const { removeUserFromRole, changeUserRole } = useProjectApi();
+    const [assignOpen, setAssignOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
+    const [removeOpen, setRemoveOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState<IProjectAccessUser>();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const roles = useMemo(() => access.roles, [JSON.stringify(access.roles)]);
 
     const columns = useMemo(
         () => [
             {
                 Header: 'Avatar',
                 accessor: 'imageUrl',
-                disableSortBy: true,
-                maxWidth: 80,
-                Cell: ({ value }: { value: string }) => (
+                Cell: ({ row: { original: user } }: any) => (
                     <TextCell>
                         <StyledAvatar
                             data-loading
                             alt="Gravatar"
-                            src={value}
+                            src={user.imageUrl}
+                            title={`${
+                                user.name || user.email || user.username
+                            } (id: ${user.id})`}
                         />
                     </TextCell>
                 ),
-                align: 'center',
+                maxWidth: 85,
+                disableSortBy: true,
             },
             {
                 id: 'name',
                 Header: 'Name',
-                minWidth: 200,
-                accessor: (row: any) => row.name || '',
+                accessor: (row: IProjectAccessUser) => row.name || '',
+                Cell: HighlightCell,
+                minWidth: 100,
+                searchable: true,
             },
             {
                 id: 'username',
                 Header: 'Username',
-                accessor: 'email',
-                minWidth: 200,
-                Cell: ({ row: { original: user } }: any) => (
-                    <TextCell>{user.email || user.username}</TextCell>
-                ),
+                accessor: (row: IProjectAccessUser) =>
+                    row.username || row.email,
+                Cell: HighlightCell,
+                minWidth: 100,
+                searchable: true,
             },
             {
                 Header: 'Role',
-                accessor: 'roleId',
+                accessor: (row: IProjectAccessUser) =>
+                    roles.find(({ id }) => id === row.roleId)?.name,
                 minWidth: 120,
-                Cell: ({
-                    value,
-                    row: { original: user },
-                }: {
-                    value: number;
-                    row: { original: IProjectAccessUser };
-                }) => (
-                    <ProjectRoleCell
-                        value={value}
-                        user={user}
-                        roles={access.roles}
-                        onChange={handleRoleChange(user.id)}
-                    />
+                filterName: 'role',
+            },
+            {
+                Header: 'Last login',
+                accessor: (row: IUser) => row.seenAt || '',
+                Cell: ({ row: { original: user } }: any) => (
+                    <TimeAgoCell value={user.seenAt} emptyText="Never logged" />
                 ),
+                sortType: 'date',
+                maxWidth: 150,
             },
             {
                 id: 'actions',
@@ -116,7 +130,27 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
                             projectId={projectId}
-                            onClick={() => handleRemoveAccess(user)}
+                            onClick={() => {
+                                setSelectedRow(user);
+                                setEditOpen(true);
+                            }}
+                            disabled={access.users.length === 1}
+                            tooltipProps={{
+                                title:
+                                    access.users.length === 1
+                                        ? 'Cannot edit access. A project must have at least one owner'
+                                        : 'Edit access',
+                            }}
+                        >
+                            <Edit />
+                        </PermissionIconButton>
+                        <PermissionIconButton
+                            permission={UPDATE_PROJECT}
+                            projectId={projectId}
+                            onClick={() => {
+                                setSelectedRow(user);
+                                setRemoveOpen(true);
+                            }}
                             disabled={access.users.length === 1}
                             tooltipProps={{
                                 title:
@@ -131,63 +165,139 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 ),
             },
         ],
-        [
-            access.roles,
-            access.users.length,
-            handleRemoveAccess,
-            handleRoleChange,
-            projectId,
-        ]
+        [roles, access.users.length, projectId]
     );
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable(
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [initialState] = useState(() => ({
+        sortBy: [
             {
-                columns: columns as any[], // TODO: fix after `react-table` v8 update
-                data : data as any[],
-                initialState,
-                sortTypes,
-                autoResetGlobalFilter: false,
-                autoResetSortBy: false,
-                disableSortRemove: true,
-                defaultColumn: {
-                    Cell: TextCell,
-                },
+                id: searchParams.get('sort') || storedParams.id,
+                desc: searchParams.has('order')
+                    ? searchParams.get('order') === 'desc'
+                    : storedParams.desc,
             },
-            useFlexLayout,
-            useSortBy,
-        );
+        ],
+        globalFilter: searchParams.get('search') || '',
+    }));
+    const [searchValue, setSearchValue] = useState(initialState.globalFilter);
 
-    const [searchValue, setSearchValue] = useState(
-        searchParams.get('search') || ''
+    const { data, getSearchText, getSearchContext } = useSearch(
+        columns,
+        searchValue,
+        access.users ?? []
     );
 
     const {
-        data: searchedData,
-        getSearchText,
-        getSearchContext,
-    } = useSearch(columns, searchValue, rows);
+        headerGroups,
+        rows,
+        prepareRow,
+        state: { sortBy },
+    } = useTable(
+        {
+            columns: columns as any[],
+            data,
+            initialState,
+            sortTypes,
+            autoResetSortBy: false,
+            disableSortRemove: true,
+            disableMultiSort: true,
+            defaultColumn: {
+                Cell: TextCell,
+            },
+        },
+        useSortBy,
+        useFlexLayout
+    );
+
+    useEffect(() => {
+        const tableState: PageQueryType = {};
+        tableState.sort = sortBy[0].id;
+        if (sortBy[0].desc) {
+            tableState.order = 'desc';
+        }
+        if (searchValue) {
+            tableState.search = searchValue;
+        }
+
+        setSearchParams(tableState, {
+            replace: true,
+        });
+        setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
+    }, [sortBy, searchValue, setSearchParams]);
+
+    const removeAccess = (user?: IProjectAccessUser) => async () => {
+        if (!user) return;
+        const { id, roleId } = user;
+
+        try {
+            await removeUserFromRole(projectId, roleId, id);
+            refetchProjectAccess();
+            setToastData({
+                type: 'success',
+                title: `${
+                    user.email || user.username || 'The user / group'
+                } has been removed from project`,
+            });
+        } catch (err: any) {
+            setToastData({
+                type: 'error',
+                title: err.message || 'Server problems when adding users.',
+            });
+        }
+        setRemoveOpen(false);
+    };
 
     return (
-        // <Table {...getTableProps()} rowHeight="compact">
-        //     {/* @ts-expect-error -- react-table  */}
-        //     <SortableTableHeader headerGroups={headerGroups} />
-        //     <TableBody {...getTableBodyProps()}>
-        //         {rows.map(row => {
-        //             prepareRow(row);
-        //             return (
-        //                 <TableRow hover {...row.getRowProps()}>
-        //                     {row.cells.map(cell => (
-        //                         <TableCell {...cell.getCellProps()}>
-        //                             {cell.render('Cell')}
-        //                         </TableCell>
-        //                     ))}
-        //                 </TableRow>
-        //             );
-        //         })}
-        //     </TableBody>
-        // </Table>
-        <>
+        <PageContent
+            header={
+                <PageHeader
+                    secondary
+                    title={`Access (${
+                        rows.length < data.length
+                            ? `${rows.length} of ${data.length}`
+                            : data.length
+                    })`}
+                    actions={
+                        <>
+                            <ConditionallyRender
+                                condition={!isSmallScreen}
+                                show={
+                                    <>
+                                        <Search
+                                            initialValue={searchValue}
+                                            onChange={setSearchValue}
+                                            hasFilters
+                                            getSearchContext={getSearchContext}
+                                        />
+                                        <PageHeader.Divider />
+                                    </>
+                                }
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => setAssignOpen(true)}
+                            >
+                                Assign user / group
+                            </Button>
+                        </>
+                    }
+                >
+                    <ConditionallyRender
+                        condition={isSmallScreen}
+                        show={
+                            <Search
+                                initialValue={searchValue}
+                                onChange={setSearchValue}
+                                hasFilters
+                                getSearchContext={getSearchContext}
+                            />
+                        }
+                    />
+                </PageHeader>
+            }
+        >
             <SearchHighlightProvider value={getSearchText(searchValue)}>
                 <VirtualizedTable
                     rows={rows}
@@ -202,20 +312,41 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                         condition={searchValue?.length > 0}
                         show={
                             <TablePlaceholder>
-                                No feature toggles found matching &ldquo;
+                                No access found matching &ldquo;
                                 {searchValue}
                                 &rdquo;
                             </TablePlaceholder>
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No feature toggles available. Get started by
-                                adding a new feature toggle.
+                                No access available. Get started by assigning a
+                                user / group.
                             </TablePlaceholder>
                         }
                     />
                 }
             />
-        </>
+            <SidebarModal
+                label="Assign user / group"
+                onClose={() => setAssignOpen(false)}
+                open={assignOpen}
+            >
+                <ProjectAccessAssign
+                    onSubmit={() => setAssignOpen(false)}
+                    onCancel={() => setAssignOpen(false)}
+                    roles={access.roles}
+                    modal
+                />
+            </SidebarModal>
+            <Dialogue
+                open={removeOpen}
+                onClick={() => removeAccess(selectedRow)}
+                onClose={() => {
+                    setSelectedRow(undefined);
+                    setRemoveOpen(false);
+                }}
+                title="Really remove user / group from this project?"
+            />
+        </PageContent>
     );
 };
