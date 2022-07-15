@@ -99,7 +99,7 @@ export default createTheme({
         tableHeaderBackground: themeColors.secondary,
         tableHeaderColor: themeColors.textColor,
         highlight: '#FFEACC',
-        secondaryContainer: colors.grey[200],
+        secondaryContainer: themeColors.secondary,
         contentWrapper: colors.darkblue[800],
         formBackground: themeColors.main,
         formSidebar: colors.darkblue[1000],
@@ -110,10 +110,24 @@ export default createTheme({
         featureMetaData: colors.darkblue[1000],
         playgroundBackground: themeColors.secondary,
         standaloneBackground: colors.black,
+        featureStrategySegmentChipBackground: themeColors.secondary,
+        featureSegmentSearchBackground: themeColors.secondary,
+        dialogHeaderBackground: themeColors.secondary,
+        constraintAccordion: {
+            editBackground: colors.darkblue[600],
+            background: themeColors.secondary,
+            operatorBackground: themeColors.main,
+        },
         standaloneBannerGradient: {
             from: colors.darkblue[1000],
             to: colors.black,
         },
+        projectCard: {
+            hover: themeColors.secondary,
+            textColor: themeColors.textColor,
+        },
+        checkmarkBadge: themeColors.secondary,
+        inputLabelBackground: 'transparent',
         featureMetricsBackground: themeColors.secondary,
         grey: colors.grey,
         text: {
@@ -136,8 +150,8 @@ export default createTheme({
             abandoned: themeColors.secondary,
         },
         statusBadge: {
-            success: colors.green[100],
-            warning: colors.orange[200],
+            success: themeColors.secondary,
+            warning: themeColors.secondary,
         },
         inactiveIcon: colors.grey[600],
     },
@@ -149,18 +163,10 @@ export default createTheme({
                 },
             },
         },
-        MuiButton: {
-            styleOverrides: {
-                primary: {
-                    backgroundColor: colors.white,
-                    color: themeColors.main,
-                },
-            },
-        },
-        MuiSvgIcon: {
+        MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    fill: colors.white,
+                    color: themeColors.textColor,
                 },
             },
         },
@@ -168,6 +174,14 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     color: colors.white,
+                    '&:hover': {
+                        backgroundColor: themeColors.hover,
+                    },
+                    '&.Mui-disabled': {
+                        '& .MuiSvgIcon-root': {
+                            color: colors.grey[700],
+                        },
+                    },
                 },
             },
         },
@@ -233,7 +247,7 @@ export default createTheme({
                         backgroundColor: colors.blue[50],
                         color: colors.blue[700],
                         border: `1px solid ${colors.blue[200]}`,
-                        '& .MuiAlert-icon': {
+                        '& .MuiAlert-icon .MuiSvgIcon-root': {
                             color: colors.blue[500],
                         },
                     },
@@ -241,7 +255,7 @@ export default createTheme({
                         backgroundColor: colors.green[50],
                         color: colors.green[800],
                         border: `1px solid ${colors.green[300]}`,
-                        '& .MuiAlert-icon': {
+                        '& .MuiAlert-icon .MuiSvgIcon-root': {
                             color: colors.green[500],
                         },
                     },
@@ -249,7 +263,7 @@ export default createTheme({
                         backgroundColor: colors.orange[100],
                         color: colors.orange[900],
                         border: `1px solid ${colors.orange[500]}`,
-                        '& .MuiAlert-icon': {
+                        '& .MuiAlert-icon .MuiSvgIcon-root': {
                             color: colors.orange[800],
                         },
                     },
@@ -257,10 +271,26 @@ export default createTheme({
                         backgroundColor: colors.red[50],
                         color: colors.red[800],
                         border: `1px solid ${colors.red[300]}`,
-                        '& .MuiAlert-icon': {
+                        '& .MuiAlert-icon .MuiSvgIcon-root': {
                             color: colors.red[700],
                         },
                     },
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-disabled': {
+                        backgroundColor: colors.grey[400],
+                    },
+                },
+            },
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: themeColors.textColor,
                 },
             },
         },
@@ -348,7 +378,7 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: themeColors.main,
-                    color: colors.textColor,
+                    color: themeColors.textColor,
                 },
             },
         },

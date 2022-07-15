@@ -122,11 +122,25 @@ export default createTheme({
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         playgroundBackground: colors.grey[200],
         standaloneBackground: colors.grey[300],
+        constraintAccordion: {
+            editBackground: '#F6F6FA',
+            background: colors.white,
+            operatorBackground: colors.grey[200],
+        },
+        projectCard: {
+            hover: colors.grey[100],
+            textColor: '#4A4599',
+        },
         standaloneBannerGradient: {
             from: colors.purple[900],
-            to: "#173341"
+            to: '#173341',
         },
+        checkmarkBadge: colors.purple[800],
+        inputLabelBackground: colors.white,
         featureMetricsBackground: colors.grey[100],
+        featureStrategySegmentChipBackground: colors.purple[800],
+        featureSegmentSearchBackground: colors.purple[800],
+        dialogHeaderBackground: colors.purple[800],
         grey: colors.grey,
         lightBorder: colors.grey[400],
         text: {

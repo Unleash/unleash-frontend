@@ -66,6 +66,20 @@ declare module '@mui/material/styles' {
             to: string;
         };
         featureMetricsBackground: string;
+        constraintAccordion: {
+            editBackground: string;
+            background: string;
+            operatorBackground: string;
+        };
+        projectCard: {
+            hover: string;
+            textColor: string;
+        };
+        checkmarkBadge: string;
+        inputLabelBackground: string;
+        featureStrategySegmentChipBackground: string;
+        featureSegmentSearchBackground: string;
+        dialogHeaderBackground: string;
         /**
          * For table header hover effect.
          */
