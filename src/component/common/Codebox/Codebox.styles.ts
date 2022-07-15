@@ -13,7 +13,7 @@ export const useStyles = makeStyles()(theme => ({
         margin: 0,
         wordBreak: 'break-all',
         whiteSpace: 'pre-wrap',
-        color: theme.palette.text.primary,
+        color: theme.palette.formSidebarTextColor,
         fontSize: 14,
     },
     icon: {

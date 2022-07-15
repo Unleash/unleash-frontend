@@ -126,6 +126,7 @@ export default createTheme({
             hover: themeColors.secondary,
             textColor: themeColors.textColor,
         },
+        formSidebarTextColor: themeColors.textColor,
         checkmarkBadge: themeColors.secondary,
         inputLabelBackground: 'transparent',
         featureMetricsBackground: themeColors.secondary,

@@ -42,7 +42,7 @@ export const useStyles = makeStyles()(theme => ({
         fontWeight: 'normal',
     },
     subtitle: {
-        color: theme.palette.text.primary,
+        color: theme.palette.formSidebarTextColor,
         marginBottom: '1rem',
         display: 'flex',
         justifyContent: 'space-between',
@@ -51,7 +51,7 @@ export const useStyles = makeStyles()(theme => ({
         fontSize: theme.fontSizes.bodySize,
     },
     description: {
-        color: theme.palette.text.primary,
+        color: theme.palette.formSidebarTextColor,
         zIndex: 1,
         position: 'relative',
     },

@@ -80,6 +80,7 @@ declare module '@mui/material/styles' {
         featureStrategySegmentChipBackground: string;
         featureSegmentSearchBackground: string;
         dialogHeaderBackground: string;
+        formSidebarTextColor: string;
         /**
          * For table header hover effect.
          */
