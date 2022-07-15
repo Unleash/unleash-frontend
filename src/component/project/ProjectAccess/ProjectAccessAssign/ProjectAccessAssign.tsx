@@ -29,6 +29,7 @@ import {ProjectAccessAssignForm} from "./ProjectAccessAssignForm/ProjectAccessAs
 import {useUsers} from "../../../../hooks/api/getters/useUsers/useUsers";
 import {useGroupForm} from "../../../admin/groups/hooks/useGroupForm";
 import {useProjectAccessForm} from "../../hooks/useProjectAccessForm";
+import {formatUnknownError} from "../../../../utils/formatUnknownError";
 
 interface IProjectAccessAddUserProps {
     roles: IProjectRole[];
@@ -100,46 +101,6 @@ export const ProjectAccessAssign = ({roles, modal, onCancel}: IProjectAccessAddU
         }
     };
 
-    const handleSubmit = async (evt: React.SyntheticEvent) => {
-        evt.preventDefault();
-        if (!role || !user) {
-            setToastData({
-                type: 'error',
-                title: 'Invalid selection',
-                text: `The selected user or role does not exist`,
-            });
-            return;
-        }
-
-        try {
-            await addUserToRole(projectId, role.id, user.id);
-            refetchProjectAccess();
-            setUser(undefined);
-            setOptions([]);
-            setToastData({
-                type: 'success',
-                title: 'Added user to project',
-                text: `User added to the project with the role of ${role.name}`,
-            });
-        } catch (e: any) {
-            let error;
-
-            if (
-                e
-                    .toString()
-                    .includes(`User already has access to project=${projectId}`)
-            ) {
-                error = `User already has access to project ${projectId}`;
-            } else {
-                error = e.toString() || 'Server problems when adding users.';
-            }
-            setToastData({
-                type: 'error',
-                title: error,
-            });
-        }
-    };
-
     const getOptionLabel = (option: IProjectAccessUser | string) => {
         if (option && typeof option !== 'string') {
             return `${option.name || option.username || '(Empty name)'} <${
@@ -157,6 +118,25 @@ export const ProjectAccessAssign = ({roles, modal, onCancel}: IProjectAccessAddU
         --header 'Content-Type: application/json' \\
         --data-raw '${JSON.stringify(getProjectAccessPayload(), undefined, 2)}'`;
     };
+    const handleSubmit = async (e: Event) => {
+        e.preventDefault();
+        clearErrors();
+
+        const payload = getProjectAccessPayload();
+        try {
+            // const group = await createGroup(payload);
+            // navigate(`/admin/groups/${group.id}`);
+            setToastData({
+                title: 'Permissions assigned successfully',
+                text: 'Now you can start using your group.',
+                confetti: true,
+                type: 'success',
+            });
+        } catch (error: unknown) {
+            // setToastApiError(formatUnknownError(error));
+        }
+    };
+
 
     return (
         <FormTemplate
@@ -170,10 +150,9 @@ export const ProjectAccessAssign = ({roles, modal, onCancel}: IProjectAccessAddU
         >
             <ProjectAccessAssignForm
                 // errors={errors}
-                // handleSubmit={handleSubmit}
+                handleSubmit={handleSubmit}
                 roles={roles}
-                onCancel={onCancel}
-                setUsers={setUsers}
+                handleCancel={onCancel}
                 // contextName={contextName}
                 // setContextName={setContextName}
                 // contextDesc={contextDesc}

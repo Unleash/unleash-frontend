@@ -14,14 +14,16 @@ import {IUser} from "../../../../../interfaces/user";
 import {useGroups} from "../../../../../hooks/api/getters/useGroups/useGroups";
 
 interface IProjectAccessAssignForm {
-    onCancel: () => void;
+    handleSubmit: (e: any) => void;
+    handleCancel: () => void;
     roles: IProjectRole[];
 }
 
 const ENTER = 'Enter';
 
 export const ProjectAccessAssignForm: React.FC<IProjectAccessAssignForm> = ({
-                                                                                onCancel, roles
+                                                                                handleSubmit,
+                                                                                handleCancel, roles
                                                                             }: IProjectAccessAssignForm) => {
     const {classes: styles} = useStyles();
     const [value, setValue] = useState('');
@@ -43,7 +45,7 @@ export const ProjectAccessAssignForm: React.FC<IProjectAccessAssignForm> = ({
 
 
     return (
-        <form className={styles.form}>
+        <form className={styles.form}  onSubmit={handleSubmit}>
             <div className={styles.container}>
                 <p className={styles.inputDescription}>
                     The user must have an Unleash root role before added to the project.
@@ -84,7 +86,7 @@ export const ProjectAccessAssignForm: React.FC<IProjectAccessAssignForm> = ({
                 >
                     Assign user/group
                 </Button>
-                <Button onClick={onCancel} className={styles.cancelButton}>
+                <Button onClick={handleCancel} className={styles.cancelButton}>
                     Cancel
                 </Button>
             </div>
