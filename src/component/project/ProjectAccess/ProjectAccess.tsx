@@ -1,5 +1,4 @@
-import React, { useContext, VFC } from 'react';
-import { ProjectAccessPage } from 'component/project/ProjectAccess/ProjectAccessPage';
+import { useContext, VFC } from 'react';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { Alert } from '@mui/material';
@@ -8,6 +7,7 @@ import AccessContext from 'contexts/AccessContext';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { usePageTitle } from 'hooks/usePageTitle';
+import { ProjectAccessTable } from 'component/project/ProjectAccess/ProjectAccessTable/ProjectAccessTable';
 
 interface IProjectAccess {
     projectName: string;
@@ -48,5 +48,5 @@ export const ProjectAccess: VFC<IProjectAccess> = ({ projectName }) => {
         );
     }
 
-    return <ProjectAccessPage />;
+    return <ProjectAccessTable projectId={projectId} />;
 };
