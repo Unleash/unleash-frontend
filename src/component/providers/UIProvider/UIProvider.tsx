@@ -5,7 +5,6 @@ import { getLocalStorageItem } from 'utils/storage';
 
 const resolveMode = (): themeMode => {
     const value = getLocalStorageItem('unleash-theme');
-    console.log(value);
     if (value) {
         return value as themeMode;
     }
