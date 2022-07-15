@@ -15,6 +15,7 @@ interface IProjectAccess {
 
 export const ProjectAccess: VFC<IProjectAccess> = ({ projectName }) => {
     const projectId = useRequiredPathParam('projectId');
+
     const { hasAccess } = useContext(AccessContext);
     const { isOss } = useUiConfig();
     usePageTitle(`Project access – ${projectName}`);
@@ -48,5 +49,5 @@ export const ProjectAccess: VFC<IProjectAccess> = ({ projectName }) => {
         );
     }
 
-    return <ProjectAccessTable projectId={projectId} />;
+    return <ProjectAccessTable />;
 };

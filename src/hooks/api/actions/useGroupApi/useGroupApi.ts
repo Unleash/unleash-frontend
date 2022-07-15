@@ -27,7 +27,7 @@ export const useGroupApi = () => {
     };
 
     const updateGroup = async (
-        groupId: string,
+        groupId: number,
         payload: ICreateGroupPayload
     ) => {
         const path = `api/admin/groups/${groupId}`;
@@ -42,7 +42,7 @@ export const useGroupApi = () => {
         }
     };
 
-    const removeGroup = async (groupId: string) => {
+    const removeGroup = async (groupId: number) => {
         const path = `api/admin/groups/${groupId}`;
         const req = createRequest(path, {
             method: 'DELETE',

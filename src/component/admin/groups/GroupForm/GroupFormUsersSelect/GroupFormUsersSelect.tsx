@@ -25,7 +25,7 @@ const StyledGroupFormUsersSelect = styled('div')(({ theme }) => ({
     marginBottom: theme.spacing(3),
     '& > div:first-of-type': {
         width: '100%',
-        maxWidth: '400px',
+        maxWidth: theme.spacing(50),
         marginRight: theme.spacing(1),
     },
 }));

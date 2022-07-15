@@ -14,9 +14,8 @@ import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 import { useSearch } from 'hooks/useSearch';
-import { IGroupUser } from 'interfaces/group';
+import { IGroup, IGroupUser } from 'interfaces/group';
 import { VFC, useState } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
@@ -109,26 +108,27 @@ const columns = [
     },
 ];
 
-interface IProjectGroupView {
-    groupId: string;
-    projectId: string;
+interface IProjectGroupViewProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    group: IGroup;
+    projectId: string;
+    subtitle: string;
     onEdit: () => void;
     onRemove: () => void;
 }
 
-export const ProjectGroupView: VFC<IProjectGroupView> = ({
-    groupId,
-    projectId,
+export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
     open,
     setOpen,
+    group,
+    projectId,
+    subtitle,
     onEdit,
     onRemove,
 }) => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const { group, loading } = useGroup(groupId);
 
     const [initialState] = useState(() => ({
         sortBy: [
@@ -169,7 +169,6 @@ export const ProjectGroupView: VFC<IProjectGroupView> = ({
             label={group?.name || 'Group'}
         >
             <StyledPageContent
-                isLoading={loading}
                 header={
                     <PageHeader
                         secondary
@@ -179,8 +178,7 @@ export const ProjectGroupView: VFC<IProjectGroupView> = ({
                                 {rows.length < data.length
                                     ? `${rows.length} of ${data.length}`
                                     : data.length}
-                                )<span>Role: Owner</span>
-                                {/* TODO: grab the real project role */}
+                                )<span>{subtitle}</span>
                             </StyledTitle>
                         }
                         actions={

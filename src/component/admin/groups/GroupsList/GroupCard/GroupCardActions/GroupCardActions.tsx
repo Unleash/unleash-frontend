@@ -24,7 +24,7 @@ const StyledPopover = styled(Popover)(({ theme }) => ({
 }));
 
 interface IGroupCardActions {
-    groupId: string;
+    groupId: number;
     onRemove: () => void;
 }
 
