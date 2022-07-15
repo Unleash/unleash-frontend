@@ -376,5 +376,12 @@ export default createTheme({
                 },
             },
         },
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    color: colors.black,
+                },
+            },
+        },
     },
 });

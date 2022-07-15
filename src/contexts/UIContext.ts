@@ -6,7 +6,11 @@ interface IUIContext {
     setToast: React.Dispatch<React.SetStateAction<IToast>>;
     showFeedback: boolean;
     setShowFeedback: React.Dispatch<React.SetStateAction<boolean>>;
+    setMode: React.Dispatch<React.SetStateAction<themeMode>>;
+    mode: themeMode;
 }
+
+export type themeMode = 'light' | 'dark';
 
 export const createEmptyToast = (): IToast => {
     return {
@@ -27,11 +31,17 @@ const setShowFeedbackPlaceholder = () => {
     throw new Error('setShowFeedback called outside UIContext');
 };
 
+const setModePlaceHolder = () => {
+    throw new Error('setMode called outside UIContext');
+};
+
 const UIContext = React.createContext<IUIContext>({
     toastData: createEmptyToast(),
     setToast: setToastPlaceholder,
     showFeedback: false,
     setShowFeedback: setShowFeedbackPlaceholder,
+    mode: 'light',
+    setMode: setModePlaceHolder,
 });
 
 export default UIContext;
