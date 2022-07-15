@@ -12,7 +12,7 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 
 export const EditGroup = () => {
-    const groupId = useRequiredPathParam('groupId');
+    const groupId = Number(useRequiredPathParam('groupId'));
     const { group, refetchGroup } = useGroup(groupId);
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();

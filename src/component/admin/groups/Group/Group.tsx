@@ -70,7 +70,7 @@ const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
 );
 
 export const Group: VFC = () => {
-    const groupId = useRequiredPathParam('groupId');
+    const groupId = Number(useRequiredPathParam('groupId'));
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { group, loading } = useGroup(groupId);
