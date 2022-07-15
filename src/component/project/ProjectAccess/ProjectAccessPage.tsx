@@ -1,17 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import {Button, SelectChangeEvent} from '@mui/material';
-import { ProjectAccessAssign } from './ProjectAccessAssign/ProjectAccessAssign';
-import { PageContent } from 'component/common/PageContent/PageContent';
-import { useStyles } from './ProjectAccess.styles';
+import {ProjectAccessAssign} from './ProjectAccessAssign/ProjectAccessAssign';
+import {PageContent} from 'component/common/PageContent/PageContent';
+import {useStyles} from './ProjectAccess.styles';
 import useToast from 'hooks/useToast';
-import { Dialogue as ConfirmDialogue } from 'component/common/Dialogue/Dialogue';
+import {Dialogue as ConfirmDialogue} from 'component/common/Dialogue/Dialogue';
 import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
-import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import { ProjectAccessTable } from './ProjectAccessTable/ProjectAccessTable';
+import {PageHeader} from 'component/common/PageHeader/PageHeader';
+import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
+import {ProjectAccessTable} from './ProjectAccessTable/ProjectAccessTable';
 import {Search} from "../../common/Search/Search";
 import {useSearchParams} from "react-router-dom";
 import {SidebarModal} from "../../common/SidebarModal/SidebarModal";
@@ -19,10 +19,10 @@ import {CreateUnleashContext} from "../../context/CreateUnleashContext/CreateUnl
 
 export const ProjectAccessPage = () => {
     const projectId = useRequiredPathParam('projectId');
-    const { classes: styles } = useStyles();
-    const { access, refetchProjectAccess } = useProjectAccess(projectId);
-    const { setToastData } = useToast();
-    const { removeUserFromRole, changeUserRole } = useProjectApi();
+    const {classes: styles} = useStyles();
+    const {access, refetchProjectAccess} = useProjectAccess(projectId);
+    const {setToastData} = useToast();
+    const {removeUserFromRole, changeUserRole} = useProjectApi();
     const [showDelDialogue, setShowDelDialogue] = useState(false);
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -56,7 +56,7 @@ export const ProjectAccessPage = () => {
 
     const removeAccess = (user: IProjectAccessUser | undefined) => async () => {
         if (!user) return;
-        const { id, roleId } = user;
+        const {id, roleId} = user;
 
         try {
             await removeUserFromRole(projectId, roleId, id);

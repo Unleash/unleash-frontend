@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {
     TextField,
     CircularProgress,
@@ -7,17 +7,17 @@ import {
     InputAdornment,
     SelectChangeEvent,
 } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import {Search} from '@mui/icons-material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { ProjectRoleSelect } from '../ProjectRoleSelect/ProjectRoleSelect';
+import {ProjectRoleSelect} from '../ProjectRoleSelect/ProjectRoleSelect';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useToast from 'hooks/useToast';
 import useProjectAccess, {
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
-import { IProjectRole } from 'interfaces/role';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import {IProjectRole} from 'interfaces/role';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
 import {CreateUnleashContext} from "../../../context/CreateUnleashContext/CreateUnleashContext";
 import {SidebarModal} from "../../../common/SidebarModal/SidebarModal";
 import FormTemplate from "../../../common/FormTemplate/FormTemplate";
@@ -26,6 +26,9 @@ import {CreateButton} from "../../../common/CreateButton/CreateButton";
 import {CREATE_CONTEXT_FIELD} from "../../../providers/AccessProvider/permissions";
 import useUiConfig from "../../../../hooks/api/getters/useUiConfig/useUiConfig";
 import {ProjectAccessAssignForm} from "./ProjectAccessAssignForm/ProjectAccessAssignForm";
+import {useUsers} from "../../../../hooks/api/getters/useUsers/useUsers";
+import {useGroupForm} from "../../../admin/groups/hooks/useGroupForm";
+import {useProjectAccessForm} from "../../hooks/useProjectAccessForm";
 
 interface IProjectAccessAddUserProps {
     roles: IProjectRole[];
@@ -34,18 +37,18 @@ interface IProjectAccessAddUserProps {
     onCancel: () => void;
 }
 
-export const ProjectAccessAssign = ({ roles, modal, onCancel }: IProjectAccessAddUserProps) => {
+export const ProjectAccessAssign = ({roles, modal, onCancel}: IProjectAccessAddUserProps) => {
     const projectId = useRequiredPathParam('projectId');
     const [user, setUser] = useState<IProjectAccessUser | undefined>();
     const [role, setRole] = useState<IProjectRole | undefined>();
     const [options, setOptions] = useState<IProjectAccessUser[]>([]);
     const [loading, setLoading] = useState(false);
-    const { setToastData } = useToast();
+    const {setToastData} = useToast();
     const [open, setOpen] = useState(false);
-    const { refetchProjectAccess, access } = useProjectAccess(projectId);
-    const { uiConfig } = useUiConfig();
+    const {refetchProjectAccess, access} = useProjectAccess(projectId);
+    const {uiConfig} = useUiConfig();
 
-    const { searchProjectUser, addUserToRole } = useProjectApi();
+    const {searchProjectUser, addUserToRole} = useProjectApi();
 
     useEffect(() => {
         if (roles.length > 0) {
@@ -56,33 +59,16 @@ export const ProjectAccessAssign = ({ roles, modal, onCancel }: IProjectAccessAd
         }
     }, [roles]);
 
-    const search = async (query: string) => {
-        if (query.length > 1) {
-            setLoading(true);
+    const {
+        setGroups,
+        groups,
+        users,
+        setUsers,
+        getProjectAccessPayload,
+        clearErrors,
+        errors,
+    } = useProjectAccessForm();
 
-            const result = await searchProjectUser(query);
-            const userSearchResults = await result.json();
-
-            const filteredUsers = userSearchResults.filter(
-                (selectedUser: IProjectAccessUser) => {
-                    const selected = access.users.find(
-                        (user: IProjectAccessUser) =>
-                            user.id === selectedUser.id
-                    );
-                    return !selected;
-                }
-            );
-            setOptions(filteredUsers);
-        } else {
-            setOptions([]);
-        }
-        setLoading(false);
-    };
-
-    const handleQueryUpdate = (evt: { target: { value: string } }) => {
-        const q = evt.target.value;
-        search(q);
-    };
 
     const handleBlur = () => {
         if (options.length > 0) {
@@ -162,22 +148,14 @@ export const ProjectAccessAssign = ({ roles, modal, onCancel }: IProjectAccessAd
         } else return '';
     };
 
-    const getUserPayload = () => {
-        return {
-            projectId: '',
-            roleId: '',
-            userId: '',
-        };
-    };
-
 
     const formatApiCode = () => {
         return `curl --location --request POST '${
             uiConfig.unleashUrl
-        }/api/admin/TODO' \\
+        }/api/admin/projects/:projectId/role/:roleId/access' \\
         --header 'Authorization: INSERT_API_KEY' \\
         --header 'Content-Type: application/json' \\
-        --data-raw '${JSON.stringify(getUserPayload(), undefined, 2)}'`;
+        --data-raw '${JSON.stringify(getProjectAccessPayload(), undefined, 2)}'`;
     };
 
     return (
@@ -195,6 +173,7 @@ export const ProjectAccessAssign = ({ roles, modal, onCancel }: IProjectAccessAd
                 // handleSubmit={handleSubmit}
                 roles={roles}
                 onCancel={onCancel}
+                setUsers={setUsers}
                 // contextName={contextName}
                 // setContextName={setContextName}
                 // contextDesc={contextDesc}

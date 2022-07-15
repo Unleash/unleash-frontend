@@ -9,6 +9,9 @@ import {ContextFormChipList} from 'component/context/ContectFormChip/ContextForm
 import {CreateButton} from "../../../../common/CreateButton/CreateButton";
 import {CREATE_CONTEXT_FIELD} from "../../../../providers/AccessProvider/permissions";
 import {IProjectRole} from "../../../../../interfaces/role";
+import {useUsers} from "../../../../../hooks/api/getters/useUsers/useUsers";
+import {IUser} from "../../../../../interfaces/user";
+import {useGroups} from "../../../../../hooks/api/getters/useGroups/useGroups";
 
 interface IProjectAccessAssignForm {
     onCancel: () => void;
@@ -18,44 +21,26 @@ interface IProjectAccessAssignForm {
 const ENTER = 'Enter';
 
 export const ProjectAccessAssignForm: React.FC<IProjectAccessAssignForm> = ({
-        onCancel, roles
-} : IProjectAccessAssignForm) => {
+                                                                                onCancel, roles
+                                                                            }: IProjectAccessAssignForm) => {
     const {classes: styles} = useStyles();
     const [value, setValue] = useState('');
     const [valueDesc, setValueDesc] = useState('');
     const [valueFocused, setValueFocused] = useState(false);
+    const {users} = useUsers();
+    const {groups} = useGroups();
+    const [selectedAssignees, setSelectedAssignees] = useState<IUser[]>([]);
 
-    const data = {
-        users: [
-            {
-                id: 1,
-                name: 'User 1 '
-            },
-            {
-                id: 2,
-                name: 'User 2 '
-            }
-        ],
-        groups: [
-            {
-                id: 1,
-                name: 'Group 1 '
-            },
-            {
-                id: 2,
-                name: 'Group 2 '
-            }
-        ]
-    }
+
     const options = [
-        ...data.users.map(user => (
-        {...user, type: 'USERS'}
-    )),
-        ...data.groups.map(user => (
+        ...users.map(user => (
+            {...user, type: 'USERS', name: user.email}
+        )),
+        ...groups.map(user => (
             {...user, type: 'GROUPS'}
         ))
     ]
-    console.log(roles);
+
 
     return (
         <form className={styles.form}>
@@ -65,20 +50,29 @@ export const ProjectAccessAssignForm: React.FC<IProjectAccessAssignForm> = ({
                 </p>
 
                 <Autocomplete
-                    id="grouped-demo"
+                    multiple
+                    limitTags={10}
                     options={options.sort((a, b) => -b.type.localeCompare(a.type))}
                     groupBy={(option) => option.type}
                     getOptionLabel={(option) => option.name}
                     sx={{width: 300}}
+                    onChange={(event, newValue, reason) => {
+                        if (
+                            event.type === 'keydown' &&
+                            (event as React.KeyboardEvent).key === 'Backspace' &&
+                            reason === 'removeOption'
+                        ) {
+                            return;
+                        }
+                        setSelectedAssignees(newValue);
+                    }}
                     renderInput={(params) => <TextField {...params} label="User/Group"/>}
                 />
                 <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
                     options={roles}
                     getOptionLabel={(option) => option.name}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Movie" />}
+                    sx={{width: 300}}
+                    renderInput={(params) => <TextField {...params} label="Role"/>}
                 />
 
             </div>

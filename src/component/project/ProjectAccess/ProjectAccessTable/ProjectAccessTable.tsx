@@ -8,27 +8,27 @@ import {
     SortableTableHeader, VirtualizedTable, TablePlaceholder,
 } from 'component/common/Table';
 import {Avatar, SelectChangeEvent, styled} from '@mui/material';
-import { Delete } from '@mui/icons-material';
-import { sortTypes } from 'utils/sortTypes';
+import {Delete} from '@mui/icons-material';
+import {sortTypes} from 'utils/sortTypes';
 import {
     IProjectAccessOutput,
     IProjectAccessUser,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
-import { ProjectRoleCell } from './ProjectRoleCell/ProjectRoleCell';
+import {ProjectRoleCell} from './ProjectRoleCell/ProjectRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
-import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
+import {UPDATE_PROJECT} from 'component/providers/AccessProvider/permissions';
+import {TextCell} from 'component/common/Table/cells/TextCell/TextCell';
+import {ActionCell} from 'component/common/Table/cells/ActionCell/ActionCell';
 import {SearchHighlightProvider} from "../../../common/Table/SearchHighlightContext/SearchHighlightContext";
 import {ConditionallyRender} from "../../../common/ConditionallyRender/ConditionallyRender";
 import {useSearch} from "../../../../hooks/useSearch";
 import {useSearchParams} from "react-router-dom";
 
 const initialState = {
-    sortBy: [{ id: 'name' }],
+    sortBy: [{id: 'name'}],
 };
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
+const StyledAvatar = styled(Avatar)(({theme}) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
     margin: 'auto',
@@ -44,11 +44,11 @@ interface IProjectAccessTableProps {
 }
 
 export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
-    access,
-    projectId,
-    handleRoleChange,
-    handleRemoveAccess,
-}) => {
+                                                                      access,
+                                                                      projectId,
+                                                                      handleRoleChange,
+                                                                      handleRemoveAccess,
+                                                                  }) => {
     const data = access.users;
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -60,7 +60,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 accessor: 'imageUrl',
                 disableSortBy: true,
                 maxWidth: 80,
-                Cell: ({ value }: { value: string }) => (
+                Cell: ({value}: { value: string }) => (
                     <TextCell>
                         <StyledAvatar
                             data-loading
@@ -82,7 +82,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 Header: 'Username',
                 accessor: 'email',
                 minWidth: 200,
-                Cell: ({ row: { original: user } }: any) => (
+                Cell: ({row: {original: user}}: any) => (
                     <TextCell>{user.email || user.username}</TextCell>
                 ),
             },
@@ -91,9 +91,9 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 accessor: 'roleId',
                 minWidth: 120,
                 Cell: ({
-                    value,
-                    row: { original: user },
-                }: {
+                           value,
+                           row: {original: user},
+                       }: {
                     value: number;
                     row: { original: IProjectAccessUser };
                 }) => (
@@ -111,7 +111,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                 disableSortBy: true,
                 align: 'center',
                 maxWidth: 200,
-                Cell: ({ row: { original: user } }: any) => (
+                Cell: ({row: {original: user}}: any) => (
                     <ActionCell>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
@@ -125,7 +125,7 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
                                         : 'Remove access',
                             }}
                         >
-                            <Delete />
+                            <Delete/>
                         </PermissionIconButton>
                     </ActionCell>
                 ),
@@ -140,11 +140,11 @@ export const ProjectAccessTable: VFC<IProjectAccessTableProps> = ({
         ]
     );
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} =
         useTable(
             {
                 columns: columns as any[], // TODO: fix after `react-table` v8 update
-                data : data as any[],
+                data: data as any[],
                 initialState,
                 sortTypes,
                 autoResetGlobalFilter: false,
