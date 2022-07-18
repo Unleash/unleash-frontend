@@ -20,12 +20,18 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import usePlaygroundApi from 'hooks/api/actions/usePlayground/usePlayground';
 import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 
-interface IPlaygroundProps {}
+const resolveProjects = (projects: string[] | string): string[] | string => {
+    return !projects ||
+        projects.length === 0 ||
+        (projects.length === 1 && projects[0] === '*')
+        ? '*'
+        : projects;
+};
 
-export const Playground: VFC<IPlaygroundProps> = () => {
+export const Playground: VFC<{}> = () => {
     const theme = useTheme();
-    const [environment, onSetEnvironment] = useState<string>('');
-    const [projects, onSetProjects] = useState<string[]>([]);
+    const [environment, setEnvironment] = useState<string>('');
+    const [projects, setProjects] = useState<string[]>([]);
     const [context, setContext] = useState<string>();
     const [results, setResults] = useState<
         PlaygroundResponseSchema | undefined
@@ -39,16 +45,33 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         try {
             const environmentFromUrl = searchParams.get('environment');
             if (environmentFromUrl) {
-                onSetEnvironment(environmentFromUrl);
+                setEnvironment(environmentFromUrl);
             }
-            const projectsFromUrl = searchParams.get('projects');
+
+            let projectsArray: string[];
+            let projectsFromUrl = searchParams.get('projects');
             if (projectsFromUrl) {
-                onSetProjects(projectsFromUrl.split(','));
+                projectsArray = projectsFromUrl.split(',');
+                setProjects(projectsArray);
             }
-            const contextFromUrl = searchParams.get('context');
+
+            let contextFromUrl = searchParams.get('context');
             if (contextFromUrl) {
-                setContext(decodeURI(contextFromUrl));
+                contextFromUrl = decodeURI(contextFromUrl);
+                setContext(contextFromUrl);
             }
+
+            const makePlaygroundRequest = async () => {
+                if (environmentFromUrl && contextFromUrl) {
+                    await evaluatePlaygroundContext(
+                        environmentFromUrl,
+                        projectsArray || '*',
+                        contextFromUrl
+                    );
+                }
+            };
+
+            makePlaygroundRequest();
         } catch (error) {
             setToastData({
                 type: 'error',
@@ -60,40 +83,27 @@ export const Playground: VFC<IPlaygroundProps> = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
-        event.preventDefault();
-
+    const evaluatePlaygroundContext = async (
+        environment: string,
+        projects: string[] | string,
+        context: string | undefined,
+        action?: () => void
+    ) => {
         try {
             const parsedContext = JSON.parse(context || '{}');
             const response = await evaluatePlayground({
                 environment,
-                projects:
-                    !projects ||
-                    projects.length === 0 ||
-                    (projects.length === 1 && projects[0] === '*')
-                        ? '*'
-                        : projects,
+                projects: resolveProjects(projects),
                 context: {
                     appName: 'playground',
                     ...parsedContext,
                 },
             });
 
-            // Set URL search parameters
-            searchParams.set('context', encodeURI(context || '')); // always set because of native validation
-            searchParams.set('environment', environment);
-            if (
-                Array.isArray(projects) &&
-                projects.length > 0 &&
-                !(projects.length === 1 && projects[0] === '*')
-            ) {
-                searchParams.set('projects', projects.join(','));
-            } else {
-                searchParams.delete('projects');
+            if (action && typeof action === 'function') {
+                action();
             }
-            setSearchParams(searchParams);
 
-            // Display results
             setResults(response);
         } catch (error: unknown) {
             setToastData({
@@ -101,6 +111,32 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                 title: `Error parsing context: ${formatUnknownError(error)}`,
             });
         }
+    };
+
+    const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
+        event.preventDefault();
+
+        await evaluatePlaygroundContext(
+            environment,
+            projects,
+            context,
+            setURLParameters
+        );
+    };
+
+    const setURLParameters = () => {
+        searchParams.set('context', encodeURI(context || '')); // always set because of native validation
+        searchParams.set('environment', environment);
+        if (
+            Array.isArray(projects) &&
+            projects.length > 0 &&
+            !(projects.length === 1 && projects[0] === '*')
+        ) {
+            searchParams.set('projects', projects.join(','));
+        } else {
+            searchParams.delete('projects');
+        }
+        setSearchParams(searchParams);
     };
 
     return (
@@ -130,8 +166,8 @@ export const Playground: VFC<IPlaygroundProps> = () => {
                     <PlaygroundConnectionFieldset
                         environment={environment}
                         projects={projects}
-                        setEnvironment={onSetEnvironment}
-                        setProjects={onSetProjects}
+                        setEnvironment={setEnvironment}
+                        setProjects={setProjects}
                     />
                     <Divider
                         variant="fullWidth"
