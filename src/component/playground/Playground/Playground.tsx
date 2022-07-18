@@ -19,6 +19,8 @@ import { ContextBanner } from './PlaygroundResultsTable/ContextBanner/ContextBan
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import usePlaygroundApi from 'hooks/api/actions/usePlayground/usePlayground';
 import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
+import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
+import { IEnvironment } from 'interfaces/environments';
 
 const resolveProjects = (projects: string[] | string): string[] | string => {
     return !projects ||
@@ -28,8 +30,25 @@ const resolveProjects = (projects: string[] | string): string[] | string => {
         : projects;
 };
 
+const resolveDefaultEnvironment = (environmentOptions: IEnvironment[]) => {
+    const options = getEnvironmentOptions(environmentOptions);
+    if (options.length > 0) {
+        return options[0];
+    }
+    return '';
+};
+
+const getEnvironmentOptions = (environments: IEnvironment[]) => {
+    return environments
+        .filter(({ enabled }) => Boolean(enabled))
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .map(({ name }) => name);
+};
+
 export const Playground: VFC<{}> = () => {
     const theme = useTheme();
+    const { environments } = useEnvironments();
+
     const [environment, setEnvironment] = useState<string>('');
     const [projects, setProjects] = useState<string[]>([]);
     const [context, setContext] = useState<string>();
@@ -39,6 +58,10 @@ export const Playground: VFC<{}> = () => {
     const { setToastData } = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
     const { evaluatePlayground, loading } = usePlaygroundApi();
+
+    useEffect(() => {
+        setEnvironment(resolveDefaultEnvironment(environments));
+    }, [environments]);
 
     useEffect(() => {
         // Load initial values from URL
@@ -168,6 +191,7 @@ export const Playground: VFC<{}> = () => {
                         projects={projects}
                         setEnvironment={setEnvironment}
                         setProjects={setProjects}
+                        environmentOptions={getEnvironmentOptions(environments)}
                     />
                     <Divider
                         variant="fullWidth"
