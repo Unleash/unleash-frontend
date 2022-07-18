@@ -96,30 +96,8 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
             >
                 Unleash context
             </Typography>
-            <TextField
-                error={Boolean(error)}
-                helperText={error}
-                autoCorrect="off"
-                spellCheck={false}
-                multiline
-                label="JSON"
-                placeholder={JSON.stringify(
-                    {
-                        currentTime: '2022-07-04T14:13:03.929Z',
-                        appName: 'playground',
-                        userId: 'test',
-                        remoteAddress: '127.0.0.1',
-                    },
-                    null,
-                    2
-                )}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ minRows: 5 }}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            />
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}>
+
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
                 <FormControl>
                     <InputLabel id="context-field-label" size="small">
                         Context field
@@ -165,6 +143,29 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                     } `}
                 </Button>
             </Box>
+            <TextField
+                error={Boolean(error)}
+                helperText={error}
+                autoCorrect="off"
+                spellCheck={false}
+                multiline
+                label="JSON"
+                placeholder={JSON.stringify(
+                    {
+                        currentTime: '2022-07-04T14:13:03.929Z',
+                        appName: 'playground',
+                        userId: 'test',
+                        remoteAddress: '127.0.0.1',
+                    },
+                    null,
+                    2
+                )}
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                InputProps={{ minRows: 5 }}
+                value={value}
+                onChange={event => setValue(event.target.value)}
+            />
         </Box>
     );
 };
