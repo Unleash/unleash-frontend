@@ -187,7 +187,7 @@ export const PlaygroundResultsTable = ({
                             </Table>
                         </SearchHighlightProvider>
                         <ConditionallyRender
-                            condition={searchValue?.length > 0}
+                            condition={data.length === 0}
                             show={
                                 <TablePlaceholder>
                                     No feature toggles found matching &ldquo;
