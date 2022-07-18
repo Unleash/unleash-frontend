@@ -14,6 +14,7 @@ interface IPlaygroundConnectionFieldsetProps {
     projects: string[];
     setProjects: (projects: string[]) => void;
     setEnvironment: (environment: string) => void;
+    environmentOptions: string[];
 }
 
 interface IOption {
@@ -25,13 +26,14 @@ const allOption: IOption = { label: 'ALL', id: '*' };
 
 export const PlaygroundConnectionFieldset: VFC<
     IPlaygroundConnectionFieldsetProps
-> = ({ environment, projects, setProjects, setEnvironment }) => {
+> = ({
+    environment,
+    projects,
+    setProjects,
+    setEnvironment,
+    environmentOptions,
+}) => {
     const theme = useTheme();
-    const { environments } = useEnvironments();
-    const environmentOptions = environments
-        .filter(({ enabled }) => Boolean(enabled))
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .map(({ name }) => name);
 
     const { projects: availableProjects = [] } = useProjects();
     const projectsOptions = [
