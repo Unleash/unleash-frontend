@@ -244,6 +244,8 @@ const COLUMNS = [
     {
         Header: 'isEnabled',
         accessor: 'isEnabled',
+        filterName: 'isEnabled',
+        filterParsing: (value: boolean) => (value ? 'true' : 'false'),
         maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
         sortType: 'boolean',

@@ -1,4 +1,4 @@
-import { FormEventHandler, useEffect, useState, VFC } from 'react';
+import { FormEventHandler, useEffect, useState, useCallback, VFC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
     Box,
@@ -21,6 +21,8 @@ import usePlaygroundApi from 'hooks/api/actions/usePlayground/usePlayground';
 import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { IEnvironment } from 'interfaces/environments';
+import CodeMirror from '@uiw/react-codemirror';
+import { json } from '@codemirror/lang-json';
 
 const resolveProjects = (projects: string[] | string): string[] | string => {
     return !projects ||
@@ -162,6 +164,10 @@ export const Playground: VFC<{}> = () => {
         setSearchParams(searchParams);
     };
 
+    const onCodeFieldChange = useCallback(value => {
+        setContext(value);
+    }, []);
+
     return (
         <PageContent
             header={<PageHeader title="Unleash playground" />}
@@ -204,6 +210,12 @@ export const Playground: VFC<{}> = () => {
                     <PlaygroundCodeFieldset
                         value={context}
                         setValue={setContext}
+                    />
+                    <CodeMirror
+                        value={context}
+                        height="200px"
+                        extensions={[json()]}
+                        onChange={onCodeFieldChange}
                     />
                     <Divider
                         variant="fullWidth"

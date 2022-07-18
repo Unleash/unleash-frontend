@@ -137,5 +137,11 @@
     "ignorePatterns": [
       "cypress"
     ]
+  },
+  "dependencies": {
+    "@codemirror/lang-json": "^6.0.0",
+    "@codemirror/state": "^6.1.0",
+    "@uiw/react-codemirror": "^4.11.4",
+    "codemirror": "^6.0.1"
   }
 }

@@ -143,7 +143,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                     } `}
                 </Button>
             </Box>
-            <TextField
+            {/* <TextField
                 error={Boolean(error)}
                 helperText={error}
                 autoCorrect="off"
@@ -165,7 +165,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                 InputProps={{ minRows: 5 }}
                 value={value}
                 onChange={event => setValue(event.target.value)}
-            />
+            /> */}
         </Box>
     );
 };
