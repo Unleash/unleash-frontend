@@ -22,6 +22,8 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useEnvironments';
 import { AddonMultiSelector } from './AddonMultiSelector/AddonMultiSelector';
+import FormTemplate from 'component/common/FormTemplate/FormTemplate'
+import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const useStyles = makeStyles()(theme => ({
     nameInput: {
@@ -67,6 +69,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         value: event,
         label: event,
     }));
+    const { uiConfig } = useUiConfig();
     const [formValues, setFormValues] = useState(initialValues);
     const [errors, setErrors] = useState<{
         containsErrors: boolean;
@@ -81,6 +84,14 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         parameters: {},
     });
     const submitText = editMode ? 'Update' : 'Create';
+    let url = `${uiConfig.unleashUrl}/api/admin/addons${editMode ? `/${formValues.id}` : ``}`;
+
+    const formatApiCode = () => {
+        return `curl --location --request ${editMode ? 'PUT' : 'POST'} '${url}' \\
+        --header 'Authorization: INSERT_API_KEY' \\
+        --header 'Content-Type: application/json' \\
+        --data-raw '${JSON.stringify(formValues, undefined, 2)}'`;
+    };
 
     useEffect(() => {
         if (!provider) {
@@ -230,6 +241,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 </a>
                 <p className={themeStyles.error}>{errors.general}</p>
             </section>
+            <FormTemplate title={`${submitText} Addon`} description='' documentationLink="https://docs.getunleash.io/addons" documentationLinkLabel="Addon documentation" formatApiCode={formatApiCode}>
             <form onSubmit={onSubmit}>
                 <section className={styles.formSection}>
                     <TextField
@@ -313,6 +325,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                     </Button>
                 </section>
             </form>
+            </FormTemplate>
         </PageContent>
     );
 };
