@@ -22,7 +22,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useEnvironments';
 import { AddonMultiSelector } from './AddonMultiSelector/AddonMultiSelector';
-import FormTemplate from 'component/common/FormTemplate/FormTemplate'
+import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 
 const useStyles = makeStyles()(theme => ({
@@ -84,10 +84,14 @@ export const AddonForm: VFC<IAddonFormProps> = ({
         parameters: {},
     });
     const submitText = editMode ? 'Update' : 'Create';
-    let url = `${uiConfig.unleashUrl}/api/admin/addons${editMode ? `/${formValues.id}` : ``}`;
+    let url = `${uiConfig.unleashUrl}/api/admin/addons${
+        editMode ? `/${formValues.id}` : ``
+    }`;
 
     const formatApiCode = () => {
-        return `curl --location --request ${editMode ? 'PUT' : 'POST'} '${url}' \\
+        return `curl --location --request ${
+            editMode ? 'PUT' : 'POST'
+        } '${url}' \\
         --header 'Authorization: INSERT_API_KEY' \\
         --header 'Content-Type: application/json' \\
         --data-raw '${JSON.stringify(formValues, undefined, 2)}'`;
@@ -241,90 +245,100 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                 </a>
                 <p className={themeStyles.error}>{errors.general}</p>
             </section>
-            <FormTemplate title={`${submitText} Addon`} description='' documentationLink="https://docs.getunleash.io/addons" documentationLinkLabel="Addon documentation" formatApiCode={formatApiCode}>
-            <form onSubmit={onSubmit}>
-                <section className={styles.formSection}>
-                    <TextField
-                        size="small"
-                        label="Provider"
-                        name="provider"
-                        value={formValues.provider}
-                        disabled
-                        variant="outlined"
-                        className={styles.nameInput}
-                    />
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={formValues.enabled}
-                                onClick={onEnabled}
-                            />
-                        }
-                        label={formValues.enabled ? 'Enabled' : 'Disabled'}
-                    />
-                </section>
-                <section className={styles.formSection}>
-                    <TextField
-                        size="small"
-                        style={{ width: '80%' }}
-                        minRows={4}
-                        multiline
-                        label="Description"
-                        name="description"
-                        placeholder=""
-                        value={formValues.description}
-                        error={Boolean(errors.description)}
-                        helperText={errors.description}
-                        onChange={setFieldValue('description')}
-                        variant="outlined"
-                    />
-                </section>
+            <FormTemplate
+                title={`${submitText} Addon`}
+                description=""
+                documentationLink="https://docs.getunleash.io/addons"
+                documentationLinkLabel="Addon documentation"
+                formatApiCode={formatApiCode}
+            >
+                <form onSubmit={onSubmit}>
+                    <section className={styles.formSection}>
+                        <TextField
+                            size="small"
+                            label="Provider"
+                            name="provider"
+                            value={formValues.provider}
+                            disabled
+                            variant="outlined"
+                            className={styles.nameInput}
+                        />
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={formValues.enabled}
+                                    onClick={onEnabled}
+                                />
+                            }
+                            label={formValues.enabled ? 'Enabled' : 'Disabled'}
+                        />
+                    </section>
+                    <section className={styles.formSection}>
+                        <TextField
+                            size="small"
+                            style={{ width: '80%' }}
+                            minRows={4}
+                            multiline
+                            label="Description"
+                            name="description"
+                            placeholder=""
+                            value={formValues.description}
+                            error={Boolean(errors.description)}
+                            helperText={errors.description}
+                            onChange={setFieldValue('description')}
+                            variant="outlined"
+                        />
+                    </section>
 
-                <section className={styles.formSection}>
-                    <AddonMultiSelector
-                        options={selectableEvents || []}
-                        selectedItems={formValues.events}
-                        onChange={setEventValues}
-                        entityName={'event'}
-                        selectAllEnabled={false}
-                    />
-                </section>
-                <section className={styles.formSection}>
-                    <AddonMultiSelector
-                        options={selectableProjects}
-                        selectedItems={formValues.projects || []}
-                        onChange={setProjects}
-                        entityName={'project'}
-                        selectAllEnabled={true}
-                    />
-                </section>
-                <section className={styles.formSection}>
-                    <AddonMultiSelector
-                        options={selectableEnvironments}
-                        selectedItems={formValues.environments || []}
-                        onChange={setEnvironments}
-                        entityName={'environment'}
-                        selectAllEnabled={true}
-                    />
-                </section>
-                <section className={styles.formSection}>
-                    <AddonParameters
-                        provider={provider}
-                        config={formValues}
-                        parametersErrors={errors.parameters}
-                        editMode={editMode}
-                        setParameterValue={setParameterValue}
-                    />
-                </section>
-                <section className={styles.buttonsSection}>
-                    <Button type="submit" color="primary" variant="contained">
-                        {submitText}
-                    </Button>
-                    <Button type="button" onClick={onCancel}>
-                        Cancel
-                    </Button>
-                </section>
-            </form>
+                    <section className={styles.formSection}>
+                        <AddonMultiSelector
+                            options={selectableEvents || []}
+                            selectedItems={formValues.events}
+                            onChange={setEventValues}
+                            entityName={'event'}
+                            selectAllEnabled={false}
+                        />
+                    </section>
+                    <section className={styles.formSection}>
+                        <AddonMultiSelector
+                            options={selectableProjects}
+                            selectedItems={formValues.projects || []}
+                            onChange={setProjects}
+                            entityName={'project'}
+                            selectAllEnabled={true}
+                        />
+                    </section>
+                    <section className={styles.formSection}>
+                        <AddonMultiSelector
+                            options={selectableEnvironments}
+                            selectedItems={formValues.environments || []}
+                            onChange={setEnvironments}
+                            entityName={'environment'}
+                            selectAllEnabled={true}
+                        />
+                    </section>
+                    <section className={styles.formSection}>
+                        <AddonParameters
+                            provider={provider}
+                            config={formValues}
+                            parametersErrors={errors.parameters}
+                            editMode={editMode}
+                            setParameterValue={setParameterValue}
+                        />
+                    </section>
+                    <section className={styles.buttonsSection}>
+                        <Button
+                            type="submit"
+                            color="primary"
+                            variant="contained"
+                        >
+                            {submitText}
+                        </Button>
+                        <Button type="button" onClick={onCancel}>
+                            Cancel
+                        </Button>
+                    </section>
+                </form>
             </FormTemplate>
         </PageContent>
     );
