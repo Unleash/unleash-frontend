@@ -73,10 +73,10 @@ export const ProjectAccessTable: VFC = () => {
     const [selectedRow, setSelectedRow] = useState<IProjectAccess>();
 
     useEffect(() => {
-        if (!assignOpen) {
+        if (!assignOpen && !groupOpen) {
             setSelectedRow(undefined);
         }
-    }, [assignOpen]);
+    }, [assignOpen, groupOpen]);
 
     const roles = useMemo(
         () => access.roles || [],
@@ -324,6 +324,7 @@ export const ProjectAccessTable: VFC = () => {
             });
         }
         setRemoveOpen(false);
+        setSelectedRow(undefined);
     };
 
     return (
@@ -430,7 +431,10 @@ export const ProjectAccessTable: VFC = () => {
                     roles.find(({ id }) => id === selectedRow?.entity.roleId)
                         ?.name
                 }`}
-                onEdit={() => {}}
+                onEdit={() => {
+                    setAssignOpen(true);
+                    console.log("Assign Open true");
+                }}
                 onRemove={() => {
                     setGroupOpen(false);
                     setRemoveOpen(true);

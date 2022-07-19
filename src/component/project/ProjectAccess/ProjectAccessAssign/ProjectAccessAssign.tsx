@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import {FormEvent, useEffect, useMemo, useState} from 'react';
 import {
     Autocomplete,
     Button,
@@ -15,18 +15,18 @@ import useProjectAccess, {
     ENTITY_TYPE,
     IProjectAccess,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
-import { IProjectRole } from 'interfaces/role';
-import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import {IProjectRole} from 'interfaces/role';
+import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { SidebarModal } from 'component/common/SidebarModal/SidebarModal';
-import { formatUnknownError } from 'utils/formatUnknownError';
-import { IUser } from 'interfaces/user';
-import { IGroup } from 'interfaces/group';
-import { useUsers } from 'hooks/api/getters/useUsers/useUsers';
-import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { ProjectRoleDescription } from './ProjectRoleDescription/ProjectRoleDescription';
+import {SidebarModal} from 'component/common/SidebarModal/SidebarModal';
+import {formatUnknownError} from 'utils/formatUnknownError';
+import {IUser} from 'interfaces/user';
+import {IGroup} from 'interfaces/group';
+import {useUsers} from 'hooks/api/getters/useUsers/useUsers';
+import {useGroups} from 'hooks/api/getters/useGroups/useGroups';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import {ProjectRoleDescription} from './ProjectRoleDescription/ProjectRoleDescription';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -34,12 +34,12 @@ const StyledForm = styled('form')(() => ({
     height: '100%',
 }));
 
-const StyledInputDescription = styled('p')(({ theme }) => ({
+const StyledInputDescription = styled('p')(({theme}) => ({
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(1),
 }));
 
-const StyledAutocompleteWrapper = styled('div')(({ theme }) => ({
+const StyledAutocompleteWrapper = styled('div')(({theme}) => ({
     '& > div:first-of-type': {
         width: '100%',
         maxWidth: theme.spacing(50),
@@ -53,11 +53,11 @@ const StyledButtonContainer = styled('div')(() => ({
     justifyContent: 'flex-end',
 }));
 
-const StyledCancelButton = styled(Button)(({ theme }) => ({
+const StyledCancelButton = styled(Button)(({theme}) => ({
     marginLeft: theme.spacing(3),
 }));
 
-const StyledGroupOption = styled('div')(({ theme }) => ({
+const StyledGroupOption = styled('div')(({theme}) => ({
     display: 'flex',
     flexDirection: 'column',
     '& > span:last-of-type': {
@@ -65,7 +65,7 @@ const StyledGroupOption = styled('div')(({ theme }) => ({
     },
 }));
 
-const StyledUserOption = styled('div')(({ theme }) => ({
+const StyledUserOption = styled('div')(({theme}) => ({
     display: 'flex',
     flexDirection: 'column',
     '& > span:first-of-type': {
@@ -73,7 +73,7 @@ const StyledUserOption = styled('div')(({ theme }) => ({
     },
 }));
 
-const StyledRoleOption = styled('div')(({ theme }) => ({
+const StyledRoleOption = styled('div')(({theme}) => ({
     display: 'flex',
     flexDirection: 'column',
     '& > span:last-of-type': {
@@ -98,41 +98,41 @@ interface IProjectAccessAssignProps {
 }
 
 export const ProjectAccessAssign = ({
-    open,
-    setOpen,
-    selected,
-    accesses,
-    roles,
-    entityType,
-}: IProjectAccessAssignProps) => {
+                                        open,
+                                        setOpen,
+                                        selected,
+                                        accesses,
+                                        roles,
+                                        entityType,
+                                    }: IProjectAccessAssignProps) => {
     const projectId = useRequiredPathParam('projectId');
-    const { refetchProjectAccess } = useProjectAccess(projectId);
-    const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
+    const {refetchProjectAccess} = useProjectAccess(projectId);
+    const {addAccessToProject, changeUserRole, changeGroupRole, loading} =
         useProjectApi();
-    const { users = [] } = useUsers();
-    const { groups = [] } = useGroups();
+    const {users = []} = useUsers();
+    const {groups = []} = useGroups();
     const edit = Boolean(selected);
 
-    const { setToastData, setToastApiError } = useToast();
-    const { uiConfig } = useUiConfig();
+    const {setToastData, setToastApiError} = useToast();
+    const {uiConfig} = useUiConfig();
 
     const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>([]);
     const [role, setRole] = useState<IProjectRole | null>(
-        roles.find(({ id }) => id === selected?.entity.roleId) ?? null
+        roles.find(({id}) => id === selected?.entity.roleId) ?? null
     );
 
     useEffect(() => {
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) ?? null);
+        setRole(roles.find(({id}) => id === selected?.entity.roleId) ?? null);
     }, [roles, selected]);
 
     const payload = useMemo(
         () => ({
             users: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.USER)
-                .map(({ id }) => ({ id })),
+                ?.filter(({type}) => type === ENTITY_TYPE.USER)
+                .map(({id}) => ({id})),
             groups: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
-                .map(({ id }) => ({ id })),
+                ?.filter(({type}) => type === ENTITY_TYPE.GROUP)
+                .map(({id}) => ({id})),
         }),
         [selectedOptions]
     );
@@ -143,7 +143,7 @@ export const ProjectAccessAssign = ({
                 .filter(
                     (group: IGroup) =>
                         edit ||
-                        !accesses.some(({ entity: { id } }) => group.id === id)
+                        !accesses.some(({entity: {id}, type}) => group.id === id && type === ENTITY_TYPE.GROUP)
                 )
                 .map(group => ({
                     id: group.id,
@@ -154,7 +154,7 @@ export const ProjectAccessAssign = ({
                 .filter(
                     (user: IUser) =>
                         edit ||
-                        !accesses.some(({ entity: { id } }) => user.id === id)
+                        !accesses.some(({entity: {id}, type}) => user.id === id && type === ENTITY_TYPE.USER)
                 )
                 .map((user: IUser) => ({
                     id: user.id,
@@ -168,11 +168,11 @@ export const ProjectAccessAssign = ({
     useEffect(() => {
         const selectedOption =
             options.filter(
-                ({ id, type }) =>
+                ({id, type}) =>
                     id === selected?.entity.id && type === selected?.type
             ) || [];
         setSelectedOptions(selectedOption);
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) || null);
+        setRole(roles.find(({id}) => id === selected?.entity.roleId) || null);
     }, [open, selected, options, roles]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -233,9 +233,9 @@ export const ProjectAccessAssign = ({
         return (
             <li {...props}>
                 <Checkbox
-                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                    checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    style={{ marginRight: 8 }}
+                    icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
+                    checkedIcon={<CheckBoxIcon fontSize="small"/>}
+                    style={{marginRight: 8}}
                     checked={selected}
                 />
                 <ConditionallyRender
@@ -305,7 +305,7 @@ export const ProjectAccessAssign = ({
                                     if (
                                         event.type === 'keydown' &&
                                         (event as React.KeyboardEvent).key ===
-                                            'Backspace' &&
+                                        'Backspace' &&
                                         reason === 'removeOption'
                                     ) {
                                         return;
@@ -314,10 +314,10 @@ export const ProjectAccessAssign = ({
                                 }}
                                 options={options}
                                 groupBy={option => option.type}
-                                renderOption={(props, option, { selected }) =>
+                                renderOption={(props, option, {selected}) =>
                                     renderOption(
                                         props,
-                                        option as IAccessOption,
+                                        option,
                                         selected
                                     )
                                 }
@@ -355,13 +355,13 @@ export const ProjectAccessAssign = ({
                                 renderOption={renderRoleOption}
                                 getOptionLabel={option => option.name}
                                 renderInput={params => (
-                                    <TextField {...params} label="Role" />
+                                    <TextField {...params} label="Role"/>
                                 )}
                             />
                         </StyledAutocompleteWrapper>
                         <ConditionallyRender
                             condition={Boolean(role?.id)}
-                            show={<ProjectRoleDescription roleId={role?.id!} />}
+                            show={<ProjectRoleDescription roleId={role?.id!}/>}
                         />
                     </div>
 
