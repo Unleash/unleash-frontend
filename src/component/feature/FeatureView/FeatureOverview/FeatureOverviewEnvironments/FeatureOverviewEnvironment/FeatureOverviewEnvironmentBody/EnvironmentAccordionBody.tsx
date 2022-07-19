@@ -1,19 +1,20 @@
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
-import { useStyles } from '../FeatureOverviewEnvironment.styles';
 import { IFeatureEnvironment } from 'interfaces/featureToggle';
 import { FeatureStrategyEmpty } from 'component/feature/FeatureStrategy/FeatureStrategyEmpty/FeatureStrategyEmpty';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { useStyles } from './FeatureOverviewEnvironment.styles';
+import { Alert } from '@mui/material';
 
-interface IFeatureOverviewEnvironmentBodyProps {
-    getOverviewText: () => string;
+interface IEnvironmentAccordionBodyProps {
+    isDisabled: boolean;
     featureEnvironment?: IFeatureEnvironment;
 }
 
-const FeatureOverviewEnvironmentBody = ({
+const EnvironmentAccordionBody = ({
     featureEnvironment,
-    getOverviewText,
-}: IFeatureOverviewEnvironmentBodyProps) => {
+    isDisabled,
+}: IEnvironmentAccordionBodyProps) => {
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const { classes: styles } = useStyles();
@@ -25,13 +26,17 @@ const FeatureOverviewEnvironmentBody = ({
     return (
         <div className={styles.accordionBody}>
             <div className={styles.accordionBodyInnerContainer}>
-                <div className={styles.resultInfo}>
-                    <div className={styles.leftWing} />
-                    <div className={styles.separatorText}>
-                        {getOverviewText()}
-                    </div>
-                    <div className={styles.rightWing} />
-                </div>
+                <ConditionallyRender
+                    condition={
+                        featureEnvironment?.strategies.length > 0 && isDisabled
+                    }
+                    show={() => (
+                        <Alert severity="warning" sx={{ mb: 2 }}>
+                            This environment is disabled, which means that none
+                            of your strategies are executing.
+                        </Alert>
+                    )}
+                />
                 <ConditionallyRender
                     condition={featureEnvironment?.strategies.length > 0}
                     show={
@@ -54,4 +59,4 @@ const FeatureOverviewEnvironmentBody = ({
         </div>
     );
 };
-export default FeatureOverviewEnvironmentBody;
+export default EnvironmentAccordionBody;

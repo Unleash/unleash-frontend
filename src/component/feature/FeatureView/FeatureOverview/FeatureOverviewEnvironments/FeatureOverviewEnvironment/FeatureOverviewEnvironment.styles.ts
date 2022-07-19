@@ -2,13 +2,13 @@ import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
     featureOverviewEnvironment: {
-        borderRadius: '12.5px',
-        padding: '0.2rem',
-        marginBottom: '1rem',
-        backgroundColor: '#fff',
+        borderRadius: theme.shape.borderRadiusLarge,
+        marginBottom: theme.spacing(2),
+        background: theme.palette.background.default,
     },
-    accordionContainer: {
-        width: '100%',
+    accordion: {
+        boxShadow: 'none',
+        background: 'none',
     },
     accordionHeader: {
         boxShadow: 'none',
@@ -21,6 +21,12 @@ export const useStyles = makeStyles()(theme => ({
         [theme.breakpoints.down(400)]: {
             padding: '0.5rem',
         },
+    },
+    accordionDetails: {
+        padding: theme.spacing(2, 3),
+        background: theme.palette.secondaryContainer,
+        borderBottomLeftRadius: theme.shape.borderRadiusLarge,
+        borderBottomRightRadius: theme.shape.borderRadiusLarge,
     },
     accordionBody: {
         width: '100%',
@@ -68,26 +74,6 @@ export const useStyles = makeStyles()(theme => ({
         fill: '#fff',
         width: '17px',
         height: '17px',
-    },
-    resultInfo: {
-        display: 'flex',
-        alignItems: 'center',
-        margin: '1rem 0',
-    },
-    leftWing: {
-        height: '2px',
-        backgroundColor: theme.palette.grey[300],
-        width: '90%',
-    },
-    separatorText: {
-        fontSize: theme.fontSizes.smallBody,
-        textAlign: 'center',
-        padding: '0 1rem',
-    },
-    rightWing: {
-        height: '2px',
-        backgroundColor: theme.palette.grey[300],
-        width: '90%',
     },
     linkContainer: {
         display: 'flex',

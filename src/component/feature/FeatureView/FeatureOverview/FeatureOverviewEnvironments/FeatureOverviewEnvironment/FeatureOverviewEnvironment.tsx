@@ -9,7 +9,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import EnvironmentIcon from 'component/common/EnvironmentIcon/EnvironmentIcon';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useStyles } from './FeatureOverviewEnvironment.styles';
-import FeatureOverviewEnvironmentBody from './FeatureOverviewEnvironmentBody/FeatureOverviewEnvironmentBody';
+import EnvironmentAccordionBody from './FeatureOverviewEnvironmentBody/EnvironmentAccordionBody';
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
@@ -39,17 +39,10 @@ const FeatureOverviewEnvironment = ({
         featureEnvironment => featureEnvironment.name === env.name
     );
 
-    const getOverviewText = () => {
-        if (env.enabled) {
-            return `${environmentMetric?.yes} received this feature because the following strategies are executing`;
-        }
-        return `This environment is disabled, which means that none of your strategies are executing`;
-    };
-
     return (
         <div className={styles.featureOverviewEnvironment}>
             <Accordion
-                style={{ boxShadow: 'none' }}
+                className={styles.accordion}
                 data-testid={`${FEATURE_ENVIRONMENT_ACCORDION}_${env.name}`}
             >
                 <AccordionSummary
@@ -102,26 +95,22 @@ const FeatureOverviewEnvironment = ({
                     />
                 </AccordionSummary>
 
-                <AccordionDetails>
-                    <div className={styles.accordionContainer}>
-                        <FeatureOverviewEnvironmentBody
-                            featureEnvironment={featureEnvironment}
-                            getOverviewText={getOverviewText}
-                        />
-                        <ConditionallyRender
-                            condition={
-                                // @ts-expect-error
-                                featureEnvironment?.strategies?.length > 0
-                            }
-                            show={
-                                <FeatureOverviewEnvironmentFooter
-                                    // @ts-expect-error
-                                    env={env}
-                                    environmentMetric={environmentMetric}
-                                />
-                            }
-                        />
-                    </div>
+                <AccordionDetails className={styles.accordionDetails}>
+                    <EnvironmentAccordionBody
+                        featureEnvironment={featureEnvironment}
+                        isDisabled={!env.enabled}
+                    />
+                    <ConditionallyRender
+                        condition={
+                            (featureEnvironment?.strategies?.length || 0) > 0
+                        }
+                        show={
+                            <FeatureOverviewEnvironmentFooter
+                                // env={env}
+                                environmentMetric={environmentMetric}
+                            />
+                        }
+                    />
                 </AccordionDetails>
             </Accordion>
         </div>
