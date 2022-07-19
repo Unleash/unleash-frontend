@@ -124,7 +124,7 @@ export const PlaygroundResultsTable = ({
     }, [loading, sortBy, searchValue]);
 
     return (
-        <Box sx={theme => ({ padding: theme.spacing(4, 2) })}>
+        <>
             <Box
                 sx={{
                     display: 'flex',
@@ -206,7 +206,7 @@ export const PlaygroundResultsTable = ({
                     </Box>
                 )}
             />
-        </Box>
+        </>
     );
 };
 

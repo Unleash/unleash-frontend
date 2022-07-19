@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    Divider,
-    Paper,
-    Typography,
-    useTheme,
-} from '@mui/material';
+import { Box, Button, Divider, useTheme } from '@mui/material';
 import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
 import { IEnvironment } from 'interfaces/environments';
 import { FormEvent, VFC } from 'react';

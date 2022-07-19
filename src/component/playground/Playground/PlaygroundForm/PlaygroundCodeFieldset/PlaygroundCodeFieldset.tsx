@@ -143,7 +143,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                     variant="outlined"
                     disabled={!contextField || Boolean(error)}
                     onClick={onAddField}
-                    sx={{ marginLeft: 'auto', width: '95px' }}
+                    sx={{ width: '95px' }}
                 >
                     {`${!fieldExist ? 'Add' : 'Replace'} `}
                 </Button>
