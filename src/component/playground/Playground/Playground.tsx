@@ -12,6 +12,7 @@ import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playgr
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { PlaygroundForm } from './PlaygroundForm/PlaygroundForm';
 import { resolveDefaultEnvironment, resolveProjects } from './playground.utils';
+import { PlaygroundGuidance } from './PlaygroundGuidance/PlaygroundGuidance';
 
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
@@ -149,6 +150,7 @@ export const Playground: VFC<{}> = () => {
                         m: 4,
                         background: theme.palette.grey[200],
                         transition: 'width 0.4s ease',
+                        minWidth: '500px',
                         width: formWidth,
                     }}
                 >
@@ -165,7 +167,11 @@ export const Playground: VFC<{}> = () => {
                 </Paper>
 
                 <Box
-                    sx={{ width: resultsWidth, transition: 'width 0.4s ease' }}
+                    sx={theme => ({
+                        width: resultsWidth,
+                        transition: 'width 0.4s ease',
+                        padding: theme.spacing(4, 2),
+                    })}
                 >
                     <ConditionallyRender
                         condition={Boolean(results)}
@@ -175,6 +181,7 @@ export const Playground: VFC<{}> = () => {
                                 features={results?.features}
                             />
                         }
+                        elseShow={<PlaygroundGuidance />}
                     />
                 </Box>
             </Box>

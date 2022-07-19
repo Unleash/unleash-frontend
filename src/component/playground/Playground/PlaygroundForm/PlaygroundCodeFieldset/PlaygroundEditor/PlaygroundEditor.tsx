@@ -84,7 +84,7 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
     );
 
     return (
-        <div>
+        <Box sx={{ width: '100%' }}>
             <StyledEditorHeader>
                 Json
                 <ConditionallyRender
@@ -114,6 +114,6 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
                     2
                 )}
             />
-        </div>
+        </Box>
     );
 };
