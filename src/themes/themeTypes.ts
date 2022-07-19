@@ -81,6 +81,16 @@ declare module '@mui/material/styles' {
          * and not with `import YourIcon from "@mui/icons/YourIcon"`.
          */
         inactiveIcon: string;
+
+        tertiary: {
+            main: string;
+            light: string;
+            dark: string;
+        };
+    }
+
+    interface CustomTypeText {
+        tertiaryContrast: string;
     }
 
     interface Theme extends CustomTheme {}
@@ -88,6 +98,8 @@ declare module '@mui/material/styles' {
 
     interface Palette extends CustomPalette {}
     interface PaletteOptions extends CustomPalette {}
+
+    interface TypeText extends CustomTypeText {}
 
     interface PaletteColor {
         light: string;

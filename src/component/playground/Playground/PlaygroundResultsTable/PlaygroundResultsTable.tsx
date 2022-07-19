@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
-import { PageContent } from 'component/common/PageContent/PageContent';
-import { PageHeader } from 'component/common/PageHeader/PageHeader';
+
 import {
     SortableTableHeader,
     Table,
@@ -21,6 +20,9 @@ import { useSearch } from 'hooks/useSearch';
 import { createLocalStorage } from 'utils/createLocalStorage';
 import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
 import { PlaygroundFeatureSchema } from 'hooks/api/actions/usePlayground/playground.model';
+import { Box, Typography } from '@mui/material';
+import useLoading from 'hooks/useLoading';
+import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
 
 const defaultSort: SortingRule<string> = { id: 'name' };
 const { value, setValue } = createLocalStorage(
@@ -38,7 +40,7 @@ export const PlaygroundResultsTable = ({
     loading,
 }: IPlaygroundResultsTableProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const ref = useLoading(loading);
     const [searchValue, setSearchValue] = useState(
         searchParams.get('search') || ''
     );
@@ -122,31 +124,37 @@ export const PlaygroundResultsTable = ({
     }, [loading, sortBy, searchValue]);
 
     return (
-        <PageContent
-            header={
-                <PageHeader
-                    titleElement={
-                        features !== undefined
+        <Box sx={theme => ({ padding: theme.spacing(4, 2) })}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mb: 3,
+                }}
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <GuidanceIndicator type="secondary">4</GuidanceIndicator>
+                    <Typography variant="subtitle1" sx={{ ml: 1 }}>
+                        {features !== undefined && !loading
                             ? `Results (${
                                   rows.length < data.length
                                       ? `${rows.length} of ${data.length}`
                                       : data.length
                               })`
-                            : 'Results'
-                    }
-                    actions={
-                        <Search
-                            initialValue={searchValue}
-                            onChange={setSearchValue}
-                            hasFilters
-                            getSearchContext={getSearchContext}
-                            disabled={loading}
-                        />
-                    }
+                            : 'Results'}
+                    </Typography>
+                </Box>
+
+                <Search
+                    initialValue={searchValue}
+                    onChange={setSearchValue}
+                    hasFilters
+                    getSearchContext={getSearchContext}
+                    disabled={loading}
                 />
-            }
-            isLoading={loading}
-        >
+            </Box>
+
             <ConditionallyRender
                 condition={!loading && (!data || data.length === 0)}
                 show={() => (
@@ -157,7 +165,7 @@ export const PlaygroundResultsTable = ({
                     </TablePlaceholder>
                 )}
                 elseShow={() => (
-                    <>
+                    <Box ref={ref}>
                         <SearchHighlightProvider
                             value={getSearchText(searchValue)}
                         >
@@ -195,10 +203,10 @@ export const PlaygroundResultsTable = ({
                                 </TablePlaceholder>
                             }
                         />
-                    </>
+                    </Box>
                 )}
             />
-        </PageContent>
+        </Box>
     );
 };
 
