@@ -238,17 +238,10 @@ export const AddonForm: VFC<IAddonFormProps> = ({
 
     return (
         <PageContent header={`Configure ${name} addon`}>
-            <section className={styles.formSection}>
-                {description}&nbsp;
-                <a href={documentationUrl} target="_blank" rel="noreferrer">
-                    Read more
-                </a>
-                <p className={themeStyles.error}>{errors.general}</p>
-            </section>
             <FormTemplate
                 title={`${submitText} Addon`}
-                description=""
-                documentationLink="https://docs.getunleash.io/addons"
+                description={description || ''}
+                documentationLink={documentationUrl}
                 documentationLinkLabel="Addon documentation"
                 formatApiCode={formatApiCode}
             >
