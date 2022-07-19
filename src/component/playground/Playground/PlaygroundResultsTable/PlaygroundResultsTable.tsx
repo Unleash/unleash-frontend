@@ -23,6 +23,7 @@ import { PlaygroundFeatureSchema } from 'hooks/api/actions/usePlayground/playgro
 import { Box, Typography } from '@mui/material';
 import useLoading from 'hooks/useLoading';
 import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
+import { VariantCell } from './VariantCell/VariantCell';
 
 const defaultSort: SortingRule<string> = { id: 'name' };
 const { value, setValue } = createLocalStorage(
@@ -247,7 +248,12 @@ const COLUMNS = [
             row: {
                 original: { variant },
             },
-        }: any) => <HighlightCell value={variant?.enabled ? value : ''} />,
+        }: any) => (
+            <VariantCell
+                variant={variant?.enabled ? value : ''}
+                variants={[]}
+            />
+        ),
     },
     {
         Header: 'isEnabled',
