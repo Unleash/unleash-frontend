@@ -6,14 +6,12 @@ import React, {
     useState,
     VFC,
 } from 'react';
-import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
+import { Button, Divider, FormControlLabel, Switch, TextField } from "@mui/material";
 import produce from 'immer';
-import { styles as themeStyles } from 'component/common';
 import { trim } from 'component/common/util';
 import { IAddon, IAddonProvider } from 'interfaces/addons';
 import { AddonParameters } from './AddonParameters/AddonParameters';
 import cloneDeep from 'lodash.clonedeep';
-import { PageContent } from 'component/common/PageContent/PageContent';
 import { useNavigate } from 'react-router-dom';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
@@ -24,10 +22,20 @@ import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useE
 import { AddonMultiSelector } from './AddonMultiSelector/AddonMultiSelector';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
+import PermissionButton from "../../common/PermissionButton/PermissionButton";
+import { ADMIN } from "../../providers/AccessProvider/permissions";
 
 const useStyles = makeStyles()(theme => ({
     nameInput: {
         marginRight: '1.5rem',
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+    },
+    inputDescription: {
+        marginBottom: '0.5rem',
     },
     formSection: { padding: '10px 28px' },
     buttonsSection: {
@@ -35,6 +43,14 @@ const useStyles = makeStyles()(theme => ({
         '& > *': {
             marginRight: theme.spacing(1),
         },
+    },
+    container: {
+        maxWidth: '600px',
+    },
+    buttonContainer: {
+        marginTop: 'auto',
+        display: 'flex',
+        justifyContent: 'flex-end',
     },
 }));
 
@@ -177,7 +193,9 @@ export const AddonForm: VFC<IAddonFormProps> = ({
 
     const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();
-        if (!provider) return;
+        if (!provider) {
+            return;
+        }
 
         const updatedErrors = cloneDeep(errors);
         updatedErrors.containsErrors = false;
@@ -237,15 +255,15 @@ export const AddonForm: VFC<IAddonFormProps> = ({
     } = provider ? provider : ({} as Partial<IAddonProvider>);
 
     return (
-        <PageContent header={`Configure ${name} addon`}>
-            <FormTemplate
-                title={`${submitText} Addon`}
-                description={description || ''}
-                documentationLink={documentationUrl}
-                documentationLinkLabel="Addon documentation"
-                formatApiCode={formatApiCode}
-            >
-                <form onSubmit={onSubmit}>
+        <FormTemplate
+            title={`${submitText} ${name} addon`}
+            description={description || ''}
+            documentationLink={documentationUrl}
+            documentationLinkLabel="Addon documentation"
+            formatApiCode={formatApiCode}
+        >
+            <form onSubmit={onSubmit} className={styles.form}>
+                <div className={styles.container}>
                     <section className={styles.formSection}>
                         <TextField
                             size="small"
@@ -253,6 +271,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             name="provider"
                             value={formValues.provider}
                             disabled
+                            hidden={true}
                             variant="outlined"
                             className={styles.nameInput}
                         />
@@ -267,6 +286,10 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         />
                     </section>
                     <section className={styles.formSection}>
+                        <p className={styles.inputDescription}>
+                            What is your addon description?
+                        </p>
+
                         <TextField
                             size="small"
                             style={{ width: '80%' }}
@@ -290,6 +313,9 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             onChange={setEventValues}
                             entityName={'event'}
                             selectAllEnabled={false}
+                            description={
+                                'Select what events you want your addon to be notified about'
+                            }
                         />
                     </section>
                     <section className={styles.formSection}>
@@ -319,20 +345,24 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             setParameterValue={setParameterValue}
                         />
                     </section>
+                </div>
+                <Divider />
+                <div className={styles.buttonContainer}>
                     <section className={styles.buttonsSection}>
-                        <Button
+                        <PermissionButton
                             type="submit"
                             color="primary"
                             variant="contained"
+                            permission={ADMIN}
                         >
                             {submitText}
-                        </Button>
+                        </PermissionButton>
                         <Button type="button" onClick={onCancel}>
                             Cancel
                         </Button>
                     </section>
-                </form>
-            </FormTemplate>
-        </PageContent>
+                </div>
+            </form>
+        </FormTemplate>
     );
 };

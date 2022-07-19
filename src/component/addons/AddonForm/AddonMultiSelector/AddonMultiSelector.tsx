@@ -29,6 +29,7 @@ export interface IAddonMultiSelectorProps {
     onFocus?: () => void;
     entityName: string;
     selectAllEnabled: boolean;
+    description?: string;
 }
 
 const ALL_OPTIONS = '*';
@@ -47,6 +48,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     onFocus,
     entityName,
     selectAllEnabled = true,
+    description
 }) => {
     const [isWildcardSelected, selectWildcard] = useState(
         selectedItems.includes(ALL_OPTIONS)
@@ -142,6 +144,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     return (
         <React.Fragment>
             <h4>{capitalize(entityName)}s</h4>
+            <ConditionallyRender condition={description !== undefined} show={<p>{description}</p>} />
             <ConditionallyRender
                 condition={selectAllEnabled}
                 show={<HelpText />}
