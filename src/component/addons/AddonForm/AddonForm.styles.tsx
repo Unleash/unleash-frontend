@@ -6,6 +6,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     helpText: {
         paddingBottom: '16px',
+        marginBottom: '1rem',
     },
     selectAll: {
         paddingBottom: '16px',

@@ -149,7 +149,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
             <h4 className={styles.title}>{capitalize(entityName)}s</h4>
             <ConditionallyRender
                 condition={description !== undefined}
-                show={<p>{description}</p>}
+                show={<p className={styles.helpText}>{description}</p>}
             />
             <ConditionallyRender
                 condition={selectAllEnabled}
