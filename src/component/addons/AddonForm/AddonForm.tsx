@@ -24,35 +24,9 @@ import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PermissionButton from "../../common/PermissionButton/PermissionButton";
 import { ADMIN } from "../../providers/AccessProvider/permissions";
+import { useStyles } from "./AddonForm.styles";
 
-const useStyles = makeStyles()(theme => ({
-    nameInput: {
-        marginRight: '1.5rem',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-    },
-    inputDescription: {
-        marginBottom: '0.5rem',
-    },
-    formSection: { padding: '10px 28px' },
-    buttonsSection: {
-        padding: '10px 28px',
-        '& > *': {
-            marginRight: theme.spacing(1),
-        },
-    },
-    container: {
-        maxWidth: '600px',
-    },
-    buttonContainer: {
-        marginTop: 'auto',
-        display: 'flex',
-        justifyContent: 'flex-end',
-    },
-}));
+
 
 interface IAddonFormProps {
     provider?: IAddonProvider;
@@ -303,6 +277,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             helperText={errors.description}
                             onChange={setFieldValue('description')}
                             variant="outlined"
+                            className={styles.input}
                         />
                     </section>
 

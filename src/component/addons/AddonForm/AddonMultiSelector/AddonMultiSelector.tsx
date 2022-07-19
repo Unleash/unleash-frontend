@@ -20,6 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ConditionallyRender } from '../../../common/ConditionallyRender/ConditionallyRender';
 import { SelectAllButton } from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
+import { useStyles } from "../AddonForm.styles";
 
 export interface IAddonMultiSelectorProps {
     options: IAutocompleteBoxOption[];
@@ -53,6 +54,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     const [isWildcardSelected, selectWildcard] = useState(
         selectedItems.includes(ALL_OPTIONS)
     );
+    const { classes: styles } = useStyles()
     const renderInput = (params: AutocompleteRenderInputParams) => (
         <TextField
             {...params}
@@ -128,13 +130,14 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
                         onChange={onAllItemsChange}
                     />
                 }
+                className={styles.selectAll}
                 label={`ALL current and future ${entityName}s`}
             />
         </Box>
     );
 
     const HelpText = () => (
-        <p>
+        <p className={styles.helpText}>
             Selecting {entityName}(s) here will filter events so that your addon
             will only receive events that are tagged with one of your{' '}
             {entityName}s.
@@ -143,14 +146,13 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
 
     return (
         <React.Fragment>
-            <h4>{capitalize(entityName)}s</h4>
+            <h4 className={styles.title}>{capitalize(entityName)}s</h4>
             <ConditionallyRender condition={description !== undefined} show={<p>{description}</p>} />
             <ConditionallyRender
                 condition={selectAllEnabled}
                 show={<HelpText />}
             />
             <span className={themeStyles.error}>{error}</span>
-            <br />
             <Box sx={{ mt: -1, mb: 3 }}>
                 <ConditionallyRender
                     condition={selectAllEnabled}
@@ -164,6 +166,7 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
                     disableCloseOnSelect
                     getOptionLabel={({ label }) => label}
                     fullWidth
+                    className={styles.autocomplete}
                     groupBy={() => 'Select/Deselect all'}
                     renderGroup={renderGroup}
                     PaperComponent={CustomPaper}
