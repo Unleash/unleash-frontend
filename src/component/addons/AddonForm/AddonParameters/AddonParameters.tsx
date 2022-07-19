@@ -4,7 +4,7 @@ import {
     AddonParameter,
     IAddonParameterProps,
 } from './AddonParameter/AddonParameter';
-import { useStyles } from "../AddonForm.styles";
+import { useStyles } from '../AddonForm.styles';
 
 interface IAddonParametersProps {
     provider?: IAddonProvider;
@@ -21,7 +21,7 @@ export const AddonParameters = ({
     setParameterValue,
     editMode,
 }: IAddonParametersProps) => {
-    const { classes: styles } = useStyles()
+    const { classes: styles } = useStyles();
     if (!provider) return null;
     return (
         <React.Fragment>

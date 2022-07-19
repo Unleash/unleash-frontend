@@ -6,7 +6,13 @@ import React, {
     useState,
     VFC,
 } from 'react';
-import { Button, Divider, FormControlLabel, Switch, TextField } from "@mui/material";
+import {
+    Button,
+    Divider,
+    FormControlLabel,
+    Switch,
+    TextField,
+} from '@mui/material';
 import produce from 'immer';
 import { trim } from 'component/common/util';
 import { IAddon, IAddonProvider } from 'interfaces/addons';
@@ -22,11 +28,9 @@ import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useE
 import { AddonMultiSelector } from './AddonMultiSelector/AddonMultiSelector';
 import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
-import PermissionButton from "../../common/PermissionButton/PermissionButton";
-import { ADMIN } from "../../providers/AccessProvider/permissions";
-import { useStyles } from "./AddonForm.styles";
-
-
+import PermissionButton from '../../common/PermissionButton/PermissionButton';
+import { ADMIN } from '../../providers/AccessProvider/permissions';
+import { useStyles } from './AddonForm.styles';
 
 interface IAddonFormProps {
     provider?: IAddonProvider;

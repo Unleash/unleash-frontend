@@ -1,17 +1,17 @@
-import { makeStyles } from "tss-react/mui";
+import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
     title: {
-      paddingBottom: '8px'
+        paddingBottom: '8px',
     },
     helpText: {
-      paddingBottom: '16px'
+        paddingBottom: '16px',
     },
     selectAll: {
-        paddingBottom: '16px'
+        paddingBottom: '16px',
     },
     autocomplete: {
-        paddingBottom: '36px'
+        paddingBottom: '36px',
     },
     nameInput: {
         marginRight: '1rem',
@@ -20,7 +20,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        gap: '1rem'
+        gap: '1rem',
     },
     inputDescription: {
         marginBottom: '0.5rem',

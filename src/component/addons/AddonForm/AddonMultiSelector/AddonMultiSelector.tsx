@@ -20,7 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ConditionallyRender } from '../../../common/ConditionallyRender/ConditionallyRender';
 import { SelectAllButton } from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
-import { useStyles } from "../AddonForm.styles";
+import { useStyles } from '../AddonForm.styles';
 
 export interface IAddonMultiSelectorProps {
     options: IAutocompleteBoxOption[];
@@ -49,12 +49,12 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     onFocus,
     entityName,
     selectAllEnabled = true,
-    description
+    description,
 }) => {
     const [isWildcardSelected, selectWildcard] = useState(
         selectedItems.includes(ALL_OPTIONS)
     );
-    const { classes: styles } = useStyles()
+    const { classes: styles } = useStyles();
     const renderInput = (params: AutocompleteRenderInputParams) => (
         <TextField
             {...params}
@@ -147,7 +147,10 @@ export const AddonMultiSelector: VFC<IAddonMultiSelectorProps> = ({
     return (
         <React.Fragment>
             <h4 className={styles.title}>{capitalize(entityName)}s</h4>
-            <ConditionallyRender condition={description !== undefined} show={<p>{description}</p>} />
+            <ConditionallyRender
+                condition={description !== undefined}
+                show={<p>{description}</p>}
+            />
             <ConditionallyRender
                 condition={selectAllEnabled}
                 show={<HelpText />}
