@@ -16,20 +16,25 @@ import {
     TextField,
     Typography,
     useTheme,
+    Alert,
 } from '@mui/material';
+
 import { debounce } from 'debounce';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import useToast from 'hooks/useToast';
+import { PlaygroundEditor } from './PlaygroundEditor/PlaygroundEditor';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
 
 interface IPlaygroundCodeFieldsetProps {
-    value: string | undefined;
-    setValue: Dispatch<SetStateAction<string | undefined>>;
+    context: string | undefined;
+    setContext: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
-    value,
-    setValue,
+    context,
+    setContext,
 }) => {
     const theme = useTheme();
     const { setToastData } = useToast();
@@ -62,13 +67,13 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
     );
 
     useEffect(() => {
-        debounceJsonParsing(value);
-    }, [debounceJsonParsing, value]);
+        debounceJsonParsing(context);
+    }, [debounceJsonParsing, context]);
 
     const onAddField = () => {
         try {
-            const currentValue = JSON.parse(value || '{}');
-            setValue(
+            const currentValue = JSON.parse(context || '{}');
+            setContext(
                 JSON.stringify(
                     {
                         ...currentValue,
@@ -89,13 +94,16 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
 
     return (
         <Box>
-            <Typography
-                variant="body2"
-                sx={{ mb: 2 }}
-                color={theme.palette.text.secondary}
-            >
-                Unleash context
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <GuidanceIndicator type="secondary">2</GuidanceIndicator>
+                <Typography
+                    variant="body2"
+                    color={theme.palette.text.secondary}
+                    sx={{ ml: 1 }}
+                >
+                    Unleash context
+                </Typography>
+            </Box>
 
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
                 <FormControl>
@@ -112,7 +120,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                         }
                         variant="outlined"
                         size="small"
-                        sx={{ width: 300, maxWidth: '100%' }}
+                        sx={{ width: 200, maxWidth: '100%' }}
                     >
                         {contextOptions.map(option => (
                             <MenuItem key={option} value={option}>
@@ -124,7 +132,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                 <TextField
                     label="Value"
                     id="context-value"
-                    sx={{ width: 300, maxWidth: '100%' }}
+                    sx={{ width: 200, maxWidth: '100%' }}
                     size="small"
                     value={contextValue}
                     onChange={event =>
@@ -135,37 +143,17 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                     variant="outlined"
                     disabled={!contextField || Boolean(error)}
                     onClick={onAddField}
+                    sx={{ marginLeft: 'auto', width: '95px' }}
                 >
-                    {`${
-                        !fieldExist
-                            ? 'Add context field'
-                            : 'Replace context field value'
-                    } `}
+                    {`${!fieldExist ? 'Add' : 'Replace'} `}
                 </Button>
             </Box>
-            {/* <TextField
-                error={Boolean(error)}
-                helperText={error}
-                autoCorrect="off"
-                spellCheck={false}
-                multiline
-                label="JSON"
-                placeholder={JSON.stringify(
-                    {
-                        currentTime: '2022-07-04T14:13:03.929Z',
-                        appName: 'playground',
-                        userId: 'test',
-                        remoteAddress: '127.0.0.1',
-                    },
-                    null,
-                    2
-                )}
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ minRows: 5 }}
-                value={value}
-                onChange={event => setValue(event.target.value)}
-            /> */}
+
+            <PlaygroundEditor
+                context={context}
+                setContext={setContext}
+                error={error}
+            />
         </Box>
     );
 };

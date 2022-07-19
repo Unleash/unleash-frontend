@@ -91,6 +91,11 @@ export default createTheme({
             dark: colors.grey[800],
             border: colors.grey[500],
         },
+        tertiary: {
+            light: colors.grey[200],
+            main: colors.grey[400],
+            dark: colors.grey[600],
+        },
         divider: colors.grey[300],
         dividerAlternative: colors.grey[400],
         tableHeaderHover: colors.grey[400],
@@ -102,6 +107,7 @@ export default createTheme({
             primary: colors.grey[900],
             secondary: colors.grey[800],
             disabled: colors.grey[600],
+            tertiaryContrast: '#fff',
         },
         code: {
             main: '#0b8c8f',
