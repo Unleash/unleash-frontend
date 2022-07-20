@@ -49,7 +49,7 @@ const EditorStatusOk = () => {
     return (
         <StyledEditorStatusContainer
             style={{
-                color: '#fff',
+                color: theme.palette.text.tertiaryContrast,
                 backgroundColor: theme.palette.success.main,
             }}
         >
@@ -64,7 +64,7 @@ const EditorStatusError = () => {
     return (
         <StyledEditorStatusContainer
             style={{
-                color: '#fff',
+                color: theme.palette.text.tertiaryContrast,
                 backgroundColor: theme.palette.error.main,
             }}
         >
