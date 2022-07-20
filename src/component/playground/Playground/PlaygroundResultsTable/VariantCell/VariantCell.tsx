@@ -1,7 +1,7 @@
 import { InfoOutlined } from '@mui/icons-material';
-import { IconButton, Popover } from '@mui/material';
+import { IconButton, Popover, styled } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useState, VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import { VariantInformation } from './VariantInformation/VariantInformation';
 import { IFeatureVariant } from 'interfaces/featureToggle';
 
@@ -12,28 +12,30 @@ interface IVariantCellProps {
     isEnabled: boolean;
 }
 
+const StyledDiv = styled('div')(() => ({
+    maxWidth: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    wordBreak: 'break-all',
+}));
+
 export const VariantCell: VFC<IVariantCellProps> = ({
     variant,
     variants,
     feature,
     isEnabled,
 }) => {
-    const [anchor, setAnchorEl] = useState(null);
+    const [anchor, setAnchorEl] = useState<null | Element>(null);
 
-    const onOpen = (event: any) => setAnchorEl(event.currentTarget);
+    const onOpen = (event: React.FormEvent<HTMLButtonElement>) =>
+        setAnchorEl(event.currentTarget);
 
     const onClose = () => setAnchorEl(null);
 
     const open = Boolean(anchor);
+
     return (
-        <div
-            style={{
-                maxWidth: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                wordBreak: 'break-all',
-            }}
-        >
+        <StyledDiv>
             {variant}
             <ConditionallyRender
                 condition={
@@ -63,6 +65,6 @@ export const VariantCell: VFC<IVariantCellProps> = ({
                     </>
                 }
             />
-        </div>
+        </StyledDiv>
     );
 };
