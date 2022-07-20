@@ -433,7 +433,7 @@ export const ProjectAccessTable: VFC = () => {
                 }`}
                 onEdit={() => {
                     setAssignOpen(true);
-                    console.log("Assign Open true");
+                    console.log('Assign Open true');
                 }}
                 onRemove={() => {
                     setGroupOpen(false);
