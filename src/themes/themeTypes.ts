@@ -82,6 +82,10 @@ declare module '@mui/material/styles' {
          */
         inactiveIcon: string;
 
+        /** A border color used for contrast between similar backgroundColors **/
+        lightBorder: string;
+
+        /* Type for tertiary colors */
         tertiary: {
             main: string;
             light: string;

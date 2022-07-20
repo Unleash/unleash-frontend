@@ -1,5 +1,6 @@
 import {
     Dispatch,
+    FormEvent,
     SetStateAction,
     useEffect,
     useMemo,
@@ -16,7 +17,7 @@ import {
     TextField,
     Typography,
     useTheme,
-    Alert,
+    Autocomplete,
 } from '@mui/material';
 
 import { debounce } from 'debounce';
@@ -24,13 +25,27 @@ import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashCon
 import { formatUnknownError } from 'utils/formatUnknownError';
 import useToast from 'hooks/useToast';
 import { PlaygroundEditor } from './PlaygroundEditor/PlaygroundEditor';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
+import { format, isValid } from 'date-fns';
+import Input from 'component/common/Input/Input';
 
 interface IPlaygroundCodeFieldsetProps {
     context: string | undefined;
     setContext: Dispatch<SetStateAction<string | undefined>>;
 }
+
+export const parseDateValue = (value: string) => {
+    const date = new Date(value);
+    return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'HH:mm');
+};
+
+const parseValidDate = (value: string): Date | undefined => {
+    const parsed = new Date(value);
+
+    if (isValid(parsed)) {
+        return parsed;
+    }
+};
 
 export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
     context,
@@ -83,6 +98,17 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                     2
                 )
             );
+
+            const foundContext = contextData.find(
+                context => context.name === contextField
+            );
+
+            if (
+                (foundContext?.legalValues &&
+                    foundContext.legalValues.length > 0) ||
+                contextField === 'currentTime'
+            )
+                return;
             setContextValue('');
         } catch (error) {
             setToastData({
@@ -90,6 +116,75 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                 title: `Error parsing context: ${formatUnknownError(error)}`,
             });
         }
+    };
+
+    const resolveInput = () => {
+        if (contextField === 'currentTime') {
+            const validDate = parseValidDate(contextValue);
+            const now = new Date();
+
+            const value = validDate
+                ? parseDateValue(validDate.toISOString())
+                : parseDateValue(now.toISOString());
+
+            return (
+                <TextField
+                    id="date"
+                    label="Date"
+                    size="small"
+                    type="datetime-local"
+                    value={value}
+                    sx={{ width: 200, maxWidth: '100%' }}
+                    onChange={e => {
+                        const parsedDate = parseValidDate(e.target.value);
+                        const dateString = parsedDate?.toISOString();
+                        dateString && setContextValue(dateString);
+                    }}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    required
+                />
+            );
+        }
+        const foundField = contextData.find(
+            contextData => contextData.name === contextField
+        );
+        if (
+            foundField &&
+            foundField.legalValues &&
+            foundField.legalValues.length > 0
+        ) {
+            const options = foundField.legalValues.map(({ value }) => value);
+            return (
+                <Autocomplete
+                    disablePortal
+                    id="context-legal-values"
+                    size="small"
+                    onChange={(e: FormEvent, newValue) => {
+                        if (typeof newValue === 'string') {
+                            return setContextValue(newValue);
+                        }
+                    }}
+                    options={options}
+                    sx={{ width: 200, maxWidth: '100%' }}
+                    renderInput={(params: any) => (
+                        <TextField {...params} label="Value" />
+                    )}
+                />
+            );
+        }
+
+        return (
+            <TextField
+                label="Value"
+                id="context-value"
+                sx={{ width: 200, maxWidth: '100%' }}
+                size="small"
+                value={contextValue}
+                onChange={event => setContextValue(event.target.value || '')}
+            />
+        );
     };
 
     return (
@@ -115,9 +210,16 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                         labelId="context-field-label"
                         id="context-field"
                         value={contextField}
-                        onChange={event =>
-                            setContextField(event.target.value || '')
-                        }
+                        onChange={event => {
+                            setContextField(event.target.value || '');
+
+                            if (event.target.value === 'currentTime') {
+                                return setContextValue(
+                                    new Date().toISOString()
+                                );
+                            }
+                            setContextValue('');
+                        }}
                         variant="outlined"
                         size="small"
                         sx={{ width: 200, maxWidth: '100%' }}
@@ -129,16 +231,7 @@ export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
                         ))}
                     </Select>
                 </FormControl>
-                <TextField
-                    label="Value"
-                    id="context-value"
-                    sx={{ width: 200, maxWidth: '100%' }}
-                    size="small"
-                    value={contextValue}
-                    onChange={event =>
-                        setContextValue(event.target.value || '')
-                    }
-                />
+                {resolveInput()}
                 <Button
                     variant="outlined"
                     disabled={!contextField || Boolean(error)}

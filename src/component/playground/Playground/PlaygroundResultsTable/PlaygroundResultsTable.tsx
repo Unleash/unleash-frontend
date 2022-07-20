@@ -157,7 +157,7 @@ export const PlaygroundResultsTable = ({
             </Box>
 
             <ConditionallyRender
-                condition={!loading && (!data || data.length === 0)}
+                condition={!loading && !data}
                 show={() => (
                     <TablePlaceholder>
                         {data === undefined

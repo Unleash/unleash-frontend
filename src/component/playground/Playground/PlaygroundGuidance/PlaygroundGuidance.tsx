@@ -1,10 +1,9 @@
 import { Typography, Box, Divider } from '@mui/material';
-import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
 import { PlaygroundGuidanceSection } from './PlaygroundGuidanceSection/PlaygroundGuidanceSection';
 
 export const PlaygroundGuidance = () => {
     return (
-        <Box>
+        <Box sx={{ ml: 4 }}>
             <Typography variant="body1">
                 Unleash playground is for helping you to undestand how unleash
                 works, how feature toggles are evaluated and for you to easily
