@@ -23,6 +23,10 @@ export const trim = (value: string): string => {
     }
 };
 
+export const calculateVariantWeight = (weight: number) => {
+    return weight / 10.0;
+};
+
 export function updateWeight(variants: IFeatureVariant[], totalWeight: number) {
     if (variants.length === 0) {
         return [];
