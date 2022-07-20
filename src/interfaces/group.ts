@@ -11,6 +11,7 @@ export interface IGroup {
     description: string;
     createdAt: Date;
     users: IGroupUser[];
+    projects: string[];
 }
 
 export interface IGroupUser extends IUser {
