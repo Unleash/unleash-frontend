@@ -112,6 +112,7 @@ export default createTheme({
         statusBadge: {
             success: colors.green[100],
             warning: colors.orange[200],
+            primary: colors.purple[100],
         },
         inactiveIcon: colors.grey[600],
     },

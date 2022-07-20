@@ -1,6 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import React from 'react';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from 'hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
 import { IFeatureEnvironment } from 'interfaces/featureToggle';
@@ -9,7 +8,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import EnvironmentIcon from 'component/common/EnvironmentIcon/EnvironmentIcon';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useStyles } from './FeatureOverviewEnvironment.styles';
-import EnvironmentAccordionBody from './FeatureOverviewEnvironmentBody/EnvironmentAccordionBody';
+import EnvironmentAccordionBody from './EnvironmentAccordionBody/EnvironmentAccordionBody';
 import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
@@ -106,7 +105,6 @@ const FeatureOverviewEnvironment = ({
                         }
                         show={
                             <FeatureOverviewEnvironmentFooter
-                                // env={env}
                                 environmentMetric={environmentMetric}
                             />
                         }

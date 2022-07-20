@@ -132,7 +132,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     summary: {
         border: 'none',
-        padding: '0.25rem 1rem',
+        padding: theme.spacing(2, 3),
         '&:hover .valuesExpandLabel': {
             textDecoration: 'underline',
         },

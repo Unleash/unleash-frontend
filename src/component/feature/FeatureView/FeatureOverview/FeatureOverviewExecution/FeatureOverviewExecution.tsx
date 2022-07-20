@@ -13,12 +13,14 @@ import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { FeatureOverviewSegment } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewSegment/FeatureOverviewSegment';
 import { ConstraintAccordionList } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
-import { useStyles } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewExecution/FeatureOverviewExecution.styles';
+import { useStyles } from './FeatureOverviewExecution.styles';
 import {
     parseParameterString,
     parseParameterNumber,
     parseParameterStrings,
 } from 'utils/parseParameter';
+import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
+import { Box, styled } from '@mui/material';
 
 interface IFeatureOverviewExecutionProps {
     parameters: IFeatureStrategyParameters;
@@ -26,6 +28,15 @@ interface IFeatureOverviewExecutionProps {
     strategy: IFeatureStrategy;
     percentageFill?: string;
 }
+
+const StyledStatusBadge = styled(StatusBadge)(({ theme }) => ({
+    margin: 0,
+    borderColor: theme.palette.success.border,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    fontWeight: theme.typography.fontWeightBold,
+    fontSize: theme.fontSizes.smallBody,
+}));
 
 const FeatureOverviewExecution = ({
     parameters,
@@ -52,21 +63,32 @@ const FeatureOverviewExecution = ({
                 case 'rollout':
                 case 'Rollout':
                     return (
-                        <Fragment key={key}>
+                        <Box
+                            className={styles.summary}
+                            key={key}
+                            sx={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <PercentageCircle
+                                percentage={parseParameterNumber(
+                                    parameters[key]
+                                )}
+                                styles={{
+                                    width: '2rem',
+                                    height: '2rem',
+                                    marginRight: '1rem',
+                                }}
+                            />
                             <p>
-                                {parameters[key]}% of your base{' '}
+                                <StyledStatusBadge severity="success">
+                                    {parameters[key]}%
+                                </StyledStatusBadge>{' '}
+                                of your base{' '}
                                 {constraints.length > 0
                                     ? 'who match constraints'
                                     : ''}{' '}
                                 is included.
                             </p>
-
-                            <PercentageCircle
-                                percentage={parseParameterNumber(
-                                    parameters[key]
-                                )}
-                            />
-                        </Fragment>
+                        </Box>
                     );
                 case 'userIds':
                 case 'UserIds':
@@ -131,7 +153,10 @@ const FeatureOverviewExecution = ({
                     return (
                         <Fragment key={param?.name}>
                             <p>
-                                {strategy?.parameters[param.name]}% of your base{' '}
+                                <StyledStatusBadge severity="success">
+                                    {strategy?.parameters[param.name]}%
+                                </StyledStatusBadge>{' '}
+                                of your base{' '}
                                 {constraints?.length > 0
                                     ? 'who match constraints'
                                     : ''}{' '}
@@ -266,7 +291,15 @@ const FeatureOverviewExecution = ({
             />
             <ConditionallyRender
                 condition={strategy.name === 'default'}
-                show={<p>The standard strategy is on for all users.</p>}
+                show={
+                    <Box sx={{ width: '100%' }} className={styles.summary}>
+                        The standard strategy is{' '}
+                        <StyledStatusBadge severity="success">
+                            ON
+                        </StyledStatusBadge>{' '}
+                        for all users.
+                    </Box>
+                }
             />
             {renderParameters()}
             {renderCustomStrategy()}

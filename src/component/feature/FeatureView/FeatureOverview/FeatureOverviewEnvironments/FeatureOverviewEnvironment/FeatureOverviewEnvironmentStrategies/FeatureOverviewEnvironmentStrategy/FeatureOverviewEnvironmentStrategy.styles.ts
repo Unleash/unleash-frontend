@@ -26,7 +26,6 @@ export const useStyles = makeStyles()(theme => ({
     body: {
         padding: '1rem',
         display: 'grid',
-        gap: '1rem',
         justifyItems: 'center',
     },
 }));

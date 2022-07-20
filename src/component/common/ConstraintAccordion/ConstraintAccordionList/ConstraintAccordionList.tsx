@@ -1,5 +1,5 @@
 import { IConstraint } from 'interfaces/strategy';
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, Fragment, useImperativeHandle } from 'react';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -9,6 +9,7 @@ import { useStyles } from './ConstraintAccordionList.styles';
 import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Button } from '@mui/material';
+import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
 
 interface IConstraintAccordionListProps {
     constraints: IConstraint[];
@@ -114,16 +115,22 @@ export const ConstraintAccordionList = forwardRef<
                 }
             />
             {constraints.map((constraint, index) => (
-                <ConstraintAccordion
-                    key={objectId(constraint)}
-                    constraint={constraint}
-                    onEdit={onEdit && onEdit.bind(null, constraint)}
-                    onCancel={onCancel.bind(null, index)}
-                    onDelete={onRemove && onRemove.bind(null, index)}
-                    onSave={onSave && onSave.bind(null, index)}
-                    editing={Boolean(state.get(constraint)?.editing)}
-                    compact
-                />
+                <Fragment key={`${constraint.contextName}-${index}`}>
+                    <ConditionallyRender
+                        condition={index > 0}
+                        show={<StrategySeparator text="AND" />}
+                    />
+                    <ConstraintAccordion
+                        key={objectId(constraint)}
+                        constraint={constraint}
+                        onEdit={onEdit && onEdit.bind(null, constraint)}
+                        onCancel={onCancel.bind(null, index)}
+                        onDelete={onRemove && onRemove.bind(null, index)}
+                        onSave={onSave && onSave.bind(null, index)}
+                        editing={Boolean(state.get(constraint)?.editing)}
+                        compact
+                    />
+                </Fragment>
             ))}
         </div>
     );

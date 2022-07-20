@@ -3,7 +3,7 @@ import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentS
 import { IFeatureEnvironment } from 'interfaces/featureToggle';
 import { FeatureStrategyEmpty } from 'component/feature/FeatureStrategy/FeatureStrategyEmpty/FeatureStrategyEmpty';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import { useStyles } from './FeatureOverviewEnvironment.styles';
+import { useStyles } from './EnvironmentAccordionBody.styles';
 import { Alert } from '@mui/material';
 
 interface IEnvironmentAccordionBodyProps {

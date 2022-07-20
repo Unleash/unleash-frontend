@@ -23,10 +23,11 @@ export const useStyles = makeStyles()(theme => ({
         },
     },
     accordionDetails: {
-        padding: theme.spacing(2, 3),
+        padding: theme.spacing(3),
         background: theme.palette.secondaryContainer,
         borderBottomLeftRadius: theme.shape.borderRadiusLarge,
         borderBottomRightRadius: theme.shape.borderRadiusLarge,
+        borderBottom: `3px solid ${theme.palette.primary.main}`,
     },
     accordionBody: {
         width: '100%',

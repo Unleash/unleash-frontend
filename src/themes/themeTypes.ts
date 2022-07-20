@@ -56,6 +56,7 @@ declare module '@mui/material/styles' {
         statusBadge: {
             success: string;
             warning: string;
+            primary: string;
         };
         /**
          * For table header hover effect.
