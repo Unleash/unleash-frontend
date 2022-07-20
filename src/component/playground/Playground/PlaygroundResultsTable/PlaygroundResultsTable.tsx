@@ -57,7 +57,7 @@ export const PlaygroundResultsTable = ({
             ? Array(5).fill({
                   name: 'Feature name',
                   projectId: 'FeatureProject',
-                  variant: { name: 'FeatureVariant' },
+                  variant: { name: 'FeatureVariant', variants: [] },
                   enabled: true,
               })
             : searchedData;
@@ -216,7 +216,7 @@ const COLUMNS = [
         Header: 'Name',
         accessor: 'name',
         searchable: true,
-        width: '60%',
+        minWidth: 160,
         Cell: ({ value, row: { original } }: any) => (
             <LinkCell
                 title={value}
@@ -242,16 +242,18 @@ const COLUMNS = [
         sortType: 'alphanumeric',
         filterName: 'variant',
         searchable: true,
-        maxWidth: 170,
+        width: 200,
         Cell: ({
             value,
             row: {
-                original: { variant },
+                original: { variant, feature, variants, isEnabled },
             },
         }: any) => (
             <VariantCell
                 variant={variant?.enabled ? value : ''}
-                variants={[]}
+                variants={variants}
+                feature={feature}
+                isEnabled={isEnabled}
             />
         ),
     },
@@ -260,7 +262,6 @@ const COLUMNS = [
         accessor: 'isEnabled',
         filterName: 'isEnabled',
         filterParsing: (value: boolean) => (value ? 'true' : 'false'),
-        maxWidth: 170,
         Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
         sortType: 'boolean',
         sortInverted: true,
