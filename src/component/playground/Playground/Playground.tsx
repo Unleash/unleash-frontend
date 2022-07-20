@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useState, VFC } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Box, Paper, useTheme } from '@mui/material';
+import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import useToast from 'hooks/useToast';
@@ -17,6 +17,7 @@ import { PlaygroundGuidance } from './PlaygroundGuidance/PlaygroundGuidance';
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
     const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('lg'));
 
     const [environment, setEnvironment] = useState<string>('');
     const [projects, setProjects] = useState<string[]>([]);
@@ -131,8 +132,34 @@ export const Playground: VFC<{}> = () => {
         setSearchParams(searchParams);
     };
 
-    const formWidth = results ? '40%' : '50%';
-    const resultsWidth = results ? '60%' : '50%';
+    const resolveFormWidth = () => {
+        if (results && !matches) {
+            return '35%';
+        }
+
+        return 'auto';
+    };
+
+    const resolveResultsWidth = () => {
+        if (matches) {
+            return '100%';
+        }
+
+        if (results && !matches) {
+            return '65%';
+        }
+
+        return '50%';
+    };
+
+    const resolveLayout = () => {
+        if (!matches) {
+            return { display: 'flex' };
+        }
+        return { display: 'flex', flexDirection: 'column' };
+    };
+    const formWidth = resolveFormWidth();
+    const resultsWidth = resolveResultsWidth();
 
     return (
         <PageContent
@@ -140,21 +167,21 @@ export const Playground: VFC<{}> = () => {
             disableLoading
             bodyClass={'no-padding'}
         >
-            <Box sx={{ display: 'flex' }}>
-                <Box>
+            <Box sx={resolveLayout()}>
+                <Box sx={{ background: theme.palette.grey[200] }}>
                     <Paper
                         elevation={0}
                         sx={{
                             px: 4,
                             py: 3,
                             mb: 4,
-                            m: 4,
+                            mt: 2,
                             background: theme.palette.grey[200],
                             transition: 'width 0.4s ease',
-                            minWidth: '500px',
+                            minWidth: matches ? 'auto' : '500px',
                             width: formWidth,
                             position: 'sticky',
-                            top: '10px',
+                            top: 0,
                         }}
                     >
                         <PlaygroundForm

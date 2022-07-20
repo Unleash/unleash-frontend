@@ -1,7 +1,7 @@
 import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { Dispatch, SetStateAction, VFC, useCallback } from 'react';
-import { styled, Alert, useTheme, Box } from '@mui/material';
+import { styled, useTheme, Box } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import Check from '@mui/icons-material/Check';
 import { Error } from '@mui/icons-material';
@@ -22,6 +22,8 @@ const StyledEditorHeader = styled('aside')(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    border: `1px solid ${theme.palette.lightBorder}`,
+    borderBottom: 'none',
 }));
 
 const StyledEditorStatusContainer = styled('div')(({ theme, style }) => ({
@@ -76,6 +78,7 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
     setContext,
     error,
 }) => {
+    const theme = useTheme();
     const onCodeFieldChange = useCallback(
         context => {
             setContext(context);
@@ -90,7 +93,12 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
                 <ConditionallyRender
                     condition={Boolean(error)}
                     show={
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box
+                            sx={theme => ({
+                                display: 'flex',
+                                alignItems: 'center',
+                            })}
+                        >
                             <StyledErrorSpan>{error}</StyledErrorSpan>
                             <EditorStatusError />
                         </Box>
@@ -103,6 +111,12 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
                 height="200px"
                 extensions={[json()]}
                 onChange={onCodeFieldChange}
+                style={{
+                    border: `1px solid ${theme.palette.lightBorder}`,
+                    borderTop: 'none',
+                    borderBottomLeftRadius: '3px',
+                    borderBottomRightRadius: '3px',
+                }}
                 placeholder={JSON.stringify(
                     {
                         currentTime: '2022-07-04T14:13:03.929Z',

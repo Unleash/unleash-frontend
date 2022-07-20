@@ -103,6 +103,7 @@ export default createTheme({
         secondaryContainer: colors.grey[200],
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         grey: colors.grey,
+        lightBorder: colors.grey[400],
         text: {
             primary: colors.grey[900],
             secondary: colors.grey[800],
