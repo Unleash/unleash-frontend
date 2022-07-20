@@ -7,7 +7,7 @@ import {
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
-import FeatureOverviewExecutionChips from './FeatureOverviewExecutionChips/FeatureOverviewExecutionChips';
+import { ConstraintItem } from './ConstraintItem/ConstraintItem';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -94,31 +94,17 @@ const FeatureOverviewExecution = ({
                 case 'UserIds':
                     const users = parseParameterStrings(parameters[key]);
                     return (
-                        <FeatureOverviewExecutionChips
-                            key={key}
-                            value={users}
-                            text="user"
-                        />
+                        <ConstraintItem key={key} value={users} text="user" />
                     );
                 case 'hostNames':
                 case 'HostNames':
                     const hosts = parseParameterStrings(parameters[key]);
                     return (
-                        <FeatureOverviewExecutionChips
-                            key={key}
-                            value={hosts}
-                            text={'host'}
-                        />
+                        <ConstraintItem key={key} value={hosts} text={'host'} />
                     );
                 case 'IPs':
                     const IPs = parseParameterStrings(parameters[key]);
-                    return (
-                        <FeatureOverviewExecutionChips
-                            key={key}
-                            value={IPs}
-                            text={'IP'}
-                        />
-                    );
+                    return <ConstraintItem key={key} value={IPs} text={'IP'} />;
                 case 'stickiness':
                 case 'groupId':
                     return null;
@@ -139,10 +125,7 @@ const FeatureOverviewExecution = ({
                     );
                     return (
                         <Fragment key={param?.name}>
-                            <FeatureOverviewExecutionChips
-                                value={values}
-                                text={param.name}
-                            />
+                            <ConstraintItem value={values} text={param.name} />
                             <ConditionallyRender
                                 condition={notLastItem}
                                 show={<StrategySeparator text="AND" />}

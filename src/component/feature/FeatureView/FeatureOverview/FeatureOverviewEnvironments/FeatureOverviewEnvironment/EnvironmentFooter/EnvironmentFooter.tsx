@@ -2,7 +2,7 @@ import { styled } from '@mui/material';
 import { IFeatureEnvironmentMetrics } from 'interfaces/featureToggle';
 import { FeatureMetricsStats } from 'component/feature/FeatureView/FeatureMetrics/FeatureMetricsStats/FeatureMetricsStats';
 
-interface IFeatureOverviewEnvironmentFooterProps {
+interface IEnvironmentFooterProps {
     environmentMetric?: IFeatureEnvironmentMetrics;
 }
 
@@ -32,9 +32,9 @@ const SeparatorContent = styled('span')(({ theme }) => ({
     maxWidth: '80%',
 }));
 
-const FeatureOverviewEnvironmentFooter = ({
+export const EnvironmentFooter = ({
     environmentMetric,
-}: IFeatureOverviewEnvironmentFooterProps) => {
+}: IEnvironmentFooterProps) => {
     if (!environmentMetric) {
         return null;
     }
@@ -54,5 +54,3 @@ const FeatureOverviewEnvironmentFooter = ({
         </>
     );
 };
-
-export default FeatureOverviewEnvironmentFooter;

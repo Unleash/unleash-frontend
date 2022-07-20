@@ -1,4 +1,9 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    useTheme,
+} from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from 'hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
@@ -9,7 +14,7 @@ import EnvironmentIcon from 'component/common/EnvironmentIcon/EnvironmentIcon';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useStyles } from './FeatureOverviewEnvironment.styles';
 import EnvironmentAccordionBody from './EnvironmentAccordionBody/EnvironmentAccordionBody';
-import FeatureOverviewEnvironmentFooter from './FeatureOverviewEnvironmentFooter/FeatureOverviewEnvironmentFooter';
+import { EnvironmentFooter } from './EnvironmentFooter/EnvironmentFooter';
 import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetrics/FeatureOverviewEnvironmentMetrics';
 import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
 import { FEATURE_ENVIRONMENT_ACCORDION } from 'utils/testIds';
@@ -25,6 +30,7 @@ const FeatureOverviewEnvironment = ({
     env,
 }: IFeatureOverviewEnvironmentProps) => {
     const { classes: styles } = useStyles();
+    const theme = useTheme();
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const { metrics } = useFeatureMetrics(projectId, featureId);
@@ -39,7 +45,14 @@ const FeatureOverviewEnvironment = ({
     );
 
     return (
-        <div className={styles.featureOverviewEnvironment}>
+        <div
+            className={styles.featureOverviewEnvironment}
+            style={{
+                background: !env.enabled
+                    ? theme.palette.secondaryContainer
+                    : theme.palette.background.default,
+            }}
+        >
             <Accordion
                 className={styles.accordion}
                 data-testid={`${FEATURE_ENVIRONMENT_ACCORDION}_${env.name}`}
@@ -104,7 +117,7 @@ const FeatureOverviewEnvironment = ({
                             (featureEnvironment?.strategies?.length || 0) > 0
                         }
                         show={
-                            <FeatureOverviewEnvironmentFooter
+                            <EnvironmentFooter
                                 environmentMetric={environmentMetric}
                             />
                         }
