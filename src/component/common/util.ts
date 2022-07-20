@@ -2,6 +2,7 @@ import { weightTypes } from '../feature/FeatureView/FeatureVariants/FeatureVaria
 import { IFlags } from 'interfaces/uiConfig';
 import { IRoute } from 'interfaces/route';
 import { IFeatureVariant } from 'interfaces/featureToggle';
+import { format, isValid } from 'date-fns';
 
 export const filterByFlags = (flags: IFlags) => (r: IRoute) => {
     if (!r.flag) {
@@ -20,6 +21,19 @@ export const trim = (value: string): string => {
         return value.trim();
     } else {
         return value;
+    }
+};
+
+export const parseDateValue = (value: string) => {
+    const date = new Date(value);
+    return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'HH:mm');
+};
+
+export const parseValidDate = (value: string): Date | undefined => {
+    const parsed = new Date(value);
+
+    if (isValid(parsed)) {
+        return parsed;
     }
 };
 

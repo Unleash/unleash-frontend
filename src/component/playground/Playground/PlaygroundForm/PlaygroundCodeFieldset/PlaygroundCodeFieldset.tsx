@@ -26,26 +26,11 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import useToast from 'hooks/useToast';
 import { PlaygroundEditor } from './PlaygroundEditor/PlaygroundEditor';
 import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
-import { format, isValid } from 'date-fns';
-import Input from 'component/common/Input/Input';
-
+import { parseDateValue, parseValidDate } from 'component/common/util';
 interface IPlaygroundCodeFieldsetProps {
     context: string | undefined;
     setContext: Dispatch<SetStateAction<string | undefined>>;
 }
-
-export const parseDateValue = (value: string) => {
-    const date = new Date(value);
-    return format(date, 'yyyy-MM-dd') + 'T' + format(date, 'HH:mm');
-};
-
-const parseValidDate = (value: string): Date | undefined => {
-    const parsed = new Date(value);
-
-    if (isValid(parsed)) {
-        return parsed;
-    }
-};
 
 export const PlaygroundCodeFieldset: VFC<IPlaygroundCodeFieldsetProps> = ({
     context,
