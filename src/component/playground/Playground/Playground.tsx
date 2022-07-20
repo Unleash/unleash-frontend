@@ -141,31 +141,34 @@ export const Playground: VFC<{}> = () => {
             bodyClass={'no-padding'}
         >
             <Box sx={{ display: 'flex' }}>
-                <Paper
-                    elevation={0}
-                    sx={{
-                        px: 4,
-                        py: 3,
-                        mb: 4,
-                        m: 4,
-                        background: theme.palette.grey[200],
-                        transition: 'width 0.4s ease',
-                        minWidth: '500px',
-                        width: formWidth,
-                    }}
-                >
-                    <PlaygroundForm
-                        onSubmit={onSubmit}
-                        context={context}
-                        setContext={setContext}
-                        environments={environments}
-                        projects={projects}
-                        environment={environment}
-                        setProjects={setProjects}
-                        setEnvironment={setEnvironment}
-                    />
-                </Paper>
-
+                <Box>
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            px: 4,
+                            py: 3,
+                            mb: 4,
+                            m: 4,
+                            background: theme.palette.grey[200],
+                            transition: 'width 0.4s ease',
+                            minWidth: '500px',
+                            width: formWidth,
+                            position: 'sticky',
+                            top: '10px',
+                        }}
+                    >
+                        <PlaygroundForm
+                            onSubmit={onSubmit}
+                            context={context}
+                            setContext={setContext}
+                            environments={environments}
+                            projects={projects}
+                            environment={environment}
+                            setProjects={setProjects}
+                            setEnvironment={setEnvironment}
+                        />
+                    </Paper>
+                </Box>
                 <Box
                     sx={theme => ({
                         width: resultsWidth,
