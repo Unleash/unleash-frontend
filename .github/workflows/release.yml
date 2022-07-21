@@ -35,8 +35,6 @@ jobs:
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - name: Build assets with base path set to CDN path
-      run: rm -rf build && yarn build --base https://cdn.getunleash.io/unleash/${{ steps.get_version.outputs.VERSION }}/
     - name: Publish static assets to S3
       run: |
         aws s3 cp build/ s3://getunleash-static/unleash/${{ steps.get_version.outputs.VERSION }} --recursive
