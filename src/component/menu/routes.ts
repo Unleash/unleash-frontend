@@ -52,7 +52,7 @@ import { SegmentTable } from 'component/segments/SegmentTable/SegmentTable';
 import FlaggedBillingRedirect from 'component/admin/billing/FlaggedBillingRedirect/FlaggedBillingRedirect';
 import { FeaturesArchiveTable } from '../archive/FeaturesArchiveTable';
 import { Billing } from 'component/admin/billing/Billing';
-import { Playground } from 'component/playground/Playground/Playground';
+import { LazyPlayground } from 'component/playground/Playground/LazyPlayground';
 
 export const routes: IRoute[] = [
     // Splash
@@ -178,7 +178,7 @@ export const routes: IRoute[] = [
     {
         path: '/playground',
         title: 'Playground',
-        component: Playground,
+        component: LazyPlayground,
         hidden: false,
         type: 'protected',
         menu: { mobile: true },
