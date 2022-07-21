@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import { IAddonConfig, IAddonProviderParams } from 'interfaces/addons';
 import { ChangeEventHandler } from 'react';
-import { StyledAddonParameterContainer } from "../../AddonForm.styles";
+import { StyledAddonParameterContainer } from '../../AddonForm.styles';
 
 const resolveType = ({ type = 'text', sensitive = false }, value: string) => {
     if (sensitive && value === MASKED_VALUE) {

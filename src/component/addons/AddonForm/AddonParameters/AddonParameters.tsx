@@ -4,7 +4,7 @@ import {
     AddonParameter,
     IAddonParameterProps,
 } from './AddonParameter/AddonParameter';
-import { StyledTitle } from "../AddonForm.styles";
+import { StyledTitle } from '../AddonForm.styles';
 
 interface IAddonParametersProps {
     provider?: IAddonProvider;

@@ -11,7 +11,7 @@ export const StyledForm = styled('form')({
 
 export const StyledAutocomplete = styled(Autocomplete)({
     paddingBottom: '36px',
-    marginTop: '0px'
+    marginTop: '0px',
 });
 export const StyledFormSection = styled('section')({
     marginBottom: '36px',
@@ -41,7 +41,7 @@ export const StyledButtonSection = styled('section')(({ theme }) => ({
 export const StyledTextField = styled(TextField)({
     width: '100%',
     marginBottom: '1rem',
-    marginTop: '0px'
+    marginTop: '0px',
 });
 
 export const StyledSelectAllFormControlLabel = styled(FormControlLabel)({
@@ -53,5 +53,5 @@ export const StyledTitle = styled('h4')({
 });
 
 export const StyledAddonParameterContainer = styled('div')({
-  marginTop: '25px'
+    marginTop: '25px',
 });
