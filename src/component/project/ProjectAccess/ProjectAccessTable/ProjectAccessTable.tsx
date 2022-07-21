@@ -47,7 +47,7 @@ export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
 >;
 
-const defaultSort: SortingRule<string> = { id: 'name' };
+const defaultSort: SortingRule<string> = { id: 'added' };
 
 const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
     'ProjectAccess:v1',
@@ -166,6 +166,19 @@ export const ProjectAccessTable: VFC = () => {
                     roles.find(({ id }) => id === row.entity.roleId)?.name,
                 minWidth: 120,
                 filterName: 'role',
+            },
+            {
+                id: 'added',
+                Header: 'Added',
+                accessor: (row: IProjectAccess) => {
+                    const userRow = row.entity as IUser | IGroup;
+                    return userRow.addedAt || '';
+                },
+                Cell: ({ value }: { value: Date }) => (
+                    <TimeAgoCell value={value} emptyText="Never logged" />
+                ),
+                sortType: 'date',
+                maxWidth: 150,
             },
             {
                 Header: 'Last login',

@@ -34,7 +34,7 @@ const useProjectAccess = (
     projectId: string,
     options: SWRConfiguration = {}
 ) => {
-    const path = formatApiPath(`api/admin/projects/${projectId}/users`);
+    const path = formatApiPath(`api/admin/projects/${projectId}/access`);
     const fetcher = () => {
         return fetch(path, {
             method: 'GET',

@@ -12,6 +12,7 @@ export interface IGroup {
     createdAt: Date;
     users: IGroupUser[];
     projects: string[];
+    addedAt?: string;
 }
 
 export interface IGroupUser extends IUser {
