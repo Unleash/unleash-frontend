@@ -32,7 +32,7 @@ export const StyledButtonContainer = styled('div')({
 });
 
 export const StyledButtonSection = styled('section')(({ theme }) => ({
-    padding: '10px 36px',
+    'padding-top': '16px',
     '& > *': {
         marginRight: theme.spacing(1),
     },
