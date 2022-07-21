@@ -27,7 +27,10 @@ export const useStyles = makeStyles()(theme => ({
         background: theme.palette.secondaryContainer,
         borderBottomLeftRadius: theme.shape.borderRadiusLarge,
         borderBottomRightRadius: theme.shape.borderRadiusLarge,
-        borderBottom: `3px solid ${theme.palette.primary.main}`,
+        borderBottom: `4px solid ${theme.palette.primary.light}`,
+    },
+    accordionDetailsDisabled: {
+        borderBottom: `4px solid ${theme.palette.dividerAlternative}`,
     },
     accordionBody: {
         width: '100%',

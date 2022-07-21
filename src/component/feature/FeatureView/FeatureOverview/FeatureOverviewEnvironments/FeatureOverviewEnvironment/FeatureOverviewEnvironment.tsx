@@ -4,6 +4,7 @@ import {
     AccordionSummary,
     useTheme,
 } from '@mui/material';
+import classNames from 'classnames';
 import { ExpandMore } from '@mui/icons-material';
 import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import useFeatureMetrics from 'hooks/api/getters/useFeatureMetrics/useFeatureMetrics';
@@ -107,7 +108,11 @@ const FeatureOverviewEnvironment = ({
                     />
                 </AccordionSummary>
 
-                <AccordionDetails className={styles.accordionDetails}>
+                <AccordionDetails
+                    className={classNames(styles.accordionDetails, {
+                        [styles.accordionDetailsDisabled]: !env.enabled,
+                    })}
+                >
                     <EnvironmentAccordionBody
                         featureEnvironment={featureEnvironment}
                         isDisabled={!env.enabled}

@@ -13,7 +13,7 @@ import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { FeatureOverviewSegment } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewSegment/FeatureOverviewSegment';
 import { ConstraintAccordionList } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
-import { useStyles } from './FeatureOverviewExecution.styles';
+import { useStyles } from './StrategyExecution.styles';
 import {
     parseParameterString,
     parseParameterNumber,
@@ -22,7 +22,7 @@ import {
 import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
 import { Box, styled } from '@mui/material';
 
-interface IFeatureOverviewExecutionProps {
+interface IStrategyExecutionProps {
     parameters: IFeatureStrategyParameters;
     constraints?: IConstraint[];
     strategy: IFeatureStrategy;
@@ -38,11 +38,11 @@ const StyledStatusBadge = styled(StatusBadge)(({ theme }) => ({
     fontSize: theme.fontSizes.smallBody,
 }));
 
-const FeatureOverviewExecution = ({
+export const StrategyExecution = ({
     parameters,
     constraints = [],
     strategy,
-}: IFeatureOverviewExecutionProps) => {
+}: IStrategyExecutionProps) => {
     const { classes: styles } = useStyles();
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
@@ -289,5 +289,3 @@ const FeatureOverviewExecution = ({
         </>
     );
 };
-
-export default FeatureOverviewExecution;

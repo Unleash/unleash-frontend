@@ -8,22 +8,22 @@ import {
 } from 'utils/strategyNames';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
-import FeatureOverviewExecution from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewExecution/FeatureOverviewExecution';
-import { useStyles } from './FeatureOverviewEnvironmentStrategy.styles';
 import { formatEditStrategyPath } from 'component/feature/FeatureStrategy/FeatureStrategyEdit/FeatureStrategyEdit';
 import { FeatureStrategyRemove } from 'component/feature/FeatureStrategy/FeatureStrategyRemove/FeatureStrategyRemove';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { StrategyExecution } from './StrategyExecution/StrategyExecution';
+import { useStyles } from './StrategyItem.styles';
 
-interface IFeatureOverviewEnvironmentStrategyProps {
+interface IStrategyItemProps {
     environmentId: string;
     strategy: IFeatureStrategy;
 }
 
-const FeatureOverviewEnvironmentStrategy = ({
+export const StrategyItem = ({
     environmentId,
     strategy,
-}: IFeatureOverviewEnvironmentStrategyProps) => {
+}: IStrategyItemProps) => {
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
     const theme = useTheme();
@@ -68,7 +68,7 @@ const FeatureOverviewEnvironmentStrategy = ({
                 </div>
             </div>
             <div className={styles.body}>
-                <FeatureOverviewExecution
+                <StrategyExecution
                     parameters={parameters}
                     strategy={strategy}
                     constraints={constraints}
@@ -78,5 +78,3 @@ const FeatureOverviewEnvironmentStrategy = ({
         </div>
     );
 };
-
-export default FeatureOverviewEnvironmentStrategy;

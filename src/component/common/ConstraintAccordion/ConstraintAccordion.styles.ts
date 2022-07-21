@@ -121,7 +121,7 @@ export const useStyles = makeStyles()(theme => ({
         },
     },
     accordionDetails: {
-        borderTop: `1px solid ${theme.palette.grey[300]}`,
+        borderTop: `1px dashed ${theme.palette.grey[300]}`,
         display: 'flex',
         flexDirection: 'column',
     },
@@ -132,7 +132,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     summary: {
         border: 'none',
-        padding: theme.spacing(2, 3),
+        padding: theme.spacing(0.5, 3),
         '&:hover .valuesExpandLabel': {
             textDecoration: 'underline',
         },

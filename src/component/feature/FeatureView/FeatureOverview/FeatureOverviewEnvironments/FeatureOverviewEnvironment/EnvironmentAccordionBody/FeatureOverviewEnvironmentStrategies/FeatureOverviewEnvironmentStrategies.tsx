@@ -2,7 +2,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { Fragment } from 'react';
-import FeatureOverviewEnvironmentStrategy from './FeatureOverviewEnvironmentStrategy/FeatureOverviewEnvironmentStrategy';
+import { StrategyItem } from './StrategyItem/StrategyItem';
 
 interface IFeatureOverviewEnvironmentStrategiesProps {
     strategies: IFeatureStrategy[];
@@ -21,7 +21,7 @@ const FeatureOverviewEnvironmentStrategies = ({
                         condition={index > 0}
                         show={<StrategySeparator text="OR" />}
                     />
-                    <FeatureOverviewEnvironmentStrategy
+                    <StrategyItem
                         strategy={strategy}
                         environmentId={environmentName}
                     />

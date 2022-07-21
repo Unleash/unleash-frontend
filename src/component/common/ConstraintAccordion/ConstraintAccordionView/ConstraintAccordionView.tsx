@@ -38,7 +38,7 @@ export const ConstraintAccordionView = ({
             classes={{ root: styles.accordionRoot }}
         >
             <AccordionSummary
-                className={styles.summary}
+                classes={{ root: styles.summary }}
                 expandIcon={<ExpandMore titleAccess="Toggle" />}
             >
                 <ConstraintAccordionViewHeader

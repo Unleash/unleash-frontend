@@ -1,5 +1,5 @@
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import FeatureOverviewEnvironmentStrategies from '../FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
+import FeatureOverviewEnvironmentStrategies from './FeatureOverviewEnvironmentStrategies/FeatureOverviewEnvironmentStrategies';
 import { IFeatureEnvironment } from 'interfaces/featureToggle';
 import { FeatureStrategyEmpty } from 'component/feature/FeatureStrategy/FeatureStrategyEmpty/FeatureStrategyEmpty';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
