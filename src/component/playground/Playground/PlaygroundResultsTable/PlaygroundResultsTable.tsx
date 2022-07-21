@@ -168,6 +168,7 @@ export const PlaygroundResultsTable = ({
                     hasFilters
                     getSearchContext={getSearchContext}
                     disabled={loading}
+                    styles={{ marginLeft: "1rem", maxWidth: "400px"}}
                 />
             </Box>
 
