@@ -20,7 +20,7 @@ import { useSearch } from 'hooks/useSearch';
 import { createLocalStorage } from 'utils/createLocalStorage';
 import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
 import { PlaygroundFeatureSchema } from 'hooks/api/actions/usePlayground/playground.model';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import useLoading from 'hooks/useLoading';
 import { GuidanceIndicator } from 'component/common/GuidanceIndicator/GuidanceIndicator';
 import { VariantCell } from './VariantCell/VariantCell';
@@ -45,6 +45,9 @@ export const PlaygroundResultsTable = ({
     const [searchValue, setSearchValue] = useState(
         searchParams.get('search') || ''
     );
+    const theme = useTheme();
+    const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const {
         data: searchedData,
@@ -81,6 +84,7 @@ export const PlaygroundResultsTable = ({
         state: { sortBy },
         rows,
         prepareRow,
+        setHiddenColumns,
     } = useTable(
         {
             initialState,
@@ -97,6 +101,17 @@ export const PlaygroundResultsTable = ({
         useGlobalFilter,
         useSortBy
     );
+
+    useEffect(() => {
+        const hiddenColumns = [];
+        if (isSmallScreen) {
+            hiddenColumns.push('projectId');
+        }
+        if (isExtraSmallScreen) {
+            hiddenColumns.push('variant');
+        }
+        setHiddenColumns(hiddenColumns);
+    }, [setHiddenColumns, isExtraSmallScreen, isSmallScreen]);
 
     useEffect(() => {
         if (loading) {
