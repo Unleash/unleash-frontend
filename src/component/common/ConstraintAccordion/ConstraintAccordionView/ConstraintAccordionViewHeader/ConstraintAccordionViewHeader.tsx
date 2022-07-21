@@ -1,6 +1,6 @@
 import { Chip, IconButton, Tooltip, styled } from '@mui/material';
 import { ConstraintIcon } from 'component/common/ConstraintAccordion/ConstraintIcon';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, DragIndicator, Edit } from '@mui/icons-material';
 import { IConstraint } from 'interfaces/strategy';
 
 import { useStyles } from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';

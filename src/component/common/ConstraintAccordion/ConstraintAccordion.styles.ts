@@ -107,12 +107,6 @@ export const useStyles = makeStyles()(theme => ({
         },
     },
     headerSelect: { marginRight: '2rem', width: '200px' },
-    chip: {
-        margin: '0 0.5rem 0.5rem 0',
-    },
-    chipValue: {
-        whiteSpace: 'pre',
-    },
     headerActions: {
         marginLeft: 'auto',
         whiteSpace: 'nowrap',
@@ -137,28 +131,11 @@ export const useStyles = makeStyles()(theme => ({
             textDecoration: 'underline',
         },
     },
-    settingsParagraph: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0.5rem 0',
-    },
     settingsIcon: {
         height: '32.5px',
         width: '32.5px',
         marginRight: '0.5rem',
         fill: theme.palette.inactiveIcon,
-    },
-    singleValueView: {
-        display: 'flex',
-        alignItems: 'center',
-        [theme.breakpoints.down(600)]: { flexDirection: 'column' },
-    },
-    singleValueText: {
-        marginRight: '0.75rem',
-        [theme.breakpoints.down(600)]: {
-            marginBottom: '0.75rem',
-            marginRight: 0,
-        },
     },
     form: { padding: 0, margin: 0, width: '100%' },
 }));

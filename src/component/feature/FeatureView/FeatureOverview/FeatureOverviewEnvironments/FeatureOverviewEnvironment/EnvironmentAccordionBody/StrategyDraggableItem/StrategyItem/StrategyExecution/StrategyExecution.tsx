@@ -23,8 +23,6 @@ import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
 import { Box, styled } from '@mui/material';
 
 interface IStrategyExecutionProps {
-    parameters: IFeatureStrategyParameters;
-    constraints?: IConstraint[];
     strategy: IFeatureStrategy;
     percentageFill?: string;
 }
@@ -38,11 +36,8 @@ const StyledStatusBadge = styled(StatusBadge)(({ theme }) => ({
     fontSize: theme.fontSizes.smallBody,
 }));
 
-export const StrategyExecution = ({
-    parameters,
-    constraints = [],
-    strategy,
-}: IStrategyExecutionProps) => {
+export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
+    const { parameters, constraints = [] } = strategy;
     const { classes: styles } = useStyles();
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
@@ -78,7 +73,7 @@ export const StrategyExecution = ({
                                     marginRight: '1rem',
                                 }}
                             />
-                            <p>
+                            <div>
                                 <StyledStatusBadge severity="success">
                                     {parameters[key]}%
                                 </StyledStatusBadge>{' '}
@@ -87,7 +82,7 @@ export const StrategyExecution = ({
                                     ? 'who match constraints'
                                     : ''}{' '}
                                 is included.
-                            </p>
+                            </div>
                         </Box>
                     );
                 case 'userIds':
@@ -135,7 +130,7 @@ export const StrategyExecution = ({
                 case 'percentage':
                     return (
                         <Fragment key={param?.name}>
-                            <p>
+                            <div>
                                 <StyledStatusBadge severity="success">
                                     {strategy?.parameters[param.name]}%
                                 </StyledStatusBadge>{' '}
@@ -144,7 +139,7 @@ export const StrategyExecution = ({
                                     ? 'who match constraints'
                                     : ''}{' '}
                                 is included.
-                            </p>
+                            </div>
                             <PercentageCircle
                                 percentage={parseParameterNumber(
                                     strategy.parameters[param.name]

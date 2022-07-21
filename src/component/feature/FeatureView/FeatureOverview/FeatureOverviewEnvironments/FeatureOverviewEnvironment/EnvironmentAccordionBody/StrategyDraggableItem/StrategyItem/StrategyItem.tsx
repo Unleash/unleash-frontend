@@ -1,5 +1,5 @@
-import { Edit } from '@mui/icons-material';
-import { useTheme } from '@mui/material/styles';
+import { DragIndicator, Edit } from '@mui/icons-material';
+import { styled, useTheme, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import {
@@ -20,6 +20,12 @@ interface IStrategyItemProps {
     strategy: IFeatureStrategy;
 }
 
+const DragIcon = styled(IconButton)(({ theme }) => ({
+    padding: 0,
+    cursor: 'inherit',
+    transition: 'color 0.2s ease-in-out',
+}));
+
 export const StrategyItem = ({
     environmentId,
     strategy,
@@ -29,7 +35,6 @@ export const StrategyItem = ({
     const theme = useTheme();
     const { classes: styles } = useStyles();
     const Icon = getFeatureStrategyIcon(strategy.name);
-    const { parameters, constraints } = strategy;
 
     const editStrategyPath = formatEditStrategyPath(
         projectId,
@@ -41,6 +46,12 @@ export const StrategyItem = ({
     return (
         <div className={styles.container}>
             <div className={styles.header}>
+                <DragIcon disableRipple disabled size="small">
+                    <DragIndicator
+                        titleAccess="Drag to reorder"
+                        cursor="grab"
+                    />
+                </DragIcon>
                 <Icon className={styles.icon} />
                 <StringTruncator
                     maxWidth="150"
@@ -69,9 +80,7 @@ export const StrategyItem = ({
             </div>
             <div className={styles.body}>
                 <StrategyExecution
-                    parameters={parameters}
                     strategy={strategy}
-                    constraints={constraints}
                     percentageFill={theme.palette.grey[200]}
                 />
             </div>

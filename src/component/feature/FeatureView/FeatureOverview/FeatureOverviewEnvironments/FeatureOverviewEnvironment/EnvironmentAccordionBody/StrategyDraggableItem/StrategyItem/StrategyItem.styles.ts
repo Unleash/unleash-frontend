@@ -15,6 +15,7 @@ export const useStyles = makeStyles()(theme => ({
         gap: '0.5rem',
         alignItems: 'center',
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
+        fontWeight: theme.typography.fontWeightMedium,
     },
     icon: {
         fill: theme.palette.inactiveIcon,
