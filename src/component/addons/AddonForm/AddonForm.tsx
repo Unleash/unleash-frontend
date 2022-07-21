@@ -21,7 +21,6 @@ import cloneDeep from 'lodash.clonedeep';
 import { useNavigate } from 'react-router-dom';
 import useAddonsApi from 'hooks/api/actions/useAddonsApi/useAddonsApi';
 import useToast from 'hooks/useToast';
-import { makeStyles } from 'tss-react/mui';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import useProjects from '../../../hooks/api/getters/useProjects/useProjects';
 import { useEnvironments } from '../../../hooks/api/getters/useEnvironments/useEnvironments';
@@ -30,7 +29,16 @@ import FormTemplate from 'component/common/FormTemplate/FormTemplate';
 import useUiConfig from '../../../hooks/api/getters/useUiConfig/useUiConfig';
 import PermissionButton from '../../common/PermissionButton/PermissionButton';
 import { ADMIN } from '../../providers/AccessProvider/permissions';
-import { useStyles } from './AddonForm.styles';
+import {
+    StyledForm,
+    StyledFormSection,
+    StyledHelpText,
+    StyledTextField,
+    StyledContainer,
+    StyledButtonContainer,
+    StyledButtonSection,
+} from './AddonForm.styles';
+import { useTheme } from '@mui/system';
 
 interface IAddonFormProps {
     provider?: IAddonProvider;
@@ -48,7 +56,7 @@ export const AddonForm: VFC<IAddonFormProps> = ({
     const { createAddon, updateAddon } = useAddonsApi();
     const { setToastData, setToastApiError } = useToast();
     const navigate = useNavigate();
-    const { classes: styles } = useStyles();
+    const theme = useTheme();
     const { projects: availableProjects } = useProjects();
     const selectableProjects = availableProjects.map(project => ({
         value: project.id,
@@ -240,10 +248,10 @@ export const AddonForm: VFC<IAddonFormProps> = ({
             documentationLinkLabel="Addon documentation"
             formatApiCode={formatApiCode}
         >
-            <form onSubmit={onSubmit} className={styles.form}>
-                <div className={styles.container}>
-                    <section className={styles.formSection}>
-                        <TextField
+            <StyledForm onSubmit={onSubmit}>
+                <StyledContainer>
+                    <StyledFormSection>
+                        <StyledTextField
                             size="small"
                             label="Provider"
                             name="provider"
@@ -251,7 +259,6 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             disabled
                             hidden={true}
                             variant="outlined"
-                            className={styles.nameInput}
                         />
                         <FormControlLabel
                             control={
@@ -262,13 +269,13 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             }
                             label={formValues.enabled ? 'Enabled' : 'Disabled'}
                         />
-                    </section>
-                    <section className={styles.formSection}>
-                        <p className={styles.inputDescription}>
+                    </StyledFormSection>
+                    <StyledFormSection>
+                        <StyledHelpText>
                             What is your addon description?
-                        </p>
+                        </StyledHelpText>
 
-                        <TextField
+                        <StyledTextField
                             size="small"
                             style={{ width: '80%' }}
                             minRows={4}
@@ -281,11 +288,10 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             helperText={errors.description}
                             onChange={setFieldValue('description')}
                             variant="outlined"
-                            className={styles.input}
                         />
-                    </section>
+                    </StyledFormSection>
 
-                    <section className={styles.formSection}>
+                    <StyledFormSection>
                         <AddonMultiSelector
                             options={selectableEvents || []}
                             selectedItems={formValues.events}
@@ -296,8 +302,8 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                                 'Select what events you want your addon to be notified about'
                             }
                         />
-                    </section>
-                    <section className={styles.formSection}>
+                    </StyledFormSection>
+                    <StyledFormSection>
                         <AddonMultiSelector
                             options={selectableProjects}
                             selectedItems={formValues.projects || []}
@@ -305,8 +311,8 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             entityName={'project'}
                             selectAllEnabled={true}
                         />
-                    </section>
-                    <section className={styles.formSection}>
+                    </StyledFormSection>
+                    <StyledFormSection>
                         <AddonMultiSelector
                             options={selectableEnvironments}
                             selectedItems={formValues.environments || []}
@@ -314,8 +320,8 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             entityName={'environment'}
                             selectAllEnabled={true}
                         />
-                    </section>
-                    <section className={styles.formSection}>
+                    </StyledFormSection>
+                    <StyledFormSection>
                         <AddonParameters
                             provider={provider}
                             config={formValues}
@@ -323,11 +329,11 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                             editMode={editMode}
                             setParameterValue={setParameterValue}
                         />
-                    </section>
-                </div>
+                    </StyledFormSection>
+                </StyledContainer>
                 <Divider />
-                <div className={styles.buttonContainer}>
-                    <section className={styles.buttonsSection}>
+                <StyledButtonContainer>
+                    <StyledButtonSection theme={theme}>
                         <PermissionButton
                             type="submit"
                             color="primary"
@@ -339,9 +345,9 @@ export const AddonForm: VFC<IAddonFormProps> = ({
                         <Button type="button" onClick={onCancel}>
                             Cancel
                         </Button>
-                    </section>
-                </div>
-            </form>
+                    </StyledButtonSection>
+                </StyledButtonContainer>
+            </StyledForm>
         </FormTemplate>
     );
 };

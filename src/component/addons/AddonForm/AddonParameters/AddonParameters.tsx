@@ -4,7 +4,7 @@ import {
     AddonParameter,
     IAddonParameterProps,
 } from './AddonParameter/AddonParameter';
-import { useStyles } from '../AddonForm.styles';
+import { StyledTitle } from "../AddonForm.styles";
 
 interface IAddonParametersProps {
     provider?: IAddonProvider;
@@ -21,11 +21,10 @@ export const AddonParameters = ({
     setParameterValue,
     editMode,
 }: IAddonParametersProps) => {
-    const { classes: styles } = useStyles();
     if (!provider) return null;
     return (
         <React.Fragment>
-            <h4 className={styles.title}>Parameters</h4>
+            <StyledTitle>Parameters</StyledTitle>
             {editMode ? (
                 <p>
                     Sensitive parameters will be masked with value "<i>*****</i>
