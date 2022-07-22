@@ -1,32 +1,32 @@
-import { Avatar, Badge, styled } from '@mui/material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IGroupUser, Role } from 'interfaces/group';
-import React, { useMemo, useState } from 'react';
+import {Avatar, Badge, styled} from '@mui/material';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import {IGroupUser, Role} from 'interfaces/group';
+import React, {useMemo, useState} from 'react';
 import StarIcon from '@mui/icons-material/Star';
-import { GroupPopover } from './GroupPopover/GroupPopover';
+import {GroupPopover} from './GroupPopover/GroupPopover';
 
-const StyledAvatars = styled('div')(({ theme }) => ({
+const StyledAvatars = styled('div')(({theme}) => ({
     display: 'inline-flex',
     alignItems: 'center',
     flexWrap: 'wrap',
     marginLeft: theme.spacing(1),
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
+const StyledAvatar = styled(Avatar)(({theme}) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
     outline: `2px solid ${theme.palette.background.paper}`,
     marginLeft: theme.spacing(-1),
 }));
 
-const StyledAvatarMore = styled(StyledAvatar)(({ theme }) => ({
+const StyledAvatarMore = styled(StyledAvatar)(({theme}) => ({
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.text.primary,
     fontSize: theme.fontSizes.smallerBody,
     fontWeight: theme.fontWeight.bold,
 }));
 
-const StyledStar = styled(StarIcon)(({ theme }) => ({
+const StyledStar = styled(StarIcon)(({theme}) => ({
     color: theme.palette.warning.main,
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadiusExtraLarge,
@@ -38,7 +38,7 @@ interface IGroupCardAvatarsProps {
     users: IGroupUser[];
 }
 
-export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
+export const GroupCardAvatars = ({users}: IGroupCardAvatarsProps) => {
     const shownUsers = useMemo(
         () => users.sort((a, b) => (a.role < b.role ? 1 : -1)).slice(0, 9),
         [users]
@@ -82,7 +82,7 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                                 vertical: 'top',
                                 horizontal: 'left',
                             }}
-                            badgeContent={<StyledStar />}
+                            badgeContent={<StyledStar/>}
                         >
                             <StyledAvatar
                                 data-loading
@@ -110,7 +110,7 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                 open={avatarOpen}
                 user={popupUser}
                 anchorEl={anchorEl}
-                handlePopoverClose={onPopoverClose}
+                onPopoverClose={onPopoverClose}
             />
         </StyledAvatars>
     );

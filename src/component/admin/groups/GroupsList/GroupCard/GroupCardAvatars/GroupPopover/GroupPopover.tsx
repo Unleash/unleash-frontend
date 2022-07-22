@@ -1,30 +1,30 @@
-import { Popover, Badge, styled, Tooltip } from '@mui/material';
-import { IGroup, IGroupUser, Role } from 'interfaces/group';
-import { Link } from 'react-router-dom';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import {Popover, Badge, styled, Tooltip} from '@mui/material';
+import {IGroup, IGroupUser, Role} from 'interfaces/group';
+import {Link} from 'react-router-dom';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
 
-import { Badge as StyledBadge } from 'component/common/Badge/Badge';
+import {Badge as StyledBadge} from 'component/common/Badge/Badge';
 
-import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
-import { useState } from 'react';
+import {RemoveGroup} from 'component/admin/groups/RemoveGroup/RemoveGroup';
+import {useState} from 'react';
 import StarIcon from '@mui/icons-material/Star';
-import { IUser } from '../../../../../../../interfaces/user';
+import {IUser} from '../../../../../../../interfaces/user';
 
-const StyledPopover = styled(Popover)(({ theme }) => ({
+const StyledPopover = styled(Popover)(({theme}) => ({
     pointerEvents: 'none',
     '.MuiPaper-root': {
         padding: '12px',
     },
 }));
 
-const StyledPopupStar = styled(StarIcon)(({ theme }) => ({
+const StyledPopupStar = styled(StarIcon)(({theme}) => ({
     color: theme.palette.warning.main,
     fontSize: theme.fontSizes.smallBody,
     marginLeft: theme.spacing(0.1),
     marginTop: theme.spacing(2),
 }));
 
-const StyledName = styled('div')(({ theme }) => ({
+const StyledName = styled('div')(({theme}) => ({
     color: theme.palette.text.secondary,
     fontSize: theme.fontSizes.smallBody,
     marginTop: theme.spacing(1),
@@ -36,20 +36,20 @@ interface IGroupPopoverProps {
     open: boolean;
     anchorEl: HTMLElement | null;
 
-    handlePopoverClose(event: React.MouseEvent<HTMLElement>): void;
+    onPopoverClose(event: React.MouseEvent<HTMLElement>): void;
 }
 
 export const GroupPopover = ({
-    user,
-    open,
-    anchorEl,
-    handlePopoverClose,
-}: IGroupPopoverProps) => {
+                                 user,
+                                 open,
+                                 anchorEl,
+                                 onPopoverClose,
+                             }: IGroupPopoverProps) => {
     return (
         <StyledPopover
             open={open}
             anchorEl={anchorEl}
-            onClose={handlePopoverClose}
+            onClose={onPopoverClose}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -69,11 +69,11 @@ export const GroupPopover = ({
                             vertical: 'top',
                             horizontal: 'left',
                         }}
-                        badgeContent={<StyledPopupStar />}
+                        badgeContent={<StyledPopupStar/>}
                     >
                         <StyledBadge
                             color="success"
-                            sx={{ paddingLeft: '16px' }}
+                            sx={{paddingLeft: '16px'}}
                         >
                             {user?.role}
                         </StyledBadge>
