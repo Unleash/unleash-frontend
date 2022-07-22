@@ -149,18 +149,15 @@ export const PlaygroundResultsTable = ({
                     mb: 3,
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <GuidanceIndicator type="secondary">4</GuidanceIndicator>
-                    <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                        {features !== undefined && !loading
-                            ? `Results (${
-                                  rows.length < data.length
-                                      ? `${rows.length} of ${data.length}`
-                                      : data.length
-                              })`
-                            : 'Results'}
-                    </Typography>
-                </Box>
+                <Typography variant="subtitle1" sx={{ ml: 1 }}>
+                    {features !== undefined && !loading
+                        ? `Results (${
+                              rows.length < data.length
+                                  ? `${rows.length} of ${data.length}`
+                                  : data.length
+                          })`
+                        : 'Results'}
+                </Typography>
 
                 <Search
                     initialValue={searchValue}
@@ -219,6 +216,17 @@ export const PlaygroundResultsTable = ({
                                 <TablePlaceholder>
                                     No feature toggles found matching &ldquo;
                                     {searchValue}&rdquo;
+                                </TablePlaceholder>
+                            }
+                        />
+
+                        <ConditionallyRender
+                            condition={
+                                data && data.length === 0 && !searchValue
+                            }
+                            show={
+                                <TablePlaceholder>
+                                    No features toggles to display
                                 </TablePlaceholder>
                             }
                         />

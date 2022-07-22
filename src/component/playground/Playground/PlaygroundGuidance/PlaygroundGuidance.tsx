@@ -17,27 +17,23 @@ export const PlaygroundGuidance = () => {
             </Typography>
 
             <PlaygroundGuidanceSection
-                headerText="  Select in which environment you want to test your
+                headerText="Select in which environment you want to test your
                             feature toggle configuration"
-                bodyText="  You can also specify specific projects, or check
+                bodyText="You can also specify specific projects, or check
                             toggles in all projects."
                 sectionNumber="1"
             />
 
             <PlaygroundGuidanceSection
                 headerText="Select a context field that you'd like to check"
-                bodyText="Configure multiple context fields or leave empty to test against an empty context"
+                bodyText="You can configure as many context fields context fields as you want. You can also leave the context empty to test against an empty context."
                 sectionNumber="2"
             />
 
             <PlaygroundGuidanceSection
-                headerText="Try configuration"
+                headerText="Submit the form to try the configuration"
+                bodyText="The results of evaluating your feature toggles will appear after you submit the form. Then view the results."
                 sectionNumber="3"
-            />
-
-            <PlaygroundGuidanceSection
-                headerText="View the results"
-                sectionNumber="4"
             />
         </Box>
     );
