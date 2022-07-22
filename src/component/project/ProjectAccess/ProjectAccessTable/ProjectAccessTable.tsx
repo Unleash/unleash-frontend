@@ -1,39 +1,40 @@
-import { useEffect, useMemo, useState, VFC } from 'react';
-import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
-import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
-import { Avatar, Button, styled, useMediaQuery, useTheme } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
-import { sortTypes } from 'utils/sortTypes';
+import {useEffect, useMemo, useState, VFC} from 'react';
+import {SortingRule, useFlexLayout, useSortBy, useTable} from 'react-table';
+import {VirtualizedTable, TablePlaceholder} from 'component/common/Table';
+import {Avatar, Button, styled, useMediaQuery, useTheme} from '@mui/material';
+import {Delete, Edit} from '@mui/icons-material';
+import {sortTypes} from 'utils/sortTypes';
 import useProjectAccess, {
     ENTITY_TYPE,
     IProjectAccess,
 } from 'hooks/api/getters/useProjectAccess/useProjectAccess';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
-import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
-import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useSearch } from 'hooks/useSearch';
-import { useSearchParams } from 'react-router-dom';
-import { createLocalStorage } from 'utils/createLocalStorage';
-import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
-import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
-import { PageContent } from 'component/common/PageContent/PageContent';
-import { PageHeader } from 'component/common/PageHeader/PageHeader';
-import { Search } from 'component/common/Search/Search';
-import { ProjectAccessAssign } from 'component/project/ProjectAccess/ProjectAccessAssign/ProjectAccessAssign';
+import {UPDATE_PROJECT} from 'component/providers/AccessProvider/permissions';
+import {TextCell} from 'component/common/Table/cells/TextCell/TextCell';
+import {ActionCell} from 'component/common/Table/cells/ActionCell/ActionCell';
+import {SearchHighlightProvider} from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
+import {ConditionallyRender} from 'component/common/ConditionallyRender/ConditionallyRender';
+import {useSearch} from 'hooks/useSearch';
+import {useSearchParams} from 'react-router-dom';
+import {createLocalStorage} from 'utils/createLocalStorage';
+import {HighlightCell} from 'component/common/Table/cells/HighlightCell/HighlightCell';
+import {TimeAgoCell} from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
+import {PageContent} from 'component/common/PageContent/PageContent';
+import {PageHeader} from 'component/common/PageHeader/PageHeader';
+import {Search} from 'component/common/Search/Search';
+import {ProjectAccessAssign} from 'component/project/ProjectAccess/ProjectAccessAssign/ProjectAccessAssign';
 import useProjectApi from 'hooks/api/actions/useProjectApi/useProjectApi';
 import useToast from 'hooks/useToast';
-import { Dialogue } from 'component/common/Dialogue/Dialogue';
+import {Dialogue} from 'component/common/Dialogue/Dialogue';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
-import { ProjectGroupView } from '../ProjectGroupView/ProjectGroupView';
-import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import { IUser } from 'interfaces/user';
-import { IGroup } from 'interfaces/group';
-import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
+import {ProjectGroupView} from '../ProjectGroupView/ProjectGroupView';
+import {useRequiredPathParam} from 'hooks/useRequiredPathParam';
+import {IUser} from 'interfaces/user';
+import {IGroup} from 'interfaces/group';
+import {LinkCell} from 'component/common/Table/cells/LinkCell/LinkCell';
+import {mapGroupUsers} from "../../../../hooks/api/getters/useGroup/useGroup";
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
+const StyledAvatar = styled(Avatar)(({theme}) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
     margin: 'auto',
@@ -43,13 +44,11 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
     fontWeight: theme.fontWeight.bold,
 }));
 
-export type PageQueryType = Partial<
-    Record<'sort' | 'order' | 'search', string>
->;
+export type PageQueryType = Partial<Record<'sort' | 'order' | 'search', string>>;
 
-const defaultSort: SortingRule<string> = { id: 'added' };
+const defaultSort: SortingRule<string> = {id: 'added'};
 
-const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
+const {value: storedParams, setValue: setStoredParams} = createLocalStorage(
     'ProjectAccess:v1',
     defaultSort
 );
@@ -57,16 +56,16 @@ const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
 
-    const { uiConfig } = useUiConfig();
-    const { flags } = uiConfig;
+    const {uiConfig} = useUiConfig();
+    const {flags} = uiConfig;
     const entityType = flags.UG ? 'user / group' : 'user';
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const { setToastData } = useToast();
+    const {setToastData} = useToast();
 
-    const { access, refetchProjectAccess } = useProjectAccess(projectId);
-    const { removeUserFromRole, removeGroupFromRole } = useProjectApi();
+    const {access, refetchProjectAccess} = useProjectAccess(projectId);
+    const {removeUserFromRole, removeGroupFromRole} = useProjectApi();
     const [assignOpen, setAssignOpen] = useState(false);
     const [removeOpen, setRemoveOpen] = useState(false);
     const [groupOpen, setGroupOpen] = useState(false);
@@ -104,7 +103,7 @@ export const ProjectAccessTable: VFC = () => {
             {
                 Header: 'Avatar',
                 accessor: 'imageUrl',
-                Cell: ({ row: { original: row } }: any) => (
+                Cell: ({row: {original: row}}: any) => (
                     <TextCell>
                         <StyledAvatar
                             data-loading
@@ -127,7 +126,7 @@ export const ProjectAccessTable: VFC = () => {
                 id: 'name',
                 Header: 'Name',
                 accessor: (row: IProjectAccess) => row.entity.name || '',
-                Cell: ({ value, row: { original: row } }: any) => (
+                Cell: ({value, row: {original: row}}: any) => (
                     <ConditionallyRender
                         condition={row.type === ENTITY_TYPE.GROUP}
                         show={
@@ -140,7 +139,7 @@ export const ProjectAccessTable: VFC = () => {
                                 subtitle={`${row.entity.users?.length} users`}
                             />
                         }
-                        elseShow={<HighlightCell value={value} />}
+                        elseShow={<HighlightCell value={value}/>}
                     />
                 ),
                 minWidth: 100,
@@ -163,7 +162,7 @@ export const ProjectAccessTable: VFC = () => {
             {
                 Header: 'Role',
                 accessor: (row: IProjectAccess) =>
-                    roles.find(({ id }) => id === row.entity.roleId)?.name,
+                    roles.find(({id}) => id === row.entity.roleId)?.name,
                 minWidth: 120,
                 filterName: 'role',
             },
@@ -174,8 +173,8 @@ export const ProjectAccessTable: VFC = () => {
                     const userRow = row.entity as IUser | IGroup;
                     return userRow.addedAt || '';
                 },
-                Cell: ({ value }: { value: Date }) => (
-                    <TimeAgoCell value={value} emptyText="Never logged" />
+                Cell: ({value}: { value: Date }) => (
+                    <TimeAgoCell value={value} emptyText="Never logged"/>
                 ),
                 sortType: 'date',
                 maxWidth: 150,
@@ -189,12 +188,12 @@ export const ProjectAccessTable: VFC = () => {
                     }
                     const userGroup = row.entity as IGroup;
                     return userGroup.users
-                        .map(({ seenAt }) => seenAt)
+                        .map(({seenAt}) => seenAt)
                         .sort()
                         .reverse()[0];
                 },
-                Cell: ({ value }: { value: Date }) => (
-                    <TimeAgoCell value={value} emptyText="Never logged" />
+                Cell: ({value}: { value: Date }) => (
+                    <TimeAgoCell value={value} emptyText="Never logged"/>
                 ),
                 sortType: 'date',
                 maxWidth: 150,
@@ -205,7 +204,7 @@ export const ProjectAccessTable: VFC = () => {
                 disableSortBy: true,
                 align: 'center',
                 maxWidth: 200,
-                Cell: ({ row: { original: row } }: any) => (
+                Cell: ({row: {original: row}}: any) => (
                     <ActionCell>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
@@ -222,7 +221,7 @@ export const ProjectAccessTable: VFC = () => {
                                         : 'Edit access',
                             }}
                         >
-                            <Edit />
+                            <Edit/>
                         </PermissionIconButton>
                         <PermissionIconButton
                             permission={UPDATE_PROJECT}
@@ -239,7 +238,7 @@ export const ProjectAccessTable: VFC = () => {
                                         : 'Remove access',
                             }}
                         >
-                            <Delete />
+                            <Delete/>
                         </PermissionIconButton>
                     </ActionCell>
                 ),
@@ -262,7 +261,7 @@ export const ProjectAccessTable: VFC = () => {
     }));
     const [searchValue, setSearchValue] = useState(initialState.globalFilter);
 
-    const { data, getSearchText, getSearchContext } = useSearch(
+    const {data, getSearchText, getSearchContext} = useSearch(
         columns,
         searchValue,
         mappedData ?? []
@@ -272,7 +271,7 @@ export const ProjectAccessTable: VFC = () => {
         headerGroups,
         rows,
         prepareRow,
-        state: { sortBy },
+        state: {sortBy},
     } = useTable(
         {
             columns: columns as any[],
@@ -303,12 +302,12 @@ export const ProjectAccessTable: VFC = () => {
         setSearchParams(tableState, {
             replace: true,
         });
-        setStoredParams({ id: sortBy[0].id, desc: sortBy[0].desc || false });
+        setStoredParams({id: sortBy[0].id, desc: sortBy[0].desc || false});
     }, [sortBy, searchValue, setSearchParams]);
 
     const removeAccess = async (userOrGroup?: IProjectAccess) => {
         if (!userOrGroup) return;
-        const { id, roleId } = userOrGroup.entity;
+        const {id, roleId} = userOrGroup.entity;
         let name = userOrGroup.entity.name;
         if (userOrGroup.type === ENTITY_TYPE.USER) {
             const user = userOrGroup.entity as IUser;
@@ -339,7 +338,6 @@ export const ProjectAccessTable: VFC = () => {
         setRemoveOpen(false);
         setSelectedRow(undefined);
     };
-
     return (
         <PageContent
             header={
@@ -362,7 +360,7 @@ export const ProjectAccessTable: VFC = () => {
                                             hasFilters
                                             getSearchContext={getSearchContext}
                                         />
-                                        <PageHeader.Divider />
+                                        <PageHeader.Divider/>
                                     </>
                                 }
                             />
@@ -441,7 +439,7 @@ export const ProjectAccessTable: VFC = () => {
                 group={selectedRow?.entity as IGroup}
                 projectId={projectId}
                 subtitle={`Role: ${
-                    roles.find(({ id }) => id === selectedRow?.entity.roleId)
+                    roles.find(({id}) => id === selectedRow?.entity.roleId)
                         ?.name
                 }`}
                 onEdit={() => {
