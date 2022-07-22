@@ -1,12 +1,12 @@
-import useSWR, {mutate, SWRConfiguration} from 'swr';
-import {useState, useEffect, useMemo} from 'react';
-import {formatApiPath} from 'utils/formatPath';
+import useSWR, { mutate, SWRConfiguration } from 'swr';
+import { useState, useEffect, useMemo } from 'react';
+import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
-import {IProjectRole} from 'interfaces/role';
-import {IGroup} from 'interfaces/group';
-import {IUser} from 'interfaces/user';
-import {useGroups} from "../useGroups/useGroups";
-import {mapGroupUsers} from "../useGroup/useGroup";
+import { IProjectRole } from 'interfaces/role';
+import { IGroup } from 'interfaces/group';
+import { IUser } from 'interfaces/user';
+import { useGroups } from '../useGroups/useGroups';
+import { mapGroupUsers } from '../useGroup/useGroup';
 
 export enum ENTITY_TYPE {
     USER = 'USERS',
@@ -47,11 +47,7 @@ const useProjectAccess = (
 
     const CACHE_KEY = `api/admin/projects/${projectId}/users`;
 
-    const {data, error} = useSWR(
-        CACHE_KEY,
-        fetcher,
-        options
-    );
+    const { data, error } = useSWR(CACHE_KEY, fetcher, options);
 
     const [loading, setLoading] = useState(!error && !data);
 
@@ -63,12 +59,17 @@ const useProjectAccess = (
         setLoading(!error && !data);
     }, [data, error]);
 
-    let access: IProjectAccessOutput = data ? {
-        roles: data.roles, users: data.users, groups: data?.groups.map((group: any) => ({
-            ...group,
-            users: mapGroupUsers(group.users ?? []),
-        })) ?? [],
-    } : {roles: [], users: [], groups: []};
+    let access: IProjectAccessOutput = data
+        ? {
+              roles: data.roles,
+              users: data.users,
+              groups:
+                  data?.groups.map((group: any) => ({
+                      ...group,
+                      users: mapGroupUsers(group.users ?? []),
+                  })) ?? [],
+          }
+        : { roles: [], users: [], groups: [] };
     return {
         access: access,
         error,
