@@ -68,7 +68,6 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                             data-loading
                             alt="Gravatar"
                             src={user.imageUrl}
-                            data-name={user.name}
                             onMouseEnter={event => {
                                 handlePopoverOpen(event);
                                 setPopupUser(user);
