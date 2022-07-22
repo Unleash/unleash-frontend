@@ -152,12 +152,6 @@ export const Playground: VFC<{}> = () => {
         return '50%';
     };
 
-    const resolveLayout = () => {
-        if (!matches) {
-            return { display: 'flex' };
-        }
-        return { display: 'flex', flexDirection: 'column' };
-    };
     const formWidth = resolveFormWidth();
     const resultsWidth = resolveResultsWidth();
 
@@ -167,7 +161,12 @@ export const Playground: VFC<{}> = () => {
             disableLoading
             bodyClass={'no-padding'}
         >
-            <Box sx={resolveLayout()}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: !matches ? 'row' : 'column',
+                }}
+            >
                 <Box sx={{ background: theme.palette.grey[200] }}>
                     <Paper
                         elevation={0}

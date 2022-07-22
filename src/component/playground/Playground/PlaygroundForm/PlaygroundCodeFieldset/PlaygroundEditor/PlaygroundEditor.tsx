@@ -114,8 +114,8 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
                 style={{
                     border: `1px solid ${theme.palette.lightBorder}`,
                     borderTop: 'none',
-                    borderBottomLeftRadius: '3px',
-                    borderBottomRightRadius: '3px',
+                    borderBottomLeftRadius: theme.shape.borderRadiusMedium,
+                    borderBottomRightRadius: theme.shape.borderRadiusMedium,
                 }}
                 placeholder={JSON.stringify(
                     {
