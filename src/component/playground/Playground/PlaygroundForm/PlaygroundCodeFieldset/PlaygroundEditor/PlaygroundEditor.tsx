@@ -89,7 +89,7 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
     return (
         <Box sx={{ width: '100%' }}>
             <StyledEditorHeader>
-                Json
+                JSON
                 <ConditionallyRender
                     condition={Boolean(error)}
                     show={

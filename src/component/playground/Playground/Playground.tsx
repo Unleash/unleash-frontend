@@ -1,6 +1,6 @@
 import { FormEventHandler, useEffect, useState, VFC } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Box, Paper, useMediaQuery, useTheme, IconButton } from '@mui/material';
+import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import useToast from 'hooks/useToast';
@@ -11,9 +11,12 @@ import { usePlaygroundApi } from 'hooks/api/actions/usePlayground/usePlayground'
 import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { PlaygroundForm } from './PlaygroundForm/PlaygroundForm';
-import { resolveDefaultEnvironment, resolveProjects } from './playground.utils';
+import {
+    resolveDefaultEnvironment,
+    resolveProjects,
+    resolveResultsWidth,
+} from './playground.utils';
 import { PlaygroundGuidance } from './PlaygroundGuidance/PlaygroundGuidance';
-import { Help } from '@mui/icons-material';
 import { PlaygroundGuidancePopper } from './PlaygroundGuidancePopper/PlaygroundGuidancePopper';
 
 export const Playground: VFC<{}> = () => {
@@ -134,20 +137,8 @@ export const Playground: VFC<{}> = () => {
         setSearchParams(searchParams);
     };
 
-    const resolveResultsWidth = () => {
-        if (matches) {
-            return '100%';
-        }
-
-        if (results && !matches) {
-            return '65%';
-        }
-
-        return '50%';
-    };
-
     const formWidth = results && !matches ? '35%' : 'auto';
-    const resultsWidth = resolveResultsWidth();
+    const resultsWidth = resolveResultsWidth(matches, results);
 
     return (
         <PageContent

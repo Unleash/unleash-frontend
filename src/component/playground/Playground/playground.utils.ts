@@ -1,3 +1,4 @@
+import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 import { IEnvironment } from 'interfaces/environments';
 
 export const resolveProjects = (
@@ -25,4 +26,19 @@ export const getEnvironmentOptions = (environments: IEnvironment[]) => {
         .filter(({ enabled }) => Boolean(enabled))
         .sort((a, b) => a.sortOrder - b.sortOrder)
         .map(({ name }) => name);
+};
+
+export const resolveResultsWidth = (
+    matches: boolean,
+    results: PlaygroundResponseSchema | undefined
+) => {
+    if (matches) {
+        return '100%';
+    }
+
+    if (results && !matches) {
+        return '65%';
+    }
+
+    return '50%';
 };
