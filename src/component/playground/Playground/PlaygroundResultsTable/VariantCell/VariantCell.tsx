@@ -1,5 +1,5 @@
 import { InfoOutlined } from '@mui/icons-material';
-import { IconButton, Popover, styled } from '@mui/material';
+import { IconButton, Popover, styled, useTheme } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import React, { useState, VFC } from 'react';
 import { VariantInformation } from './VariantInformation/VariantInformation';
@@ -25,6 +25,7 @@ export const VariantCell: VFC<IVariantCellProps> = ({
     feature,
     isEnabled,
 }) => {
+    const theme = useTheme();
     const [anchor, setAnchorEl] = useState<null | Element>(null);
 
     const onOpen = (event: React.FormEvent<HTMLButtonElement>) =>
@@ -50,6 +51,12 @@ export const VariantCell: VFC<IVariantCellProps> = ({
                         <Popover
                             open={open}
                             id={`${feature}-result-variants`}
+                            PaperProps={{
+                                sx: {
+                                    borderRadius:
+                                        theme.shape.borderRadiusExtraLarge,
+                                },
+                            }}
                             onClose={onClose}
                             anchorEl={anchor}
                             anchorOrigin={{

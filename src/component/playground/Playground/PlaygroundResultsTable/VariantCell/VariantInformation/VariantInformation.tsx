@@ -18,7 +18,6 @@ interface IVariantInformationProps {
 
 const StyledBox = styled('div')(({ theme }) => ({
     padding: theme.spacing(4),
-    borderRadius: '5px',
     maxWidth: '400px',
 }));
 

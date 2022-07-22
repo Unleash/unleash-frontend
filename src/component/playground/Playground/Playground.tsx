@@ -134,14 +134,6 @@ export const Playground: VFC<{}> = () => {
         setSearchParams(searchParams);
     };
 
-    const resolveFormWidth = () => {
-        if (results && !matches) {
-            return '35%';
-        }
-
-        return 'auto';
-    };
-
     const resolveResultsWidth = () => {
         if (matches) {
             return '100%';
@@ -154,7 +146,7 @@ export const Playground: VFC<{}> = () => {
         return '50%';
     };
 
-    const formWidth = resolveFormWidth();
+    const formWidth = results && !matches ? '35%' : 'auto';
     const resultsWidth = resolveResultsWidth();
 
     return (
