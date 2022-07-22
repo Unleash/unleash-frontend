@@ -35,7 +35,7 @@ export const useStyles = makeStyles()(theme => ({
     accordionBody: {
         width: '100%',
         position: 'relative',
-        paddingBottom: '1rem',
+        paddingBottom: theme.spacing(2),
     },
     header: {
         display: 'flex',
@@ -85,6 +85,8 @@ export const useStyles = makeStyles()(theme => ({
         marginBottom: '1rem',
     },
     truncator: {
+        fontSize: theme.fontSizes.bodySize,
+        fontWeight: theme.typography.fontWeightMedium,
         [theme.breakpoints.down(560)]: {
             textAlign: 'center',
         },

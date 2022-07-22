@@ -1,7 +1,6 @@
-import NoItems from 'component/common/NoItems/NoItems';
-import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useStyles } from './FeatureStrategyEmpty.styles';
 import { FeatureStrategyMenu } from '../FeatureStrategyMenu/FeatureStrategyMenu';
+import { Link } from 'react-router-dom';
 
 interface IFeatureStrategyEmptyProps {
     projectId: string;
@@ -17,28 +16,15 @@ export const FeatureStrategyEmpty = ({
     const { classes: styles } = useStyles();
 
     return (
-        <NoItems>
-            <p className={styles.noItemsParagraph}>
-                No strategies added in the{' '}
-                <StringTruncator
-                    text={environmentId}
-                    maxWidth={'130'}
-                    maxLength={15}
-                    className={styles.envName}
-                />{' '}
-                environment
-            </p>
-            <p className={styles.noItemsParagraph}>
+        <div className={styles.container}>
+            <div className={styles.title}>
+                You have not defined any strategies yet.
+            </div>
+            <p className={styles.description}>
                 Strategies added in this environment will only be executed if
-                the SDK is using an API key configured for this environment.
-                <a
-                    className={styles.link}
-                    href="https://docs.getunleash.io/user_guide/environments"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    Read more here
-                </a>
+                the SDK is using an{' '}
+                <Link to="/admin/api">API key configured</Link> for this
+                environment.
             </p>
             <FeatureStrategyMenu
                 label="Add your first strategy"
@@ -46,6 +32,6 @@ export const FeatureStrategyEmpty = ({
                 featureId={featureId}
                 environmentId={environmentId}
             />
-        </NoItems>
+        </div>
     );
 };

@@ -2,6 +2,7 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
+    Box,
     useTheme,
 } from '@mui/material';
 import classNames from 'classnames';
@@ -50,7 +51,7 @@ const FeatureOverviewEnvironment = ({
             className={styles.featureOverviewEnvironment}
             style={{
                 background: !env.enabled
-                    ? theme.palette.secondaryContainer
+                    ? theme.palette.grey[100]
                     : theme.palette.background.default,
             }}
         >
@@ -62,14 +63,21 @@ const FeatureOverviewEnvironment = ({
                     className={styles.accordionHeader}
                     expandIcon={<ExpandMore titleAccess="Toggle" />}
                 >
-                    <div className={styles.header} data-loading>
+                    <div
+                        className={styles.header}
+                        data-loading
+                        style={{
+                            color: !env.enabled
+                                ? theme.palette.text.disabled
+                                : theme.palette.text.primary,
+                        }}
+                    >
                         <div className={styles.headerTitle}>
                             <EnvironmentIcon
                                 enabled={env.enabled}
                                 className={styles.headerIcon}
                             />
                             <p>
-                                Feature toggle execution for&nbsp;
                                 <StringTruncator
                                     text={env.name}
                                     className={styles.truncator}
@@ -122,9 +130,25 @@ const FeatureOverviewEnvironment = ({
                             (featureEnvironment?.strategies?.length || 0) > 0
                         }
                         show={
-                            <EnvironmentFooter
-                                environmentMetric={environmentMetric}
-                            />
+                            <>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        py: 1,
+                                    }}
+                                >
+                                    <FeatureStrategyMenu
+                                        label="Add strategy"
+                                        projectId={projectId}
+                                        featureId={featureId}
+                                        environmentId={env.name}
+                                    />
+                                </Box>
+                                <EnvironmentFooter
+                                    environmentMetric={environmentMetric}
+                                />
+                            </>
                         }
                     />
                 </AccordionDetails>
