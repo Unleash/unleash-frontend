@@ -47,11 +47,11 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [popupUser, setPopupUser] = useState<IGroupUser>();
 
-    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    const onPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handlePopoverClose = () => {
+    const onPopoverClose = () => {
         setAnchorEl(null);
     };
 
@@ -69,10 +69,10 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                             alt="Gravatar"
                             src={user.imageUrl}
                             onMouseEnter={event => {
-                                handlePopoverOpen(event);
+                                onPopoverOpen(event);
                                 setPopupUser(user);
                             }}
-                            onMouseLeave={handlePopoverClose}
+                            onMouseLeave={onPopoverClose}
                         />
                     }
                     elseShow={
@@ -89,10 +89,10 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                                 alt="Gravatar"
                                 src={user.imageUrl}
                                 onMouseEnter={event => {
-                                    handlePopoverOpen(event);
+                                    onPopoverOpen(event);
                                     setPopupUser(user);
                                 }}
-                                onMouseLeave={handlePopoverClose}
+                                onMouseLeave={onPopoverClose}
                             />
                         </Badge>
                     }
@@ -110,7 +110,7 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
                 open={avatarOpen}
                 user={popupUser}
                 anchorEl={anchorEl}
-                handlePopoverClose={handlePopoverClose}
+                handlePopoverClose={onPopoverClose}
             />
         </StyledAvatars>
     );
