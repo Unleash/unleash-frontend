@@ -1,18 +1,20 @@
 import { FormEventHandler, useEffect, useState, VFC } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Paper, useMediaQuery, useTheme, IconButton } from '@mui/material';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import useToast from 'hooks/useToast';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import usePlaygroundApi from 'hooks/api/actions/usePlayground/usePlayground';
+import { usePlaygroundApi } from 'hooks/api/actions/usePlayground/usePlayground';
 import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { PlaygroundForm } from './PlaygroundForm/PlaygroundForm';
 import { resolveDefaultEnvironment, resolveProjects } from './playground.utils';
 import { PlaygroundGuidance } from './PlaygroundGuidance/PlaygroundGuidance';
+import { Help } from '@mui/icons-material';
+import { PlaygroundGuidancePopper } from './PlaygroundGuidancePopper/PlaygroundGuidancePopper';
 
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
@@ -157,7 +159,12 @@ export const Playground: VFC<{}> = () => {
 
     return (
         <PageContent
-            header={<PageHeader title="Unleash playground" />}
+            header={
+                <PageHeader
+                    title="Unleash playground"
+                    actions={<PlaygroundGuidancePopper />}
+                />
+            }
             disableLoading
             bodyClass={'no-padding'}
         >
@@ -167,7 +174,12 @@ export const Playground: VFC<{}> = () => {
                     flexDirection: !matches ? 'row' : 'column',
                 }}
             >
-                <Box sx={{ background: theme.palette.grey[200] }}>
+                <Box
+                    sx={{
+                        background: theme.palette.grey[200],
+                        borderBottomLeftRadius: theme.shape.borderRadiusMedium,
+                    }}
+                >
                     <Paper
                         elevation={0}
                         sx={{

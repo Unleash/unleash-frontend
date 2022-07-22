@@ -15,8 +15,8 @@ interface IPlaygroundEditorProps {
 const StyledEditorHeader = styled('aside')(({ theme }) => ({
     height: '50px',
     backgroundColor: theme.palette.grey[100],
-    borderTopRightRadius: '5px',
-    borderTopLeftRadius: '5px',
+    borderTopRightRadius: theme.shape.borderRadiusMedium,
+    borderTopLeftRadius: theme.shape.borderRadiusMedium,
     padding: theme.spacing(1, 2),
     color: theme.palette.text.primary,
     display: 'flex',
