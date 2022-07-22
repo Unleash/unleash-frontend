@@ -112,23 +112,6 @@ const useProjectApi = () => {
         }
     };
 
-    const addUserToRole = async (
-        projectId: string,
-        roleId: number,
-        userId: number
-    ) => {
-        const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
-        const req = createRequest(path, { method: 'POST' });
-
-        try {
-            const res = await makeRequest(req.caller, req.id);
-
-            return res;
-        } catch (e) {
-            throw e;
-        }
-    };
-
     const addAccessToProject = async (
         projectId: string,
         roleId: number,
@@ -197,28 +180,6 @@ const useProjectApi = () => {
         }
     };
 
-    const changeUserRole = (
-        projectId: string,
-        roleId: number,
-        userId: number
-    ) => {
-        const path = `api/admin/projects/${projectId}/users/${userId}/roles/${roleId}`;
-        const req = createRequest(path, { method: 'PUT' });
-
-        return makeRequest(req.caller, req.id);
-    };
-
-    const changeGroupRole = (
-        projectId: string,
-        roleId: number,
-        groupId: number
-    ) => {
-        const path = `api/admin/projects/${projectId}/groups/${groupId}/roles/${roleId}`;
-        const req = createRequest(path, { method: 'PUT' });
-
-        return makeRequest(req.caller, req.id);
-    };
-
     return {
         createProject,
         validateId,
@@ -226,12 +187,9 @@ const useProjectApi = () => {
         deleteProject,
         addEnvironmentToProject,
         removeEnvironmentFromProject,
-        addUserToRole,
         addAccessToProject,
         removeUserFromRole,
         removeGroupFromRole,
-        changeUserRole,
-        changeGroupRole,
         errors,
         loading,
         searchProjectUser,

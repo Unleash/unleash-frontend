@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useEffect, useMemo, useState } from 'react';
 import {
     Autocomplete,
     Button,
@@ -107,8 +107,7 @@ export const ProjectAccessAssign = ({
 }: IProjectAccessAssignProps) => {
     const projectId = useRequiredPathParam('projectId');
     const { refetchProjectAccess } = useProjectAccess(projectId);
-    const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
-        useProjectApi();
+    const { addAccessToProject, loading } = useProjectApi();
     const { users = [] } = useUsers();
     const { groups = [] } = useGroups();
     const edit = Boolean(selected);
@@ -187,13 +186,7 @@ export const ProjectAccessAssign = ({
         if (!role) return;
 
         try {
-            if (!edit) {
-                await addAccessToProject(projectId, role.id, payload);
-            } else if (selected?.type === ENTITY_TYPE.USER) {
-                await changeUserRole(projectId, role.id, selected.entity.id);
-            } else if (selected?.type === ENTITY_TYPE.GROUP) {
-                await changeGroupRole(projectId, role.id, selected.entity.id);
-            }
+            await addAccessToProject(projectId, role.id, payload);
             refetchProjectAccess();
             setOpen(false);
             setToastData({
