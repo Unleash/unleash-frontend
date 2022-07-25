@@ -17,7 +17,7 @@ const StringTruncator = ({
 }: IStringTruncatorProps) => {
     return (
         <ConditionallyRender
-            condition={text.length > maxLength}
+            condition={text?.length > maxLength}
             show={
                 <Tooltip title={text} arrow>
                     <span
