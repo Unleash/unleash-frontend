@@ -110,7 +110,7 @@ export const ProjectAccessAssign = ({
     const { refetchProjectAccess } = useProjectAccess(projectId);
     const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
         useProjectApi();
-    const { users = [], groups = [] } = useAccess();
+    const { users, groups } = useAccess();
     const edit = Boolean(selected);
 
     const { setToastData, setToastApiError } = useToast();
