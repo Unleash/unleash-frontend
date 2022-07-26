@@ -5,7 +5,7 @@ import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { useMediaQuery } from '@mui/material';
 import { sortTypes } from 'utils/sortTypes';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -14,7 +14,7 @@ import { FeatureTypeCell } from 'component/common/Table/cells/FeatureTypeCell/Fe
 import { FeatureSeenCell } from 'component/common/Table/cells/FeatureSeenCell/FeatureSeenCell';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { FeatureStaleCell } from 'component/feature/FeatureToggleList/FeatureStaleCell/FeatureStaleCell';
-import { ReviveArchivedFeatureCell } from 'component/archive/ArchiveTable/ReviveArchivedFeatureCell/ReviveArchivedFeatureCell';
+import { ArchivedFeatureActionCell } from 'component/archive/ArchiveTable/ArchivedFeatureActionCell/ArchivedFeatureActionCell';
 import { featuresPlaceholder } from 'component/feature/FeatureToggleList/FeatureToggleListTable';
 import theme from 'themes/theme';
 import { FeatureSchema } from 'openapi';
@@ -24,6 +24,8 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useSearch } from 'hooks/useSearch';
 import { FeatureArchivedCell } from './FeatureArchivedCell/FeatureArchivedCell';
 import { useSearchParams } from 'react-router-dom';
+import ArchivedFeatureDeleteConfirm from './ArchivedFeatureActionCell/ArchivedFeatureDeleteConfirm/ArchivedFeatureDeleteConfirm';
+import { IFeatureToggle } from '../../../interfaces/featureToggle';
 
 export interface IFeaturesArchiveTableProps {
     archivedFeatures: FeatureSchema[];
@@ -51,6 +53,9 @@ export const ArchiveTable = ({
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('lg'));
     const { setToastData, setToastApiError } = useToast();
+
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deletedFeature, setDeletedFeature] = useState<IFeatureToggle>();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const { reviveFeature } = useFeatureArchiveApi();
@@ -153,12 +158,16 @@ export const ArchiveTable = ({
                 Header: 'Actions',
                 id: 'Actions',
                 align: 'center',
-                maxWidth: 85,
+                maxWidth: 100,
                 canSort: false,
                 Cell: ({ row: { original } }: any) => (
-                    <ReviveArchivedFeatureCell
+                    <ArchivedFeatureActionCell
                         project={original.project}
                         onRevive={() => onRevive(original.name)}
+                        onDelete={() => {
+                            setDeletedFeature(original);
+                            setDeleteModalOpen(true);
+                        }}
                     />
                 ),
             },
@@ -289,6 +298,12 @@ export const ArchiveTable = ({
                         }
                     />
                 )}
+            />
+            <ArchivedFeatureDeleteConfirm
+                deletedFeature={deletedFeature}
+                open={deleteModalOpen}
+                setOpen={setDeleteModalOpen}
+                refetch={refetch}
             />
         </PageContent>
     );
