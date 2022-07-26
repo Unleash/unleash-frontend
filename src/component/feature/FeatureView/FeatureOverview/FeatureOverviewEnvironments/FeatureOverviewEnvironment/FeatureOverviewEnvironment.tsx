@@ -78,7 +78,7 @@ const FeatureOverviewEnvironment = ({
                                 enabled={env.enabled}
                                 className={styles.headerIcon}
                             />
-                            <p>
+                            <div>
                                 <StringTruncator
                                     text={env.name}
                                     className={styles.truncator}
@@ -97,7 +97,7 @@ const FeatureOverviewEnvironment = ({
                                         />
                                     }
                                 />
-                            </p>
+                            </div>
                         </div>
                         <div className={styles.container}>
                             <FeatureStrategyMenu

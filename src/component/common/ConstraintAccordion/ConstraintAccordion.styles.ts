@@ -33,7 +33,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     headerMetaInfo: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'stretch',
         [theme.breakpoints.down(710)]: { flexDirection: 'column' },
     },
     headerContainer: {
@@ -48,12 +48,11 @@ export const useStyles = makeStyles()(theme => ({
     },
     headerValuesContainerWrapper: {
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
+        alignItems: 'stretch',
     },
     headerValuesContainer: {
         display: 'flex',
-        flexDirection: 'column',
+        alignItems: 'stretch',
     },
     headerValues: {
         fontSize: theme.fontSizes.smallBody,
