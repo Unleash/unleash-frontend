@@ -1,5 +1,5 @@
 import { Chip } from '@mui/material';
-import { ImportExportOutlined, TextFormatOutlined } from '@mui/icons-material';
+import { TextFormatOutlined } from '@mui/icons-material';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useState } from 'react';
 import { stringOperators } from 'constants/operators';
@@ -32,16 +32,6 @@ export const ConstraintAccordionViewBody = ({
                     <p className={styles.settingsParagraph}>
                         <TextFormatOutlined className={styles.settingsIcon} />{' '}
                         Case insensitive setting is active
-                    </p>
-                }
-            />
-
-            <ConditionallyRender
-                condition={Boolean(constraint.inverted)}
-                show={
-                    <p className={styles.settingsParagraph}>
-                        <ImportExportOutlined className={styles.settingsIcon} />{' '}
-                        Operator is negated
                     </p>
                 }
             />

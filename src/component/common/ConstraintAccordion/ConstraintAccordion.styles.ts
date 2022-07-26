@@ -12,6 +12,9 @@ export const useStyles = makeStyles()(theme => ({
             marginBottom: '1rem',
             marginRight: 0,
         },
+        [theme.breakpoints.between(1101, 1365)]: {
+            marginRight: '8px'
+        },
     },
     constraintIcon: {
         fill: '#fff',
@@ -50,6 +53,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+
     },
     headerValuesContainer: {
         display: 'flex',
@@ -71,6 +75,10 @@ export const useStyles = makeStyles()(theme => ({
         paddingRight: '1rem',
         [theme.breakpoints.down(650)]: {
             paddingRight: 0,
+        },
+        [theme.breakpoints.between(1101, 1365)]: {
+            minWidth: '152px',
+            paddingRight: '0.5rem'
         },
     },
     editingBadge: {
@@ -106,7 +114,14 @@ export const useStyles = makeStyles()(theme => ({
         },
         display: 'inline-flex',
     },
-    headerSelect: { marginRight: '1rem', width: '200px' },
+    headerSelect: {
+        marginRight: '1rem',
+        width: '200px',
+        [theme.breakpoints.between(1101, 1365)]: {
+            width: '170px',
+            marginRight: '8px',
+        },
+    },
     chip: {
         margin: '0 0.5rem 0.5rem 0',
     },
