@@ -23,29 +23,6 @@ export const ConstraintAccordionViewBody = ({
 
     return (
         <div>
-            <ConditionallyRender
-                condition={
-                    oneOf(stringOperators, constraint.operator) &&
-                    Boolean(constraint.caseInsensitive)
-                }
-                show={
-                    <p className={styles.settingsParagraph}>
-                        <TextFormatOutlined className={styles.settingsIcon} />{' '}
-                        Case insensitive setting is active
-                    </p>
-                }
-            />
-
-            <ConditionallyRender
-                condition={Boolean(constraint.inverted)}
-                show={
-                    <p className={styles.settingsParagraph}>
-                        <ImportExportOutlined className={styles.settingsIcon} />{' '}
-                        Operator is negated
-                    </p>
-                }
-            />
-
             <div className={styles.valuesContainer}>
                 <MultipleValues values={constraint.values} />
                 <SingleValue

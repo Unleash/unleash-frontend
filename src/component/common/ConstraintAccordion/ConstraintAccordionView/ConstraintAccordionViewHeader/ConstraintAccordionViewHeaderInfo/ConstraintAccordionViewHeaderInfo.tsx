@@ -50,6 +50,7 @@ export const ConstraintAccordionViewHeaderInfo = ({
                 show={
                     <ConstraintAccordionViewHeaderSingleValue
                         constraint={constraint}
+                        allowExpand={allowExpand}
                     />
                 }
                 elseShow={
