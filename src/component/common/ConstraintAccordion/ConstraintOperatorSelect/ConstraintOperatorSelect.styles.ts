@@ -39,5 +39,5 @@ export const useStyles = makeStyles()(theme => ({
             width: '170px',
             marginRight: '8px',
         },
-    }
+    },
 }));

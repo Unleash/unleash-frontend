@@ -23,6 +23,6 @@ export const useStyles = makeStyles()(theme => ({
         borderRadius: theme.shape.borderRadius,
     },
     selectedSegmentsLabel: {
-        color: theme.palette.text.secondary
-    }
+        color: theme.palette.text.secondary,
+    },
 }));

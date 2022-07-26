@@ -15,7 +15,7 @@ export const StyledToggleButtonOff = styled(IconButton)(({ theme }) => ({
     },
     [theme.breakpoints.between(1101, 1365)]: {
         marginRight: '0.5rem',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 }));
 
@@ -34,6 +34,6 @@ export const StyledToggleButtonOn = styled(IconButton)(({ theme }) => ({
     },
     [theme.breakpoints.between(1101, 1365)]: {
         marginRight: '0.5rem',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 }));

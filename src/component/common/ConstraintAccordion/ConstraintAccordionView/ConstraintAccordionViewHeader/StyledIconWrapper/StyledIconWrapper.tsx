@@ -12,5 +12,5 @@ export const StyledIconWrapper = styled('div')<{
     marginRight: marginright ? marginright : '1rem',
     borderRadius: theme.shape.borderRadius,
     alignItems: 'center',
-    zIndex: 1
+    zIndex: 1,
 }));

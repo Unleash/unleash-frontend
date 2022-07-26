@@ -99,9 +99,14 @@ export const ConstraintAccordionList = forwardRef<
 
     return (
         <div className={styles.container} id={constraintAccordionListId}>
-            <ConditionallyRender condition={constraints && constraints.length > 0} show={
-                <p className={styles.customConstraintLabel}>Custom constraints</p>
-            } />
+            <ConditionallyRender
+                condition={constraints && constraints.length > 0}
+                show={
+                    <p className={styles.customConstraintLabel}>
+                        Custom constraints
+                    </p>
+                }
+            />
             {constraints.map((constraint, index) => (
                 <ConstraintAccordion
                     key={objectId(constraint)}
@@ -120,7 +125,11 @@ export const ConstraintAccordionList = forwardRef<
                     <div>
                         <div className={styles.addCustomLabel}>
                             <p>Add any number of custom constraints</p>
-                            <Tooltip title="Help" arrow className={styles.helpWrapper}>
+                            <Tooltip
+                                title="Help"
+                                arrow
+                                className={styles.helpWrapper}
+                            >
                                 <a
                                     href={
                                         'https://docs.getunleash.io/advanced/strategy_constraints'

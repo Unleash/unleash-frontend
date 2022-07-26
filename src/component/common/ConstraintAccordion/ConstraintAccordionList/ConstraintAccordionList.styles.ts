@@ -14,7 +14,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     helpWrapper: {
         marginLeft: '12px',
-        height: '24px'
+        height: '24px',
     },
     addCustomLabel: {
         display: 'flex',
@@ -23,6 +23,6 @@ export const useStyles = makeStyles()(theme => ({
         margin: '0.75rem 0 ',
     },
     customConstraintLabel: {
-        color: theme.palette.text.secondary
-    }
+        color: theme.palette.text.secondary,
+    },
 }));

@@ -13,7 +13,7 @@ export const useStyles = makeStyles()(theme => ({
             marginRight: 0,
         },
         [theme.breakpoints.between(1101, 1365)]: {
-            marginRight: '8px'
+            marginRight: '8px',
         },
     },
     constraintIcon: {
@@ -53,7 +53,6 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-
     },
     headerValuesContainer: {
         display: 'flex',
@@ -79,7 +78,7 @@ export const useStyles = makeStyles()(theme => ({
         },
         [theme.breakpoints.between(1101, 1365)]: {
             minWidth: '152px',
-            paddingRight: '0.5rem'
+            paddingRight: '0.5rem',
         },
     },
     editingBadge: {

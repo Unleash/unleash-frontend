@@ -9,7 +9,7 @@ import { FeatureStrategySegmentList } from 'component/feature/FeatureStrategy/Fe
 import { useStyles } from 'component/feature/FeatureStrategy/FeatureStrategySegment/FeatureStrategySegment.styles';
 import { SegmentDocsStrategyWarning } from 'component/segments/SegmentDocs/SegmentDocs';
 import { useSegmentLimits } from 'hooks/api/getters/useSegmentLimits/useSegmentLimits';
-import {Divider} from "@mui/material";
+import { Divider } from '@mui/material';
 
 interface IFeatureStrategySegmentProps {
     segments: ISegment[];
