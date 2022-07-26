@@ -113,6 +113,7 @@ export default createTheme({
             success: colors.green[100],
             warning: colors.orange[200],
             primary: colors.purple[100],
+            disabled: colors.grey[200],
         },
         inactiveIcon: colors.grey[600],
     },

@@ -14,10 +14,12 @@ import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { StrategyExecution } from './StrategyExecution/StrategyExecution';
 import { useStyles } from './StrategyItem.styles';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
 interface IStrategyItemProps {
     environmentId: string;
     strategy: IFeatureStrategy;
+    isDraggable?: boolean;
 }
 
 const DragIcon = styled(IconButton)(({ theme }) => ({
@@ -29,6 +31,7 @@ const DragIcon = styled(IconButton)(({ theme }) => ({
 export const StrategyItem = ({
     environmentId,
     strategy,
+    isDraggable,
 }: IStrategyItemProps) => {
     const projectId = useRequiredPathParam('projectId');
     const featureId = useRequiredPathParam('featureId');
@@ -46,12 +49,17 @@ export const StrategyItem = ({
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <DragIcon disableRipple disabled size="small">
-                    <DragIndicator
-                        titleAccess="Drag to reorder"
-                        cursor="grab"
-                    />
-                </DragIcon>
+                <ConditionallyRender
+                    condition={Boolean(isDraggable)}
+                    show={() => (
+                        <DragIcon disableRipple disabled size="small">
+                            <DragIndicator
+                                titleAccess="Drag to reorder"
+                                cursor="grab"
+                            />
+                        </DragIcon>
+                    )}
+                />
                 <Icon className={styles.icon} />
                 <StringTruncator
                     maxWidth="150"

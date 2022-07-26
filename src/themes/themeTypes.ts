@@ -57,6 +57,7 @@ declare module '@mui/material/styles' {
             success: string;
             warning: string;
             primary: string;
+            disabled: string;
         };
         /**
          * For table header hover effect.

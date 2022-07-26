@@ -25,7 +25,11 @@ export const StrategyDraggableItem = ({
                 condition={index > 0}
                 show={<StrategySeparator text="OR" />}
             />
-            <StrategyItem strategy={strategy} environmentId={environmentName} />
+            <StrategyItem
+                strategy={strategy}
+                environmentId={environmentName}
+                isDraggable={Boolean(onDragAndDrop)}
+            />
         </div>
     );
 };

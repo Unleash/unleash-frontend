@@ -41,7 +41,7 @@ export const useStyles = makeStyles()(theme => ({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        paddingTop: '1.5rem',
+        // paddingTop: '1.5rem',
     },
     headerTitle: {
         display: 'flex',
@@ -54,14 +54,6 @@ export const useStyles = makeStyles()(theme => ({
     headerIcon: {
         [theme.breakpoints.down(560)]: {
             marginBottom: '0.5rem',
-        },
-    },
-    disabledIndicatorPos: {
-        position: 'absolute',
-        top: '15px',
-        left: '20px',
-        [theme.breakpoints.down(560)]: {
-            top: '13px',
         },
     },
     iconContainer: {

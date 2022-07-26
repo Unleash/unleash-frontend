@@ -13,7 +13,7 @@ const StyledStatusBadge = styled('div')(({ theme }) => ({
 }));
 
 interface IStatusBadgeProps {
-    severity: 'success' | 'warning';
+    severity: 'success' | 'warning' | 'disabled' | 'primary';
     className?: string;
     children: ReactNode;
 }
@@ -25,9 +25,18 @@ export const StatusBadge = ({
 }: IStatusBadgeProps) => {
     const theme = useTheme();
     const background = theme.palette.statusBadge[severity];
+    const color =
+        severity === 'disabled' ? theme.palette.text.secondary : undefined;
+    const border =
+        severity === 'disabled'
+            ? `1px solid ${theme.palette.dividerAlternative}`
+            : undefined;
 
     return (
-        <StyledStatusBadge sx={{ background }} className={className}>
+        <StyledStatusBadge
+            sx={{ background, color, border }}
+            className={className}
+        >
             {children}
         </StyledStatusBadge>
     );

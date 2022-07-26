@@ -84,6 +84,14 @@ const FeatureOverviewEnvironment = ({
                                     maxWidth="100"
                                     maxLength={15}
                                 />
+                                <ConditionallyRender
+                                    condition={!env.enabled}
+                                    show={
+                                        <StatusBadge severity="disabled">
+                                            Disabled
+                                        </StatusBadge>
+                                    }
+                                />
                             </p>
                         </div>
                         <div className={styles.container}>
@@ -98,17 +106,6 @@ const FeatureOverviewEnvironment = ({
                                 strategies={featureEnvironment?.strategies}
                             />
                         </div>
-                        <ConditionallyRender
-                            condition={!env.enabled}
-                            show={
-                                <StatusBadge
-                                    severity="warning"
-                                    className={styles.disabledIndicatorPos}
-                                >
-                                    Disabled
-                                </StatusBadge>
-                            }
-                        />
                     </div>
 
                     <FeatureOverviewEnvironmentMetrics

@@ -16,7 +16,7 @@ mkdir "../src/openapi"
 npx @openapitools/openapi-generator-cli generate \
     -g "typescript-fetch" \
     -i "$UNLEASH_OPENAPI_URL" \
-    -o "../src/openapi"
+    -o "../src/openapi" --skip-validate-spec
 
 # Remove unused files.
 rm  "openapitools.json"
