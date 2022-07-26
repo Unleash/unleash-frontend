@@ -1,5 +1,7 @@
-import { IConstraint } from 'interfaces/strategy';
 import React, { forwardRef, Fragment, useImperativeHandle } from 'react';
+import { Button, Tooltip } from '@mui/material';
+import { Help } from '@mui/icons-material';
+import { IConstraint } from 'interfaces/strategy';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -8,7 +10,6 @@ import { objectId } from 'utils/objectId';
 import { useStyles } from './ConstraintAccordionList.styles';
 import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Button } from '@mui/material';
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
 
 interface IConstraintAccordionListProps {
@@ -103,11 +104,25 @@ export const ConstraintAccordionList = forwardRef<
                 condition={Boolean(showCreateButton && onAdd)}
                 show={
                     <div>
+                        <div className={styles.addCustomLabel}>
+                            <p>Add any number of custom constraints</p>
+                            <Tooltip title="Help" arrow>
+                                <a
+                                    href={
+                                        'https://docs.getunleash.io/advanced/strategy_constraints'
+                                    }
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Help className={styles.help} />
+                                </a>
+                            </Tooltip>
+                        </div>
                         <Button
                             type="button"
                             onClick={onAdd}
-                            variant="text"
-                            color="primary"
+                            variant="outlined"
+                            color="secondary"
                         >
                             Add custom constraint
                         </Button>

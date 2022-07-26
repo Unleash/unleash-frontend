@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { Box, Chip } from '@mui/material';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
@@ -15,21 +16,11 @@ import {
     parseParameterNumber,
     parseParameterStrings,
 } from 'utils/parseParameter';
-import { Box, Chip, styled } from '@mui/material';
 
 interface IStrategyExecutionProps {
     strategy: IFeatureStrategy;
     percentageFill?: string;
 }
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-    // margin: 0,
-    // borderColor: theme.palette.success.border,
-    // borderWidth: 1,
-    // borderStyle: 'solid',
-    // fontWeight: theme.typography.fontWeightBold,
-    // fontSize: theme.fontSizes.smallBody,
-}));
 
 export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
     const { parameters, constraints = [] } = strategy;
@@ -69,7 +60,7 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                                 }}
                             />
                             <div>
-                                <StyledChip
+                                <Chip
                                     color="success"
                                     variant="outlined"
                                     size="small"
@@ -129,9 +120,14 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                     return (
                         <Fragment key={param?.name}>
                             <div>
-                                <StyledChip severity="success">
-                                    {strategy?.parameters[param.name]}%
-                                </StyledChip>{' '}
+                                <Chip
+                                    size="small"
+                                    variant="outlined"
+                                    color="success"
+                                    label={`${
+                                        strategy?.parameters[param.name]
+                                    }%`}
+                                />{' '}
                                 of your base{' '}
                                 {constraints?.length > 0
                                     ? 'who match constraints'
@@ -270,7 +266,7 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                 show={
                     <Box sx={{ width: '100%' }} className={styles.summary}>
                         The standard strategy is{' '}
-                        <StyledChip
+                        <Chip
                             variant="outlined"
                             size="small"
                             color="success"
