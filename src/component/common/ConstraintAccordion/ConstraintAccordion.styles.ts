@@ -60,6 +60,7 @@ export const useStyles = makeStyles()(theme => ({
     },
     headerValuesExpand: {
         fontSize: theme.fontSizes.smallBody,
+        marginTop: '4px',
         color: theme.palette.primary.dark,
         [theme.breakpoints.down(710)]: {
             textAlign: 'center',

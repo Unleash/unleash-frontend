@@ -1,7 +1,7 @@
 import { styled, Tooltip } from '@mui/material';
 import { ConstraintViewHeaderOperator } from '../ConstraintViewHeaderOperator/ConstraintViewHeaderOperator';
 import { ConditionallyRender } from '../../../../ConditionallyRender/ConditionallyRender';
-import { ContraintAccordionViewHeaderSingleValue } from '../ContraintAccordionViewHeaderSingleValue/ContraintAccordionViewHeaderSingleValue';
+import { ConstraintAccordionViewHeaderSingleValue } from '../ContraintAccordionViewHeaderSingleValue/ConstraintAccordionViewHeaderSingleValue';
 import { ConstraintAccordionViewHeaderMultipleValues } from '../ContraintAccordionViewHeaderMultipleValues/ConstraintAccordionViewHeaderMultipleValues';
 import React from 'react';
 import { IConstraint } from '../../../../../../interfaces/strategy';
@@ -48,7 +48,7 @@ export const ConstraintAccordionViewHeaderInfo = ({
             <ConditionallyRender
                 condition={singleValue}
                 show={
-                    <ContraintAccordionViewHeaderSingleValue
+                    <ConstraintAccordionViewHeaderSingleValue
                         constraint={constraint}
                     />
                 }

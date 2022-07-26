@@ -20,7 +20,7 @@ interface ConstraintSingleValueProps {
     constraint: IConstraint;
 }
 
-export const ContraintAccordionViewHeaderSingleValue = ({
+export const ConstraintAccordionViewHeaderSingleValue = ({
     constraint,
 }: ConstraintSingleValueProps) => {
     const { locationSettings } = useLocationSettings();
@@ -35,7 +35,7 @@ export const ContraintAccordionViewHeaderSingleValue = ({
                 }
                 show={
                     <Tooltip title="Case sensitive is active" arrow>
-                        <StyledIconWrapper>
+                        <StyledIconWrapper marginright={'8px'}>
                             <CaseSensitive />{' '}
                         </StyledIconWrapper>
                     </Tooltip>

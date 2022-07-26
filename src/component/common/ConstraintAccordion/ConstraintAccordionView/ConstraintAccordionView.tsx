@@ -44,12 +44,14 @@ export const ConstraintAccordionView = ({
             className={styles.accordion}
             classes={{ root: styles.accordionRoot }}
             expanded={expanded}
-            sx={{ cursor: expandable ? 'pointer' : 'default' }}
+
         >
             <AccordionSummary
                 className={styles.summary}
                 expandIcon={null}
                 onClick={handleClick}
+                sx={{ cursor: expandable ? 'pointer' : 'default!important',
+                    '&:hover': {cursor: expandable ? 'pointer' : 'default!important',} }}
             >
                 <ConstraintAccordionViewHeader
                     constraint={constraint}

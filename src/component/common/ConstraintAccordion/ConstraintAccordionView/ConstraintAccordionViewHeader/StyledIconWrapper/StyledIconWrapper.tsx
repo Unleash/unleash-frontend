@@ -13,4 +13,7 @@ export const StyledIconWrapper = styled('div')<{
     marginRight: marginright ? marginright : '1rem',
     marginTop: 'auto',
     marginBottom: 'auto',
+    borderRadius: theme.spacing(4),
+    alignItems: 'center',
+    zIndex: 1
 }));
