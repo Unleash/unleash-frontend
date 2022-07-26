@@ -339,7 +339,6 @@ export const ProjectAccessTable: VFC = () => {
         setRemoveOpen(false);
         setSelectedRow(undefined);
     };
-
     return (
         <PageContent
             header={
