@@ -1,6 +1,12 @@
-import { useStyles } from './FeatureStrategyEmpty.styles';
-import { FeatureStrategyMenu } from '../FeatureStrategyMenu/FeatureStrategyMenu';
 import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { SectionSeparator } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewEnvironments/FeatureOverviewEnvironment/SectionSeparator/SectionSeparator';
+import useFeatureStrategyApi from 'hooks/api/actions/useFeatureStrategyApi/useFeatureStrategyApi';
+import useToast from 'hooks/useToast';
+import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
+import { FeatureStrategyMenu } from '../FeatureStrategyMenu/FeatureStrategyMenu';
+import { PresetCard } from './PresetCard/PresetCard';
+import { useStyles } from './FeatureStrategyEmpty.styles';
 
 interface IFeatureStrategyEmptyProps {
     projectId: string;
@@ -14,6 +20,40 @@ export const FeatureStrategyEmpty = ({
     environmentId,
 }: IFeatureStrategyEmptyProps) => {
     const { classes: styles } = useStyles();
+    const { addStrategyToFeature } = useFeatureStrategyApi();
+    const { setToastData } = useToast();
+    const { refetchFeature } = useFeature(projectId, featureId);
+
+    const onAfterAddStrategy = () => {
+        refetchFeature();
+        setToastData({
+            title: 'Strategy created',
+            text: 'Successfully created strategy',
+            type: 'success',
+        });
+    };
+
+    const onAddSimpleStrategy = async () => {
+        await addStrategyToFeature(projectId, featureId, environmentId, {
+            name: 'default',
+            parameters: {},
+            constraints: [],
+        });
+        onAfterAddStrategy();
+    };
+
+    const onAddGradualRolloutStrategy = async () => {
+        await addStrategyToFeature(projectId, featureId, environmentId, {
+            name: 'flexibleRollout',
+            parameters: {
+                rollout: '50',
+                stickiness: 'default',
+                groupId: 'test',
+            },
+            constraints: [],
+        });
+        onAfterAddStrategy();
+    };
 
     return (
         <div className={styles.container}>
@@ -32,6 +72,31 @@ export const FeatureStrategyEmpty = ({
                 featureId={featureId}
                 environmentId={environmentId}
             />
+            <Box sx={{ width: '100%', mt: 3 }}>
+                <SectionSeparator>Or use a strategy template</SectionSeparator>
+            </Box>
+            <Box
+                sx={{
+                    display: 'grid',
+                    width: '100%',
+                    gap: 2,
+                    gridTemplateColumns: '1fr 1fr',
+                }}
+            >
+                <PresetCard
+                    title="Standard strategy"
+                    onClick={onAddSimpleStrategy}
+                >
+                    The standard strategy is strictly on/off for your entire
+                    userbase.
+                </PresetCard>
+                <PresetCard
+                    title="Gradual rollout"
+                    onClick={onAddGradualRolloutStrategy}
+                >
+                    Roll out to a percentage of your userbase.
+                </PresetCard>
+            </Box>
         </div>
     );
 };
