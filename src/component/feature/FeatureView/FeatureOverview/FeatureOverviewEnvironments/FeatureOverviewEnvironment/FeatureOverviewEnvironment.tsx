@@ -21,8 +21,8 @@ import FeatureOverviewEnvironmentMetrics from './FeatureOverviewEnvironmentMetri
 import { FeatureStrategyMenu } from 'component/feature/FeatureStrategy/FeatureStrategyMenu/FeatureStrategyMenu';
 import { FEATURE_ENVIRONMENT_ACCORDION } from 'utils/testIds';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
 import { FeatureStrategyIcons } from 'component/feature/FeatureStrategy/FeatureStrategyIcons/FeatureStrategyIcons';
+// import { Badge } from 'component/common/Badge/Badge';
 
 interface IFeatureOverviewEnvironmentProps {
     env: IFeatureEnvironment;
@@ -84,14 +84,14 @@ const FeatureOverviewEnvironment = ({
                                     maxWidth="100"
                                     maxLength={15}
                                 />
-                                <ConditionallyRender
+                                {/* <ConditionallyRender
                                     condition={!env.enabled}
                                     show={
                                         <StatusBadge severity="disabled">
                                             Disabled
                                         </StatusBadge>
                                     }
-                                />
+                                /> */}
                             </p>
                         </div>
                         <div className={styles.container}>

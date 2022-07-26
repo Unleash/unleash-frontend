@@ -120,7 +120,14 @@ exports[`returns all baseRoutes 1`] = `
     "type": "protected",
   },
   {
-    "component": [Function],
+    "component": {
+      "$$typeof": Symbol(react.lazy),
+      "_init": [Function],
+      "_payload": {
+        "_result": [Function],
+        "_status": -1,
+      },
+    },
     "hidden": false,
     "menu": {
       "mobile": true,
@@ -400,6 +407,44 @@ exports[`returns all baseRoutes 1`] = `
   },
   {
     "component": [Function],
+    "flag": "UG",
+    "menu": {
+      "adminSettings": true,
+    },
+    "parent": "/admin",
+    "path": "/admin/groups",
+    "title": "Groups",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
+    "flag": "UG",
+    "menu": {},
+    "parent": "/admin",
+    "path": "/admin/groups/:groupId",
+    "title": ":groupId",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
+    "flag": "UG",
+    "menu": {},
+    "parent": "/admin/groups",
+    "path": "/admin/groups/create-group",
+    "title": "Create group",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
+    "flag": "UG",
+    "menu": {},
+    "parent": "/admin/groups",
+    "path": "/admin/groups/:groupId/edit",
+    "title": "Edit group",
+    "type": "protected",
+  },
+  {
+    "component": [Function],
     "flag": "RE",
     "menu": {
       "adminSettings": true,
@@ -435,7 +480,7 @@ exports[`returns all baseRoutes 1`] = `
     },
     "parent": "/admin",
     "path": "/admin-invoices",
-    "title": "Invoices",
+    "title": "Billing & invoices",
     "type": "protected",
   },
   {

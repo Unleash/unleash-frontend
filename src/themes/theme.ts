@@ -13,6 +13,7 @@ export default createTheme({
     },
     boxShadows: {
         main: '0px 2px 4px rgba(129, 122, 254, 0.2)',
+        card: '0px 2px 10px rgba(28, 25, 78, 0.12)',
         elevated: '0px 1px 20px rgba(45, 42, 89, 0.1)',
     },
     typography: {
@@ -55,9 +56,10 @@ export default createTheme({
             dark: colors.purple[900],
         },
         secondary: {
+            light: colors.purple[50],
             main: colors.purple[800],
-            light: colors.purple[700],
             dark: colors.purple[900],
+            border: colors.purple[300],
         },
         info: {
             light: colors.blue[50],
@@ -83,6 +85,17 @@ export default createTheme({
             dark: colors.red[800],
             border: colors.red[300],
         },
+        neutral: {
+            light: colors.grey[100],
+            main: colors.grey[700],
+            dark: colors.grey[800],
+            border: colors.grey[500],
+        },
+        tertiary: {
+            light: colors.grey[200],
+            main: colors.grey[400],
+            dark: colors.grey[600],
+        },
         divider: colors.grey[300],
         dividerAlternative: colors.grey[400],
         tableHeaderHover: colors.grey[400],
@@ -90,10 +103,12 @@ export default createTheme({
         secondaryContainer: colors.grey[200],
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         grey: colors.grey,
+        lightBorder: colors.grey[400],
         text: {
             primary: colors.grey[900],
             secondary: colors.grey[800],
             disabled: colors.grey[600],
+            tertiaryContrast: '#fff',
         },
         code: {
             main: '#0b8c8f',
@@ -108,12 +123,6 @@ export default createTheme({
             recent: colors.green[100],
             inactive: colors.orange[200],
             abandoned: colors.red[200],
-        },
-        statusBadge: {
-            success: colors.green[100],
-            warning: colors.orange[200],
-            primary: colors.purple[100],
-            disabled: colors.grey[200],
         },
         inactiveIcon: colors.grey[600],
     },
