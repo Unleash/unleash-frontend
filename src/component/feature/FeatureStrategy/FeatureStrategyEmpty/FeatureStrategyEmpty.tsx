@@ -7,6 +7,7 @@ import { useFeature } from 'hooks/api/getters/useFeature/useFeature';
 import { FeatureStrategyMenu } from '../FeatureStrategyMenu/FeatureStrategyMenu';
 import { PresetCard } from './PresetCard/PresetCard';
 import { useStyles } from './FeatureStrategyEmpty.styles';
+import { formatUnknownError } from 'utils/formatUnknownError';
 
 interface IFeatureStrategyEmptyProps {
     projectId: string;
@@ -21,7 +22,7 @@ export const FeatureStrategyEmpty = ({
 }: IFeatureStrategyEmptyProps) => {
     const { classes: styles } = useStyles();
     const { addStrategyToFeature } = useFeatureStrategyApi();
-    const { setToastData } = useToast();
+    const { setToastData, setToastApiError } = useToast();
     const { refetchFeature } = useFeature(projectId, featureId);
 
     const onAfterAddStrategy = () => {
@@ -34,25 +35,32 @@ export const FeatureStrategyEmpty = ({
     };
 
     const onAddSimpleStrategy = async () => {
-        await addStrategyToFeature(projectId, featureId, environmentId, {
-            name: 'default',
-            parameters: {},
-            constraints: [],
-        });
-        onAfterAddStrategy();
+        try {
+            await addStrategyToFeature(projectId, featureId, environmentId, {
+                name: 'default',
+                parameters: {},
+                constraints: [],
+            });
+            onAfterAddStrategy();
+        } catch (error) {
+            setToastApiError(formatUnknownError(error));
+        }
     };
 
     const onAddGradualRolloutStrategy = async () => {
-        await addStrategyToFeature(projectId, featureId, environmentId, {
-            name: 'flexibleRollout',
-            parameters: {
-                rollout: '50',
-                stickiness: 'default',
-                groupId: 'test',
-            },
-            constraints: [],
-        });
-        onAfterAddStrategy();
+        try {
+            await addStrategyToFeature(projectId, featureId, environmentId, {
+                name: 'flexibleRollout',
+                parameters: {
+                    rollout: '50',
+                    stickiness: 'default',
+                },
+                constraints: [],
+            });
+            onAfterAddStrategy();
+        } catch (error) {
+            setToastApiError(formatUnknownError(error));
+        }
     };
 
     return (

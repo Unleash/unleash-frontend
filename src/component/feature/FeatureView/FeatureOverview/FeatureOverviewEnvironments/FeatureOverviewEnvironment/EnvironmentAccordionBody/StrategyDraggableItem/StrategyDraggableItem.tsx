@@ -8,7 +8,7 @@ interface IStrategyDraggableItemProps {
     strategy: IFeatureStrategy;
     environmentName: string;
     index: number;
-    onDragAndDrop?: MoveListItem;
+    onDragAndDrop: MoveListItem;
 }
 
 export const StrategyDraggableItem = ({
@@ -17,10 +17,10 @@ export const StrategyDraggableItem = ({
     environmentName,
     onDragAndDrop,
 }: IStrategyDraggableItemProps) => {
-    const ref = useDragItem(index, onDragAndDrop ? onDragAndDrop : () => {});
+    const ref = useDragItem(index, onDragAndDrop);
 
     return (
-        <div key={strategy.id} ref={onDragAndDrop ? ref : undefined}>
+        <div key={strategy.id} ref={ref}>
             <ConditionallyRender
                 condition={index > 0}
                 show={<StrategySeparator text="OR" />}
@@ -28,7 +28,7 @@ export const StrategyDraggableItem = ({
             <StrategyItem
                 strategy={strategy}
                 environmentId={environmentName}
-                isDraggable={Boolean(onDragAndDrop)}
+                isDraggable
             />
         </div>
     );

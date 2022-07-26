@@ -14,7 +14,7 @@ const SeparatorContainer = styled('div')(({ theme }) => ({
         transform: 'translateY(-50%)',
         height: 2,
         width: '100%',
-        backgroundColor: theme.palette.grey[300],
+        backgroundColor: theme.palette.divider,
     },
 }));
 

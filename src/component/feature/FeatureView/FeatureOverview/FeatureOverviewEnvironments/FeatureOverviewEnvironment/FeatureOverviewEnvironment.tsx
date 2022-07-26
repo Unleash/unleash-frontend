@@ -52,7 +52,7 @@ const FeatureOverviewEnvironment = ({
             className={styles.featureOverviewEnvironment}
             style={{
                 background: !env.enabled
-                    ? theme.palette.grey[100]
+                    ? theme.palette.neutral.light
                     : theme.palette.background.default,
             }}
         >
