@@ -5,15 +5,12 @@ export const StyledIconWrapper = styled('div')<{
 }>(({ theme, marginright }) => ({
     backgroundColor: theme.palette.grey[200],
     width: 28,
-    height: 48,
     display: 'inline-flex',
     justifyContent: 'center',
     padding: '10px 0',
     color: theme.palette.primary.main,
     marginRight: marginright ? marginright : '1rem',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    borderRadius: theme.spacing(4),
+    borderRadius: theme.shape.borderRadius,
     alignItems: 'center',
     zIndex: 1
 }));

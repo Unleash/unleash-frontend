@@ -6,6 +6,7 @@ export const useStyles = makeStyles()(theme => ({
         borderRadius: theme.shape.borderRadius,
         backgroundColor: theme.palette.grey[200],
         lineHeight: 1.25,
+
     },
     name: {
         fontSize: theme.fontSizes.smallBody,
