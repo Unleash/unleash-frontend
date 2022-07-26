@@ -28,7 +28,7 @@ const StyledCenteredContent = styled(StyledContent)(({ theme }) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: theme.palette.statusBadge.primary,
+    backgroundColor: theme.palette.secondary.light,
     border: `1px solid ${theme.palette.primary.border}`,
 }));
 

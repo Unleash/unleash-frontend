@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    Chip,
     useTheme,
 } from '@mui/material';
 import classNames from 'classnames';
@@ -84,14 +85,18 @@ const FeatureOverviewEnvironment = ({
                                     maxWidth="100"
                                     maxLength={15}
                                 />
-                                {/* <ConditionallyRender
+                                <ConditionallyRender
                                     condition={!env.enabled}
                                     show={
-                                        <StatusBadge severity="disabled">
-                                            Disabled
-                                        </StatusBadge>
+                                        <Chip
+                                            size="small"
+                                            variant="outlined"
+                                            // severity="disabled"
+                                            label="Disabled"
+                                            sx={{ ml: 1 }}
+                                        />
                                     }
-                                /> */}
+                                />
                             </p>
                         </div>
                         <div className={styles.container}>

@@ -56,15 +56,6 @@ declare module '@mui/material/styles' {
         };
         dividerAlternative: string;
         /**
-         * Background colors for status badges.
-         */
-        statusBadge: {
-            success: string;
-            warning: string;
-            primary: string;
-            disabled: string;
-        };
-        /**
          * For table header hover effect.
          */
         tableHeaderHover: string;

@@ -1,9 +1,5 @@
 import { Fragment } from 'react';
-import {
-    IFeatureStrategy,
-    IFeatureStrategyParameters,
-    IConstraint,
-} from 'interfaces/strategy';
+import { IFeatureStrategy } from 'interfaces/strategy';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
@@ -19,21 +15,20 @@ import {
     parseParameterNumber,
     parseParameterStrings,
 } from 'utils/parseParameter';
-import { StatusBadge } from 'component/common/StatusBadge/StatusBadge';
-import { Box, styled } from '@mui/material';
+import { Box, Chip, styled } from '@mui/material';
 
 interface IStrategyExecutionProps {
     strategy: IFeatureStrategy;
     percentageFill?: string;
 }
 
-const StyledStatusBadge = styled(StatusBadge)(({ theme }) => ({
-    margin: 0,
-    borderColor: theme.palette.success.border,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    fontWeight: theme.typography.fontWeightBold,
-    fontSize: theme.fontSizes.smallBody,
+const StyledChip = styled(Chip)(({ theme }) => ({
+    // margin: 0,
+    // borderColor: theme.palette.success.border,
+    // borderWidth: 1,
+    // borderStyle: 'solid',
+    // fontWeight: theme.typography.fontWeightBold,
+    // fontSize: theme.fontSizes.smallBody,
 }));
 
 export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
@@ -74,9 +69,12 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                                 }}
                             />
                             <div>
-                                <StyledStatusBadge severity="success">
-                                    {parameters[key]}%
-                                </StyledStatusBadge>{' '}
+                                <StyledChip
+                                    color="success"
+                                    variant="outlined"
+                                    size="small"
+                                    label={`${parameters[key]}%`}
+                                />{' '}
                                 of your base{' '}
                                 {constraints.length > 0
                                     ? 'who match constraints'
@@ -131,9 +129,9 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                     return (
                         <Fragment key={param?.name}>
                             <div>
-                                <StyledStatusBadge severity="success">
+                                <StyledChip severity="success">
                                     {strategy?.parameters[param.name]}%
-                                </StyledStatusBadge>{' '}
+                                </StyledChip>{' '}
                                 of your base{' '}
                                 {constraints?.length > 0
                                     ? 'who match constraints'
@@ -272,9 +270,12 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                 show={
                     <Box sx={{ width: '100%' }} className={styles.summary}>
                         The standard strategy is{' '}
-                        <StyledStatusBadge severity="success">
-                            ON
-                        </StyledStatusBadge>{' '}
+                        <StyledChip
+                            variant="outlined"
+                            size="small"
+                            color="success"
+                            label="ON"
+                        />{' '}
                         for all users.
                     </Box>
                 }
