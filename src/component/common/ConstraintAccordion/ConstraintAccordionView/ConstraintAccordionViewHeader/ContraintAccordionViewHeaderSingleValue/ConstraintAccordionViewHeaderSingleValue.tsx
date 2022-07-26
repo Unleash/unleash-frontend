@@ -4,7 +4,7 @@ import { stringOperators } from '../../../../../../constants/operators';
 import { Chip, styled, Tooltip } from '@mui/material';
 import { ReactComponent as CaseSensitive } from '../../../../../../assets/icons/24_Text format.svg';
 import { formatConstraintValue } from '../../../../../../utils/formatConstraintValue';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useStyles } from '../../../ConstraintAccordion.styles';
 import { StyledIconWrapper } from '../StyledIconWrapper/StyledIconWrapper';
 import { IConstraint } from '../../../../../../interfaces/strategy';
@@ -23,14 +23,14 @@ interface ConstraintSingleValueProps {
 
 export const ConstraintAccordionViewHeaderSingleValue = ({
     constraint,
-    allowExpand
+    allowExpand,
 }: ConstraintSingleValueProps) => {
     const { locationSettings } = useLocationSettings();
     const { classes: styles } = useStyles();
 
     useEffect(() => {
-        allowExpand(false)
-    }, [])
+        allowExpand(false);
+    }, [allowExpand]);
 
     return (
         <div className={styles.headerValuesContainerWrapper}>
