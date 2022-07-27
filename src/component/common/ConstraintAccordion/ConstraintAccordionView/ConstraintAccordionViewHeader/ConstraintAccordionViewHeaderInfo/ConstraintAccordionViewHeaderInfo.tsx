@@ -1,7 +1,7 @@
 import { styled, Tooltip } from '@mui/material';
 import { ConstraintViewHeaderOperator } from '../ConstraintViewHeaderOperator/ConstraintViewHeaderOperator';
 import { ConditionallyRender } from '../../../../ConditionallyRender/ConditionallyRender';
-import { ContraintAccordionViewHeaderSingleValue } from '../ContraintAccordionViewHeaderSingleValue/ContraintAccordionViewHeaderSingleValue';
+import { ConstraintAccordionViewHeaderSingleValue } from '../ContraintAccordionViewHeaderSingleValue/ConstraintAccordionViewHeaderSingleValue';
 import { ConstraintAccordionViewHeaderMultipleValues } from '../ContraintAccordionViewHeaderMultipleValues/ConstraintAccordionViewHeaderMultipleValues';
 import React from 'react';
 import { IConstraint } from '../../../../../../interfaces/strategy';
@@ -15,6 +15,8 @@ const StyledHeaderText = styled('span')(({ theme }) => ({
     maxWidth: '100px',
     minWidth: '100px',
     marginRight: '10px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     wordBreak: 'break-word',
     fontSize: theme.fontSizes.smallBody,
     [theme.breakpoints.down(710)]: {
@@ -48,8 +50,9 @@ export const ConstraintAccordionViewHeaderInfo = ({
             <ConditionallyRender
                 condition={singleValue}
                 show={
-                    <ContraintAccordionViewHeaderSingleValue
+                    <ConstraintAccordionViewHeaderSingleValue
                         constraint={constraint}
+                        allowExpand={allowExpand}
                     />
                 }
                 elseShow={
@@ -57,6 +60,7 @@ export const ConstraintAccordionViewHeaderInfo = ({
                         constraint={constraint}
                         expanded={expanded}
                         allowExpand={allowExpand}
+                        maxLength={112}
                     />
                 }
             />

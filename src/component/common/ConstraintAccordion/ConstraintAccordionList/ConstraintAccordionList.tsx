@@ -1,5 +1,7 @@
-import { IConstraint } from 'interfaces/strategy';
 import React, { forwardRef, useImperativeHandle } from 'react';
+import { Button, Tooltip } from '@mui/material';
+import { HelpOutline } from '@mui/icons-material';
+import { IConstraint } from 'interfaces/strategy';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -8,8 +10,6 @@ import { objectId } from 'utils/objectId';
 import { useStyles } from './ConstraintAccordionList.styles';
 import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Button, Tooltip } from '@mui/material';
-import { Help } from '@mui/icons-material';
 
 interface IConstraintAccordionListProps {
     constraints: IConstraint[];
@@ -100,32 +100,11 @@ export const ConstraintAccordionList = forwardRef<
     return (
         <div className={styles.container} id={constraintAccordionListId}>
             <ConditionallyRender
-                condition={Boolean(showCreateButton && onAdd)}
+                condition={constraints && constraints.length > 0}
                 show={
-                    <div>
-                        <div className={styles.addCustomLabel}>
-                            <p>Add any number of custom constraints</p>
-                            <Tooltip title="Help" arrow>
-                                <a
-                                    href={
-                                        'https://docs.getunleash.io/advanced/strategy_constraints'
-                                    }
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <Help className={styles.help} />
-                                </a>
-                            </Tooltip>
-                        </div>
-                        <Button
-                            type="button"
-                            onClick={onAdd}
-                            variant="outlined"
-                            color="secondary"
-                        >
-                            Add custom constraint
-                        </Button>
-                    </div>
+                    <p className={styles.customConstraintLabel}>
+                        Custom constraints
+                    </p>
                 }
             />
             {constraints.map((constraint, index) => (
@@ -140,6 +119,40 @@ export const ConstraintAccordionList = forwardRef<
                     compact
                 />
             ))}
+            <ConditionallyRender
+                condition={Boolean(showCreateButton && onAdd)}
+                show={
+                    <div>
+                        <div className={styles.addCustomLabel}>
+                            <p>Add any number of custom constraints</p>
+                            <Tooltip
+                                title="Help"
+                                arrow
+                                className={styles.helpWrapper}
+                            >
+                                <a
+                                    href={
+                                        'https://docs.getunleash.io/advanced/strategy_constraints'
+                                    }
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <HelpOutline className={styles.help} />
+                                </a>
+                            </Tooltip>
+                        </div>
+                        <Button
+                            type="button"
+                            onClick={onAdd}
+                            variant="outlined"
+                            color="secondary"
+                            sx={{ mb: 2 }}
+                        >
+                            Add custom constraint
+                        </Button>
+                    </div>
+                }
+            />
         </div>
     );
 });

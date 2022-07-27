@@ -3,12 +3,11 @@ import { oneOf } from '../../../../../../utils/oneOf';
 import { stringOperators } from '../../../../../../constants/operators';
 import { styled, Tooltip } from '@mui/material';
 import { ReactComponent as CaseSensitive } from '../../../../../../assets/icons/24_Text format.svg';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classnames from 'classnames';
 import { StyledIconWrapper } from '../StyledIconWrapper/StyledIconWrapper';
 import { IConstraint } from '../../../../../../interfaces/strategy';
 import { useStyles } from '../../../ConstraintAccordion.styles';
-import { getTextWidth } from '../../../helpers';
 
 const StyledValuesSpan = styled('span')(({ theme }) => ({
     display: '-webkit-box',
@@ -17,6 +16,7 @@ const StyledValuesSpan = styled('span')(({ theme }) => ({
     overflow: 'hidden',
     wordBreak: 'break-word',
     fontSize: theme.fontSizes.smallBody,
+    margin: 'auto 0',
     [theme.breakpoints.down(710)]: {
         margin: theme.spacing(1, 0),
         textAlign: 'center',
@@ -26,6 +26,7 @@ const StyledValuesSpan = styled('span')(({ theme }) => ({
 interface ConstraintSingleValueProps {
     constraint: IConstraint;
     expanded: boolean;
+    maxLength: number;
     allowExpand: (shouldExpand: boolean) => void;
 }
 
@@ -33,33 +34,22 @@ export const ConstraintAccordionViewHeaderMultipleValues = ({
     constraint,
     expanded,
     allowExpand,
+    maxLength,
 }: ConstraintSingleValueProps) => {
     const { classes: styles } = useStyles();
 
-    const elementRef = useRef<HTMLElement>(null);
-
-    const [width, setWidth] = useState(0);
-    const [textWidth, setTextWidth] = useState(0);
     const [expandable, setExpandable] = useState(false);
 
-    useEffect(() => {
-        if (elementRef && elementRef.current != null) {
-            setTextWidth(
-                Math.round(getTextWidth(elementRef.current.innerText) / 2) // 2 lines
-            );
-            setWidth(elementRef.current.clientWidth);
-        }
-    }, []);
+    const text = useMemo(() => {
+        return constraint?.values?.map(value => value).join(', ');
+    }, [constraint]);
 
     useEffect(() => {
-        if (textWidth && width) {
-            setExpandable(textWidth > width);
+        if (text) {
+            allowExpand((text?.length ?? 0) > maxLength);
+            setExpandable((text?.length ?? 0) > maxLength);
         }
-    }, [textWidth, width]);
-
-    useEffect(() => {
-        allowExpand(expandable);
-    }, [expandable, allowExpand]);
+    }, [text, maxLength, allowExpand, setExpandable]);
 
     return (
         <div className={styles.headerValuesContainerWrapper}>
@@ -77,9 +67,7 @@ export const ConstraintAccordionViewHeaderMultipleValues = ({
                 }
             />
             <div className={styles.headerValuesContainer}>
-                <StyledValuesSpan ref={elementRef}>
-                    {constraint?.values?.map(value => value).join(', ')}
-                </StyledValuesSpan>
+                <StyledValuesSpan>{text}</StyledValuesSpan>
                 <ConditionallyRender
                     condition={expandable}
                     show={
@@ -90,8 +78,7 @@ export const ConstraintAccordionViewHeaderMultipleValues = ({
                             )}
                         >
                             {!expanded
-                                ? `View all (
-                                            ${constraint?.values?.length})`
+                                ? `View all (${constraint?.values?.length})`
                                 : 'View less'}
                         </p>
                     }
