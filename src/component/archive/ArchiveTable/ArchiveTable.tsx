@@ -24,7 +24,9 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useSearch } from 'hooks/useSearch';
 import { FeatureArchivedCell } from './FeatureArchivedCell/FeatureArchivedCell';
 import { useSearchParams } from 'react-router-dom';
-import ArchivedFeatureDeleteConfirm from './ArchivedFeatureActionCell/ArchivedFeatureDeleteConfirm/ArchivedFeatureDeleteConfirm';
+import {
+    ArchivedFeatureDeleteConfirm
+} from './ArchivedFeatureActionCell/ArchivedFeatureDeleteConfirm/ArchivedFeatureDeleteConfirm';
 import { IFeatureToggle } from 'interfaces/featureToggle';
 
 export interface IFeaturesArchiveTableProps {
@@ -160,7 +162,7 @@ export const ArchiveTable = ({
                 align: 'center',
                 maxWidth: 120,
                 canSort: false,
-                Cell: ({ row: { feature } }: any) => (
+                Cell: ({ row: { original: feature } }: any) => (
                     <ArchivedFeatureActionCell
                         project={feature.project}
                         onRevive={() => onRevive(feature.name)}

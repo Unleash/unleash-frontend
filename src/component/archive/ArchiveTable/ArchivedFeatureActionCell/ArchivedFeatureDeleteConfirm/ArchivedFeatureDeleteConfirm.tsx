@@ -7,7 +7,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { useFeatureArchiveApi } from 'hooks/api/actions/useFeatureArchiveApi/useReviveFeatureApi';
 import useToast from 'hooks/useToast';
 
-interface ArchivedFeatureDeleteConfirmProps {
+interface IArchivedFeatureDeleteConfirmProps {
     deletedFeature?: IFeatureToggle;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,12 +22,12 @@ const StyledFormInput = styled(Input)(({ theme }) => ({
     marginTop: theme.spacing(2),
 }));
 
-const ArchivedFeatureDeleteConfirm = ({
+export const ArchivedFeatureDeleteConfirm = ({
     deletedFeature,
     open,
     setOpen,
     refetch,
-}: ArchivedFeatureDeleteConfirmProps) => {
+}: IArchivedFeatureDeleteConfirmProps) => {
     const [confirmName, setConfirmName] = useState('');
     const { setToastData, setToastApiError } = useToast();
     const { deleteFeature } = useFeatureArchiveApi();
@@ -95,5 +95,3 @@ const ArchivedFeatureDeleteConfirm = ({
         </Dialogue>
     );
 };
-
-export default ArchivedFeatureDeleteConfirm;
