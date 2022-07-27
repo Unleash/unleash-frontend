@@ -58,6 +58,7 @@ export const ConstraintAccordionViewHeaderInfo = ({
                         constraint={constraint}
                         expanded={expanded}
                         allowExpand={allowExpand}
+                        maxLength={112}
                     />
                 }
             />
