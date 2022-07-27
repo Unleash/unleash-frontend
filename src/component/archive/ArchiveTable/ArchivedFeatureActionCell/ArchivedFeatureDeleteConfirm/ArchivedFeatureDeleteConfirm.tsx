@@ -2,12 +2,12 @@ import { Alert, styled } from '@mui/material';
 import React, { useState } from 'react';
 import { Dialogue } from 'component/common/Dialogue/Dialogue';
 import Input from 'component/common/Input/Input';
-import { IFeatureToggle } from '../../../../../interfaces/featureToggle';
-import { formatUnknownError } from '../../../../../utils/formatUnknownError';
-import { useFeatureArchiveApi } from '../../../../../hooks/api/actions/useFeatureArchiveApi/useReviveFeatureApi';
-import useToast from '../../../../../hooks/useToast';
+import { IFeatureToggle } from 'interfaces/featureToggle';
+import { formatUnknownError } from 'utils/formatUnknownError';
+import { useFeatureArchiveApi } from 'hooks/api/actions/useFeatureArchiveApi/useReviveFeatureApi';
+import useToast from 'hooks/useToast';
 
-interface IEnviromentDeleteConfirmProps {
+interface ArchivedFeatureDeleteConfirmProps {
     deletedFeature?: IFeatureToggle;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,11 +15,11 @@ interface IEnviromentDeleteConfirmProps {
 }
 
 const StyledDeleteParagraph = styled('p')(({ theme }) => ({
-    marginTop: '2rem',
+    marginTop: theme.spacing(4),
 }));
 
 const StyledFormInput = styled(Input)(({ theme }) => ({
-    marginTop: '1rem',
+    marginTop: theme.spacing(2),
 }));
 
 const ArchivedFeatureDeleteConfirm = ({
@@ -27,7 +27,7 @@ const ArchivedFeatureDeleteConfirm = ({
     open,
     setOpen,
     refetch,
-}: IEnviromentDeleteConfirmProps) => {
+}: ArchivedFeatureDeleteConfirmProps) => {
     const [confirmName, setConfirmName] = useState('');
     const { setToastData, setToastApiError } = useToast();
     const { deleteFeature } = useFeatureArchiveApi();
@@ -70,10 +70,11 @@ const ArchivedFeatureDeleteConfirm = ({
             formId={formId}
         >
             <Alert severity="warning">
-                Warning! To safely delete a feature toggle you should delete the
-                code in you application first for this feature toggle so you
-                avoid any errors in the future if you will create a new feature
-                toggle with the same name.
+                Warning! To safely delete a feature toggle you
+                might want to delete the related code in your
+                application first. This ensures you avoid any
+                errors in case you create a new feature toggle
+                with the same name in the future.
             </Alert>
 
             <StyledDeleteParagraph>

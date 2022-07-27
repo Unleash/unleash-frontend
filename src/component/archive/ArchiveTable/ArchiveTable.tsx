@@ -5,7 +5,7 @@ import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { useMediaQuery } from '@mui/material';
 import { sortTypes } from 'utils/sortTypes';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { DateCell } from 'component/common/Table/cells/DateCell/DateCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -25,7 +25,7 @@ import { useSearch } from 'hooks/useSearch';
 import { FeatureArchivedCell } from './FeatureArchivedCell/FeatureArchivedCell';
 import { useSearchParams } from 'react-router-dom';
 import ArchivedFeatureDeleteConfirm from './ArchivedFeatureActionCell/ArchivedFeatureDeleteConfirm/ArchivedFeatureDeleteConfirm';
-import { IFeatureToggle } from '../../../interfaces/featureToggle';
+import { IFeatureToggle } from 'interfaces/featureToggle';
 
 export interface IFeaturesArchiveTableProps {
     archivedFeatures: FeatureSchema[];
@@ -158,14 +158,14 @@ export const ArchiveTable = ({
                 Header: 'Actions',
                 id: 'Actions',
                 align: 'center',
-                maxWidth: 100,
+                maxWidth: 120,
                 canSort: false,
-                Cell: ({ row: { original } }: any) => (
+                Cell: ({ row: { feature } }: any) => (
                     <ArchivedFeatureActionCell
-                        project={original.project}
-                        onRevive={() => onRevive(original.name)}
+                        project={feature.project}
+                        onRevive={() => onRevive(feature.name)}
                         onDelete={() => {
-                            setDeletedFeature(original);
+                            setDeletedFeature(feature);
                             setDeleteModalOpen(true);
                         }}
                     />

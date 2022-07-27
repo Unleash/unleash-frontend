@@ -1,15 +1,11 @@
-import { useState, VFC } from 'react';
+import { VFC } from 'react';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { Delete, Undo } from '@mui/icons-material';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import {
-    DELETE_ADDON,
     DELETE_FEATURE,
     UPDATE_FEATURE,
 } from 'component/providers/AccessProvider/permissions';
-import EnvironmentDeleteConfirm from '../../../environments/EnvironmentDeleteConfirm/EnvironmentDeleteConfirm';
-import ArchivedFeatureDeleteConfirm from './ArchivedFeatureDeleteConfirm/ArchivedFeatureDeleteConfirm';
-import { IAddon } from '../../../../interfaces/addons';
 
 interface IReviveArchivedFeatureCell {
     onRevive: () => void;
