@@ -1,5 +1,7 @@
-import { IConstraint } from 'interfaces/strategy';
 import React, { forwardRef, useImperativeHandle } from 'react';
+import { Button, Tooltip } from '@mui/material';
+import { HelpOutline } from '@mui/icons-material';
+import { IConstraint } from 'interfaces/strategy';
 import { ConstraintAccordion } from 'component/common/ConstraintAccordion/ConstraintAccordion';
 import produce from 'immer';
 import useUnleashContext from 'hooks/api/getters/useUnleashContext/useUnleashContext';
@@ -8,8 +10,6 @@ import { objectId } from 'utils/objectId';
 import { useStyles } from './ConstraintAccordionList.styles';
 import { createEmptyConstraint } from 'component/common/ConstraintAccordion/ConstraintAccordionList/createEmptyConstraint';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { Button, Tooltip } from '@mui/material';
-import { HelpOutline } from '@mui/icons-material';
 
 interface IConstraintAccordionListProps {
     constraints: IConstraint[];
@@ -146,6 +146,7 @@ export const ConstraintAccordionList = forwardRef<
                             onClick={onAdd}
                             variant="outlined"
                             color="secondary"
+                            sx={{ mb: 2 }}
                         >
                             Add custom constraint
                         </Button>

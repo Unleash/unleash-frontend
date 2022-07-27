@@ -1,12 +1,9 @@
-import { Chip } from '@mui/material';
-import StringTruncator from 'component/common/StringTruncator/StringTruncator';
-import { useState } from 'react';
 import { IConstraint } from 'interfaces/strategy';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useStyles } from 'component/common/ConstraintAccordion/ConstraintAccordion.styles';
-import { ConstraintValueSearch } from 'component/common/ConstraintAccordion/ConstraintValueSearch/ConstraintValueSearch';
 import { formatConstraintValue } from 'utils/formatConstraintValue';
 import { useLocationSettings } from 'hooks/useLocationSettings';
+import { MultipleValues } from './MultipleValues/MultipleValues';
+import { SingleValue } from './SingleValue/SingleValue';
 
 interface IConstraintAccordionViewBodyProps {
     constraint: IConstraint;
@@ -28,72 +25,5 @@ export const ConstraintAccordionViewBody = ({
                 />
             </div>
         </div>
-    );
-};
-
-interface ISingleValueProps {
-    value: string | undefined;
-    operator: string;
-}
-
-const SingleValue = ({ value, operator }: ISingleValueProps) => {
-    const { classes: styles } = useStyles();
-    if (!value) return null;
-
-    return (
-        <div className={styles.singleValueView}>
-            <p className={styles.singleValueText}>Value must be {operator}</p>{' '}
-            <Chip
-                label={
-                    <StringTruncator
-                        maxWidth="400"
-                        text={value}
-                        maxLength={50}
-                    />
-                }
-                className={styles.chip}
-            />
-        </div>
-    );
-};
-
-interface IMultipleValuesProps {
-    values: string[] | undefined;
-}
-
-const MultipleValues = ({ values }: IMultipleValuesProps) => {
-    const [filter, setFilter] = useState('');
-    const { classes: styles } = useStyles();
-
-    if (!values || values.length === 0) return null;
-
-    return (
-        <>
-            <ConditionallyRender
-                condition={values.length > 20}
-                show={
-                    <ConstraintValueSearch
-                        filter={filter}
-                        setFilter={setFilter}
-                    />
-                }
-            />
-            {values
-                .filter(value => value.includes(filter))
-                .map((value, index) => (
-                    <Chip
-                        key={`${value}-${index}`}
-                        label={
-                            <StringTruncator
-                                maxWidth="400"
-                                text={value}
-                                maxLength={50}
-                                className={styles.chipValue}
-                            />
-                        }
-                        className={styles.chip}
-                    />
-                ))}
-        </>
     );
 };
