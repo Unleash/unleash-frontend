@@ -70,10 +70,9 @@ const ArchivedFeatureDeleteConfirm = ({
             formId={formId}
         >
             <Alert severity="warning">
-                Warning! To safely delete a feature toggle you
-                might want to delete the related code in your
-                application first. This ensures you avoid any
-                errors in case you create a new feature toggle
+                Warning! To safely delete a feature toggle you might want to
+                delete the related code in your application first. This ensures
+                you avoid any errors in case you create a new feature toggle
                 with the same name in the future.
             </Alert>
 
