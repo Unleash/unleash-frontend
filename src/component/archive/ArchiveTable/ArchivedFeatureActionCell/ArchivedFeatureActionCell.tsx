@@ -30,6 +30,7 @@ export const ArchivedFeatureActionCell: VFC<IReviveArchivedFeatureCell> = ({
             </PermissionIconButton>
             <PermissionIconButton
                 permission={DELETE_FEATURE}
+                projectId={project}
                 tooltipProps={{ title: 'Delete feature toggle' }}
                 onClick={onDelete}
             >
