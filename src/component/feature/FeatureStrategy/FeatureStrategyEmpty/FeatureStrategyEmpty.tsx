@@ -9,6 +9,7 @@ import { PresetCard } from './PresetCard/PresetCard';
 import { useStyles } from './FeatureStrategyEmpty.styles';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useFeatureImmutable } from 'hooks/api/getters/useFeature/useFeatureImmutable';
+import { getFeatureStrategyIcon } from 'utils/strategyNames';
 
 interface IFeatureStrategyEmptyProps {
     projectId: string;
@@ -100,6 +101,7 @@ export const FeatureStrategyEmpty = ({
             >
                 <PresetCard
                     title="Standard strategy"
+                    Icon={getFeatureStrategyIcon('default')}
                     onClick={onAddSimpleStrategy}
                 >
                     The standard strategy is strictly on/off for your entire
@@ -107,6 +109,7 @@ export const FeatureStrategyEmpty = ({
                 </PresetCard>
                 <PresetCard
                     title="Gradual rollout"
+                    Icon={getFeatureStrategyIcon('flexibleRollout')}
                     onClick={onAddGradualRolloutStrategy}
                 >
                     Roll out to a percentage of your userbase.
