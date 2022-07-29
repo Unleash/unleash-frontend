@@ -47,7 +47,6 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         setAnchorEl(null);
     };
     const { hasAccess } = useContext(AccessContext);
-
     const onClick = async (environmentId: string) => {
         const { id, ...strategyCopy } = {
             ...strategy,
@@ -74,19 +73,30 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         handleClose();
     };
 
+    const enabled = environments.some(environment =>
+        hasAccess(CREATE_FEATURE_STRATEGY, projectId, environment)
+    );
+
     return (
         <div>
-            <Tooltip title="Copy to another environment">
-                <IconButton
-                    size="large"
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    <CopyIcon />
-                </IconButton>
+            <Tooltip
+                title={`Copy to another environment${
+                    enabled ? '' : ' (Access denied)'
+                }`}
+            >
+                <div>
+                    <IconButton
+                        size="large"
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                        disabled={!enabled}
+                    >
+                        <CopyIcon />
+                    </IconButton>
+                </div>
             </Tooltip>
             <Menu
                 id="basic-menu"
