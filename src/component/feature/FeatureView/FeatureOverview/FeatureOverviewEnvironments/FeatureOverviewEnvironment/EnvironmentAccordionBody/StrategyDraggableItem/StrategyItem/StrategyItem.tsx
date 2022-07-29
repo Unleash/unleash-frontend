@@ -78,6 +78,7 @@ export const StrategyItem = ({
                         show={() => (
                             <CopyStrategyIconMenu
                                 environments={otherEnvironments as string[]}
+                                strategy={strategy}
                             />
                         )}
                     />
