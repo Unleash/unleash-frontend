@@ -9,6 +9,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { UG_CREATE_BTN_ID } from 'utils/testIds';
 import { Button } from '@mui/material';
 import { CREATE } from 'constants/misc';
+import { ENVIRONMENT_STRATEGY_ERROR } from '../../../../constants/apiErrors';
 
 export const CreateGroup = () => {
     const { setToastData, setToastApiError } = useToast();
@@ -25,6 +26,7 @@ export const CreateGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
+        setErrors,
     } = useGroupForm();
 
     const { createGroup, loading } = useGroupApi();
@@ -43,8 +45,12 @@ export const CreateGroup = () => {
                 confetti: true,
                 type: 'success',
             });
-        } catch (error: unknown) {
-            setToastApiError(formatUnknownError(error));
+        } catch (error: any) {
+            if (error.body.name === 'NameExistsError') {
+                setErrors(prev => ({ ...prev, name: error.message }));
+            } else {
+                setToastApiError(formatUnknownError(error));
+            }
         }
     };
 
