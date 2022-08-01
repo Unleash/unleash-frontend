@@ -1,17 +1,17 @@
 import { vi } from 'vitest';
-import React from 'react';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'utils/testRenderer';
 import {
-    ISelectProjectInputProps,
-    SelectProjectInput,
-} from './SelectProjectInput';
+    ISelectAllAutocompleteProps,
+    SelectAllAutocomplete,
+} from './SelectAllAutocomplete';
 
 const onChange = vi.fn();
 const onFocus = vi.fn();
 
-const mockProps: ISelectProjectInputProps = {
+const mockProps: ISelectAllAutocompleteProps = {
+    label: 'projects',
     options: [
         { label: 'Project1', value: 'project1' },
         { label: 'Project2', value: 'project2' },
@@ -22,14 +22,14 @@ const mockProps: ISelectProjectInputProps = {
     onFocus,
 };
 
-describe('SelectProjectInput', () => {
+describe('SelectAllAutocomplete', () => {
     beforeEach(() => {
         onChange.mockClear();
         onFocus.mockClear();
     });
 
     it('renders with default state', () => {
-        render(<SelectProjectInput {...mockProps} />);
+        render(<SelectAllAutocomplete {...mockProps} />);
 
         const checkbox = screen.getByLabelText(
             /all current and future projects/i
@@ -43,7 +43,7 @@ describe('SelectProjectInput', () => {
 
     it('can toggle "ALL" checkbox', async () => {
         const user = userEvent.setup();
-        render(<SelectProjectInput {...mockProps} />);
+        render(<SelectAllAutocomplete {...mockProps} />);
 
         await user.click(screen.getByTestId('select-all-projects'));
 
@@ -64,7 +64,7 @@ describe('SelectProjectInput', () => {
 
     it('renders with autocomplete enabled if default value is not a wildcard', () => {
         render(
-            <SelectProjectInput {...mockProps} defaultValue={['project1']} />
+            <SelectAllAutocomplete {...mockProps} defaultValue={['project1']} />
         );
 
         const checkbox = screen.getByLabelText(
@@ -80,7 +80,7 @@ describe('SelectProjectInput', () => {
     describe('Select/Deselect projects in dropdown', () => {
         it('selects and deselects all options', async () => {
             const user = userEvent.setup();
-            render(<SelectProjectInput {...mockProps} defaultValue={[]} />);
+            render(<SelectAllAutocomplete {...mockProps} defaultValue={[]} />);
             await user.click(screen.getByLabelText('Projects'));
 
             let button = screen.getByRole('button', {
@@ -106,7 +106,7 @@ describe('SelectProjectInput', () => {
         it("doesn't show up for less than 3 options", async () => {
             const user = userEvent.setup();
             render(
-                <SelectProjectInput
+                <SelectAllAutocomplete
                     {...mockProps}
                     defaultValue={[]}
                     options={[
@@ -127,7 +127,7 @@ describe('SelectProjectInput', () => {
     it('can filter options', async () => {
         const user = userEvent.setup();
         render(
-            <SelectProjectInput
+            <SelectAllAutocomplete
                 {...mockProps}
                 defaultValue={[]}
                 options={[

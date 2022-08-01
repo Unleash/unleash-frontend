@@ -27,11 +27,11 @@ export const CreateApiToken = () => {
         username,
         type,
         projects,
-        environment,
+        environments,
         setUsername,
         setTokenType,
         setProjects,
-        setEnvironment,
+        setEnvironments,
         isValid,
         errors,
         clearErrors,
@@ -91,8 +91,8 @@ export const CreateApiToken = () => {
                 username={username}
                 type={type}
                 projects={projects}
-                environment={environment}
-                setEnvironment={setEnvironment}
+                environments={environments}
+                setEnvironments={setEnvironments}
                 setTokenType={setTokenType}
                 setUsername={setUsername}
                 setProjects={setProjects}

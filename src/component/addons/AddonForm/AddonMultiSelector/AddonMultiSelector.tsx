@@ -11,7 +11,7 @@ import { capitalize, Checkbox, Paper, TextField } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ConditionallyRender } from '../../../common/ConditionallyRender/ConditionallyRender';
-import { SelectAllButton } from '../../../admin/apiToken/ApiTokenForm/SelectProjectInput/SelectAllButton/SelectAllButton';
+import { SelectAllButton } from '../../../admin/apiToken/ApiTokenForm/SelectAllAutocomplete/SelectAllButton/SelectAllButton';
 import {
     StyledHelpText,
     StyledSelectAllFormControlLabel,

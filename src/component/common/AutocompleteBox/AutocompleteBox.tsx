@@ -16,6 +16,7 @@ interface IAutocompleteBoxProps {
 export interface IAutocompleteBoxOption {
     value: string;
     label: string;
+    disabled?: boolean;
 }
 
 export const AutocompleteBox = ({

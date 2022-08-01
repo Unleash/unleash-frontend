@@ -1,10 +1,12 @@
-import React, { Fragment, useState, ChangeEvent, VFC } from 'react';
+import { Fragment, useState, ChangeEvent, VFC } from 'react';
 import {
     Checkbox,
     FormControlLabel,
     TextField,
     Box,
     Paper,
+    capitalize,
+    styled,
 } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 
@@ -17,76 +19,87 @@ import {
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { IAutocompleteBoxOption } from 'component/common/AutocompleteBox/AutocompleteBox';
-import { useStyles } from '../ApiTokenForm.styles';
 import { SelectAllButton } from './SelectAllButton/SelectAllButton';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 
-const ALL_PROJECTS = '*';
+const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+    marginRight: theme.spacing(0.5),
+}));
+
+const ALL = '*';
 
 // Fix for shadow under Autocomplete - match with Select input
 const CustomPaper = ({ ...props }) => <Paper elevation={8} {...props} />;
 
-export interface ISelectProjectInputProps {
+export interface ISelectAllAutocompleteProps {
     disabled?: boolean;
     options: IAutocompleteBoxOption[];
     defaultValue: string[];
     onChange: (value: string[]) => void;
     onFocus?: () => void;
+    label?: string;
     error?: string;
 }
 
-export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
+export const SelectAllAutocomplete: VFC<ISelectAllAutocompleteProps> = ({
     options,
-    defaultValue = [ALL_PROJECTS],
+    defaultValue = [ALL],
     onChange,
     disabled,
+    label = 'options',
     error,
     onFocus,
 }) => {
-    const { classes: styles } = useStyles();
-    const [projects, setProjects] = useState<string[]>(
+    const [values, setValues] = useState<string[]>(
         typeof defaultValue === 'string' ? [defaultValue] : defaultValue
     );
     const [isWildcardSelected, selectWildcard] = useState(
-        typeof defaultValue === 'string' || defaultValue.includes(ALL_PROJECTS)
+        typeof defaultValue === 'string' || defaultValue.includes(ALL)
     );
     const isAllSelected =
-        projects.length > 0 &&
-        projects.length === options.length &&
-        projects[0] !== ALL_PROJECTS;
+        values.length > 0 &&
+        values.length === options.filter(option => !option.disabled).length &&
+        values[0] !== ALL;
 
-    const onAllProjectsChange = (
+    const onAllValuesChange = (
         e: ChangeEvent<HTMLInputElement>,
         checked: boolean
     ) => {
         if (checked) {
             selectWildcard(true);
-            onChange([ALL_PROJECTS]);
+            onChange([ALL]);
         } else {
             selectWildcard(false);
-            onChange(projects.includes(ALL_PROJECTS) ? [] : projects);
+            onChange(values.includes(ALL) ? [] : values);
         }
     };
 
     const onSelectAllClick = () => {
-        const newProjects = isAllSelected
+        const newValues = isAllSelected
             ? []
-            : options.map(({ value }) => value);
-        setProjects(newProjects);
-        onChange(newProjects);
+            : options
+                  .filter(option => !option.disabled)
+                  .map(({ value }) => value);
+        setValues(newValues);
+        onChange(newValues);
     };
 
     const renderOption = (
-        props: object,
+        props: React.HTMLAttributes<HTMLLIElement>,
         option: IAutocompleteBoxOption,
         { selected }: AutocompleteRenderOptionState
     ) => (
-        <li {...props}>
-            <Checkbox
+        <li
+            {...props}
+            onClick={e =>
+                option.disabled ? e.preventDefault() : props.onClick?.(e)
+            }
+        >
+            <StyledCheckbox
                 icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                 checkedIcon={<CheckBoxIcon fontSize="small" />}
                 checked={selected}
-                className={styles.selectOptionCheckbox}
+                disabled={option.disabled}
             />
             {option.label}
         </li>
@@ -113,8 +126,8 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
             error={Boolean(error)}
             helperText={error}
             variant="outlined"
-            label="Projects"
-            placeholder="Select one or more projects"
+            label={capitalize(label)}
+            placeholder={`Select one or more ${label}`}
             onFocus={onFocus}
             data-testid="select-input"
         />
@@ -125,14 +138,14 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
             <Box sx={{ mt: 1, mb: 0.25, ml: 1.5 }}>
                 <FormControlLabel
                     disabled={disabled}
-                    data-testid="select-all-projects"
+                    data-testid={`select-all-${label}`}
                     control={
                         <Checkbox
                             checked={disabled || isWildcardSelected}
-                            onChange={onAllProjectsChange}
+                            onChange={onAllValuesChange}
                         />
                     }
-                    label="ALL current and future projects"
+                    label={`ALL current and future ${label}`}
                 />
             </Box>
             <Autocomplete
@@ -150,14 +163,14 @@ export const SelectProjectInput: VFC<ISelectProjectInputProps> = ({
                 renderInput={renderInput}
                 value={
                     isWildcardSelected || disabled
-                        ? options
+                        ? options.filter(option => !option.disabled)
                         : options.filter(option =>
-                              projects.includes(option.value)
+                              values.includes(option.value)
                           )
                 }
                 onChange={(_, input) => {
                     const state = input.map(({ value }) => value);
-                    setProjects(state);
+                    setValues(state);
                     onChange(state);
                 }}
             />

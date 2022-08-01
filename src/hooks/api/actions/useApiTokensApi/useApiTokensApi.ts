@@ -3,8 +3,8 @@ import useAPI from '../useApi/useApi';
 export interface IApiTokenCreate {
     username: string;
     type: string;
-    environment?: string;
     projects: string[];
+    environments: string[];
 }
 
 const useApiTokensApi = () => {

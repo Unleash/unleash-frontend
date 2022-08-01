@@ -1,45 +1,52 @@
 import { useEffect, useState } from 'react';
-import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { IApiTokenCreate } from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
+import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 
-export type ApiTokenFormErrorType = 'username' | 'projects';
+export type ApiTokenFormErrorType = 'username' | 'projects' | 'environments';
 
 export const useApiTokenForm = () => {
-    const { environments } = useEnvironments();
-    const initialEnvironment = environments?.find(e => e.enabled)?.name;
+    const { environments: allEnvironments } = useEnvironments();
 
     const [username, setUsername] = useState('');
     const [type, setType] = useState('CLIENT');
     const [projects, setProjects] = useState<string[]>(['*']);
     const [memorizedProjects, setMemorizedProjects] =
         useState<string[]>(projects);
-    const [environment, setEnvironment] = useState<string>();
+    const [environments, setEnvironments] = useState<string[]>(['*']);
+    const [memorizedEnvironments, setMemorizedEnvironments] =
+        useState<string[]>(environments);
     const [errors, setErrors] = useState<
         Partial<Record<ApiTokenFormErrorType, string>>
     >({});
 
     useEffect(() => {
-        setEnvironment(type === 'ADMIN' ? '*' : initialEnvironment);
-    }, [type, initialEnvironment]);
+        if (type === 'CLIENT') {
+            const initialEnvironment = allEnvironments?.find(
+                e => e.enabled
+            )?.name;
+            setEnvironments(initialEnvironment ? [initialEnvironment] : []);
+        }
+    }, [type, allEnvironments]);
 
     const setTokenType = (value: string) => {
         if (value === 'ADMIN') {
             setType(value);
             setMemorizedProjects(projects);
+            setMemorizedEnvironments(environments);
             setProjects(['*']);
-            setEnvironment('*');
+            setEnvironments(['*']);
         } else {
             setType(value);
             setProjects(memorizedProjects);
-            setEnvironment(initialEnvironment);
+            setEnvironments(memorizedEnvironments);
         }
     };
 
     const getApiTokenPayload = (): IApiTokenCreate => ({
         username,
         type,
-        environment,
         projects,
+        environments,
     });
 
     const isValid = () => {
@@ -49,6 +56,9 @@ export const useApiTokenForm = () => {
         }
         if (projects.length === 0) {
             newErrors['projects'] = 'At least one project is required';
+        }
+        if (environments.length === 0) {
+            newErrors['environments'] = 'At least one environment is required';
         }
 
         setErrors(newErrors);
@@ -69,11 +79,11 @@ export const useApiTokenForm = () => {
         username,
         type,
         projects,
-        environment,
+        environments,
         setUsername,
         setTokenType,
         setProjects,
-        setEnvironment,
+        setEnvironments,
         getApiTokenPayload,
         isValid,
         clearErrors,
