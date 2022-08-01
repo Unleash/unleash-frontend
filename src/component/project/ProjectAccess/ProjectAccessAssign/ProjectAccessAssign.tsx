@@ -25,7 +25,7 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ProjectRoleDescription } from './ProjectRoleDescription/ProjectRoleDescription';
-import { useAccess } from '../../../../hooks/api/getters/useAccess/useAccess';
+import { useAccess } from 'hooks/api/getters/useAccess/useAccess';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
