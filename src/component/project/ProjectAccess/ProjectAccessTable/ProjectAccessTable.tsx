@@ -63,12 +63,6 @@ export const ProjectAccessTable: VFC = () => {
     const [groupOpen, setGroupOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IProjectAccess>();
 
-    useEffect(() => {
-        if (!assignOpen && !groupOpen) {
-            setSelectedRow(undefined);
-        }
-    }, [assignOpen, groupOpen]);
-
     const roles = useMemo(
         () => access.roles || [],
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -319,7 +313,6 @@ export const ProjectAccessTable: VFC = () => {
             });
         }
         setRemoveOpen(false);
-        setSelectedRow(undefined);
     };
     return (
         <PageContent
@@ -350,7 +343,10 @@ export const ProjectAccessTable: VFC = () => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => setAssignOpen(true)}
+                                onClick={() => {
+                                    setSelectedRow(undefined);
+                                    setAssignOpen(true);
+                                }}
                             >
                                 Assign {entityType}
                             </Button>
@@ -411,7 +407,6 @@ export const ProjectAccessTable: VFC = () => {
                 open={removeOpen}
                 onClick={() => removeAccess(selectedRow)}
                 onClose={() => {
-                    setSelectedRow(undefined);
                     setRemoveOpen(false);
                 }}
                 title={`Really remove ${entityType} from this project?`}
@@ -427,7 +422,6 @@ export const ProjectAccessTable: VFC = () => {
                 }`}
                 onEdit={() => {
                     setAssignOpen(true);
-                    console.log('Assign Open true');
                 }}
                 onRemove={() => {
                     setGroupOpen(false);

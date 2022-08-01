@@ -119,10 +119,6 @@ export const ProjectAccessAssign = ({
         roles.find(({ id }) => id === selected?.entity.roleId) ?? null
     );
 
-    useEffect(() => {
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) ?? null);
-    }, [roles, selected]);
-
     const payload = useMemo(
         () => ({
             users: selectedOptions
@@ -177,7 +173,8 @@ export const ProjectAccessAssign = ({
             ) || [];
         setSelectedOptions(selectedOption);
         setRole(roles.find(({ id }) => id === selected?.entity.roleId) || null);
-    }, [open, selected, options, roles]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open, selected, JSON.stringify(options), JSON.stringify(roles)]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
