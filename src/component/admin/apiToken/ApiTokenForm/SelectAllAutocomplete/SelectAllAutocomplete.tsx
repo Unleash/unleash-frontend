@@ -94,6 +94,7 @@ export const SelectAllAutocomplete: VFC<ISelectAllAutocompleteProps> = ({
             onClick={e =>
                 option.disabled ? e.preventDefault() : props.onClick?.(e)
             }
+            style={{ cursor: option.disabled ? 'default' : 'pointer' }}
         >
             <StyledCheckbox
                 icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
