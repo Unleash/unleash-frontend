@@ -23,6 +23,10 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
         padding: theme.spacing(4),
     },
+    '&:hover': {
+        transition: 'background-color 0.2s ease-in-out',
+        backgroundColor: theme.palette.neutral.light,
+    },
 }));
 
 const StyledRow = styled('div')(() => ({
