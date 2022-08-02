@@ -7,16 +7,16 @@ import { StrategySeparator } from 'component/common/StrategySeparator/StrategySe
 import { ConstraintItem } from './ConstraintItem/ConstraintItem';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
-import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { FeatureOverviewSegment } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewSegment/FeatureOverviewSegment';
 import { ConstraintAccordionList } from 'component/common/ConstraintAccordion/ConstraintAccordionList/ConstraintAccordionList';
 import { useStyles } from './StrategyExecution.styles';
 import {
-    parseParameterString,
     parseParameterNumber,
+    parseParameterString,
     parseParameterStrings,
 } from 'utils/parseParameter';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 
 interface IStrategyExecutionProps {
     strategy: IFeatureStrategy;
@@ -50,13 +50,13 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                 case 'rollout':
                 case 'Rollout':
                     const percentage = parseParameterNumber(parameters[key]);
+
                     return (
                         <Box
-                            className={styles.summary}
-                            key={key}
+                            className={styles.valueContainer}
                             sx={{ display: 'flex', alignItems: 'center' }}
                         >
-                            <Box sx={{ mr: '1rem' }}>
+                            <Box sx={{ mr: 2 }}>
                                 <PercentageCircle
                                     percentage={percentage}
                                     size="2rem"
@@ -103,116 +103,141 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
 
     const customStrategyList = useMemo(() => {
         if (!parameters || !definition?.editable) return null;
+        const isSetTo = (
+            <span className={styles.valueSeparator}>{' is set to '}</span>
+        );
 
-        return definition?.parameters.map((param: any) => {
+        return definition?.parameters.map(param => {
+            const { type, name } = { ...param };
+            if (!type || !name || parameters[name] === undefined) {
+                return null;
+            }
+            const nameItem = (
+                <StringTruncator maxLength={15} maxWidth="150" text={name} />
+            );
+
             switch (param?.type) {
                 case 'list':
-                    const values = parseParameterStrings(
-                        parameters[param.name]
-                    );
-                    return (
-                        <Fragment key={param?.name}>
-                            <ConstraintItem value={values} text={param.name} />
-                        </Fragment>
-                    );
+                    const values = parseParameterStrings(parameters[name]);
+
+                    return values.length > 0 ? (
+                        <div className={styles.valueContainer}>
+                            {nameItem}{' '}
+                            <span className={styles.valueSeparator}>
+                                has {values.length}{' '}
+                                {values.length > 1 ? `items` : 'item'}:{' '}
+                                {values.map((item: string) => (
+                                    <Chip
+                                        key={item}
+                                        label={
+                                            <StringTruncator
+                                                maxWidth="300"
+                                                text={item}
+                                                maxLength={50}
+                                            />
+                                        }
+                                        sx={{ mr: 0.5 }}
+                                    />
+                                ))}
+                            </span>
+                        </div>
+                    ) : null;
+
                 case 'percentage':
+                    const percentage = parseParameterNumber(parameters[name]);
                     return (
-                        <Fragment key={param?.name}>
+                        <Box
+                            className={styles.valueContainer}
+                            sx={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <Box sx={{ mr: 2 }}>
+                                <PercentageCircle
+                                    percentage={percentage}
+                                    size="2rem"
+                                />
+                            </Box>
                             <div>
+                                {nameItem}
+                                {isSetTo}
                                 <Chip
-                                    size="small"
-                                    variant="outlined"
                                     color="success"
-                                    label={`${parameters[param.name]}%`}
-                                />{' '}
-                                of your base{' '}
-                                {constraints?.length > 0
-                                    ? 'who match constraints'
-                                    : ''}{' '}
-                                is included.
+                                    variant="outlined"
+                                    size="small"
+                                    label={`${percentage}%`}
+                                />
                             </div>
-                            <PercentageCircle
-                                percentage={parseParameterNumber(
-                                    parameters[param.name]
-                                )}
-                            />
-                        </Fragment>
+                        </Box>
                     );
+
                 case 'boolean':
-                    return (
-                        <Fragment key={param.name}>
-                            <p key={param.name}>
-                                <StringTruncator
-                                    maxLength={15}
-                                    maxWidth="150"
-                                    text={param.name}
-                                />{' '}
-                                {parameters[param.name]}
-                            </p>
-                        </Fragment>
-                    );
+                    return parameters[name] === 'true' ||
+                        parameters[name] === 'false' ? (
+                        <div className={styles.valueContainer}>
+                            <StringTruncator
+                                maxLength={15}
+                                maxWidth="150"
+                                text={name}
+                            />
+                            {isSetTo}
+                            <Chip
+                                color={
+                                    parameters[name] === 'true'
+                                        ? 'success'
+                                        : 'error'
+                                }
+                                variant="outlined"
+                                size="small"
+                                label={parameters[name]}
+                            />
+                        </div>
+                    ) : null;
+
                 case 'string':
-                    const value = parseParameterString(parameters[param.name]);
-                    return (
-                        <ConditionallyRender
-                            condition={
-                                typeof parameters[param.name] !== 'undefined'
-                            }
-                            key={param.name}
-                            show={
-                                <>
-                                    <p className={styles.valueContainer}>
-                                        <StringTruncator
-                                            maxWidth="150"
-                                            maxLength={15}
-                                            text={param.name}
-                                        />
-                                        <span className={styles.valueSeparator}>
-                                            is set to
-                                        </span>
+                    const value = parseParameterString(parameters[name]);
+                    return typeof parameters[name] !== 'undefined' ? (
+                        <div className={styles.valueContainer}>
+                            {nameItem}
+                            <ConditionallyRender
+                                condition={value === ''}
+                                show={
+                                    <span className={styles.valueSeparator}>
+                                        {' is an empty string'}
+                                    </span>
+                                }
+                                elseShow={
+                                    <>
+                                        {isSetTo}
                                         <StringTruncator
                                             maxWidth="300"
                                             text={value}
                                             maxLength={50}
                                         />
-                                    </p>
-                                </>
-                            }
-                        />
-                    );
+                                    </>
+                                }
+                            />
+                        </div>
+                    ) : null;
+
                 case 'number':
-                    const number = parseParameterNumber(parameters[param.name]);
-                    return (
-                        <ConditionallyRender
-                            condition={number !== undefined}
-                            key={param.name}
-                            show={
-                                <>
-                                    <p className={styles.valueContainer}>
-                                        <StringTruncator
-                                            maxLength={15}
-                                            maxWidth="150"
-                                            text={param.name}
-                                        />
-                                        <span className={styles.valueSeparator}>
-                                            is set to
-                                        </span>
-                                        <StringTruncator
-                                            maxWidth="300"
-                                            text={String(number)}
-                                            maxLength={50}
-                                        />
-                                    </p>
-                                </>
-                            }
-                        />
-                    );
+                    const number = parseParameterNumber(parameters[name]);
+                    return number !== undefined ? (
+                        <div className={styles.valueContainer}>
+                            {nameItem}
+                            {isSetTo}
+                            <StringTruncator
+                                maxWidth="300"
+                                text={String(number)}
+                                maxLength={50}
+                            />
+                        </div>
+                    ) : null;
                 case 'default':
                     return null;
             }
+
             return null;
         });
-    }, [parameters, definition, constraints, styles]);
+    }, [parameters, definition, styles]);
 
     if (!parameters) {
         return <NoItems />;
@@ -230,7 +255,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
         ),
         strategy.name === 'default' && (
             <>
-                <Box sx={{ width: '100%' }} className={styles.summary}>
+                <Box sx={{ width: '100%' }} className={styles.valueContainer}>
                     The standard strategy is{' '}
                     <Chip
                         variant="outlined"
