@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useMemo, VFC } from 'react';
 import { Box, Chip } from '@mui/material';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -6,6 +6,7 @@ import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
 import { ConstraintItem } from './ConstraintItem/ConstraintItem';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
+import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { FeatureOverviewSegment } from 'component/feature/FeatureView/FeatureOverview/FeatureOverviewSegment/FeatureOverviewSegment';
@@ -22,22 +23,27 @@ interface IStrategyExecutionProps {
     percentageFill?: string;
 }
 
-export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
+const NoItems: VFC = () => (
+    <Box sx={{ px: 3, color: 'text.disabled' }}>
+        This strategy does not have constraints or parameters.
+    </Box>
+);
+
+export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
+    strategy,
+}) => {
     const { parameters, constraints = [] } = strategy;
     const { classes: styles } = useStyles();
     const { strategies } = useStrategies();
     const { uiConfig } = useUiConfig();
-
-    if (!parameters) {
-        return null;
-    }
+    const { segments } = useSegments(strategy.id);
 
     const definition = strategies.find(strategyDefinition => {
         return strategyDefinition.name === strategy.name;
     });
 
-    const renderParameters = () => {
-        if (definition?.editable) return null;
+    const renderParameters = useMemo(() => {
+        if (!parameters || definition?.editable) return null;
 
         return Object.keys(parameters).map(key => {
             switch (key) {
@@ -97,10 +103,11 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                     return null;
             }
         });
-    };
+    }, [parameters, definition, constraints, styles]);
 
-    const renderCustomStrategy = () => {
-        if (!definition?.editable) return null;
+    const renderCustomStrategy = useMemo(() => {
+        if (!parameters || !definition?.editable) return null;
+
         return definition?.parameters.map((param: any, index: number) => {
             const notLastItem = index !== definition?.parameters?.length - 1;
             switch (param?.type) {
@@ -245,43 +252,65 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
             }
             return null;
         });
-    };
+    }, [parameters, definition, strategy, constraints, styles]);
+
+    if (!parameters) {
+        return <NoItems />;
+    }
+
+    const listItems = [
+        Boolean(uiConfig.flags.SE) && segments && segments.length > 0 && (
+            <FeatureOverviewSegment strategyId={strategy.id} />
+        ),
+        constraints.length > 0 && (
+            <ConstraintAccordionList
+                constraints={constraints}
+                showLabel={false}
+            />
+        ),
+        strategy.name === 'default' && (
+            <>
+                <ConditionallyRender
+                    condition={constraints.length > 0 || Boolean(segments)}
+                    show={<StrategySeparator text="AND" />}
+                />
+                <Box sx={{ width: '100%' }} className={styles.summary}>
+                    The standard strategy is{' '}
+                    <Chip
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                        label="ON"
+                    />{' '}
+                    for all users.
+                </Box>
+            </>
+        ),
+        Boolean(renderParameters) &&
+            (renderParameters as any[])?.length > 0 &&
+            renderParameters,
+        Boolean(renderCustomStrategy) &&
+            (renderCustomStrategy as any[])?.length > 0 &&
+            renderCustomStrategy,
+    ].filter(Boolean);
 
     return (
-        <>
-            <ConditionallyRender
-                condition={Boolean(uiConfig.flags.SE)}
-                show={<FeatureOverviewSegment strategyId={strategy.id} />}
-            />
-            <ConditionallyRender
-                condition={constraints.length > 0}
-                show={
-                    <>
-                        <ConstraintAccordionList
-                            constraints={constraints}
-                            showLabel={false}
-                        />
-                        <StrategySeparator text="AND" />
-                    </>
-                }
-            />
-            <ConditionallyRender
-                condition={strategy.name === 'default'}
-                show={
-                    <Box sx={{ width: '100%' }} className={styles.summary}>
-                        The standard strategy is{' '}
-                        <Chip
-                            variant="outlined"
-                            size="small"
-                            color="success"
-                            label="ON"
-                        />{' '}
-                        for all users.
-                    </Box>
-                }
-            />
-            {renderParameters()}
-            {renderCustomStrategy()}
-        </>
+        <ConditionallyRender
+            condition={listItems.length > 0}
+            show={
+                <>
+                    {listItems.map((item, index) => (
+                        <Fragment key={index}>
+                            <ConditionallyRender
+                                condition={index > 0}
+                                show={<StrategySeparator text="AND" />}
+                            />
+                            {item}
+                        </Fragment>
+                    ))}
+                </>
+            }
+            elseShow={<NoItems />}
+        />
     );
 };
