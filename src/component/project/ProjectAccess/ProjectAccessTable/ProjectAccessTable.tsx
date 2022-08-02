@@ -38,6 +38,7 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
+import { ProjectAccessDialog } from 'component/project/ProjectAccess/ProjectAccessDialog/ProjectAccessDialog';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -383,7 +384,7 @@ export const ProjectAccessTable: VFC = () => {
                     />
                 }
             />
-            {/* <Routes>
+            <Routes>
                 <Route path="create" element={<ProjectAccessDialog />} />
                 <Route
                     path="edit/group/:groupId"
@@ -393,7 +394,7 @@ export const ProjectAccessTable: VFC = () => {
                     path="edit/user/:userId"
                     element={<ProjectAccessDialog />}
                 />
-            </Routes> */}
+            </Routes>
             <Dialogue
                 open={removeOpen}
                 onClick={() => removeAccess(selectedRow)}
