@@ -1,5 +1,5 @@
 import { Fragment, useMemo, VFC } from 'react';
-import { Box, Chip } from '@mui/material';
+import { Box, Chip, Tooltip } from '@mui/material';
 import { IFeatureStrategy } from 'interfaces/strategy';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import PercentageCircle from 'component/common/PercentageCircle/PercentageCircle';
@@ -145,7 +145,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
 
                 case 'percentage':
                     const percentage = parseParameterNumber(parameters[name]);
-                    return (
+                    return parameters[name] !== '' ? (
                         <Box
                             className={styles.valueContainer}
                             sx={{ display: 'flex', alignItems: 'center' }}
@@ -167,7 +167,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                                 />
                             </div>
                         </Box>
-                    );
+                    ) : null;
 
                 case 'boolean':
                     return parameters[name] === 'true' ||
@@ -220,7 +220,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
 
                 case 'number':
                     const number = parseParameterNumber(parameters[name]);
-                    return number !== undefined ? (
+                    return parameters[name] !== '' && number !== undefined ? (
                         <div className={styles.valueContainer}>
                             {nameItem}
                             {isSetTo}
