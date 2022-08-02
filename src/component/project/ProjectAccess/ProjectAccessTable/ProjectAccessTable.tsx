@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
-import { Button, useMediaQuery, useTheme } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+import { Avatar, Button, useMediaQuery, useTheme } from '@mui/material';
+import { Delete, DeviceHub, Edit } from '@mui/icons-material';
 import { sortTypes } from 'utils/sortTypes';
 import useProjectAccess, {
     ENTITY_TYPE,
@@ -175,8 +175,16 @@ export const ProjectAccessTable: VFC = () => {
                         .sort()
                         .reverse()[0];
                 },
-                Cell: ({ value }: { value: Date }) => (
-                    <TimeAgoCell value={value} emptyText="Never logged" />
+                Cell: ({ value, row: { original: row } }: any) => (
+                    <ConditionallyRender
+                        condition={row.type === ENTITY_TYPE.USER}
+                        show={
+                            <TimeAgoCell
+                                value={value}
+                                emptyText="Never logged"
+                            />
+                        }
+                    />
                 ),
                 sortType: 'date',
                 maxWidth: 150,

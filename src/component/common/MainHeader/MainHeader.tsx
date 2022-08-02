@@ -51,7 +51,7 @@ export const MainHeader = ({
                 <StyledActions>{actions}</StyledActions>
             </StyledTitleHeader>
             <ConditionallyRender
-                condition={description !== undefined && description?.length > 0}
+                condition={Boolean(description?.length)}
                 show={
                     <>
                         Description:
