@@ -8,8 +8,7 @@ export const useStyles = makeStyles()(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: theme.spacing(1),
-        [theme.breakpoints.down(650)]: {
-            marginBottom: '1rem',
+        [theme.breakpoints.down(710)]: {
             marginRight: 0,
         },
     },

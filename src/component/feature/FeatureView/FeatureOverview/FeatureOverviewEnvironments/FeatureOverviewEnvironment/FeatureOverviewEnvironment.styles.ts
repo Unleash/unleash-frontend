@@ -28,6 +28,10 @@ export const useStyles = makeStyles()(theme => ({
         borderBottomLeftRadius: theme.shape.borderRadiusLarge,
         borderBottomRightRadius: theme.shape.borderRadiusLarge,
         borderBottom: `4px solid ${theme.palette.primary.light}`,
+
+        [theme.breakpoints.down('md')]: {
+            padding: theme.spacing(2, 1),
+        },
     },
     accordionDetailsDisabled: {
         borderBottom: `4px solid ${theme.palette.dividerAlternative}`,
