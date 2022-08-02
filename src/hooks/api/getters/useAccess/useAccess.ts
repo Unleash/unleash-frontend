@@ -2,8 +2,18 @@ import useSWR from 'swr';
 import { useMemo } from 'react';
 import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
+import { IGroup } from 'interfaces/group';
+import { IUser } from 'interfaces/user';
 
-export const useAccess = () => {
+export interface IUseAccessOutput {
+    users?: IUser[];
+    groups?: IGroup[];
+    loading: boolean;
+    refetch: () => void;
+    error?: Error;
+}
+
+export const useAccess = (): IUseAccessOutput => {
     const { data, error, mutate } = useSWR(
         formatApiPath(`api/admin/user-admin/access`),
         fetcher
@@ -11,8 +21,8 @@ export const useAccess = () => {
 
     return useMemo(
         () => ({
-            users: data?.users ?? [],
-            groups: data?.groups ?? [],
+            users: data?.users,
+            groups: data?.groups,
             loading: !error && !data,
             refetch: () => mutate(),
             error,

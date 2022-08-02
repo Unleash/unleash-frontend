@@ -38,7 +38,9 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
-import { ProjectAccessDialog } from 'component/project/ProjectAccess/ProjectAccessDialog/ProjectAccessDialog';
+import { ProjectAccessCreate } from 'component/project/ProjectAccess/ProjectAccessCreate/ProjectAccessCreate';
+import { ProjectAccessEditUser } from 'component/project/ProjectAccess/ProjectAccessEditUser/ProjectAccessEditUser';
+import { ProjectAccessEditGroup } from 'component/project/ProjectAccess/ProjectAccessEditGroup/ProjectAccessEditGroup';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -65,7 +67,6 @@ export const ProjectAccessTable: VFC = () => {
 
     const { access, refetchProjectAccess } = useProjectAccess(projectId);
     const { removeUserFromRole, removeGroupFromRole } = useProjectApi();
-    // const [assignOpen, setAssignOpen] = useState(false);
     const [removeOpen, setRemoveOpen] = useState(false);
     const [groupOpen, setGroupOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState<IProjectAccess>();
@@ -385,14 +386,14 @@ export const ProjectAccessTable: VFC = () => {
                 }
             />
             <Routes>
-                <Route path="create" element={<ProjectAccessDialog />} />
+                <Route path="create" element={<ProjectAccessCreate />} />
                 <Route
                     path="edit/group/:groupId"
-                    element={<ProjectAccessDialog />}
+                    element={<ProjectAccessEditGroup />}
                 />
                 <Route
                     path="edit/user/:userId"
-                    element={<ProjectAccessDialog />}
+                    element={<ProjectAccessEditUser />}
                 />
             </Routes>
             <Dialogue

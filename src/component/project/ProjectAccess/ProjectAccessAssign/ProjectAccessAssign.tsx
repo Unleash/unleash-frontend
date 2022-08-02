@@ -25,7 +25,7 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ProjectRoleDescription } from './ProjectRoleDescription/ProjectRoleDescription';
-import { useAccess } from 'hooks/api/getters/useAccess/useAccess';
+import { useNavigate } from 'react-router-dom';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -88,24 +88,24 @@ interface IAccessOption {
 }
 
 interface IProjectAccessAssignProps {
-    onClose: () => void;
     selected?: IProjectAccess;
     accesses: IProjectAccess[];
     users: IUser[];
     groups: IGroup[];
     roles: IProjectRole[];
-    entityType: string;
 }
 
 export const ProjectAccessAssign = ({
-    onClose,
     selected,
     accesses,
     users,
     groups,
     roles,
-    entityType,
 }: IProjectAccessAssignProps) => {
+    const { uiConfig } = useUiConfig();
+    const { flags } = uiConfig;
+    const entityType = flags.UG ? 'user / group' : 'user';
+
     const projectId = useRequiredPathParam('projectId');
     const { refetchProjectAccess } = useProjectAccess(projectId);
     const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
@@ -113,7 +113,7 @@ export const ProjectAccessAssign = ({
     const edit = Boolean(selected);
 
     const { setToastData, setToastApiError } = useToast();
-    const { uiConfig } = useUiConfig();
+    const navigate = useNavigate();
 
     const options = useMemo(
         () => [
@@ -186,7 +186,7 @@ export const ProjectAccessAssign = ({
                 await changeGroupRole(projectId, role.id, selected.entity.id);
             }
             refetchProjectAccess();
-            onClose();
+            navigate(-1);
             setToastData({
                 title: `${selectedOptions.length} ${
                     selectedOptions.length === 1 ? 'access' : 'accesses'
@@ -271,7 +271,7 @@ export const ProjectAccessAssign = ({
     return (
         <SidebarModal
             open
-            onClose={onClose}
+            onClose={() => navigate(-1)}
             label={`${!edit ? 'Assign' : 'Edit'} ${entityType} access`}
         >
             <FormTemplate
@@ -364,11 +364,7 @@ export const ProjectAccessAssign = ({
                         >
                             Assign {entityType}
                         </Button>
-                        <StyledCancelButton
-                            onClick={() => {
-                                onClose();
-                            }}
-                        >
+                        <StyledCancelButton onClick={() => navigate(-1)}>
                             Cancel
                         </StyledCancelButton>
                     </StyledButtonContainer>
