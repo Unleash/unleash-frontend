@@ -16,7 +16,7 @@ export const StyledMemberBadge = styled('div')(({ theme }) => ({
     lineHeight: 1,
 }));
 
-export const StyledOwnerBadge = styled(StyledMemberBadge)(({ theme }) => ({
+const StyledOwnerBadge = styled(StyledMemberBadge)(({ theme }) => ({
     color: theme.palette.success.dark,
     border: `1px solid ${theme.palette.success.border}`,
     background: theme.palette.success.light,

@@ -9,7 +9,6 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { UG_CREATE_BTN_ID } from 'utils/testIds';
 import { Button } from '@mui/material';
 import { CREATE } from 'constants/misc';
-import { ENVIRONMENT_STRATEGY_ERROR } from '../../../../constants/apiErrors';
 
 export const CreateGroup = () => {
     const { setToastData, setToastApiError } = useToast();
