@@ -96,15 +96,22 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                             <ConditionallyRender
                                 condition={group.projects.length > 0}
                                 show={group.projects.map(project => (
-                                    <Badge
+                                    <Tooltip
                                         key={group.id}
-                                        color="secondary"
-                                        icon={<TopicOutlinedIcon />}
                                         title="View project"
-                                        sx={{ marginRight: 0.5 }}
+                                        arrow
+                                        placement="bottom-end"
+                                        describeChild
+                                        enterDelay={400}
                                     >
-                                        {project}
-                                    </Badge>
+                                        <Badge
+                                            color="secondary"
+                                            icon={<TopicOutlinedIcon />}
+                                            sx={{ marginRight: 0.5 }}
+                                        >
+                                            {project}
+                                        </Badge>
+                                    </Tooltip>
                                 ))}
                                 elseShow={
                                     <Tooltip
@@ -112,7 +119,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                         arrow
                                         placement="bottom-end"
                                         describeChild
-                                        enterDelay={1000}
+                                        enterDelay={400}
                                     >
                                         <Badge>Not used</Badge>
                                     </Tooltip>
