@@ -42,7 +42,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
         return strategyDefinition.name === strategy.name;
     });
 
-    const renderParameters = useMemo(() => {
+    const parametersList = useMemo(() => {
         if (!parameters || definition?.editable) return null;
 
         return Object.keys(parameters).map(key => {
@@ -105,23 +105,18 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
         });
     }, [parameters, definition, constraints, styles]);
 
-    const renderCustomStrategy = useMemo(() => {
+    const customStrategyList = useMemo(() => {
         if (!parameters || !definition?.editable) return null;
 
-        return definition?.parameters.map((param: any, index: number) => {
-            const notLastItem = index !== definition?.parameters?.length - 1;
+        return definition?.parameters.map((param: any) => {
             switch (param?.type) {
                 case 'list':
                     const values = parseParameterStrings(
-                        strategy?.parameters[param.name]
+                        parameters[param.name]
                     );
                     return (
                         <Fragment key={param?.name}>
                             <ConstraintItem value={values} text={param.name} />
-                            <ConditionallyRender
-                                condition={notLastItem}
-                                show={<StrategySeparator text="AND" />}
-                            />
                         </Fragment>
                     );
                 case 'percentage':
@@ -132,9 +127,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                                     size="small"
                                     variant="outlined"
                                     color="success"
-                                    label={`${
-                                        strategy?.parameters[param.name]
-                                    }%`}
+                                    label={`${parameters[param.name]}%`}
                                 />{' '}
                                 of your base{' '}
                                 {constraints?.length > 0
@@ -144,12 +137,8 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                             </div>
                             <PercentageCircle
                                 percentage={parseParameterNumber(
-                                    strategy.parameters[param.name]
+                                    parameters[param.name]
                                 )}
-                            />
-                            <ConditionallyRender
-                                condition={notLastItem}
-                                show={<StrategySeparator text="AND" />}
                             />
                         </Fragment>
                     );
@@ -162,31 +151,16 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                                     maxWidth="150"
                                     text={param.name}
                                 />{' '}
-                                {strategy.parameters[param.name]}
+                                {parameters[param.name]}
                             </p>
-                            <ConditionallyRender
-                                condition={
-                                    typeof strategy.parameters[param.name] !==
-                                    'undefined'
-                                }
-                                show={
-                                    <ConditionallyRender
-                                        condition={notLastItem}
-                                        show={<StrategySeparator text="AND" />}
-                                    />
-                                }
-                            />
                         </Fragment>
                     );
                 case 'string':
-                    const value = parseParameterString(
-                        strategy.parameters[param.name]
-                    );
+                    const value = parseParameterString(parameters[param.name]);
                     return (
                         <ConditionallyRender
                             condition={
-                                typeof strategy.parameters[param.name] !==
-                                'undefined'
+                                typeof parameters[param.name] !== 'undefined'
                             }
                             key={param.name}
                             show={
@@ -206,18 +180,12 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                                             maxLength={50}
                                         />
                                     </p>
-                                    <ConditionallyRender
-                                        condition={notLastItem}
-                                        show={<StrategySeparator text="AND" />}
-                                    />
                                 </>
                             }
                         />
                     );
                 case 'number':
-                    const number = parseParameterNumber(
-                        strategy.parameters[param.name]
-                    );
+                    const number = parseParameterNumber(parameters[param.name]);
                     return (
                         <ConditionallyRender
                             condition={number !== undefined}
@@ -239,10 +207,6 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                                             maxLength={50}
                                         />
                                     </p>
-                                    <ConditionallyRender
-                                        condition={notLastItem}
-                                        show={<StrategySeparator text="AND" />}
-                                    />
                                 </>
                             }
                         />
@@ -252,7 +216,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
             }
             return null;
         });
-    }, [parameters, definition, strategy, constraints, styles]);
+    }, [parameters, definition, constraints, styles]);
 
     if (!parameters) {
         return <NoItems />;
@@ -270,10 +234,6 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
         ),
         strategy.name === 'default' && (
             <>
-                <ConditionallyRender
-                    condition={constraints.length > 0 || Boolean(segments)}
-                    show={<StrategySeparator text="AND" />}
-                />
                 <Box sx={{ width: '100%' }} className={styles.summary}>
                     The standard strategy is{' '}
                     <Chip
@@ -286,12 +246,8 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
                 </Box>
             </>
         ),
-        Boolean(renderParameters) &&
-            (renderParameters as any[])?.length > 0 &&
-            renderParameters,
-        Boolean(renderCustomStrategy) &&
-            (renderCustomStrategy as any[])?.length > 0 &&
-            renderCustomStrategy,
+        ...(parametersList ?? []),
+        ...(customStrategyList ?? []),
     ].filter(Boolean);
 
     return (
