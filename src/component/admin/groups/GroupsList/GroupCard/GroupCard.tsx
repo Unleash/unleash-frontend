@@ -65,7 +65,9 @@ const StyledCounterDescription = styled('span')(({ theme }) => ({
     marginLeft: theme.spacing(1),
 }));
 
-const ProjectBadgeContainer = styled('div')(() => ({}));
+const ProjectBadgeContainer = styled('div')(() => ({
+    width: '50%',
+}));
 
 interface IGroupCardProps {
     group: IGroup;
