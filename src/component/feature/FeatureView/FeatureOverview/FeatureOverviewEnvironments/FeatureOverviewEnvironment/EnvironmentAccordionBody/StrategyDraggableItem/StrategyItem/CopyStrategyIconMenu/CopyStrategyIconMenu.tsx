@@ -40,10 +40,7 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         projectId,
         featureId
     );
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
+    const onClose = () => {
         setAnchorEl(null);
     };
     const { hasAccess } = useContext(AccessContext);
@@ -70,7 +67,7 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         } catch (error) {
             setToastApiError(formatUnknownError(error));
         }
-        handleClose();
+        onClose();
     };
 
     const enabled = environments.some(environment =>
@@ -91,7 +88,9 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                        onClick={(event: MouseEvent<HTMLButtonElement>) => {
+                            setAnchorEl(event.currentTarget);
+                        }}
                         disabled={!enabled}
                     >
                         <CopyIcon />
@@ -102,7 +101,7 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                onClose={onClose}
                 MenuListProps={{
                     'aria-labelledby': `copy-strategy-icon-menu-${strategy.id}`,
                 }}
@@ -136,7 +135,9 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                                             </ListItemIcon>
                                         }
                                     />
-                                    <ListItemText>{environment}</ListItemText>
+                                    <ListItemText>
+                                        Copy to {environment}
+                                    </ListItemText>
                                 </MenuItem>
                             </div>
                         </Tooltip>

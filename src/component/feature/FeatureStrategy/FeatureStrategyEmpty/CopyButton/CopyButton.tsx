@@ -28,14 +28,7 @@ export const CopyButton: VFC<ICopyButtonProps> = ({
     const projectId = useRequiredPathParam('projectId');
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     const { hasAccess } = useContext(AccessContext);
-
     const enabled = environments.some(environment =>
         hasAccess(CREATE_FEATURE_STRATEGY, projectId, environment)
     );
@@ -49,7 +42,9 @@ export const CopyButton: VFC<ICopyButtonProps> = ({
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                        onClick={(event: MouseEvent<HTMLButtonElement>) => {
+                            setAnchorEl(event.currentTarget);
+                        }}
                         disabled={!enabled}
                         variant="outlined"
                     >
@@ -61,7 +56,9 @@ export const CopyButton: VFC<ICopyButtonProps> = ({
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                onClose={() => {
+                    setAnchorEl(null);
+                }}
                 MenuListProps={{
                     'aria-labelledby': `copy-all-strategies-${environmentId}`,
                 }}
@@ -95,7 +92,9 @@ export const CopyButton: VFC<ICopyButtonProps> = ({
                                             </ListItemIcon>
                                         }
                                     />
-                                    <ListItemText>{environment}</ListItemText>
+                                    <ListItemText>
+                                        Copy from {environment}
+                                    </ListItemText>
                                 </MenuItem>
                             </div>
                         </Tooltip>
