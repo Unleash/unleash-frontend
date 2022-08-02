@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useMemo, useState } from 'react';
 import {
     Autocomplete,
     Button,
@@ -88,19 +88,21 @@ interface IAccessOption {
 }
 
 interface IProjectAccessAssignProps {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    onClose: () => void;
     selected?: IProjectAccess;
     accesses: IProjectAccess[];
+    users: IUser[];
+    groups: IGroup[];
     roles: IProjectRole[];
     entityType: string;
 }
 
 export const ProjectAccessAssign = ({
-    open,
-    setOpen,
+    onClose,
     selected,
     accesses,
+    users,
+    groups,
     roles,
     entityType,
 }: IProjectAccessAssignProps) => {
@@ -108,28 +110,10 @@ export const ProjectAccessAssign = ({
     const { refetchProjectAccess } = useProjectAccess(projectId);
     const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
         useProjectApi();
-    const { users, groups } = useAccess();
     const edit = Boolean(selected);
 
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
-
-    const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>([]);
-    const [role, setRole] = useState<IProjectRole | null>(
-        roles.find(({ id }) => id === selected?.entity.roleId) ?? null
-    );
-
-    const payload = useMemo(
-        () => ({
-            users: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.USER)
-                .map(({ id }) => ({ id })),
-            groups: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
-                .map(({ id }) => ({ id })),
-        }),
-        [selectedOptions]
-    );
 
     const options = useMemo(
         () => [
@@ -165,16 +149,28 @@ export const ProjectAccessAssign = ({
         [users, accesses, edit, groups]
     );
 
-    useEffect(() => {
-        const selectedOption =
+    const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>(
+        () =>
             options.filter(
                 ({ id, type }) =>
                     id === selected?.entity.id && type === selected?.type
-            ) || [];
-        setSelectedOptions(selectedOption);
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) || null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open, selected, JSON.stringify(options), JSON.stringify(roles)]);
+            )
+    );
+    const [role, setRole] = useState<IProjectRole | null>(
+        roles.find(({ id }) => id === selected?.entity.roleId) ?? null
+    );
+
+    const payload = useMemo(
+        () => ({
+            users: selectedOptions
+                ?.filter(({ type }) => type === ENTITY_TYPE.USER)
+                .map(({ id }) => ({ id })),
+            groups: selectedOptions
+                ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
+                .map(({ id }) => ({ id })),
+        }),
+        [selectedOptions]
+    );
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -190,7 +186,7 @@ export const ProjectAccessAssign = ({
                 await changeGroupRole(projectId, role.id, selected.entity.id);
             }
             refetchProjectAccess();
-            setOpen(false);
+            onClose();
             setToastData({
                 title: `${selectedOptions.length} ${
                     selectedOptions.length === 1 ? 'access' : 'accesses'
@@ -274,10 +270,8 @@ export const ProjectAccessAssign = ({
 
     return (
         <SidebarModal
-            open={open}
-            onClose={() => {
-                setOpen(false);
-            }}
+            open
+            onClose={onClose}
             label={`${!edit ? 'Assign' : 'Edit'} ${entityType} access`}
         >
             <FormTemplate
@@ -372,7 +366,7 @@ export const ProjectAccessAssign = ({
                         </Button>
                         <StyledCancelButton
                             onClick={() => {
-                                setOpen(false);
+                                onClose();
                             }}
                         >
                             Cancel
