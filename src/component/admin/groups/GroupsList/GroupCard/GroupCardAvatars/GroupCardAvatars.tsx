@@ -44,6 +44,7 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
         <StyledAvatars>
             {shownUsers.map(user => (
                 <StyledAvatar
+                    key={user.id}
                     user={user}
                     star={user.role === Role.Owner}
                     onMouseEnter={event => {

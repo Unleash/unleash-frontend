@@ -17,6 +17,7 @@ interface IBadgeProps {
     className?: string;
     sx?: SxProps<Theme>;
     children?: ReactNode;
+    title?: string;
 }
 
 interface IBadgeIconProps {

@@ -97,8 +97,10 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 condition={group.projects.length > 0}
                                 show={group.projects.map(project => (
                                     <Badge
+                                        key={group.id}
                                         color="secondary"
                                         icon={<TopicOutlinedIcon />}
+                                        title="View project"
                                         sx={{ marginRight: 0.5 }}
                                     >
                                         {project}
