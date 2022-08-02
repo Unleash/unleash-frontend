@@ -103,7 +103,7 @@ export const GroupCardActions: FC<IGroupCardActions> = ({
                         </ListItemIcon>
                         <ListItemText>
                             <Typography variant="body2">
-                                Remove group
+                                Delete group
                             </Typography>
                         </ListItemText>
                     </MenuItem>

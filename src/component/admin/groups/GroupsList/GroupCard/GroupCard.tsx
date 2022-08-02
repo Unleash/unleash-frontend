@@ -31,6 +31,12 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     },
 }));
 
+const StyledTitleRow = styled('div')(() => ({
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+}));
+
 const StyledRow = styled('div')(() => ({
     display: 'flex',
     alignItems: 'center',
@@ -80,7 +86,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
         <>
             <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
                 <StyledGroupCard>
-                    <StyledRow>
+                    <StyledTitleRow>
                         <StyledHeaderTitle>{group.name}</StyledHeaderTitle>
                         <StyledHeaderActions>
                             <GroupCardActions
@@ -88,7 +94,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 onRemove={() => setRemoveOpen(true)}
                             />
                         </StyledHeaderActions>
-                    </StyledRow>
+                    </StyledTitleRow>
                     <StyledDescription>{group.description}</StyledDescription>
                     <StyledBottomRow>
                         <ConditionallyRender
