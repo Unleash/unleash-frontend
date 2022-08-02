@@ -15,6 +15,9 @@ const StyledAvatars = styled('div')(({ theme }) => ({
 const StyledAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
     marginLeft: theme.spacing(-1),
+    '&:hover': {
+        outlineColor: theme.palette.primary.main,
+    },
 }));
 
 interface IGroupCardAvatarsProps {

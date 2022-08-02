@@ -3,7 +3,7 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { Role } from 'interfaces/group';
 
-const StyledBadge = styled('div')(({ theme }) => ({
+export const StyledMemberBadge = styled('div')(({ theme }) => ({
     padding: theme.spacing(0.5, 1),
     textDecoration: 'none',
     color: theme.palette.text.secondary,
@@ -11,13 +11,12 @@ const StyledBadge = styled('div')(({ theme }) => ({
     background: theme.palette.activityIndicators.unknown,
     display: 'inline-block',
     borderRadius: theme.shape.borderRadius,
-    marginLeft: theme.spacing(1.5),
     fontSize: theme.fontSizes.smallerBody,
     fontWeight: theme.fontWeight.bold,
     lineHeight: 1,
 }));
 
-const StyledOwnerBadge = styled(StyledBadge)(({ theme }) => ({
+export const StyledOwnerBadge = styled(StyledMemberBadge)(({ theme }) => ({
     color: theme.palette.success.dark,
     border: `1px solid ${theme.palette.success.border}`,
     background: theme.palette.success.light,
@@ -35,7 +34,7 @@ export const GroupUserRoleCell = ({
     const renderBadge = () => (
         <ConditionallyRender
             condition={value === Role.Member}
-            show={<StyledBadge>{capitalize(value)}</StyledBadge>}
+            show={<StyledMemberBadge>{capitalize(value)}</StyledMemberBadge>}
             elseShow={<StyledOwnerBadge>{capitalize(value)}</StyledOwnerBadge>}
         />
     );
