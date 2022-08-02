@@ -1,6 +1,6 @@
 import { styled, Tooltip } from '@mui/material';
 import { IGroup } from 'interfaces/group';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { GroupCardAvatars } from './GroupCardAvatars/GroupCardAvatars';
 import { Badge } from 'component/common/Badge/Badge';
@@ -20,6 +20,8 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     border: `1px solid ${theme.palette.dividerAlternative}`,
     borderRadius: theme.shape.borderRadiusLarge,
     boxShadow: theme.boxShadows.card,
+    display: 'flex',
+    flexDirection: 'column',
     [theme.breakpoints.up('md')]: {
         padding: theme.spacing(4),
     },
@@ -33,6 +35,10 @@ const StyledRow = styled('div')(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+}));
+
+const StyledBottomRow = styled(StyledRow)(() => ({
+    marginTop: 'auto',
 }));
 
 const StyledHeaderTitle = styled('h2')(({ theme }) => ({
@@ -67,7 +73,7 @@ interface IGroupCardProps {
 
 export const GroupCard = ({ group }: IGroupCardProps) => {
     const [removeOpen, setRemoveOpen] = useState(false);
-
+    const navigate = useNavigate();
     return (
         <>
             <StyledLink key={group.id} to={`/admin/groups/${group.id}`}>
@@ -82,7 +88,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                         </StyledHeaderActions>
                     </StyledRow>
                     <StyledDescription>{group.description}</StyledDescription>
-                    <StyledRow>
+                    <StyledBottomRow>
                         <ConditionallyRender
                             condition={group.users?.length > 0}
                             show={<GroupCardAvatars users={group.users} />}
@@ -105,6 +111,12 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                         enterDelay={400}
                                     >
                                         <Badge
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                navigate(
+                                                    `/projects/${project}/access`
+                                                );
+                                            }}
                                             color="secondary"
                                             icon={<TopicOutlinedIcon />}
                                             sx={{ marginRight: 0.5 }}
@@ -126,7 +138,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 }
                             />
                         </ProjectBadgeContainer>
-                    </StyledRow>
+                    </StyledBottomRow>
                 </StyledGroupCard>
             </StyledLink>
             <RemoveGroup

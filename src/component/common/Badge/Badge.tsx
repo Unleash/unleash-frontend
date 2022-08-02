@@ -1,5 +1,5 @@
 import { styled, SxProps, Theme } from '@mui/material';
-import {
+import React, {
     cloneElement,
     FC,
     ForwardedRef,
@@ -18,6 +18,7 @@ interface IBadgeProps {
     sx?: SxProps<Theme>;
     children?: ReactNode;
     title?: string;
+    onClick?: (event: React.SyntheticEvent) => void;
 }
 
 interface IBadgeIconProps {
