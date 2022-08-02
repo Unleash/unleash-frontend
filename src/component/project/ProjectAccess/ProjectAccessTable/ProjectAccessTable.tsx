@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
-import { Avatar, Button, useMediaQuery, useTheme } from '@mui/material';
-import { Delete, DeviceHub, Edit } from '@mui/icons-material';
+import { Button, useMediaQuery, useTheme } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import { sortTypes } from 'utils/sortTypes';
 import useProjectAccess, {
     ENTITY_TYPE,
