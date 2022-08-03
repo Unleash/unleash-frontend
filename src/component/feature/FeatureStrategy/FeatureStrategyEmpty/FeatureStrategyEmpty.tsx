@@ -8,6 +8,10 @@ import { FeatureStrategyMenu } from '../FeatureStrategyMenu/FeatureStrategyMenu'
 import { PresetCard } from './PresetCard/PresetCard';
 import { useStyles } from './FeatureStrategyEmpty.styles';
 import { formatUnknownError } from 'utils/formatUnknownError';
+import { useFeatureImmutable } from 'hooks/api/getters/useFeature/useFeatureImmutable';
+import { getFeatureStrategyIcon } from 'utils/strategyNames';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import { CopyButton } from './CopyButton/CopyButton';
 
 interface IFeatureStrategyEmptyProps {
     projectId: string;
@@ -24,14 +28,57 @@ export const FeatureStrategyEmpty = ({
     const { addStrategyToFeature } = useFeatureStrategyApi();
     const { setToastData, setToastApiError } = useToast();
     const { refetchFeature } = useFeature(projectId, featureId);
+    const { refetchFeature: refetchFeatureImmutable } = useFeatureImmutable(
+        projectId,
+        featureId
+    );
+    const { feature } = useFeature(projectId, featureId);
+    const otherAvailableEnvironments = feature?.environments.filter(
+        environment =>
+            environment.name !== environmentId &&
+            environment.strategies &&
+            environment.strategies.length > 0
+    );
 
-    const onAfterAddStrategy = () => {
+    const onAfterAddStrategy = (multiple = false) => {
         refetchFeature();
+        refetchFeatureImmutable();
+
         setToastData({
-            title: 'Strategy created',
-            text: 'Successfully created strategy',
+            title: multiple ? 'Strategies created' : 'Strategy created',
+            text: multiple
+                ? 'Successfully copied from another environment'
+                : 'Successfully created strategy',
             type: 'success',
         });
+    };
+
+    const onCopyStrategies = async (fromEnvironmentName: string) => {
+        const strategies =
+            otherAvailableEnvironments?.find(
+                environment => environment.name === fromEnvironmentName
+            )?.strategies || [];
+
+        try {
+            await Promise.all(
+                strategies.map(strategy => {
+                    const { id, ...strategyCopy } = {
+                        ...strategy,
+                        environment: environmentId,
+                    };
+
+                    return addStrategyToFeature(
+                        projectId,
+                        featureId,
+                        environmentId,
+                        strategyCopy
+                    );
+                })
+            );
+            onAfterAddStrategy(true);
+        } catch (error) {
+            setToastApiError(formatUnknownError(error));
+        }
     };
 
     const onAddSimpleStrategy = async () => {
@@ -74,12 +121,38 @@ export const FeatureStrategyEmpty = ({
                 <Link to="/admin/api">API key configured</Link> for this
                 environment.
             </p>
-            <FeatureStrategyMenu
-                label="Add your first strategy"
-                projectId={projectId}
-                featureId={featureId}
-                environmentId={environmentId}
-            />
+            <Box
+                sx={{
+                    w: '100%',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 2,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <FeatureStrategyMenu
+                    label="Add your first strategy"
+                    projectId={projectId}
+                    featureId={featureId}
+                    environmentId={environmentId}
+                />
+                <ConditionallyRender
+                    condition={
+                        otherAvailableEnvironments &&
+                        otherAvailableEnvironments.length > 0
+                    }
+                    show={
+                        <CopyButton
+                            environmentId={environmentId}
+                            environments={otherAvailableEnvironments.map(
+                                environment => environment.name
+                            )}
+                            onClick={onCopyStrategies}
+                        />
+                    }
+                />
+            </Box>
             <Box sx={{ width: '100%', mt: 3 }}>
                 <SectionSeparator>Or use a strategy template</SectionSeparator>
             </Box>
@@ -93,14 +166,20 @@ export const FeatureStrategyEmpty = ({
             >
                 <PresetCard
                     title="Standard strategy"
+                    Icon={getFeatureStrategyIcon('default')}
                     onClick={onAddSimpleStrategy}
+                    projectId={projectId}
+                    environmentId={environmentId}
                 >
                     The standard strategy is strictly on/off for your entire
                     userbase.
                 </PresetCard>
                 <PresetCard
                     title="Gradual rollout"
+                    Icon={getFeatureStrategyIcon('flexibleRollout')}
                     onClick={onAddGradualRolloutStrategy}
+                    projectId={projectId}
+                    environmentId={environmentId}
                 >
                     Roll out to a percentage of your userbase.
                 </PresetCard>

@@ -43,28 +43,25 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
             switch (key) {
                 case 'rollout':
                 case 'Rollout':
+                    const percentage = parseParameterNumber(parameters[key]);
                     return (
                         <Box
                             className={styles.summary}
                             key={key}
                             sx={{ display: 'flex', alignItems: 'center' }}
                         >
-                            <PercentageCircle
-                                percentage={parseParameterNumber(
-                                    parameters[key]
-                                )}
-                                styles={{
-                                    width: '2rem',
-                                    height: '2rem',
-                                    marginRight: '1rem',
-                                }}
-                            />
+                            <Box sx={{ mr: '1rem' }}>
+                                <PercentageCircle
+                                    percentage={percentage}
+                                    size="2rem"
+                                />
+                            </Box>
                             <div>
                                 <Chip
                                     color="success"
                                     variant="outlined"
                                     size="small"
-                                    label={`${parameters[key]}%`}
+                                    label={`${percentage}%`}
                                 />{' '}
                                 of your base{' '}
                                 {constraints.length > 0
@@ -256,7 +253,10 @@ export const StrategyExecution = ({ strategy }: IStrategyExecutionProps) => {
                 condition={constraints.length > 0}
                 show={
                     <>
-                        <ConstraintAccordionList constraints={constraints} />
+                        <ConstraintAccordionList
+                            constraints={constraints}
+                            showLabel={false}
+                        />
                         <StrategySeparator text="AND" />
                     </>
                 }

@@ -116,7 +116,6 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                         arrow
                                         placement="bottom-end"
                                         describeChild
-                                        enterDelay={400}
                                     >
                                         <Badge
                                             onClick={e => {
@@ -135,11 +134,9 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 ))}
                                 elseShow={
                                     <Tooltip
-                                        title="This project is not used in any project"
+                                        title="This group is not used in any project"
                                         arrow
-                                        placement="bottom-end"
                                         describeChild
-                                        enterDelay={400}
                                     >
                                         <Badge>Not used</Badge>
                                     </Tooltip>
