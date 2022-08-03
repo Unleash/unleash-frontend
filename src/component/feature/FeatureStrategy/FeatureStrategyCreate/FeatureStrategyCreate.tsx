@@ -22,6 +22,7 @@ import { ISegment } from 'interfaces/segment';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { formatStrategyName } from 'utils/strategyNames';
 import { useFeatureImmutable } from 'hooks/api/getters/useFeature/useFeatureImmutable';
+import { useFormErrors } from 'hooks/useFormErrors';
 import { createFeatureStrategy } from 'utils/createFeatureStrategy';
 
 export const FeatureStrategyCreate = () => {
@@ -32,6 +33,7 @@ export const FeatureStrategyCreate = () => {
     const [strategy, setStrategy] = useState<Partial<IFeatureStrategy>>({});
     const [segments, setSegments] = useState<ISegment[]>([]);
     const { strategies } = useStrategies();
+    const errors = useFormErrors();
 
     const { addStrategyToFeature, loading } = useFeatureStrategyApi();
     const { setStrategySegments } = useSegmentsApi();
@@ -105,6 +107,7 @@ export const FeatureStrategyCreate = () => {
                 onSubmit={onSubmit}
                 loading={loading}
                 permission={CREATE_FEATURE_STRATEGY}
+                errors={errors}
             />
         </FormTemplate>
     );

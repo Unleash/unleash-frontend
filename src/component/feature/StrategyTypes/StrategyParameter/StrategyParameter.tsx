@@ -12,12 +12,14 @@ import {
     parseParameterString,
 } from 'utils/parseParameter';
 import { InputCaption } from 'component/common/InputCaption/InputCaption';
+import { IFormErrors } from 'hooks/useFormErrors';
 
 interface IStrategyParameterProps {
     definition: IStrategyParameter;
     parameters: IFeatureStrategyParameters;
     updateParameter: (field: string, value: string) => void;
     editable: boolean;
+    errors: IFormErrors;
 }
 
 export const StrategyParameter = ({
@@ -25,41 +27,33 @@ export const StrategyParameter = ({
     parameters,
     updateParameter,
     editable,
+    errors,
 }: IStrategyParameterProps) => {
     const { type, name, description, required } = definition;
+    const value = parameters[name];
+    const error = errors.get(name);
+    const label = required ? `${name} * ` : name;
 
-    const onChangeTextField = (
-        field: string,
-        evt: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const { value } = evt.currentTarget;
-        evt.preventDefault();
-        updateParameter(field, value);
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        updateParameter(name, event.target.value);
     };
 
-    const onChangePercentage = (
-        field: string,
-        evt: Event,
-        newValue: number | number[]
-    ) => {
-        evt.preventDefault();
-        updateParameter(field, newValue.toString());
+    const onChangePercentage = (event: Event, next: number | number[]) => {
+        updateParameter(name, next.toString());
     };
 
-    const handleSwitchChange = (field: string, currentValue: any) => {
-        const value = currentValue === 'true' ? 'false' : 'true';
-        updateParameter(field, value);
+    const onChangeBoolean = (event: React.ChangeEvent, checked: boolean) => {
+        updateParameter(name, String(checked));
     };
 
     if (type === 'percentage') {
-        const value = parseParameterNumber(parameters[name]);
         return (
             <div>
                 <RolloutSlider
                     name={name}
-                    onChange={onChangePercentage.bind(this, name)}
+                    onChange={onChangePercentage}
                     disabled={!editable}
-                    value={value}
+                    value={parseParameterNumber(parameters[name])}
                     minLabel="off"
                     maxLabel="on"
                 />
@@ -69,14 +63,14 @@ export const StrategyParameter = ({
     }
 
     if (type === 'list') {
-        const values = parseParameterStrings(parameters[name]);
         return (
             <div>
                 <StrategyInputList
                     name={name}
-                    list={values}
+                    list={parseParameterStrings(parameters[name])}
                     disabled={!editable}
                     setConfig={updateParameter}
+                    errors={errors}
                 />
                 <InputCaption text={description} />
             </div>
@@ -84,22 +78,18 @@ export const StrategyParameter = ({
     }
 
     if (type === 'number') {
-        const regex = new RegExp('^\\d+$');
-        const value = parseParameterString(parameters[name]);
-        const error = value.length > 0 ? !regex.test(value) : false;
         return (
             <div>
                 <TextField
-                    error={error}
-                    helperText={error && `${name} is not a number!`}
+                    error={Boolean(error)}
+                    helperText={error}
                     variant="outlined"
                     size="small"
-                    required={required}
+                    aria-required={required}
                     style={{ width: '100%' }}
                     disabled={!editable}
-                    name={name}
-                    label={name}
-                    onChange={onChangeTextField.bind(this, name)}
+                    label={label}
+                    onChange={onChange}
                     value={value}
                 />
                 <InputCaption text={description} />
@@ -109,6 +99,7 @@ export const StrategyParameter = ({
 
     if (type === 'boolean') {
         const value = parseParameterString(parameters[name]);
+        const checked = value === 'true';
         return (
             <Tooltip title={description} placement="right-end" arrow>
                 <FormControlLabel
@@ -116,12 +107,8 @@ export const StrategyParameter = ({
                     control={
                         <Switch
                             name={name}
-                            onChange={handleSwitchChange.bind(
-                                this,
-                                name,
-                                value
-                            )}
-                            checked={value === 'true'}
+                            onChange={onChangeBoolean}
+                            checked={checked}
                         />
                     }
                 />
@@ -137,11 +124,13 @@ export const StrategyParameter = ({
                 variant="outlined"
                 size="small"
                 style={{ width: '100%' }}
-                required={required}
+                aria-required={required}
                 disabled={!editable}
+                error={Boolean(error)}
+                helperText={error}
                 name={name}
-                label={name}
-                onChange={onChangeTextField.bind(this, name)}
+                label={label}
+                onChange={onChange}
                 value={parseParameterString(parameters[name])}
             />
             <InputCaption text={description} />
