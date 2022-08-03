@@ -102,7 +102,7 @@ export const ProjectAccessTable: VFC = () => {
                         </UserAvatar>
                     </TextCell>
                 ),
-                maxWidth: 85,
+                maxWidth: 185,
                 disableSortBy: true,
             },
             {
@@ -163,7 +163,7 @@ export const ProjectAccessTable: VFC = () => {
                 maxWidth: 150,
             },
             {
-                Header: 'Last login',
+                Header: 'Last logi',
                 accessor: (row: IProjectAccess) => {
                     if (row.type === ENTITY_TYPE.USER) {
                         const userRow = row.entity as IUser;

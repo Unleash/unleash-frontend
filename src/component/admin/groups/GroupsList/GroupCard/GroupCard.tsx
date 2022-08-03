@@ -93,6 +93,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 condition={group.projects.length > 0}
                                 show={group.projects.map(project => (
                                     <Badge
+                                        key={project}
                                         color="secondary"
                                         icon={<TopicOutlinedIcon />}
                                         sx={{ marginRight: 0.5 }}

@@ -20,6 +20,7 @@ import { IGroup, IGroupUser } from 'interfaces/group';
 import { VFC, useState } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
+import { colors } from '../../../../themes/colors';
 
 const StyledPageContent = styled(PageContent)(({ theme }) => ({
     height: '100vh',
@@ -31,6 +32,7 @@ const StyledPageContent = styled(PageContent)(({ theme }) => ({
     '& .body': {
         padding: theme.spacing(3, 0, 0, 0),
     },
+    borderRadius: `${theme.spacing(1.5, 0, 0, 1.5)} !important`,
 }));
 
 const StyledTitle = styled('div')(({ theme }) => ({
@@ -38,7 +40,7 @@ const StyledTitle = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     '& > span': {
         color: theme.palette.text.secondary,
-        fontSize: theme.fontSizes.smallBody,
+        fontSize: theme.fontSizes.bodySize,
     },
 }));
 

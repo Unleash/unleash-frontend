@@ -133,28 +133,34 @@ export const Group: VFC = () => {
                 Cell: ({ row: { original: rowUser } }: any) => (
                     <ActionCell>
                         <Tooltip title="Edit user" arrow describeChild>
-                            <IconButton
-                                onClick={() => {
-                                    setSelectedUser(rowUser);
-                                    setEditUserOpen(true);
-                                }}
-                            >
-                                <Edit />
-                            </IconButton>
+                            <span>
+                                <IconButton
+                                    disabled={group?.users.length == 1}
+                                    onClick={() => {
+                                        setSelectedUser(rowUser);
+                                        setEditUserOpen(true);
+                                    }}
+                                >
+                                    <Edit />
+                                </IconButton>
+                            </span>
                         </Tooltip>
                         <Tooltip
                             title="Remove user from group"
                             arrow
                             describeChild
                         >
-                            <IconButton
-                                onClick={() => {
-                                    setSelectedUser(rowUser);
-                                    setRemoveUserOpen(true);
-                                }}
-                            >
-                                <Delete />
-                            </IconButton>
+                            <span>
+                                <IconButton
+                                    disabled={group?.users.length == 1}
+                                    onClick={() => {
+                                        setSelectedUser(rowUser);
+                                        setRemoveUserOpen(true);
+                                    }}
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </span>
                         </Tooltip>
                     </ActionCell>
                 ),
