@@ -16,8 +16,8 @@ export const useStyles = makeStyles()(theme => ({
         fill: '#fff',
     },
     accordion: {
-        border: `1px solid ${theme.palette.grey[400]}`,
-        borderRadius: '8px',
+        border: `1px solid ${theme.palette.dividerAlternative}`,
+        borderRadius: theme.shape.borderRadiusMedium,
         backgroundColor: '#fff',
         boxShadow: 'none',
         margin: 0,
@@ -25,6 +25,9 @@ export const useStyles = makeStyles()(theme => ({
     accordionRoot: {
         '&:before': {
             opacity: '0 !important',
+        },
+        '&:first-of-type, &:last-of-type': {
+            borderRadius: theme.shape.borderRadiusMedium,
         },
     },
     accordionEdit: {
