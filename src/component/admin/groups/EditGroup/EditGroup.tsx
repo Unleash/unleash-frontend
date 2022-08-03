@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { EDIT } from 'constants/misc';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
+import { UG_SAVE_BTN_ID } from 'utils/testIds';
 
 export const EditGroup = () => {
     const groupId = Number(useRequiredPathParam('groupId'));
@@ -85,7 +86,12 @@ export const EditGroup = () => {
                 mode={EDIT}
                 clearErrors={clearErrors}
             >
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    data-testid={UG_SAVE_BTN_ID}
+                >
                     Save
                 </Button>
             </GroupForm>
