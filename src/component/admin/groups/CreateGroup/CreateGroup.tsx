@@ -43,7 +43,7 @@ export const CreateGroup = () => {
                 confetti: true,
                 type: 'success',
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             setToastApiError(formatUnknownError(error));
         }
     };
