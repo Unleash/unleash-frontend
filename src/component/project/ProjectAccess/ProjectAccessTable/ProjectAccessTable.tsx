@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
-import { Button, useMediaQuery, useTheme } from '@mui/material';
+import { Button, styled, useMediaQuery, useTheme } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { sortTypes } from 'utils/sortTypes';
 import useProjectAccess, {
@@ -44,6 +44,20 @@ const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
     'ProjectAccess:v1',
     defaultSort
 );
+
+const StyledUserAvatars = styled('div')(({ theme }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginLeft: theme.spacing(1),
+}));
+
+const StyledEmptyAvatar = styled(UserAvatar)(({ theme }) => ({
+    marginRight: theme.spacing(-3.5),
+}));
+const StyledGroupAvatar = styled(UserAvatar)(({ theme }) => ({
+    outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
+}));
 
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -96,13 +110,17 @@ export const ProjectAccessTable: VFC = () => {
                 Header: 'Avatar',
                 accessor: 'imageUrl',
                 Cell: ({ row: { original: row } }: any) => (
-                    <TextCell>
-                        <UserAvatar user={row.entity}>
+                    <StyledUserAvatars>
+                        <ConditionallyRender
+                            condition={row.type === ENTITY_TYPE.GROUP}
+                            show={<StyledEmptyAvatar />}
+                        />
+                        <StyledGroupAvatar user={row.entity}>
                             {row.entity.users?.length}
-                        </UserAvatar>
-                    </TextCell>
+                        </StyledGroupAvatar>
+                    </StyledUserAvatars>
                 ),
-                maxWidth: 185,
+                maxWidth: 85,
                 disableSortBy: true,
             },
             {
@@ -163,7 +181,7 @@ export const ProjectAccessTable: VFC = () => {
                 maxWidth: 150,
             },
             {
-                Header: 'Last logi',
+                Header: 'Last login',
                 accessor: (row: IProjectAccess) => {
                     if (row.type === ENTITY_TYPE.USER) {
                         const userRow = row.entity as IUser;
