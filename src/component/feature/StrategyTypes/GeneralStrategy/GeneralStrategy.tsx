@@ -3,12 +3,13 @@ import { FormControlLabel, Switch, TextField, Tooltip } from '@mui/material';
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
 import { IStrategy, IFeatureStrategyParameters } from 'interfaces/strategy';
-import { useStyles } from './GeneralStrategy.styles';
 import {
     parseParameterNumber,
     parseParameterStrings,
     parseParameterString,
 } from 'utils/parseParameter';
+import { InputCaption } from 'component/common/InputCaption/InputCaption';
+import { styled } from '@mui/system';
 
 interface IGeneralStrategyProps {
     parameters: IFeatureStrategyParameters;
@@ -17,13 +18,17 @@ interface IGeneralStrategyProps {
     editable: boolean;
 }
 
+const StyledContainer = styled('div')(({ theme }) => ({
+    display: 'grid',
+    gap: theme.spacing(4),
+}));
+
 const GeneralStrategy = ({
     parameters,
     strategyDefinition,
     updateParameter,
     editable,
 }: IGeneralStrategyProps) => {
-    const { classes: styles } = useStyles();
     const onChangeTextField = (
         field: string,
         evt: React.ChangeEvent<HTMLInputElement>
@@ -53,7 +58,7 @@ const GeneralStrategy = ({
     }
 
     return (
-        <div className={styles.container}>
+        <StyledContainer>
             {strategyDefinition.parameters.map(
                 ({ name, type, description, required }) => {
                     if (type === 'percentage') {
@@ -71,11 +76,7 @@ const GeneralStrategy = ({
                                     minLabel="off"
                                     maxLabel="on"
                                 />
-                                {description && (
-                                    <p className={styles.helpText}>
-                                        {description}
-                                    </p>
-                                )}
+                                <InputCaption text={description} />
                             </div>
                         );
                     } else if (type === 'list') {
@@ -88,11 +89,7 @@ const GeneralStrategy = ({
                                     disabled={!editable}
                                     setConfig={updateParameter}
                                 />
-                                {description && (
-                                    <p className={styles.helpText}>
-                                        {description}
-                                    </p>
-                                )}
+                                <InputCaption text={description} />
                             </div>
                         );
                     } else if (type === 'number') {
@@ -121,11 +118,7 @@ const GeneralStrategy = ({
                                     )}
                                     value={value}
                                 />
-                                {description && (
-                                    <p className={styles.helpText}>
-                                        {description}
-                                    </p>
-                                )}
+                                <InputCaption text={description} />
                             </div>
                         );
                     } else if (type === 'boolean') {
@@ -174,17 +167,13 @@ const GeneralStrategy = ({
                                     )}
                                     value={value}
                                 />
-                                {description && (
-                                    <p className={styles.helpText}>
-                                        {description}
-                                    </p>
-                                )}
+                                <InputCaption text={description} />
                             </div>
                         );
                     }
                 }
             )}
-        </div>
+        </StyledContainer>
     );
 };
 
