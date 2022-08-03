@@ -16,13 +16,13 @@ import {
     createStrategyPayload,
     featureStrategyDocsLinkLabel,
 } from '../FeatureStrategyEdit/FeatureStrategyEdit';
-import { getStrategyObject } from 'utils/getStrategyObject';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { CREATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import { ISegment } from 'interfaces/segment';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { formatStrategyName } from 'utils/strategyNames';
 import { useFeatureImmutable } from 'hooks/api/getters/useFeature/useFeatureImmutable';
+import { createFeatureStrategy } from 'utils/createFeatureStrategy';
 
 export const FeatureStrategyCreate = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -46,8 +46,8 @@ export const FeatureStrategyCreate = () => {
     );
 
     useEffect(() => {
-        // Fill in the default values once the strategies have been fetched.
-        setStrategy(getStrategyObject(strategies, strategyName, featureId));
+        const strategy = strategies.find(s => s.name === strategyName);
+        strategy && setStrategy(createFeatureStrategy(featureId, strategy));
     }, [strategies, strategyName, featureId]);
 
     const onSubmit = async () => {
