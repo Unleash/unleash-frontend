@@ -2,7 +2,7 @@ import { Popover, styled } from '@mui/material';
 import { IGroupUser, Role } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Badge } from 'component/common/Badge/Badge';
-import StarIcon from '@mui/icons-material/Star';
+import { StarRounded } from '@mui/icons-material';
 
 const StyledPopover = styled(Popover)(({ theme }) => ({
     pointerEvents: 'none',
@@ -11,7 +11,7 @@ const StyledPopover = styled(Popover)(({ theme }) => ({
     },
 }));
 
-const StyledPopupStar = styled(StarIcon)(({ theme }) => ({
+const StyledPopupStar = styled(StarRounded)(({ theme }) => ({
     color: theme.palette.warning.main,
 }));
 

@@ -3,9 +3,9 @@ import { ConditionallyRender } from 'component/common/ConditionallyRender/Condit
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { Role } from 'interfaces/group';
 import { Badge } from 'component/common/Badge/Badge';
-import StarIcon from '@mui/icons-material/Star';
+import { StarRounded } from '@mui/icons-material';
 
-const StyledPopupStar = styled(StarIcon)(({ theme }) => ({
+const StyledPopupStar = styled(StarRounded)(({ theme }) => ({
     color: theme.palette.warning.main,
 }));
 
