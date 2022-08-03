@@ -31,16 +31,14 @@ const StyledGroupCard = styled('aside')(({ theme }) => ({
     },
 }));
 
-const StyledTitleRow = styled('div')(() => ({
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-}));
-
 const StyledRow = styled('div')(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+}));
+
+const StyledTitleRow = styled(StyledRow)(() => ({
+    alignItems: 'flex-start',
 }));
 
 const StyledBottomRow = styled(StyledRow)(() => ({
@@ -72,7 +70,11 @@ const StyledCounterDescription = styled('span')(({ theme }) => ({
 }));
 
 const ProjectBadgeContainer = styled('div')(() => ({
-    width: '50%',
+    maxWidth: '50%',
+}));
+
+const StyledBadge = styled(Badge)(() => ({
+    marginRight: 0.5,
 }));
 
 interface IGroupCardProps {
@@ -117,7 +119,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                         placement="bottom-end"
                                         describeChild
                                     >
-                                        <Badge
+                                        <StyledBadge
                                             onClick={e => {
                                                 e.preventDefault();
                                                 navigate(
@@ -126,10 +128,9 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                             }}
                                             color="secondary"
                                             icon={<TopicOutlinedIcon />}
-                                            sx={{ marginRight: 0.5 }}
                                         >
                                             {project}
-                                        </Badge>
+                                        </StyledBadge>
                                     </Tooltip>
                                 ))}
                                 elseShow={

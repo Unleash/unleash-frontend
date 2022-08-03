@@ -3,7 +3,6 @@ import { IGroupUser, Role } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Badge } from 'component/common/Badge/Badge';
 import StarIcon from '@mui/icons-material/Star';
-import { StyledMemberBadge } from '../../../../GroupUserRoleCell/GroupUserRoleCell';
 
 const StyledPopover = styled(Popover)(({ theme }) => ({
     pointerEvents: 'none',
@@ -53,7 +52,7 @@ export const GroupPopover = ({
         >
             <ConditionallyRender
                 condition={user?.role === Role.Member}
-                show={<StyledMemberBadge>{user?.role}</StyledMemberBadge>}
+                show={<Badge>{user?.role}</Badge>}
                 elseShow={
                     <Badge color="success" icon={<StyledPopupStar />}>
                         {user?.role}
