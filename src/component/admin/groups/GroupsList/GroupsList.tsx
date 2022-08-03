@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { IGroup } from 'interfaces/group';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -11,6 +11,9 @@ import theme from 'themes/theme';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { TablePlaceholder } from 'component/common/Table';
 import { GroupCard } from './GroupCard/GroupCard';
+import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { Add } from '@mui/icons-material';
 
 type PageQueryType = Partial<Record<'search', string>>;
 
@@ -31,6 +34,7 @@ const groupsSearch = (group: IGroup, searchValue: string) => {
 };
 
 export const GroupsList: VFC = () => {
+    const navigate = useNavigate();
     const { groups = [], loading } = useGroups();
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState(
@@ -79,14 +83,16 @@ export const GroupsList: VFC = () => {
                                     </>
                                 }
                             />
-                            <Button
-                                to="/admin/groups/create-group"
-                                component={Link}
-                                variant="contained"
-                                color="primary"
+                            <ResponsiveButton
+                                onClick={() =>
+                                    navigate('/admin/groups/create-group')
+                                }
+                                maxWidth="700px"
+                                Icon={Add}
+                                permission={ADMIN}
                             >
                                 New group
-                            </Button>
+                            </ResponsiveButton>
                         </>
                     }
                 >

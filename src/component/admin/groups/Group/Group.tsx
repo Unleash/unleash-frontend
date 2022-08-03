@@ -26,7 +26,7 @@ import { HighlightCell } from 'component/common/Table/cells/HighlightCell/Highli
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
 import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
-import { Delete, Edit } from '@mui/icons-material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
@@ -37,6 +37,7 @@ import { AddGroupUser } from './AddGroupUser/AddGroupUser';
 import { EditGroupUser } from './EditGroupUser/EditGroupUser';
 import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
+import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 
 const StyledEdit = styled(Edit)(({ theme }) => ({
     fontSize: theme.fontSizes.mainHeader,
@@ -301,15 +302,16 @@ export const Group: VFC = () => {
                                                 </>
                                             }
                                         />
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
+                                        <ResponsiveButton
                                             onClick={() => {
                                                 setAddUserOpen(true);
                                             }}
+                                            maxWidth="700px"
+                                            Icon={Add}
+                                            permission={ADMIN}
                                         >
                                             Add user
-                                        </Button>
+                                        </ResponsiveButton>
                                     </>
                                 }
                             >

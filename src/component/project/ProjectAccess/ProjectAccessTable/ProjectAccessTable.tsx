@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { VirtualizedTable, TablePlaceholder } from 'component/common/Table';
-import { Button, styled, useMediaQuery, useTheme } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+import { styled, useMediaQuery, useTheme } from '@mui/material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 import { sortTypes } from 'utils/sortTypes';
 import useProjectAccess, {
     ENTITY_TYPE,
@@ -33,7 +33,8 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
-import theme from '../../../../themes/theme';
+import theme from 'themes/theme';
+import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -389,13 +390,14 @@ export const ProjectAccessTable: VFC = () => {
                                     </>
                                 }
                             />
-                            <Button
-                                variant="contained"
-                                color="primary"
+                            <ResponsiveButton
                                 onClick={() => setAssignOpen(true)}
+                                maxWidth="700px"
+                                Icon={Add}
+                                permission={UPDATE_PROJECT}
                             >
                                 Assign {entityType}
-                            </Button>
+                            </ResponsiveButton>
                         </>
                     }
                 >

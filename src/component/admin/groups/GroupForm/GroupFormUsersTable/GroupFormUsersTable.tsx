@@ -11,8 +11,7 @@ import { VirtualizedTable } from 'component/common/Table';
 import { useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
-import useUiConfig from '../../../../../hooks/api/getters/useUiConfig/useUiConfig';
-import theme from '../../../../../themes/theme';
+import theme from 'themes/theme';
 
 interface IGroupFormUsersTableProps {
     users: IGroupUser[];

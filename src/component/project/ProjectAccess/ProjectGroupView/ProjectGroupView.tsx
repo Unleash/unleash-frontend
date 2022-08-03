@@ -20,7 +20,6 @@ import { IGroup, IGroupUser } from 'interfaces/group';
 import { VFC, useState } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
-import { colors } from '../../../../themes/colors';
 
 const StyledPageContent = styled(PageContent)(({ theme }) => ({
     height: '100vh',
