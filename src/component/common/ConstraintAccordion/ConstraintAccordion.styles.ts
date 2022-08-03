@@ -33,7 +33,10 @@ export const useStyles = makeStyles()(theme => ({
     headerMetaInfo: {
         display: 'flex',
         alignItems: 'stretch',
-        [theme.breakpoints.down(710)]: { flexDirection: 'column' },
+        [theme.breakpoints.down(710)]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
     },
     headerContainer: {
         display: 'flex',
@@ -74,6 +77,9 @@ export const useStyles = makeStyles()(theme => ({
         [theme.breakpoints.between(1101, 1365)]: {
             minWidth: '152px',
             paddingRight: '0.5rem',
+        },
+        [theme.breakpoints.down(710)]: {
+            paddingRight: 0,
         },
     },
     editingBadge: {
