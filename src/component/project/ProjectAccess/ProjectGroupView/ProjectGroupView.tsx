@@ -17,9 +17,10 @@ import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { useSearch } from 'hooks/useSearch';
 import { IGroup, IGroupUser } from 'interfaces/group';
-import { VFC, useState } from 'react';
+import { VFC, useState, useEffect, useMemo } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
+import theme from '../../../../themes/theme';
 
 const StyledPageContent = styled(PageContent)(({ theme }) => ({
     height: '100vh',
@@ -81,6 +82,7 @@ const columns = [
         filterName: 'type',
     },
     {
+        id: 'joined',
         Header: 'Joined',
         accessor: 'joinedAt',
         Cell: DateCell,
@@ -88,6 +90,7 @@ const columns = [
         maxWidth: 150,
     },
     {
+        id: 'lastLogin',
         Header: 'Last login',
         accessor: (row: IGroupUser) => row.seenAt || '',
         Cell: ({ row: { original: user } }: any) => (
@@ -107,6 +110,20 @@ interface IProjectGroupViewProps {
     onEdit: () => void;
     onRemove: () => void;
 }
+
+const useHiddenColumns = (): string[] => {
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    return useMemo(() => {
+        const hidden: string[] = [];
+
+        if (isMediumScreen) {
+            hidden.push('imageUrl', 'name', 'joined', 'lastLogin');
+        }
+
+        return hidden;
+    }, [isMediumScreen]);
+};
 
 export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
     open,
@@ -136,7 +153,7 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         group?.users ?? []
     );
 
-    const { headerGroups, rows, prepareRow } = useTable(
+    const { headerGroups, rows, prepareRow, setHiddenColumns } = useTable(
         {
             columns: columns as any[],
             data,
@@ -149,6 +166,12 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         useSortBy,
         useFlexLayout
     );
+
+    const hiddenColumns = useHiddenColumns();
+
+    useEffect(() => {
+        setHiddenColumns(hiddenColumns);
+    }, [setHiddenColumns, hiddenColumns]);
 
     return (
         <SidebarModal
