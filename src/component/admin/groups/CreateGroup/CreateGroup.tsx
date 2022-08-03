@@ -25,7 +25,6 @@ export const CreateGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
-        setErrors,
     } = useGroupForm();
 
     const { createGroup, loading } = useGroupApi();
