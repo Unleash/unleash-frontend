@@ -45,11 +45,7 @@ export const CreateGroup = () => {
                 type: 'success',
             });
         } catch (error: any) {
-            if (error.body.name === 'NameExistsError') {
-                setErrors(prev => ({ ...prev, name: error.message }));
-            } else {
-                setToastApiError(formatUnknownError(error));
-            }
+            setToastApiError(formatUnknownError(error));
         }
     };
 

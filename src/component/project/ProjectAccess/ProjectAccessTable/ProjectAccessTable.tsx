@@ -175,16 +175,8 @@ export const ProjectAccessTable: VFC = () => {
                         .sort()
                         .reverse()[0];
                 },
-                Cell: ({ value, row: { original: row } }: any) => (
-                    <ConditionallyRender
-                        condition={row.type === ENTITY_TYPE.USER}
-                        show={
-                            <TimeAgoCell
-                                value={value}
-                                emptyText="Never logged"
-                            />
-                        }
-                    />
+                Cell: ({ value }: { value: Date }) => (
+                    <TimeAgoCell value={value} emptyText="Never logged" />
                 ),
                 sortType: 'date',
                 maxWidth: 150,

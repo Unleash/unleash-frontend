@@ -113,7 +113,7 @@ export const GroupCard = ({ group }: IGroupCardProps) => {
                                 condition={group.projects.length > 0}
                                 show={group.projects.map(project => (
                                     <Tooltip
-                                        key={group.id}
+                                        key={project}
                                         title="View project"
                                         arrow
                                         placement="bottom-end"
