@@ -33,6 +33,7 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
+import theme from '../../../../themes/theme';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -58,6 +59,20 @@ const StyledEmptyAvatar = styled(UserAvatar)(({ theme }) => ({
 const StyledGroupAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
 }));
+
+const useHiddenColumns = (): string[] => {
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    return useMemo(() => {
+        const hidden: string[] = [];
+
+        if (isMediumScreen) {
+            hidden.push('imageUrl', 'username', 'role', 'added', 'lastLogin');
+        }
+
+        return hidden;
+    }, [isMediumScreen]);
+};
 
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -161,6 +176,7 @@ export const ProjectAccessTable: VFC = () => {
                 searchable: true,
             },
             {
+                id: 'role',
                 Header: 'Role',
                 accessor: (row: IProjectAccess) =>
                     roles.find(({ id }) => id === row.entity.roleId)?.name,
@@ -181,6 +197,7 @@ export const ProjectAccessTable: VFC = () => {
                 maxWidth: 150,
             },
             {
+                id: 'lastLogin',
                 Header: 'Last login',
                 accessor: (row: IProjectAccess) => {
                     if (row.type === ENTITY_TYPE.USER) {
@@ -272,6 +289,7 @@ export const ProjectAccessTable: VFC = () => {
         headerGroups,
         rows,
         prepareRow,
+        setHiddenColumns,
         state: { sortBy },
     } = useTable(
         {
@@ -289,6 +307,12 @@ export const ProjectAccessTable: VFC = () => {
         useSortBy,
         useFlexLayout
     );
+
+    const hiddenColumns = useHiddenColumns();
+
+    useEffect(() => {
+        setHiddenColumns(hiddenColumns);
+    }, [setHiddenColumns, hiddenColumns]);
 
     useEffect(() => {
         const tableState: PageQueryType = {};

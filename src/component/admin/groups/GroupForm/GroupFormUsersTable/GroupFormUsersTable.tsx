@@ -1,5 +1,5 @@
-import { useMemo, VFC } from 'react';
-import { IconButton, Tooltip } from '@mui/material';
+import { useEffect, useMemo, VFC } from 'react';
+import { IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { IGroupUser } from 'interfaces/group';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
@@ -11,11 +11,28 @@ import { VirtualizedTable } from 'component/common/Table';
 import { useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
+import useUiConfig from '../../../../../hooks/api/getters/useUiConfig/useUiConfig';
+import theme from '../../../../../themes/theme';
 
 interface IGroupFormUsersTableProps {
     users: IGroupUser[];
     setUsers: React.Dispatch<React.SetStateAction<IGroupUser[]>>;
 }
+
+const useHiddenColumns = (): string[] => {
+    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    return useMemo(() => {
+        const hidden: string[] = [];
+
+        if (isMediumScreen) {
+            hidden.push('imageUrl');
+            hidden.push('name');
+        }
+
+        return hidden;
+    }, [isMediumScreen]);
+};
 
 export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
     users,
@@ -106,7 +123,7 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         [setUsers]
     );
 
-    const { headerGroups, rows, prepareRow } = useTable(
+    const { headerGroups, rows, prepareRow, setHiddenColumns } = useTable(
         {
             columns: columns as any[],
             data: users as any[],
@@ -118,6 +135,12 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         useSortBy,
         useFlexLayout
     );
+
+    const hiddenColumns = useHiddenColumns();
+
+    useEffect(() => {
+        setHiddenColumns(hiddenColumns);
+    }, [setHiddenColumns, hiddenColumns]);
 
     return (
         <ConditionallyRender
