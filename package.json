@@ -66,7 +66,7 @@
     "chart.js": "3.8.2",
     "chartjs-adapter-date-fns": "2.0.0",
     "classnames": "2.3.1",
-    "copy-to-clipboard": "3.3.1",
+    "copy-to-clipboard": "3.3.2",
     "cypress": "9.7.0",
     "date-fns": "2.29.1",
     "debounce": "1.2.1",
@@ -103,7 +103,7 @@
     "vitest": "0.20.3",
     "whatwg-fetch": "^3.6.2",
     "@codemirror/lang-json": "6.0.0",
-    "@codemirror/state": "6.1.0",
+    "@codemirror/state": "6.1.1",
     "@uiw/react-codemirror": "^4.11.4",
     "codemirror": "^6.0.1"
   },
