@@ -16,7 +16,7 @@ describe('groups', () => {
         disableActiveSplashScreens();
         cy.login();
         for (let i = 1; i <= 2; i++) {
-            cy.request('POST', `${baseUrl}/api/admin/user-admin/`, {
+            cy.request('POST', `${baseUrl}/api/admin/user-admin`, {
                 name: `unleash-e2e-user${i}-${randomId}`,
                 email: `unleash-e2e-user${i}-${randomId}@test.com`,
                 sendEmail: false,
