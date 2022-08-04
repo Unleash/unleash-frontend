@@ -82,7 +82,9 @@ export const FeatureStrategyForm = ({
     }
 
     const findParameterDefinition = (name: string): IStrategyParameter => {
-        return strategyDefinition.parameters.find(p => p.name === name)!;
+        return strategyDefinition.parameters.find(parameterDefinition => {
+            return parameterDefinition.name === name;
+        })!;
     };
 
     const validateParameter = (
@@ -104,7 +106,8 @@ export const FeatureStrategyForm = ({
 
     const validateAllParameters = (): boolean => {
         return strategyDefinition.parameters
-            .map(p => validateParameter(p.name, strategy.parameters?.[p.name]))
+            .map(parameter => parameter.name)
+            .map(name => validateParameter(name, strategy.parameters?.[name]))
             .every(Boolean);
     };
 

@@ -47,10 +47,15 @@ export const FeatureStrategyCreate = () => {
         featureId
     );
 
+    const strategyDefinition = strategies.find(strategy => {
+        return strategy.name === strategyName;
+    });
+
     useEffect(() => {
-        const strategy = strategies.find(s => s.name === strategyName);
-        strategy && setStrategy(createFeatureStrategy(featureId, strategy));
-    }, [strategies, strategyName, featureId]);
+        if (strategyDefinition) {
+            setStrategy(createFeatureStrategy(featureId, strategyDefinition));
+        }
+    }, [featureId, strategyDefinition]);
 
     const onSubmit = async () => {
         try {
