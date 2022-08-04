@@ -45,7 +45,6 @@ export const StrategyDraggableItem = ({
     onDragOver,
     onDragEnd,
 }: IStrategyDraggableItemProps) => {
-    // const ref = useDragItem(index, onDragAndDrop);
     const ref = useRef<HTMLDivElement>(null);
 
     return (
