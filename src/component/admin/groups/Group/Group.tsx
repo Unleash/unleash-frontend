@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import {
-    Button,
     IconButton,
     styled,
     Tooltip,
     useMediaQuery,
     useTheme,
 } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { TablePlaceholder, VirtualizedTable } from 'component/common/Table';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
@@ -31,7 +30,6 @@ import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
-import { Link } from 'react-router-dom';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { AddGroupUser } from './AddGroupUser/AddGroupUser';
 import { EditGroupUser } from './EditGroupUser/EditGroupUser';
@@ -144,7 +142,7 @@ export const Group: VFC = () => {
                             <span>
                                 <IconButton
                                     data-testid={`${UG_EDIT_USER_BTN_ID}-${rowUser.id}`}
-                                    disabled={group?.users.length == 1}
+                                    disabled={group?.users.length === 1}
                                     onClick={() => {
                                         setSelectedUser(rowUser);
                                         setEditUserOpen(true);
@@ -162,7 +160,7 @@ export const Group: VFC = () => {
                             <span>
                                 <IconButton
                                     data-testid={`${UG_REMOVE_USER_BTN_ID}-${rowUser.id}`}
-                                    disabled={group?.users.length == 1}
+                                    disabled={group?.users.length === 1}
                                     onClick={() => {
                                         setSelectedUser(rowUser);
                                         setRemoveUserOpen(true);
@@ -178,7 +176,7 @@ export const Group: VFC = () => {
                 disableSortBy: true,
             },
         ],
-        [setSelectedUser, setRemoveUserOpen]
+        [setSelectedUser, setRemoveUserOpen, group?.users.length]
     );
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -384,13 +382,13 @@ export const Group: VFC = () => {
                         <EditGroupUser
                             open={editUserOpen}
                             setOpen={setEditUserOpen}
-                            user={selectedUser!}
+                            user={selectedUser}
                             group={group!}
                         />
                         <RemoveGroupUser
                             open={removeUserOpen}
                             setOpen={setRemoveUserOpen}
-                            user={selectedUser!}
+                            user={selectedUser}
                             group={group!}
                         />
                     </PageContent>
