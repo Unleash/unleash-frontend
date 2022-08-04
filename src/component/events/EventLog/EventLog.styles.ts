@@ -1,13 +1,11 @@
 import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()(theme => ({
-    eventEntry: {
-        border: `1px solid ${theme.palette.neutral.light}`,
-        padding: '1rem',
-        margin: '1rem 0',
-        borderRadius: theme.shape.borderRadius,
-    },
-    history: {
+    events: {
+        listStyleType: 'none',
+        margin: 0,
+        padding: 0,
+
         '& code': {
             wordWrap: 'break-word',
             whiteSpace: 'pre',

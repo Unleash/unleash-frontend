@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useStyles } from './EventJson.styles';
+import { useStyles } from 'component/events/EventJson/EventJson.styles';
 import { IEvent } from 'interfaces/event';
 
 interface IEventJsonProps {

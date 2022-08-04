@@ -1,23 +1,30 @@
-import EventDiff from 'component/history/EventLog/EventCard/EventDiff/EventDiff';
-import { useStyles } from './EventCard.styles';
+import EventDiff from 'component/events/EventDiff/EventDiff';
+import { useStyles } from 'component/events/EventCard/EventCard.styles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IEvent } from 'interfaces/event';
+import { useLocationSettings } from 'hooks/useLocationSettings';
+import { formatDateYMDHMS } from 'utils/formatDate';
 
 interface IEventCardProps {
     entry: IEvent;
-    timeFormatted: string;
 }
 
-const EventCard = ({ entry, timeFormatted }: IEventCardProps) => {
+const EventCard = ({ entry }: IEventCardProps) => {
     const { classes: styles } = useStyles();
+    const { locationSettings } = useLocationSettings();
+
+    const createdAtFormatted = formatDateYMDHMS(
+        entry.createdAt,
+        locationSettings.locale
+    );
 
     return (
-        <div>
+        <li className={styles.eventEntry}>
             <dl>
                 <dt className={styles.eventLogHeader}>Event id: </dt>
                 <dd>{entry.id}</dd>
                 <dt className={styles.eventLogHeader}>Changed at:</dt>
-                <dd>{timeFormatted}</dd>
+                <dd>{createdAtFormatted}</dd>
                 <dt className={styles.eventLogHeader}>Event: </dt>
                 <dd>{entry.type}</dd>
                 <dt className={styles.eventLogHeader}>Changed by: </dt>
@@ -50,7 +57,7 @@ const EventCard = ({ entry, timeFormatted }: IEventCardProps) => {
                     </>
                 }
             />
-        </div>
+        </li>
     );
 };
 

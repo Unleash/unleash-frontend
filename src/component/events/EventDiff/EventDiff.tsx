@@ -1,5 +1,5 @@
 import { diff } from 'deep-diff';
-import { useStyles } from './EventDiff.styles';
+import { useStyles } from 'component/events/EventDiff/EventDiff.styles';
 import { IEvent } from 'interfaces/event';
 
 const DIFF_PREFIXES = {
