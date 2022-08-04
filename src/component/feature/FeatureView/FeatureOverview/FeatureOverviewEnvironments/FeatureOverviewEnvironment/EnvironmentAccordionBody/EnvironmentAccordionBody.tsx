@@ -30,7 +30,11 @@ const EnvironmentAccordionBody = ({
     const [strategies, setStrategies] = useState(
         featureEnvironment?.strategies || []
     );
-    const [dragId, setDragId] = useState<string | null>(null);
+    const [dragItem, setDragItem] = useState<{
+        id: string;
+        index: number;
+        height: number;
+    } | null>(null);
     const { classes: styles } = useStyles();
     useEffect(() => {
         // Use state to enable drag and drop, but switch to API output when it arrives
@@ -41,37 +45,23 @@ const EnvironmentAccordionBody = ({
         return null;
     }
 
-    // FIXME: API
-    // const onDragAndDrop = async (
-    //     from: number,
-    //     to: number,
-    //     dropped?: boolean
-    // ) => {
-    //     if (from !== to && dropped) {
-    //         const newStrategies = [...strategies];
-    //         const movedStrategy = newStrategies.splice(from, 1)[0];
-    //         newStrategies.splice(to, 0, movedStrategy);
-    //         setStrategies(newStrategies);
-    //         try {
-    //             await setStrategiesSortOrder(
-    //                 projectId,
-    //                 featureId,
-    //                 featureEnvironment.name,
-    //                 [...newStrategies].map((strategy, sortOrder) => ({
-    //                     id: strategy.id,
-    //                     sortOrder,
-    //                 }))
-    //             );
-    //             refetchFeature();
-    //             setToastData({
-    //                 title: 'Order of strategies updated',
-    //                 type: 'success',
-    //             });
-    //         } catch (error: unknown) {
-    //             setToastApiError(formatUnknownError(error));
-    //         }
-    //     }
-    // };
+    const onReorder = async (payload: { id: string; sortOrder: number }[]) => {
+        try {
+            await setStrategiesSortOrder(
+                projectId,
+                featureId,
+                featureEnvironment.name,
+                payload
+            );
+            refetchFeature();
+            setToastData({
+                title: 'Order of strategies updated',
+                type: 'success',
+            });
+        } catch (error: unknown) {
+            setToastApiError(formatUnknownError(error));
+        }
+    };
 
     const onDragStartRef =
         (
@@ -79,7 +69,11 @@ const EnvironmentAccordionBody = ({
             index: number
         ): DragEventHandler<HTMLButtonElement> =>
         event => {
-            setDragId(strategies[index].id);
+            setDragItem({
+                id: strategies[index].id,
+                index,
+                height: ref.current?.offsetHeight || 0,
+            });
 
             if (ref?.current) {
                 event.dataTransfer.effectAllowed = 'move';
@@ -88,20 +82,49 @@ const EnvironmentAccordionBody = ({
             }
         };
 
-    const onDragOver = (id: string) => {
-        if (dragId === null) return;
-        const from = strategies.findIndex(strategy => strategy.id === dragId);
-        const to = strategies.findIndex(strategy => strategy.id === id);
-        const newStrategies = [...strategies];
-        const movedStrategy = newStrategies.splice(from, 1)[0];
-        newStrategies.splice(to, 0, movedStrategy);
-        if (movedStrategy.id !== id) {
-            setStrategies(newStrategies);
-        }
-    };
+    const onDragOver =
+        (targetId: string) =>
+        (
+            ref: RefObject<HTMLDivElement>,
+            targetIndex: number
+        ): DragEventHandler<HTMLDivElement> =>
+        event => {
+            if (dragItem === null || ref.current === null) return;
+            if (dragItem.index === targetIndex || targetId === dragItem.id)
+                return;
+
+            const { top, bottom } = ref.current.getBoundingClientRect();
+            const overTargetTop = event.clientY - top < dragItem.height;
+            const overTargetBottom = bottom - event.clientY < dragItem.height;
+            const draggingUp = dragItem.index > targetIndex;
+
+            // prevent oscillating by only reordering if there is sufficient space
+            if (
+                (overTargetTop && draggingUp) ||
+                (overTargetBottom && !draggingUp)
+            ) {
+                const newStrategies = [...strategies];
+                const movedStrategy = newStrategies.splice(
+                    dragItem.index,
+                    1
+                )[0];
+                newStrategies.splice(targetIndex, 0, movedStrategy);
+                setStrategies(newStrategies);
+                setDragItem({
+                    ...dragItem,
+                    index: targetIndex,
+                });
+            }
+        };
 
     const onDragEnd = () => {
-        setDragId(null);
+        setDragItem(null);
+        onReorder(
+            strategies.map((strategy, sortOrder) => ({
+                id: strategy.id,
+                sortOrder,
+            }))
+        );
     };
 
     return (
@@ -127,9 +150,9 @@ const EnvironmentAccordionBody = ({
                                     index={index}
                                     environmentName={featureEnvironment.name}
                                     otherEnvironments={otherEnvironments}
-                                    isDragging={dragId === strategy.id}
+                                    isDragging={dragItem?.id === strategy.id}
                                     onDragStartRef={onDragStartRef}
-                                    onDragOver={() => onDragOver(strategy.id)}
+                                    onDragOver={onDragOver(strategy.id)}
                                     onDragEnd={onDragEnd}
                                 />
                             ))}

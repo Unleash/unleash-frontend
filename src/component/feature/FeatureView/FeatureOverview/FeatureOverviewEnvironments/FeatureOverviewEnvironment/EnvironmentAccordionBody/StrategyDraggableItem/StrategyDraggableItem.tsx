@@ -16,7 +16,10 @@ interface IStrategyDraggableItemProps {
         ref: RefObject<HTMLDivElement>,
         index: number
     ) => DragEventHandler<HTMLButtonElement>;
-    onDragOver: () => void;
+    onDragOver: (
+        ref: RefObject<HTMLDivElement>,
+        index: number
+    ) => DragEventHandler<HTMLDivElement>;
     onDragEnd: () => void;
 }
 
@@ -49,7 +52,7 @@ export const StrategyDraggableItem = ({
         <Box
             key={strategy.id}
             ref={ref}
-            onDragOver={onDragOver}
+            onDragOver={onDragOver(ref, index)}
             sx={{ opacity: isDragging ? '0.5' : '1' }}
         >
             <ConditionallyRender
