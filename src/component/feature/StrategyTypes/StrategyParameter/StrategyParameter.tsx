@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControlLabel, Switch, TextField, Tooltip } from '@mui/material';
+import { FormControlLabel, Switch, TextField } from '@mui/material';
 import StrategyInputList from '../StrategyInputList/StrategyInputList';
 import RolloutSlider from '../RolloutSlider/RolloutSlider';
 import {
@@ -101,7 +101,7 @@ export const StrategyParameter = ({
         const value = parseParameterString(parameters[name]);
         const checked = value === 'true';
         return (
-            <Tooltip title={description} placement="right-end" arrow>
+            <div>
                 <FormControlLabel
                     label={name}
                     control={
@@ -112,7 +112,8 @@ export const StrategyParameter = ({
                         />
                     }
                 />
-            </Tooltip>
+                <InputCaption text={description} />
+            </div>
         );
     }
 
