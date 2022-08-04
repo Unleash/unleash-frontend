@@ -380,6 +380,7 @@ export const ProjectAccessTable: VFC = () => {
                                 maxWidth="700px"
                                 Icon={Add}
                                 permission={UPDATE_PROJECT}
+                                projectId={projectId}
                             >
                                 Assign {entityType}
                             </ResponsiveButton>
