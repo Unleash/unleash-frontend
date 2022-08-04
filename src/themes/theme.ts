@@ -26,13 +26,16 @@ export default createTheme({
             fontSize: '1.5rem',
             lineHeight: 1.875,
         },
+        h3: {
+            fontSize: '1rem',
+            fontWeight: '700',
+        },
         caption: {
             fontSize: `${12 / 16}rem`,
         },
     },
     fontSizes: {
         mainHeader: '1.25rem',
-        subHeader: '1.1rem',
         bodySize: '1rem',
         smallBody: `${14 / 16}rem`,
         smallerBody: `${12 / 16}rem`,
@@ -128,6 +131,7 @@ export default createTheme({
             recent: colors.green[100],
             inactive: colors.orange[200],
             abandoned: colors.red[200],
+            primary: colors.purple[100],
         },
         inactiveIcon: colors.grey[600],
     },
@@ -255,11 +259,23 @@ export default createTheme({
                 },
             },
         },
+        MuiAccordion: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    '&:first-of-type, &:last-of-type': {
+                        borderRadius: theme.shape.borderRadiusMedium,
+                    },
+                }),
+            },
+        },
         MuiAccordionSummary: {
             styleOverrides: {
                 root: {
                     '& > .MuiAccordionSummary-content.Mui-expanded': {
                         margin: '12px 0',
+                    },
+                    '&.Mui-expanded': {
+                        minHeight: '0',
                     },
                 },
             },

@@ -15,6 +15,7 @@ import { GroupEmpty } from './GroupEmpty/GroupEmpty';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
 import { Add } from '@mui/icons-material';
+import { NAVIGATE_TO_CREATE_GROUP } from 'utils/testIds';
 
 type PageQueryType = Partial<Record<'search', string>>;
 
@@ -91,6 +92,7 @@ export const GroupsList: VFC = () => {
                                 maxWidth="700px"
                                 Icon={Add}
                                 permission={ADMIN}
+                                data-testid={NAVIGATE_TO_CREATE_GROUP}
                             >
                                 New group
                             </ResponsiveButton>

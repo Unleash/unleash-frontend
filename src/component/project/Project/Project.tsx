@@ -16,80 +16,54 @@ import ProjectOverview from './ProjectOverview';
 import ProjectHealth from './ProjectHealth/ProjectHealth';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
-import { TabPanel } from 'component/common/TabNav/TabPanel/TabPanel';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
-import { useOptionalPathParam } from 'hooks/useOptionalPathParam';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 const Project = () => {
     const projectId = useRequiredPathParam('projectId');
-    const activeTab = useOptionalPathParam('activeTab');
     const params = useQueryParams();
     const { project, error, loading, refetch } = useProject(projectId);
     const ref = useLoading(loading);
     const { setToastData } = useToast();
     const { classes: styles } = useStyles();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { isOss } = useUiConfig();
-
     const basePath = `/projects/${projectId}`;
     const projectName = project?.name || projectId;
-    const tabData = [
+
+    const tabs = [
         {
             title: 'Overview',
-            component: (
-                <ProjectOverview
-                    projectId={projectId}
-                    projectName={projectName}
-                />
-            ),
             path: basePath,
             name: 'overview',
         },
         {
             title: 'Health',
-            component: (
-                <ProjectHealth
-                    projectId={projectId}
-                    projectName={projectName}
-                />
-            ),
             path: `${basePath}/health`,
             name: 'health',
         },
         {
             title: 'Access',
-            component: <ProjectAccess projectName={projectName} />,
             path: `${basePath}/access`,
             name: 'access',
         },
         {
             title: 'Environments',
-            component: (
-                <ProjectEnvironment
-                    projectId={projectId}
-                    projectName={projectName}
-                />
-            ),
             path: `${basePath}/environments`,
             name: 'environments',
         },
         {
             title: 'Archive',
-            component: (
-                <ProjectFeaturesArchive
-                    projectId={projectId}
-                    projectName={projectName}
-                />
-            ),
             path: `${basePath}/archive`,
             name: 'archive',
         },
     ];
 
-    const activeTabIdx = activeTab
-        ? tabData.findIndex(tab => tab.name === activeTab)
-        : 0;
+    const activeTab = [...tabs]
+        .reverse()
+        .find(tab => pathname.startsWith(tab.path));
 
     useEffect(() => {
         const created = params.get('created');
@@ -105,31 +79,6 @@ const Project = () => {
 
         /* eslint-disable-next-line */
     }, []);
-
-    const renderTabs = () => {
-        return tabData.map((tab, index) => {
-            return (
-                <Tab
-                    key={tab.title}
-                    id={`tab-${index}`}
-                    aria-controls={`tabpanel-${index}`}
-                    label={tab.title}
-                    onClick={() => navigate(tab.path)}
-                    className={styles.tabButton}
-                />
-            );
-        });
-    };
-
-    const renderTabContent = () => {
-        return tabData.map((tab, index) => {
-            return (
-                <TabPanel value={activeTabIdx} index={index} key={tab.path}>
-                    {tab.component}
-                </TabPanel>
-            );
-        });
-    };
 
     return (
         <div ref={ref}>
@@ -167,15 +116,29 @@ const Project = () => {
                 <div className={styles.separator} />
                 <div className={styles.tabContainer}>
                     <Tabs
-                        value={activeTabIdx}
+                        value={activeTab?.path}
                         indicatorColor="primary"
                         textColor="primary"
                     >
-                        {renderTabs()}
+                        {tabs.map(tab => (
+                            <Tab
+                                key={tab.title}
+                                label={tab.title}
+                                value={tab.path}
+                                onClick={() => navigate(tab.path)}
+                                className={styles.tabButton}
+                            />
+                        ))}
                     </Tabs>
                 </div>
             </div>
-            {renderTabContent()}
+            <Routes>
+                <Route path="health" element={<ProjectHealth />} />
+                <Route path="access/*" element={<ProjectAccess />} />
+                <Route path="environments" element={<ProjectEnvironment />} />
+                <Route path="archive" element={<ProjectFeaturesArchive />} />
+                <Route path="*" element={<ProjectOverview />} />
+            </Routes>
         </div>
     );
 };

@@ -8,8 +8,7 @@ export const useStyles = makeStyles()(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: theme.spacing(1),
-        [theme.breakpoints.down(650)]: {
-            marginBottom: '1rem',
+        [theme.breakpoints.down(710)]: {
             marginRight: 0,
         },
     },
@@ -17,8 +16,8 @@ export const useStyles = makeStyles()(theme => ({
         fill: '#fff',
     },
     accordion: {
-        border: `1px solid ${theme.palette.grey[400]}`,
-        borderRadius: '8px',
+        border: `1px solid ${theme.palette.dividerAlternative}`,
+        borderRadius: theme.shape.borderRadiusMedium,
         backgroundColor: '#fff',
         boxShadow: 'none',
         margin: 0,
@@ -34,7 +33,10 @@ export const useStyles = makeStyles()(theme => ({
     headerMetaInfo: {
         display: 'flex',
         alignItems: 'stretch',
-        [theme.breakpoints.down(710)]: { flexDirection: 'column' },
+        [theme.breakpoints.down(710)]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
     },
     headerContainer: {
         display: 'flex',
@@ -75,6 +77,9 @@ export const useStyles = makeStyles()(theme => ({
         [theme.breakpoints.between(1101, 1365)]: {
             minWidth: '152px',
             paddingRight: '0.5rem',
+        },
+        [theme.breakpoints.down(710)]: {
+            paddingRight: 0,
         },
     },
     editingBadge: {
