@@ -96,10 +96,10 @@ export const FeatureStrategyForm = ({
             value
         );
         if (parameterValueError) {
-            errors.set(name, parameterValueError);
+            errors.setFormError(name, parameterValueError);
             return false;
         } else {
-            errors.remove(name);
+            errors.removeFormError(name);
             return true;
         }
     };
@@ -182,7 +182,11 @@ export const FeatureStrategyForm = ({
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={loading || !hasValidConstraints || errors.some()}
+                    disabled={
+                        loading ||
+                        !hasValidConstraints ||
+                        errors.hasFormErrors()
+                    }
                     data-testid={STRATEGY_FORM_SUBMIT_ID}
                 >
                     Save strategy

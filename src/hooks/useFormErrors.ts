@@ -1,29 +1,29 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import produce from 'immer';
 
 export interface IFormErrors {
     // Get the error message for a field name, if any.
-    get(field: string): string | undefined;
+    getFormError(field: string): string | undefined;
 
     // Set an error message for a field name.
-    set(field: string, message: string): void;
+    setFormError(field: string, message: string): void;
 
     // Remove an existing error for a field name.
-    remove(field: string): void;
+    removeFormError(field: string): void;
 
     // Check if there are any errors.
-    some(): boolean;
+    hasFormErrors(): boolean;
 }
 
 export const useFormErrors = (): IFormErrors => {
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const get = useCallback(
+    const getFormError = useCallback(
         (field: string): string | undefined => errors[field],
         [errors]
     );
 
-    const set = useCallback(
+    const setFormError = useCallback(
         (field: string, message: string): void => {
             setErrors(
                 produce(draft => {
@@ -34,7 +34,7 @@ export const useFormErrors = (): IFormErrors => {
         [setErrors]
     );
 
-    const remove = useCallback(
+    const removeFormError = useCallback(
         (field: string): void => {
             setErrors(
                 produce(draft => {
@@ -45,18 +45,15 @@ export const useFormErrors = (): IFormErrors => {
         [setErrors]
     );
 
-    const some = useCallback(
+    const hasFormErrors = useCallback(
         (): boolean => Object.values(errors).some(Boolean),
         [errors]
     );
 
-    return useMemo(
-        () => ({
-            get,
-            set,
-            remove,
-            some,
-        }),
-        [get, set, remove, some]
-    );
+    return {
+        getFormError,
+        setFormError,
+        removeFormError,
+        hasFormErrors,
+    };
 };

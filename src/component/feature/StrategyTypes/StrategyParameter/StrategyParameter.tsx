@@ -31,7 +31,7 @@ export const StrategyParameter = ({
 }: IStrategyParameterProps) => {
     const { type, name, description, required } = definition;
     const value = parameters[name];
-    const error = errors.get(name);
+    const error = errors.getFormError(name);
     const label = required ? `${name} * ` : name;
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

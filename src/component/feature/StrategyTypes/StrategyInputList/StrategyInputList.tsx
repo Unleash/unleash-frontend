@@ -124,8 +124,8 @@ const StrategyInputList = ({
                 show={
                     <InputContainer>
                         <TextField
-                            error={Boolean(errors.get(name))}
-                            helperText={errors.get(name)}
+                            error={Boolean(errors.getFormError(name))}
+                            helperText={errors.getFormError(name)}
                             name={`input_field`}
                             variant="outlined"
                             label="Add items"
