@@ -11,6 +11,7 @@ import { EDIT } from 'constants/misc';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 import { UG_SAVE_BTN_ID } from 'utils/testIds';
+import { GO_BACK } from 'constants/navigate';
 
 export const EditGroup = () => {
     const groupId = Number(useRequiredPathParam('groupId'));
@@ -41,7 +42,7 @@ export const EditGroup = () => {
         try {
             await updateGroup(groupId, payload);
             refetchGroup();
-            navigate(-1);
+            navigate(GO_BACK);
             setToastData({
                 title: 'Group updated successfully',
                 type: 'success',
@@ -61,7 +62,7 @@ export const EditGroup = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1);
+        navigate(GO_BACK);
     };
 
     return (

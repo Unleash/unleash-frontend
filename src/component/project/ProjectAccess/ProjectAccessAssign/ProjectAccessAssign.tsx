@@ -26,6 +26,7 @@ import { IGroup } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ProjectRoleDescription } from './ProjectRoleDescription/ProjectRoleDescription';
 import { useNavigate } from 'react-router-dom';
+import { GO_BACK } from 'constants/navigate';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -180,7 +181,7 @@ export const ProjectAccessAssign = ({
                 await changeGroupRole(projectId, role.id, selected.entity.id);
             }
             refetchProjectAccess();
-            navigate(-1);
+            navigate(GO_BACK);
             setToastData({
                 title: `${selectedOptions.length} ${
                     selectedOptions.length === 1 ? 'access' : 'accesses'
@@ -265,7 +266,7 @@ export const ProjectAccessAssign = ({
     return (
         <SidebarModal
             open
-            onClose={() => navigate(-1)}
+            onClose={() => navigate(GO_BACK)}
             label={`${!edit ? 'Assign' : 'Edit'} ${entityType} access`}
         >
             <FormTemplate
@@ -358,7 +359,7 @@ export const ProjectAccessAssign = ({
                         >
                             Assign {entityType}
                         </Button>
-                        <StyledCancelButton onClick={() => navigate(-1)}>
+                        <StyledCancelButton onClick={() => navigate(GO_BACK)}>
                             Cancel
                         </StyledCancelButton>
                     </StyledButtonContainer>
