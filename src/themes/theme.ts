@@ -36,7 +36,6 @@ export default createTheme({
     },
     fontSizes: {
         mainHeader: '1.25rem',
-        subHeader: '1.1rem',
         bodySize: '1rem',
         smallBody: `${14 / 16}rem`,
         smallerBody: `${12 / 16}rem`,

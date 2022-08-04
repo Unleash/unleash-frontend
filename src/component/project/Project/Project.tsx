@@ -106,21 +106,6 @@ const Project = () => {
         /* eslint-disable-next-line */
     }, []);
 
-    const renderTabs = () => {
-        return tabData.map((tab, index) => {
-            return (
-                <Tab
-                    key={tab.title}
-                    id={`tab-${index}`}
-                    aria-controls={`tabpanel-${index}`}
-                    label={tab.title}
-                    onClick={() => navigate(tab.path)}
-                    className={styles.tabButton}
-                />
-            );
-        });
-    };
-
     const renderTabContent = () => {
         return tabData.map((tab, index) => {
             return (
@@ -171,7 +156,16 @@ const Project = () => {
                         indicatorColor="primary"
                         textColor="primary"
                     >
-                        {renderTabs()}
+                        {tabData.map((tab, index) => (
+                            <Tab
+                                key={tab.title}
+                                id={`tab-${index}`}
+                                aria-controls={`tabpanel-${index}`}
+                                label={tab.title}
+                                onClick={() => navigate(tab.path)}
+                                className={styles.tabButton}
+                            />
+                        ))}
                     </Tabs>
                 </div>
             </div>
