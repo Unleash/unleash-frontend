@@ -1,4 +1,4 @@
-import React, { FormEvent, useMemo, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
     Autocomplete,
     Button,
@@ -115,39 +115,36 @@ export const ProjectAccessAssign = ({
     const { setToastData, setToastApiError } = useToast();
     const navigate = useNavigate();
 
-    const options = useMemo(
-        () => [
-            ...groups
-                .filter(
-                    (group: IGroup) =>
-                        edit ||
-                        !accesses.some(
-                            ({ entity: { id }, type }) =>
-                                group.id === id && type === ENTITY_TYPE.GROUP
-                        )
-                )
-                .map((group: IGroup) => ({
-                    id: group.id,
-                    entity: group,
-                    type: ENTITY_TYPE.GROUP,
-                })),
-            ...users
-                .filter(
-                    (user: IUser) =>
-                        edit ||
-                        !accesses.some(
-                            ({ entity: { id }, type }) =>
-                                user.id === id && type === ENTITY_TYPE.USER
-                        )
-                )
-                .map((user: IUser) => ({
-                    id: user.id,
-                    entity: user,
-                    type: ENTITY_TYPE.USER,
-                })),
-        ],
-        [users, accesses, edit, groups]
-    );
+    const options = [
+        ...groups
+            .filter(
+                (group: IGroup) =>
+                    edit ||
+                    !accesses.some(
+                        ({ entity: { id }, type }) =>
+                            group.id === id && type === ENTITY_TYPE.GROUP
+                    )
+            )
+            .map((group: IGroup) => ({
+                id: group.id,
+                entity: group,
+                type: ENTITY_TYPE.GROUP,
+            })),
+        ...users
+            .filter(
+                (user: IUser) =>
+                    edit ||
+                    !accesses.some(
+                        ({ entity: { id }, type }) =>
+                            user.id === id && type === ENTITY_TYPE.USER
+                    )
+            )
+            .map((user: IUser) => ({
+                id: user.id,
+                entity: user,
+                type: ENTITY_TYPE.USER,
+            })),
+    ];
 
     const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>(
         () =>
@@ -160,17 +157,14 @@ export const ProjectAccessAssign = ({
         roles.find(({ id }) => id === selected?.entity.roleId) ?? null
     );
 
-    const payload = useMemo(
-        () => ({
-            users: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.USER)
-                .map(({ id }) => ({ id })),
-            groups: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
-                .map(({ id }) => ({ id })),
-        }),
-        [selectedOptions]
-    );
+    const payload = {
+        users: selectedOptions
+            ?.filter(({ type }) => type === ENTITY_TYPE.USER)
+            .map(({ id }) => ({ id })),
+        groups: selectedOptions
+            ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
+            .map(({ id }) => ({ id })),
+    };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

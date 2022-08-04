@@ -1,5 +1,4 @@
 import useSWR from 'swr';
-import { useMemo } from 'react';
 import { formatApiPath } from 'utils/formatPath';
 import handleErrorResponses from '../httpErrorResponseHandler';
 import { IGroup } from 'interfaces/group';
@@ -19,16 +18,13 @@ export const useAccess = (): IUseAccessOutput => {
         fetcher
     );
 
-    return useMemo(
-        () => ({
-            users: data?.users,
-            groups: data?.groups,
-            loading: !error && !data,
-            refetch: () => mutate(),
-            error,
-        }),
-        [data, error, mutate]
-    );
+    return {
+        users: data?.users,
+        groups: data?.groups,
+        loading: !error && !data,
+        refetch: () => mutate(),
+        error,
+    };
 };
 
 const fetcher = (path: string) => {

@@ -8,7 +8,7 @@ import { Tab, Tabs } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import useToast from 'hooks/useToast';
 import useQueryParams from 'hooks/useQueryParams';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import { ProjectFeaturesArchive } from './ProjectFeaturesArchive/ProjectFeaturesArchive';
@@ -33,40 +33,37 @@ const Project = () => {
     const basePath = `/projects/${projectId}`;
     const projectName = project?.name || projectId;
 
-    const tabs = useMemo(
-        () => [
-            {
-                title: 'Overview',
-                path: basePath,
-                name: 'overview',
-            },
-            {
-                title: 'Health',
-                path: `${basePath}/health`,
-                name: 'health',
-            },
-            {
-                title: 'Access',
-                path: `${basePath}/access`,
-                name: 'access',
-            },
-            {
-                title: 'Environments',
-                path: `${basePath}/environments`,
-                name: 'environments',
-            },
-            {
-                title: 'Archive',
-                path: `${basePath}/archive`,
-                name: 'archive',
-            },
-        ],
-        [basePath]
-    );
+    const tabs = [
+        {
+            title: 'Overview',
+            path: basePath,
+            name: 'overview',
+        },
+        {
+            title: 'Health',
+            path: `${basePath}/health`,
+            name: 'health',
+        },
+        {
+            title: 'Access',
+            path: `${basePath}/access`,
+            name: 'access',
+        },
+        {
+            title: 'Environments',
+            path: `${basePath}/environments`,
+            name: 'environments',
+        },
+        {
+            title: 'Archive',
+            path: `${basePath}/archive`,
+            name: 'archive',
+        },
+    ];
 
-    const activeTab = useMemo(() => {
-        return [...tabs].reverse().find(tab => pathname.startsWith(tab.path));
-    }, [tabs, pathname]);
+    const activeTab = [...tabs]
+        .reverse()
+        .find(tab => pathname.startsWith(tab.path));
 
     useEffect(() => {
         const created = params.get('created');
