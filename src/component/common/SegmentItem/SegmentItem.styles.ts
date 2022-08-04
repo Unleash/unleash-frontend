@@ -28,12 +28,6 @@ export const useStyles = makeStyles()(theme => ({
     },
     accordionRoot: {
         transition: 'all 0.1s ease',
-        '&:before': {
-            opacity: '0 !important',
-        },
-        '&:first-of-type, &:last-of-type': {
-            borderRadius: theme.shape.borderRadiusMedium,
-        },
     },
     accordionExpanded: {
         backgroundColor: theme.palette.neutral.light,
@@ -47,8 +41,5 @@ export const useStyles = makeStyles()(theme => ({
     summary: {
         fontSize: theme.fontSizes.smallBody,
         margin: theme.spacing(0.5, 0),
-        ['&.Mui-expanded']: {
-            minHeight: 'auto',
-        },
     },
 }));

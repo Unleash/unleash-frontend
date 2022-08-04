@@ -259,11 +259,23 @@ export default createTheme({
                 },
             },
         },
+        MuiAccordion: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    '&:first-of-type, &:last-of-type': {
+                        borderRadius: theme.shape.borderRadiusMedium,
+                    },
+                }),
+            },
+        },
         MuiAccordionSummary: {
             styleOverrides: {
                 root: {
                     '& > .MuiAccordionSummary-content.Mui-expanded': {
                         margin: '12px 0',
+                    },
+                    '&.Mui-expanded': {
+                        minHeight: '0',
                     },
                 },
             },
