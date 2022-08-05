@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useStyles } from 'component/events/EventJson/EventJson.styles';
 import { IEvent } from 'interfaces/event';
 
@@ -17,16 +16,12 @@ const EventJson = ({ entry }: IEventJsonProps) => {
     const prettyPrinted = JSON.stringify(localEventData, null, 2);
 
     return (
-        <li className={styles.historyItem}>
+        <li className={styles.container}>
             <div>
                 <code>{prettyPrinted}</code>
             </div>
         </li>
     );
-};
-
-EventJson.propTypes = {
-    entry: PropTypes.object,
 };
 
 export default EventJson;
