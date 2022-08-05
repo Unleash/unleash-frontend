@@ -38,11 +38,11 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
-import theme from 'themes/theme';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import { ProjectAccessCreate } from 'component/project/ProjectAccess/ProjectAccessCreate/ProjectAccessCreate';
 import { ProjectAccessEditUser } from 'component/project/ProjectAccess/ProjectAccessEditUser/ProjectAccessEditUser';
 import { ProjectAccessEditGroup } from 'component/project/ProjectAccess/ProjectAccessEditGroup/ProjectAccessEditGroup';
+import useHiddenColumns from 'hooks/useHiddenColumns';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -68,20 +68,6 @@ const StyledEmptyAvatar = styled(UserAvatar)(({ theme }) => ({
 const StyledGroupAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
 }));
-
-const useHiddenColumns = (): string[] => {
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-    return useMemo(() => {
-        const hidden: string[] = [];
-
-        if (isMediumScreen) {
-            hidden.push('imageUrl', 'username', 'role', 'added', 'lastLogin');
-        }
-
-        return hidden;
-    }, [isMediumScreen]);
-};
 
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -295,11 +281,11 @@ export const ProjectAccessTable: VFC = () => {
         useFlexLayout
     );
 
-    const hiddenColumns = useHiddenColumns();
-
-    useEffect(() => {
-        setHiddenColumns(hiddenColumns);
-    }, [setHiddenColumns, hiddenColumns]);
+    useHiddenColumns(
+        setHiddenColumns,
+        ['imageUrl', 'username', 'role', 'added', 'lastLogin'],
+        isSmallScreen
+    );
 
     useEffect(() => {
         const tableState: PageQueryType = {};

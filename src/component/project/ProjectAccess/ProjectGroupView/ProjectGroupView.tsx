@@ -17,10 +17,10 @@ import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import { UPDATE_PROJECT } from 'component/providers/AccessProvider/permissions';
 import { useSearch } from 'hooks/useSearch';
 import { IGroup, IGroupUser } from 'interfaces/group';
-import { VFC, useState, useEffect, useMemo } from 'react';
+import { VFC, useState } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
-import theme from '../../../../themes/theme';
+import useHiddenColumns from 'hooks/useHiddenColumns';
 
 const StyledPageContent = styled(PageContent)(({ theme }) => ({
     height: '100vh',
@@ -114,20 +114,6 @@ interface IProjectGroupViewProps {
     onRemove: () => void;
 }
 
-const useHiddenColumns = (): string[] => {
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-    return useMemo(() => {
-        const hidden: string[] = [];
-
-        if (isMediumScreen) {
-            hidden.push('imageUrl', 'name', 'joined', 'lastLogin');
-        }
-
-        return hidden;
-    }, [isMediumScreen]);
-};
-
 export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
     open,
     setOpen,
@@ -170,11 +156,11 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         useFlexLayout
     );
 
-    const hiddenColumns = useHiddenColumns();
-
-    useEffect(() => {
-        setHiddenColumns(hiddenColumns);
-    }, [setHiddenColumns, hiddenColumns]);
+    useHiddenColumns(
+        setHiddenColumns,
+        ['imageUrl', 'name', 'joined', 'lastLogin'],
+        useMediaQuery(theme.breakpoints.down('md'))
+    );
 
     return (
         <SidebarModal

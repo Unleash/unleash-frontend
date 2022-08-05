@@ -1,4 +1,4 @@
-import { useEffect, useMemo, VFC } from 'react';
+import { useMemo, VFC } from 'react';
 import { IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { IGroupUser } from 'interfaces/group';
@@ -12,26 +12,12 @@ import { useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import theme from 'themes/theme';
+import useHiddenColumns from 'hooks/useHiddenColumns';
 
 interface IGroupFormUsersTableProps {
     users: IGroupUser[];
     setUsers: React.Dispatch<React.SetStateAction<IGroupUser[]>>;
 }
-
-const useHiddenColumns = (): string[] => {
-    const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-    return useMemo(() => {
-        const hidden: string[] = [];
-
-        if (isMediumScreen) {
-            hidden.push('imageUrl');
-            hidden.push('name');
-        }
-
-        return hidden;
-    }, [isMediumScreen]);
-};
 
 export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
     users,
@@ -135,11 +121,11 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         useFlexLayout
     );
 
-    const hiddenColumns = useHiddenColumns();
-
-    useEffect(() => {
-        setHiddenColumns(hiddenColumns);
-    }, [setHiddenColumns, hiddenColumns]);
+    useHiddenColumns(
+        setHiddenColumns,
+        ['imageUrl', 'name'],
+        useMediaQuery(theme.breakpoints.down('md'))
+    );
 
     return (
         <ConditionallyRender
