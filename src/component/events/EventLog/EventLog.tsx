@@ -3,7 +3,6 @@ import EventJson from 'component/events/EventJson/EventJson';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import EventCard from 'component/events/EventCard/EventCard';
-import { useStyles } from './EventLog.styles';
 import { useEventSettings } from 'hooks/useEventSettings';
 import React, { useState, useEffect } from 'react';
 import { Search } from 'component/common/Search/Search';
@@ -12,6 +11,7 @@ import { useEventSearch } from 'hooks/api/getters/useEventSearch/useEventSearch'
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { useOnVisible } from 'hooks/useOnVisible';
 import { IEvent } from 'interfaces/event';
+import { styled } from '@mui/system';
 
 interface IEventLogProps {
     title: string;
@@ -19,6 +19,14 @@ interface IEventLogProps {
     feature?: string;
     displayInline?: boolean;
 }
+
+const StyledEventsList = styled('ul')(({ theme }) => ({
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0,
+    display: 'grid',
+    gap: theme.spacing(2),
+}));
 
 export const EventLog = ({
     title,
@@ -31,7 +39,6 @@ export const EventLog = ({
     const fetchNextPageRef = useOnVisible<HTMLDivElement>(fetchNextPage);
     const { eventSettings, setEventSettings } = useEventSettings();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const { classes: styles } = useStyles();
 
     // Cache the previous search results so that we can show those while
     // fetching new results for a new search query in the background.
@@ -83,7 +90,7 @@ export const EventLog = ({
             <ConditionallyRender
                 condition={Boolean(cache && cache.length > 0)}
                 show={() => (
-                    <ul className={styles.events}>
+                    <StyledEventsList>
                         {cache?.map(entry => (
                             <ConditionallyRender
                                 key={entry.id}
@@ -92,7 +99,7 @@ export const EventLog = ({
                                 elseShow={() => <EventCard entry={entry} />}
                             />
                         ))}
-                    </ul>
+                    </StyledEventsList>
                 )}
             />
             <div ref={fetchNextPageRef} />

@@ -1,13 +1,25 @@
-import { useStyles } from 'component/events/EventJson/EventJson.styles';
 import { IEvent } from 'interfaces/event';
+import { styled } from '@mui/material';
 
 interface IEventJsonProps {
     entry: IEvent;
 }
 
-const EventJson = ({ entry }: IEventJsonProps) => {
-    const { classes: styles } = useStyles();
+export const StyledJsonListItem = styled('li')(({ theme }) => ({
+    padding: theme.spacing(4),
+    backgroundColor: theme.palette.neutral.light,
+    borderRadius: theme.shape.borderRadiusLarge,
+    fontSize: theme.fontSizes.smallBody,
 
+    '& code': {
+        wordWrap: 'break-word',
+        whiteSpace: 'pre',
+        fontFamily: 'monospace',
+        lineHeight: '100%',
+    },
+}));
+
+const EventJson = ({ entry }: IEventJsonProps) => {
     const localEventData = JSON.parse(JSON.stringify(entry));
     delete localEventData.description;
     delete localEventData.name;
@@ -16,11 +28,11 @@ const EventJson = ({ entry }: IEventJsonProps) => {
     const prettyPrinted = JSON.stringify(localEventData, null, 2);
 
     return (
-        <li className={styles.container}>
+        <StyledJsonListItem>
             <div>
                 <code>{prettyPrinted}</code>
             </div>
-        </li>
+        </StyledJsonListItem>
     );
 };
 

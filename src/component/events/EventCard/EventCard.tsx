@@ -1,17 +1,68 @@
 import EventDiff from 'component/events/EventDiff/EventDiff';
-import { useStyles } from 'component/events/EventCard/EventCard.styles';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { IEvent } from 'interfaces/event';
 import { useLocationSettings } from 'hooks/useLocationSettings';
 import { formatDateYMDHMS } from 'utils/formatDate';
 import { Link } from 'react-router-dom';
+import { styled } from '@mui/material';
 
 interface IEventCardProps {
     entry: IEvent;
 }
 
+const StyledDefinitionTerm = styled('dt')(({ theme }) => ({
+    color: theme.palette.text.secondary,
+}));
+
+const StyledChangesTitle = styled('strong')(({ theme }) => ({
+    fontWeight: 'inherit',
+    color: theme.palette.text.secondary,
+}));
+
+const StyledContainerListItem = styled('li')(({ theme }) => ({
+    display: 'grid',
+    backgroundColor: theme.palette.neutral.light,
+    borderRadius: theme.shape.borderRadiusLarge,
+    padding: theme.spacing(0.5),
+    [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: 'auto minmax(0, 1fr)',
+    },
+
+    '& dl': {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        alignContent: 'start',
+        gap: theme.spacing(1),
+        padding: theme.spacing(2),
+        [theme.breakpoints.up('md')]: {
+            padding: theme.spacing(4),
+        },
+    },
+}));
+
+const StyledCodeSection = styled('div')(({ theme }) => ({
+    backgroundColor: 'white',
+    overflowX: 'auto',
+    padding: theme.spacing(2),
+    borderBottomLeftRadius: theme.shape.borderRadiusLarge,
+    borderBottomRightRadius: theme.shape.borderRadiusLarge,
+    [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(4),
+        borderRadius: 0,
+        borderTopRightRadius: theme.shape.borderRadiusLarge,
+        borderBottomRightRadius: theme.shape.borderRadiusLarge,
+    },
+
+    '& code': {
+        wordWrap: 'break-word',
+        whiteSpace: 'pre-wrap',
+        fontFamily: 'monospace',
+        lineHeight: 1.5,
+        fontSize: theme.fontSizes.smallBody,
+    },
+}));
+
 const EventCard = ({ entry }: IEventCardProps) => {
-    const { classes: styles } = useStyles();
     const { locationSettings } = useLocationSettings();
 
     const createdAtFormatted = formatDateYMDHMS(
@@ -20,21 +71,23 @@ const EventCard = ({ entry }: IEventCardProps) => {
     );
 
     return (
-        <li className={styles.container}>
+        <StyledContainerListItem>
             <dl>
-                <dt className={styles.title}>Event id:</dt>
+                <StyledDefinitionTerm>Event id:</StyledDefinitionTerm>
                 <dd>{entry.id}</dd>
-                <dt className={styles.title}>Changed at:</dt>
+                <StyledDefinitionTerm>Changed at:</StyledDefinitionTerm>
                 <dd>{createdAtFormatted}</dd>
-                <dt className={styles.title}>Event:</dt>
+                <StyledDefinitionTerm>Event:</StyledDefinitionTerm>
                 <dd>{entry.type}</dd>
-                <dt className={styles.title}>Changed by:</dt>
+                <StyledDefinitionTerm>Changed by:</StyledDefinitionTerm>
                 <dd title={entry.createdBy}>{entry.createdBy}</dd>
                 <ConditionallyRender
                     condition={Boolean(entry.project)}
                     show={
                         <>
-                            <dt className={styles.title}>Project:</dt>
+                            <StyledDefinitionTerm>
+                                Project:
+                            </StyledDefinitionTerm>
                             <dd>
                                 <Link to={`/projects/${entry.project}`}>
                                     {entry.project}
@@ -47,7 +100,9 @@ const EventCard = ({ entry }: IEventCardProps) => {
                     condition={Boolean(entry.featureName)}
                     show={
                         <>
-                            <dt className={styles.title}>Feature:</dt>
+                            <StyledDefinitionTerm>
+                                Feature:
+                            </StyledDefinitionTerm>
                             <dd>
                                 <Link
                                     to={`/projects/${entry.project}/features/${entry.featureName}`}
@@ -62,13 +117,13 @@ const EventCard = ({ entry }: IEventCardProps) => {
             <ConditionallyRender
                 condition={entry.data || entry.preData}
                 show={
-                    <div className={styles.code}>
-                        <strong className={styles.title}>Changes:</strong>
+                    <StyledCodeSection>
+                        <StyledChangesTitle>Changes:</StyledChangesTitle>
                         <EventDiff entry={entry} />
-                    </div>
+                    </StyledCodeSection>
                 }
             />
-        </li>
+        </StyledContainerListItem>
     );
 };
 
