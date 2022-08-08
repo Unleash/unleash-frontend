@@ -30,14 +30,14 @@ import { MainHeader } from 'component/common/MainHeader/MainHeader';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
-import { AddGroupUser } from './AddGroupUser/AddGroupUser';
+import { EditGroupUsers } from './EditGroupUsers/EditGroupUsers';
 import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
 import {
     UG_EDIT_BTN_ID,
     UG_DELETE_BTN_ID,
-    UG_ADD_USER_BTN_ID,
+    UG_EDIT_USERS_BTN_ID,
     UG_REMOVE_USER_BTN_ID,
 } from 'utils/testIds';
 
@@ -71,7 +71,7 @@ export const Group: VFC = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { group, loading } = useGroup(groupId);
     const [removeOpen, setRemoveOpen] = useState(false);
-    const [addUserOpen, setAddUserOpen] = useState(false);
+    const [editUsersOpen, setEditUsersOpen] = useState(false);
     const [removeUserOpen, setRemoveUserOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IGroupUser>();
 
@@ -286,15 +286,15 @@ export const Group: VFC = () => {
                                             }
                                         />
                                         <ResponsiveButton
-                                            data-testid={UG_ADD_USER_BTN_ID}
+                                            data-testid={UG_EDIT_USERS_BTN_ID}
                                             onClick={() => {
-                                                setAddUserOpen(true);
+                                                setEditUsersOpen(true);
                                             }}
                                             maxWidth="700px"
                                             Icon={Add}
                                             permission={ADMIN}
                                         >
-                                            Add user
+                                            Edit users
                                         </ResponsiveButton>
                                     </>
                                 }
@@ -348,9 +348,9 @@ export const Group: VFC = () => {
                             setOpen={setRemoveOpen}
                             group={group!}
                         />
-                        <AddGroupUser
-                            open={addUserOpen}
-                            setOpen={setAddUserOpen}
+                        <EditGroupUsers
+                            open={editUsersOpen}
+                            setOpen={setEditUsersOpen}
                             group={group!}
                         />
                         <RemoveGroupUser

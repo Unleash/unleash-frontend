@@ -19,7 +19,7 @@ export const UG_CREATE_BTN_ID = 'UG_CREATE_BTN_ID';
 export const UG_SAVE_BTN_ID = 'UG_SAVE_BTN_ID';
 export const UG_EDIT_BTN_ID = 'UG_EDIT_BTN_ID';
 export const UG_DELETE_BTN_ID = 'UG_DELETE_BTN_ID';
-export const UG_ADD_USER_BTN_ID = 'UG_ADD_USER_BTN_ID';
+export const UG_EDIT_USERS_BTN_ID = 'UG_EDIT_USERS_BTN_ID';
 export const UG_REMOVE_USER_BTN_ID = 'UG_REMOVE_USER_BTN_ID';
 
 /* SEGMENT */

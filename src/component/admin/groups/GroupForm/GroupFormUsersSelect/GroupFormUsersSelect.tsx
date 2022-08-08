@@ -2,7 +2,7 @@ import { Autocomplete, Checkbox, styled, TextField } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { IUser } from 'interfaces/user';
-import { useMemo, VFC } from 'react';
+import { VFC } from 'react';
 import { useUsers } from 'hooks/api/getters/useUsers/useUsers';
 import { IGroupUser } from 'interfaces/group';
 import { UG_USERS_ID } from 'utils/testIds';
@@ -67,14 +67,6 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
 }) => {
     const { users: usersAll } = useUsers();
 
-    const usersOptions = useMemo(
-        () =>
-            usersAll.filter(
-                (user: IUser) => !users?.map(({ id }) => id).includes(user.id)
-            ),
-        [usersAll, users]
-    );
-
     return (
         <StyledGroupFormUsersSelect>
             <Autocomplete
@@ -94,7 +86,7 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
                     }
                     setUsers(newValue);
                 }}
-                options={[...usersOptions].sort((a, b) => {
+                options={[...usersAll].sort((a, b) => {
                     const aName = a.name || a.username || '';
                     const bName = b.name || b.username || '';
                     return aName.localeCompare(bName);
@@ -102,6 +94,7 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
                 renderOption={(props, option, { selected }) =>
                     renderOption(props, option as IUser, selected)
                 }
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option: IUser) =>
                     option.email || option.name || option.username || ''
                 }

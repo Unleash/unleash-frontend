@@ -5,12 +5,13 @@ import { useGroupApi } from 'hooks/api/actions/useGroupApi/useGroupApi';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
-import { IGroup, IGroupUser } from 'interfaces/group';
-import { FC, FormEvent, useEffect, useMemo, useState } from 'react';
+import { IGroup } from 'interfaces/group';
+import { FC, FormEvent, useEffect } from 'react';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { GroupFormUsersSelect } from 'component/admin/groups/GroupForm/GroupFormUsersSelect/GroupFormUsersSelect';
 import { GroupFormUsersTable } from 'component/admin/groups/GroupForm/GroupFormUsersTable/GroupFormUsersTable';
 import { UG_SAVE_BTN_ID } from 'utils/testIds';
+import { useGroupForm } from 'component/admin/groups/hooks/useGroupForm';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -33,13 +34,13 @@ const StyledCancelButton = styled(Button)(({ theme }) => ({
     marginLeft: theme.spacing(3),
 }));
 
-interface IAddGroupUserProps {
+interface IEditGroupUsersProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     group: IGroup;
 }
 
-export const AddGroupUser: FC<IAddGroupUserProps> = ({
+export const EditGroupUsers: FC<IEditGroupUsersProps> = ({
     open,
     setOpen,
     group,
@@ -49,46 +50,25 @@ export const AddGroupUser: FC<IAddGroupUserProps> = ({
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
 
-    const [users, setUsers] = useState<IGroupUser[]>(group.users);
+    const { users, setUsers, getGroupPayload } = useGroupForm(
+        group.name,
+        group.description,
+        group.users
+    );
 
     useEffect(() => {
         setUsers(group.users);
-    }, [group.users, open]);
-
-    const newUsers = useMemo(() => {
-        return users.filter(
-            user => !group.users.some(({ id }) => id === user.id)
-        );
-    }, [group.users, users]);
-
-    const payload = useMemo(() => {
-        const addUsers = [...group.users, ...newUsers];
-        return {
-            name: group.name,
-            description: group.description,
-            users: addUsers.map(({ id }) => ({
-                user: { id },
-            })),
-        };
-    }, [group, newUsers]);
+    }, [group.users, open, setUsers]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
-            const message =
-                newUsers.length === 1
-                    ? `${
-                          newUsers[0].name ||
-                          newUsers[0].username ||
-                          newUsers[0].email
-                      } added to the group`
-                    : `${newUsers.length} users added to the group`;
-            await updateGroup(group.id, payload);
+            await updateGroup(group.id, getGroupPayload());
             refetchGroup();
             setOpen(false);
             setToastData({
-                title: message,
+                title: 'Group users saved successfully',
                 type: 'success',
             });
         } catch (error: unknown) {
@@ -102,7 +82,7 @@ export const AddGroupUser: FC<IAddGroupUserProps> = ({
         }/api/admin/groups/${group.id}' \\
     --header 'Authorization: INSERT_API_KEY' \\
     --header 'Content-Type: application/json' \\
-    --data-raw '${JSON.stringify(payload, undefined, 2)}'`;
+    --data-raw '${JSON.stringify(getGroupPayload(), undefined, 2)}'`;
     };
 
     return (
@@ -111,12 +91,12 @@ export const AddGroupUser: FC<IAddGroupUserProps> = ({
             onClose={() => {
                 setOpen(false);
             }}
-            label="Add user"
+            label="Edit users"
         >
             <FormTemplate
                 loading={loading}
                 modal
-                title="Add user"
+                title="Edit users"
                 description="Groups is the best and easiest way to organize users and then use them in projects to assign a specific role in one go to all the users in a group."
                 documentationLink="https://docs.getunleash.io/advanced/groups"
                 documentationLinkLabel="Groups documentation"
@@ -125,14 +105,14 @@ export const AddGroupUser: FC<IAddGroupUserProps> = ({
                 <StyledForm onSubmit={handleSubmit}>
                     <div>
                         <StyledInputDescription>
-                            Add users to this group
+                            Edit users in this group
                         </StyledInputDescription>
                         <GroupFormUsersSelect
                             users={users}
                             setUsers={setUsers}
                         />
                         <GroupFormUsersTable
-                            users={newUsers}
+                            users={users}
                             setUsers={setUsers}
                         />
                     </div>
