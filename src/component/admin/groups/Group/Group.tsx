@@ -17,13 +17,12 @@ import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { sortTypes } from 'utils/sortTypes';
 import { createLocalStorage } from 'utils/createLocalStorage';
-import { IGroupUser, Role } from 'interfaces/group';
+import { IGroupUser } from 'interfaces/group';
 import { useSearch } from 'hooks/useSearch';
 import { Search } from 'component/common/Search/Search';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
 import { TimeAgoCell } from 'component/common/Table/cells/TimeAgoCell/TimeAgoCell';
-import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import PermissionIconButton from 'component/common/PermissionIconButton/PermissionIconButton';
 import { Add, Delete, Edit } from '@mui/icons-material';
 import { ADMIN } from 'component/providers/AccessProvider/permissions';
@@ -32,7 +31,6 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { RemoveGroup } from 'component/admin/groups/RemoveGroup/RemoveGroup';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { AddGroupUser } from './AddGroupUser/AddGroupUser';
-import { EditGroupUser } from './EditGroupUser/EditGroupUser';
 import { RemoveGroupUser } from './RemoveGroupUser/RemoveGroupUser';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
@@ -40,7 +38,6 @@ import {
     UG_EDIT_BTN_ID,
     UG_DELETE_BTN_ID,
     UG_ADD_USER_BTN_ID,
-    UG_EDIT_USER_BTN_ID,
     UG_REMOVE_USER_BTN_ID,
 } from 'utils/testIds';
 
@@ -55,14 +52,13 @@ const StyledDelete = styled(Delete)(({ theme }) => ({
 export const groupUsersPlaceholder: IGroupUser[] = Array(15).fill({
     name: 'Name of the user',
     username: 'Username of the user',
-    role: Role.Member,
 });
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
 >;
 
-const defaultSort: SortingRule<string> = { id: 'role', desc: true };
+const defaultSort: SortingRule<string> = { id: 'joinedAt' };
 
 const { value: storedParams, setValue: setStoredParams } = createLocalStorage(
     'Group:v1',
@@ -76,7 +72,6 @@ export const Group: VFC = () => {
     const { group, loading } = useGroup(groupId);
     const [removeOpen, setRemoveOpen] = useState(false);
     const [addUserOpen, setAddUserOpen] = useState(false);
-    const [editUserOpen, setEditUserOpen] = useState(false);
     const [removeUserOpen, setRemoveUserOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IGroupUser>();
 
@@ -110,13 +105,6 @@ export const Group: VFC = () => {
                 searchable: true,
             },
             {
-                Header: 'User type',
-                accessor: 'role',
-                Cell: GroupUserRoleCell,
-                maxWidth: 150,
-                filterName: 'type',
-            },
-            {
                 Header: 'Joined',
                 accessor: 'joinedAt',
                 Cell: DateCell,
@@ -138,20 +126,6 @@ export const Group: VFC = () => {
                 align: 'center',
                 Cell: ({ row: { original: rowUser } }: any) => (
                     <ActionCell>
-                        <Tooltip title="Edit user" arrow describeChild>
-                            <span>
-                                <IconButton
-                                    data-testid={`${UG_EDIT_USER_BTN_ID}-${rowUser.id}`}
-                                    disabled={group?.users.length === 1}
-                                    onClick={() => {
-                                        setSelectedUser(rowUser);
-                                        setEditUserOpen(true);
-                                    }}
-                                >
-                                    <Edit />
-                                </IconButton>
-                            </span>
-                        </Tooltip>
                         <Tooltip
                             title="Remove user from group"
                             arrow
@@ -377,12 +351,6 @@ export const Group: VFC = () => {
                         <AddGroupUser
                             open={addUserOpen}
                             setOpen={setAddUserOpen}
-                            group={group!}
-                        />
-                        <EditGroupUser
-                            open={editUserOpen}
-                            setOpen={setEditUserOpen}
-                            user={selectedUser}
                             group={group!}
                         />
                         <RemoveGroupUser

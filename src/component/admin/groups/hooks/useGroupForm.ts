@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useQueryParams from 'hooks/useQueryParams';
-import { IGroupUser, Role } from 'interfaces/group';
+import { IGroupUser } from 'interfaces/group';
 
 export const useGroupForm = (
     initialName = '',
@@ -35,9 +35,8 @@ export const useGroupForm = (
         return {
             name,
             description,
-            users: users.map(({ id, role }) => ({
+            users: users.map(({ id }) => ({
                 user: { id },
-                role: role || Role.Member,
             })),
         };
     };

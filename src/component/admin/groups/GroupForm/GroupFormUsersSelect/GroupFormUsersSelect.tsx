@@ -10,7 +10,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { IUser } from 'interfaces/user';
 import { useMemo, useState, VFC } from 'react';
 import { useUsers } from 'hooks/api/getters/useUsers/useUsers';
-import { IGroupUser, Role } from 'interfaces/group';
+import { IGroupUser } from 'interfaces/group';
 import { UG_USERS_ADD_ID, UG_USERS_ID } from 'utils/testIds';
 
 const StyledOption = styled('div')(({ theme }) => ({
@@ -74,7 +74,6 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
         const usersToBeAdded = selectedUsers.map(
             (user: IUser): IGroupUser => ({
                 ...user,
-                role: Role.Member,
             })
         );
         setUsers((users: IGroupUser[]) => [...users, ...usersToBeAdded]);

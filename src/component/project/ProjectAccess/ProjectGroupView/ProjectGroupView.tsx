@@ -1,6 +1,5 @@
 import { Delete, Edit } from '@mui/icons-material';
 import { styled, useMediaQuery, useTheme } from '@mui/material';
-import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -47,7 +46,7 @@ const StyledTitle = styled('div')(({ theme }) => ({
     },
 }));
 
-const defaultSort: SortingRule<string> = { id: 'role', desc: true };
+const defaultSort: SortingRule<string> = { id: 'joinedAt' };
 
 const columns = [
     {
@@ -76,13 +75,6 @@ const columns = [
         Cell: HighlightCell,
         minWidth: 100,
         searchable: true,
-    },
-    {
-        Header: 'User type',
-        accessor: 'role',
-        Cell: GroupUserRoleCell,
-        maxWidth: 150,
-        filterName: 'type',
     },
     {
         id: 'joined',

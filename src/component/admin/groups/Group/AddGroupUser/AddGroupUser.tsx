@@ -66,9 +66,8 @@ export const AddGroupUser: FC<IAddGroupUserProps> = ({
         return {
             name: group.name,
             description: group.description,
-            users: addUsers.map(({ id, role }) => ({
+            users: addUsers.map(({ id }) => ({
                 user: { id },
-                role,
             })),
         };
     }, [group, newUsers]);
