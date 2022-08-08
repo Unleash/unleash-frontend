@@ -74,7 +74,7 @@ const FeatureOverviewEnvSwitches = () => {
             <StyledHeader data-loading>
                 Feature toggle status
                 <HelpIcon
-                    tooltip="Environments can be switched off for a single toggle. Resulting in all calls towards the toggle to return false."
+                    tooltip="When a feature is switched off in an environment, it will always return false. When switched on, it will return true or false depending on its strategies."
                     placement="top"
                 />
             </StyledHeader>
