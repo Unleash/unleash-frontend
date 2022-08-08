@@ -8,7 +8,7 @@ import { styled, Tab, Tabs } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import useToast from 'hooks/useToast';
 import useQueryParams from 'hooks/useQueryParams';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProjectAccess } from '../ProjectAccess/ProjectAccess';
 import ProjectEnvironment from '../ProjectEnvironment/ProjectEnvironment';
 import { ProjectFeaturesArchive } from './ProjectFeaturesArchive/ProjectFeaturesArchive';
@@ -23,6 +23,25 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { DeleteProjectDialogue } from './DeleteProject/DeleteProjectDialogue';
+
+const StyledDiv = styled('div')(() => ({
+    display: 'flex',
+}));
+
+const StyledName = styled('div')(({ theme }) => ({
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    paddingBottom: theme.spacing(2),
+}));
+
+const StyledTitle = styled('span')(({ theme }) => ({
+    fontSize: theme.fontSizes.smallBody,
+    fontWeight: 'normal',
+}));
+const StyledText = styled(StyledTitle)(({ theme }) => ({
+    color: theme.palette.grey[800],
+}));
 
 const Project = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -86,25 +105,6 @@ const Project = () => {
         /* eslint-disable-next-line */
     }, []);
 
-    const StyledDiv = styled('div')(({ theme }) => ({
-        display: 'flex',
-    }));
-
-    const StyledName = styled('div')(({ theme }) => ({
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        paddingBottom: theme.spacing(2),
-    }));
-
-    const StyledTitle = styled('span')(({ theme }) => ({
-        fontSize: theme.fontSizes.smallBody,
-        fontWeight: 'normal',
-    }));
-    const StyledText = styled(StyledTitle)(({ theme }) => ({
-        color: theme.palette.grey[800],
-    }));
-
     return (
         <div ref={ref}>
             <div className={styles.header}>
@@ -158,7 +158,7 @@ const Project = () => {
                                 onClick={() => {
                                     setShowDelDialog(true);
                                 }}
-                                tooltipProps={{ title: 'Remove project' }}
+                                tooltipProps={{ title: 'Delete project' }}
                                 data-loading
                             >
                                 <Delete />
@@ -200,9 +200,6 @@ const Project = () => {
                 project={projectId}
                 open={showDelDialog}
                 onClose={() => {
-                    setShowDelDialog(false);
-                }}
-                onFinish={() => {
                     setShowDelDialog(false);
                 }}
                 onSuccess={() => {

@@ -130,14 +130,9 @@ export const ProjectCard = ({
             <DeleteProjectDialogue
                 project={id}
                 open={showDelDialog}
-                onClose={event => {
-                    event.preventDefault();
+                onClose={() => {
                     setAnchorEl(null);
                     setShowDelDialog(false);
-                }}
-                onFinish={() => {
-                    setShowDelDialog(false);
-                    setAnchorEl(null);
                 }}
             />
         </Card>
