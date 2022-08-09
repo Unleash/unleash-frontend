@@ -43,6 +43,7 @@ import { ProjectAccessCreate } from 'component/project/ProjectAccess/ProjectAcce
 import { ProjectAccessEditUser } from 'component/project/ProjectAccess/ProjectAccessEditUser/ProjectAccessEditUser';
 import { ProjectAccessEditGroup } from 'component/project/ProjectAccess/ProjectAccessEditGroup/ProjectAccessEditGroup';
 import useHiddenColumns from 'hooks/useHiddenColumns';
+import { ProjectAccessRoleCell } from './ProjectAccessRoleCell/ProjectAccessRoleCell';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -149,6 +150,12 @@ export const ProjectAccessTable: VFC = () => {
                 accessor: (row: IProjectAccess) =>
                     access?.roles.find(({ id }) => id === row.entity.roleId)
                         ?.name,
+                Cell: ({ value, row: { original: row } }: any) => (
+                    <ProjectAccessRoleCell
+                        roleId={row.entity.roleId}
+                        value={value}
+                    />
+                ),
                 minWidth: 120,
                 filterName: 'role',
             },

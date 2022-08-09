@@ -170,7 +170,7 @@ export const ProjectAccessAssign = ({
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!role) return;
+        if (!isValid) return;
 
         try {
             if (!edit) {
@@ -262,6 +262,8 @@ export const ProjectAccessAssign = ({
             </StyledRoleOption>
         </li>
     );
+
+    const isValid = selectedOptions.length > 0 && role;
 
     return (
         <SidebarModal
@@ -360,6 +362,7 @@ export const ProjectAccessAssign = ({
                             type="submit"
                             variant="contained"
                             color="primary"
+                            disabled={!isValid}
                         >
                             Assign {entityType}
                         </Button>
