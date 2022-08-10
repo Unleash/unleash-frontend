@@ -289,6 +289,7 @@ export const ProjectAccessAssign = ({
                             <Autocomplete
                                 size="small"
                                 multiple
+                                openOnFocus
                                 limitTags={10}
                                 disableCloseOnSelect
                                 disabled={edit}
@@ -341,6 +342,7 @@ export const ProjectAccessAssign = ({
                         <StyledAutocompleteWrapper>
                             <Autocomplete
                                 size="small"
+                                openOnFocus
                                 value={role}
                                 onChange={(_, newValue) => setRole(newValue)}
                                 options={roles}

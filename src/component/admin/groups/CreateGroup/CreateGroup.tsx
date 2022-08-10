@@ -70,7 +70,7 @@ export const CreateGroup = () => {
     const onSetName = (name: string) => {
         clearErrors();
         if (groups?.filter(group => group.name === name).length) {
-            setErrors({ name: 'Group name already exists.' });
+            setErrors({ name: 'A group with that name already exists.' });
         }
         setName(name);
     };

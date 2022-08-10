@@ -134,7 +134,6 @@ export const Group: VFC = () => {
                             <span>
                                 <IconButton
                                     data-testid={`${UG_REMOVE_USER_BTN_ID}-${rowUser.id}`}
-                                    disabled={group?.users.length === 1}
                                     onClick={() => {
                                         setSelectedUser(rowUser);
                                         setRemoveUserOpen(true);
@@ -150,7 +149,7 @@ export const Group: VFC = () => {
                 disableSortBy: true,
             },
         ],
-        [setSelectedUser, setRemoveUserOpen, group?.users.length]
+        [setSelectedUser, setRemoveUserOpen]
     );
 
     const [searchParams, setSearchParams] = useSearchParams();

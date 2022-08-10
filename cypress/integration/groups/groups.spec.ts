@@ -48,7 +48,6 @@ describe('groups', () => {
         cy.get("[data-testid='UG_DESC_ID']").type('hello-world');
         cy.get("[data-testid='UG_USERS_ID']").click();
         cy.contains(`unleash-e2e-user1-${randomId}`).click();
-        cy.get("[data-testid='UG_USERS_ADD_ID']").click();
 
         cy.get("[data-testid='UG_CREATE_BTN_ID']").click();
         cy.wait('@createGroup');
@@ -61,14 +60,8 @@ describe('groups', () => {
         cy.intercept('POST', '/api/admin/groups').as('createGroup');
 
         cy.get("[data-testid='UG_NAME_ID']").type(groupName);
-        cy.get("[data-testid='UG_DESC_ID']").type('hello-world');
-        cy.get("[data-testid='UG_USERS_ID']").click();
-        cy.contains(`unleash-e2e-user1-${randomId}`).click();
-        cy.get("[data-testid='UG_USERS_ADD_ID']").click();
-
-        cy.get("[data-testid='UG_CREATE_BTN_ID']").click();
-        cy.get("[data-testid='TOAST_TEXT']").contains(
-            'Group name already exists'
+        cy.get("[data-testid='INPUT_ERROR_TEXT'").contains(
+            'A group with that name already exists.'
         );
     });
 
@@ -87,11 +80,10 @@ describe('groups', () => {
     it('can add user to a group', () => {
         cy.contains(groupName).click();
 
-        cy.get("[data-testid='UG_ADD_USER_BTN_ID']").click();
+        cy.get("[data-testid='UG_EDIT_USERS_BTN_ID']").click();
 
         cy.get("[data-testid='UG_USERS_ID']").click();
         cy.contains(`unleash-e2e-user2-${randomId}`).click();
-        cy.get("[data-testid='UG_USERS_ADD_ID']").click();
 
         cy.get("[data-testid='UG_SAVE_BTN_ID']").click();
 

@@ -74,6 +74,7 @@ export const GroupFormUsersSelect: VFC<IGroupFormUsersSelectProps> = ({
                 size="small"
                 multiple
                 limitTags={1}
+                openOnFocus
                 disableCloseOnSelect
                 value={users}
                 onChange={(event, newValue, reason) => {
