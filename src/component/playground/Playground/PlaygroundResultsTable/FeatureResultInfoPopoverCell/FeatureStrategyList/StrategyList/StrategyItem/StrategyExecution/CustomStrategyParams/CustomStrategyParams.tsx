@@ -57,7 +57,6 @@ export const CustomStrategyParams: VFC<ICustomStrategyProps> = ({
                     />
                 );
             case 'boolean':
-                console.log({ paramValue, param });
                 const bool = ['true', 'false'].includes(paramValue)
                     ? paramValue
                     : undefined;

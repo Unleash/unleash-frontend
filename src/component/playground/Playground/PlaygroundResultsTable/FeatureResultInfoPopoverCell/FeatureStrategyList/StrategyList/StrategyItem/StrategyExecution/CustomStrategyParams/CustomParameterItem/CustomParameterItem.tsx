@@ -1,9 +1,7 @@
-import { Typography, useTheme } from '@mui/material';
-import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { useStyles } from './CustomParameterItem.styles';
-import StringTruncator from 'component/common/StringTruncator/StringTruncator';
+import { Box, styled, Typography, useTheme } from '@mui/material';
 import { CancelOutlined } from '@mui/icons-material';
-import classnames from 'classnames';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
+import StringTruncator from 'component/common/StringTruncator/StringTruncator';
 
 interface ICustomParameterItem {
     text: string;
@@ -11,19 +9,30 @@ interface ICustomParameterItem {
     isRequired?: boolean;
 }
 
+const StyledWrapper = styled(Box)(({ theme }) => ({
+    width: '100%',
+    px: 3,
+    py: 2,
+    borderRadius: theme.shape.borderRadiusMedium,
+    border: `1px solid ${theme.palette.dividerAlternative}`,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+}));
+
 export const CustomParameterItem = ({
     text,
     input = null,
     isRequired = false,
 }: ICustomParameterItem) => {
-    const { classes: styles } = useStyles();
     const theme = useTheme();
 
     const color = input === null ? 'error' : 'neutral';
     const requiredError = isRequired && input === null;
 
     return (
-        <div className={classnames(styles.container)}>
+        <StyledWrapper>
             <Typography
                 variant="subtitle1"
                 color={theme.palette[color].main}
@@ -31,8 +40,13 @@ export const CustomParameterItem = ({
             >
                 {`${input === null ? 'no value' : input}`}
             </Typography>
-            <div className={styles.column}>
-                <p className={styles.paragraph}>
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    flexDirection: 'column',
+                }}
+            >
+                <Box sx={{ flexGrow: 1 }}>
                     <ConditionallyRender
                         condition={Boolean(requiredError)}
                         show={
@@ -72,13 +86,13 @@ export const CustomParameterItem = ({
                             </>
                         }
                     />
-                </p>
-            </div>
+                </Box>
+            </Box>
             <ConditionallyRender
                 condition={Boolean(requiredError)}
                 show={<CancelOutlined color={'error'} />}
                 elseShow={<div />}
             />
-        </div>
+        </StyledWrapper>
     );
 };
