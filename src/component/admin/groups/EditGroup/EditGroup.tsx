@@ -12,10 +12,12 @@ import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
 import { UG_SAVE_BTN_ID } from 'utils/testIds';
 import { GO_BACK } from 'constants/navigate';
+import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
 
 export const EditGroup = () => {
     const groupId = Number(useRequiredPathParam('groupId'));
     const { group, refetchGroup } = useGroup(groupId);
+    const { refetchGroups } = useGroups();
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
@@ -30,8 +32,10 @@ export const EditGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
+        setErrors,
     } = useGroupForm(group?.name, group?.description, group?.users);
 
+    const { groups } = useGroups();
     const { updateGroup, loading } = useGroupApi();
 
     const handleSubmit = async (e: Event) => {
@@ -42,6 +46,7 @@ export const EditGroup = () => {
         try {
             await updateGroup(groupId, payload);
             refetchGroup();
+            refetchGroups();
             navigate(GO_BACK);
             setToastData({
                 title: 'Group updated successfully',
@@ -65,6 +70,22 @@ export const EditGroup = () => {
         navigate(GO_BACK);
     };
 
+    const onSetName = (name: string) => {
+        clearErrors();
+        if (
+            groups?.filter(group => group.name === name && group.id !== groupId)
+                .length
+        ) {
+            setErrors({ name: 'Group name already exists.' });
+        }
+        setName(name);
+    };
+
+    const isValid =
+        name.length &&
+        !groups?.filter(group => group.name === name && group.id !== groupId)
+            .length;
+
     return (
         <FormTemplate
             loading={loading}
@@ -78,19 +99,19 @@ export const EditGroup = () => {
                 name={name}
                 description={description}
                 users={users}
-                setName={setName}
+                setName={onSetName}
                 setDescription={setDescription}
                 setUsers={setUsers}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
                 mode={EDIT}
-                clearErrors={clearErrors}
             >
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
+                    disabled={!isValid}
                     data-testid={UG_SAVE_BTN_ID}
                 >
                     Save
