@@ -12,6 +12,7 @@ import { GroupFormUsersSelect } from 'component/admin/groups/GroupForm/GroupForm
 import { GroupFormUsersTable } from 'component/admin/groups/GroupForm/GroupFormUsersTable/GroupFormUsersTable';
 import { UG_SAVE_BTN_ID } from 'utils/testIds';
 import { useGroupForm } from 'component/admin/groups/hooks/useGroupForm';
+import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -46,6 +47,7 @@ export const EditGroupUsers: FC<IEditGroupUsersProps> = ({
     group,
 }) => {
     const { refetchGroup } = useGroup(group.id);
+    const { refetchGroups } = useGroups();
     const { updateGroup, loading } = useGroupApi();
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
@@ -66,6 +68,7 @@ export const EditGroupUsers: FC<IEditGroupUsersProps> = ({
         try {
             await updateGroup(group.id, getGroupPayload());
             refetchGroup();
+            refetchGroups();
             setOpen(false);
             setToastData({
                 title: 'Group users saved successfully',
