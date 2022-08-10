@@ -10,6 +10,7 @@ import { UG_CREATE_BTN_ID } from 'utils/testIds';
 import { Button } from '@mui/material';
 import { CREATE } from 'constants/misc';
 import { GO_BACK } from 'constants/navigate';
+import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
 
 export const CreateGroup = () => {
     const { setToastData, setToastApiError } = useToast();
@@ -26,13 +27,17 @@ export const CreateGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
+        setErrors,
     } = useGroupForm();
 
+    const { groups } = useGroups();
     const { createGroup, loading } = useGroupApi();
 
     const handleSubmit = async (e: Event) => {
         e.preventDefault();
         clearErrors();
+
+        if (!isValid) return;
 
         const payload = getGroupPayload();
         try {
@@ -62,6 +67,17 @@ export const CreateGroup = () => {
         navigate(GO_BACK);
     };
 
+    const onSetName = (name: string) => {
+        clearErrors();
+        if (groups?.filter(g => g.name === name).length) {
+            setErrors({ name: 'Group name already exists.' });
+        }
+        setName(name);
+    };
+
+    const isValid =
+        name.length > 0 && groups?.filter(g => g.name === name).length === 0;
+
     return (
         <FormTemplate
             loading={loading}
@@ -75,19 +91,19 @@ export const CreateGroup = () => {
                 name={name}
                 description={description}
                 users={users}
-                setName={setName}
+                setName={onSetName}
                 setDescription={setDescription}
                 setUsers={setUsers}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
                 mode={CREATE}
-                clearErrors={clearErrors}
             >
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
+                    disabled={!isValid}
                     data-testid={UG_CREATE_BTN_ID}
                 >
                     Create group

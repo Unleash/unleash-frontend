@@ -55,5 +55,6 @@ export const useGroupForm = (
         getGroupPayload,
         clearErrors,
         errors,
+        setErrors,
     };
 };
