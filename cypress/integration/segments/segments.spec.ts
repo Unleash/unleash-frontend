@@ -9,7 +9,7 @@ const disableActiveSplashScreens = () => {
     cy.visit(`/splash/operators`);
 };
 
-describe('segments', () => {
+describe('project-access', () => {
     before(() => {
         disableActiveSplashScreens();
     });

@@ -43,6 +43,11 @@ import { ProjectAccessCreate } from 'component/project/ProjectAccess/ProjectAcce
 import { ProjectAccessEditUser } from 'component/project/ProjectAccess/ProjectAccessEditUser/ProjectAccessEditUser';
 import { ProjectAccessEditGroup } from 'component/project/ProjectAccess/ProjectAccessEditGroup/ProjectAccessEditGroup';
 import useHiddenColumns from 'hooks/useHiddenColumns';
+import {
+    PA_ASSIGN_BUTTON_ID,
+    PA_EDIT_BUTTON_ID,
+    PA_REMOVE_BUTTON_ID,
+} from '../../../../utils/testIds';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
@@ -198,6 +203,7 @@ export const ProjectAccessTable: VFC = () => {
                 }) => (
                     <ActionCell>
                         <PermissionIconButton
+                            data-testid={PA_EDIT_BUTTON_ID}
                             component={Link}
                             permission={UPDATE_PROJECT}
                             projectId={projectId}
@@ -215,6 +221,7 @@ export const ProjectAccessTable: VFC = () => {
                             <Edit />
                         </PermissionIconButton>
                         <PermissionIconButton
+                            data-testid={PA_REMOVE_BUTTON_ID}
                             permission={UPDATE_PROJECT}
                             projectId={projectId}
                             onClick={() => {
@@ -367,6 +374,7 @@ export const ProjectAccessTable: VFC = () => {
                                 Icon={Add}
                                 permission={UPDATE_PROJECT}
                                 projectId={projectId}
+                                data-testid={PA_ASSIGN_BUTTON_ID}
                             >
                                 Assign {entityType}
                             </ResponsiveButton>
