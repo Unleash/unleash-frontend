@@ -96,6 +96,8 @@ const columns = [
     },
 ];
 
+const hiddenColumnsSmall = ['imageUrl', 'name', 'joined', 'lastLogin'];
+
 interface IProjectGroupViewProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -148,11 +150,7 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         useFlexLayout
     );
 
-    useHiddenColumns(
-        setHiddenColumns,
-        ['imageUrl', 'name', 'joined', 'lastLogin'],
-        useMediaQuery(theme.breakpoints.down('md'))
-    );
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     return (
         <SidebarModal

@@ -70,6 +70,14 @@ const StyledGroupAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
 }));
 
+const hiddenColumnsSmall = [
+    'imageUrl',
+    'username',
+    'role',
+    'added',
+    'lastLogin',
+];
+
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
 
@@ -288,11 +296,7 @@ export const ProjectAccessTable: VFC = () => {
         useFlexLayout
     );
 
-    useHiddenColumns(
-        setHiddenColumns,
-        ['imageUrl', 'username', 'role', 'added', 'lastLogin'],
-        isSmallScreen
-    );
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     useEffect(() => {
         const tableState: PageQueryType = {};
@@ -342,6 +346,7 @@ export const ProjectAccessTable: VFC = () => {
         }
         setRemoveOpen(false);
     };
+
     return (
         <PageContent
             header={
