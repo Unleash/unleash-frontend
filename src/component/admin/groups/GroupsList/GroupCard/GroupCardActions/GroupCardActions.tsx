@@ -10,7 +10,7 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import { Delete, Edit, ManageAccounts, MoreVert } from '@mui/icons-material';
+import { Delete, Edit, GroupRounded, MoreVert } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const StyledActions = styled('div')(({ theme }) => ({
@@ -95,7 +95,7 @@ export const GroupCardActions: FC<IGroupCardActions> = ({
                         }}
                     >
                         <ListItemIcon>
-                            <ManageAccounts />
+                            <GroupRounded />
                         </ListItemIcon>
                         <ListItemText>
                             <Typography variant="body2">
