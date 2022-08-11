@@ -11,8 +11,7 @@ interface ICustomParameterItem {
 
 const StyledWrapper = styled(Box)(({ theme }) => ({
     width: '100%',
-    px: 3,
-    py: 2,
+    padding: theme.spacing(2, 3),
     borderRadius: theme.shape.borderRadiusMedium,
     border: `1px solid ${theme.palette.dividerAlternative}`,
     display: 'flex',
