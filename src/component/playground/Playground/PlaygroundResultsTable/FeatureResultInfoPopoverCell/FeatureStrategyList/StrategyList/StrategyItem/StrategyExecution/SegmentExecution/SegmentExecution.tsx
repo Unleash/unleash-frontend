@@ -64,8 +64,10 @@ export const SegmentExecution: VFC<ISegmentExecutionProps> = ({
                     />
                     <ConditionallyRender
                         condition={
+                            // Add IF there is a next segment
                             index >= 0 &&
                             segments.length > 1 &&
+                            // Don't add if it's the last segment item
                             index !== segments.length - 1
                         }
                         show={<StrategySeparator text="AND" />}

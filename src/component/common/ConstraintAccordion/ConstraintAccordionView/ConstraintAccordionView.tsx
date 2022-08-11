@@ -22,8 +22,8 @@ interface IConstraintAccordionViewProps {
     onDelete?: () => void;
     onEdit?: () => void;
     sx?: SxProps<Theme>;
-    compact: boolean;
-    renderAfter?: React.Element;
+    compact?: boolean;
+    renderAfter?: JSX.Element;
 }
 
 export const ConstraintAccordionView = ({
