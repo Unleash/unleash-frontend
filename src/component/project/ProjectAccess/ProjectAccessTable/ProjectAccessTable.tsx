@@ -47,7 +47,7 @@ import {
     PA_ASSIGN_BUTTON_ID,
     PA_EDIT_BUTTON_ID,
     PA_REMOVE_BUTTON_ID,
-} from '../../../../utils/testIds';
+} from 'utils/testIds';
 
 export type PageQueryType = Partial<
     Record<'sort' | 'order' | 'search', string>
