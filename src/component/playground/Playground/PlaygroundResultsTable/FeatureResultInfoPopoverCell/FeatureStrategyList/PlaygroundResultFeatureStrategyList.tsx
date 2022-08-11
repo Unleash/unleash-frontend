@@ -1,10 +1,12 @@
-import { PlaygroundResultStrategyLists } from './StrategyList/playgroundResultStrategyLists';
+import {
+    PlaygroundResultStrategyLists,
+    WrappedPlaygroundResultStrategyList
+} from './StrategyList/playgroundResultStrategyLists';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
     PlaygroundFeatureSchema,
     PlaygroundRequestSchema,
 } from 'component/playground/Playground/interfaces/playground.model';
-import { Alert } from '@mui/material';
 
 interface PlaygroundResultFeatureStrategyListProps {
     feature: PlaygroundFeatureSchema;
@@ -22,18 +24,17 @@ export const PlaygroundResultFeatureStrategyList = ({
                     !feature.isEnabledInCurrentEnvironment &&
                     Boolean(feature?.strategies?.data)
                 }
-                show={
-                    <Alert severity={'info'} color={'info'}>
-                        If environment would be enabled then this feature would
-                        be {feature.strategies?.result ? 'TRUE' : 'FALSE'} and
-                        the strategies would evaluate like this:{' '}
-                    </Alert>
+                elseShow={
+                    <PlaygroundResultStrategyLists
+                        strategies={feature?.strategies?.data || []}
+                        input={input}
+                    />
                 }
-            />
-            <PlaygroundResultStrategyLists
-                strategies={feature?.strategies?.data || []}
-                input={input}
-            />
+                show={<WrappedPlaygroundResultStrategyList
+                    strategies={feature?.strategies}
+                    input={input}
+                 />}
+                />
         </>
     );
 };

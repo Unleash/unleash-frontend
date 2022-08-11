@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { Alert, Box, styled, Typography } from '@mui/material';
 import {
-    PlaygroundFeatureSchema,
     PlaygroundStrategySchema,
     PlaygroundRequestSchema,
+    PlaygroundStrategyResultSchema,
 } from 'component/playground/Playground/interfaces/playground.model';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { FeatureStrategyItem } from './StrategyItem/FeatureStrategyItem';
@@ -42,9 +42,9 @@ export const PlaygroundResultStrategyLists = ({
                 <Typography
                     variant={'subtitle1'}
                     sx={{ mt: 2, ml: 1, mb: 2, color: 'text.secondary' }}
-                >{`Strategies (${strategies.length})`}</Typography>
+                >{`Strategies (${strategies?.length})`}</Typography>
                 <Box sx={{ width: '100%' }}>
-                    {strategies.map((strategy, index) => (
+                    {strategies?.map((strategy, index) => (
                         <Fragment key={strategy.id}>
                             <ConditionallyRender
                                 condition={index > 0}
@@ -64,26 +64,26 @@ export const PlaygroundResultStrategyLists = ({
     />
 );
 
-interface WrappedPlaygroundResultStrategyListProps
-    extends PlaygroundResultStrategyListProps {
-    feature: PlaygroundFeatureSchema;
+
+interface IWrappedPlaygroundResultStrategyListProps {
+    strategies: PlaygroundStrategyResultSchema;
+    input?: PlaygroundRequestSchema;
 }
 
 export const WrappedPlaygroundResultStrategyList = ({
     strategies,
-    feature,
     input,
-}: WrappedPlaygroundResultStrategyListProps) => {
+}: IWrappedPlaygroundResultStrategyListProps) => {
     return (
-        <StyledAlertWrapper sx={{ pb: 1 }}>
+        <StyledAlertWrapper sx={{ pb: 1, mt: 2 }}>
             <StyledAlert severity={'info'} color={'info'}>
-                If environment would be enabled then this feature would be{' '}
-                {feature.strategies.result ? 'TRUE' : 'FALSE'} and the
-                strategies would evaluate like this:{' '}
+                If environment was enabled then this feature would
+                be {strategies?.result ? 'TRUE' : 'FALSE'} and
+                the strategies would evaluate like so:{' '}
             </StyledAlert>
-            <StyledListWrapper>
+            <StyledListWrapper  sx={{ p: 2.5 }}>
                 <PlaygroundResultStrategyLists
-                    strategies={strategies}
+                    strategies={strategies?.data || []}
                     input={input}
                 />
             </StyledListWrapper>

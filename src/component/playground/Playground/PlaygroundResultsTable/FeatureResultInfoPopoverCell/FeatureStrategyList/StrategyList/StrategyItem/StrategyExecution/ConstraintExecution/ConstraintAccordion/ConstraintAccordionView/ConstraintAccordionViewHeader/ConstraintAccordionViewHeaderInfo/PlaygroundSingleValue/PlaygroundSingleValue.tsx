@@ -35,7 +35,7 @@ export const PlaygroundSingleValue = ({
                 condition={!Boolean(constraint.result)}
                 show={
                     <Typography variant={'body1'} color={'error'}>
-                        does not match values{' '}
+                        no match{' '}
                     </Typography>
                 }
             />
