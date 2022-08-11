@@ -1,30 +1,40 @@
-import useSWR, { mutate, SWRConfiguration } from 'swr';
+import useSWR from 'swr';
+import { useCallback } from 'react';
 import { formatApiPath } from 'utils/formatPath';
+import { IStrategy } from 'interfaces/strategy';
 import handleErrorResponses from '../httpErrorResponseHandler';
-import { defaultStrategy } from './defaultStrategy';
 
-const useStrategy = (strategyName: string, options: SWRConfiguration = {}) => {
-    const STRATEGY_CACHE_KEY = `api/admin/strategies/${strategyName}`;
-    const path = formatApiPath(STRATEGY_CACHE_KEY);
+interface IUseStrategyOutput {
+    strategyDefinition?: IStrategy;
+    refetchStrategies: () => void;
+    loading: boolean;
+    error?: Error;
+}
 
-    const fetcher = () => {
-        return fetch(path)
-            .then(handleErrorResponses(`${strategyName} strategy`))
-            .then(res => res.json());
-    };
+export const useStrategy = (
+    strategyName: string | undefined
+): IUseStrategyOutput => {
+    const { data, error, mutate } = useSWR(
+        strategyName
+            ? formatApiPath(`api/admin/strategies/${strategyName}`)
+            : null, // Don't fetch until we have a strategyName.
+        fetcher
+    );
 
-    const { data, error } = useSWR(STRATEGY_CACHE_KEY, fetcher, options);
-
-    const refetchStrategy = () => {
-        mutate(STRATEGY_CACHE_KEY);
-    };
+    const refetchStrategies = useCallback(() => {
+        mutate().catch(console.warn);
+    }, [mutate]);
 
     return {
-        strategy: data || defaultStrategy,
-        error,
+        strategyDefinition: data,
+        refetchStrategies,
         loading: !error && !data,
-        refetchStrategy,
+        error,
     };
 };
 
-export default useStrategy;
+const fetcher = (path: string): Promise<IStrategy> => {
+    return fetch(path)
+        .then(handleErrorResponses('Strategies'))
+        .then(res => res.json());
+};
