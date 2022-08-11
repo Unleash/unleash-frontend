@@ -21,9 +21,11 @@ const StyledListWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(1, 0.5),
 }));
 
-const StyledAlert = styled(Alert)(() => ({
+const StyledAlert = styled(Alert)(({theme}) => ({
+    border: '0!important',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+    borderBottom: `1px solid ${theme.palette.info.border}!important`,
 }));
 
 interface PlaygroundResultStrategyListProps {
