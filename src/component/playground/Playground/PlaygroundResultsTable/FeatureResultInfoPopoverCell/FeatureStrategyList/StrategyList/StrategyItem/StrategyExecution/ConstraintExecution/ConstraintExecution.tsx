@@ -33,16 +33,13 @@ export const ConstraintExecution: VFC<IConstraintExecutionProps> = ({
             {constraints?.map((constraint, index) => (
                 <Fragment key={objectId(constraint)}>
                     <ConditionallyRender
-                        condition={index > 0 && constraints?.length > 1}
+                        condition={index > 0}
                         show={<StrategySeparator text="AND" />}
                     />
                     <ConstraintAccordionView
                         constraint={constraint}
                         playgroundInput={input}
                         maxLength={compact ? 25 : 50}
-                        sx={{
-                            backgroundColor: 'transparent!important',
-                        }}
                     />
                 </Fragment>
             ))}
