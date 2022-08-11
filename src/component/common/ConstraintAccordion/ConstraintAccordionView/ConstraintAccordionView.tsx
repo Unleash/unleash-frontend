@@ -66,7 +66,13 @@ export const ConstraintAccordionView = ({
                     },
                 }}
             >
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                    }}
+                >
                     <ConstraintAccordionViewHeader
                         constraint={constraint}
                         onEdit={onEdit}

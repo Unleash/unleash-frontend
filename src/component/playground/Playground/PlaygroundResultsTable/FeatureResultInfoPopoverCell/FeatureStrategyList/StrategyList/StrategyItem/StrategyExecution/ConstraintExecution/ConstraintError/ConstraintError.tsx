@@ -25,7 +25,7 @@ export const ConstraintError = ({
         const value = input?.context[constraint.contextName];
 
         if (value) {
-            return `Constraint was not met because ${value} is not ${constraint.operator} ${constraint.contextName}`;
+            return `Constraint was not met because the value passed in the context: { ${value} } is not ${constraint.operator} ${constraint.contextName}`;
         }
 
         return `Constraint was not met because no value was specified for ${constraint.contextName}`;
