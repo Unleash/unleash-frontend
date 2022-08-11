@@ -67,16 +67,18 @@ export const CreateGroup = () => {
         navigate(GO_BACK);
     };
 
+    const isNameEmpty = (name: string) => name.length;
+    const isNameUnique = (name: string) =>
+        !groups?.filter(group => group.name === name).length;
+    const isValid = isNameEmpty(name) && isNameUnique(name);
+
     const onSetName = (name: string) => {
         clearErrors();
-        if (groups?.filter(group => group.name === name).length) {
+        if (!isNameUnique(name)) {
             setErrors({ name: 'A group with that name already exists.' });
         }
         setName(name);
     };
-
-    const isValid =
-        name.length && !groups?.filter(group => group.name === name).length;
 
     return (
         <FormTemplate
