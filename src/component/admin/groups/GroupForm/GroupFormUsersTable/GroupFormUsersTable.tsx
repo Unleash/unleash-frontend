@@ -13,6 +13,8 @@ import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
 import theme from 'themes/theme';
 import useHiddenColumns from 'hooks/useHiddenColumns';
 
+const hiddenColumnsSmall = ['imageUrl', 'name'];
+
 interface IGroupFormUsersTableProps {
     users: IGroupUser[];
     setUsers: React.Dispatch<React.SetStateAction<IGroupUser[]>>;
@@ -22,6 +24,8 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
     users,
     setUsers,
 }) => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     const columns = useMemo(
         () => [
             {
@@ -96,11 +100,7 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         useFlexLayout
     );
 
-    useHiddenColumns(
-        setHiddenColumns,
-        ['imageUrl', 'name'],
-        useMediaQuery(theme.breakpoints.down('md'))
-    );
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     return (
         <ConditionallyRender
