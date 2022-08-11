@@ -36,6 +36,7 @@ export const useStyles = makeStyles()(theme => ({
         [theme.breakpoints.down(710)]: {
             flexDirection: 'column',
             alignItems: 'center',
+            width: '100%',
         },
     },
     headerContainer: {

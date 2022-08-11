@@ -50,11 +50,7 @@ export const StrategyExecution: VFC<IStrategyExecutionProps> = ({
     const items = [
         hasSegments && <SegmentExecution segments={segments} input={input} />,
         hasConstraints && (
-            <ConstraintExecution
-                constraints={constraints}
-                compact={true}
-                input={input}
-            />
+            <ConstraintExecution constraints={constraints} input={input} />
         ),
         hasExecutionParameters && (
             <PlaygroundResultStrategyExecutionParameters
