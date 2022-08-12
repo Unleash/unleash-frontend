@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
@@ -12,7 +13,6 @@ import { useStrategy } from 'hooks/api/getters/useStrategy/useStrategy';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { GO_BACK } from 'constants/navigate';
-import React from 'react';
 
 export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
