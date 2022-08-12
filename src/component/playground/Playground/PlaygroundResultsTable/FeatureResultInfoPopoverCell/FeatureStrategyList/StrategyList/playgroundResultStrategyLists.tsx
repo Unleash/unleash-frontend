@@ -21,7 +21,7 @@ const StyledListWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(1, 0.5),
 }));
 
-const StyledAlert = styled(Alert)(({theme}) => ({
+const StyledAlert = styled(Alert)(({ theme }) => ({
     border: '0!important',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
@@ -66,7 +66,6 @@ export const PlaygroundResultStrategyLists = ({
     />
 );
 
-
 interface IWrappedPlaygroundResultStrategyListProps {
     strategies: PlaygroundStrategyResultSchema;
     input?: PlaygroundRequestSchema;
@@ -79,11 +78,11 @@ export const WrappedPlaygroundResultStrategyList = ({
     return (
         <StyledAlertWrapper sx={{ pb: 1, mt: 2 }}>
             <StyledAlert severity={'info'} color={'info'}>
-                If environment was enabled then this feature would
-                be {strategies?.result ? 'TRUE' : 'FALSE'} and
-                the strategies would evaluate like so:{' '}
+                If environment was enabled then this feature would be{' '}
+                {strategies?.result ? 'TRUE' : 'FALSE'} and the strategies would
+                evaluate like so:{' '}
             </StyledAlert>
-            <StyledListWrapper  sx={{ p: 2.5 }}>
+            <StyledListWrapper sx={{ p: 2.5 }}>
                 <PlaygroundResultStrategyLists
                     strategies={strategies?.data || []}
                     input={input}

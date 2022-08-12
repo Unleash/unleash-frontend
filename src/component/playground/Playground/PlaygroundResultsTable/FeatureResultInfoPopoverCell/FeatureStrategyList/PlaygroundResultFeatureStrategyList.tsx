@@ -1,6 +1,6 @@
 import {
     PlaygroundResultStrategyLists,
-    WrappedPlaygroundResultStrategyList
+    WrappedPlaygroundResultStrategyList,
 } from './StrategyList/playgroundResultStrategyLists';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import {
@@ -30,11 +30,13 @@ export const PlaygroundResultFeatureStrategyList = ({
                         input={input}
                     />
                 }
-                show={<WrappedPlaygroundResultStrategyList
-                    strategies={feature?.strategies}
-                    input={input}
-                 />}
-                />
+                show={
+                    <WrappedPlaygroundResultStrategyList
+                        strategies={feature?.strategies}
+                        input={input}
+                    />
+                }
+            />
         </>
     );
 };
