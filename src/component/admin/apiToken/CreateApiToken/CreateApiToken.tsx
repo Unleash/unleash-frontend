@@ -35,6 +35,8 @@ export const CreateApiToken = () => {
         isValid,
         errors,
         clearErrors,
+        metadata,
+        setMetadata,
     } = useApiTokenForm();
 
     const { createToken, loading } = useApiTokensApi();
@@ -101,6 +103,8 @@ export const CreateApiToken = () => {
                 handleCancel={handleCancel}
                 mode="Create"
                 clearErrors={clearErrors}
+                metadata={metadata}
+                setMetadata={setMetadata}
             >
                 <CreateButton name="token" permission={ADMIN} />
             </ApiTokenForm>

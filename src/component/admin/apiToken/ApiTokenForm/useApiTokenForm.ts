@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { IApiTokenCreate } from 'hooks/api/actions/useApiTokensApi/useApiTokensApi';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
+import { oneOf } from 'utils/oneOf';
 
 export type ApiTokenFormErrorType = 'username' | 'projects' | 'environments';
 
 export const useApiTokenForm = () => {
     const { environments: allEnvironments } = useEnvironments();
-
+    const [metadata, setMetadata] = useState({});
     const [username, setUsername] = useState('');
     const [type, setType] = useState('CLIENT');
     const [projects, setProjects] = useState<string[]>(['*']);
@@ -20,13 +21,17 @@ export const useApiTokenForm = () => {
     >({});
 
     useEffect(() => {
-        if (type === 'CLIENT') {
+        if (oneOf(['CLIENT', 'PROXY'], type)) {
             const initialEnvironment = allEnvironments?.find(
                 e => e.enabled
             )?.name;
             setEnvironments(initialEnvironment ? [initialEnvironment] : []);
         }
     }, [type, allEnvironments]);
+
+    useEffect(() => {
+        setMetadata({});
+    }, [type]);
 
     const setTokenType = (value: string) => {
         if (value === 'ADMIN') {
@@ -47,6 +52,7 @@ export const useApiTokenForm = () => {
         type,
         projects,
         environments,
+        metadata,
     });
 
     const isValid = () => {
@@ -85,6 +91,8 @@ export const useApiTokenForm = () => {
         setProjects,
         setEnvironments,
         getApiTokenPayload,
+        setMetadata,
+        metadata,
         isValid,
         clearErrors,
         errors,
