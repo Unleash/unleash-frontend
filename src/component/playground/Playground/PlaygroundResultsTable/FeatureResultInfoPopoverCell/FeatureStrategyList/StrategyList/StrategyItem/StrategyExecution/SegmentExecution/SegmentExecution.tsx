@@ -6,7 +6,6 @@ import {
 import { ConstraintExecution } from '../ConstraintExecution/ConstraintExecution';
 import { CancelOutlined } from '@mui/icons-material';
 import { StrategySeparator } from 'component/common/StrategySeparator/StrategySeparator';
-import { useStyles } from './SegmentExecution.styles';
 import { styled, Typography } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { SegmentItem } from 'component/common/SegmentItem/SegmentItem';

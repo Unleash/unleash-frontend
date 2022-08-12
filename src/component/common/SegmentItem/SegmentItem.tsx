@@ -14,7 +14,7 @@ import { ConditionallyRender } from '../ConditionallyRender/ConditionallyRender'
 import { useStyles } from './SegmentItem.styles';
 
 interface ISegmentItemProps {
-    segment: ISegment;
+    segment: Partial<ISegment>;
     isExpanded?: boolean;
     constraintList?: JSX.Element;
     headerContent?: JSX.Element;
@@ -74,10 +74,10 @@ export const SegmentItem: VFC<ISegmentItemProps> = ({
                     show={constraintList}
                     elseShow={
                         <ConditionallyRender
-                            condition={segment!.constraints?.length > 0}
+                            condition={(segment?.constraints?.length || 0) > 0}
                             show={
                                 <ConstraintAccordionList
-                                    constraints={segment.constraints}
+                                    constraints={segment!.constraints!}
                                     showLabel={false}
                                 />
                             }
