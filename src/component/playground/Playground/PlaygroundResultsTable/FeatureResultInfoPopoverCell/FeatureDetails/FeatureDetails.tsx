@@ -28,21 +28,40 @@ export const FeatureDetails = ({
     const theme = useTheme();
 
     const [description, reason, color] = (() => {
-            if (feature.isEnabled)
-                return [`This feature toggle is True in ${input?.environment} because `, 'at least one strategy is True', theme.palette.success.main];
+        if (feature.isEnabled)
+            return [
+                `This feature toggle is True in ${input?.environment} because `,
+                'at least one strategy is True',
+                theme.palette.success.main,
+            ];
 
-            if (!feature.isEnabledInCurrentEnvironment)
-                return [`This feature toggle is False in ${input?.environment} because `, 'the environment is disabled', theme.palette.error.main]
+        if (!feature.isEnabledInCurrentEnvironment)
+            return [
+                `This feature toggle is False in ${input?.environment} because `,
+                'the environment is disabled',
+                theme.palette.error.main,
+            ];
 
-            if (hasOnlyCustomStrategies(feature))
-                return [`This feature toggle is Unknown in ${input?.environment} because `, 'no strategies could be fully evaluated', theme.palette.warning.main];
+        if (hasOnlyCustomStrategies(feature))
+            return [
+                `This feature toggle is Unknown in ${input?.environment} because `,
+                'no strategies could be fully evaluated',
+                theme.palette.warning.main,
+            ];
 
-            if (hasCustomStrategies(feature))
-                return [`This feature toggle is Unknown in ${input?.environment} because `, 'not all strategies could be fully evaluated',  theme.palette.warning.main];
+        if (hasCustomStrategies(feature))
+            return [
+                `This feature toggle is Unknown in ${input?.environment} because `,
+                'not all strategies could be fully evaluated',
+                theme.palette.warning.main,
+            ];
 
-
-        return [`This feature toggle is False in ${input?.environment} because `, 'all strategies are either False or could not be fully evaluated', theme.palette.error.main];
-    })()
+        return [
+            `This feature toggle is False in ${input?.environment} because `,
+            'all strategies are either False or could not be fully evaluated',
+            theme.palette.error.main,
+        ];
+    })();
 
     const noValueTxt = checkForEmptyValues(input?.context)
         ? 'You did not provide a value for your context field in step 2 of the configuration'
@@ -99,7 +118,9 @@ export const FeatureDetails = ({
                 condition={Boolean(noValueTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'} severity={'warning'}>{noValueTxt}</Alert>
+                        <Alert color={'info'} severity={'warning'}>
+                            {noValueTxt}
+                        </Alert>
                     </div>
                 }
             />
@@ -107,7 +128,9 @@ export const FeatureDetails = ({
                 condition={Boolean(customStrategiesTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'} severity={'info'}>{customStrategiesTxt}</Alert>
+                        <Alert color={'info'} severity={'info'}>
+                            {customStrategiesTxt}
+                        </Alert>
                     </div>
                 }
             />
