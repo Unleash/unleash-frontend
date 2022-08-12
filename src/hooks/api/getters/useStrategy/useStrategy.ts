@@ -6,7 +6,7 @@ import handleErrorResponses from '../httpErrorResponseHandler';
 
 interface IUseStrategyOutput {
     strategyDefinition?: IStrategy;
-    refetchStrategies: () => void;
+    refetchStrategy: () => void;
     loading: boolean;
     error?: Error;
 }
@@ -21,13 +21,13 @@ export const useStrategy = (
         fetcher
     );
 
-    const refetchStrategies = useCallback(() => {
+    const refetchStrategy = useCallback(() => {
         mutate().catch(console.warn);
     }, [mutate]);
 
     return {
         strategyDefinition: data,
-        refetchStrategies,
+        refetchStrategy,
         loading: !error && !data,
         error,
     };
@@ -35,6 +35,6 @@ export const useStrategy = (
 
 const fetcher = (path: string): Promise<IStrategy> => {
     return fetch(path)
-        .then(handleErrorResponses('Strategies'))
+        .then(handleErrorResponses('Strategy'))
         .then(res => res.json());
 };
