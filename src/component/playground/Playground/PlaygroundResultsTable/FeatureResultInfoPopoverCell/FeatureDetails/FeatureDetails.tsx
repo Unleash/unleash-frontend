@@ -99,7 +99,7 @@ export const FeatureDetails = ({
                 condition={Boolean(noValueTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'}>{noValueTxt}</Alert>
+                        <Alert color={'info'} severity={'warning'}>{noValueTxt}</Alert>
                     </div>
                 }
             />
@@ -107,7 +107,7 @@ export const FeatureDetails = ({
                 condition={Boolean(customStrategiesTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'}>{customStrategiesTxt}</Alert>
+                        <Alert color={'info'} severity={'info'}>{customStrategiesTxt}</Alert>
                     </div>
                 }
             />
