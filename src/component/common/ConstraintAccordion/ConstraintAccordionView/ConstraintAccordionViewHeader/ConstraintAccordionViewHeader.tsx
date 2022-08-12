@@ -11,7 +11,7 @@ interface IConstraintAccordionViewHeaderProps {
     singleValue: boolean;
     expanded: boolean;
     allowExpand: (shouldExpand: boolean) => void;
-    compact: boolean;
+    compact?: boolean;
 }
 
 export const ConstraintAccordionViewHeader = ({
@@ -25,12 +25,9 @@ export const ConstraintAccordionViewHeader = ({
 }: IConstraintAccordionViewHeaderProps) => {
     const { classes: styles } = useStyles();
 
-    const iconSize = compact ? 15 : 25;
-    const iconStyles = { width: iconSize, height: iconSize };
-
     return (
         <div className={styles.headerContainer}>
-            <ConstraintIcon style={iconStyles} />
+            <ConstraintIcon compact={compact} />
             <ConstraintAccordionViewHeaderInfo
                 constraint={constraint}
                 singleValue={singleValue}

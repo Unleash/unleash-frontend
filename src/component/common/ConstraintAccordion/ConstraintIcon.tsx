@@ -1,16 +1,28 @@
-import { useStyles } from './ConstraintAccordion.styles';
+import { VFC } from 'react';
+import { Box } from '@mui/material';
 import { TrackChanges } from '@mui/icons-material';
 
 interface IConstraintIconProps {
-    style: React.CSSProperties;
+    compact?: boolean;
 }
 
-export const ConstraintIcon = ({ style = {} }: IConstraintIconProps) => {
-    const { classes: styles } = useStyles();
-
-    return (
-        <div className={styles.constraintIconContainer} style={style}>
-            <TrackChanges className={styles.constraintIcon} />
-        </div>
-    );
-};
+export const ConstraintIcon: VFC<IConstraintIconProps> = ({ compact }) => (
+    <Box
+        sx={{
+            backgroundColor: 'primary.light',
+            p: compact ? '1px' : '2px',
+            borderRadius: '50%',
+            width: compact ? '18px' : '24px',
+            height: compact ? '18px' : '24px',
+        }}
+    >
+        <TrackChanges
+            sx={{
+                fill: 'white',
+                display: 'block',
+                width: compact ? '16px' : '20px',
+                height: compact ? '16px' : '20px',
+            }}
+        />
+    </Box>
+);
