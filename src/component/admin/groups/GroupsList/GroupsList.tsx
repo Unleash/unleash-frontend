@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IGroup } from 'interfaces/group';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { Button, Grid, useMediaQuery } from '@mui/material';
+import { Grid, useMediaQuery } from '@mui/material';
 import theme from 'themes/theme';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { TablePlaceholder } from 'component/common/Table';
@@ -121,7 +121,7 @@ export const GroupsList: VFC = () => {
                 </Grid>
             </SearchHighlightProvider>
             <ConditionallyRender
-                condition={data.length === 0}
+                condition={!loading && data.length === 0}
                 show={
                     <ConditionallyRender
                         condition={searchValue?.length > 0}

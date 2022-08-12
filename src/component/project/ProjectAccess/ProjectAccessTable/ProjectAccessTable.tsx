@@ -43,6 +43,7 @@ import { ProjectAccessCreate } from 'component/project/ProjectAccess/ProjectAcce
 import { ProjectAccessEditUser } from 'component/project/ProjectAccess/ProjectAccessEditUser/ProjectAccessEditUser';
 import { ProjectAccessEditGroup } from 'component/project/ProjectAccess/ProjectAccessEditGroup/ProjectAccessEditGroup';
 import useHiddenColumns from 'hooks/useHiddenColumns';
+import { ProjectAccessRoleCell } from './ProjectAccessRoleCell/ProjectAccessRoleCell';
 import {
     PA_ASSIGN_BUTTON_ID,
     PA_EDIT_BUTTON_ID,
@@ -73,6 +74,14 @@ const StyledEmptyAvatar = styled(UserAvatar)(({ theme }) => ({
 const StyledGroupAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
 }));
+
+const hiddenColumnsSmall = [
+    'imageUrl',
+    'username',
+    'role',
+    'added',
+    'lastLogin',
+];
 
 export const ProjectAccessTable: VFC = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -154,6 +163,12 @@ export const ProjectAccessTable: VFC = () => {
                 accessor: (row: IProjectAccess) =>
                     access?.roles.find(({ id }) => id === row.entity.roleId)
                         ?.name,
+                Cell: ({ value, row: { original: row } }: any) => (
+                    <ProjectAccessRoleCell
+                        roleId={row.entity.roleId}
+                        value={value}
+                    />
+                ),
                 minWidth: 120,
                 filterName: 'role',
             },
@@ -288,11 +303,7 @@ export const ProjectAccessTable: VFC = () => {
         useFlexLayout
     );
 
-    useHiddenColumns(
-        setHiddenColumns,
-        ['imageUrl', 'username', 'role', 'added', 'lastLogin'],
-        isSmallScreen
-    );
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     useEffect(() => {
         const tableState: PageQueryType = {};
@@ -342,6 +353,7 @@ export const ProjectAccessTable: VFC = () => {
         }
         setRemoveOpen(false);
     };
+
     return (
         <PageContent
             header={

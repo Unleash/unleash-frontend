@@ -8,7 +8,7 @@ import { formatUnknownError } from 'utils/formatUnknownError';
 import { PlaygroundResultsTable } from './PlaygroundResultsTable/PlaygroundResultsTable';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { usePlaygroundApi } from 'hooks/api/actions/usePlayground/usePlayground';
-import { PlaygroundResponseSchema } from 'hooks/api/actions/usePlayground/playground.model';
+import { PlaygroundResponseSchema } from 'component/playground/Playground/interfaces/playground.model';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
 import { PlaygroundForm } from './PlaygroundForm/PlaygroundForm';
 import {
@@ -18,6 +18,7 @@ import {
 } from './playground.utils';
 import { PlaygroundGuidance } from './PlaygroundGuidance/PlaygroundGuidance';
 import { PlaygroundGuidancePopper } from './PlaygroundGuidancePopper/PlaygroundGuidancePopper';
+import Loader from '../../common/Loader/Loader';
 
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
@@ -101,7 +102,6 @@ export const Playground: VFC<{}> = () => {
             if (action && typeof action === 'function') {
                 action();
             }
-
             setResults(response);
         } catch (error: unknown) {
             setToastData({
@@ -198,14 +198,21 @@ export const Playground: VFC<{}> = () => {
                     })}
                 >
                     <ConditionallyRender
-                        condition={Boolean(results)}
-                        show={
-                            <PlaygroundResultsTable
-                                loading={loading}
-                                features={results?.features}
+                        condition={loading}
+                        show={<Loader />}
+                        elseShow={
+                            <ConditionallyRender
+                                condition={Boolean(results)}
+                                show={
+                                    <PlaygroundResultsTable
+                                        loading={loading}
+                                        features={results?.features}
+                                        input={results?.input}
+                                    />
+                                }
+                                elseShow={<PlaygroundGuidance />}
                             />
                         }
-                        elseShow={<PlaygroundGuidance />}
                     />
                 </Box>
             </Box>

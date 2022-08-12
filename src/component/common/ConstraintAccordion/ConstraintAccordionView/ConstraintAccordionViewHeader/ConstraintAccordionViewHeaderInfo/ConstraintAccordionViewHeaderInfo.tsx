@@ -1,6 +1,6 @@
 import { styled, Tooltip } from '@mui/material';
 import { ConstraintViewHeaderOperator } from '../ConstraintViewHeaderOperator/ConstraintViewHeaderOperator';
-import { ConditionallyRender } from '../../../../ConditionallyRender/ConditionallyRender';
+import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ConstraintAccordionViewHeaderSingleValue } from '../ContraintAccordionViewHeaderSingleValue/ConstraintAccordionViewHeaderSingleValue';
 import { ConstraintAccordionViewHeaderMultipleValues } from '../ContraintAccordionViewHeaderMultipleValues/ConstraintAccordionViewHeaderMultipleValues';
 import React from 'react';
@@ -27,11 +27,19 @@ const StyledHeaderText = styled('span')(({ theme }) => ({
     },
 }));
 
+const StyledHeaderWrapper = styled('div')(({ theme }) => ({
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    borderRadius: theme.spacing(1),
+}));
+
 interface ConstraintAccordionViewHeaderMetaInfoProps {
     constraint: IConstraint;
     singleValue: boolean;
     expanded: boolean;
     allowExpand: (shouldExpand: boolean) => void;
+    maxLength?: number;
 }
 
 export const ConstraintAccordionViewHeaderInfo = ({
@@ -39,31 +47,37 @@ export const ConstraintAccordionViewHeaderInfo = ({
     singleValue,
     allowExpand,
     expanded,
+    maxLength = 112, //The max number of characters in the values text for NOT allowing expansion
 }: ConstraintAccordionViewHeaderMetaInfoProps) => {
     const { classes: styles } = useStyles();
+
     return (
-        <div className={styles.headerMetaInfo}>
-            <Tooltip title={constraint.contextName} arrow>
-                <StyledHeaderText>{constraint.contextName}</StyledHeaderText>
-            </Tooltip>
-            <ConstraintViewHeaderOperator constraint={constraint} />
-            <ConditionallyRender
-                condition={singleValue}
-                show={
-                    <ConstraintAccordionViewHeaderSingleValue
-                        constraint={constraint}
-                        allowExpand={allowExpand}
-                    />
-                }
-                elseShow={
-                    <ConstraintAccordionViewHeaderMultipleValues
-                        constraint={constraint}
-                        expanded={expanded}
-                        allowExpand={allowExpand}
-                        maxLength={112}
-                    />
-                }
-            />
-        </div>
+        <StyledHeaderWrapper>
+            <div className={styles.headerMetaInfo}>
+                <Tooltip title={constraint.contextName} arrow>
+                    <StyledHeaderText>
+                        {constraint.contextName}
+                    </StyledHeaderText>
+                </Tooltip>
+                <ConstraintViewHeaderOperator constraint={constraint} />
+                <ConditionallyRender
+                    condition={singleValue}
+                    show={
+                        <ConstraintAccordionViewHeaderSingleValue
+                            constraint={constraint}
+                            allowExpand={allowExpand}
+                        />
+                    }
+                    elseShow={
+                        <ConstraintAccordionViewHeaderMultipleValues
+                            constraint={constraint}
+                            expanded={expanded}
+                            allowExpand={allowExpand}
+                            maxLength={maxLength}
+                        />
+                    }
+                />
+            </div>
+        </StyledHeaderWrapper>
     );
 };

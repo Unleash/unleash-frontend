@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SortingRule, useGlobalFilter, useSortBy, useTable } from 'react-table';
-
 import {
-    SortableTableHeader,
-    Table,
-    TableBody,
-    TableCell,
-    TablePlaceholder,
-    TableRow,
-} from 'component/common/Table';
+    SortingRule,
+    useFlexLayout,
+    useGlobalFilter,
+    useSortBy,
+    useTable,
+} from 'react-table';
+
+import { TablePlaceholder, VirtualizedTable } from 'component/common/Table';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { sortTypes } from 'utils/sortTypes';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
@@ -19,10 +18,14 @@ import { LinkCell } from 'component/common/Table/cells/LinkCell/LinkCell';
 import { useSearch } from 'hooks/useSearch';
 import { createLocalStorage } from 'utils/createLocalStorage';
 import { FeatureStatusCell } from './FeatureStatusCell/FeatureStatusCell';
-import { PlaygroundFeatureSchema } from 'hooks/api/actions/usePlayground/playground.model';
+import {
+    PlaygroundFeatureSchema,
+    PlaygroundRequestSchema,
+} from 'component/playground/Playground/interfaces/playground.model';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import useLoading from 'hooks/useLoading';
 import { VariantCell } from './VariantCell/VariantCell';
+import { FeatureResultInfoPopoverCell } from './FeatureResultInfoPopoverCell/FeatureResultInfoPopoverCell';
 
 const defaultSort: SortingRule<string> = { id: 'name' };
 const { value, setValue } = createLocalStorage(
@@ -32,11 +35,13 @@ const { value, setValue } = createLocalStorage(
 
 interface IPlaygroundResultsTableProps {
     features?: PlaygroundFeatureSchema[];
+    input?: PlaygroundRequestSchema;
     loading: boolean;
 }
 
 export const PlaygroundResultsTable = ({
     features,
+    input,
     loading,
 }: IPlaygroundResultsTableProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -47,6 +52,79 @@ export const PlaygroundResultsTable = ({
     const theme = useTheme();
     const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const COLUMNS = useMemo(() => {
+        return [
+            {
+                Header: 'Name',
+                accessor: 'name',
+                searchable: true,
+                minWidth: 160,
+                Cell: ({ value, row: { original } }: any) => (
+                    <LinkCell
+                        title={value}
+                        to={`/projects/${original?.projectId}/features/${value}`}
+                    />
+                ),
+            },
+            {
+                Header: 'Project ID',
+                accessor: 'projectId',
+                sortType: 'alphanumeric',
+                filterName: 'projectId',
+                searchable: true,
+                maxWidth: 170,
+                Cell: ({ value }: any) => (
+                    <LinkCell title={value} to={`/projects/${value}`} />
+                ),
+            },
+            {
+                Header: 'Variant',
+                id: 'variant',
+                accessor: 'variant.name',
+                sortType: 'alphanumeric',
+                filterName: 'variant',
+                searchable: true,
+                maxWidth: 200,
+                Cell: ({
+                    value,
+                    row: {
+                        original: { variant, feature, variants, isEnabled },
+                    },
+                }: any) => (
+                    <VariantCell
+                        variant={variant?.enabled ? value : ''}
+                        variants={variants}
+                        feature={feature}
+                        isEnabled={isEnabled}
+                    />
+                ),
+            },
+            {
+                Header: 'isEnabled',
+                accessor: 'isEnabled',
+                filterName: 'isEnabled',
+                filterParsing: (value: boolean) => (value ? 'true' : 'false'),
+                Cell: ({ row }: any) => (
+                    <FeatureStatusCell feature={row.original} />
+                ),
+                sortType: 'boolean',
+                maxWidth: 120,
+                sortInverted: true,
+            },
+            {
+                Header: '',
+                maxWidth: 70,
+                id: 'info',
+                Cell: ({ row }: any) => (
+                    <FeatureResultInfoPopoverCell
+                        feature={row.original}
+                        input={input}
+                    />
+                ),
+            },
+        ];
+    }, [input]);
 
     const {
         data: searchedData,
@@ -77,11 +155,9 @@ export const PlaygroundResultsTable = ({
     }));
 
     const {
-        getTableProps,
-        getTableBodyProps,
         headerGroups,
-        state: { sortBy },
         rows,
+        state: { sortBy },
         prepareRow,
         setHiddenColumns,
     } = useTable(
@@ -93,11 +169,13 @@ export const PlaygroundResultsTable = ({
             autoResetGlobalFilter: false,
             autoResetSortBy: false,
             disableSortRemove: true,
+            disableMultiSort: true,
             defaultColumn: {
                 Cell: HighlightCell,
             },
         },
         useGlobalFilter,
+        useFlexLayout,
         useSortBy
     );
 
@@ -167,7 +245,6 @@ export const PlaygroundResultsTable = ({
                     containerStyles={{ marginLeft: '1rem', maxWidth: '400px' }}
                 />
             </Box>
-
             <ConditionallyRender
                 condition={!loading && !data}
                 show={() => (
@@ -182,30 +259,11 @@ export const PlaygroundResultsTable = ({
                         <SearchHighlightProvider
                             value={getSearchText(searchValue)}
                         >
-                            <Table {...getTableProps()} rowHeight="standard">
-                                <SortableTableHeader
-                                    headerGroups={headerGroups as any}
-                                />
-                                <TableBody {...getTableBodyProps()}>
-                                    {rows.map(row => {
-                                        prepareRow(row);
-                                        return (
-                                            <TableRow
-                                                hover
-                                                {...row.getRowProps()}
-                                            >
-                                                {row.cells.map(cell => (
-                                                    <TableCell
-                                                        {...cell.getCellProps()}
-                                                    >
-                                                        {cell.render('Cell')}
-                                                    </TableCell>
-                                                ))}
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </Table>
+                            <VirtualizedTable
+                                rows={rows}
+                                headerGroups={headerGroups}
+                                prepareRow={prepareRow}
+                            />
                         </SearchHighlightProvider>
                         <ConditionallyRender
                             condition={
@@ -235,60 +293,3 @@ export const PlaygroundResultsTable = ({
         </>
     );
 };
-
-const COLUMNS = [
-    {
-        Header: 'Name',
-        accessor: 'name',
-        searchable: true,
-        minWidth: 160,
-        Cell: ({ value, row: { original } }: any) => (
-            <LinkCell
-                title={value}
-                to={`/projects/${original?.projectId}/features/${value}`}
-            />
-        ),
-    },
-    {
-        Header: 'Project ID',
-        accessor: 'projectId',
-        sortType: 'alphanumeric',
-        filterName: 'projectId',
-        searchable: true,
-        maxWidth: 170,
-        Cell: ({ value }: any) => (
-            <LinkCell title={value} to={`/projects/${value}`} />
-        ),
-    },
-    {
-        Header: 'Variant',
-        id: 'variant',
-        accessor: 'variant.name',
-        sortType: 'alphanumeric',
-        filterName: 'variant',
-        searchable: true,
-        width: 200,
-        Cell: ({
-            value,
-            row: {
-                original: { variant, feature, variants, isEnabled },
-            },
-        }: any) => (
-            <VariantCell
-                variant={variant?.enabled ? value : ''}
-                variants={variants}
-                feature={feature}
-                isEnabled={isEnabled}
-            />
-        ),
-    },
-    {
-        Header: 'isEnabled',
-        accessor: 'isEnabled',
-        filterName: 'isEnabled',
-        filterParsing: (value: boolean) => (value ? 'true' : 'false'),
-        Cell: ({ value }: any) => <FeatureStatusCell enabled={value} />,
-        sortType: 'boolean',
-        sortInverted: true,
-    },
-];
