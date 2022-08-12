@@ -7,6 +7,7 @@ import {
     PlaygroundFeatureSchema,
     PlaygroundRequestSchema,
 } from 'component/playground/Playground/interfaces/playground.model';
+import { Alert } from '@mui/material';
 
 interface PlaygroundResultFeatureStrategyListProps {
     feature: PlaygroundFeatureSchema;
