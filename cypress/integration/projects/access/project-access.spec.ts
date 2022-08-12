@@ -41,7 +41,7 @@ describe('project-access', () => {
                     userIds.push(id);
                     cy.request('POST', `${baseUrl}/api/admin/groups`, {
                         name: `${i}-${groupAndProjectName}`,
-                        users: [{ user: { id: id }, role: 'Owner' }],
+                        users: [{ user: { id: id } }],
                     }).then(response => {
                         const id = response.body.id;
                         groupIds.push(id);
