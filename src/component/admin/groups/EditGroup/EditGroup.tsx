@@ -10,10 +10,14 @@ import { Button } from '@mui/material';
 import { EDIT } from 'constants/misc';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
 import { useGroup } from 'hooks/api/getters/useGroup/useGroup';
+import { UG_SAVE_BTN_ID } from 'utils/testIds';
+import { GO_BACK } from 'constants/navigate';
+import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
 
 export const EditGroup = () => {
     const groupId = Number(useRequiredPathParam('groupId'));
     const { group, refetchGroup } = useGroup(groupId);
+    const { refetchGroups } = useGroups();
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
@@ -28,8 +32,10 @@ export const EditGroup = () => {
         getGroupPayload,
         clearErrors,
         errors,
+        setErrors,
     } = useGroupForm(group?.name, group?.description, group?.users);
 
+    const { groups } = useGroups();
     const { updateGroup, loading } = useGroupApi();
 
     const handleSubmit = async (e: Event) => {
@@ -40,7 +46,8 @@ export const EditGroup = () => {
         try {
             await updateGroup(groupId, payload);
             refetchGroup();
-            navigate(-1);
+            refetchGroups();
+            navigate(GO_BACK);
             setToastData({
                 title: 'Group updated successfully',
                 type: 'success',
@@ -60,7 +67,21 @@ export const EditGroup = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1);
+        navigate(GO_BACK);
+    };
+
+    const isNameEmpty = (name: string) => name.length;
+    const isNameUnique = (name: string) =>
+        !groups?.filter(group => group.name === name && group.id !== groupId)
+            .length;
+    const isValid = isNameEmpty(name) && isNameUnique(name);
+
+    const onSetName = (name: string) => {
+        clearErrors();
+        if (!isNameUnique(name)) {
+            setErrors({ name: 'A group with that name already exists.' });
+        }
+        setName(name);
     };
 
     return (
@@ -76,16 +97,21 @@ export const EditGroup = () => {
                 name={name}
                 description={description}
                 users={users}
-                setName={setName}
+                setName={onSetName}
                 setDescription={setDescription}
                 setUsers={setUsers}
                 errors={errors}
                 handleSubmit={handleSubmit}
                 handleCancel={handleCancel}
                 mode={EDIT}
-                clearErrors={clearErrors}
             >
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!isValid}
+                    data-testid={UG_SAVE_BTN_ID}
+                >
                     Save
                 </Button>
             </GroupForm>

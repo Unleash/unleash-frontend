@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
-import { IGroupUser, Role } from 'interfaces/group';
+import { IGroupUser } from 'interfaces/group';
 import React, { useMemo, useState } from 'react';
 import { GroupPopover } from './GroupPopover/GroupPopover';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
@@ -15,6 +15,9 @@ const StyledAvatars = styled('div')(({ theme }) => ({
 const StyledAvatar = styled(UserAvatar)(({ theme }) => ({
     outline: `${theme.spacing(0.25)} solid ${theme.palette.background.paper}`,
     marginLeft: theme.spacing(-1),
+    '&:hover': {
+        outlineColor: theme.palette.primary.main,
+    },
 }));
 
 interface IGroupCardAvatarsProps {
@@ -23,7 +26,10 @@ interface IGroupCardAvatarsProps {
 
 export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
     const shownUsers = useMemo(
-        () => users.sort((a, b) => (a.role < b.role ? 1 : -1)).slice(0, 9),
+        () =>
+            users
+                .sort((a, b) => b?.joinedAt!.getTime() - a?.joinedAt!.getTime())
+                .slice(0, 9),
         [users]
     );
 
@@ -44,8 +50,8 @@ export const GroupCardAvatars = ({ users }: IGroupCardAvatarsProps) => {
         <StyledAvatars>
             {shownUsers.map(user => (
                 <StyledAvatar
+                    key={user.id}
                     user={user}
-                    star={user.role === Role.Owner}
                     onMouseEnter={event => {
                         onPopoverOpen(event);
                         setPopupUser(user);

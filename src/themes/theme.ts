@@ -26,13 +26,16 @@ export default createTheme({
             fontSize: '1.5rem',
             lineHeight: 1.875,
         },
+        h3: {
+            fontSize: '1rem',
+            fontWeight: '700',
+        },
         caption: {
             fontSize: `${12 / 16}rem`,
         },
     },
     fontSizes: {
         mainHeader: '1.25rem',
-        subHeader: '1.1rem',
         bodySize: '1rem',
         smallBody: `${14 / 16}rem`,
         smallerBody: `${12 / 16}rem`,
@@ -44,10 +47,10 @@ export default createTheme({
         bold: 700,
     },
     shape: {
-        borderRadius: '4px',
-        borderRadiusMedium: '8px',
-        borderRadiusLarge: '12px',
-        borderRadiusExtraLarge: '20px',
+        borderRadius: 4,
+        borderRadiusMedium: 8,
+        borderRadiusLarge: 12,
+        borderRadiusExtraLarge: 20,
         tableRowHeight: 64,
         tableRowHeightCompact: 56,
         tableRowHeightDense: 48,
@@ -117,17 +120,17 @@ export default createTheme({
         },
         code: {
             main: '#0b8c8f',
-            diffAdd: 'green',
-            diffSub: 'red',
+            diffAdd: '#3b6600',
+            diffSub: '#d11525',
             diffNeutral: 'black',
-            edited: 'blue',
-            background: '#efefef',
+            edited: 'black',
         },
         activityIndicators: {
             unknown: colors.grey[100],
             recent: colors.green[100],
             inactive: colors.orange[200],
             abandoned: colors.red[200],
+            primary: colors.purple[100],
         },
         inactiveIcon: colors.grey[600],
     },
@@ -255,11 +258,23 @@ export default createTheme({
                 },
             },
         },
+        MuiAccordion: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    '&:first-of-type, &:last-of-type': {
+                        borderRadius: theme.shape.borderRadiusMedium,
+                    },
+                }),
+            },
+        },
         MuiAccordionSummary: {
             styleOverrides: {
                 root: {
                     '& > .MuiAccordionSummary-content.Mui-expanded': {
                         margin: '12px 0',
+                    },
+                    '&.Mui-expanded': {
+                        minHeight: '0',
                     },
                 },
             },
@@ -308,6 +323,11 @@ export default createTheme({
                             }),
                             ...(ownerState.color === 'default' && {
                                 color: theme.palette.text.secondary,
+                            }),
+                            ...(ownerState.color === 'error' && {
+                                color: theme.palette.error.dark,
+                                background: theme.palette.error.light,
+                                borderColor: theme.palette.error.border,
                             }),
                         }),
                 }),

@@ -6,12 +6,13 @@ import useProjectRolesApi from 'hooks/api/actions/useProjectRolesApi/useProjectR
 import useProjectRole from 'hooks/api/getters/useProjectRole/useProjectRole';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
-import { IPermission } from 'interfaces/user';
+import { IPermission } from 'interfaces/project';
 import { useNavigate } from 'react-router-dom';
 import useProjectRoleForm from '../hooks/useProjectRoleForm';
 import ProjectRoleForm from '../ProjectRoleForm/ProjectRoleForm';
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { GO_BACK } from 'constants/navigate';
 
 const EditProjectRole = () => {
     const { uiConfig } = useUiConfig();
@@ -42,7 +43,6 @@ const EditProjectRole = () => {
     useEffect(() => {
         const initialCheckedPermissions = role?.permissions?.reduce(
             (acc: { [key: string]: IPermission }, curr: IPermission) => {
-                // @ts-expect-error
                 acc[getRoleKey(curr)] = curr;
                 return acc;
             },
@@ -94,7 +94,7 @@ const EditProjectRole = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1);
+        navigate(GO_BACK);
     };
 
     return (

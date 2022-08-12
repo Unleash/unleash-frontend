@@ -10,7 +10,7 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import { Delete, Edit, MoreVert } from '@mui/icons-material';
+import { Delete, Edit, GroupRounded, MoreVert } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const StyledActions = styled('div')(({ theme }) => ({
@@ -25,11 +25,13 @@ const StyledPopover = styled(Popover)(({ theme }) => ({
 
 interface IGroupCardActions {
     groupId: number;
+    onEditUsers: () => void;
     onRemove: () => void;
 }
 
 export const GroupCardActions: FC<IGroupCardActions> = ({
     groupId,
+    onEditUsers,
     onRemove,
 }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -88,6 +90,21 @@ export const GroupCardActions: FC<IGroupCardActions> = ({
                     </MenuItem>
                     <MenuItem
                         onClick={() => {
+                            onEditUsers();
+                            handleClose();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <GroupRounded />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <Typography variant="body2">
+                                Edit group users
+                            </Typography>
+                        </ListItemText>
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => {
                             onRemove();
                             handleClose();
                         }}
@@ -97,7 +114,7 @@ export const GroupCardActions: FC<IGroupCardActions> = ({
                         </ListItemIcon>
                         <ListItemText>
                             <Typography variant="body2">
-                                Remove group
+                                Delete group
                             </Typography>
                         </ListItemText>
                     </MenuItem>

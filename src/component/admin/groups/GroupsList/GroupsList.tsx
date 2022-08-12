@@ -1,16 +1,21 @@
 import { useEffect, useMemo, useState, VFC } from 'react';
 import { useGroups } from 'hooks/api/getters/useGroups/useGroups';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IGroup } from 'interfaces/group';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { Search } from 'component/common/Search/Search';
-import { Button, Grid, useMediaQuery } from '@mui/material';
+import { Grid, useMediaQuery } from '@mui/material';
 import theme from 'themes/theme';
 import { SearchHighlightProvider } from 'component/common/Table/SearchHighlightContext/SearchHighlightContext';
 import { TablePlaceholder } from 'component/common/Table';
 import { GroupCard } from './GroupCard/GroupCard';
+import { GroupEmpty } from './GroupEmpty/GroupEmpty';
+import ResponsiveButton from 'component/common/ResponsiveButton/ResponsiveButton';
+import { ADMIN } from 'component/providers/AccessProvider/permissions';
+import { Add } from '@mui/icons-material';
+import { NAVIGATE_TO_CREATE_GROUP } from 'utils/testIds';
 
 type PageQueryType = Partial<Record<'search', string>>;
 
@@ -31,6 +36,7 @@ const groupsSearch = (group: IGroup, searchValue: string) => {
 };
 
 export const GroupsList: VFC = () => {
+    const navigate = useNavigate();
     const { groups = [], loading } = useGroups();
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState(
@@ -79,14 +85,17 @@ export const GroupsList: VFC = () => {
                                     </>
                                 }
                             />
-                            <Button
-                                to="/admin/groups/create-group"
-                                component={Link}
-                                variant="contained"
-                                color="primary"
+                            <ResponsiveButton
+                                onClick={() =>
+                                    navigate('/admin/groups/create-group')
+                                }
+                                maxWidth="700px"
+                                Icon={Add}
+                                permission={ADMIN}
+                                data-testid={NAVIGATE_TO_CREATE_GROUP}
                             >
                                 New group
-                            </Button>
+                            </ResponsiveButton>
                         </>
                     }
                 >
@@ -112,7 +121,7 @@ export const GroupsList: VFC = () => {
                 </Grid>
             </SearchHighlightProvider>
             <ConditionallyRender
-                condition={data.length === 0}
+                condition={!loading && data.length === 0}
                 show={
                     <ConditionallyRender
                         condition={searchValue?.length > 0}
@@ -123,12 +132,7 @@ export const GroupsList: VFC = () => {
                                 &rdquo;
                             </TablePlaceholder>
                         }
-                        elseShow={
-                            <TablePlaceholder>
-                                No groups available. Get started by adding a new
-                                group.
-                            </TablePlaceholder>
-                        }
+                        elseShow={<GroupEmpty />}
                     />
                 }
             />

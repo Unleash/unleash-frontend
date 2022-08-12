@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
     Autocomplete,
     Button,
@@ -25,7 +25,14 @@ import { IUser } from 'interfaces/user';
 import { IGroup } from 'interfaces/group';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { ProjectRoleDescription } from './ProjectRoleDescription/ProjectRoleDescription';
-import { useAccess } from '../../../../hooks/api/getters/useAccess/useAccess';
+import { useNavigate } from 'react-router-dom';
+import { GO_BACK } from 'constants/navigate';
+import {
+    PA_ASSIGN_CREATE_ID,
+    PA_ROLE_ID,
+    PA_USERS_GROUPS_ID,
+    PA_USERS_GROUPS_TITLE_ID,
+} from 'utils/testIds';
 
 const StyledForm = styled('form')(() => ({
     display: 'flex',
@@ -46,8 +53,8 @@ const StyledAutocompleteWrapper = styled('div')(({ theme }) => ({
     },
 }));
 
-const StyledButtonContainer = styled('div')(() => ({
-    marginTop: 'auto',
+const StyledButtonContainer = styled('div')(({ theme }) => ({
+    marginTop: theme.spacing(6),
     display: 'flex',
     justifyContent: 'flex-end',
 }));
@@ -88,101 +95,88 @@ interface IAccessOption {
 }
 
 interface IProjectAccessAssignProps {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     selected?: IProjectAccess;
     accesses: IProjectAccess[];
+    users: IUser[];
+    groups: IGroup[];
     roles: IProjectRole[];
-    entityType: string;
 }
 
 export const ProjectAccessAssign = ({
-    open,
-    setOpen,
     selected,
     accesses,
+    users,
+    groups,
     roles,
-    entityType,
 }: IProjectAccessAssignProps) => {
+    const { uiConfig } = useUiConfig();
+    const { flags } = uiConfig;
+    const entityType = flags.UG ? 'user / group' : 'user';
+
     const projectId = useRequiredPathParam('projectId');
     const { refetchProjectAccess } = useProjectAccess(projectId);
     const { addAccessToProject, changeUserRole, changeGroupRole, loading } =
         useProjectApi();
-    const { users, groups } = useAccess();
     const edit = Boolean(selected);
 
     const { setToastData, setToastApiError } = useToast();
-    const { uiConfig } = useUiConfig();
+    const navigate = useNavigate();
 
-    const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>([]);
+    const options = [
+        ...groups
+            .filter(
+                (group: IGroup) =>
+                    edit ||
+                    !accesses.some(
+                        ({ entity: { id }, type }) =>
+                            group.id === id && type === ENTITY_TYPE.GROUP
+                    )
+            )
+            .map((group: IGroup) => ({
+                id: group.id,
+                entity: group,
+                type: ENTITY_TYPE.GROUP,
+            })),
+        ...users
+            .filter(
+                (user: IUser) =>
+                    edit ||
+                    !accesses.some(
+                        ({ entity: { id }, type }) =>
+                            user.id === id && type === ENTITY_TYPE.USER
+                    )
+            )
+            .map((user: IUser) => ({
+                id: user.id,
+                entity: user,
+                type: ENTITY_TYPE.USER,
+            })),
+    ];
+
+    const [selectedOptions, setSelectedOptions] = useState<IAccessOption[]>(
+        () =>
+            options.filter(
+                ({ id, type }) =>
+                    id === selected?.entity.id && type === selected?.type
+            )
+    );
     const [role, setRole] = useState<IProjectRole | null>(
         roles.find(({ id }) => id === selected?.entity.roleId) ?? null
     );
 
-    useEffect(() => {
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) ?? null);
-    }, [roles, selected]);
-
-    const payload = useMemo(
-        () => ({
-            users: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.USER)
-                .map(({ id }) => ({ id })),
-            groups: selectedOptions
-                ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
-                .map(({ id }) => ({ id })),
-        }),
-        [selectedOptions]
-    );
-
-    const options = useMemo(
-        () => [
-            ...groups
-                .filter(
-                    (group: IGroup) =>
-                        edit ||
-                        !accesses.some(
-                            ({ entity: { id }, type }) =>
-                                group.id === id && type === ENTITY_TYPE.GROUP
-                        )
-                )
-                .map((group: IGroup) => ({
-                    id: group.id,
-                    entity: group,
-                    type: ENTITY_TYPE.GROUP,
-                })),
-            ...users
-                .filter(
-                    (user: IUser) =>
-                        edit ||
-                        !accesses.some(
-                            ({ entity: { id }, type }) =>
-                                user.id === id && type === ENTITY_TYPE.USER
-                        )
-                )
-                .map((user: IUser) => ({
-                    id: user.id,
-                    entity: user,
-                    type: ENTITY_TYPE.USER,
-                })),
-        ],
-        [users, accesses, edit, groups]
-    );
-
-    useEffect(() => {
-        const selectedOption =
-            options.filter(
-                ({ id, type }) =>
-                    id === selected?.entity.id && type === selected?.type
-            ) || [];
-        setSelectedOptions(selectedOption);
-        setRole(roles.find(({ id }) => id === selected?.entity.roleId) || null);
-    }, [open, selected, options, roles]);
+    const payload = {
+        users: selectedOptions
+            ?.filter(({ type }) => type === ENTITY_TYPE.USER)
+            .map(({ id }) => ({ id })),
+        groups: selectedOptions
+            ?.filter(({ type }) => type === ENTITY_TYPE.GROUP)
+            .map(({ id }) => ({ id })),
+    };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!role) return;
+        if (!isValid) return;
 
         try {
             if (!edit) {
@@ -193,7 +187,7 @@ export const ProjectAccessAssign = ({
                 await changeGroupRole(projectId, role.id, selected.entity.id);
             }
             refetchProjectAccess();
-            setOpen(false);
+            navigate(GO_BACK);
             setToastData({
                 title: `${selectedOptions.length} ${
                     selectedOptions.length === 1 ? 'access' : 'accesses'
@@ -275,12 +269,12 @@ export const ProjectAccessAssign = ({
         </li>
     );
 
+    const isValid = selectedOptions.length > 0 && role;
+
     return (
         <SidebarModal
-            open={open}
-            onClose={() => {
-                setOpen(false);
-            }}
+            open
+            onClose={() => navigate(GO_BACK)}
             label={`${!edit ? 'Assign' : 'Edit'} ${entityType} access`}
         >
             <FormTemplate
@@ -294,13 +288,17 @@ export const ProjectAccessAssign = ({
             >
                 <StyledForm onSubmit={handleSubmit}>
                     <div>
-                        <StyledInputDescription>
+                        <StyledInputDescription
+                            data-testid={PA_USERS_GROUPS_TITLE_ID}
+                        >
                             Select the {entityType}
                         </StyledInputDescription>
                         <StyledAutocompleteWrapper>
                             <Autocomplete
+                                data-testid={PA_USERS_GROUPS_ID}
                                 size="small"
                                 multiple
+                                openOnFocus
                                 limitTags={10}
                                 disableCloseOnSelect
                                 disabled={edit}
@@ -335,6 +333,10 @@ export const ProjectAccessAssign = ({
                                         return option.entity.name;
                                     }
                                 }}
+                                isOptionEqualToValue={(option, value) =>
+                                    option.type === value.type &&
+                                    option.entity.id === value.entity.id
+                                }
                                 renderInput={params => (
                                     <TextField
                                         {...params}
@@ -348,7 +350,9 @@ export const ProjectAccessAssign = ({
                         </StyledInputDescription>
                         <StyledAutocompleteWrapper>
                             <Autocomplete
+                                data-testid={PA_ROLE_ID}
                                 size="small"
+                                openOnFocus
                                 value={role}
                                 onChange={(_, newValue) => setRole(newValue)}
                                 options={roles}
@@ -367,17 +371,15 @@ export const ProjectAccessAssign = ({
 
                     <StyledButtonContainer>
                         <Button
+                            data-testid={PA_ASSIGN_CREATE_ID}
                             type="submit"
                             variant="contained"
                             color="primary"
+                            disabled={!isValid}
                         >
                             Assign {entityType}
                         </Button>
-                        <StyledCancelButton
-                            onClick={() => {
-                                setOpen(false);
-                            }}
-                        >
+                        <StyledCancelButton onClick={() => navigate(GO_BACK)}>
                             Cancel
                         </StyledCancelButton>
                     </StyledButtonContainer>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import useToast from 'hooks/useToast';
@@ -8,16 +9,17 @@ import { UPDATE_STRATEGY } from 'component/providers/AccessProvider/permissions'
 import useStrategiesApi from 'hooks/api/actions/useStrategiesApi/useStrategiesApi';
 import { useStrategies } from 'hooks/api/getters/useStrategies/useStrategies';
 import { formatUnknownError } from 'utils/formatUnknownError';
-import useStrategy from 'hooks/api/getters/useStrategy/useStrategy';
+import { useStrategy } from 'hooks/api/getters/useStrategy/useStrategy';
 import { UpdateButton } from 'component/common/UpdateButton/UpdateButton';
 import { useRequiredPathParam } from 'hooks/useRequiredPathParam';
+import { GO_BACK } from 'constants/navigate';
 
 export const EditStrategy = () => {
     const { setToastData, setToastApiError } = useToast();
     const { uiConfig } = useUiConfig();
     const navigate = useNavigate();
     const name = useRequiredPathParam('name');
-    const { strategy } = useStrategy(name);
+    const { strategyDefinition } = useStrategy(name);
     const {
         strategyName,
         strategyDesc,
@@ -31,9 +33,9 @@ export const EditStrategy = () => {
         setErrors,
         errors,
     } = useStrategyForm(
-        strategy?.name,
-        strategy?.description,
-        strategy?.parameters
+        strategyDefinition?.name,
+        strategyDefinition?.description,
+        strategyDefinition?.parameters
     );
     const { updateStrategy, loading } = useStrategiesApi();
     const { refetchStrategies } = useStrategies();
@@ -68,7 +70,7 @@ export const EditStrategy = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1);
+        navigate(GO_BACK);
     };
 
     return (

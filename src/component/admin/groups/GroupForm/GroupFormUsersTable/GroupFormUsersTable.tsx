@@ -1,9 +1,8 @@
 import { useMemo, VFC } from 'react';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { TextCell } from 'component/common/Table/cells/TextCell/TextCell';
 import { IGroupUser } from 'interfaces/group';
 import { HighlightCell } from 'component/common/Table/cells/HighlightCell/HighlightCell';
-import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import { ActionCell } from 'component/common/Table/cells/ActionCell/ActionCell';
 import { Delete } from '@mui/icons-material';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
@@ -11,6 +10,10 @@ import { VirtualizedTable } from 'component/common/Table';
 import { useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
 import { UserAvatar } from 'component/common/UserAvatar/UserAvatar';
+import theme from 'themes/theme';
+import useHiddenColumns from 'hooks/useHiddenColumns';
+
+const hiddenColumnsSmall = ['imageUrl', 'name'];
 
 interface IGroupFormUsersTableProps {
     users: IGroupUser[];
@@ -21,6 +24,8 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
     users,
     setUsers,
 }) => {
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     const columns = useMemo(
         () => [
             {
@@ -49,30 +54,6 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
                 Cell: HighlightCell,
                 minWidth: 100,
                 searchable: true,
-            },
-            {
-                Header: 'Group role',
-                accessor: 'role',
-                Cell: ({ row: { original: rowUser } }: any) => (
-                    <GroupUserRoleCell
-                        value={rowUser.role}
-                        onChange={role =>
-                            setUsers((users: IGroupUser[]) => {
-                                const newUsers = [...users];
-                                const index = newUsers.findIndex(
-                                    user => user.id === rowUser.id
-                                );
-                                newUsers[index] = {
-                                    ...rowUser,
-                                    role,
-                                };
-                                return newUsers;
-                            })
-                        }
-                    />
-                ),
-                maxWidth: 150,
-                filterName: 'type',
             },
             {
                 Header: 'Action',
@@ -106,7 +87,7 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         [setUsers]
     );
 
-    const { headerGroups, rows, prepareRow } = useTable(
+    const { headerGroups, rows, prepareRow, setHiddenColumns } = useTable(
         {
             columns: columns as any[],
             data: users as any[],
@@ -118,6 +99,8 @@ export const GroupFormUsersTable: VFC<IGroupFormUsersTableProps> = ({
         useSortBy,
         useFlexLayout
     );
+
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     return (
         <ConditionallyRender

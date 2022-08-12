@@ -40,10 +40,7 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         projectId,
         featureId
     );
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
+    const onClose = () => {
         setAnchorEl(null);
     };
     const { hasAccess } = useContext(AccessContext);
@@ -70,7 +67,7 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
         } catch (error) {
             setToastApiError(formatUnknownError(error));
         }
-        handleClose();
+        onClose();
     };
 
     const enabled = environments.some(environment =>
@@ -87,11 +84,13 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                 <div>
                     <IconButton
                         size="large"
-                        id="basic-button"
+                        id={`copy-strategy-icon-menu-${strategy.id}`}
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
+                        onClick={(event: MouseEvent<HTMLButtonElement>) => {
+                            setAnchorEl(event.currentTarget);
+                        }}
                         disabled={!enabled}
                     >
                         <CopyIcon />
@@ -102,9 +101,9 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                onClose={onClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+                    'aria-labelledby': `copy-strategy-icon-menu-${strategy.id}`,
                 }}
             >
                 {environments.map(environment => {
@@ -136,7 +135,9 @@ export const CopyStrategyIconMenu: VFC<ICopyStrategyIconMenuProps> = ({
                                             </ListItemIcon>
                                         }
                                     />
-                                    <ListItemText>{environment}</ListItemText>
+                                    <ListItemText>
+                                        Copy to {environment}
+                                    </ListItemText>
                                 </MenuItem>
                             </div>
                         </Tooltip>

@@ -1,6 +1,5 @@
 import { Delete, Edit } from '@mui/icons-material';
 import { styled, useMediaQuery, useTheme } from '@mui/material';
-import { GroupUserRoleCell } from 'component/admin/groups/GroupUserRoleCell/GroupUserRoleCell';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import { PageContent } from 'component/common/PageContent/PageContent';
 import { PageHeader } from 'component/common/PageHeader/PageHeader';
@@ -20,17 +19,22 @@ import { IGroup, IGroupUser } from 'interfaces/group';
 import { VFC, useState } from 'react';
 import { SortingRule, useFlexLayout, useSortBy, useTable } from 'react-table';
 import { sortTypes } from 'utils/sortTypes';
+import useHiddenColumns from 'hooks/useHiddenColumns';
 
 const StyledPageContent = styled(PageContent)(({ theme }) => ({
     height: '100vh',
     overflow: 'auto',
     padding: theme.spacing(7.5, 6),
+    [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(4, 2),
+    },
     '& .header': {
         padding: theme.spacing(0, 0, 2, 0),
     },
     '& .body': {
         padding: theme.spacing(3, 0, 0, 0),
     },
+    borderRadius: `${theme.spacing(1.5, 0, 0, 1.5)} !important`,
 }));
 
 const StyledTitle = styled('div')(({ theme }) => ({
@@ -38,11 +42,11 @@ const StyledTitle = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     '& > span': {
         color: theme.palette.text.secondary,
-        fontSize: theme.fontSizes.smallBody,
+        fontSize: theme.fontSizes.bodySize,
     },
 }));
 
-const defaultSort: SortingRule<string> = { id: 'role', desc: true };
+const defaultSort: SortingRule<string> = { id: 'joinedAt' };
 
 const columns = [
     {
@@ -73,13 +77,7 @@ const columns = [
         searchable: true,
     },
     {
-        Header: 'User type',
-        accessor: 'role',
-        Cell: GroupUserRoleCell,
-        maxWidth: 150,
-        filterName: 'type',
-    },
-    {
+        id: 'joined',
         Header: 'Joined',
         accessor: 'joinedAt',
         Cell: DateCell,
@@ -87,6 +85,7 @@ const columns = [
         maxWidth: 150,
     },
     {
+        id: 'lastLogin',
         Header: 'Last login',
         accessor: (row: IGroupUser) => row.seenAt || '',
         Cell: ({ row: { original: user } }: any) => (
@@ -96,6 +95,8 @@ const columns = [
         maxWidth: 150,
     },
 ];
+
+const hiddenColumnsSmall = ['imageUrl', 'name', 'joined', 'lastLogin'];
 
 interface IProjectGroupViewProps {
     open: boolean;
@@ -135,7 +136,7 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         group?.users ?? []
     );
 
-    const { headerGroups, rows, prepareRow } = useTable(
+    const { headerGroups, rows, prepareRow, setHiddenColumns } = useTable(
         {
             columns: columns as any[],
             data,
@@ -148,6 +149,8 @@ export const ProjectGroupView: VFC<IProjectGroupViewProps> = ({
         useSortBy,
         useFlexLayout
     );
+
+    useHiddenColumns(setHiddenColumns, hiddenColumnsSmall, isSmallScreen);
 
     return (
         <SidebarModal

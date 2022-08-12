@@ -8,13 +8,20 @@ import useFeatureStrategyApi from 'hooks/api/actions/useFeatureStrategyApi/useFe
 import { formatUnknownError } from 'utils/formatUnknownError';
 import { useNavigate } from 'react-router-dom';
 import useToast from 'hooks/useToast';
-import { IFeatureStrategy, IFeatureStrategyPayload } from 'interfaces/strategy';
+import {
+    IFeatureStrategy,
+    IFeatureStrategyPayload,
+    IStrategy,
+} from 'interfaces/strategy';
 import { UPDATE_FEATURE_STRATEGY } from 'component/providers/AccessProvider/permissions';
 import { ISegment } from 'interfaces/segment';
 import { useSegmentsApi } from 'hooks/api/actions/useSegmentsApi/useSegmentsApi';
 import { useSegments } from 'hooks/api/getters/useSegments/useSegments';
 import { formatStrategyName } from 'utils/strategyNames';
 import { useFeatureImmutable } from 'hooks/api/getters/useFeature/useFeatureImmutable';
+import { useFormErrors } from 'hooks/useFormErrors';
+import { useStrategy } from 'hooks/api/getters/useStrategy/useStrategy';
+import { sortStrategyParameters } from 'utils/sortStrategyParameters';
 
 export const FeatureStrategyEdit = () => {
     const projectId = useRequiredPathParam('projectId');
@@ -26,7 +33,9 @@ export const FeatureStrategyEdit = () => {
     const [segments, setSegments] = useState<ISegment[]>([]);
     const { updateStrategyOnFeature, loading } = useFeatureStrategyApi();
     const { setStrategySegments } = useSegmentsApi();
+    const { strategyDefinition } = useStrategy(strategy.name);
     const { setToastData, setToastApiError } = useToast();
+    const errors = useFormErrors();
     const { uiConfig } = useUiConfig();
     const { unleashUrl } = uiConfig;
     const navigate = useNavigate();
@@ -83,8 +92,7 @@ export const FeatureStrategyEdit = () => {
         }
     };
 
-    // Wait until the strategy has loaded before showing the form.
-    if (!strategy.id) {
+    if (!strategy.id || !strategyDefinition) {
         return null;
     }
 
@@ -101,6 +109,7 @@ export const FeatureStrategyEdit = () => {
                     featureId,
                     environmentId,
                     strategy,
+                    strategyDefinition,
                     unleashUrl
                 )
             }
@@ -115,6 +124,7 @@ export const FeatureStrategyEdit = () => {
                 onSubmit={onSubmit}
                 loading={loading}
                 permission={UPDATE_FEATURE_STRATEGY}
+                errors={errors}
             />
         </FormTemplate>
     );
@@ -153,14 +163,25 @@ export const formatUpdateStrategyApiCode = (
     featureId: string,
     environmentId: string,
     strategy: Partial<IFeatureStrategy>,
+    strategyDefinition: IStrategy,
     unleashUrl?: string
 ): string => {
     if (!unleashUrl) {
         return '';
     }
 
+    // Sort the strategy parameters payload so that they match
+    // the order of the input fields in the form, for usability.
+    const sortedStrategy = {
+        ...strategy,
+        parameters: sortStrategyParameters(
+            strategy.parameters ?? {},
+            strategyDefinition
+        ),
+    };
+
     const url = `${unleashUrl}/api/admin/projects/${projectId}/features/${featureId}/environments/${environmentId}/strategies/${strategy.id}`;
-    const payload = JSON.stringify(strategy, undefined, 2);
+    const payload = JSON.stringify(sortedStrategy, undefined, 2);
 
     return `curl --location --request PUT '${url}' \\
     --header 'Authorization: INSERT_API_KEY' \\
