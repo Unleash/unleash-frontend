@@ -32,7 +32,7 @@ export const PlaygroundResultFeatureStrategyList = ({
                     (feature?.strategies?.data?.length || 0) > 0
                 }
                 show={
-                    <Alert severity="info" color="info">
+                    <Alert severity="info" color="warning">
                         If environment was enabled, then this feature toggle
                         would be {feature.strategies?.result ? 'TRUE' : 'FALSE'}{' '}
                         with strategies evaluated like so:{' '}
