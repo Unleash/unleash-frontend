@@ -68,7 +68,7 @@ export const FeatureDetails = ({
         : undefined;
 
     const customStrategiesTxt = hasCustomStrategies(feature)
-        ? `This feature uses custom strategies. Custom strategies can't be evaluated, so they will be marked as Unevaluated`
+        ? `This feature uses custom strategies. Custom strategies can't be evaluated, so they will be marked accordingly.`
         : undefined;
 
     const onCloseClick =
@@ -113,14 +113,15 @@ export const FeatureDetails = ({
                 <Typography variant="subtitle1" color={color} component="span">
                     {reason}
                 </Typography>
+                <Typography variant="body1" component="span">
+                    .
+                </Typography>
             </div>
             <ConditionallyRender
                 condition={Boolean(noValueTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'} severity={'warning'}>
-                            {noValueTxt}
-                        </Alert>
+                        <Alert color={'info'}>{noValueTxt}</Alert>
                     </div>
                 }
             />
@@ -128,7 +129,7 @@ export const FeatureDetails = ({
                 condition={Boolean(customStrategiesTxt)}
                 show={
                     <div className={styles.alertRow}>
-                        <Alert color={'info'} severity={'info'}>
+                        <Alert severity="warning" color="info">
                             {customStrategiesTxt}
                         </Alert>
                     </div>
