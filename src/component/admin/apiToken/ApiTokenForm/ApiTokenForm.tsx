@@ -1,4 +1,12 @@
-import { Button } from '@mui/material';
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    Typography,
+} from '@mui/material';
 import { KeyboardArrowDownOutlined } from '@mui/icons-material';
 import React from 'react';
 import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironments';
@@ -45,8 +53,21 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     const { projects: availableProjects } = useProjects();
 
     const selectableTypes = [
-        { key: 'CLIENT', label: 'Client', title: 'Client SDK token' },
-        { key: 'ADMIN', label: 'Admin', title: 'Admin API token' },
+        {
+            key: 'CLIENT',
+            label: 'Server-side SDK',
+            title: 'For backend SDK access or for Unleash Proxy.',
+        },
+        {
+            key: 'PROXY',
+            label: 'Client-side SDK',
+            title: 'Direct connection for web or mobile frontend.',
+        },
+        {
+            key: 'ADMIN',
+            label: 'Admin',
+            title: 'Full access for managing Unleash.',
+        },
     ];
 
     const selectableProjects = availableProjects.map(project => ({
@@ -81,20 +102,39 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                     onFocus={() => clearErrors('username')}
                     autoFocus
                 />
-                <p className={styles.inputDescription}>
-                    What is your token type?
-                </p>
-                <GeneralSelect
-                    options={selectableTypes}
-                    value={type}
-                    onChange={setTokenType}
-                    label="Token Type"
-                    id="api_key_type"
-                    name="type"
-                    IconComponent={KeyboardArrowDownOutlined}
-                    fullWidth
-                    className={styles.selectInput}
-                />
+                <FormControl className={styles.radioGroup}>
+                    <p id="token-type" className={styles.inputDescription}>
+                        What is it that you need to connect?
+                    </p>
+                    <RadioGroup
+                        aria-labelledby="token-type"
+                        defaultValue="CLIENT"
+                        name="radio-buttons-group"
+                        value={type}
+                        onChange={(event, value) => setTokenType(value)}
+                    >
+                        {selectableTypes.map(({ key, label, title }) => (
+                            <FormControlLabel
+                                key={key}
+                                value={key}
+                                className={styles.radioItem}
+                                control={<Radio className={styles.radio} />}
+                                label={
+                                    <>
+                                        {label}
+                                        <br />
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
+                                            {title}
+                                        </Typography>
+                                    </>
+                                }
+                            />
+                        ))}
+                    </RadioGroup>
+                </FormControl>
                 <p className={styles.inputDescription}>
                     Which project do you want to give access to?
                 </p>
