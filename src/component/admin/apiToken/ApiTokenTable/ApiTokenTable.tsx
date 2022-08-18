@@ -128,6 +128,18 @@ export const ApiTokenTable = () => {
     );
 };
 
+const getTypeDescription = (type: string) => {
+    switch (type) {
+        case 'admin':
+            return 'Full access for managing Unleash.';
+        case 'client':
+            return 'For server-side SDK access or Unleash Proxy.';
+        case 'frontend':
+            return 'Client-side SDK connection for web or mobile.';
+    }
+    return undefined;
+};
+
 const COLUMNS = [
     {
         id: 'Icon',
@@ -145,9 +157,12 @@ const COLUMNS = [
         Header: 'Type',
         accessor: 'type',
         Cell: ({ value }: { value: string }) => (
-            <HighlightCell value={value.toUpperCase()} />
+            <HighlightCell
+                value={value.toUpperCase()}
+                subtitle={getTypeDescription(value)}
+            />
         ),
-        minWidth: 100,
+        minWidth: 300,
     },
     {
         Header: 'Project',

@@ -2,7 +2,6 @@ import {
     Button,
     FormControl,
     FormControlLabel,
-    FormLabel,
     Radio,
     RadioGroup,
     Typography,
@@ -55,17 +54,17 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     const selectableTypes = [
         {
             key: 'CLIENT',
-            label: 'Server-side SDK',
-            title: 'For backend SDK access or for Unleash Proxy.',
+            label: 'CLIENT',
+            title: 'For server-side SDK access or Unleash Proxy.',
         },
         {
-            key: 'PROXY',
-            label: 'Client-side SDK',
-            title: 'Direct connection for web or mobile frontend.',
+            key: 'FRONTEND',
+            label: 'FRONTEND',
+            title: 'Client-side SDK connection for web or mobile.',
         },
         {
             key: 'ADMIN',
-            label: 'Admin',
+            label: 'ADMIN',
             title: 'Full access for managing Unleash.',
         },
     ];
