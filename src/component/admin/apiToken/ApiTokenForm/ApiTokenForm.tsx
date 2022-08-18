@@ -60,21 +60,20 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
             label: 'Server-side SDK (CLIENT)',
             title: 'Connect server-side SDK or Unleash Proxy',
         },
-        ...(uiConfig.embedProxy
-            ? [
-                  {
-                      key: 'FRONTEND',
-                      label: 'Client-side SDK (FRONTEND)',
-                      title: 'Connect web and mobile SDK directly to Unleash',
-                  },
-              ]
-            : []),
         {
             key: 'ADMIN',
             label: 'ADMIN',
             title: 'Full access for managing Unleash',
         },
     ];
+
+    if (uiConfig.embedProxy) {
+        selectableTypes.splice(1, 0, {
+            key: 'FRONTEND',
+            label: 'Client-side SDK (FRONTEND)',
+            title: 'Connect web and mobile SDK directly to Unleash',
+        });
+    }
 
     const selectableProjects = availableProjects.map(project => ({
         value: project.id,
@@ -109,9 +108,9 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                     autoFocus
                 />
                 <FormControl className={styles.radioGroup}>
-                    <p id="token-type" className={styles.inputDescription}>
+                    <label id="token-type" className={styles.inputDescription}>
                         What do you want to connect?
-                    </p>
+                    </label>
                     <RadioGroup
                         aria-labelledby="token-type"
                         defaultValue="CLIENT"
