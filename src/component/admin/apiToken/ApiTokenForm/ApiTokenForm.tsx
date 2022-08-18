@@ -12,9 +12,11 @@ import { useEnvironments } from 'hooks/api/getters/useEnvironments/useEnvironmen
 import useProjects from 'hooks/api/getters/useProjects/useProjects';
 import GeneralSelect from 'component/common/GeneralSelect/GeneralSelect';
 import Input from 'component/common/Input/Input';
-import { useStyles } from './ApiTokenForm.styles';
+import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
 import { SelectProjectInput } from './SelectProjectInput/SelectProjectInput';
-import { ApiTokenFormErrorType } from 'component/admin/apiToken/ApiTokenForm/useApiTokenForm';
+import { ApiTokenFormErrorType } from './useApiTokenForm';
+import { useStyles } from './ApiTokenForm.styles';
+
 interface IApiTokenFormProps {
     username: string;
     type: string;
@@ -47,6 +49,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     clearErrors,
 }) => {
     const TYPE_ADMIN = 'ADMIN';
+    const { uiConfig } = useUiConfig();
     const { classes: styles } = useStyles();
     const { environments } = useEnvironments();
     const { projects: availableProjects } = useProjects();
@@ -57,11 +60,15 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
             label: 'CLIENT',
             title: 'For server-side SDK access or Unleash Proxy.',
         },
-        {
-            key: 'FRONTEND',
-            label: 'FRONTEND',
-            title: 'Client-side SDK connection for web or mobile.',
-        },
+        ...(uiConfig.embedProxy
+            ? [
+                  {
+                      key: 'FRONTEND',
+                      label: 'FRONTEND',
+                      title: 'Client-side SDK connection for web or mobile.',
+                  },
+              ]
+            : []),
         {
             key: 'ADMIN',
             label: 'ADMIN',
