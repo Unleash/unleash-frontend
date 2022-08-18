@@ -78,9 +78,14 @@ export const ApiTokenTable = () => {
                 />
             }
         >
-            <Box sx={{ mb: 4 }}>
-                <ApiTokenDocs />
-            </Box>
+            <ConditionallyRender
+                condition={rows.length > 0}
+                show={
+                    <Box sx={{ mb: 4 }}>
+                        <ApiTokenDocs />
+                    </Box>
+                }
+            />
             <Box sx={{ overflowX: 'auto' }}>
                 <SearchHighlightProvider value={globalFilter}>
                     <Table {...getTableProps()}>
@@ -118,7 +123,17 @@ export const ApiTokenTable = () => {
                         }
                         elseShow={
                             <TablePlaceholder>
-                                No tokens available. Get started by adding one.
+                                <span>
+                                    {'No tokens available. Read '}
+                                    <a
+                                        href="https://docs.getunleash.io/how-to/api"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        API How-to guides
+                                    </a>{' '}
+                                    {' to learn more.'}
+                                </span>
                             </TablePlaceholder>
                         }
                     />
@@ -128,16 +143,19 @@ export const ApiTokenTable = () => {
     );
 };
 
-const getTypeDescription = (type: string) => {
-    switch (type) {
-        case 'admin':
-            return 'Full access for managing Unleash.';
-        case 'client':
-            return 'For server-side SDK access or Unleash Proxy.';
-        case 'frontend':
-            return 'Client-side SDK connection for web or mobile.';
-    }
-    return undefined;
+const tokenDescriptions = {
+    client: {
+        label: 'CLIENT',
+        title: 'Connect server-side SDK or Unleash Proxy',
+    },
+    frontend: {
+        label: 'FRONTEND',
+        title: 'Connect web and mobile SDK',
+    },
+    admin: {
+        label: 'ADMIN',
+        title: 'Full access for managing Unleash',
+    },
 };
 
 const COLUMNS = [
@@ -156,13 +174,13 @@ const COLUMNS = [
     {
         Header: 'Type',
         accessor: 'type',
-        Cell: ({ value }: { value: string }) => (
+        Cell: ({ value }: { value: 'admin' | 'client' | 'frontend' }) => (
             <HighlightCell
-                value={value.toUpperCase()}
-                subtitle={getTypeDescription(value)}
+                value={tokenDescriptions[value].label}
+                subtitle={tokenDescriptions[value].title}
             />
         ),
-        minWidth: 300,
+        minWidth: 280,
     },
     {
         Header: 'Project',

@@ -57,22 +57,22 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
     const selectableTypes = [
         {
             key: 'CLIENT',
-            label: 'CLIENT',
-            title: 'For server-side SDK access or Unleash Proxy.',
+            label: 'Server-side SDK (CLIENT)',
+            title: 'Connect server-side SDK or Unleash Proxy',
         },
         ...(uiConfig.embedProxy
             ? [
                   {
                       key: 'FRONTEND',
-                      label: 'FRONTEND',
-                      title: 'Client-side SDK connection for web or mobile.',
+                      label: 'Client-side SDK (FRONTEND)',
+                      title: 'Connect web and mobile SDK directly to Unleash',
                   },
               ]
             : []),
         {
             key: 'ADMIN',
             label: 'ADMIN',
-            title: 'Full access for managing Unleash.',
+            title: 'Full access for managing Unleash',
         },
     ];
 
@@ -110,7 +110,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                 />
                 <FormControl className={styles.radioGroup}>
                     <p id="token-type" className={styles.inputDescription}>
-                        What is it that you need to connect?
+                        What do you want to connect?
                     </p>
                     <RadioGroup
                         aria-labelledby="token-type"
@@ -127,8 +127,7 @@ const ApiTokenForm: React.FC<IApiTokenFormProps> = ({
                                 control={<Radio className={styles.radio} />}
                                 label={
                                     <>
-                                        {label}
-                                        <br />
+                                        <Typography>{label}</Typography>
                                         <Typography
                                             variant="body2"
                                             color="text.secondary"
