@@ -363,6 +363,8 @@ export default createTheme({
                             }),
                         }),
                 }),
+            },
+        },
         MuiInputBase: {
             styleOverrides: {
                 root: {

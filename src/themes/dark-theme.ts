@@ -144,6 +144,12 @@ export default createTheme({
             edited: 'blue',
             background: '#efefef',
         },
+        neutral: {
+            light: colors.grey[100],
+            main: colors.grey[700],
+            dark: colors.grey[800],
+            border: colors.grey[500],
+        },
         activityIndicators: {
             unknown: themeColors.secondary,
             recent: themeColors.secondary,
