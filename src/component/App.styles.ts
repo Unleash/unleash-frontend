@@ -5,7 +5,6 @@ export const useStyles = makeStyles()(theme => ({
         '& ul': {
             margin: 0,
         },
-        height: 'calc(100% - 412px)',
     },
     primaryBreadcrumb: {
         color: 'white',

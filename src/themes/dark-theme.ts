@@ -145,12 +145,13 @@ export default createTheme({
             background: '#efefef',
         },
         neutral: {
-            light: colors.grey[100],
+            light: colors.darkblue[500],
             main: colors.grey[700],
             dark: colors.grey[800],
             border: colors.grey[500],
         },
         activityIndicators: {
+            primary: themeColors.secondary,
             unknown: themeColors.secondary,
             recent: themeColors.secondary,
             inactive: themeColors.secondary,
