@@ -56,6 +56,7 @@ import { Group } from 'component/admin/groups/Group/Group';
 import { CreateGroup } from 'component/admin/groups/CreateGroup/CreateGroup';
 import { EditGroup } from 'component/admin/groups/EditGroup/EditGroup';
 import { LazyPlayground } from 'component/playground/Playground/LazyPlayground';
+import { CorsAdmin } from 'component/admin/cors';
 
 export const routes: IRoute[] = [
     // Splash
@@ -486,6 +487,14 @@ export const routes: IRoute[] = [
         parent: '/admin',
         title: 'Single sign-on',
         component: AuthSettings,
+        type: 'protected',
+        menu: { adminSettings: true },
+    },
+    {
+        path: '/admin/cors',
+        parent: '/admin',
+        title: 'CORS origins',
+        component: CorsAdmin,
         type: 'protected',
         menu: { adminSettings: true },
     },

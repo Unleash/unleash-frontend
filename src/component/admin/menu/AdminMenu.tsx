@@ -77,12 +77,19 @@ function AdminMenu() {
                         }
                     />
                 )}
-
                 <Tab
                     value="/admin/api"
                     label={
                         <NavLink to="/admin/api" style={createNavLinkStyle}>
                             API access
+                        </NavLink>
+                    }
+                />
+                <Tab
+                    value="/admin/cors"
+                    label={
+                        <NavLink to="/admin/cors" style={createNavLinkStyle}>
+                            CORS origins
                         </NavLink>
                     }
                 />
