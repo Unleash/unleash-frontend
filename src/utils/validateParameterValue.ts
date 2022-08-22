@@ -9,27 +9,22 @@ export const validateParameterValue = (
 ): string | undefined => {
     const { type, required } = definition;
 
-    if (shouldValidateRequired(type) && required && value === '') {
+    // The components for booleans and percentages can't yet show error messages.
+    // We should not enforce `required` until these errors can be shown in the UI.
+    const shouldValidateRequired =
+        type === 'string' || type === 'list' || type === 'number';
+    if (shouldValidateRequired && required && value === '') {
         return 'Field is required';
     }
 
-    if (shouldValidateNumeric(type) && !isValidNumberOrEmpty(value)) {
+    const shouldValidateNumeric = type === 'percentage' || type === 'number';
+    if (shouldValidateNumeric && !isValidNumberOrEmpty(value)) {
         return 'Not a valid number.';
     }
 
     if (type === 'boolean' && !isValidBooleanOrEmpty(value)) {
         return 'Not a valid boolean.';
     }
-};
-
-// The components for booleans and percentages can't yet show error messages.
-// We should not enforce `required` until these errors can be shown in the UI.
-const shouldValidateRequired = (type: string): boolean => {
-    return type === 'string' || type === 'list' || type === 'number';
-};
-
-const shouldValidateNumeric = (type: string): boolean => {
-    return type === 'percentage' || type === 'number';
 };
 
 const isValidNumberOrEmpty = (value: string | number | undefined): boolean => {
