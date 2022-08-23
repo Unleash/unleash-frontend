@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
@@ -32,12 +32,11 @@ import { useStyles } from './Header.styles';
 import classNames from 'classnames';
 import { useId } from 'hooks/useId';
 import { IRoute } from 'interfaces/route';
-import UIContext from 'contexts/UIContext';
-import { setLocalStorageItem } from 'utils/storage';
 import { ThemeMode } from 'component/common/ThemeMode/ThemeMode';
+import { useThemeMode } from 'hooks/useThemeMode';
 
 const Header: VFC = () => {
-    const { themeMode, setThemeMode } = useContext(UIContext);
+    const { onSetThemeMode, themeMode } = useThemeMode();
     const theme = useTheme();
     const adminId = useId();
     const configId = useId();
@@ -114,17 +113,6 @@ const Header: VFC = () => {
             </AppBar>
         );
     }
-
-    const onSetThemeMode = () => {
-        setThemeMode(prev => {
-            if (prev === 'light') {
-                setLocalStorageItem('unleash-theme', 'dark');
-                return 'dark';
-            }
-            setLocalStorageItem('unleash-theme', 'light');
-            return 'light';
-        });
-    };
 
     return (
         <AppBar className={styles.header} position="static">

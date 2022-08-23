@@ -1,10 +1,9 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
-import mainTheme from 'themes/theme';
-import darkTheme from 'themes/dark-theme';
+
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import UIContext from 'contexts/UIContext';
+import { useThemeMode } from 'hooks/useThemeMode';
 
 export const muiCache = createCache({
     key: 'mui',
@@ -12,15 +11,7 @@ export const muiCache = createCache({
 });
 
 export const ThemeProvider: FC = ({ children }) => {
-    const { theme } = useContext(UIContext);
-
-    const resolveTheme = () => {
-        if (theme === 'light') {
-            return mainTheme;
-        }
-
-        return darkTheme;
-    };
+    const { resolveTheme } = useThemeMode();
 
     return (
         <CacheProvider value={muiCache}>

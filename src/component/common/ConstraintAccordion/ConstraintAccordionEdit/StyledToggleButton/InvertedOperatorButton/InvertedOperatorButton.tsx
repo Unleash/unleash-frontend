@@ -2,12 +2,12 @@ import { Box, Tooltip, useTheme } from '@mui/material';
 import { ReactComponent as NegatedIcon } from 'assets/icons/24_Negator.svg';
 import { ReactComponent as NegatedIconOff } from 'assets/icons/24_Negator off.svg';
 import { IConstraint } from 'interfaces/strategy';
-import { ThemeMode } from 'components/common/ThemeMode/ThemeMode';
 import {
     StyledToggleButtonOff,
     StyledToggleButtonOn,
 } from '../StyledToggleButton';
 import { ConditionallyRender } from '../../../../ConditionallyRender/ConditionallyRender';
+import { ThemeMode } from 'component/common/ThemeMode/ThemeMode';
 
 interface InvertedOperatorButtonProps {
     localConstraint: IConstraint;
