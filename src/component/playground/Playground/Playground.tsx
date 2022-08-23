@@ -23,7 +23,6 @@ import Loader from '../../common/Loader/Loader';
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
     const theme = useTheme();
-    const [initialLoad, setInitialLoad] = useState(true);
     const matches = useMediaQuery(theme.breakpoints.down('lg'));
 
     const [environment, setEnvironment] = useState<string>('');
@@ -111,10 +110,6 @@ export const Playground: VFC<{}> = () => {
             });
         }
     };
-
-    useEffect(() => {
-        setInitialLoad(false);
-    }, [setInitialLoad]);
 
     const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();

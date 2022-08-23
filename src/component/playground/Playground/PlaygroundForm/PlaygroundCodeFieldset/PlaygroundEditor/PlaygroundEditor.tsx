@@ -81,7 +81,7 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
     setContext,
     error,
 }) => {
-    const { mode } = useContext(UIContext);
+    const { themeMode } = useContext(UIContext);
     const theme = useTheme();
     const onCodeFieldChange = useCallback(
         context => {
@@ -113,7 +113,7 @@ export const PlaygroundEditor: VFC<IPlaygroundEditorProps> = ({
             <CodeMirror
                 value={context}
                 height="200px"
-                theme={mode === 'dark' ? duotoneDark : duotoneLight}
+                theme={themeMode === 'dark' ? duotoneDark : duotoneLight}
                 extensions={[json()]}
                 onChange={onCodeFieldChange}
                 style={{

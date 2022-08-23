@@ -2,13 +2,12 @@ import { Box, Tooltip, useTheme } from '@mui/material';
 import { ReactComponent as NegatedIcon } from 'assets/icons/24_Negator.svg';
 import { ReactComponent as NegatedIconOff } from 'assets/icons/24_Negator off.svg';
 import { IConstraint } from 'interfaces/strategy';
+import { ThemeMode } from 'components/common/ThemeMode/ThemeMode';
 import {
     StyledToggleButtonOff,
     StyledToggleButtonOn,
 } from '../StyledToggleButton';
 import { ConditionallyRender } from '../../../../ConditionallyRender/ConditionallyRender';
-import { useContext } from 'react';
-import UIContext from 'contexts/UIContext';
 
 interface InvertedOperatorButtonProps {
     localConstraint: IConstraint;
@@ -19,7 +18,6 @@ export const InvertedOperatorButton = ({
     localConstraint,
     setInvertedOperator,
 }: InvertedOperatorButtonProps) => {
-    const { mode } = useContext(UIContext);
     const theme = useTheme();
 
     return (
@@ -39,9 +37,8 @@ export const InvertedOperatorButton = ({
                             onClick={setInvertedOperator}
                             disableRipple
                         >
-                            <ConditionallyRender
-                                condition={mode === 'dark'}
-                                show={
+                            <ThemeMode
+                                darkmode={
                                     <NegatedIcon
                                         style={{
                                             fill: theme.palette.background
@@ -49,7 +46,7 @@ export const InvertedOperatorButton = ({
                                         }}
                                     />
                                 }
-                                elseShow={<NegatedIcon />}
+                                lightmode={<NegatedIcon />}
                             />
                         </StyledToggleButtonOn>
                     }
@@ -58,9 +55,8 @@ export const InvertedOperatorButton = ({
                             onClick={setInvertedOperator}
                             disableRipple
                         >
-                            <ConditionallyRender
-                                condition={mode === 'dark'}
-                                show={
+                            <ThemeMode
+                                darkmode={
                                     <NegatedIconOff
                                         style={{
                                             fill: theme.palette.background
@@ -68,7 +64,7 @@ export const InvertedOperatorButton = ({
                                         }}
                                     />
                                 }
-                                elseShow={<NegatedIconOff />}
+                                lightmode={<NegatedIconOff />}
                             />
                         </StyledToggleButtonOff>
                     }

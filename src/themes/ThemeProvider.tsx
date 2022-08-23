@@ -12,10 +12,10 @@ export const muiCache = createCache({
 });
 
 export const ThemeProvider: FC = ({ children }) => {
-    const { mode } = useContext(UIContext);
+    const { theme } = useContext(UIContext);
 
     const resolveTheme = () => {
-        if (mode === 'light') {
+        if (theme === 'light') {
             return mainTheme;
         }
 

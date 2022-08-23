@@ -34,9 +34,10 @@ import { useId } from 'hooks/useId';
 import { IRoute } from 'interfaces/route';
 import UIContext from 'contexts/UIContext';
 import { setLocalStorageItem } from 'utils/storage';
+import { ThemeMode } from 'component/common/ThemeMode/ThemeMode';
 
 const Header: VFC = () => {
-    const { mode, setMode } = useContext(UIContext);
+    const { themeMode, setThemeMode } = useContext(UIContext);
     const theme = useTheme();
     const adminId = useId();
     const configId = useId();
@@ -114,8 +115,8 @@ const Header: VFC = () => {
         );
     }
 
-    const onSetMode = () => {
-        setMode(prev => {
+    const onSetThemeMode = () => {
+        setThemeMode(prev => {
             if (prev === 'light') {
                 setLocalStorageItem('unleash-theme', 'dark');
                 return 'dark';
@@ -136,16 +137,15 @@ const Header: VFC = () => {
                     )}
                     aria-label="Home"
                 >
-                    <ConditionallyRender
-                        condition={mode === 'light'}
-                        show={
-                            <UnleashLogo
+                    <ThemeMode
+                        darkmode={
+                            <UnleashLogoWhite
                                 className={styles.logo}
                                 aria-label="Unleash logo"
                             />
                         }
-                        elseShow={
-                            <UnleashLogoWhite
+                        lightmode={
+                            <UnleashLogo
                                 className={styles.logo}
                                 aria-label="Unleash logo"
                             />
@@ -190,8 +190,8 @@ const Header: VFC = () => {
                                 <FormControlLabel
                                     control={
                                         <Switch
-                                            onChange={onSetMode}
-                                            checked={mode === 'dark'}
+                                            onChange={onSetThemeMode}
+                                            checked={themeMode === 'dark'}
                                         />
                                     }
                                     label="darkmode"
