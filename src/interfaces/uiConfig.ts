@@ -38,6 +38,7 @@ export interface IFlags {
     T?: boolean;
     UNLEASH_CLOUD?: boolean;
     UG?: boolean;
+    DARK_MODE?: boolean;
 }
 
 export interface IVersionInfo {

@@ -20,6 +20,7 @@ export default createTheme({
     },
     boxShadows: {
         main: '0px 2px 4px rgba(129, 122, 254, 0.2)',
+        card: '0px 2px 10px rgba(28, 25, 78, 0.12)',
         elevated: '0px 1px 20px rgba(45, 42, 89, 0.1)',
     },
     typography: {
@@ -35,7 +36,6 @@ export default createTheme({
     },
     fontSizes: {
         mainHeader: '1.25rem',
-        subHeader: '1.1rem',
         bodySize: '1rem',
         smallBody: `${14 / 16}rem`,
         smallerBody: `${12 / 16}rem`,
@@ -47,10 +47,10 @@ export default createTheme({
         bold: 700,
     },
     shape: {
-        borderRadius: '4px',
-        borderRadiusMedium: '8px',
-        borderRadiusLarge: '12px',
-        borderRadiusExtraLarge: '20px',
+        borderRadius: 4,
+        borderRadiusMedium: 8,
+        borderRadiusLarge: 12,
+        borderRadiusExtraLarge: 20,
         tableRowHeight: 64,
         tableRowHeightCompact: 56,
         tableRowHeightDense: 48,
@@ -75,7 +75,7 @@ export default createTheme({
         success: {
             light: colors.green[50],
             main: colors.green[600],
-            dark: themeColors.textColor,
+            dark: themeColors.main,
             border: colors.green[300],
         },
         warning: {

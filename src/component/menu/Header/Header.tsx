@@ -32,12 +32,10 @@ import classNames from 'classnames';
 import { useId } from 'hooks/useId';
 import { IRoute } from 'interfaces/route';
 import UIContext from 'contexts/UIContext';
-import { createLocalStorage } from 'utils/createLocalStorage';
 import { setLocalStorageItem } from 'utils/storage';
 
 const Header: VFC = () => {
     const { mode, setMode } = useContext(UIContext);
-
     const theme = useTheme();
     const adminId = useId();
     const configId = useId();
@@ -174,14 +172,19 @@ const Header: VFC = () => {
                         />
                     </div>
                     <div className={styles.userContainer}>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    onChange={onSetMode}
-                                    checked={mode === 'dark'}
+                        <ConditionallyRender
+                            condition={Boolean(flags.DARK_MODE)}
+                            show={
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            onChange={onSetMode}
+                                            checked={mode === 'dark'}
+                                        />
+                                    }
+                                    label="darkmode"
                                 />
                             }
-                            label="darkmode"
                         />
                         <Tooltip title="Documentation" arrow>
                             <IconButton

@@ -3,13 +3,16 @@ import UIContext, { createEmptyToast, themeMode } from 'contexts/UIContext';
 import { IToast } from 'interfaces/toast';
 import { getLocalStorageItem } from 'utils/storage';
 
-const resolveMode = (): themeMode => {
+const resolveMode = (darkmode: boolean): themeMode => {
     const value = getLocalStorageItem('unleash-theme');
     if (value) {
         return value as themeMode;
     }
 
-    const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let osDark;
+    if (darkmode) {
+        osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
 
     if (osDark) {
         return 'dark';
@@ -17,10 +20,17 @@ const resolveMode = (): themeMode => {
     return 'light';
 };
 
-const UIProvider: React.FC = ({ children }) => {
+interface IUiProviderProps {
+    darkmode: boolean;
+}
+
+const UIProvider: React.FC<IUiProviderProps> = ({
+    children,
+    darkmode = false,
+}) => {
     const [toastData, setToast] = useState<IToast>(createEmptyToast());
     const [showFeedback, setShowFeedback] = useState(false);
-    const [mode, setMode] = useState(resolveMode());
+    const [mode, setMode] = useState(resolveMode(darkmode));
 
     const context = React.useMemo(
         () => ({
