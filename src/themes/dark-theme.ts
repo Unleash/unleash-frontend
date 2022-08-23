@@ -374,6 +374,15 @@ export default createTheme({
                 },
             },
         },
+        MuiMenu: {
+            styleOverrides: {
+                root: {
+                    '.MuiMenu-list': {
+                        backgroundColor: colors.darkblue[600],
+                    },
+                },
+            },
+        },
         MuiMenuItem: {
             styleOverrides: {
                 root: {
@@ -390,6 +399,9 @@ export default createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: colors.darkblue[1000],
+                    '.MuiSvgIcon-root': {
+                        color: '#fff',
+                    },
                 },
             },
         },
