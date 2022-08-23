@@ -23,6 +23,7 @@ import Loader from '../../common/Loader/Loader';
 export const Playground: VFC<{}> = () => {
     const { environments } = useEnvironments();
     const theme = useTheme();
+    const [initialLoad, setInitialLoad] = useState(true);
     const matches = useMediaQuery(theme.breakpoints.down('lg'));
 
     const [environment, setEnvironment] = useState<string>('');
@@ -111,6 +112,10 @@ export const Playground: VFC<{}> = () => {
         }
     };
 
+    useEffect(() => {
+        setInitialLoad(false);
+    }, [setInitialLoad]);
+
     const onSubmit: FormEventHandler<HTMLFormElement> = async event => {
         event.preventDefault();
 
@@ -155,14 +160,11 @@ export const Playground: VFC<{}> = () => {
                 sx={{
                     display: 'flex',
                     flexDirection: !matches ? 'row' : 'column',
-                    px: 4,
-                    py: 3,
-                    background: theme.palette.playgroundBackground,
                 }}
             >
                 <Box
                     sx={{
-                        background: theme.palette.grey[200],
+                        background: theme.palette.playgroundBackground,
                         borderBottomLeftRadius: theme.shape.borderRadiusMedium,
                     }}
                 >
@@ -173,7 +175,7 @@ export const Playground: VFC<{}> = () => {
                             py: 3,
                             mb: 4,
                             mt: 2,
-                            background: theme.palette.grey[200],
+                            background: theme.palette.playgroundBackground,
                             transition: 'width 0.4s ease',
                             minWidth: matches ? 'auto' : '500px',
                             width: formWidth,

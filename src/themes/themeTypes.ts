@@ -60,6 +60,7 @@ declare module '@mui/material/styles' {
         codebox: string;
         featureMetaData: string;
         playgroundBackground: string;
+        playgroundFormBackground: string;
         standaloneBackground: string;
         standaloneBannerGradient: {
             from: string;

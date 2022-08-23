@@ -108,7 +108,8 @@ export default createTheme({
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         codebox: colors.darkblue[600],
         featureMetaData: colors.darkblue[1000],
-        playgroundBackground: themeColors.secondary,
+        playgroundBackground: colors.darkblue[600],
+        playgroundFormBackground: themeColors.secondary,
         standaloneBackground: colors.black,
         featureStrategySegmentChipBackground: themeColors.secondary,
         featureSegmentSearchBackground: themeColors.secondary,
@@ -158,7 +159,7 @@ export default createTheme({
             abandoned: themeColors.secondary,
         },
         tertiary: {
-            light: colors.grey[200],
+            light: themeColors.secondary,
             main: colors.grey[400],
             dark: colors.grey[600],
             background: 'white',

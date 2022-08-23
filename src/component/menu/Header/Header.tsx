@@ -16,6 +16,7 @@ import UserProfile from 'component/user/UserProfile';
 import { ConditionallyRender } from 'component/common/ConditionallyRender/ConditionallyRender';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ReactComponent as UnleashLogo } from 'assets/img/logoDarkWithText.svg';
+import { ReactComponent as UnleashLogoWhite } from 'assets/img/logoWithWhiteText.svg';
 
 import { DrawerMenu } from './DrawerMenu/DrawerMenu';
 import useUiConfig from 'hooks/api/getters/useUiConfig/useUiConfig';
@@ -135,9 +136,20 @@ const Header: VFC = () => {
                     )}
                     aria-label="Home"
                 >
-                    <UnleashLogo
-                        className={styles.logo}
-                        aria-label="Unleash logo"
+                    <ConditionallyRender
+                        condition={mode === 'light'}
+                        show={
+                            <UnleashLogo
+                                className={styles.logo}
+                                aria-label="Unleash logo"
+                            />
+                        }
+                        elseShow={
+                            <UnleashLogoWhite
+                                className={styles.logo}
+                                aria-label="Unleash logo"
+                            />
+                        }
                     />
                 </Link>
                 <nav className={styles.nav}>

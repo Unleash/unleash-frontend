@@ -121,6 +121,7 @@ export default createTheme({
         codebox: 'rgba(32,32,33, 0.2)',
         sidebarContainer: 'rgba(32,32,33, 0.2)',
         playgroundBackground: colors.grey[200],
+        playgroundFormBackground: colors.grey[200],
         standaloneBackground: colors.grey[300],
         constraintAccordion: {
             editBackground: '#F6F6FA',
