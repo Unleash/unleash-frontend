@@ -142,7 +142,6 @@ export default createTheme({
             diffSub: 'red',
             diffNeutral: 'black',
             edited: 'blue',
-            background: '#efefef',
         },
         neutral: {
             light: colors.darkblue[500],
