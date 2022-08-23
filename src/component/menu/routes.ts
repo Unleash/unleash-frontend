@@ -496,6 +496,7 @@ export const routes: IRoute[] = [
         title: 'CORS origins',
         component: CorsAdmin,
         type: 'protected',
+        configFlag: 'embedProxy',
         menu: { adminSettings: true },
     },
     {

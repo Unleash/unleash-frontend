@@ -34,7 +34,7 @@ export const CorsForm = ({ frontendApiOrigins }: ICorsFormProps) => {
         <form onSubmit={onSubmit}>
             <Box sx={{ display: 'grid', gap: 1 }}>
                 <label htmlFor={inputFieldId}>
-                    Which origins should be allowed to call the frontend API
+                    Which origins should be allowed to call the Frontend API
                     (one per line)?
                 </label>
                 <TextField

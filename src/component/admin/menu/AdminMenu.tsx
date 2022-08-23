@@ -85,14 +85,19 @@ function AdminMenu() {
                         </NavLink>
                     }
                 />
-                <Tab
-                    value="/admin/cors"
-                    label={
-                        <NavLink to="/admin/cors" style={createNavLinkStyle}>
-                            CORS origins
-                        </NavLink>
-                    }
-                />
+                {uiConfig.embedProxy && (
+                    <Tab
+                        value="/admin/cors"
+                        label={
+                            <NavLink
+                                to="/admin/cors"
+                                style={createNavLinkStyle}
+                            >
+                                CORS origins
+                            </NavLink>
+                        }
+                    />
+                )}
                 <Tab
                     value="/admin/auth"
                     label={
