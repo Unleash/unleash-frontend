@@ -1,5 +1,5 @@
 import UIContext, { themeMode } from 'contexts/UIContext';
-import { useContext, UseContext } from 'react';
+import { useContext } from 'react';
 import { setLocalStorageItem } from 'utils/storage';
 import mainTheme from 'themes/theme';
 import darkTheme from 'themes/dark-theme';
