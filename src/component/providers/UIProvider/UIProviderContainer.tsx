@@ -9,7 +9,7 @@ export const UIProviderContainer: React.FC = ({ children }) => {
     }
 
     return (
-        <UIProvider darkmode={uiConfig.flags.DARK_MODE || false}>
+        <UIProvider darkmode={uiConfig.flags.ENABLE_DARK_MODE_SUPPORT || false}>
             {children}
         </UIProvider>
     );

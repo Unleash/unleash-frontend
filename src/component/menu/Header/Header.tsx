@@ -185,7 +185,7 @@ const Header: VFC = () => {
                     </div>
                     <div className={styles.userContainer}>
                         <ConditionallyRender
-                            condition={Boolean(flags.DARK_MODE)}
+                            condition={Boolean(flags.ENABLE_DARK_MODE_SUPPORT)}
                             show={
                                 <FormControlLabel
                                     control={
