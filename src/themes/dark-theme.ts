@@ -33,6 +33,13 @@ export default createTheme({
             fontSize: '1.5rem',
             lineHeight: 1.875,
         },
+        h3: {
+            fontSize: '1rem',
+            fontWeight: '700',
+        },
+        caption: {
+            fontSize: `${12 / 16}rem`,
+        },
     },
     fontSizes: {
         mainHeader: '1.25rem',
