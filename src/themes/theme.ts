@@ -142,6 +142,7 @@ export default createTheme({
         featureStrategySegmentChipBackground: colors.purple[800],
         featureSegmentSearchBackground: colors.purple[800],
         dialogHeaderBackground: colors.purple[800],
+        dialogHeaderText: '#ffffffe6',
         grey: colors.grey,
         lightBorder: colors.grey[400],
         text: {

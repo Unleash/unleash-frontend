@@ -121,6 +121,7 @@ export default createTheme({
         featureStrategySegmentChipBackground: themeColors.secondary,
         featureSegmentSearchBackground: themeColors.secondary,
         dialogHeaderBackground: themeColors.secondary,
+        dialogHeaderText: themeColors.textColor,
         lightBorder: colors.darkblue[500],
         constraintAccordion: {
             editBackground: colors.darkblue[600],
