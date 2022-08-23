@@ -104,7 +104,6 @@ export default createTheme({
             background: 'white',
             contrast: colors.grey[300],
         },
-
         divider: colors.grey[300],
         dividerAlternative: colors.grey[400],
         tableHeaderHover: colors.grey[400],

@@ -113,6 +113,7 @@ export default createTheme({
         featureStrategySegmentChipBackground: themeColors.secondary,
         featureSegmentSearchBackground: themeColors.secondary,
         dialogHeaderBackground: themeColors.secondary,
+        lightBorder: colors.darkblue[500],
         constraintAccordion: {
             editBackground: colors.darkblue[600],
             background: themeColors.secondary,
@@ -156,9 +157,12 @@ export default createTheme({
             inactive: themeColors.secondary,
             abandoned: themeColors.secondary,
         },
-        statusBadge: {
-            success: themeColors.secondary,
-            warning: themeColors.secondary,
+        tertiary: {
+            light: colors.grey[200],
+            main: colors.grey[400],
+            dark: colors.grey[600],
+            background: 'white',
+            contrast: colors.grey[300],
         },
         inactiveIcon: colors.grey[600],
     },
