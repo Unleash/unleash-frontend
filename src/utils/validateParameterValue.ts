@@ -21,16 +21,8 @@ export const validateParameterValue = (
     if (shouldValidateNumeric && !isValidNumberOrEmpty(value)) {
         return 'Not a valid number.';
     }
-
-    if (type === 'boolean' && !isValidBooleanOrEmpty(value)) {
-        return 'Not a valid boolean.';
-    }
 };
 
 const isValidNumberOrEmpty = (value: string | number | undefined): boolean => {
     return value === '' || /^\d+$/.test(String(value));
-};
-
-const isValidBooleanOrEmpty = (value: string | number | undefined): boolean => {
-    return value === '' || value === 'true' || value === 'false';
 };

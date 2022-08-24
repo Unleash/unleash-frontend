@@ -31,9 +31,9 @@ test('validateParameterValue boolean', () => {
     expect(fn({ type: 'boolean', required: false }, '')).toBeUndefined();
     expect(fn({ type: 'boolean', required: false }, 'true')).toBeUndefined();
     expect(fn({ type: 'boolean', required: false }, 'false')).toBeUndefined();
-    expect(fn({ type: 'boolean', required: false }, 'a')).not.toBeUndefined();
+    expect(fn({ type: 'boolean', required: false }, 'a')).toBeUndefined();
     expect(fn({ type: 'boolean', required: true }, '')).toBeUndefined();
     expect(fn({ type: 'boolean', required: true }, 'true')).toBeUndefined();
     expect(fn({ type: 'boolean', required: true }, 'false')).toBeUndefined();
-    expect(fn({ type: 'boolean', required: true }, 'a')).not.toBeUndefined();
+    expect(fn({ type: 'boolean', required: true }, 'a')).toBeUndefined();
 });
