@@ -2622,7 +2622,7 @@
     "@uiw/codemirror-extensions-basic-setup" "4.11.5"
     codemirror "^6.0.0"
 
-"@vitejs/plugin-react@^2.0.1":
+"@vitejs/plugin-react@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-2.0.1.tgz#3197c01d8e4a4eb9fed829c7888c467a43aadd4e"
   integrity sha512-uINzNHmjrbunlFtyVkST6lY1ewSfz/XwLufG0PIqvLGnpk2nOIOa/1CACTDNcKi1/RwaCzJLmsXwm1NsUVV/NA==
